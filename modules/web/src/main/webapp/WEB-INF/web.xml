@@ -75,15 +75,7 @@
 
     <filter-mapping>
         <filter-name>openSessionInViewFilter</filter-name>
-        <url-pattern>/playground/*</url-pattern>
-        <dispatcher>ERROR</dispatcher>
-        <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
-
-
-    <filter-mapping>
-        <filter-name>openSessionInViewFilter</filter-name>
-        <url-pattern>/view/*</url-pattern>
+        <url-pattern>/warehouse/*</url-pattern>
         <dispatcher>ERROR</dispatcher>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
@@ -129,17 +121,12 @@
 
     <servlet-mapping>
         <servlet-name>web-app</servlet-name>
-        <url-pattern>/view/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>web-app</servlet-name>
         <url-pattern>/info/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>web-app</servlet-name>
-        <url-pattern>/playground/*</url-pattern>
+        <url-pattern>/warehouse/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

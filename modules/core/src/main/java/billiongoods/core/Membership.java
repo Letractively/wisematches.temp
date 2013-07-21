@@ -3,6 +3,7 @@ package billiongoods.core;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
+@Deprecated
 public enum Membership {
     /**
      * Indicates that it's basic registered player.

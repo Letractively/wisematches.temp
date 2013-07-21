@@ -1,6 +1,6 @@
 package billiongoods.server.web.servlet.sdo;
 
-import billiongoods.core.MessageFormatter;
+import billiongoods.server.MessageFormatter;
 
 import java.util.Locale;
 

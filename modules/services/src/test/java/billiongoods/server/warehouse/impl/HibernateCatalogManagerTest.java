@@ -1,6 +1,6 @@
-package billiongoods.server.services.catalog.impl;
+package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.services.catalog.CatalogItem;
+import billiongoods.server.warehouse.Category;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,20 +29,20 @@ public class HibernateCatalogManagerTest {
 
     @Test
     public void test() throws Exception {
-        final HibernateCatalogManager manager = new HibernateCatalogManager();
+        final HibernateCategoryManager manager = new HibernateCategoryManager();
         manager.setSessionFactory(sessionFactory);
         manager.afterPropertiesSet();
 
-        final CatalogItem catalog = manager.getCatalog();
+        final Category catalog = manager.getCatalog();
         assertNotNull(catalog);
 
         final int size = catalog.getCatalogItems().size();
 
-        final CatalogItem t1 = manager.addCatalogItem("Test1", null);
-        final CatalogItem t2 = manager.addCatalogItem("Test2", null);
+        final Category t1 = manager.addCatalogItem("Test1", null);
+        final Category t2 = manager.addCatalogItem("Test2", null);
 
-        final CatalogItem c1 = manager.addCatalogItem("Child1", t1);
-        final CatalogItem c2 = manager.addCatalogItem("Child2", t1);
+        final Category c1 = manager.addCatalogItem("Child1", t1);
+        final Category c2 = manager.addCatalogItem("Child2", t1);
 
         assertEquals(size + 2, catalog.getCatalogItems().size());
         assertSame(t1, c1.getParent());

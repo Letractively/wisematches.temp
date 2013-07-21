@@ -27,11 +27,6 @@
         <property name="accountManager" ref="accountManager"/>
     </bean>
 
-    <bean id="profileManager" class="billiongoods.core.personality.player.profile.impl.HibernatePlayerProfileManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="personalityManager" ref="personalityManager"/>
-    </bean>
-
     <bean id="profileCountriesManager" class="billiongoods.core.personality.player.profile.impl.CSVCountriesManager">
         <property name="csvCountriesFile" value="classpath:/i18n/countries.csv"/>
     </bean>

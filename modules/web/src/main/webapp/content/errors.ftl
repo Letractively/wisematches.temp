@@ -4,7 +4,7 @@
 <#include "/core.ftl">
 
 <div class="error-layout">
-    <img src="<@wm.ui.static "images/errorPage.png"/>" width="83" height="71" alt="" style="float: left;">
+    <img src="<@bg.ui.static "images/errorPage.png"/>" width="83" height="71" alt="" style="float: left;">
 
     <h1><@message code="error.${errorCode}.label"/></h1>
 

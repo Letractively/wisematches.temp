@@ -1,7 +1,7 @@
-package billiongoods.server.services.catalog.impl;
+package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.services.catalog.CatalogItem;
-import billiongoods.server.services.catalog.CatalogManager;
+import billiongoods.server.warehouse.Category;
+import billiongoods.server.warehouse.CategoryManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,61 +12,63 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernateCatalogManager implements CatalogManager, InitializingBean {
+public class HibernateCategoryManager implements CategoryManager, InitializingBean {
     private SessionFactory sessionFactory;
 
-    private final HibernateCatalogItem rootCatalogItem = new HibernateCatalogItem();
+    private final HibernateCategory rootCatalogItem = new HibernateCategory();
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.HibernateCatalogManager");
+    private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.HibernateCategoryManager");
 
-    public HibernateCatalogManager() {
+    public HibernateCategoryManager() {
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void afterPropertiesSet() throws Exception {
         final Session session = sessionFactory.openSession();
-        final Query query = session.createQuery("select i from billiongoods.server.services.catalog.impl.HibernateCatalogItem i where i.parent is null");
-        for (Object o : query.list()) {
-            rootCatalogItem.addChild((HibernateCatalogItem) o);
+        final Query query = session.createQuery("select i from billiongoods.server.warehouse.impl.HibernateCategory i where i.parent is null");
+        final List list = query.list();
+        for (Object o : list) {
+            rootCatalogItem.addChild((HibernateCategory) o);
         }
     }
 
     @Override
-    public CatalogItem getCatalog() {
+    public Category getCatalog() {
         return rootCatalogItem;
     }
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public CatalogItem addCatalogItem(String name, CatalogItem parent) {
+    public Category addCatalogItem(String name, Category parent) {
         final Session session = sessionFactory.getCurrentSession();
 
-        HibernateCatalogItem p = (HibernateCatalogItem) parent;
+        HibernateCategory p = (HibernateCategory) parent;
         if (p == null) {
             p = rootCatalogItem;
         }
 
-        final HibernateCatalogItem i = new HibernateCatalogItem(name, p);
+        final HibernateCategory i = new HibernateCategory(name, p);
         session.save(i);
         return i;
     }
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public CatalogItem removeCatalogItem(CatalogItem item, CatalogItem newParent) {
+    public Category removeCatalogItem(Category item, Category newParent) {
         final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateCatalogItem hItem = (HibernateCatalogItem) item;
-        final HibernateCatalogItem hNewParent = (HibernateCatalogItem) newParent;
+        final HibernateCategory hItem = (HibernateCategory) item;
+        final HibernateCategory hNewParent = (HibernateCategory) newParent;
 
         session.delete(hItem);
-        for (CatalogItem ci : new ArrayList<>(hItem.getCatalogItems())) {
-            final HibernateCatalogItem hci = (HibernateCatalogItem) ci;
+        for (Category ci : new ArrayList<>(hItem.getCatalogItems())) {
+            final HibernateCategory hci = (HibernateCategory) ci;
             hci.removeFromParent();
             hNewParent.addChild(hci);
         }

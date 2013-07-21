@@ -51,17 +51,17 @@
 <body>
 
 <div id="billiongoods">
-    <div id="mainHeader">
+    <div id="siteHeader">
     <#include "header.ftl"/>
     </div>
 
     <div id="notification-block"></div>
 
-    <div id="mainContent" style="padding: 5px; display: none;">
+    <div id="siteContent">
     <#include "${templateName}"/>
     </div>
 
-    <div id="hainFooter" style="display: none;">
+    <div id="siteFooter">
     <#include "footer.ftl"/>
     </div>
 </div>

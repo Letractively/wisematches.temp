@@ -1,5 +1,6 @@
-package billiongoods.core;
+package billiongoods.server;
 
+import billiongoods.core.*;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Years;

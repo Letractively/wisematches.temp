@@ -3,6 +3,7 @@ package billiongoods.core;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
+@Deprecated
 public abstract class Localization {
     private final String momentAgo;
     private final String[][] timeDeclension;

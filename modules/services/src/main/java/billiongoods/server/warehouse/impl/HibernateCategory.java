@@ -1,6 +1,6 @@
-package billiongoods.server.services.catalog.impl;
+package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.services.catalog.CatalogItem;
+import billiongoods.server.warehouse.Category;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,8 +10,8 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Entity
-@Table(name = "store_catalog")
-public class HibernateCatalogItem implements CatalogItem {
+@Table(name = "store_category")
+public class HibernateCategory implements Category {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,18 +26,18 @@ public class HibernateCatalogItem implements CatalogItem {
     @Column(name = "position")
     private int position;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true, targetEntity = HibernateCatalogItem.class)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true, targetEntity = HibernateCategory.class)
     @JoinColumn(name = "parent", nullable = true)
-    private HibernateCatalogItem parent;
+    private HibernateCategory parent;
 
     @OrderColumn(name = "position")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parent", orphanRemoval = true, targetEntity = HibernateCatalogItem.class)
-    private List<HibernateCatalogItem> children = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "parent", orphanRemoval = true, targetEntity = HibernateCategory.class)
+    private List<HibernateCategory> children = new ArrayList<>();
 
-    protected HibernateCatalogItem() {
+    protected HibernateCategory() {
     }
 
-    protected HibernateCatalogItem(String name, HibernateCatalogItem parent) {
+    protected HibernateCategory(String name, HibernateCategory parent) {
         this.name = name;
         parent.addChild(this);
     }
@@ -51,7 +51,7 @@ public class HibernateCatalogItem implements CatalogItem {
     public int getLevel() {
         if (level == -1) {
             int i = 0;
-            CatalogItem p = parent;
+            Category p = parent;
             while (p != null) {
                 i++;
                 p = p.getParent();
@@ -72,16 +72,16 @@ public class HibernateCatalogItem implements CatalogItem {
     }
 
     @Override
-    public CatalogItem getParent() {
+    public Category getParent() {
         return parent;
     }
 
     @Override
-    public List<HibernateCatalogItem> getCatalogItems() {
+    public List<HibernateCategory> getCatalogItems() {
         return children;
     }
 
-    void addChild(HibernateCatalogItem item) {
+    void addChild(HibernateCategory item) {
         if (item.parent != null) {
             throw new IllegalArgumentException("Item already has a parent");
         }
@@ -93,7 +93,7 @@ public class HibernateCatalogItem implements CatalogItem {
         parent.removeChild(this);
     }
 
-    void removeChild(HibernateCatalogItem item) {
+    void removeChild(HibernateCategory item) {
         if (item.parent != this) {
             throw new IllegalArgumentException("Item doesn't belong to this item");
         }
@@ -103,7 +103,7 @@ public class HibernateCatalogItem implements CatalogItem {
 
     @Override
     public String toString() {
-        return "HibernateCatalogItem{" +
+        return "HibernateCategory{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

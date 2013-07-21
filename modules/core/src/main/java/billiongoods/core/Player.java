@@ -5,6 +5,7 @@ package billiongoods.core;
  *
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
+@Deprecated
 public abstract class Player extends Personality {
     Player(long id) {
         super(id);

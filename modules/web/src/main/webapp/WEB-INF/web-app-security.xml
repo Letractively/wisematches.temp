@@ -133,10 +133,8 @@
     <http pattern="/static/**" security="none"/>
 
     <http use-expressions="true">
-        <intercept-url pattern="/store/**" access="permitAll"/>
         <intercept-url pattern="/maintain/**" access="hasRole('admin') and isFullyAuthenticated()"/>
         <intercept-url pattern="/account/modify" access="isFullyAuthenticated()"/>
-
         <intercept-url pattern="/**" access="permitAll"/>
 
         <!--<custom-filter after="BASIC_AUTH_FILTER" ref="androidAuthenticationFilter"/>-->

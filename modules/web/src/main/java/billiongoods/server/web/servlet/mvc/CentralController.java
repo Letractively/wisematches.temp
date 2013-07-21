@@ -22,7 +22,7 @@ public class CentralController extends AbstractController {
 
     @RequestMapping(value = {"/", "/index"})
     public final String mainPage() {
-        return "forward:/warehouse/overview";
+        return "forward:/warehouse/home";
     }
 
     @RequestMapping(value = "/info/error")

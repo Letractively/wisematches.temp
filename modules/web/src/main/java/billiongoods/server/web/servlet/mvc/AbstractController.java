@@ -1,9 +1,9 @@
 package billiongoods.server.web.servlet.mvc;
 
-import billiongoods.core.MessageFormatter;
 import billiongoods.core.PersonalityManager;
 import billiongoods.core.Player;
 import billiongoods.core.security.PersonalityContext;
+import billiongoods.server.MessageFormatter;
 import billiongoods.server.web.servlet.sdo.ServiceResponseFactory;
 import billiongoods.server.web.servlet.view.StaticContentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;

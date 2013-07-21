@@ -1,15 +1,15 @@
-package billiongoods.server.services.catalog;
+package billiongoods.server.warehouse;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface CatalogManager {
+public interface CategoryManager {
     /**
      * Returns root element of the catalog.
      *
      * @return the root element of the catalog.
      */
-    CatalogItem getCatalog();
+    Category getCatalog();
 
     /**
      * Adds new catalog with specified to specified parent catalog.
@@ -20,7 +20,7 @@ public interface CatalogManager {
      * @throws NullPointerException     if name or parent is null
      * @throws IllegalArgumentException if parent catalog already has item with the same name
      */
-    CatalogItem addCatalogItem(String name, CatalogItem parent);
+    Category addCatalogItem(String name, Category parent);
 
     /**
      * Removes specified catalog item and moves all it's commodities to specified parent.
@@ -30,5 +30,5 @@ public interface CatalogManager {
      * @return removed catalog item.
      * @throws NullPointerException if item or newParent is null
      */
-    CatalogItem removeCatalogItem(CatalogItem item, CatalogItem newParent);
+    Category removeCatalogItem(Category item, Category newParent);
 }
