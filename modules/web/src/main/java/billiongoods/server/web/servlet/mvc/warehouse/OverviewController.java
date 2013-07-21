@@ -1,4 +1,4 @@
-package billiongoods.server.web.servlet.mvc.store;
+package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,6 @@ public class OverviewController extends AbstractController {
 
     @RequestMapping(value = "overview")
     public String modifyAccountPage(Model model) {
-        return "/content/store/home";
+        return "/content/warehouse/home";
     }
 }

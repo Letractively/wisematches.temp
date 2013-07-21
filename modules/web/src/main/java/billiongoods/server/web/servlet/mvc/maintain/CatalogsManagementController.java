@@ -14,7 +14,7 @@ public class CatalogsManagementController {
 
     @RequestMapping("/view")
     public String mainPage() {
-        return "/content/maintain/store/view";
+        return "/content/maintain/warehouse/view";
     }
 
 }

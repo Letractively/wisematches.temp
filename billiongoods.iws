@@ -2,370 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/billiongoods.ids" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/database/billiongoods.mwb.bak" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/database/billiongoods.mwb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/status/checkmark_32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/close.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/flags/en.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/errorPage.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/status/error_32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/favicon.ico" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/status/forbidden_32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/status/help_32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/status/information_32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/logo/logo170x70x1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/logo/logo170x70x2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/dashboard/newMessageIcon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/progress.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/flags/ru.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/resources/images/testImage.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/resources/images/testImage.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/resources/images/testImage.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/thumbnail.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/wait.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/status/warning_32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/descriptive/AbstractDescriptiveSearchManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/entity/AbstractEntitySearchManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/expiration/impl/AbstractExpirationManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/expiration/impl/AbstractExpirationManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/Account.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountAvailability.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountEditor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountLockInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountLockListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountLockManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/form/AccountLoginForm.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountNicknameLockInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountNicknameLockListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/AccountRecoveryManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/form/AccountRegistrationForm.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/AdministrationController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/reclame/AdvertisementBlock.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/reclame/AdvertisementManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/reclame/AdvertisementProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/AlertsOriginCenter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AuthenticationController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/BillionGoodsServlet.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/task/scheduler/BreakingDayExecutorJob.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/task/BreakingDayListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/profile/impl/CSVCountriesManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/personality/player/profile/impl/CSVCountriesManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/catalog/CatalogItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/catalog/CatalogManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/CatalogsManagementController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/CentralController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/task/scheduler/CleaningDayExecutorJob.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/task/CleaningDayListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/commodity/Commodity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/profile/CountriesManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/profile/Country.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/sdo/DataTablesRequest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/sdo/DataTablesResponse.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/DefaultMember.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/DefaultPersonalityManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/DefaultVisitor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/descriptive/DescriptiveSearchManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/DuplicateAccountException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/entity/EntitySearchManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/expiration/ExpirationListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/expiration/ExpirationManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/expiration/ExpirationType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/props/impl/FilePropertiesManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/props/impl/FilePropertiesManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/view/freemarker/FreeMarkerEnumMap.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/converter/FreeMarkerNotificationConverter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/notify/impl/converter/FreeMarkerNotificationConverterTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/impl/HibernateAccount.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/impl/HibernateAccountLockInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/impl/HibernateAccountLockManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/personality/player/account/impl/HibernateAccountLockManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/impl/HibernateAccountManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/personality/player/account/impl/HibernateAccountManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/impl/HibernateAccountNicknameLockInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/impl/HibernateAccountRecoveryManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/personality/player/account/impl/HibernateAccountRecoveryManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/catalog/impl/HibernateCatalogItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/catalog/impl/HibernateCatalogManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/catalog/impl/HibernateCatalogManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/membership/impl/HibernateMembershipCard.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/membership/impl/HibernateMembershipManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/HibernateNotificationManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/HibernatePlayerActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/HibernatePlayerStateManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/state/impl/HibernatePlayerStateManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/impl/HibernateRecoveryToken.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/InadmissibleUsernameException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/assistance/InformationController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/assistance/InformationUnavailableException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Language.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/i18n/LanguageChangeInterceptor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Localization.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/publisher/MailNotificationPublisher.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Member.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/MemberAuthenticationProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Membership.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/membership/MembershipCard.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/membership/MembershipExpiration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/membership/MembershipListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/membership/MembershipManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/props/impl/MemoryPropertiesManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/MessageFormatter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/expiration/impl/MockExpirationManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/expiration/MockExpirationType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/search/descriptive/MockSearchableEntity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/cache/NoOpCache.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/Notification.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/NotificationConverter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/NotificationDescriptor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/NotificationException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/NotificationManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/NotificationOriginCenter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/notify/impl/NotificationOriginCenterTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/NotificationPublisher.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/NotificationScope.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/NotificationSender.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/NotificationService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/form/NotificationsTreeView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/Order.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/Orders.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/store/OverviewController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Personality.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/PersonalityContext.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/PersonalityListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/i18n/PersonalityLocaleResolver.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/PersonalityManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/PersonalityType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Player.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/PlayerAuthentication.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/PlayerAuthenticationProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/userdetails/PlayerDetails.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/userdetails/PlayerDetailsService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/PlayerStateListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/PlayerStateManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/PublicationException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/PublishNotificationService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/Range.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/form/RecoveryConfirmationForm.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/RecoveryController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/form/RecoveryRequestForm.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/RecoveryToken.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/cache/ReferenceMapCache.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/cache/ReferenceMapCacheFactoryBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/cache/ReferenceMapCacheManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/cache/ReferenceType.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/props/ReliablePropertiesManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/task/scheduler/SchedulerContextHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/SearchManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/descriptive/SearchableBean.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/descriptive/SearchableDescriptor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/search/descriptive/SearchableDescriptorTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/descriptive/SearchableProperty.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/ServerDescriptor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/sdo/ServiceResponse.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/sdo/ServiceResponseFactory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/SessionRegistryFilter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/SessionRegistryStateManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/state/impl/SessionRegistryStateManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/SettingsController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/java/billiongoods/server/web/servlet/mvc/playground/player/settings/SettingsControllerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/form/SettingsForm.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/validation/SpringMessageInterpolator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/view/freemarker/SpringSecurityContext.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/view/StaticContentGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/java/billiongoods/server/web/servlet/view/StaticContentGeneratorTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/utils/StringComparators.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/form/TimeZoneInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/task/executor/TransactionAwareExecutor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/task/executor/TransactionAwareTaskExecutorTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/task/TransactionalExecutor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/task/scheduler/TransactionalExecutorJob.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/TransformationException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/player/account/UnknownAccountException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/UnknownEntityException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/http/UserAgent.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Visitor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/VisitorAuthenticationFilter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/VisitorAuthenticationProvider.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/access/WMAccessDeniedHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/authentication/WMAuthenticationEntryPoint.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/authentication/WMAuthenticationFailureHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/authentication/WMAuthenticationSuccessHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/view/freemarker/WMFreeMarkerView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/view/freemarker/WMFreeMarkerViewResolver.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/authentication/rememberme/WMPersistentTokenRepository.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/WMRedirectStrategy.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/authentication/rememberme/WMRememberMeServices.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/http/WebClient.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/java/billiongoods/server/web/http/WebClientTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/reclame/impl/XMLAdvertisementManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/reclame/impl/XMLAdvertisementManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/about.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/about_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/resources/adsBlocks.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/config/adsBlocks.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/tourney/announced_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/tourney/announced_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/dictionary/approved_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/dictionary/approved_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/awards.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/awards_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/billiongoods.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/billiongoods.ipr" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/resources/config/cache-config.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/store/catalog.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/item/catalog.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/recovery/confirmation.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/core.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/core.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/resources/i18n/countries.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/create.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/created_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/created_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/resources/config/database-config.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/database/database.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/database/dbdump.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/config/cache/default-ehcache.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/config/development.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/errors.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/exceptions.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/exceptions_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/challenge/expiration_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/game/expiration_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/challenge/expiration_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/game/expiration_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/features.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/features_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/fileuploader.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/filters.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/challenge/finalized_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/challenge/finalized_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/game/finished_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/tourney/finished_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/game/finished_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/tourney/finished_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/footer.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/footer.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/freemarker_implicit.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/general.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/general.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/general_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/award/granted_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/award/granted_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/header.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/assistance/help.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/help.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/help_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/home.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/challenge/initiated_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/challenge/initiated_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/account/insufficient.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/account/insufficient_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/integ.logback.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/config/integration.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.blockUI-2.5.4.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/jquery.cluetip-1.2.7.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.cluetip-1.2.7.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.dataTables-1.9.4.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/jquery.dataTables_themeroller-1.9.4.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.freeow-1.0.2.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.hoverIntent-0.0.6.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/jquery.jscrollpane-2.0.0.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.jscrollpane-2.0.0.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.mousewheel-3.0.6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.mousewheelIntent-1.2.0.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.textchange.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/jquery.timers-1.2.0.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/json2-2.1.8.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/junit.logback.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/database/latest_patch.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/assistance/loadTest.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/assistance/loadTest_de.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/assistance/loadTest_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/main.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/message.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/mail/mock_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/mock_resources.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/mock_resources_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/mail/mock_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/assistance/move.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/naming.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/naming_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/assistance/navigation.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/navigation.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/notification.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/config/notifications-config.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/item/overview.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui/panel.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/assistance/parsingTest.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/resources/config/personality-config.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/policy.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/policy_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/resources/config/properties-config.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/rating.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/rating_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/message/received_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/message/received_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/recovery_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/recovery_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/dictionary/rejected_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/dictionary/rejected_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/recovery/request.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/robots.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/rules.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/rules_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/security.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/services.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/account/session.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/account/session_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/sitemap.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/game/started_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/game/started_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/assistance/static.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/account/status.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/account/status_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/account/system.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/account/system_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui/table.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/terms.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/terms_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/test/resources/images/testImage.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/test_en.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/test/resources/i18n/test_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/tourney.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/tourney_ru.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/game/turn_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/playground/game/turn_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/updated_en.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/updated_ru.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/utils.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/item/view.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/web.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web_ru.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/CatalogsManagementController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/CatalogsManagementController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/CentralController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/CentralController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/catalog/impl/HibernateCatalogManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/catalog/impl/HibernateCatalogManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
+      <change type="MOVED" beforePath="C:\Users\sergey\billiongoods\modules\web\src\main\java\billiongoods\server\web\servlet\mvc\store\OverviewController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/OverviewController.java" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -456,6 +97,7 @@
     <option name="repositoryUrls">
       <list>
         <option value="https://smklimenko@code.google.com/p/wisematches/" />
+        <option value="https://code.google.com/p/wisematches.temp/" />
       </list>
     </option>
   </component>
@@ -555,6 +197,386 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="content" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mvc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mvc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="warehouse" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mvc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="maintain" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1040,7 +1062,11 @@
       <created>1373911960435</created>
       <updated>1373911960436</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="info about change is closed">
+      <created>1374419429022</created>
+      <updated>1374419429022</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1057,6 +1083,7 @@
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42096773" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43387097" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1064,20 +1091,19 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42096773" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32741934" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32419354" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2621212" sideWeight="0.5388349" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2560606" sideWeight="0.67419356" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2560606" sideWeight="0.566129" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44354838" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43387097" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32419354" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1156,7 +1182,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Release 5.1.17" />
+    <option name="LAST_COMMIT_MESSAGE" value="info about change is closed" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1188,6 +1214,7 @@
     <MESSAGE value="Safari 4 is minor" />
     <MESSAGE value="Release 5.1.15" />
     <MESSAGE value="Release 5.1.17" />
+    <MESSAGE value="info about change is closed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1231,7 +1258,7 @@
         <state line="73" column="0" selection-start="2644" selection-end="2644" vertical-scroll-proportion="0.5993266" vertical-offset="885" max-vertical-offset="1479">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#983#1013#0" expanded="true" />
+            <element signature="e#987#1017#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1251,24 +1278,6 @@
         <state line="6" column="27" selection-start="146" selection-end="146" vertical-scroll-proportion="0.17957747" vertical-offset="0" max-vertical-offset="568" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/AdministrationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="26" selection-start="320" selection-end="328" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/CatalogsManagementController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="75" selection-start="369" selection-end="369" vertical-scroll-proportion="0.34343433" vertical-offset="0" max-vertical-offset="594">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/assistance/navigation.ftl">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1598" />
@@ -1277,6 +1286,36 @@
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/navigation.ftl">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/CatalogsManagementController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="75" selection-start="369" selection-end="369" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/AdministrationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="109" selection-start="504" selection-end="504" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/OverviewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="13" selection-start="375" selection-end="375" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="22" selection-start="713" selection-end="713" vertical-scroll-proportion="0.2003367" vertical-offset="0" max-vertical-offset="1207">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>

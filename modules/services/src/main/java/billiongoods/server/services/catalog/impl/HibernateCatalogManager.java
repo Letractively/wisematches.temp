@@ -21,7 +21,7 @@ public class HibernateCatalogManager implements CatalogManager, InitializingBean
 
     private final HibernateCatalogItem rootCatalogItem = new HibernateCatalogItem();
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.store.HibernateCatalogManager");
+    private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.HibernateCatalogManager");
 
     public HibernateCatalogManager() {
     }
