@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <import resource="cache-config.xml"/>
+
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+
+    <bean id="accountManager" class="billiongoods.core.personality.player.account.impl.HibernateAccountManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+        <property name="accountLockManager" ref="accountLockManager"/>
+    </bean>
+
+    <bean id="accountLockManager" class="billiongoods.core.personality.player.account.impl.HibernateAccountLockManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="accountRecoveryManager"
+          class="billiongoods.core.personality.player.account.impl.HibernateAccountRecoveryManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="membershipManager"
+          class="billiongoods.core.personality.player.membership.impl.HibernateMembershipManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="accountManager" ref="accountManager"/>
+    </bean>
+
+    <bean id="profileManager" class="billiongoods.core.personality.player.profile.impl.HibernatePlayerProfileManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="personalityManager" ref="personalityManager"/>
+    </bean>
+
+    <bean id="profileCountriesManager" class="billiongoods.core.personality.player.profile.impl.CSVCountriesManager">
+        <property name="csvCountriesFile" value="classpath:/i18n/countries.csv"/>
+    </bean>
+
+    <bean id="userDetailsChecker" class="org.springframework.security.authentication.AccountStatusUserDetailsChecker"/>
+
+    <bean id="personalityManager" class="billiongoods.core.personality.DefaultPersonalityManager">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="accountManager" ref="accountManager"/>
+        <property name="membershipManager" ref="membershipManager"/>
+    </bean>
+
+    <bean id="personalityDetailsManager" class="billiongoods.core.security.userdetails.PlayerDetailsService">
+        <property name="accountManager" ref="accountManager"/>
+        <property name="accountLockManager" ref="accountLockManager"/>
+        <property name="accountRecoveryManager" ref="accountRecoveryManager"/>
+
+        <property name="moderators" value="${server.moderators}"/>
+        <property name="administrators" value="${server.admins}"/>
+        <property name="personalityManager" ref="personalityManager"/>
+    </bean>
+
+    <bean id="visitorAuthenticationProvider"
+          class="billiongoods.core.security.authentication.VisitorAuthenticationProvider">
+        <property name="visitorKey" value="visitor"/>
+        <property name="userDetailsChecker" ref="userDetailsChecker"/>
+        <property name="personalityDetailsService" ref="personalityDetailsManager"/>
+    </bean>
+
+    <bean id="playerAuthenticationProvider"
+          class="billiongoods.core.security.authentication.MemberAuthenticationProvider">
+        <property name="userDetailsChecker" ref="userDetailsChecker"/>
+        <property name="personalityDetailsService" ref="personalityDetailsManager"/>
+    </bean>
+</beans>
