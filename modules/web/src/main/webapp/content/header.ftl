@@ -10,12 +10,8 @@
                         class="domain"><sup>.ru</sup></span>
                 </a>
             </div>
-            <br>
-
-            <div>
-                <a href="">Бесплатная доставка почтой!</a>
-            </div>
         </td>
+
         <td align="right" valign="middle">
             <div class="table-cell header-welcome">
                 Добро Пожаловать!
@@ -39,3 +35,4 @@
         </td>
     </tr>
 </table>
+

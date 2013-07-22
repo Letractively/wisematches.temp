@@ -13,12 +13,7 @@
     <meta http-equiv="Content-Language" content="${locale}"/>
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
-    <link rel="stylesheet" type="text/css"
-          href="http://code.jquery.com/ui/1.10.3/themes/humanity/jquery-ui.min.css"/>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 
-
-    <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/jquery.dataTables_themeroller-1.9.4.css"/>">
     <script type="text/javascript" src="<@bg.ui.static "js/jquery.dataTables-1.9.4.min.js"/>"></script>
 
     <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/jquery.cluetip-1.2.7.css"/>"/>
@@ -61,9 +56,9 @@
         </tr>
 
         <tr>
-            <td class="nav-layout">
-                <div class="nav-content">
-                <#include "warehouse/navigation.ftl"/>
+            <td class="toolbar-layout">
+                <div class="toolbar-content">
+                <#include "toolbar.ftl"/>
                 </div>
             </td>
         </tr>
