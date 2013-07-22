@@ -15,15 +15,6 @@
         <constructor-arg name="alertsMailBox" value="${server.alerts.box}"/>
     </bean>
 
-    <bean id="reliablePropertiesManager"
-          class="billiongoods.server.services.props.impl.FilePropertiesManager">
-        <property name="propertiesFile" value="${server.properties.file}"/>
-    </bean>
-
-    <bean id="advertisementManager" class="billiongoods.server.services.reclame.impl.XMLAdvertisementManager">
-        <property name="adsResource" value="${advertisement.providers.file}"/>
-    </bean>
-
     <bean id="playerStateManager" class="billiongoods.server.services.state.impl.HibernatePlayerStateManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -126,7 +117,6 @@
         </property>
     </bean>
 
-
     <bean class="billiongoods.server.services.notify.impl.AlertsOriginCenter">
         <property name="mailSender" ref="notificationMailSender"/>
         <property name="serverDescriptor" ref="serverDescriptor"/>
@@ -137,7 +127,6 @@
     <bean class="billiongoods.server.services.notify.impl.NotificationOriginCenter">
         <property name="taskExecutor" ref="notificationTaskExecutor"/>
         <property name="notificationService" ref="notificationService"/>
-        <property name="propertiesManager" ref="reliablePropertiesManager"/>
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

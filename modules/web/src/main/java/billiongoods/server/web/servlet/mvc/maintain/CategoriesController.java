@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Controller
-@RequestMapping("/maintain/catalog")
+@RequestMapping("/maintain/category")
 public class CategoriesController {
-    public CategoriesController() {
-    }
+	public CategoriesController() {
+	}
 
-    @RequestMapping("/view")
-    public String mainPage() {
-        return "/content/maintain/warehouse/view";
-    }
+	@RequestMapping("/view")
+	public String mainPage() {
+		return "/content/maintain/warehouse/view";
+	}
 
 }

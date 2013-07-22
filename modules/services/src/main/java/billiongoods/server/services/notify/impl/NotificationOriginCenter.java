@@ -8,7 +8,6 @@ import billiongoods.core.task.BreakingDayListener;
 import billiongoods.server.services.notify.NotificationException;
 import billiongoods.server.services.notify.NotificationSender;
 import billiongoods.server.services.notify.NotificationService;
-import billiongoods.server.services.props.ReliablePropertiesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -20,56 +19,51 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class NotificationOriginCenter implements BreakingDayListener, InitializingBean {
-    private TaskExecutor taskExecutor;
-    private PersonalityManager personalityManager;
-    private ReliablePropertiesManager propertiesManager;
+	private TaskExecutor taskExecutor;
+	private PersonalityManager personalityManager;
 
-    private NotificationService notificationDistributor;
+	private NotificationService notificationDistributor;
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.OriginCenter");
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.OriginCenter");
 
-    public NotificationOriginCenter() {
-    }
+	public NotificationOriginCenter() {
+	}
 
-    protected void processNotification(long person, String code, Object context) {
-        final Member member = personalityManager.getMember(person);
-        if (member != null) {
-            fireNotification(code, member, context);
-        }
-    }
+	protected void processNotification(long person, String code, Object context) {
+		final Member member = personalityManager.getMember(person);
+		if (member != null) {
+			fireNotification(code, member, context);
+		}
+	}
 
-    protected void processNotification(Personality person, String code, Object context) {
-        if (person instanceof Member) {
-            fireNotification(code, (Member) person, context);
-        }
-    }
+	protected void processNotification(Personality person, String code, Object context) {
+		if (person instanceof Member) {
+			fireNotification(code, (Member) person, context);
+		}
+	}
 
-    private void fireNotification(String code, Member player, Object context) {
-        try {
-            notificationDistributor.raiseNotification(code, player, NotificationSender.GAME, context);
-            log.info("Notification was raised to {} [{}]", player, code);
-        } catch (NotificationException ex) {
-            log.error("Notification can't be sent to player: code=" + code + ", player=" + player.getId(), ex);
-        }
-    }
+	private void fireNotification(String code, Member player, Object context) {
+		try {
+			notificationDistributor.raiseNotification(code, player, NotificationSender.GAME, context);
+			log.info("Notification was raised to {} [{}]", player, code);
+		} catch (NotificationException ex) {
+			log.error("Notification can't be sent to player: code=" + code + ", player=" + player.getId(), ex);
+		}
+	}
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-    }
+	@Override
+	public void afterPropertiesSet() throws Exception {
+	}
 
-    @Override
-    public void breakingDayTime(Date midnight) {
-    }
+	@Override
+	public void breakingDayTime(Date midnight) {
+	}
 
-    public void setTaskExecutor(TaskExecutor taskExecutor) {
-        this.taskExecutor = taskExecutor;
-    }
+	public void setTaskExecutor(TaskExecutor taskExecutor) {
+		this.taskExecutor = taskExecutor;
+	}
 
-    public void setNotificationService(NotificationService notificationDistributor) {
-        this.notificationDistributor = notificationDistributor;
-    }
-
-    public void setPropertiesManager(ReliablePropertiesManager propertiesManager) {
-        this.propertiesManager = propertiesManager;
-    }
+	public void setNotificationService(NotificationService notificationDistributor) {
+		this.notificationDistributor = notificationDistributor;
+	}
 }

@@ -55,6 +55,10 @@
     <#include "header.ftl"/>
     </div>
 
+    <div id="siteHeader">
+    <#include "header.ftl"/>
+    </div>
+
     <div id="notification-block"></div>
 
     <div id="siteContent">
