@@ -40,18 +40,18 @@ input {
 }
 
 a:link, a:visited {
-    color: black !important;
-    text-decoration: underline !important;
+    color: black;
+    text-decoration: underline;
 }
 
 a:hover, a:active {
-    color: #900 !important;
-    text-decoration: underline !important;
+    color: #900;
+    text-decoration: underline;
 }
 
 a.highlight:link, a.highlight:visited {
-    color: #900 !important;
-    font-weight: bold !important;
+    color: #900;
+    font-weight: bold;
 }
 
 #billiongoods {
@@ -84,6 +84,8 @@ a.highlight:link, a.highlight:visited {
 }
 
 .footer-content {
+    margin-top: 10px;
+    padding-top: 10px;
     border-top: 1px solid #d3d3d3;
 }
 
@@ -130,6 +132,10 @@ a.highlight:link, a.highlight:visited {
 
 .footer-info-list a:link, .footer-info-list a:visited {
     color: #474747;
+}
+
+.nav-content .ui-button-text {
+    font-weight: bold;
 }
 
 /*

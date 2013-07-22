@@ -2,6 +2,7 @@
  * Copyright (c) 2013, BillionGoods.
  */
 bg = {};
+bg.util = {};
 
 STATE = {
     DEFAULT: {
@@ -739,7 +740,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".wm-ui-button").button();
+    $(".wm-ui-button").button().removeClass("ui-corner-all");
     $(".wm-ui-buttonset").buttonset();
 
     var globalSplitButtonMenu = null;
