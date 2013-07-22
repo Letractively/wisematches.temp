@@ -470,13 +470,13 @@ bg.ui.editor = new function () {
         var previousValue;
 
         var editorDialog = $("<div class='ui-widget-editor ui-widget-content'><div class='ui-layout-table'><div>" +
-            "<div class='ui-editor-label'></div>" +
-            "<div><div class='ui-editor-content'></div><div class='ui-editor-controls'>" +
-            "<div class='ui-editor-error'></div>" +
-            "<button class='ui-editor-save'>Save</button> " +
-            "<button class='ui-editor-cancel'>Cancel</button>" +
-            "</div></div>" +
-            "</div></div></div>");
+                "<div class='ui-editor-label'></div>" +
+                "<div><div class='ui-editor-content'></div><div class='ui-editor-controls'>" +
+                "<div class='ui-editor-error'></div>" +
+                "<button class='ui-editor-save'>Save</button> " +
+                "<button class='ui-editor-cancel'>Cancel</button>" +
+                "</div></div>" +
+                "</div></div></div>");
 
         var editorLabel = $(editorDialog).find('.ui-editor-label');
         var editorContent = $(editorDialog).find('.ui-editor-content');
@@ -665,23 +665,17 @@ $(document).ready(function () {
 
     $('[title]').cluetip({ showTitle: false, activation: 'hover', local: true});
 
-    var notifications = $(".notification");
-    if (notifications.size() > 0) {
-        $("#header-separator").slideUp('slow');
-        notifications.appendTo($("#notification-block")).slideDown('slow');
-    }
-
     $(".quickInfo").addClass('ui-state-default').hover(
-        function () {
-            if (!$(this).hasClass('ui-state-active')) {
-                $(this).attr('class', 'quickInfo ui-state-hover');
-            }
-        },
-        function () {
-            if (!$(this).hasClass('ui-state-active')) {
-                $(this).attr('class', 'quickInfo ui-state-default');
-            }
-        });
+            function () {
+                if (!$(this).hasClass('ui-state-active')) {
+                    $(this).attr('class', 'quickInfo ui-state-hover');
+                }
+            },
+            function () {
+                if (!$(this).hasClass('ui-state-active')) {
+                    $(this).attr('class', 'quickInfo ui-state-default');
+                }
+            });
 
     var activeQuickInfo = undefined;
     $(".quickInfo.ajax a").cluetip({
@@ -760,25 +754,25 @@ $(document).ready(function () {
                 primary: "ui-icon-triangle-1-s"
             }
         }).click(function () {
-                if (globalSplitButtonMenu != null) {
-                    globalSplitButtonMenu.hide();
-                    globalSplitButtonMenu = null;
-                }
-
-                globalSplitButtonMenu = $(ch[1]).menu().show().position({
-                    my: "left top",
-                    at: "left bottom",
-                    of: this
-                });
-
-                $(document).one("click", function () {
                     if (globalSplitButtonMenu != null) {
                         globalSplitButtonMenu.hide();
                         globalSplitButtonMenu = null;
                     }
+
+                    globalSplitButtonMenu = $(ch[1]).menu().show().position({
+                        my: "left top",
+                        at: "left bottom",
+                        of: this
+                    });
+
+                    $(document).one("click", function () {
+                        if (globalSplitButtonMenu != null) {
+                            globalSplitButtonMenu.hide();
+                            globalSplitButtonMenu = null;
+                        }
+                    });
+                    return false;
                 });
-                return false;
-            });
         buttons.buttonset();
     });
 });
@@ -787,30 +781,30 @@ $(document).ready(function () {
     var timeoutID;
 
     $('.dropdown')
-        .mouseenter(function () {
-            var submenu = $('.sublinks').stop(false, true).hide();
-            window.clearTimeout(timeoutID);
-
-            submenu.css({
-                width: $(this).width() + 20 + 'px',
-                top: $(this).offset().top + $(this).height() + 7 + 'px',
-                left: $(this).offset().left + 'px'
-            });
-
-            submenu.stop().slideDown(300);
-
-            submenu.mouseleave(function () {
-                $(this).slideUp(300);
-            });
-
-            submenu.mouseenter(function () {
+            .mouseenter(function () {
+                var submenu = $('.sublinks').stop(false, true).hide();
                 window.clearTimeout(timeoutID);
-            });
 
-        })
-        .mouseleave(function () {
-            timeoutID = window.setTimeout(function () {
-                $('.sublinks').stop(false, true).slideUp(300);
-            }, 250);
-        });
+                submenu.css({
+                    width: $(this).width() + 20 + 'px',
+                    top: $(this).offset().top + $(this).height() + 7 + 'px',
+                    left: $(this).offset().left + 'px'
+                });
+
+                submenu.stop().slideDown(300);
+
+                submenu.mouseleave(function () {
+                    $(this).slideUp(300);
+                });
+
+                submenu.mouseenter(function () {
+                    window.clearTimeout(timeoutID);
+                });
+
+            })
+            .mouseleave(function () {
+                timeoutID = window.setTimeout(function () {
+                    $('.sublinks').stop(false, true).slideUp(300);
+                }, 250);
+            });
 });

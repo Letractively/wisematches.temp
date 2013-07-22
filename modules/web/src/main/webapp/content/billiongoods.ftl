@@ -14,8 +14,8 @@
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
     <link rel="stylesheet" type="text/css"
-          href="http://code.jquery.com/ui/1.10.2/themes/redmond/jquery-ui.min.css"/>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+          href="http://code.jquery.com/ui/1.10.3/themes/humanity/jquery-ui.min.css"/>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 
 
     <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/jquery.dataTables_themeroller-1.9.4.css"/>">
@@ -51,22 +51,38 @@
 <body>
 
 <div id="billiongoods">
-    <div id="siteHeader">
-    <#include "header.ftl"/>
-    </div>
+    <table width="100%">
+        <tr>
+            <td class="header-layout">
+                <div class="header-content">
+                <#include "header.ftl"/>
+                </div>
+            </td>
+        </tr>
 
-    <div id="siteHeader">
-    <#include "header.ftl"/>
-    </div>
+        <tr>
+            <td class="nav-layout">
+                <div class="nav-content">
+                <#include "warehouse/navigation.ftl"/>
+                </div>
+            </td>
+        </tr>
 
-    <div id="notification-block"></div>
+        <tr>
+            <td class="content-layout">
+                <div class="content-content">
+                <#include "${templateName}"/>
+                </div>
+            </td>
+        </tr>
 
-    <div id="siteContent">
-    <#include "${templateName}"/>
-    </div>
-
-    <div id="siteFooter">
-    <#include "footer.ftl"/>
-    </div>
+        <tr>
+            <td class="footer-layout">
+                <div class="footer-content">
+                <#include "footer.ftl"/>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 </html>

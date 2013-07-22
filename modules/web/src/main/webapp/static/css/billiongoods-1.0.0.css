@@ -10,13 +10,14 @@ body {
 }
 
 body, div, label, span, td {
-    font: 13px sans-serif, arial;
+    font: 13px "Trebuchet MS", "Helvetica", "Arial", "Verdana", "sans-serif";
     line-height: 1.5;
 }
 
 table {
-    padding: 0;
     border: 0;
+    padding: 0;
+    width: 100%;
     border-spacing: 0;
 }
 
@@ -39,18 +40,22 @@ input {
 }
 
 a:link, a:visited {
-    color: black;
-    text-decoration: underline;
+    color: black !important;
+    text-decoration: underline !important;
 }
 
 a:hover, a:active {
-    color: #900;
-    text-decoration: underline;
+    color: #900 !important;
+    text-decoration: underline !important;
 }
 
-.link-active:link, .link-active:visited {
-    color: #900;
-    font-weight: bold;
+a.highlight:link, a.highlight:visited {
+    color: #900 !important;
+    font-weight: bold !important;
+}
+
+#billiongoods {
+    width: 100%;
 }
 
 .divider {
@@ -59,16 +64,34 @@ a:hover, a:active {
     text-shadow: 1px 1px 2px white;
 }
 
-.header-layout {
+.header-layout, .content-layout, .footer-layout, .nav-layout {
     width: 100%;
-    margin-bottom: 10px;
+}
+
+.header-content, .content-content, .footer-content, .nav-content {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.header-layout {
     background: #f6f6f6;
+    margin-bottom: 10px;
     border-bottom: 1px solid #ebebeb;
 }
 
+.content-layout {
+    margin-bottom: 10px;
+}
+
+.footer-content {
+    border-top: 1px solid #d3d3d3;
+}
+
+.footer-layout td {
+    vertical-align: top;
+}
+
 .header-content {
-    width: 1000px;
-    margin: 0 auto;
     text-align: right;
     vertical-align: middle;
 }
@@ -97,4 +120,48 @@ a:hover, a:active {
 .header-logo span.domain {
     color: #4c738d;
     font-size: 16px;
+    text-shadow: none;
 }
+
+.footer-info-title {
+    color: #474747;
+    font-weight: bold;
+}
+
+.footer-info-list a:link, .footer-info-list a:visited {
+    color: #474747;
+}
+
+/*
+.nav-layout {
+    padding: 0;
+    background: #ede4d4;
+    border-top: 1px solid #cdc3b7;
+    border-bottom: 1px solid #cdc3b7;
+}
+
+.navigation div {
+    display: inline;
+}
+*/
+
+/*.navigation {*/
+/*width: 100%;*/
+/*margin-top: 10px;*/
+/*}*/
+/*
+
+.catalog a span {
+    text-shadow: 1px 1px 2px black;
+}
+
+.position {
+    overflow: hidden;
+    background: #f6f6f6;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.scart {
+    float: right;
+}*/

@@ -7,6 +7,7 @@
 
 [#-- @ftlvariable name="messageSource" type="billiongoods.server.MessageFormatter" --]
 
+[#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Category" --]
 [#-- @ftlvariable name="personalityManager" type="billiongoods.core.PersonalityManager" --]
 [#-- @ftlvariable name="playerStateManager" type="billiongoods.server.services.state.PlayerStateManager" --]
 
