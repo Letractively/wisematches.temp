@@ -7,22 +7,29 @@
     <#assign items=catalog.rootCategories/>
 </#if>
 
-<div class="catalog">
-    <div class="ct-tit">
+
+<div class="navigation catalog">
+    <ul class="ct-toc">
     <#if !category??>
         Общий каталог
     <#else>
         <#list category.genealogy.parents as p>
+            <#assign padding=15 + p_index * 10/>
             <div class="ct-tit-item"
-                 style="padding-left: ${p_index * 4}px; background-position: ${p_index * 4}px 0">${p.name}</div>
+                 style="margin-left: ${padding}px; background-position: ${padding}px 0">
+                <#if p_index != 0><span class="image"></span></#if>
+                <#if p == category>
+                    <span class="active">${p.name}</span>
+                <#else>
+                    <@bg.link.categoryLink p/>
+                </#if>
+            </div>
         </#list>
     </#if>
-    </div>
 
-    <ul class="ct-toc">
     <#list items as category>
         <li class="ct-toc-item">
-            <span class="ct-toc-tit"><@bg.link.categoryLink category/></span>
+            <span class="ct-toc-tit" style="padding-left: ${padding + 10}px"><@bg.link.categoryLink category/></span>
 
             <div class="ct-toc-cnt" style="display: none">
                 <#list category.children as ch>

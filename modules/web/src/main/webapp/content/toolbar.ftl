@@ -4,9 +4,8 @@
     <ul>
         <li class="bg-ui-button tb-item-cart tb-separator-left tb-separator-right">
             <a href="/warehouse/cart">
-                <img src="<@bg.ui.static "/images/warehouse/cart.png"/>" alt="">
+                <span class="image"></span>
                 <span>Корзина</span>
-                <span id="cartItemsCount">0</span>
             </a>
     </ul>
 </div>
@@ -14,7 +13,7 @@
 <div>
     <ul>
         <li class="bg-ui-button tb-item-catalog tb-separator-left tb-separator-right">
-            <img src="<@bg.ui.static "/images/warehouse/catalog.png"/>" alt="">
+            <span class="image"></span>
             <a href="">Весь каталог</a>
 
         <li class="bg-ui-button tb-item-arrivals tb-separator-right"><a href="/warehouse/arrivals">Новые поступления</a>

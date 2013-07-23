@@ -8,22 +8,32 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class Genealogy implements Iterable<Category> {
-	private final LinkedList<Category> categories = new LinkedList<>();
+    private final Category category;
+    private final LinkedList<Category> parents = new LinkedList<>();
 
-	public Genealogy(Category category) {
-		Category cat = category;
-		while (cat != null) {
-			categories.addFirst(cat);
-			cat = cat.getParent();
-		}
-	}
+    public Genealogy(Category category) {
+        this.category = category;
+        Category cat = category.getParent();
+        while (cat != null) {
+            parents.addFirst(cat);
+            cat = cat.getParent();
+        }
+    }
 
-	public List<Category> getParents() {
-		return categories;
-	}
+    public int getGeneration() {
+        return parents.size();
+    }
 
-	@Override
-	public Iterator<Category> iterator() {
-		return categories.iterator();
-	}
+    public Category getCategory() {
+        return category;
+    }
+
+    public List<Category> getParents() {
+        return parents;
+    }
+
+    @Override
+    public Iterator<Category> iterator() {
+        return parents.iterator();
+    }
 }

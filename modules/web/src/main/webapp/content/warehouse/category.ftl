@@ -3,7 +3,7 @@
 <table cellspacing="0" cellpadding="0">
     <tr>
         <td width="210px" valign="top">
-        <#include "widget/catalog.ftl"/>
+        <#include "widget/navigation.ftl"/>
         </td>
         <td valign="top">
             <div style="margin-left: 5px">
