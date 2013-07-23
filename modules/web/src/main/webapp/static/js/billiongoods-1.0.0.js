@@ -4,50 +4,6 @@
 bg = {};
 bg.util = {};
 
-STATE = {
-    DEFAULT: {
-        class: 'ui-state-highlight'
-    },
-    INFO: {
-        class: 'ui-state-active'
-    },
-    ERROR: {
-        class: 'ui-state-error'
-    }
-};
-
-bg.i18n = new function () {
-    var values = {};
-
-    var lookup = function (key) {
-        return values[key] || null;
-    };
-
-    var getValue = function (key, defaultValue, options) {
-        var value = lookup(key);
-        if (value == null) return defaultValue;
-
-        if (options != null) {
-            for (key in options) {
-                value = value.replace("{" + key + "}", options[key]);
-            }
-        }
-        return value;
-    };
-
-    this.extend = function (hash) {
-        $.extend(values, hash);
-    };
-
-    this.value = function (key, defaultValue, options) {
-        return getValue(key, defaultValue, options);
-    };
-
-    this.locale = function () {
-        return this.value('locale');
-    }
-};
-
 bg.util.url = new function () {
     this.reload = function () {
         window.location.reload();
@@ -288,14 +244,14 @@ bg.ui = new function () {
             width: 400,
             buttons: [
                 {
-                    text: bg.i18n.value('button.ok', 'Ok'),
+                    text: 'Да',
                     click: function () {
                         $(this).dialog("close");
                         approvedAction(true);
                     }
                 },
                 {
-                    text: bg.i18n.value('button.cancel', 'Cancel'),
+                    text: 'Отмена',
                     click: function () {
                         $(this).dialog("close");
                         approvedAction(false);
@@ -685,7 +641,7 @@ $(document).ready(function () {
         ajaxCache: true,
         activation: 'click',
         closePosition: 'bottom',
-        closeText: bg.i18n.value('button.close'),
+        closeText: 'Закрыть',
         arrows: false,
         sticky: true,
         ajaxProcess: function (response) {
@@ -740,41 +696,8 @@ $(document).ready(function () {
         }
     });
 
-    $(".wm-ui-button").button().removeClass("ui-corner-all");
-    $(".wm-ui-buttonset").buttonset();
-
-    var globalSplitButtonMenu = null;
-    $(".wm-ui-splitbutton").each(function (i, sb) {
-        sb = $(sb);
-        var ch = sb.children();
-        var buttons = $("<div></div>").appendTo(sb.empty().append($(ch[1]))).append($(ch[0]));
-
-        $("<button>&nbsp;</button>").appendTo(buttons).button({
-            text: false,
-            icons: {
-                primary: "ui-icon-triangle-1-s"
-            }
-        }).click(function () {
-                    if (globalSplitButtonMenu != null) {
-                        globalSplitButtonMenu.hide();
-                        globalSplitButtonMenu = null;
-                    }
-
-                    globalSplitButtonMenu = $(ch[1]).menu().show().position({
-                        my: "left top",
-                        at: "left bottom",
-                        of: this
-                    });
-
-                    $(document).one("click", function () {
-                        if (globalSplitButtonMenu != null) {
-                            globalSplitButtonMenu.hide();
-                            globalSplitButtonMenu = null;
-                        }
-                    });
-                    return false;
-                });
-        buttons.buttonset();
+    $(".bg-ui-button").click(function (el) {
+        bg.util.url.redirect($(this).find("a").attr("href"));
     });
 });
 

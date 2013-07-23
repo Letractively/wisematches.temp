@@ -38,10 +38,6 @@
             s.parentNode.insertBefore(ga, s);
         })();
     </script>
-
-    <script type="text/javascript">
-        bg.i18n.extend({<#list Language.values() as l>'language.${l.code}': '<@message code="language."+l.code/>',</#list> locale: '${locale}', 'button.close': '<@message code="button.close"/>', 'button.ok': '<@message code="button.ok"/>', 'button.cancel': '<@message code="button.cancel"/>'});
-    </script>
 </head>
 <body>
 

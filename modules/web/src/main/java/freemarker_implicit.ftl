@@ -2,12 +2,17 @@
 [#-- @implicitly included --]
 [#-- @ftlvariable name="locale" type="java.util.Locale" --]
 
+[#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Catalog" --]
+[#-- @ftlvariable name="whereabouts" type="billiongoods.server.warehouse.Catalog" --]
+
+
 [#-- @ftlvariable name="principal" type="billiongoods.core.Player" --]
 [#-- @ftlvariable name="language" type="billiongoods.core.Language" --]
 
 [#-- @ftlvariable name="messageSource" type="billiongoods.server.MessageFormatter" --]
 
-[#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Category" --]
+
+
 [#-- @ftlvariable name="personalityManager" type="billiongoods.core.PersonalityManager" --]
 [#-- @ftlvariable name="playerStateManager" type="billiongoods.server.services.state.PlayerStateManager" --]
 

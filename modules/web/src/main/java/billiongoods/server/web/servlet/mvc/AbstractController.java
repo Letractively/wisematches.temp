@@ -4,8 +4,6 @@ import billiongoods.core.PersonalityManager;
 import billiongoods.core.Player;
 import billiongoods.core.security.PersonalityContext;
 import billiongoods.server.MessageFormatter;
-import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.CategoryManager;
 import billiongoods.server.web.servlet.sdo.ServiceResponseFactory;
 import billiongoods.server.web.servlet.view.StaticContentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractController {
 	protected MessageFormatter messageSource;
-	protected CategoryManager categoryManager;
 	protected PersonalityManager personalityManager;
 	protected ServiceResponseFactory responseFactory;
 	protected StaticContentGenerator staticContentGenerator;
@@ -46,11 +43,6 @@ public abstract class AbstractController {
 		return PersonalityContext.getPrincipal();
 	}
 
-	@ModelAttribute("catalog")
-	public Category getCatalog() {
-		return categoryManager.getCatalog();
-	}
-
 	@SuppressWarnings("unchecked")
 	protected <P extends Player> P getPrincipal(Class<P> type) {
 		final Player principal = getPrincipal();
@@ -71,11 +63,6 @@ public abstract class AbstractController {
 	public void setMessageSource(MessageFormatter messageSource) {
 		this.messageSource = messageSource;
 		this.responseFactory = new ServiceResponseFactory(messageSource);
-	}
-
-	@Autowired
-	public void setCategoryManager(CategoryManager categoryManager) {
-		this.categoryManager = categoryManager;
 	}
 
 	@Autowired

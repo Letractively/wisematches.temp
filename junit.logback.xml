@@ -14,7 +14,7 @@
         </encoder>
     </appender>
 
-    <logger name="billiongoods" level="DEBUG" additivity="false">
+    <logger name="billiongoods" level="INFO" additivity="false">
         <appender-ref ref="ConsoleAppender"/>
     </logger>
 

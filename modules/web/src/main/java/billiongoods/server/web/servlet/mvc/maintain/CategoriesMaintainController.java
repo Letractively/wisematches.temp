@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/maintain/category")
-public class CategoriesController {
-	public CategoriesController() {
+public class CategoriesMaintainController {
+	public CategoriesMaintainController() {
 	}
 
 	@RequestMapping("/view")
