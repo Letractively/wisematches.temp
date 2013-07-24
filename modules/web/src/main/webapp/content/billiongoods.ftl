@@ -41,7 +41,7 @@
 </head>
 <body>
 
-<div id="billiongoods">
+<div id="billiongoods" class="${department.style}">
     <table width="100%">
         <tr>
             <td class="header-layout">
@@ -54,16 +54,30 @@
         <tr>
             <td class="toolbar-layout">
                 <div class="toolbar-content">
-                <#include "warehouse/toolbar.ftl"/>
+                <#include "toolbar.ftl"/>
                 </div>
             </td>
         </tr>
 
         <tr>
             <td class="content-layout">
-                <div class="content-content">
-                <#include "${templateName}"/>
-                </div>
+                <table cellspacing="0" cellpadding="0" class="content-content">
+                    <tr>
+                        <td width="210px" valign="top">
+                        <#include "${department.style}/navigation.ftl"/>
+                        </td>
+                        <td valign="top">
+                            <div style="margin-left: 5px">
+                                <div>
+                                <#include "whereabouts.ftl"/>
+                                </div>
+                                <div>
+                                <#include "${templateName}"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
 

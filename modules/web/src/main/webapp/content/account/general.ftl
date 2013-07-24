@@ -8,7 +8,7 @@
 <table width="100%">
     <tr>
         <td width="100%" style="vertical-align: top; text-align: left;">
-        <#include "/content/assistance/static.ftl">
+        <#include "/content/assistance/widget/static.ftl">
         </td>
 
         <td width="270" style="vertical-align: top;">
@@ -112,9 +112,9 @@
                         <div class="separator"><@message code="separator.or"/></div>
                         <div id="info-links">
                             <@message code="info.readmore.label"/>
-                            <a href="/info/about"><@message code="info.principles.label"/></a>
+                            <a href="/assistance/about"><@message code="info.principles.label"/></a>
                             <@message code="separator.and"/><br>
-                            <a href="/info/features"><@message code="info.features.label"/></a>
+                            <a href="/assistance/features"><@message code="info.features.label"/></a>
                         </div>
                     </div>
                 </@wm.ui.panel.round>

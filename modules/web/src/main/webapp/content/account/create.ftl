@@ -6,7 +6,7 @@
         $('#terms_tabs a').removeClass('active');
         $('#terms-' + name + '-page-link').addClass('active');
 
-        $.get('/info/' + name + '?plain=true',
+        $.get('/assistance/' + name + '?plain=true',
                 function (data) {
                     var el = $('#terms_panel');
                     el.height($('#form').height() - $('#terms_tabs').height() - 5);

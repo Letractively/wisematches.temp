@@ -3,7 +3,10 @@
 [#-- @ftlvariable name="locale" type="java.util.Locale" --]
 
 [#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Catalog" --]
-[#-- @ftlvariable name="whereabouts" type="billiongoods.server.warehouse.Catalog" --]
+[#-- @ftlvariable name="department" type="billiongoods.server.web.servlet.mvc.Department" --]
+
+
+
 
 
 [#-- @ftlvariable name="principal" type="billiongoods.core.Player" --]

@@ -24,13 +24,13 @@
                 <div><a href="/warehouse/tracking">Отслеживание заказов</a></div>
 
                 <div class="divider">|</div>
-                <div><a href="/info/payment">Оплата</a></div>
+                <div><a href="/assistance/payment">Оплата</a></div>
 
                 <div class="divider">|</div>
-                <div><a href="/info/shipment">Доставка</a></div>
+                <div><a href="/assistance/shipment">Доставка</a></div>
 
                 <div class="divider">|</div>
-                <div><a href="/info">Помощь</a></div>
+                <div><a href="/assistance">Помощь</a></div>
             </div>
         </td>
     </tr>

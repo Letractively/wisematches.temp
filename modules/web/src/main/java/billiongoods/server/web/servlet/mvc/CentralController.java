@@ -25,7 +25,7 @@ public class CentralController extends AbstractController {
 		return "forward:/warehouse/catalog";
 	}
 
-	@RequestMapping(value = "/info/error")
+	@RequestMapping(value = "/assistance/error")
 	public ModelAndView processException(HttpServletRequest request, HttpServletResponse response) {
 		return processException(String.valueOf(response.getStatus()), null, request, request.getRequestURI());
 	}

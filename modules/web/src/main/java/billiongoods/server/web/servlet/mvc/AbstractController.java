@@ -38,9 +38,32 @@ public abstract class AbstractController {
 		return "title." + uri.replaceAll("/", ".").substring(1);
 	}
 
+	public void setTitle(Model model, String title) {
+		model.addAttribute("title", title);
+	}
+
+	protected void setTitleExtension(Model model, String value) {
+		model.addAttribute("titleExtension", value);
+	}
+
 	@ModelAttribute("principal")
 	public Player getPrincipal() {
 		return PersonalityContext.getPrincipal();
+	}
+
+
+	@ModelAttribute("department")
+	public Department getDepartment(HttpServletRequest request) {
+		final String servletPath = request.getServletPath();
+		if (servletPath.isEmpty() || servletPath.equals("/index")) {
+			return Department.WAREHOUSE;
+		}
+
+		try {
+			return Department.valueOf(servletPath.toUpperCase().substring(1));
+		} catch (IllegalArgumentException ex) {
+			return null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -53,10 +76,6 @@ public abstract class AbstractController {
 			throw new AccessDeniedException("unregistered");
 		}
 		return (P) principal;
-	}
-
-	protected void setTitleExtension(Model model, String value) {
-		model.addAttribute("titleExtension", value);
 	}
 
 	@Autowired

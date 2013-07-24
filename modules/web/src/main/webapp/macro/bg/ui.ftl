@@ -60,7 +60,8 @@
     <div class="ui-widget-header ui-corner-all shadow">
         <#if help?has_content>
             <div class="quickInfo ajax">
-                <a class="ui-icon ui-icon-info" href="#" onclick="return false" rel="/info/tip.ajax?s=${help}"></a>
+                <a class="ui-icon ui-icon-info" href="#" onclick="return false"
+                   rel="/assistance/tip.ajax?s=${help}"></a>
             </div>
         </#if>
         <@message code=title/>

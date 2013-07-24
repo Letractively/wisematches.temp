@@ -4,10 +4,10 @@
             <div class="footer-info">
                 <div class="footer-info-title">Помощь</div>
                 <ul class="footer-info-list">
-                    <li><a href="">Доставка товара</a></li>
-                    <li><a href="">Способы оплаты</a></li>
-                    <li><a href="">Гарантия и возврат</a></li>
-                    <li><a href="">Работа с PayPal</a></li>
+                    <li><a href="/assistance/shipment">Доставка товара</a></li>
+                    <li><a href="/assistance/payment">Способы оплаты</a></li>
+                    <li><a href="/assistance/warranty">Гарантия и возврат</a></li>
+                    <li><a href="/assistance/paypal">Работа с PayPal</a></li>
                 </ul>
             </div>
         </td>
@@ -28,9 +28,9 @@
             <div class="footer-info">
                 <div class="footer-info-title">BillionGoods.ru</div>
                 <ul class="footer-info-list">
-                    <li><a href="">О нас</a></li>
-                    <li><a href="">Центр Поддержки</a></li>
-                    <li><a href="">Наши преимущества</a></li>
+                    <li><a href="/assistance/about">О нас</a></li>
+                    <li><a href="/assistance/">Центр Поддержки</a></li>
+                    <li><a href="/assistance/advantage">Наши преимущества</a></li>
                 </ul>
             </div>
         </td>

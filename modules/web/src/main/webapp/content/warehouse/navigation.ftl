@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 
 <#if category??>
-    <#include "navigation/category.ftl"/>
+    <#include "widget/category.ftl"/>
 <#else>
-    <#include "navigation/catalog.ftl"/>
+    <#include "widget/catalog.ftl"/>
 </#if>

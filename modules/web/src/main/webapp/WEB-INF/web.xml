@@ -68,7 +68,7 @@
 
     <filter-mapping>
         <filter-name>openSessionInViewFilter</filter-name>
-        <url-pattern>/info/*</url-pattern>
+        <url-pattern>/assistance/*</url-pattern>
         <dispatcher>ERROR</dispatcher>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
@@ -121,7 +121,7 @@
 
     <servlet-mapping>
         <servlet-name>web-app</servlet-name>
-        <url-pattern>/info/*</url-pattern>
+        <url-pattern>/assistance/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -154,15 +154,15 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/info/error</location>
+        <location>/assistance/error</location>
     </error-page>
 
     <error-page>
         <error-code>500</error-code>
-        <location>/info/error</location>
+        <location>/assistance/error</location>
     </error-page>
 
     <error-page>
-        <location>/info/error</location>
+        <location>/assistance/error</location>
     </error-page>
 </web-app>
