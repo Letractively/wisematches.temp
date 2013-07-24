@@ -11,79 +11,80 @@ import java.util.Locale;
  */
 @Deprecated
 public enum Language {
-    EN("UTF-8", new Locale("en"), Localization.ENGLISH),
-    RU("Cp1251", new Locale("ru"), Localization.RUSSIAN);
-    /**
-     * Default language which should be used if another is not specified.
-     */
-    public static final Language DEFAULT = RU;
-    private final String code;
-    private final Locale locale;
-    private final String nativeCharset;
-    private final Localization localization;
+	EN("UTF-8", new Locale("en"), Localization.ENGLISH),
+	RU("Cp1251", new Locale("ru"), Localization.RUSSIAN);
+	/**
+	 * Default language which should be used if another is not specified.
+	 */
+	public static final Language DEFAULT = RU;
+	private final String code;
+	private final Locale locale;
+	private final String nativeCharset;
+	private final Localization localization;
 
-    private Language(String nativeCharset, Locale locale, Localization localization) {
-        this.code = locale.getLanguage();
-        this.locale = locale;
-        this.nativeCharset = nativeCharset;
-        this.localization = localization;
-    }
+	private Language(String nativeCharset, Locale locale, Localization localization) {
+		this.code = locale.getLanguage();
+		this.locale = locale;
+		this.nativeCharset = nativeCharset;
+		this.localization = localization;
+	}
 
-    /**
-     * Returns language by specified code.
-     *
-     * @param code the language code
-     * @return language by specified code or {@code null} if language is unknown or code is null
-     */
-    public static Language byCode(String code) {
-        if (code == null) {
-            return null;
-        }
-        if (EN.code.equalsIgnoreCase(code)) {
-            return EN;
-        } else if (RU.code.equalsIgnoreCase(code)) {
-            return RU;
-        }
-        return null;
-    }
+	/**
+	 * Returns language by specified code.
+	 *
+	 * @param code the language code
+	 * @return language by specified code or {@code null} if language is unknown or code is null
+	 */
+	public static Language byCode(String code) {
+		if (code == null) {
+			return null;
+		}
 
-    public static Language byLocale(Locale locale) {
-        return byCode(locale.getLanguage());
-    }
+		for (Language language : values()) {
+			if (language.code.equals(code)) {
+				return language;
+			}
+		}
+		return null;
+	}
 
-    /**
-     * Returns code (or name) of this language
-     *
-     * @return the code of this language.
-     */
-    public String getCode() {
-        return code;
-    }
+	public static Language byLocale(Locale locale) {
+		return byCode(locale.getLanguage());
+	}
 
-    /**
-     * Returns getLocale for this language.
-     *
-     * @return the getLocale for this language.
-     */
-    public Locale getLocale() {
-        return locale;
-    }
+	/**
+	 * Returns code (or name) of this language
+	 *
+	 * @return the code of this language.
+	 */
+	public String getCode() {
+		return code;
+	}
 
-    /**
-     * Returns native charset encoding for this language.
-     *
-     * @return the native charset encoding for this language.
-     */
-    public String getNativeCharset() {
-        return nativeCharset;
-    }
+	/**
+	 * Returns getLocale for this language.
+	 *
+	 * @return the getLocale for this language.
+	 */
+	public Locale getLocale() {
+		return locale;
+	}
 
-    /**
-     * Returns localization interface for this language.
-     *
-     * @return the localization interface for this language.
-     */
-    public Localization getLocalization() {
-        return localization;
-    }
+	/**
+	 * Returns native charset encoding for this language.
+	 *
+	 * @return the native charset encoding for this language.
+	 */
+	public String getNativeCharset() {
+		return nativeCharset;
+	}
+
+	/**
+	 * Returns localization interface for this language.
+	 *
+	 * @return the localization interface for this language.
+	 */
+	public Localization getLocalization() {
+		return localization;
+	}
 }

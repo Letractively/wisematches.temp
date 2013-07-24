@@ -6,7 +6,7 @@
 <#macro item cat root selected expanded>
 <div class="item <#if root>root</#if> <#if selected>selected</#if>" style="padding-left: ${level}">
     <#if !root>
-        <div class="image<#if expanded> expanded</#if><#if cat.final> empty</#if>"></div></#if>
+        <span class="image<#if expanded> expanded</#if><#if cat.final> empty</#if>"></span></#if>
     <@bg.link.categoryLink cat/>
 </div>
 </#macro>
