@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="info about change is closed">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/sprites.png" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/sprites.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Language.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Language.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/i18n/PersonalityLocaleResolver.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/i18n/PersonalityLocaleResolver.java" />
+    <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/catalog.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/catalog.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/category.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/category.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/link.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/link.ftl" />
+      <change type="MOVED" beforePath="C:\Source\bg\modules\web\src\main\webapp\content\toolbar.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/toolbar.ftl" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,12 +88,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="category.ftl" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/category.ftl">
+      <file leaf-file-name="billiongoods.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="26" selection-start="307" selection-end="312" vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="731">
+            <state line="44" column="61" selection-start="2021" selection-end="2021" vertical-scroll-proportion="-5.0384617" vertical-offset="617" max-vertical-offset="1428">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="toolbar.ftl" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/toolbar.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="64" selection-start="586" selection-end="586" vertical-scroll-proportion="0.3919903" vertical-offset="0" max-vertical-offset="824">
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="navigation.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="36" selection-start="188" selection-end="188" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="204">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="billiongoods-1.0.0.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="694" column="50" selection-start="23121" selection-end="23121" vertical-scroll-proportion="0.0" vertical-offset="11588" max-vertical-offset="12563">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1374665086903" expanded="true" signature="5188:5228" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -104,7 +132,7 @@
       <file leaf-file-name="catalog.ftl" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/catalog.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="32" selection-start="117" selection-end="117" vertical-scroll-proportion="-2.9230769" vertical-offset="9" max-vertical-offset="850">
+            <state line="7" column="63" selection-start="145" selection-end="145" vertical-scroll-proportion="-4.576923" vertical-offset="0" max-vertical-offset="918">
               <folding>
                 <element signature="n#style#0;n#div#1;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
@@ -113,10 +141,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="billiongoods-1.0.0.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="billiongoods-1.0.0.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="249" column="59" selection-start="4012" selection-end="4012" vertical-scroll-proportion="0.4729412" vertical-offset="3831" max-vertical-offset="6239">
+            <state line="212" column="2" selection-start="3491" selection-end="3491" vertical-scroll-proportion="0.0" vertical-offset="3610" max-vertical-offset="6341">
               <folding />
             </state>
           </provider>
@@ -141,11 +169,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateCategory.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/Whereabouts.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/WarehouseController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/CategoriesController.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/whereabouts.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/whereabouts.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/category.ftl" />
@@ -155,8 +178,13 @@
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/i18n/PersonalityLocaleResolver.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/category.ftl" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/catalog.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/link.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/catalog.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/toolbar.ftl" />
       </list>
     </option>
   </component>
@@ -488,78 +516,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="macro" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="macro" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="content" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -641,52 +597,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="content" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="warehouse" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="navigation" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1255,11 +1165,11 @@
       <recent name="billiongoods.server.services" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Source\bg\modules\web\src\main\webapp\content\warehouse" />
       <recent name="C:\Source\bg\modules\web\src\main\webapp\content\warehouse\widget" />
       <recent name="C:\Users\sergey\billiongoods\modules\web\src\main\webapp\content\maintain\store" />
       <recent name="C:\Users\sergey\billiongoods\modules\web\src\main\webapp\content\maintain" />
       <recent name="C:\Users\sergey\billiongoods\modules\web\src\main\webapp\content" />
-      <recent name="C:\Users\sergey\wisematches\source\modules\web\src\main\webapp\static\images\logo" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 7">
@@ -1721,7 +1631,11 @@
       <created>1374584162077</created>
       <updated>1374584162077</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="info about change is closed">
+      <created>1374660273122</created>
+      <updated>1374660273122</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1752,7 +1666,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2621212" sideWeight="0.5388349" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21717991" sideWeight="0.5673516" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23662885" sideWeight="0.70091325" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5285388" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1879,34 +1793,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/personality/player/profile/impl/CSVCountriesManagerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="66" selection-start="942" selection-end="942" vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="731">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Language.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="53" selection-start="839" selection-end="839" vertical-scroll-proportion="0.47647768" vertical-offset="47" max-vertical-offset="1615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/i18n/LocaleChangeInterceptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="53" selection-start="1534" selection-end="1534" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1088">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/i18n/LanguageChangeInterceptor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="66" selection-start="588" selection-end="588" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/3.2.1.RELEASE/spring-web-3.2.1.RELEASE-sources.jar!/org/springframework/web/filter/CharacterEncodingFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="48" column="60" selection-start="1713" selection-end="1837" vertical-scroll-proportion="-0.0048250905" vertical-offset="514" max-vertical-offset="1343">
@@ -1951,20 +1837,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/category.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="34" selection-start="208" selection-end="208" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="30" selection-start="132" selection-end="132" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="204">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/sprites.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1972,16 +1844,59 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/category.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="26" selection-start="307" selection-end="312" vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="731">
+        <state line="8" column="26" selection-start="307" selection-end="312" vertical-scroll-proportion="2.3076923" vertical-offset="196" max-vertical-offset="731">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/link.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="45" selection-start="141" selection-end="141" vertical-scroll-proportion="-0.65384614" vertical-offset="0" max-vertical-offset="119">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/category.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="31" selection-start="205" selection-end="205" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/whereabouts.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="837">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="212" column="2" selection-start="3491" selection-end="3491" vertical-scroll-proportion="0.0" vertical-offset="3610" max-vertical-offset="6341">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="694" column="50" selection-start="23121" selection-end="23121" vertical-scroll-proportion="0.0" vertical-offset="11588" max-vertical-offset="12563">
           <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1374665086903" expanded="true" signature="5188:5228" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="36" selection-start="188" selection-end="188" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="204">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/navigation/catalog.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="32" selection-start="117" selection-end="117" vertical-scroll-proportion="-2.9230769" vertical-offset="9" max-vertical-offset="850">
+        <state line="7" column="63" selection-start="145" selection-end="145" vertical-scroll-proportion="-4.576923" vertical-offset="0" max-vertical-offset="918">
           <folding>
             <element signature="n#style#0;n#div#1;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="true" />
@@ -1989,10 +1904,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="249" column="59" selection-start="4012" selection-end="4012" vertical-scroll-proportion="0.4729412" vertical-offset="3831" max-vertical-offset="6239">
+        <state line="44" column="61" selection-start="2021" selection-end="2021" vertical-scroll-proportion="-5.0384617" vertical-offset="617" max-vertical-offset="1428">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/toolbar.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="64" selection-start="586" selection-end="586" vertical-scroll-proportion="0.3919903" vertical-offset="0" max-vertical-offset="824">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

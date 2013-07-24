@@ -1,1 +1,2 @@
-<#macro categoryLink category><a href="/warehouse/category/${category.id}">${category.name}</a></#macro>
+<#macro categoryLink category class="" name=""><a <#if class?has_content>class="${class}"</#if>
+                                                  href="/warehouse/category/${category.id}"><#if name?has_content>${name}<#else>${category.name}</#if></a></#macro>

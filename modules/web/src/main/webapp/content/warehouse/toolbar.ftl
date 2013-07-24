@@ -13,8 +13,7 @@
 <div>
     <ul>
         <li class="bg-ui-button tb-item-catalog tb-separator-left tb-separator-right">
-            <span class="image"></span>
-            <a href="">Весь каталог</a>
+            <a href="/">Домашняя страница</a>
 
         <li class="bg-ui-button tb-item-arrivals tb-separator-right"><a href="/warehouse/arrivals">Новые поступления</a>
     </ul>

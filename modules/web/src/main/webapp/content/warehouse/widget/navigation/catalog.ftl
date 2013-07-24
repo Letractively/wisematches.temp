@@ -8,9 +8,10 @@
     <ul class="container">
     <#list catalog.rootCategories as p>
         <li class="ct-item">
-            <div class="ct-toc"><span class="image"></span><@bg.link.categoryLink p/></div>
+            <div class="ct-toc"><span
+                    class="image"></span><@bg.link.categoryLink p/></div>
 
-            <div class="ct-list" style="display: none">
+            <div class="ct-list" style="display: none;">
                 <#list p.children as category>
                     <#if category_index%3==0>
                     <div style="float: left"></#if>
@@ -20,9 +21,12 @@
                             <span class="image"></span><@bg.link.categoryLink category/></li>
 
                         <#list category.children as ch>
+                            <#if ch_index==5><#break/></#if>
                             <li class="ct-list-cnt">
                                 <span class="image"></span><@bg.link.categoryLink ch/></li>
                         </#list>
+                        <#if (category.children?size>5)>
+                            <li class="ct-list-cnt"><@bg.link.categoryLink category "highlight" "все элементы"/></li></#if>
                     </ul>
                     <#if (category_index-2)%3==0></div></#if>
                 </#list>
@@ -33,7 +37,7 @@
 </div>
 
 <script type="application/javascript">
-    $(".ct-item").hover(function () {
+    $(".navigation").find(".ct-item").hover(function () {
         var $2 = $(this);
         $2.find(".ct-toc").addClass("hover");
         $2.find(".ct-list").show();

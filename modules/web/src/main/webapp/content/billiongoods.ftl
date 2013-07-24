@@ -54,7 +54,7 @@
         <tr>
             <td class="toolbar-layout">
                 <div class="toolbar-content">
-                <#include "toolbar.ftl"/>
+                <#include "warehouse/toolbar.ftl"/>
                 </div>
             </td>
         </tr>

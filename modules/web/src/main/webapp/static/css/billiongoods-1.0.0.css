@@ -150,7 +150,7 @@ a.highlight:link, a.highlight:visited {
     padding: 0;
 }
 
-.toolbar-content li {
+.toolbar-content .bg-ui-button {
     color: #fff;
     cursor: pointer;
     height: 28px;
@@ -160,7 +160,7 @@ a.highlight:link, a.highlight:visited {
     display: inline-block;
 }
 
-.toolbar-content li a {
+.toolbar-content .bg-ui-button a {
     color: #fff;
     font-weight: bold;
     font-size: 13px;
@@ -168,7 +168,7 @@ a.highlight:link, a.highlight:visited {
     text-shadow: #985813 0 -1px
 }
 
-.toolbar-content li:hover {
+.toolbar-content .bg-ui-button:hover {
     background-color: #c3692c;
 }
 
@@ -228,7 +228,7 @@ a.highlight:link, a.highlight:visited {
 }
 
 .navigation {
-    width: 208px;
+    width: 210px;
     height: auto;
 }
 
@@ -294,10 +294,11 @@ a.highlight:link, a.highlight:visited {
 
 .catalog .ct-item {
     position: relative;
+    background: #ffffff;
 }
 
 .catalog .ct-toc {
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     height: 30px;
     line-height: 30px;
@@ -319,8 +320,9 @@ a.highlight:link, a.highlight:visited {
 }
 
 .catalog .ct-list {
+    z-index: 1;
     top: -1px;
-    left: 208px;
+    left: 210px;
     width: 500px;
     padding: 10px;
     overflow: hidden;
@@ -350,6 +352,10 @@ a.highlight:link, a.highlight:visited {
     line-height: 22px;
     padding-left: 15px;
     overflow: hidden;
+}
+
+.catalog .ct-list-cnt .highlight {
+    font-weight: normal;
 }
 
 .catalog .ct-list-cnt .image {
