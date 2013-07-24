@@ -20,6 +20,8 @@
     <script type="text/javascript" src="<@bg.ui.static "js/jquery.cluetip-1.2.7.min.js"/>"></script>
     <script type="text/javascript" src="<@bg.ui.static "js/jquery.freeow-1.0.2.min.js"/>"></script>
     <script type="text/javascript" src="<@bg.ui.static "js/jquery.blockUI-2.5.4.js"/>"></script>
+    <script type="text/javascript" src="<@bg.ui.static "js/jquery.timers-1.2.0.js"/>"></script>
+    <script type="text/javascript" src="<@bg.ui.static "js/json2-2.1.8.min.js"/>"></script>
 
     <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/billiongoods-1.0.0.css"/>"/>
     <script type="text/javascript" src="<@bg.ui.static "js/billiongoods-1.0.0.js"/>"></script>
@@ -41,39 +43,35 @@
 </head>
 <body>
 
-<div id="billiongoods" class="${department.style}">
+<div id="billiongoods" class="body-${department.style}">
     <table width="100%">
         <tr>
-            <td class="header-layout">
-                <div class="header-content">
+            <td class="layout-container header-layout">
+                <div class="layout-content header-content">
                 <#include "header.ftl"/>
                 </div>
             </td>
         </tr>
 
         <tr>
-            <td class="toolbar-layout">
-                <div class="toolbar-content">
+            <td class="layout-container toolbar-layout">
+                <div class="layout-content toolbar-content">
                 <#include "toolbar.ftl"/>
                 </div>
             </td>
         </tr>
 
         <tr>
-            <td class="content-layout">
-                <table cellspacing="0" cellpadding="0" class="content-content">
+            <td class="layout-container content-layout">
+                <table cellspacing="0" cellpadding="0" class="layout-content">
                     <tr>
                         <td width="210px" valign="top">
                         <#include "${department.style}/navigation.ftl"/>
                         </td>
                         <td valign="top">
-                            <div style="margin-left: 5px">
-                                <div>
-                                <#include "whereabouts.ftl"/>
-                                </div>
-                                <div>
-                                <#include "${templateName}"/>
-                                </div>
+                            <div class="content">
+                                <div><#include "whereabouts.ftl"/></div>
+                                <div><#include "${templateName}"/></div>
                             </div>
                         </td>
                     </tr>
@@ -82,8 +80,8 @@
         </tr>
 
         <tr>
-            <td class="footer-layout">
-                <div class="footer-content">
+            <td class="layout-container footer-layout">
+                <div class="layout-content footer-content">
                 <#include "footer.ftl"/>
                 </div>
             </td>

@@ -35,6 +35,10 @@ form label.static {
     color: #551f1f;
 }
 
+ul, li {
+    list-style: none;
+}
+
 input {
     margin: 0;
 }
@@ -64,22 +68,16 @@ a.highlight:link, a.highlight:visited {
     text-shadow: 1px 1px 2px white;
 }
 
-.header-layout, .content-layout, .footer-layout, .toolbar-layout {
+.layout-container {
     width: 100%;
 }
 
-.header-content, .content-content, .footer-content, .toolbar-content {
+.layout-content {
     width: 1000px;
-    margin: 0 auto;
+    margin: 15px auto 0;
 }
 
-.header-layout {
-    /*background: #f6f6f6;*/
-    margin-bottom: 10px;
-    /*border-bottom: 1px solid #ebebeb;*/
-}
-
-.content-layout {
+.header-layout, .content-layout {
     margin-bottom: 10px;
 }
 
@@ -130,12 +128,21 @@ a.highlight:link, a.highlight:visited {
     font-weight: bold;
 }
 
+.footer-info-list li {
+    list-style: disc;
+}
+
 .footer-info-list a:link, .footer-info-list a:visited {
     color: #474747;
 }
 
 .nav-content .ui-button-text {
     font-weight: bold;
+}
+
+.toolbar-content, .header-content {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .toolbar-layout {
@@ -201,21 +208,9 @@ a.highlight:link, a.highlight:visited {
     width: 160px;
 }
 
-.tb-item-catalog .image {
-    top: 19px;
-    right: 10px;
-    width: 9px;
-    height: 5px;
-    position: absolute;
-    background: url("../images/sprites.png") 0 -33px no-repeat;
-}
-
-.content-content {
-    margin-top: 15px;
-}
-
 .whereabouts {
     padding: 10px;
+    margin-bottom: 5px;
     background: #f6f6f6;
 }
 
@@ -230,10 +225,6 @@ a.highlight:link, a.highlight:visited {
 .navigation {
     width: 210px;
     height: auto;
-}
-
-.navigation ul, .navigation li {
-    list-style: none;
 }
 
 .navigation.category {
@@ -284,8 +275,8 @@ a.highlight:link, a.highlight:visited {
     padding: 0;
 }
 
-.catalog .ct-tit {
-    padding: 5px;
+.catalog .ct-tit, .assistance .title {
+    padding: 10px;
     color: #fa6302;
     font-weight: bold;
     background: #f6f6f6;
@@ -297,7 +288,7 @@ a.highlight:link, a.highlight:visited {
     background: #ffffff;
 }
 
-.catalog .ct-toc {
+.catalog .ct-toc, .assistance .list li {
     z-index: 2;
     width: 100%;
     height: 30px;
@@ -339,7 +330,7 @@ a.highlight:link, a.highlight:visited {
     width: 250px;
 }
 
-.catalog .ct-toc .image, .catalog .ct-list-tit .image {
+.catalog .ct-toc .image, .catalog .ct-list-tit .image, .assistance .list .image, .assistance .toc .image {
     width: 5px;
     height: 7px;
     padding-right: 5px;
@@ -364,4 +355,72 @@ a.highlight:link, a.highlight:visited {
     padding-right: 5px;
     display: inline-block;
     background: url("../images/sprites.png") 0 0 no-repeat;
+}
+
+.navigation.assistance {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ebebeb;
+}
+
+.navigation.assistance .list ul {
+    margin: 0;
+    padding: 0;
+}
+
+.navigation.assistance ul, .navigation.assistance li {
+    list-style: none;
+}
+
+.content {
+    padding-left: 10px;
+}
+
+.content .assistance {
+    float: left;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ebebeb;
+}
+
+.content .assistance .tit {
+    color: #f00;
+    font-weight: bold;
+    font-size: larger;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.content .assistance .toc, .content .assistance .cnt {
+    margin: 0;
+    float: left;
+    width: 100%;
+    padding: 10px 0 10px 0;
+
+}
+
+.content .assistance .toc, .content .assistance .cnt li {
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ebebeb;
+}
+
+.content .assistance .toc li {
+    width: 50%;
+    float: left;
+    height: 22px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.content .assistance .sec {
+    color: #fa6302;
+    font-weight: bold;
+    font-size: large;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.content .assistance .des {
+    text-align: justify;
+    padding-left: 10px;
 }
