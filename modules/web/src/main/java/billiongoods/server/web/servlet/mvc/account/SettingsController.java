@@ -1,35 +1,9 @@
 package billiongoods.server.web.servlet.mvc.account;
 
 
-import billiongoods.core.Language;
-import billiongoods.core.Member;
-import billiongoods.core.personality.player.account.*;
-import billiongoods.core.security.authentication.PlayerAuthentication;
-import billiongoods.core.security.userdetails.PlayerDetails;
-import billiongoods.core.security.userdetails.PlayerDetailsService;
-import billiongoods.server.services.notify.NotificationManager;
-import billiongoods.server.services.notify.NotificationScope;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import billiongoods.server.web.servlet.mvc.UnknownEntityException;
-import billiongoods.server.web.servlet.mvc.account.form.NotificationsTreeView;
-import billiongoods.server.web.servlet.mvc.account.form.SettingsForm;
-import billiongoods.server.web.servlet.mvc.account.form.TimeZoneInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -37,7 +11,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/account/modify")
 public class SettingsController extends AbstractController {
-    private AccountManager accountManager;
+/*
+	private AccountManager accountManager;
     private PlayerDetailsService detailsService;
     private NotificationManager notificationManager;
 
@@ -189,4 +164,5 @@ public class SettingsController extends AbstractController {
     public void setNotificationManager(NotificationManager notificationManager) {
         this.notificationManager = notificationManager;
     }
+*/
 }

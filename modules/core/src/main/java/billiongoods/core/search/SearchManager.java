@@ -1,7 +1,5 @@
 package billiongoods.core.search;
 
-import billiongoods.core.Personality;
-
 import java.util.List;
 
 /**
@@ -18,27 +16,25 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface SearchManager<E, C> {
-    /**
-     * Returns total items count for specified personality and
-     *
-     * @param person  the person who searches entities.
-     * @param context the context for search.
-     * @return number of items available for search.
-     */
-    <Ctx extends C> int getTotalCount(Personality person, Ctx context);
+	/**
+	 * Returns total items count for specified personality and
+	 *
+	 * @param context the context for search.
+	 * @return number of items available for search.
+	 */
+	<Ctx extends C> int getTotalCount(Ctx context);
 
-    /**
-     * Searches and returns list of all entities for specified person in specified context and according
-     * to specified criteria.
-     * <p/>
-     * The result will be sorted according to specified orders and will be limited according to specified
-     * range.
-     *
-     * @param person  the person who searches entities.
-     * @param context the context for search.
-     * @param orders  orders of result
-     * @param range   the range of returned entities.
-     * @return list of entities or empty list if no entities are found.
-     */
-    <Ctx extends C> List<E> searchEntities(Personality person, Ctx context, Orders orders, Range range);
+	/**
+	 * Searches and returns list of all entities for specified person in specified context and according
+	 * to specified criteria.
+	 * <p/>
+	 * The result will be sorted according to specified orders and will be limited according to specified
+	 * range.
+	 *
+	 * @param context the context for search.
+	 * @param orders  orders of result
+	 * @param range   the range of returned entities.
+	 * @return list of entities or empty list if no entities are found.
+	 */
+	<Ctx extends C> List<E> searchEntities(Ctx context, Orders orders, Range range);
 }

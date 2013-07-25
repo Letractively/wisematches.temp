@@ -1,30 +1,9 @@
 package billiongoods.server.web.servlet.mvc.account;
 
 
-import billiongoods.core.Member;
-import billiongoods.core.personality.player.account.*;
-import billiongoods.server.services.notify.NotificationSender;
-import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import billiongoods.server.web.servlet.mvc.account.form.RecoveryConfirmationForm;
-import billiongoods.server.web.servlet.mvc.account.form.RecoveryRequestForm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -32,7 +11,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/account/recovery")
 public class RecoveryController extends AbstractController {
-    private AccountManager accountManager;
+/*
+	private AccountManager accountManager;
     private NotificationService notificationService;
     private AccountRecoveryManager recoveryTokenManager;
 
@@ -173,4 +153,5 @@ public class RecoveryController extends AbstractController {
     public void setRecoveryTokenManager(AccountRecoveryManager recoveryTokenManager) {
         this.recoveryTokenManager = recoveryTokenManager;
     }
+*/
 }

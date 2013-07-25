@@ -3,39 +3,11 @@
  */
 package billiongoods.server.web.servlet.mvc.account;
 
-import billiongoods.core.Language;
-import billiongoods.core.Member;
-import billiongoods.core.Membership;
-import billiongoods.core.personality.DefaultMember;
-import billiongoods.core.personality.player.account.*;
-import billiongoods.server.services.notify.NotificationException;
-import billiongoods.server.services.notify.NotificationSender;
-import billiongoods.server.services.notify.NotificationService;
+import billiongoods.core.personality.player.account.DuplicateAccountException;
+import billiongoods.core.personality.player.account.InadmissibleUsernameException;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import billiongoods.server.web.servlet.mvc.account.form.AccountRegistrationForm;
-import billiongoods.server.web.servlet.sdo.ServiceResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Set;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -43,7 +15,8 @@ import java.util.Set;
 @Controller
 @RequestMapping("/account")
 public class AccountController extends AbstractController {
-    private AccountManager accountManager;
+/*
+	private AccountManager accountManager;
     private NotificationService notificationService;
 
     private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.AccountController");
@@ -51,30 +24,34 @@ public class AccountController extends AbstractController {
     public AccountController() {
     }
 
-    /**
-     * This is basic form form. Just forward it to appropriate FTL page.
-     *
-     * @param model the associated model where {@code accountBodyPageName} parameter will be stored.
-     * @param form  the form form.
-     * @return the FTL full page name without extension
-     */
+    */
+/**
+ * This is basic form form. Just forward it to appropriate FTL page.
+ *
+ * @param model the associated model where {@code accountBodyPageName} parameter will be stored.
+ * @param form  the form form.
+ * @return the FTL full page name without extension
+ *//*
+
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String createAccountPage(Model model, @ModelAttribute("registration") AccountRegistrationForm form) {
         model.addAttribute("infoId", "create");
         return "/content/account/create";
     }
 
-    /**
-     * This is action publisher for new account. Get model from HTTP POST request and creates new account, if possible.	 *
-     *
-     * @param model    the all model
-     * @param request  original http request
-     * @param response original http response
-     * @param form     the form request form
-     * @param result   the errors errors
-     * @param status   the session status. Will be cleared in case of success
-     * @return the create account page in case of error of forward to {@code authMember} page in case of success.
-     */
+    */
+/**
+ * This is action publisher for new account. Get model from HTTP POST request and creates new account, if possible.	 *
+ *
+ * @param model    the all model
+ * @param request  original http request
+ * @param response original http response
+ * @param form     the form request form
+ * @param result   the errors errors
+ * @param status   the session status. Will be cleared in case of success
+ * @return the create account page in case of error of forward to {@code authMember} page in case of success.
+ *//*
+
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String createAccountAction(HttpServletRequest request, HttpServletResponse response,
@@ -121,13 +98,15 @@ public class AccountController extends AbstractController {
         }
     }
 
-    /**
-     * This is action publisher for new account. Get model from HTTP POST request and creates new account, if possible.	 *
-     *
-     * @param request original http request
-     * @param form    the form request form
-     * @return the create account page in case of error of forward to {@code authMember} page in case of success.
-     */
+    */
+/**
+ * This is action publisher for new account. Get model from HTTP POST request and creates new account, if possible.	 *
+ *
+ * @param request original http request
+ * @param form    the form request form
+ * @return the create account page in case of error of forward to {@code authMember} page in case of success.
+ *//*
+
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
     @RequestMapping(value = "create.ajax", method = RequestMethod.POST)
     public ServiceResponse createAccountService(HttpServletRequest request,
@@ -171,14 +150,16 @@ public class AccountController extends AbstractController {
         }
     }
 
-    /**
-     * JSON request for email and username validation.
-     *
-     * @param email    the email to to checked.
-     * @param nickname the nickname to be checked
-     * @param result   the bind errors that will be filled in case of any errors.
-     * @return the service response that also contains information about errors.
-     */
+    */
+/**
+ * JSON request for email and username validation.
+ *
+ * @param email    the email to to checked.
+ * @param nickname the nickname to be checked
+ * @param result   the bind errors that will be filled in case of any errors.
+ * @return the service response that also contains information about errors.
+ *//*
+
     @RequestMapping(value = "checkAvailability")
     private ServiceResponse getAvailabilityStatus(@RequestParam("email") String email,
                                                   @RequestParam("nickname") String nickname,
@@ -233,12 +214,14 @@ public class AccountController extends AbstractController {
         }
     }
 
-    /**
-     * Checks that specified form is valid. Otherwise fills specified errors object.
-     *
-     * @param form   the form to be checked
-     * @param errors the binding errors to be filled in case of any error.
-     */
+    */
+/**
+ * Checks that specified form is valid. Otherwise fills specified errors object.
+ *
+ * @param form   the form to be checked
+ * @param errors the binding errors to be filled in case of any error.
+ *//*
+
     private void validateRegistrationForm(AccountRegistrationForm form, Errors errors, Locale locale) {
         if (!form.getPassword().equals(form.getConfirm())) {
             errors.rejectValue("confirm", "account.register.pwd-cfr.err.mismatch");
@@ -246,15 +229,17 @@ public class AccountController extends AbstractController {
         getAvailabilityStatus(form.getEmail(), form.getNickname(), errors, locale);
     }
 
-    /**
-     * Creates account based on specified form and returns created user.
-     *
-     * @param registration the new account form
-     * @param request      the original request
-     * @return the create player
-     * @throws DuplicateAccountException     if account with the same email or nickname already exist
-     * @throws InadmissibleUsernameException if nickname can't be used.
-     */
+    */
+/**
+ * Creates account based on specified form and returns created user.
+ *
+ * @param registration the new account form
+ * @param request      the original request
+ * @return the create player
+ * @throws DuplicateAccountException     if account with the same email or nickname already exist
+ * @throws InadmissibleUsernameException if nickname can't be used.
+ *//*
+
     private Account createAccount(AccountRegistrationForm registration, HttpServletRequest request) throws AccountException {
         final AccountEditor editor = new AccountEditor();
         editor.setEmail(registration.getEmail());
@@ -263,4 +248,5 @@ public class AccountController extends AbstractController {
         editor.setTimeZone(Calendar.getInstance(request.getLocale()).getTimeZone());
         return accountManager.createAccount(editor.createAccount(), registration.getPassword());
     }
+*/
 }
