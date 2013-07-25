@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="imageResourcesDomain" type="java.lang.String" -->
 <#-- @ftlvariable name="staticResourcesDomain" type="java.lang.String" -->
 
 <#include "/macro/message.ftl"/>
@@ -5,6 +6,8 @@
 <#import "/spring.ftl" as spring />
 <#import "ui/table.ftl" as table />
 <#import "ui/panel.ftl" as panel />
+
+<#macro img p>${imageResourcesDomain}/${p}</#macro>
 
 <#macro static p>${staticResourcesDomain}/${p}</#macro>
 

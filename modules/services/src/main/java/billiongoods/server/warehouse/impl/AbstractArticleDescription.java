@@ -29,11 +29,11 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Transient
 	private Category category;
 
-	@Column(name = "sellPrice")
-	private float sellPrice;
+	@Column(name = "price")
+	private float price;
 
-	@Column(name = "sellDiscount")
-	private float sellDiscount;
+	@Column(name = "primordialPrice")
+	private Float primordialPrice;
 
 	@Column(name = "restockDate")
 	private Date restockDate;
@@ -44,13 +44,13 @@ public class AbstractArticleDescription implements ArticleDescription {
 	AbstractArticleDescription() {
 	}
 
-	public AbstractArticleDescription(String name, boolean active, Category category, float sellPrice, float sellDiscount, Date restockDate, Date registrationDate) {
+	public AbstractArticleDescription(String name, boolean active, Category category, float price, Float primordialPrice, Date restockDate, Date registrationDate) {
 		this.name = name;
 		this.active = active;
 		this.category = category;
 		this.categoryId = category.getId();
-		this.sellPrice = sellPrice;
-		this.sellDiscount = sellDiscount;
+		this.price = price;
+		this.primordialPrice = primordialPrice;
 		this.restockDate = restockDate;
 		this.registrationDate = registrationDate;
 	}
@@ -76,13 +76,13 @@ public class AbstractArticleDescription implements ArticleDescription {
 	}
 
 	@Override
-	public float getSellPrice() {
-		return sellPrice;
+	public float getPrice() {
+		return price;
 	}
 
 	@Override
-	public float getSellDiscount() {
-		return sellDiscount;
+	public Float getPrimordialPrice() {
+		return primordialPrice;
 	}
 
 	@Override
@@ -107,12 +107,12 @@ public class AbstractArticleDescription implements ArticleDescription {
 		this.category = category;
 	}
 
-	void setSellPrice(float sellPrice) {
-		this.sellPrice = sellPrice;
+	public void setPrice(float price) {
+		this.price = price;
 	}
 
-	void setSellDiscount(float sellDiscount) {
-		this.sellDiscount = sellDiscount;
+	public void setPrimordialPrice(Float primordialPrice) {
+		this.primordialPrice = primordialPrice;
 	}
 
 	void setRestockDate(Date restockDate) {
@@ -127,10 +127,12 @@ public class AbstractArticleDescription implements ArticleDescription {
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("AbstractArticleDescription{");
 		sb.append("id=").append(id);
+		sb.append(", name='").append(name).append('\'');
 		sb.append(", active=").append(active);
 		sb.append(", categoryId=").append(categoryId);
-		sb.append(", sellPrice=").append(sellPrice);
-		sb.append(", sellDiscount=").append(sellDiscount);
+		sb.append(", price=").append(price);
+		sb.append(", primordialPrice=").append(primordialPrice);
+		sb.append(", registrationDate=").append(registrationDate);
 		sb.append('}');
 		return sb.toString();
 	}

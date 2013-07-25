@@ -1,3 +1,12 @@
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
+<#-- @ftlvariable name="articles" type="billiongoods.server.warehouse.ArticleDescription[]" -->
 
-Woh, it's big table here!
+<#include "/core.ftl">
+
+<div class="articles preview">
+<#list articles as a>
+<@bg.link.article a>
+${a.name}
+</@bg.link.article>
+    </#list>
+</div>

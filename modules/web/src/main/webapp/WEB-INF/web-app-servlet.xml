@@ -86,7 +86,10 @@
                         <entry key="analyticsCode" value="${analytics.trackcode}"/>
 
                         <entry key="messageSource" value-ref="messageSource"/>
+
+                        <entry key="imageResourcesDomain" value="${server.image.domain}"/>
                         <entry key="staticResourcesDomain" value="${server.static.domain}"/>
+
                         <entry key="springSecurityContext">
                             <bean class="billiongoods.server.web.servlet.view.freemarker.SpringSecurityContext"/>
                         </entry>

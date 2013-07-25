@@ -1,7 +1,9 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.*;
+import billiongoods.server.warehouse.Article;
+import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Character;
+import billiongoods.server.warehouse.Option;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -52,7 +54,7 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	}
 
 	@Override
-	public SupplierInfo getSupplierInfo() {
+	public HibernateSupplierInfo getSupplierInfo() {
 		return supplierInfo;
 	}
 

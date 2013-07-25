@@ -2,6 +2,7 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.server.warehouse.Article;
 import billiongoods.server.warehouse.ArticleManager;
+import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/warehouse/article")
-public class ArticleController extends WarehouseController {
+public class ArticleController extends AbstractController {
 	private ArticleManager articleManager;
 
 	public ArticleController() {

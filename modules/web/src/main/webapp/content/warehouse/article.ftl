@@ -1,1 +1,3 @@
-Article will be here
+<#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Article" -->
+
+${article.name}

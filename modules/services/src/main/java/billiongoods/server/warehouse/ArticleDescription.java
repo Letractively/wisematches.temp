@@ -16,9 +16,21 @@ public interface ArticleDescription {
 	Category getCategory();
 
 
-	float getSellPrice();
+	/**
+	 * Returns current price. If there is any discount for the article this value contains discounted price.
+	 *
+	 * @return the current supplier's price.
+	 */
+	float getPrice();
 
-	float getSellDiscount(); // Float.NaN
+	/**
+	 * Returns primordial price. This value can be used
+	 * to get discount and is {@code null} if there is no discount. Returned value
+	 * contains original, primordial price before discount.
+	 *
+	 * @return the primordial supplier's price or {@code null} if there is no any discount.
+	 */
+	Float getPrimordialPrice();
 
 
 	/**

@@ -7,18 +7,21 @@ import java.util.Date;
  */
 public interface SupplierInfo {
 	/**
-	 * Returns original price by selling shop
+	 * Returns current supplier's price. If there is any discount from supplier,
+	 * this value contains discounted price.
 	 *
-	 * @return the original price by selling shop
+	 * @return the current supplier's price.
 	 */
-	float getBuyPrice();
+	float getPrice();
 
 	/**
-	 * Returns discount price by selling shop or {@link Float#NaN} if there is no discount.
+	 * Returns primordial supplier's price. This value can be used
+	 * to get supplier discount and is {@code null} if there is no discount. Returned value
+	 * contains original, primordial price before discount.
 	 *
-	 * @return the discount price or {@link Float#NaN} if there is no discount.
+	 * @return the primordial supplier's price or {@code null} if there is no any discount.
 	 */
-	float getBuyDiscount();
+	Float getPrimordialPrice();
 
 	/**
 	 * Returns link to wholesaler WEB page for this article.

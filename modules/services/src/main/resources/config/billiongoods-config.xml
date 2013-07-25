@@ -11,6 +11,10 @@
         <constructor-arg name="alertsMailBox" value="${server.alerts.box}"/>
     </bean>
 
+    <bean id="articleImagesManager" class="billiongoods.server.warehouse.impl.FileArticleImagesManager">
+        <property name="imagesFolder" value="${server.images.path}"/>
+    </bean>
+
     <bean id="catalogManager" class="billiongoods.server.warehouse.impl.HibernateCategoryManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

@@ -15,10 +15,10 @@ import java.util.Date;
 @Embeddable
 public class HibernateSupplierInfo implements SupplierInfo {
 	@Column(name = "buyPrice")
-	private float buyPrice;
+	private float price;
 
-	@Column(name = "buyDiscount")
-	private float buyDiscount;
+	@Column(name = "buyPrimordialPrice")
+	private Float primordialPrice;
 
 	@Column(name = "referenceId")
 	private String referenceId;
@@ -36,9 +36,9 @@ public class HibernateSupplierInfo implements SupplierInfo {
 	public HibernateSupplierInfo() {
 	}
 
-	public HibernateSupplierInfo(String referenceId, String referenceCode, Supplier wholesaler, float buyPrice, float buyDiscount, Date validationDate) {
-		this.buyPrice = buyPrice;
-		this.buyDiscount = buyDiscount;
+	public HibernateSupplierInfo(String referenceId, String referenceCode, Supplier wholesaler, float price, Float primordialPrice, Date validationDate) {
+		this.price = price;
+		this.primordialPrice = primordialPrice;
 		this.referenceId = referenceId;
 		this.referenceCode = referenceCode;
 		this.wholesaler = wholesaler;
@@ -46,13 +46,13 @@ public class HibernateSupplierInfo implements SupplierInfo {
 	}
 
 	@Override
-	public float getBuyPrice() {
-		return buyPrice;
+	public float getPrice() {
+		return price;
 	}
 
 	@Override
-	public float getBuyDiscount() {
-		return buyDiscount;
+	public Float getPrimordialPrice() {
+		return primordialPrice;
 	}
 
 	@Override
@@ -75,17 +75,17 @@ public class HibernateSupplierInfo implements SupplierInfo {
 		return validationDate;
 	}
 
-	void validatePrices(float buyPrice, float buyDiscount) {
-		this.buyPrice = buyPrice;
-		this.buyDiscount = buyDiscount;
+	void validatePrices(float price, Float primordialPrice) {
+		this.price = price;
+		this.primordialPrice = primordialPrice;
 		this.validationDate = new Date();
 	}
 
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("HibernateSupplierInfo{");
-		sb.append("buyPrice=").append(buyPrice);
-		sb.append(", buyDiscount=").append(buyDiscount);
+		sb.append("price=").append(price);
+		sb.append(", primordialPrice=").append(primordialPrice);
 		sb.append(", referenceId='").append(referenceId).append('\'');
 		sb.append(", referenceCode='").append(referenceCode).append('\'');
 		sb.append(", wholesaler=").append(wholesaler);
