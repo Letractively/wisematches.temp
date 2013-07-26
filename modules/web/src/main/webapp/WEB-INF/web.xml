@@ -106,7 +106,7 @@
 
     <servlet>
         <servlet-name>web-static</servlet-name>
-        <servlet-class>billiongoods.server.web.servlet.BillionGoodsServlet</servlet-class>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 

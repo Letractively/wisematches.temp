@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-static-servlet.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/MyResourceHttpRequestHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/web.iml" afterPath="$PROJECT_DIR$/modules/web/web.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/catalog.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/catalog.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-static-servlet.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-static-servlet.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web.xml" />
     </list>
     <ignored path="application.iws" />
@@ -78,7 +78,116 @@
     <favorites_list name="application" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="web-static-servlet.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-static-servlet.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="26" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DispatcherServlet.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="900" column="34" selection-start="40725" selection-end="40725" vertical-scroll-proportion="0.30882353" vertical-offset="15048" max-vertical-offset="22270">
+              <folding>
+                <element signature="e#0#55589#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractUrlHandlerMapping.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/AbstractUrlHandlerMapping.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="159" column="0" selection-start="6136" selection-end="6136" vertical-scroll-proportion="0.0" vertical-offset="2098" max-vertical-offset="6239">
+              <folding>
+                <element signature="e#6062#6070#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AntPathMatcher.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/3.2.1.RELEASE/spring-core-3.2.1.RELEASE-sources.jar!/org/springframework/util/AntPathMatcher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="114" column="0" selection-start="4464" selection-end="4464" vertical-scroll-proportion="0.0" vertical-offset="1457" max-vertical-offset="9248">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractHandlerMapping.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/AbstractHandlerMapping.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="168" column="0" selection-start="5961" selection-end="5961" vertical-scroll-proportion="0.0" vertical-offset="2438" max-vertical-offset="5899">
+              <folding>
+                <element signature="e#0#13847#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BeanNameUrlHandlerMapping.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/BeanNameUrlHandlerMapping.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="47" selection-start="630" selection-end="669" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
+              <folding>
+                <element signature="e#0#2713#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AbstractHandlerMethodAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/AbstractHandlerMethodAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="76" column="48" selection-start="2556" selection-end="2556" vertical-scroll-proportion="0.0" vertical-offset="814" max-vertical-offset="1666">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestMappingHandlerAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="710" column="70" selection-start="30206" selection-end="30213" vertical-scroll-proportion="0.0" vertical-offset="10402" max-vertical-offset="13379">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web.xml">
+          <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
+            <state />
+          </provider>
+          <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
+            <state />
+          </provider>
+          <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="106" column="19" selection-start="3645" selection-end="3645" vertical-scroll-proportion="-17.04" vertical-offset="1376" max-vertical-offset="3230">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BillionGoodsServlet.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/BillionGoodsServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="49" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1071">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -97,9 +206,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Image.java" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ArticleImageManager.java" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/FileArticleImageManager.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ImageSize.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ArticleImagesManager.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ImageType.java" />
@@ -111,6 +217,9 @@
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/FileArticleImagesManagerTest.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/catalog.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/BillionGoodsResponseFilter.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/MyResourceHttpRequestHandler.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-static-servlet.xml" />
       </list>
@@ -587,6 +696,146 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="validation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1461,7 +1710,11 @@
       <created>1374758192558</created>
       <updated>1374758192558</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="static servlet for resources added">
+      <created>1374828441125</created>
+      <updated>1374828441125</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1469,7 +1722,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1272" y="-8" width="1296" height="1010" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32305935" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1482,7 +1735,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3242009" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3002283" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42009133" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580644" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1492,8 +1745,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2621212" sideWeight="0.5388349" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23905997" sideWeight="0.6757991" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25121555" sideWeight="0.6757991" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18557537" sideWeight="0.6997717" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37925446" sideWeight="0.6757991" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37442923" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1579,7 +1832,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="info about change is closed" />
+    <option name="LAST_COMMIT_MESSAGE" value="static servlet for resources added" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1612,6 +1865,7 @@
     <MESSAGE value="Release 5.1.15" />
     <MESSAGE value="Release 5.1.17" />
     <MESSAGE value="info about change is closed" />
+    <MESSAGE value="static servlet for resources added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1619,89 +1873,142 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/AbstractHandlerMethodMapping.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1-sources.jar!/javax/servlet/http/HttpServletResponse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="318" column="44" selection-start="11714" selection-end="11714" vertical-scroll-proportion="0.33333334" vertical-offset="4648" max-vertical-offset="5780">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/AbstractUrlHandlerMapping.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="242" column="0" selection-start="10039" selection-end="10039" vertical-scroll-proportion="0.0" vertical-offset="3457" max-vertical-offset="6239">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/AbstractHandlerMapping.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="57" selection-start="1902" selection-end="1902" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="5661">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/HandlerExecutionChain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="34" selection-start="4376" selection-end="4376" vertical-scroll-proportion="0.0" vertical-offset="1621" max-vertical-offset="3349">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="900" column="55" selection-start="40725" selection-end="40725" vertical-scroll-proportion="0.0" vertical-offset="14273" max-vertical-offset="21335">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/3.2.1.RELEASE/spring-core-3.2.1.RELEASE-sources.jar!/org/springframework/core/io/Resource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="33" selection-start="4102" selection-end="4102" vertical-scroll-proportion="0.0" vertical-offset="1478" max-vertical-offset="2108">
-          <folding />
+        <state line="346" column="4" selection-start="12833" selection-end="12833" vertical-scroll-proportion="0.0" vertical-offset="992" max-vertical-offset="4981">
+          <folding>
+            <element signature="docComment;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#addCookie#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#containsHeader#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#encodeURL#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#encodeRedirectURL#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#encodeUrl#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#encodeRedirectUrl#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#sendError#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#sendError#1;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#sendRedirect#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#setDateHeader#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#addDateHeader#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#setHeader#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#addHeader#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#setIntHeader#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#addIntHeader#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#setStatus#1;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#getStatus#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#getHeader#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#getHeaders#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;method#getHeaderNames#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_CONTINUE#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_SWITCHING_PROTOCOLS#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_OK#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_CREATED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_ACCEPTED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_NON_AUTHORITATIVE_INFORMATION#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_NO_CONTENT#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_RESET_CONTENT#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_PARTIAL_CONTENT#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_MULTIPLE_CHOICES#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_MOVED_PERMANENTLY#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_MOVED_TEMPORARILY#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_FOUND#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_SEE_OTHER#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_NOT_MODIFIED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_USE_PROXY#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_TEMPORARY_REDIRECT#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_BAD_REQUEST#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_UNAUTHORIZED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_PAYMENT_REQUIRED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_FORBIDDEN#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_NOT_FOUND#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_METHOD_NOT_ALLOWED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_NOT_ACCEPTABLE#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_PROXY_AUTHENTICATION_REQUIRED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_REQUEST_TIMEOUT#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_CONFLICT#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_GONE#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_LENGTH_REQUIRED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_PRECONDITION_FAILED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_REQUEST_ENTITY_TOO_LARGE#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_REQUEST_URI_TOO_LONG#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_UNSUPPORTED_MEDIA_TYPE#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_REQUESTED_RANGE_NOT_SATISFIABLE#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_EXPECTATION_FAILED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_INTERNAL_SERVER_ERROR#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_NOT_IMPLEMENTED#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_BAD_GATEWAY#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_SERVICE_UNAVAILABLE#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_GATEWAY_TIMEOUT#0;class#HttpServletResponse#0" expanded="false" />
+            <element signature="docComment;field#SC_HTTP_VERSION_NOT_SUPPORTED#0;class#HttpServletResponse#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE.jar!/org/springframework/web/servlet/config/spring-mvc-3.2.xsd">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="251" column="41" selection-start="12211" selection-end="12211" vertical-scroll-proportion="0.0" vertical-offset="4168" max-vertical-offset="7089">
+        <state line="255" column="44" selection-start="12491" selection-end="12491" vertical-scroll-proportion="0.0" vertical-offset="3920" max-vertical-offset="7089">
           <folding>
             <element signature="tag#xsd:element#2;tag#xsd:schema#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/support/WebContentGenerator.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/3.2.1.RELEASE/spring-context-3.2.1.RELEASE-sources.jar!/org/springframework/context/support/ApplicationObjectSupport.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="287" column="67" selection-start="9577" selection-end="9577" vertical-scroll-proportion="0.0" vertical-offset="4018" max-vertical-offset="6154">
+        <state line="49" column="24" selection-start="2091" selection-end="2091" vertical-scroll-proportion="0.33294117" vertical-offset="210" max-vertical-offset="2465">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/config/development.properties">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/resource/ResourceHttpRequestHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="545">
+        <state line="145" column="0" selection-start="5255" selection-end="6338" vertical-scroll-proportion="0.9329412" vertical-offset="1094" max-vertical-offset="4471">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/config/integration.properties">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/MyResourceHttpRequestHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="44" selection-start="256" selection-end="256" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
+        <state line="18" column="48" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/HandlerExecutionChain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="0" selection-start="2593" selection-end="2593" vertical-scroll-proportion="0.0" vertical-offset="841" max-vertical-offset="3349">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/3.2.1.RELEASE/spring-web-3.2.1.RELEASE-sources.jar!/org/springframework/web/context/support/ServletContextResource.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/AbstractHandlerMethodAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="184" column="19" selection-start="5767" selection-end="5767" vertical-scroll-proportion="0.0" vertical-offset="2522" max-vertical-offset="3672">
+        <state line="76" column="48" selection-start="2556" selection-end="2556" vertical-scroll-proportion="0.0" vertical-offset="814" max-vertical-offset="1666">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="70" selection-start="276" selection-end="276" vertical-scroll-proportion="0.1218638" vertical-offset="0" max-vertical-offset="1921">
+        <state line="710" column="70" selection-start="30206" selection-end="30213" vertical-scroll-proportion="0.0" vertical-offset="10402" max-vertical-offset="13379">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/BillionGoodsServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="49" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1071">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/BeanNameUrlHandlerMapping.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="47" selection-start="630" selection-end="669" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
+          <folding>
+            <element signature="e#0#2713#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1716,29 +2023,50 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="60" selection-start="5336" selection-end="5336" vertical-scroll-proportion="0.46424243" vertical-offset="2405" max-vertical-offset="3230">
+        <state line="106" column="19" selection-start="3645" selection-end="3645" vertical-scroll-proportion="-17.04" vertical-offset="1376" max-vertical-offset="3230">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/AbstractHandlerMapping.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="168" column="0" selection-start="5961" selection-end="5961" vertical-scroll-proportion="0.0" vertical-offset="2438" max-vertical-offset="5899">
+          <folding>
+            <element signature="e#0#13847#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/handler/AbstractUrlHandlerMapping.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="159" column="0" selection-start="6136" selection-end="6136" vertical-scroll-proportion="0.0" vertical-offset="2098" max-vertical-offset="6239">
+          <folding>
+            <element signature="e#6062#6070#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/3.2.1.RELEASE/spring-core-3.2.1.RELEASE-sources.jar!/org/springframework/util/AntPathMatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="114" column="0" selection-start="4464" selection-end="4464" vertical-scroll-proportion="0.0" vertical-offset="1457" max-vertical-offset="9248">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-static-servlet.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="36" selection-start="286" selection-end="286" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+        <state line="18" column="26" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/BillionGoodsServlet.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="42" selection-start="996" selection-end="996" vertical-scroll-proportion="0.3154122" vertical-offset="8" max-vertical-offset="1071">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.1.RELEASE/spring-webmvc-3.2.1.RELEASE-sources.jar!/org/springframework/web/servlet/resource/ResourceHttpRequestHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="163" column="26" selection-start="6931" selection-end="6931" vertical-scroll-proportion="0.14117648" vertical-offset="2073" max-vertical-offset="4471">
-          <folding />
+        <state line="900" column="34" selection-start="40725" selection-end="40725" vertical-scroll-proportion="0.30882353" vertical-offset="15048" max-vertical-offset="22270">
+          <folding>
+            <element signature="e#0#55589#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
