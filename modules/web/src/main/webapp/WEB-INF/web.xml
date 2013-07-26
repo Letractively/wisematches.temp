@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-    <display-name>BillionGoods Scribble On-Line Game</display-name>
+    <display-name>BillionGoods On-Line Market</display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -95,19 +95,36 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- Only account is under security -->
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/account/*</url-pattern>
         <dispatcher>ERROR</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
     <servlet>
-        <servlet-name>web-app</servlet-name>
+        <servlet-name>web-static</servlet-name>
         <servlet-class>billiongoods.server.web.servlet.BillionGoodsServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+    <servlet>
+        <servlet-name>web-app</servlet-name>
+        <servlet-class>billiongoods.server.web.servlet.BillionGoodsServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>web-static</servlet-name>
+        <url-pattern>/static/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>web-static</servlet-name>
+        <url-pattern>/images/*</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>web-app</servlet-name>
