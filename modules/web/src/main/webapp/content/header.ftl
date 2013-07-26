@@ -27,7 +27,7 @@
                 <div><a href="/assistance/payment">Оплата</a></div>
 
                 <div class="divider">|</div>
-                <div><a href="/assistance/shipment">Доставка</a></div>
+                <div><a href="/assistance/shipping">Доставка</a></div>
 
                 <div class="divider">|</div>
                 <div><a href="/assistance">Помощь</a></div>

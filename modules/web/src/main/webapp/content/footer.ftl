@@ -4,7 +4,7 @@
             <div class="footer-info">
                 <div class="footer-info-title">Помощь</div>
                 <ul class="footer-info-list">
-                    <li><a href="/assistance/shipment">Доставка товара</a></li>
+                    <li><a href="/assistance/shipping">Доставка товара</a></li>
                     <li><a href="/assistance/payment">Способы оплаты</a></li>
                     <li><a href="/assistance/warranty">Гарантия и возврат</a></li>
                     <li><a href="/assistance/paypal">Работа с PayPal</a></li>
