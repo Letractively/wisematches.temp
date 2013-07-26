@@ -8,6 +8,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -28,6 +30,13 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 			article.initialize(catalogManager);
 		}
 		return article;
+	}
+
+	@Override
+	protected void initializeEntities(List<ArticleDescription> list) {
+		for (ArticleDescription description : list) {
+			((HibernateArticleDescription) description).initialize(catalogManager);
+		}
 	}
 
 	@Override

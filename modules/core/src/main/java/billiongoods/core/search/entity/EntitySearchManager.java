@@ -42,12 +42,18 @@ public abstract class EntitySearchManager<E, C> implements SearchManager<E, C> {
 		applyProjections(criteria, context);
 		applyOrders(criteria, orders);
 		applyRange(range, criteria);
-		return criteria.list();
+
+		final List list = criteria.list();
+		initializeEntities(list);
+		return list;
 	}
 
 	protected abstract void applyRestrictions(Criteria criteria, C context);
 
 	protected abstract void applyProjections(Criteria criteria, C context);
+
+	protected void initializeEntities(List<E> list) {
+	}
 
 	protected void applyRange(Range range, Criteria criteria) {
 		if (range != null) {

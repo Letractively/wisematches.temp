@@ -14,7 +14,7 @@
 <div class="navigation category">
     <div class="container">
         <div class="item selected root">
-            Выбранные раздел
+            Выбранный раздел
         </div>
 
     <#assign genealogy=category.genealogy/>

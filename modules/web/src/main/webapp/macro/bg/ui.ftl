@@ -1,5 +1,6 @@
 <#-- @ftlvariable name="imageResourcesDomain" type="java.lang.String" -->
 <#-- @ftlvariable name="staticResourcesDomain" type="java.lang.String" -->
+<#setting locale="en">
 
 <#include "/macro/message.ftl"/>
 
@@ -7,24 +8,21 @@
 <#import "ui/table.ftl" as table />
 <#import "ui/panel.ftl" as panel />
 
-<#macro img p>${imageResourcesDomain}/${p}</#macro>
-
 <#macro static p>${staticResourcesDomain}/${p}</#macro>
 
-<#macro playground id>
-<table width="100%">
-    <tr>
-        <td width="165px" valign="top" align="left" rowspan="2">
-        </td>
-        <td valign="top">
-            <div <#if id?has_content>id="${id}"</#if>>
-                <#nested/>
-            </div>
-        </td>
-    </tr>
-</table>
-</#macro>
+<#macro articleImg article img type size><img
+        src="${imageResourcesDomain}/${imageResolver.resolveImagePath(article, img, type)}" width="${size}"
+        height="${size}"></#macro>
 
+<#macro usd v>US$${v?string("0.00")}</#macro>
+
+<#macro rub v>${v?string("0.00")}<img src="<@static "images/ruble_gray.gif"/>" class="ruble-img"/><span
+        class="dot">руб.</span></#macro>
+
+<#macro price v><span class="us"><@usd v/></span>
+<span class="rub">(~<@rub priceConverter.convertPrice(v)/>)</span></#macro>
+
+<#--
 <#macro bind path>
     <@spring.bind path/>
 
@@ -89,4 +87,4 @@
 
 <#macro info>
 <div class="help-tooltip ui-icon ui-icon-info" title="<#nested>"></div>
-</#macro>
+</#macro>-->

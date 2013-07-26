@@ -1,4 +1,4 @@
-package billiongoods.server.warehouse.impl;
+package billiongoods.server.services.image.impl;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;

@@ -16,7 +16,7 @@
             </div>
 
             <#if category.description??>
-                <div class="description">${category.description} ${category.description} ${category.description} ${category.description} ${category.description}</div>
+                <div class="description">${category.description}</div>
             </#if>
         </div>
         </#if>

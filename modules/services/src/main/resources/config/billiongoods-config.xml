@@ -11,8 +11,13 @@
         <constructor-arg name="alertsMailBox" value="${server.alerts.box}"/>
     </bean>
 
-    <bean id="articleImagesManager" class="billiongoods.server.warehouse.impl.FileArticleImagesManager">
+    <bean id="priceConverter" class="billiongoods.server.services.price.PriceConverter"/>
+
+    <bean id="imageResolver" class="billiongoods.server.services.image.impl.SimpleImageResolver"/>
+
+    <bean id="articleImagesManager" class="billiongoods.server.services.image.impl.FileArticleImagesManager">
         <property name="imagesFolder" value="${server.images.path}"/>
+        <property name="imageResolver" ref="imageResolver"/>
     </bean>
 
     <bean id="catalogManager" class="billiongoods.server.warehouse.impl.HibernateCategoryManager">

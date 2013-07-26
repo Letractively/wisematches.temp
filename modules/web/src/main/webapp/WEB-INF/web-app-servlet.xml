@@ -73,6 +73,7 @@
             <list>
                 <value>billiongoods.core.Language</value>
                 <value>billiongoods.core.Membership</value>
+                <value>billiongoods.server.services.image.ImageType</value>
             </list>
         </property>
 
@@ -85,6 +86,9 @@
                         <entry key="analyticsCode" value="${analytics.trackcode}"/>
 
                         <entry key="messageSource" value-ref="messageSource"/>
+
+                        <entry key="imageResolver" value-ref="imageResolver"/>
+                        <entry key="priceConverter" value-ref="priceConverter"/>
 
                         <entry key="imageResourcesDomain" value="${server.image.domain}"/>
                         <entry key="staticResourcesDomain" value="${server.static.domain}"/>

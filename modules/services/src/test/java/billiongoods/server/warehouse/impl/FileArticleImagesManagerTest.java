@@ -1,5 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.services.image.impl.FileArticleImagesManager;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 

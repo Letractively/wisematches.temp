@@ -4,11 +4,10 @@ import billiongoods.server.warehouse.Article;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Character;
 import billiongoods.server.warehouse.Option;
+import org.hibernate.annotations.IndexColumn;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +19,21 @@ import java.util.List;
 public class HibernateArticle extends AbstractArticleDescription implements Article {
 	@Column(name = "soldCount")
 	private int soldCount;
+
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "imageId")
+	@IndexColumn(name = "order")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "store_article_image", joinColumns = @JoinColumn(name = "aid"))
+	private List<String> imageIds = new ArrayList<>();
+
+	@Column(name = "accessoryId")
+	@IndexColumn(name = "order")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "store_article_accessories", joinColumns = @JoinColumn(name = "aid"))
+	private List<Long> accessories = new ArrayList<>();
 
 	@Embedded
 	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
@@ -39,13 +53,23 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	}
 
 	@Override
+	public String getDescription() {
+		return description;
+	}
+
+	@Override
 	public List<Option> geOptions() {
 		return null;
 	}
 
 	@Override
+	public List<String> getImageIds() {
+		return imageIds;
+	}
+
+	@Override
 	public List<Long> getAccessories() {
-		return null;
+		return accessories;
 	}
 
 	@Override
@@ -60,5 +84,9 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 
 	void incrementSoldCount() {
 		this.soldCount++;
+	}
+
+	void setDescription(String description) {
+		this.description = description;
 	}
 }

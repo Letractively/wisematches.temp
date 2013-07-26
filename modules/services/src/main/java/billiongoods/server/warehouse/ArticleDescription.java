@@ -46,4 +46,10 @@ public interface ArticleDescription {
 	 * @return the date when article was registered in the warehouse. Never null.
 	 */
 	Date getRegistrationDate();
+
+
+	/**
+	 * Returns preview image id.
+	 */
+	String getPreviewImageId();
 }

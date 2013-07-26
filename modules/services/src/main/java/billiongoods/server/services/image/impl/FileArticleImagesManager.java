@@ -1,8 +1,9 @@
-package billiongoods.server.warehouse.impl;
+package billiongoods.server.services.image.impl;
 
+import billiongoods.server.services.image.ArticleImagesManager;
+import billiongoods.server.services.image.ImageResolver;
+import billiongoods.server.services.image.ImageType;
 import billiongoods.server.warehouse.Article;
-import billiongoods.server.warehouse.ArticleImagesManager;
-import billiongoods.server.warehouse.ImageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -22,6 +23,7 @@ import java.io.InputStream;
  */
 public class FileArticleImagesManager implements ArticleImagesManager {
 	private Resource imagesFolder;
+	private ImageResolver imageResolver;
 
 	private static final FilenameFilter JPEG = new FilenameFilter() {
 		@Override
@@ -46,13 +48,13 @@ public class FileArticleImagesManager implements ArticleImagesManager {
 
 	@Override
 	public String getImage(Article article, ImageType type) {
-		final String relativePath = getRelativePath(article, type);
+		final String relativePath = imageResolver.resolveImagePath(article, "", type);
 		return relativePath + "/" + article.getId() + ".jpg";
 	}
 
 	@Override
 	public String[] getImages(Article article, ImageType type) {
-		final String relativePath = getRelativePath(article, type);
+		final String relativePath = imageResolver.resolveImagePath(article, "", type);
 		try {
 			final File file = new File(imagesFolder.getFile(), relativePath);
 			final String[] list = file.list(JPEG);
@@ -65,10 +67,6 @@ public class FileArticleImagesManager implements ArticleImagesManager {
 		} catch (IOException ex) {
 			return NO_IMAGES_RES;
 		}
-	}
-
-	private String getRelativePath(Article article, ImageType type) {
-		return article.getCategory().getId() + "/" + type.getName();
 	}
 /*
 
@@ -181,5 +179,9 @@ public class FileArticleImagesManager implements ArticleImagesManager {
 				log.warn("Images folder can't be created by system error");
 			}
 		}
+	}
+
+	public void setImageResolver(ImageResolver imageResolver) {
+		this.imageResolver = imageResolver;
 	}
 }

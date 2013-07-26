@@ -1,17 +1,17 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
-import billiongoods.core.search.Range;
-import billiongoods.server.warehouse.ArticleContext;
-import billiongoods.server.warehouse.ArticleManager;
-import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.CategoryManager;
+import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
+import billiongoods.server.web.servlet.mvc.warehouse.form.ItemsTableForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -26,7 +26,7 @@ public class CategoriesController extends AbstractController {
 	}
 
 	@RequestMapping("/{categoryId}")
-	public String showSubCategory(@PathVariable("categoryId") Integer categoryId, Model model) {
+	public String showSubCategory(@PathVariable("categoryId") Integer categoryId, Model model, @ModelAttribute("itemsTableForm") ItemsTableForm tableForm) {
 		final Category category = categoryManager.getCategory(categoryId);
 		if (category == null) {
 			throw new UnknownEntityException(categoryId, "category");
@@ -34,10 +34,15 @@ public class CategoriesController extends AbstractController {
 
 		setTitle(model, category.getName());
 
-		model.addAttribute("category", category);
+		final ArticleContext context = new ArticleContext(category);
 
-		// TODO: be must parameters more here
-		model.addAttribute("articles", articleManager.searchEntities(new ArticleContext(category), null, Range.limit(36)));
+		final int totalCount = articleManager.getTotalCount(context);
+		final List<ArticleDescription> articles = articleManager.searchEntities(context, null, tableForm.createRange());
+
+		tableForm.setTotalCount(totalCount);
+
+		model.addAttribute("category", category);
+		model.addAttribute("articles", articles);
 
 		return "/content/warehouse/category";
 	}

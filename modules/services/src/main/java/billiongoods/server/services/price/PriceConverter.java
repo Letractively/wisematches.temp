@@ -1,0 +1,23 @@
+package billiongoods.server.services.price;
+
+/**
+ * @author Sergey Klimenko (smklimenko@gmail.com)
+ */
+public class PriceConverter {
+	private float course = 32.23f;
+
+	public PriceConverter() {
+	}
+
+	public float convertPrice(float price) {
+		return price * course;
+	}
+
+	public float getCourse() {
+		return course;
+	}
+
+	public void setCourse(float course) {
+		this.course = course;
+	}
+}

@@ -1,10 +1,10 @@
-package billiongoods.server.warehouse;
+package billiongoods.server.services.image;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public enum ImageType {
-	GRID,
+	PREVIEW,
 	VIEW,
 	CUSTOM;
 

@@ -1,4 +1,6 @@
-package billiongoods.server.warehouse;
+package billiongoods.server.services.image;
+
+import billiongoods.server.warehouse.Article;
 
 import java.io.InputStream;
 

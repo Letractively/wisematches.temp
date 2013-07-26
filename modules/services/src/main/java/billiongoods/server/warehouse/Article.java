@@ -14,6 +14,20 @@ public interface Article extends ArticleDescription {
 	int getSoldCount();
 
 	/**
+	 * Returns full description for this article.
+	 *
+	 * @return the full description for this article.
+	 */
+	String getDescription();
+
+	/**
+	 * Returns ids for all available images for this article.
+	 *
+	 * @return the ids for all available images for this article.
+	 */
+	List<String> getImageIds();
+
+	/**
 	 * Returns available options for this article which customer can choice.
 	 *
 	 * @return available options for this article which customer can choice or {@code null} if there is no one.

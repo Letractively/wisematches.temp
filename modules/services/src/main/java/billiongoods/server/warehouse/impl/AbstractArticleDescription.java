@@ -41,6 +41,9 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Column(name = "registrationDate")
 	private Date registrationDate;
 
+	@Column(name = "previewImageId")
+	private String previewImageId;
+
 	AbstractArticleDescription() {
 	}
 
@@ -95,6 +98,11 @@ public class AbstractArticleDescription implements ArticleDescription {
 		return registrationDate;
 	}
 
+	@Override
+	public String getPreviewImageId() {
+		return previewImageId;
+	}
+
 	void setName(String name) {
 		this.name = name;
 	}
@@ -117,6 +125,10 @@ public class AbstractArticleDescription implements ArticleDescription {
 
 	void setRestockDate(Date restockDate) {
 		this.restockDate = restockDate;
+	}
+
+	void setPreviewImageId(String previewImageId) {
+		this.previewImageId = previewImageId;
 	}
 
 	void initialize(CategoryManager manager) {

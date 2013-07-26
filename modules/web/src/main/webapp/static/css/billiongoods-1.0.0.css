@@ -58,6 +58,16 @@ a.highlight:link, a.highlight:visited {
     font-weight: bold;
 }
 
+img.ruble-img {
+    height: 1.4ex;
+    padding-left: 3px;
+}
+
+span.dot {
+    position: absolute;
+    text-indent: -1000em;
+}
+
 #billiongoods {
     width: 100%;
 }
@@ -423,4 +433,64 @@ a.highlight:link, a.highlight:visited {
 .content .assistance .des {
     text-align: justify;
     padding-left: 10px;
+}
+
+.table-view {
+    width: 100%;
+    border: 1px solid #ebebeb;
+}
+
+.table-view, .table-pages, .table-filters, .table-content, .grid, .article {
+    float: left;
+}
+
+.table-content {
+    padding: 16px;
+}
+
+.articles.preview {
+}
+
+.article {
+    width: 168px;
+    margin-top: 20px;
+    margin-left: 9px;
+    margin-right: 9px;
+    text-align: center;
+}
+
+.article .image {
+    border: 1px solid #ebebeb;
+}
+
+.article .image:hover {
+    border-color: #d67632;
+}
+
+.article .price, .article .name {
+    padding: 3px;
+}
+
+.article .price span {
+    color: #fa6302;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.article .price span.rub {
+    color: gray;
+    font-weight: normal;
+}
+
+.table-pages {
+    padding: 10px;
+    background-color: #d3d3d3;
+}
+
+.table-pages div {
+    display: inline;
+}
+
+.table-controls {
+    float: right;
 }
