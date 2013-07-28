@@ -1,30 +1,33 @@
 package billiongoods.server.warehouse;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface Category {
-	Integer getId();
+    Integer getId();
 
 
-	int getLevel();
+    int getLevel();
 
-	String getName();
+    String getName();
 
-	String getDescription();
-
-
-	boolean isFinal();
-
-	boolean isActive();
+    String getDescription();
 
 
-	Category getParent();
+    boolean isFinal();
 
-	Genealogy getGenealogy();
+    boolean isActive();
 
 
-	List<Category> getChildren();
+    Category getParent();
+
+    Genealogy getGenealogy();
+
+
+    List<Category> getChildren();
+
+    Set<Attribute> getAttributes();
 }

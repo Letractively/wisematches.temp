@@ -20,55 +20,55 @@ import static org.junit.Assert.assertNotNull;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-		"classpath:/config/properties-config.xml",
-		"classpath:/config/database-config.xml"
+        "classpath:/config/properties-config.xml",
+        "classpath:/config/database-config.xml"
 })
 public class HibernateCategoryManagerTest {
-	@Autowired
-	private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-	public HibernateCategoryManagerTest() {
-	}
+    public HibernateCategoryManagerTest() {
+    }
 
-	@Test
-	public void test() throws Exception {
-		final HibernateCategoryManager manager = new HibernateCategoryManager();
-		manager.setSessionFactory(sessionFactory);
-		manager.afterPropertiesSet();
+    @Test
+    public void test() throws Exception {
+        final HibernateCategoryManager manager = new HibernateCategoryManager();
+        manager.setSessionFactory(sessionFactory);
+        manager.afterPropertiesSet();
 
-		final Catalog catalog = manager.getCatalog();
-		assertNotNull(catalog);
+        final Catalog catalog = manager.getCatalog();
+        assertNotNull(catalog);
 
-		dumpCategory(catalog.getRootCategories(), "");
+        dumpCategory(catalog.getRootCategories(), "");
 
 //		final int size = catalog.getChildren().size();
 //		System.out.println(size);
 
 /*
-		final Category t1 = manager.addCatalogItem("Test1", null);
-		final Category t2 = manager.addCatalogItem("Test2", null);
+        final Category t1 = manager.addCategory("Test1", null);
+		final Category t2 = manager.addCategory("Test2", null);
 
-		final Category c1 = manager.addCatalogItem("Child1", t1);
-		final Category c2 = manager.addCatalogItem("Child2", t1);
+		final Category c1 = manager.addCategory("Child1", t1);
+		final Category c2 = manager.addCategory("Child2", t1);
 
 		assertEquals(size + 2, catalog.getChildren().size());
 		assertSame(t1, c1.getParent());
 		assertSame(t1, c2.getParent());
 
-		manager.removeCatalogItem(t1, t2);
+		manager.removeCategory(t1, t2);
 		assertEquals(size + 1, catalog.getChildren().size());
 		assertSame(t2, c1.getParent());
 		assertSame(t2, c2.getParent());
 
 		assertEquals(0, t1.getChildren().size());
 */
-	}
+    }
 
-	private void dumpCategory(List<Category> catalog, String s) {
-		for (Category category : catalog) {
-			System.out.println(s + category);
+    private void dumpCategory(List<Category> catalog, String s) {
+        for (Category category : catalog) {
+            System.out.println(s + category);
 
-			dumpCategory(category.getChildren(), s + "   ");
-		}
-	}
+            dumpCategory(category.getChildren(), s + "   ");
+        }
+    }
 }

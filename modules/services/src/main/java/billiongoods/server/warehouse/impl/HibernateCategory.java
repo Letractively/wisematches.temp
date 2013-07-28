@@ -1,13 +1,11 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Genealogy;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -15,162 +13,186 @@ import java.util.List;
 @Entity
 @Table(name = "store_category")
 public class HibernateCategory implements Category {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@Column(name = "parent")
-	private Integer parentId;
+    @Column(name = "parent")
+    private Integer parentId;
 
-	@Transient
-	private int level = -1;
+    @Transient
+    private int level = -1;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@Column(name = "description")
-	private String description;
+    @Column(name = "description")
+    private String description;
 
-	@Column(name = "position")
-	private int position;
+    @Column(name = "position")
+    private int position;
 
-	@Column(name = "active")
-	private boolean active;
+    @Column(name = "active")
+    private boolean active;
 
-	@Transient
-	private transient Genealogy genealogy;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            targetEntity = HibernateAttribute.class)
+    @JoinTable(
+            name = "store_category_attr",
+            joinColumns = @JoinColumn(name = "attributeId"),
+            inverseJoinColumns = @JoinColumn(name = "categoryId")
+    )
+    private Set<Attribute> attributes = new HashSet<>();
 
-	@Transient
-	private transient HibernateCategory parent;
+    @Transient
+    private transient Genealogy genealogy;
 
-	@Transient
-	private transient List<Category> children = new ArrayList<>();
+    @Transient
+    private transient HibernateCategory parent;
 
-	protected HibernateCategory() {
-	}
+    @Transient
+    private transient List<Category> children = new ArrayList<>();
 
-	protected HibernateCategory(String name, HibernateCategory parent) {
-		this.name = name;
-		if (parent != null) {
-			this.parentId = parent.id;
-			preInit(parent);
-		}
-	}
+    protected HibernateCategory() {
+    }
 
-	@Override
-	public Integer getId() {
-		return id;
-	}
+    protected HibernateCategory(String name, HibernateCategory parent) {
+        this.name = name;
+        if (parent != null) {
+            this.parentId = parent.id;
+            preInit(parent);
+        }
+    }
 
-	@Override
-	public int getLevel() {
-		if (level == -1) {
-			int i = 0;
-			Category p = parent;
-			while (p != null) {
-				i++;
-				p = p.getParent();
-			}
-			level = i;
-		}
-		return level;
-	}
+    @Override
+    public Integer getId() {
+        return id;
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public int getLevel() {
+        if (level == -1) {
+            int i = 0;
+            Category p = parent;
+            while (p != null) {
+                i++;
+                p = p.getParent();
+            }
+            level = i;
+        }
+        return level;
+    }
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public boolean isFinal() {
-		return children.size() == 0;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	@Override
-	public boolean isActive() {
-		return active;
-	}
+    @Override
+    public boolean isFinal() {
+        return children.size() == 0;
+    }
 
-	@Override
-	public Category getParent() {
-		return parent;
-	}
+    @Override
+    public boolean isActive() {
+        return active;
+    }
 
-	@Override
-	public Genealogy getGenealogy() {
-		if (genealogy == null) {
-			genealogy = new Genealogy(this);
-		}
-		return genealogy;
-	}
+    @Override
+    public Category getParent() {
+        return parent;
+    }
 
-	@Override
-	public List<Category> getChildren() {
-		return children;
-	}
+    @Override
+    public Genealogy getGenealogy() {
+        if (genealogy == null) {
+            genealogy = new Genealogy(this);
+        }
+        return genealogy;
+    }
 
-	int getPosition() {
-		return position;
-	}
+    @Override
+    public List<Category> getChildren() {
+        return children;
+    }
 
-	Integer getParentId() {
-		return parentId;
-	}
+    @Override
+    public Set<Attribute> getAttributes() {
+        return attributes;
+    }
 
-	void preInit(HibernateCategory parentCategory) {
-		if (parentCategory == null && this.parentId == null) {
-			return;
-		}
+    int getPosition() {
+        return position;
+    }
 
-		if (parentCategory == null || this.parentId == null || !parentCategory.id.equals(this.parentId)) {
-			throw new IllegalArgumentException("Incorrect parent id");
-		}
-		this.parent = parentCategory;
-		parentCategory.children.add(this);
-	}
+    Integer getParentId() {
+        return parentId;
+    }
 
-	void postInit() {
-		Collections.sort(children, COMPARATOR);
-	}
+    void preInit(HibernateCategory parentCategory) {
+        if (parentCategory == null && this.parentId == null) {
+            return;
+        }
 
-	String toString(int depth) {
-		final StringBuilder b = new StringBuilder();
-		toString(0, depth, b, "   ");
-		return b.toString();
-	}
+        if (parentCategory == null || this.parentId == null || !parentCategory.id.equals(this.parentId)) {
+            throw new IllegalArgumentException("Incorrect parent id");
+        }
+        this.parent = parentCategory;
+        parentCategory.children.add(this);
+    }
 
-	private void toString(int level, int depth, StringBuilder b, String spaces) {
-		if (level >= depth) {
-			return;
-		}
+    void postInit() {
+        Collections.sort(children, COMPARATOR);
+    }
 
-		for (Category child : children) {
-			for (int i = 0; i < level; i++) {
-				b.append(spaces);
-			}
+    String toString(int depth) {
+        final StringBuilder b = new StringBuilder();
+        toString(0, depth, b, "   ");
+        return b.toString();
+    }
 
-			b.append(child.toString());
+    private void toString(int level, int depth, StringBuilder b, String spaces) {
+        if (level >= depth) {
+            return;
+        }
 
-			toString(level + 1, depth, b, spaces);
-		}
-	}
+        for (Category child : children) {
+            for (int i = 0; i < level; i++) {
+                b.append(spaces);
+            }
+
+            b.append(child.toString());
+
+            toString(level + 1, depth, b, spaces);
+        }
+    }
 
 
-	static final Comparator<Category> COMPARATOR = new Comparator<Category>() {
-		@Override
-		public int compare(Category o1, Category o2) {
-			return ((HibernateCategory) o1).position - ((HibernateCategory) o2).position;
-		}
-	};
+    static final Comparator<Category> COMPARATOR = new Comparator<Category>() {
+        @Override
+        public int compare(Category o1, Category o2) {
+            return ((HibernateCategory) o1).position - ((HibernateCategory) o2).position;
+        }
+    };
 
-	@Override
-	public String toString() {
-		return "HibernateCategory{" + "id=" + id + ", parentId=" + parentId + ", name='" + name + '\'' + ", position=" + position + ", active=" + active + ", childrenCount=" + children.size() + '}';
-	}
+    @Override
+    public String toString() {
+        return "HibernateCategory{" + "id=" + id + ", parentId=" + parentId + ", name='" + name + '\'' + ", position=" + position + ", active=" + active + ", childrenCount=" + children.size() + '}';
+    }
+
+    void addAttribute(Attribute attribute) {
+        attributes.add(attribute);
+    }
+
+    void removeAttribute(Attribute attribute) {
+        attributes.remove(attribute);
+    }
 }

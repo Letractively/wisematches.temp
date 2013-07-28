@@ -1,5 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.CategoryManager;
@@ -18,72 +19,73 @@ import java.util.*;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateCategoryManager implements CategoryManager, InitializingBean {
-	private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-	private final DefaultCatalog catalog = new DefaultCatalog();
-	private final Map<Integer, HibernateCategory> categoryMap = new HashMap<>();
+    private final DefaultCatalog catalog = new DefaultCatalog();
+    private final Map<Integer, HibernateCategory> categoryMap = new HashMap<>();
 
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.HibernateCategoryManager");
+    private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.HibernateCategoryManager");
 
-	public HibernateCategoryManager() {
-	}
+    public HibernateCategoryManager() {
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public void afterPropertiesSet() throws Exception {
-		final Session session = sessionFactory.openSession();
-		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateCategory");
+    @Override
+    @SuppressWarnings("unchecked")
+    public void afterPropertiesSet() throws Exception {
+        final Session session = sessionFactory.openSession();
+        final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateCategory");
 
-		final List list = query.list();
-		for (Object o : list) {
-			final HibernateCategory category = (HibernateCategory) o;
-			categoryMap.put(category.getId(), category);
-		}
+        final List list = query.list();
+        for (Object o : list) {
+            final HibernateCategory category = (HibernateCategory) o;
+            categoryMap.put(category.getId(), category);
+            session.evict(category);
+        }
 
-		for (HibernateCategory category : categoryMap.values()) {
-			category.preInit(categoryMap.get(category.getParentId()));
-		}
+        for (HibernateCategory category : categoryMap.values()) {
+            category.preInit(categoryMap.get(category.getParentId()));
+        }
 
-		final List<Category> rootCategories = new ArrayList<>();
-		for (HibernateCategory category : categoryMap.values()) {
-			category.postInit();
+        final List<Category> rootCategories = new ArrayList<>();
+        for (HibernateCategory category : categoryMap.values()) {
+            category.postInit();
 
-			if (category.getParent() == null) {
-				rootCategories.add(category);
-			}
-		}
-		Collections.sort(rootCategories, HibernateCategory.COMPARATOR);
-		catalog.setRootCategories(rootCategories);
+            if (category.getParent() == null) {
+                rootCategories.add(category);
+            }
+        }
+        Collections.sort(rootCategories, HibernateCategory.COMPARATOR);
+        catalog.setRootCategories(rootCategories);
 
-		log.info("Found {} categories", categoryMap.size());
-	}
+        log.info("Found {} categories", categoryMap.size());
+    }
 
-	@Override
-	public Catalog getCatalog() {
-		return catalog;
-	}
+    @Override
+    public Catalog getCatalog() {
+        return catalog;
+    }
 
-	@Override
-	public Category getCategory(Integer id) {
-		return categoryMap.get(id);
-	}
+    @Override
+    public Category getCategory(Integer id) {
+        return categoryMap.get(id);
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public Category addCatalogItem(String name, Category parent) {
-		final Session session = sessionFactory.getCurrentSession();
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public Category addCategory(String name, Category parent) {
+        final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateCategory p = (HibernateCategory) parent;
-		final HibernateCategory i = new HibernateCategory(name, p);
-		session.save(i);
-		return i;
-	}
+        final HibernateCategory p = (HibernateCategory) parent;
+        final HibernateCategory i = new HibernateCategory(name, p);
+        session.save(i);
+        return i;
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public Category removeCatalogItem(Category item, Category newParent) {
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public Category removeCategory(Category item, Category newParent) {
 /*
-		final Session session = sessionFactory.getCurrentSession();
+        final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateCategory hItem = (HibernateCategory) item;
 		final HibernateCategory hNewParent = (HibernateCategory) newParent;
@@ -97,10 +99,27 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 //        session.update(hNewParent);
 		hItem.removeFromParent();
 */
-		return item;
-	}
+        return item;
+    }
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void addAttribute(Category category, Attribute attribute) {
+        HibernateCategory hc = (HibernateCategory) category;
+        hc.addAttribute(attribute);
+        sessionFactory.getCurrentSession().update(hc);
+
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void removeAttribute(Category category, Attribute attribute) {
+        HibernateCategory hc = (HibernateCategory) category;
+        hc.removeAttribute(attribute);
+        sessionFactory.getCurrentSession().update(hc);
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }
