@@ -12,10 +12,10 @@ import java.util.Date;
 @Entity
 @Table(name = "store_article")
 public class HibernateArticleDescription extends AbstractArticleDescription {
-	public HibernateArticleDescription() {
-	}
+    public HibernateArticleDescription() {
+    }
 
-	public HibernateArticleDescription(String name, boolean active, Category category, float sellPrice, float sellDiscount, Date restockDate, Date registrationDate) {
-		super(name, active, category, sellPrice, sellDiscount, restockDate, registrationDate);
-	}
+    public HibernateArticleDescription(String name, boolean active, Category category, float sellPrice, float sellDiscount, Date restockDate, Date registrationDate) {
+        super(name, sellPrice, sellDiscount, category, restockDate, active);
+    }
 }

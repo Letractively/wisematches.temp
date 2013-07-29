@@ -1,32 +1,30 @@
 package billiongoods.server.warehouse;
 
-import java.util.List;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public final class Option {
+public final class Property {
     private final Attribute attribute;
-    private final List<String> values;
+    private final String value;
 
-    public Option(Attribute attribute, List<String> values) {
+    public Property(Attribute attribute, String value) {
         this.attribute = attribute;
-        this.values = values;
+        this.value = value;
     }
 
     public Attribute getAttribute() {
         return attribute;
     }
 
-    public List<String> getValues() {
-        return values;
+    public String getValue() {
+        return value;
     }
 
     @Override
     public String toString() {
-        return "Option{" +
+        return "Property{" +
                 "attribute=" + attribute +
-                ", values=" + values +
+                ", value='" + value + '\'' +
                 '}';
     }
 }

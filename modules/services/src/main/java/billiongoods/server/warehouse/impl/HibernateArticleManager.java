@@ -14,43 +14,55 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateArticleManager extends EntitySearchManager<ArticleDescription, ArticleContext> implements ArticleManager {
-	private CategoryManager catalogManager;
+    private CategoryManager catalogManager;
+    private AttributeManager attributeManager;
 
-	public HibernateArticleManager() {
-		super(HibernateArticleDescription.class);
-	}
+    public HibernateArticleManager() {
+        super(HibernateArticleDescription.class);
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public Article getArticle(Long id) {
-		final Session session = sessionFactory.getCurrentSession();
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public Article getArticle(Long id) {
+        final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
-		if (article != null) {
-			article.initialize(catalogManager);
-		}
-		return article;
-	}
+        final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
+        if (article != null) {
+            article.initialize(catalogManager, attributeManager);
+        }
+        return article;
+    }
 
-	@Override
-	protected void initializeEntities(List<ArticleDescription> list) {
-		for (ArticleDescription description : list) {
-			((HibernateArticleDescription) description).initialize(catalogManager);
-		}
-	}
+    @Override
+    public Article createArticle(String name, String description) {
+//        HibernateArticle article = new HibernateArticle(name, );
+        return null;
+    }
 
-	@Override
-	protected void applyProjections(Criteria criteria, ArticleContext context) {
-	}
+    @Override
+    protected void initializeEntities(List<ArticleDescription> list) {
+        for (ArticleDescription description : list) {
+            ((HibernateArticleDescription) description).initialize(catalogManager, attributeManager);
+        }
+    }
 
-	@Override
-	protected void applyRestrictions(Criteria criteria, ArticleContext context) {
-		if (context != null && context.getCategory() != null) {
-			criteria.add(Restrictions.eq("categoryId", context.getCategory().getId()));
-		}
-	}
+    @Override
+    protected void applyProjections(Criteria criteria, ArticleContext context) {
+    }
 
-	public void setCatalogManager(CategoryManager catalogManager) {
-		this.catalogManager = catalogManager;
-	}
+    @Override
+    protected void applyRestrictions(Criteria criteria, ArticleContext context) {
+        if (context != null && context.getCategory() != null) {
+            criteria.add(Restrictions.eq("categoryId", context.getCategory().getId()));
+        }
+    }
+
+    public void setCatalogManager(CategoryManager catalogManager) {
+        this.catalogManager = catalogManager;
+    }
+
+
+    public void setAttributeManager(AttributeManager attributeManager) {
+        this.attributeManager = attributeManager;
+    }
 }

@@ -1,9 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Attribute;
-import billiongoods.server.warehouse.Catalog;
-import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.CategoryManager;
+import billiongoods.server.warehouse.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,6 +17,7 @@ import java.util.*;
  */
 public class HibernateCategoryManager implements CategoryManager, InitializingBean {
     private SessionFactory sessionFactory;
+    private AttributeManager attributeManager;
 
     private final DefaultCatalog catalog = new DefaultCatalog();
     private final Map<Integer, HibernateCategory> categoryMap = new HashMap<>();
@@ -48,7 +46,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 
         final List<Category> rootCategories = new ArrayList<>();
         for (HibernateCategory category : categoryMap.values()) {
-            category.postInit();
+            category.initialize(attributeManager);
 
             if (category.getParent() == null) {
                 rootCategories.add(category);
@@ -72,54 +70,51 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public Category addCategory(String name, Category parent) {
+    public Category addCategory(String name, String description, Set<Attribute> attributes, Category parent) {
         final Session session = sessionFactory.getCurrentSession();
 
         final HibernateCategory p = (HibernateCategory) parent;
-        final HibernateCategory i = new HibernateCategory(name, p);
+
+        final HibernateCategory i = new HibernateCategory(name, description, p);
+        if (attributes != null) {
+            for (Attribute attribute : attributes) {
+                i.addAttribute(attribute);
+            }
+        }
+
         session.save(i);
+        session.evict(i);
+        categoryMap.put(i.getId(), i);
         return i;
     }
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
-    public Category removeCategory(Category item, Category newParent) {
-/*
+    public void addAttribute(Category category, Attribute attribute) {
         final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateCategory hItem = (HibernateCategory) item;
-		final HibernateCategory hNewParent = (HibernateCategory) newParent;
-
-		session.delete(hItem);
-		for (Category ci : new ArrayList<>(hItem.getChildren())) {
-			final HibernateCategory hci = (HibernateCategory) ci;
-			hci.removeFromParent();
-			hNewParent.addChild(hci);
-		}
-//        session.update(hNewParent);
-		hItem.removeFromParent();
-*/
-        return item;
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void addAttribute(Category category, Attribute attribute) {
-        HibernateCategory hc = (HibernateCategory) category;
-        hc.addAttribute(attribute);
-        sessionFactory.getCurrentSession().update(hc);
-
+        final HibernateCategory hibernateCategory = categoryMap.get(category.getId());
+        hibernateCategory.addAttribute(attribute);
+        session.merge(hibernateCategory);
+        session.evict(hibernateCategory);
     }
 
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
     public void removeAttribute(Category category, Attribute attribute) {
-        HibernateCategory hc = (HibernateCategory) category;
-        hc.removeAttribute(attribute);
-        sessionFactory.getCurrentSession().update(hc);
+        final Session session = sessionFactory.getCurrentSession();
+
+        final HibernateCategory hibernateCategory = categoryMap.get(category.getId());
+        hibernateCategory.removeAttribute(attribute);
+        session.merge(hibernateCategory);
+        session.evict(hibernateCategory);
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public void setAttributeManager(AttributeManager attributeManager) {
+        this.attributeManager = attributeManager;
     }
 }

@@ -1,6 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
 import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Genealogy;
 
@@ -36,15 +37,12 @@ public class HibernateCategory implements Category {
     @Column(name = "active")
     private boolean active;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            targetEntity = HibernateAttribute.class)
-    @JoinTable(
-            name = "store_category_attr",
-            joinColumns = @JoinColumn(name = "attributeId"),
-            inverseJoinColumns = @JoinColumn(name = "categoryId")
-    )
+    @Column(name = "attributeId")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "store_category_attribute", joinColumns = @JoinColumn(name = "categoryId"))
+    private Set<Integer> attributeIds = new HashSet<>();
+
+    @Transient
     private Set<Attribute> attributes = new HashSet<>();
 
     @Transient
@@ -59,8 +57,9 @@ public class HibernateCategory implements Category {
     protected HibernateCategory() {
     }
 
-    protected HibernateCategory(String name, HibernateCategory parent) {
+    protected HibernateCategory(String name, String description, HibernateCategory parent) {
         this.name = name;
+        this.description = description;
         if (parent != null) {
             this.parentId = parent.id;
             preInit(parent);
@@ -149,32 +148,27 @@ public class HibernateCategory implements Category {
         parentCategory.children.add(this);
     }
 
-    void postInit() {
+    void initialize(AttributeManager attributeManager) {
         Collections.sort(children, COMPARATOR);
-    }
 
-    String toString(int depth) {
-        final StringBuilder b = new StringBuilder();
-        toString(0, depth, b, "   ");
-        return b.toString();
-    }
-
-    private void toString(int level, int depth, StringBuilder b, String spaces) {
-        if (level >= depth) {
-            return;
-        }
-
-        for (Category child : children) {
-            for (int i = 0; i < level; i++) {
-                b.append(spaces);
+        for (Integer attributeId : attributeIds) {
+            final Attribute attribute = attributeManager.getAttribute(attributeId);
+            if (attribute == null) {
+                throw new IllegalStateException("Unknown attribute with id: " + attributeId);
             }
-
-            b.append(child.toString());
-
-            toString(level + 1, depth, b, spaces);
+            attributes.add(attribute);
         }
     }
 
+    void addAttribute(Attribute attribute) {
+        attributeIds.add(attribute.getId());
+        attributes.add(attribute);
+    }
+
+    void removeAttribute(Attribute attribute) {
+        attributeIds.remove(attribute.getId());
+        attributes.remove(attribute);
+    }
 
     static final Comparator<Category> COMPARATOR = new Comparator<Category>() {
         @Override
@@ -186,13 +180,5 @@ public class HibernateCategory implements Category {
     @Override
     public String toString() {
         return "HibernateCategory{" + "id=" + id + ", parentId=" + parentId + ", name='" + name + '\'' + ", position=" + position + ", active=" + active + ", childrenCount=" + children.size() + '}';
-    }
-
-    void addAttribute(Attribute attribute) {
-        attributes.add(attribute);
-    }
-
-    void removeAttribute(Attribute attribute) {
-        attributes.remove(attribute);
     }
 }

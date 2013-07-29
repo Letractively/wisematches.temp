@@ -1,6 +1,5 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
-import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,27 +23,13 @@ public class AttributeMaintainController extends AbstractController {
 
     @RequestMapping("view")
     public String viewAttributes(Model model) {
-        model.addAttribute("attributes", attributeManager.searchEntities(null, null, null));
+        model.addAttribute("attributes", attributeManager.getAttributes());
         return "/content/maintain/attrs";
     }
-
 
     @RequestMapping("add")
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String addAttribute(@RequestParam("n") String name, @RequestParam("u") String unit, Model model) {
-        final Attribute attribute = attributeManager.addAttribute(name, unit);
-        model.addAttribute("attributes", attributeManager.searchEntities(null, null, null));
-        return "redirect:/maintain/attributes/view";
-    }
-
-    @RequestMapping("remove")
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public String removeAttribute(@RequestParam("i") Integer id, Model model) {
-        final Attribute attribute = attributeManager.getAttribute(id);
-        if (attribute != null) {
-            attributeManager.removeAttribute(attribute);
-        }
-        model.addAttribute("attributes", attributeManager.searchEntities(null, null, null));
         return "redirect:/maintain/attributes/view";
     }
 

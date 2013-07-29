@@ -1,15 +1,10 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Article;
-import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.Character;
-import billiongoods.server.warehouse.Option;
+import billiongoods.server.warehouse.*;
 import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -17,76 +12,115 @@ import java.util.List;
 @Entity
 @Table(name = "store_article")
 public class HibernateArticle extends AbstractArticleDescription implements Article {
-	@Column(name = "soldCount")
-	private int soldCount;
+    @Column(name = "soldCount")
+    private int soldCount;
 
-	@Column(name = "description")
-	private String description;
+    @Column(name = "description")
+    private String description;
 
-	@Column(name = "imageId")
-	@IndexColumn(name = "order")
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "store_article_image", joinColumns = @JoinColumn(name = "aid"))
-	private List<String> imageIds = new ArrayList<>();
+    @Column(name = "imageId")
+    @IndexColumn(name = "order")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "store_article_image", joinColumns = @JoinColumn(name = "articleId"))
+    private List<String> imageIds = new ArrayList<>();
 
-	@Column(name = "accessoryId")
-	@IndexColumn(name = "order")
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "store_article_accessories", joinColumns = @JoinColumn(name = "aid"))
-	private List<Long> accessories = new ArrayList<>();
+    @Column(name = "accessoryId")
+    @IndexColumn(name = "order")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "store_article_accessory", joinColumns = @JoinColumn(name = "articleId"))
+    private List<Long> accessories = new ArrayList<>();
 
-	@Embedded
-	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
+    @IndexColumn(name = "order")
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
+    @CollectionTable(name = "store_article_option", joinColumns = @JoinColumn(name = "articleId"))
+    private List<HibernateArticleProperty> optionIds = new ArrayList<>();
 
-	public HibernateArticle() {
-	}
+    @IndexColumn(name = "order")
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
+    @CollectionTable(name = "store_article_property", joinColumns = @JoinColumn(name = "articleId"))
+    private List<HibernateArticleProperty> propertyIds = new ArrayList<>();
 
-	public HibernateArticle(String name, boolean active, Category category, float sellPrice, float sellDiscount, Date restockDate, Date registrationDate, int soldCount, HibernateSupplierInfo supplierInfo) {
-		super(name, active, category, sellPrice, sellDiscount, restockDate, registrationDate);
-		this.soldCount = soldCount;
-		this.supplierInfo = supplierInfo;
-	}
+    @Transient
+    private List<Option> options = new ArrayList<>();
 
-	@Override
-	public int getSoldCount() {
-		return soldCount;
-	}
+    @Transient
+    private List<Property> properties = new ArrayList<>();
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Embedded
+    private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
 
-	@Override
-	public List<Option> geOptions() {
-		return null;
-	}
+    public HibernateArticle() {
+    }
 
-	@Override
-	public List<String> getImageIds() {
-		return imageIds;
-	}
+    public HibernateArticle(String name, String description, HibernateSupplierInfo supplierInfo, float price, Float primordialPrice, Category category, Date restockDate, boolean active) {
+        super(name, price, primordialPrice, category, restockDate, active);
+        this.description = description;
+        this.supplierInfo = supplierInfo;
+    }
 
-	@Override
-	public List<Long> getAccessories() {
-		return accessories;
-	}
+    @Override
+    public int getSoldCount() {
+        return soldCount;
+    }
 
-	@Override
-	public List<Character> getCharacters() {
-		return null;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	@Override
-	public HibernateSupplierInfo getSupplierInfo() {
-		return supplierInfo;
-	}
+    @Override
+    public List<Option> getOptions() {
+        return options;
+    }
 
-	void incrementSoldCount() {
-		this.soldCount++;
-	}
+    @Override
+    public List<String> getImageIds() {
+        return imageIds;
+    }
 
-	void setDescription(String description) {
-		this.description = description;
-	}
+    @Override
+    public List<Long> getAccessories() {
+        return accessories;
+    }
+
+    @Override
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    @Override
+    public HibernateSupplierInfo getSupplierInfo() {
+        return supplierInfo;
+    }
+
+    void incrementSoldCount() {
+        this.soldCount++;
+    }
+
+    void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    void initialize(CategoryManager manager, AttributeManager attributeManager) {
+        super.initialize(manager, attributeManager);
+
+        final Map<Integer, List<String>> values = new HashMap<>();
+        for (HibernateArticleProperty optionId : optionIds) {
+            List<String> strings = values.get(optionId.getAttributeId());
+            if (strings == null) {
+                strings = new ArrayList<>(4);
+                values.put(optionId.getAttributeId(), strings);
+            }
+            strings.add(optionId.getValue());
+        }
+
+        for (Map.Entry<Integer, List<String>> entry : values.entrySet()) {
+            options.add(new Option(attributeManager.getAttribute(entry.getKey()), entry.getValue()));
+        }
+
+        for (HibernateArticleProperty propertyId : propertyIds) {
+            properties.add(new Property(attributeManager.getAttribute(propertyId.getAttributeId()), propertyId.getValue()));
+        }
+    }
 }

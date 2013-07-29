@@ -26,11 +26,13 @@
 
     <bean id="catalogManager" class="billiongoods.server.warehouse.impl.HibernateCategoryManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
     <bean id="articleManager" class="billiongoods.server.warehouse.impl.HibernateArticleManager">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="catalogManager" ref="catalogManager"/>
+        <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
     <!--

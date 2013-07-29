@@ -21,7 +21,8 @@ public class HibernateAttribute implements Attribute {
     @Column(name = "unit")
     private String unit;
 
-    public HibernateAttribute() {
+    @Deprecated
+    HibernateAttribute() {
     }
 
     public HibernateAttribute(String name, String unit) {
@@ -29,7 +30,8 @@ public class HibernateAttribute implements Attribute {
         this.unit = unit;
     }
 
-    Integer getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
@@ -41,5 +43,28 @@ public class HibernateAttribute implements Attribute {
     @Override
     public String getUnit() {
         return unit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HibernateAttribute that = (HibernateAttribute) o;
+        return !(id != null ? !id.equals(that.id) : that.id != null);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "HibernateAttribute{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", unit='" + unit + '\'' +
+                '}';
     }
 }

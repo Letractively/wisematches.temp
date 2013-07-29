@@ -339,6 +339,190 @@ LOCK TABLES `player_notification` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `store_article`
+--
+
+DROP TABLE IF EXISTS `store_article`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_article` (
+  `id`                 INT(11)      NOT NULL AUTO_INCREMENT,
+  `name`               VARCHAR(100) NOT NULL,
+  `description`        TEXT         NOT NULL,
+  `active`             TINYINT(4) DEFAULT NULL,
+  `categoryId`         INT(11)      NOT NULL,
+  `price`              FLOAT        NOT NULL,
+  `primordialPrice`    INT(11) DEFAULT NULL,
+  `restockDate`        DATE DEFAULT NULL,
+  `registrationDate`   DATE         NOT NULL,
+  `soldCount`          INT(11) DEFAULT '0',
+  `buyPrice`           FLOAT        NOT NULL,
+  `buyPrimordialPrice` FLOAT DEFAULT NULL,
+  `referenceId`        VARCHAR(50) DEFAULT NULL,
+  `referenceCode`      VARCHAR(50) DEFAULT NULL,
+  `wholesaler`         TINYINT(4) DEFAULT NULL,
+  `validationDate`     DATETIME DEFAULT NULL,
+  `previewImageId`     VARCHAR(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE =InnoDB
+  AUTO_INCREMENT =2
+  DEFAULT CHARSET =utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_article`
+--
+
+LOCK TABLES `store_article` WRITE;
+/*!40000 ALTER TABLE `store_article` DISABLE KEYS */;
+INSERT INTO `store_article` VALUES (1, 'df', 'sdf', 1, 11, 12.5, NULL, NULL, '2013-07-22', 0, 12.4, NULL, 'sdf', 'sdf', 0, NULL, NULL);
+/*!40000 ALTER TABLE `store_article` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_article_accessory`
+--
+
+DROP TABLE IF EXISTS `store_article_accessory`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_article_accessory` (
+  `id`          INT(11)    NOT NULL AUTO_INCREMENT,
+  `articleId`   INT(11)    NOT NULL,
+  `accessoryId` INT(11)    NOT NULL,
+  `order`       TINYINT(4) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_article_accessory`
+--
+
+LOCK TABLES `store_article_accessory` WRITE;
+/*!40000 ALTER TABLE `store_article_accessory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `store_article_accessory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_article_image`
+--
+
+DROP TABLE IF EXISTS `store_article_image`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_article_image` (
+  `id`        INT(11)     NOT NULL AUTO_INCREMENT,
+  `articleId` INT(11)     NOT NULL,
+  `imageId`   VARCHAR(45) NOT NULL,
+  `order`     TINYINT(4)  NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_article_image`
+--
+
+LOCK TABLES `store_article_image` WRITE;
+/*!40000 ALTER TABLE `store_article_image` DISABLE KEYS */;
+/*!40000 ALTER TABLE `store_article_image` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_article_option`
+--
+
+DROP TABLE IF EXISTS `store_article_option`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_article_option` (
+  `id`          INT(11)    NOT NULL AUTO_INCREMENT,
+  `articleId`   INT(11)    NOT NULL,
+  `attributeId` INT(11)    NOT NULL,
+  `value`       VARCHAR(45) DEFAULT NULL,
+  `order`       TINYINT(4) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE =InnoDB
+  AUTO_INCREMENT =5
+  DEFAULT CHARSET =utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_article_option`
+--
+
+LOCK TABLES `store_article_option` WRITE;
+/*!40000 ALTER TABLE `store_article_option` DISABLE KEYS */;
+INSERT INTO `store_article_option` VALUES (3, 1, 3, 'красный', 0), (4, 1, 3, 'синий', 1);
+/*!40000 ALTER TABLE `store_article_option` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_article_property`
+--
+
+DROP TABLE IF EXISTS `store_article_property`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_article_property` (
+  `id`          INT(11)    NOT NULL AUTO_INCREMENT,
+  `articleId`   INT(11)    NOT NULL,
+  `attributeId` INT(11)    NOT NULL,
+  `value`       VARCHAR(45) DEFAULT NULL,
+  `order`       TINYINT(4) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE =InnoDB
+  AUTO_INCREMENT =3
+  DEFAULT CHARSET =utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_article_property`
+--
+
+LOCK TABLES `store_article_property` WRITE;
+/*!40000 ALTER TABLE `store_article_property` DISABLE KEYS */;
+INSERT INTO `store_article_property` VALUES (1, 1, 4, 'test', 0), (2, 1, 3, 'test2', 1);
+/*!40000 ALTER TABLE `store_article_property` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_attribute`
+--
+
+DROP TABLE IF EXISTS `store_attribute`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_attribute` (
+  `id`   INT(11)     NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(20) NOT NULL,
+  `unit` VARCHAR(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE =InnoDB
+  AUTO_INCREMENT =20
+  DEFAULT CHARSET =utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_attribute`
+--
+
+LOCK TABLES `store_attribute` WRITE;
+/*!40000 ALTER TABLE `store_attribute` DISABLE KEYS */;
+INSERT INTO `store_attribute` VALUES (2, 'время', 'секунды'), (3, 'цвет', ''), (4, 'время полета', '');
+/*!40000 ALTER TABLE `store_attribute` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `store_category`
 --
 
@@ -346,14 +530,16 @@ DROP TABLE IF EXISTS `store_category`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `store_category` (
-  `id`       INT(11)    NOT NULL AUTO_INCREMENT,
-  `name`     VARCHAR(100) DEFAULT NULL,
-  `parent`   INT(11) DEFAULT NULL,
-  `position` TINYINT(4) NOT NULL,
+  `id`          INT(11)    NOT NULL AUTO_INCREMENT,
+  `name`        VARCHAR(100) DEFAULT NULL,
+  `description` TEXT,
+  `parent`      INT(11) DEFAULT NULL,
+  `position`    TINYINT(4) NOT NULL,
+  `active`      INT(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 )
   ENGINE =InnoDB
-  AUTO_INCREMENT =65
+  AUTO_INCREMENT =45
   DEFAULT CHARSET =utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -363,8 +549,34 @@ CREATE TABLE `store_category` (
 
 LOCK TABLES `store_category` WRITE;
 /*!40000 ALTER TABLE `store_category` DISABLE KEYS */;
-INSERT INTO `store_category` VALUES (1, 'Игрушки и хобби', NULL, 1), (2, 'Радиоуправляемы модели', 1, 0), (3, 'Куклы и мягкие игрушки', 1, 1), (4, 'Волшебные кубики', 1, 2), (5, 'На солнечных батареях', 1, 3), (6, 'Музыкальные инструменты', 1, 4), (7, 'Развлечения и шутки', 1, 5), (8, 'Развивающие игры', 1, 6), (9, 'Праздники и события', 1, 7), (10, 'Гаджет Игрушки', 1, 8), (11, 'Вертолеты', 2, 0), (12, 'Квадрокоптер', 2, 1), (13, 'Самолеты', 2, 2), (14, 'Машины', 2, 3), (15, 'Лодки', 2, 4), (16, 'Запчасти для вертолетов', 2, 5), (17, 'Запчасти для квадрокоптеров', 2, 6), (18, 'Запчасти для самолетов', 2, 7), (19, 'Запчасти для машин', 2, 8), (20, 'Аксессуары Apple', NULL, 0), (21, 'Аксессуары iPhone', 20, 0), (22, 'Аксессуары iPad', 20, 1), (23, 'Аксессуары iPod', 20, 2), (24, 'Аксессуары Mac', 20, 3), (25, 'Запасные части', 21, 0), (26, 'Защита экрана', 21, 1), (27, 'Автопринадлежности', 21, 2), (28, 'Зарядные устройства', 21, 3), (29, 'Докстанции и кабели', 21, 4), (30, 'Работа с SIM картами', 21, 5), (31, 'Стилусы', 21, 6), (32, 'Чехлы', 21, 7), (33, 'Динамики', 21, 8), (34, 'Наушники', 21, 9), (35, 'Пылезащитные аксессуары', 21, 10), (36, 'Игровые контроллеры', 21, 11), (37, 'Держатели', 21, 12), (38, 'Гаджеты', 21, 13), (39, 'Активные перчатки', 21, 14);
+INSERT INTO `store_category` VALUES (1, 'Игрушки и хобби', 'vfgdsf g sdg dsgf dsgf dsfg dsfg dsfg dsfg dsg dsgf df', NULL, 1, 1), (2, 'Радиоправляемы модели', NULL, 1, 0, 1), (3, 'Куклы и мягкие игрушки', NULL, 1, 1, 1), (4, 'Волшебные кубики', NULL, 1, 2, 1), (5, 'На солнечных батареях', NULL, 1, 3, 1), (6, 'Музыкальные инструменты', NULL, 1, 4, 1), (7, 'Развлечения и шутки', NULL, 1, 5, 1), (8, 'Развивающие игры', NULL, 1, 6, 1), (9, 'Праздники и события', NULL, 1, 7, 1), (10, 'Гаджет Игрушки', NULL, 1, 8, 1), (11, 'Вертолеты', NULL, 2, 0, 1), (12, 'Квадрокоптер', NULL, 2, 1, 1), (13, 'Самолеты', NULL, 2, 2, 1), (14, 'Машины', NULL, 2, 3, 1), (15, 'Лодки', NULL, 2, 4, 1), (16, 'Запчасти для вертолетов', NULL, 2, 5, 1), (17, 'Запчасти для квадрокоптеров', NULL, 2, 6, 1), (18, 'Запчасти для самолетов', NULL, 2, 7, 1), (19, 'Запчасти для машин', NULL, 2, 8, 1), (20, 'Аксессуары Apple', NULL, NULL, 0, 1), (21, 'Аксессуары iPhone', NULL, 20, 0, 1), (22, 'Аксессуары iPad', NULL, 20, 1, 1), (23, 'Аксессуары iPod', NULL, 20, 2, 1), (24, 'Аксессуары Mac', NULL, 20, 3, 1), (25, 'Запасные части', NULL, 21, 0, 1), (26, 'Защита экрана', NULL, 21, 1, 1), (27, 'Автопринадлежности', NULL, 21, 2, 1), (28, 'Зарядные устройства', NULL, 21, 3, 1), (29, 'Докстанции и кабели', NULL, 21, 4, 1), (30, 'Работа с SIM картами', NULL, 21, 5, 1), (31, 'Стилусы', NULL, 21, 6, 1), (32, 'Чехлы', NULL, 21, 7, 1), (33, 'Динамики', NULL, 21, 8, 1), (34, 'Наушники', NULL, 21, 9, 1), (35, 'Пылезащитные аксессуары', NULL, 21, 10, 1), (36, 'Игровые контроллеры', NULL, 21, 11, 1), (37, 'Держатели', NULL, 21, 12, 1), (38, 'Гаджеты', NULL, 21, 13, 1), (39, 'Активные перчатки', NULL, 21, 14, 1);
 /*!40000 ALTER TABLE `store_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_category_attribute`
+--
+
+DROP TABLE IF EXISTS `store_category_attribute`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_category_attribute` (
+  `id`          INT(11) NOT NULL AUTO_INCREMENT,
+  `categoryId`  INT(11) NOT NULL,
+  `attributeId` INT(11) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_category_attribute`
+--
+
+LOCK TABLES `store_category_attribute` WRITE;
+/*!40000 ALTER TABLE `store_category_attribute` DISABLE KEYS */;
+/*!40000 ALTER TABLE `store_category_attribute` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE = @OLD_TIME_ZONE */;
 
@@ -376,4 +588,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2013-07-22 23:53:02
+-- Dump completed on 2013-07-29 23:08:53

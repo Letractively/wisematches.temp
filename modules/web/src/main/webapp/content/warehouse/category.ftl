@@ -26,7 +26,7 @@
             <#list articles as a>
                 <div class="article">
                     <div class="image">
-                        <@bg.link.article a><@bg.ui.articleImg a a.previewImageId ImageType.PREVIEW 150/></@bg.link.article>
+                        <@bg.link.article a><@bg.ui.articleImg a a.previewImageId!"" ImageType.PREVIEW 150/></@bg.link.article>
                     </div>
                     <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
                     <div class="price"><@bg.ui.price a.price/></div>

@@ -1,5 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.Category;
 import org.hibernate.SessionFactory;
@@ -12,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -21,11 +23,15 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
         "classpath:/config/properties-config.xml",
-        "classpath:/config/database-config.xml"
+        "classpath:/config/database-config.xml",
+        "classpath:/config/billiongoods-config.xml"
 })
 public class HibernateCategoryManagerTest {
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    private AttributeManager attributeManager;
 
     public HibernateCategoryManagerTest() {
     }
@@ -34,34 +40,28 @@ public class HibernateCategoryManagerTest {
     public void test() throws Exception {
         final HibernateCategoryManager manager = new HibernateCategoryManager();
         manager.setSessionFactory(sessionFactory);
+        manager.setAttributeManager(attributeManager);
         manager.afterPropertiesSet();
 
         final Catalog catalog = manager.getCatalog();
         assertNotNull(catalog);
 
+        final Category category = manager.addCategory("mockC", "mockD", null, null);
+        assertNotNull(category);
+
+        assertSame(category, manager.getCategory(category.getId()));
+
+        final Attribute attribute = attributeManager.addAttribute("mock", "muck");
+        manager.addAttribute(category, attribute);
+
+        assertEquals(1, category.getAttributes().size());
+        assertTrue(category.getAttributes().contains(attribute));
+
+        manager.removeAttribute(category, attribute);
+        assertEquals(0, category.getAttributes().size());
+        assertFalse(category.getAttributes().contains(attribute));
+
         dumpCategory(catalog.getRootCategories(), "");
-
-//		final int size = catalog.getChildren().size();
-//		System.out.println(size);
-
-/*
-        final Category t1 = manager.addCategory("Test1", null);
-		final Category t2 = manager.addCategory("Test2", null);
-
-		final Category c1 = manager.addCategory("Child1", t1);
-		final Category c2 = manager.addCategory("Child2", t1);
-
-		assertEquals(size + 2, catalog.getChildren().size());
-		assertSame(t1, c1.getParent());
-		assertSame(t1, c2.getParent());
-
-		manager.removeCategory(t1, t2);
-		assertEquals(size + 1, catalog.getChildren().size());
-		assertSame(t2, c1.getParent());
-		assertSame(t2, c2.getParent());
-
-		assertEquals(0, t1.getChildren().size());
-*/
     }
 
     private void dumpCategory(List<Category> catalog, String s) {
