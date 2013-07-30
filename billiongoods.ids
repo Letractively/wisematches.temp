@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Data Source" product="MySQL" version="5.5.24" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.21 ( Revision: ${bzr.revision-id} )" uuid="e0c38fe3-49da-41a4-83b9-aa5ed9ff72b5">
+    <extra-name-characters>#@</extra-name-characters>
+    <identifier-quote-string>`</identifier-quote-string>
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql://localhost/wisematches</jdbc-url>
+    <user-name>wisematches</user-name>
+    <user-password>dfdedfcfdfd9dfde</user-password>
+    <libraries>
+      <library>
+        <url>jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar!/</url>
+      </library>
+    </libraries>
+  </data-source>
+</component>
