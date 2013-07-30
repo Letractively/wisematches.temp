@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <name>GameServices</name>
+    <name>WarehouseServices</name>
     <packaging>jar</packaging>
 
     <artifactId>services</artifactId>
@@ -23,30 +23,6 @@
             <groupId>billiongoods</groupId>
             <artifactId>core</artifactId>
             <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>billiongoods</groupId>
-            <artifactId>gameplay</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>billiongoods</groupId>
-            <artifactId>scribble</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1.1</version>
         </dependency>
     </dependencies>
 </project>
