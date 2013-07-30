@@ -6,12 +6,15 @@ import java.util.Collection;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface AttributeManager {
-    Attribute getAttribute(Integer id);
-
-    Collection<Attribute> getAttributes();
+	Attribute getAttribute(Integer id);
 
 
-    Attribute addAttribute(String name, String unit);
+	Attribute createAttribute(String name, String unit);
 
-    Attribute removeAttribute(Integer id);
+	Attribute updateAttribute(Integer id, String name, String unit);
+
+
+	Collection<Attribute> getAttributes();
+
+	Collection<Attribute> getAttributes(String name);
 }

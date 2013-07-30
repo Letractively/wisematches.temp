@@ -1,6 +1,5 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.Category;
@@ -14,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -22,53 +22,43 @@ import static org.junit.Assert.*;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath:/config/properties-config.xml",
-        "classpath:/config/database-config.xml",
-        "classpath:/config/billiongoods-config.xml"
+		"classpath:/config/properties-config.xml",
+		"classpath:/config/database-config.xml",
+		"classpath:/config/billiongoods-config.xml"
 })
 public class HibernateCategoryManagerTest {
-    @Autowired
-    private SessionFactory sessionFactory;
+	@Autowired
+	private SessionFactory sessionFactory;
 
-    @Autowired
-    private AttributeManager attributeManager;
+	@Autowired
+	private AttributeManager attributeManager;
 
-    public HibernateCategoryManagerTest() {
-    }
+	public HibernateCategoryManagerTest() {
+	}
 
-    @Test
-    public void test() throws Exception {
-        final HibernateCategoryManager manager = new HibernateCategoryManager();
-        manager.setSessionFactory(sessionFactory);
-        manager.setAttributeManager(attributeManager);
-        manager.afterPropertiesSet();
+	@Test
+	public void test() throws Exception {
+		final HibernateCategoryManager manager = new HibernateCategoryManager();
+		manager.setSessionFactory(sessionFactory);
+		manager.setAttributeManager(attributeManager);
+		manager.afterPropertiesSet();
 
-        final Catalog catalog = manager.getCatalog();
-        assertNotNull(catalog);
+		final Catalog catalog = manager.getCatalog();
+		assertNotNull(catalog);
 
-        final Category category = manager.addCategory("mockC", "mockD", null, null);
-        assertNotNull(category);
+		final Category category = manager.createCategory("mockC", "mockD", null, null, 0);
+		assertNotNull(category);
 
-        assertSame(category, manager.getCategory(category.getId()));
+		assertSame(category, manager.getCategory(category.getId()));
 
-        final Attribute attribute = attributeManager.addAttribute("mock", "muck");
-        manager.addAttribute(category, attribute);
+		dumpCategory(catalog.getRootCategories(), "");
+	}
 
-        assertEquals(1, category.getAttributes().size());
-        assertTrue(category.getAttributes().contains(attribute));
+	private void dumpCategory(List<Category> catalog, String s) {
+		for (Category category : catalog) {
+			System.out.println(s + category);
 
-        manager.removeAttribute(category, attribute);
-        assertEquals(0, category.getAttributes().size());
-        assertFalse(category.getAttributes().contains(attribute));
-
-        dumpCategory(catalog.getRootCategories(), "");
-    }
-
-    private void dumpCategory(List<Category> catalog, String s) {
-        for (Category category : catalog) {
-            System.out.println(s + category);
-
-            dumpCategory(category.getChildren(), s + "   ");
-        }
-    }
+			dumpCategory(category.getChildren(), s + "   ");
+		}
+	}
 }

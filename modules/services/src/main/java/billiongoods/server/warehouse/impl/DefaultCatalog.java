@@ -23,4 +23,12 @@ public class DefaultCatalog implements Catalog {
 	public void setRootCategories(List<Category> rootCategories) {
 		this.rootCategories = rootCategories;
 	}
+
+	public void addRootCategory(HibernateCategory i) {
+		rootCategories.add(i);
+	}
+
+	public void removeRootCategory(HibernateCategory hc) {
+		rootCategories.remove(hc);
+	}
 }

@@ -17,44 +17,35 @@ import static org.junit.Assert.*;
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath:/config/properties-config.xml",
-        "classpath:/config/database-config.xml",
-        "classpath:/config/billiongoods-config.xml"
+		"classpath:/config/properties-config.xml",
+		"classpath:/config/database-config.xml",
+		"classpath:/config/billiongoods-config.xml"
 })
 public class HibernateAttributeManagerTest {
-    @Autowired
-    private SessionFactory sessionFactory;
+	@Autowired
+	private SessionFactory sessionFactory;
 
-    public HibernateAttributeManagerTest() {
-    }
+	public HibernateAttributeManagerTest() {
+	}
 
-    @Test
-    public void test() throws Exception {
-        final HibernateAttributeManager manager = new HibernateAttributeManager();
-        manager.setSessionFactory(sessionFactory);
-        manager.afterPropertiesSet();
+	@Test
+	public void test() throws Exception {
+		final HibernateAttributeManager manager = new HibernateAttributeManager();
+		manager.setSessionFactory(sessionFactory);
+		manager.afterPropertiesSet();
 
-        final Attribute attr1 = manager.addAttribute("mock", "muck");
-        assertNotNull(attr1);
+		final Attribute attr1 = manager.createAttribute("mock", "muck");
+		assertNotNull(attr1);
 
-        assertSame(attr1, manager.getAttribute(attr1.getId()));
-        assertTrue(manager.getAttributes().contains(attr1));
+		assertSame(attr1, manager.getAttribute(attr1.getId()));
+		assertTrue(manager.getAttributes().contains(attr1));
 
-        final Attribute attr2 = manager.getAttribute(attr1.getId());
-        assertNotNull(attr2);
-        assertEquals(attr1.getName(), attr2.getName());
-        assertEquals(attr1.getUnit(), attr2.getUnit());
+		final Attribute attr2 = manager.getAttribute(attr1.getId());
+		assertNotNull(attr2);
+		assertEquals(attr1.getName(), attr2.getName());
+		assertEquals(attr1.getUnit(), attr2.getUnit());
 
-        assertTrue(manager.getAttributes().contains(attr1));
-        assertTrue(manager.getAttributes().contains(attr2));
-
-        manager.removeAttribute(attr1.getId());
-        assertNull(manager.getAttribute(attr1.getId()));
-        assertFalse(manager.getAttributes().contains(attr1));
-        assertFalse(manager.getAttributes().contains(attr2));
-
-        assertNull(manager.getAttribute(attr1.getId()));
-        assertFalse(manager.getAttributes().contains(attr1));
-        assertFalse(manager.getAttributes().contains(attr2));
-    }
+		assertTrue(manager.getAttributes().contains(attr1));
+		assertTrue(manager.getAttributes().contains(attr2));
+	}
 }

@@ -14,171 +14,208 @@ import java.util.*;
 @Entity
 @Table(name = "store_category")
 public class HibernateCategory implements Category {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
-    @Column(name = "parent")
-    private Integer parentId;
+	@Column(name = "parent")
+	private Integer parentId;
 
-    @Transient
-    private int level = -1;
+	@Transient
+	private int level = -1;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "description")
-    private String description;
+	@Column(name = "description")
+	private String description;
 
-    @Column(name = "position")
-    private int position;
+	@Column(name = "position")
+	private int position;
 
-    @Column(name = "active")
-    private boolean active;
+	@Column(name = "active")
+	private boolean active;
 
-    @Column(name = "attributeId")
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "store_category_attribute", joinColumns = @JoinColumn(name = "categoryId"))
-    private Set<Integer> attributeIds = new HashSet<>();
+	@Column(name = "attributeId")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "store_category_attribute", joinColumns = @JoinColumn(name = "categoryId"))
+	private Set<Integer> attributeIds = new HashSet<>();
 
-    @Transient
-    private Set<Attribute> attributes = new HashSet<>();
+	@Transient
+	private Set<Attribute> attributes = new HashSet<>();
 
-    @Transient
-    private transient Genealogy genealogy;
+	@Transient
+	private transient Genealogy genealogy;
 
-    @Transient
-    private transient HibernateCategory parent;
+	@Transient
+	private transient HibernateCategory parent;
 
-    @Transient
-    private transient List<Category> children = new ArrayList<>();
+	@Transient
+	private transient List<Category> children = new ArrayList<>();
 
-    protected HibernateCategory() {
-    }
+	protected HibernateCategory() {
+	}
 
-    protected HibernateCategory(String name, String description, HibernateCategory parent) {
-        this.name = name;
-        this.description = description;
-        if (parent != null) {
-            this.parentId = parent.id;
-            preInit(parent);
-        }
-    }
+	protected HibernateCategory(String name, String description, HibernateCategory parent, int position, Set<Attribute> attributes) {
+		this.name = name;
+		this.description = description;
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
+		if (parent != null) {
+			this.parentId = parent.id;
+			preInit(parent);
+		}
+		this.position = position;
 
-    @Override
-    public int getLevel() {
-        if (level == -1) {
-            int i = 0;
-            Category p = parent;
-            while (p != null) {
-                i++;
-                p = p.getParent();
-            }
-            level = i;
-        }
-        return level;
-    }
+		setAttributes(attributes);
+	}
 
-    @Override
-    public String getName() {
-        return name;
-    }
+	@Override
+	public Integer getId() {
+		return id;
+	}
 
-    @Override
-    public String getDescription() {
-        return description;
-    }
+	@Override
+	public int getLevel() {
+		if (level == -1) {
+			int i = 0;
+			Category p = parent;
+			while (p != null) {
+				i++;
+				p = p.getParent();
+			}
+			level = i;
+		}
+		return level;
+	}
 
-    @Override
-    public boolean isFinal() {
-        return children.size() == 0;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public boolean isActive() {
-        return active;
-    }
+	@Override
+	public String getDescription() {
+		return description;
+	}
 
-    @Override
-    public Category getParent() {
-        return parent;
-    }
+	@Override
+	public boolean isFinal() {
+		return children.size() == 0;
+	}
 
-    @Override
-    public Genealogy getGenealogy() {
-        if (genealogy == null) {
-            genealogy = new Genealogy(this);
-        }
-        return genealogy;
-    }
+	@Override
+	public boolean isActive() {
+		return active;
+	}
 
-    @Override
-    public List<Category> getChildren() {
-        return children;
-    }
+	@Override
+	public Category getParent() {
+		return parent;
+	}
 
-    @Override
-    public Set<Attribute> getAttributes() {
-        return attributes;
-    }
+	@Override
+	public Genealogy getGenealogy() {
+		if (genealogy == null) {
+			genealogy = new Genealogy(this);
+		}
+		return genealogy;
+	}
 
-    int getPosition() {
-        return position;
-    }
+	@Override
+	public List<Category> getChildren() {
+		return children;
+	}
 
-    Integer getParentId() {
-        return parentId;
-    }
+	@Override
+	public Set<Attribute> getAttributes() {
+		return attributes;
+	}
 
-    void preInit(HibernateCategory parentCategory) {
-        if (parentCategory == null && this.parentId == null) {
-            return;
-        }
+	int getPosition() {
+		return position;
+	}
 
-        if (parentCategory == null || this.parentId == null || !parentCategory.id.equals(this.parentId)) {
-            throw new IllegalArgumentException("Incorrect parent id");
-        }
-        this.parent = parentCategory;
-        parentCategory.children.add(this);
-    }
+	Integer getParentId() {
+		return parentId;
+	}
 
-    void initialize(AttributeManager attributeManager) {
-        Collections.sort(children, COMPARATOR);
+	void preInit(HibernateCategory parentCategory) {
+		if (parentCategory == null && this.parentId == null) {
+			return;
+		}
 
-        for (Integer attributeId : attributeIds) {
-            final Attribute attribute = attributeManager.getAttribute(attributeId);
-            if (attribute == null) {
-                throw new IllegalStateException("Unknown attribute with id: " + attributeId);
-            }
-            attributes.add(attribute);
-        }
-    }
+		if (parentCategory == null || this.parentId == null || !parentCategory.id.equals(this.parentId)) {
+			throw new IllegalArgumentException("Incorrect parent id");
+		}
+		this.parent = parentCategory;
+		parentCategory.children.add(this);
+	}
 
-    void addAttribute(Attribute attribute) {
-        attributeIds.add(attribute.getId());
-        attributes.add(attribute);
-    }
+	void initialize(AttributeManager attributeManager) {
+		Collections.sort(children, COMPARATOR);
 
-    void removeAttribute(Attribute attribute) {
-        attributeIds.remove(attribute.getId());
-        attributes.remove(attribute);
-    }
+		for (Integer attributeId : attributeIds) {
+			final Attribute attribute = attributeManager.getAttribute(attributeId);
+			if (attribute == null) {
+				throw new IllegalStateException("Unknown attribute with id: " + attributeId);
+			}
+			attributes.add(attribute);
+		}
+	}
 
-    static final Comparator<Category> COMPARATOR = new Comparator<Category>() {
-        @Override
-        public int compare(Category o1, Category o2) {
-            return ((HibernateCategory) o1).position - ((HibernateCategory) o2).position;
-        }
-    };
+	void setName(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public String toString() {
-        return "HibernateCategory{" + "id=" + id + ", parentId=" + parentId + ", name='" + name + '\'' + ", position=" + position + ", active=" + active + ", childrenCount=" + children.size() + '}';
-    }
+	void setDescription(String description) {
+		this.description = description;
+	}
+
+	void setPosition(int position) {
+		this.position = position;
+	}
+
+	void setActive(boolean active) {
+		this.active = active;
+	}
+
+	void setParent(HibernateCategory parent) {
+		if (this.parent != null) {
+			this.parent.children.remove(this);
+		}
+
+		this.parent = parent;
+
+		if (this.parent != null) {
+			this.parentId = parent.getId();
+			this.parent.children.add(this);
+		} else {
+			this.parentId = null;
+		}
+	}
+
+	void setAttributes(Set<Attribute> attributes) {
+		this.attributes.clear();
+		this.attributeIds.clear();
+
+		if (attributes != null) {
+			for (Attribute attribute : attributes) {
+				this.attributes.add(attribute);
+				this.attributeIds.add(attribute.getId());
+			}
+		}
+	}
+
+	static final Comparator<Category> COMPARATOR = new Comparator<Category>() {
+		@Override
+		public int compare(Category o1, Category o2) {
+			return ((HibernateCategory) o1).position - ((HibernateCategory) o2).position;
+		}
+	};
+
+	@Override
+	public String toString() {
+		return "HibernateCategory{" + "id=" + id + ", parentId=" + parentId + ", name='" + name + '\'' + ", position=" + position + ", active=" + active + ", childrenCount=" + children.size() + '}';
+	}
 }

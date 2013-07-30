@@ -22,7 +22,6 @@
 <#macro price v><span class="us"><@usd v/></span>
 <span class="rub">(~<@rub priceConverter.convertPrice(v)/>)</span></#macro>
 
-<#--
 <#macro bind path>
     <@spring.bind path/>
 
@@ -55,6 +54,7 @@
     </@field>
 </#macro>
 
+<#--
 <#macro widget title id="" class="" style="" help="" hidden=false>
 <div class="ui-widget<#if class?has_content> ${class}</#if> <#if hidden>ui-helper-hidden</#if>"
      <#if style?has_content>style="${style}"</#if>>

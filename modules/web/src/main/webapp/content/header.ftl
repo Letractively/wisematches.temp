@@ -13,12 +13,14 @@
         </td>
 
         <td align="right" valign="middle">
-            <div class="table-cell header-welcome">
-                Добро Пожаловать!
-                <a class="highlight" href="/account/login">Войти</a>
-                или
-                <a class="highlight" href="/account/register">Зарегистрироваться</a>
-            </div>
+        <#--
+                    <div class="table-cell header-welcome">
+                        Добро Пожаловать!
+                        <a class="highlight" href="/account/login">Войти</a>
+                        или
+                        <a class="highlight" href="/account/register">Зарегистрироваться</a>
+                    </div>
+        -->
 
             <div class="table-cell header-links">
                 <div><a href="/warehouse/tracking">Отслеживание заказов</a></div>
