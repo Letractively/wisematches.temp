@@ -1,5 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.warehouse.Attribute;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -8,28 +10,33 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class HibernateArticleProperty {
-    @Column(name = "attributeId")
-    private Integer attributeId;
+	@Column(name = "attributeId")
+	private Integer attributeId;
 
-    @Column(name = "value")
-    private String value;
+	@Column(name = "value")
+	private String value;
 
-    public HibernateArticleProperty() {
-    }
+	public HibernateArticleProperty() {
+	}
 
-    public Integer getAttributeId() {
-        return attributeId;
-    }
+	public HibernateArticleProperty(Attribute attribute, String value) {
+		this.attributeId = attribute.getId();
+		this.value = value;
+	}
 
-    public void setAttributeId(Integer attributeId) {
-        this.attributeId = attributeId;
-    }
+	public Integer getAttributeId() {
+		return attributeId;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public void setAttributeId(Integer attributeId) {
+		this.attributeId = attributeId;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

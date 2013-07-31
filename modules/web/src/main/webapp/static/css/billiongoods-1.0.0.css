@@ -387,26 +387,21 @@ span.dot {
 }
 
 .content .assistance {
-    float: left;
-    padding: 10px;
     margin-top: 5px;
     border: 1px solid #ebebeb;
 }
 
 .content .assistance .tit {
-    color: #f00;
+    color: #c3692c;
     font-weight: bold;
-    font-size: larger;
-    padding-bottom: 10px;
+    font-size: x-large;
+    padding: 10px;
     border-bottom: 1px solid #ebebeb;
 }
 
 .content .assistance .toc, .content .assistance .cnt {
-    margin: 0;
-    float: left;
-    width: 100%;
-    padding: 10px 0 10px 0;
-
+    padding: 0;
+    margin: 10px;
 }
 
 .content .assistance .toc, .content .assistance .cnt li {
@@ -416,7 +411,6 @@ span.dot {
 
 .content .assistance .toc li {
     width: 50%;
-    float: left;
     height: 22px;
     padding-top: 2px;
     padding-bottom: 2px;
@@ -436,12 +430,7 @@ span.dot {
 }
 
 .table-view {
-    width: 100%;
     border: 1px solid #ebebeb;
-}
-
-.table-view, .table-pages, .table-filters, .table-content, .grid, .article {
-    float: left;
 }
 
 .table-content {
@@ -493,4 +482,13 @@ span.dot {
 
 .table-controls {
     float: right;
+}
+
+.navigation.maintain {
+    border: 1px solid #ebebeb;
+}
+
+.error-msg {
+    color: red;
+    font-weight: bold;
 }

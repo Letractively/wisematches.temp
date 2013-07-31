@@ -1,6 +1,6 @@
 <#include "/core.ftl"/>
 
-<#assign pages=["about", "advantage", "payment", "paypal", "shipping", "warranty"]/>
+<#assign pages=["about", "advantage", "shipping", "warranty", "payment", "paypal"]/>
 
 <div class="navigation assistance">
     <div class="title">Центр Поддержки</div>
