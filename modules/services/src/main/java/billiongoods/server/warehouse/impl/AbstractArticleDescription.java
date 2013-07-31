@@ -13,140 +13,131 @@ import java.util.Date;
  */
 @MappedSuperclass
 public class AbstractArticleDescription implements ArticleDescription {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "active")
-    private boolean active;
+	@Column(name = "active")
+	private boolean active;
 
-    @Column(name = "categoryId")
-    private Integer categoryId;
+	@Column(name = "categoryId")
+	private Integer categoryId;
 
-    @Transient
-    private Category category;
+	@Transient
+	private Category category;
 
-    @Column(name = "price")
-    private float price;
+	@Column(name = "price")
+	private float price;
 
-    @Column(name = "primordialPrice")
-    private Float primordialPrice;
+	@Column(name = "primordialPrice")
+	private Float primordialPrice;
 
-    @Column(name = "restockDate")
-    private Date restockDate;
+	@Column(name = "restockDate")
+	private Date restockDate;
 
-    @Column(name = "registrationDate")
-    private Date registrationDate;
+	@Column(name = "registrationDate")
+	private Date registrationDate;
 
-    @Column(name = "previewImageId")
-    private String previewImageId;
+	@Column(name = "previewImageId")
+	private String previewImageId;
 
-    AbstractArticleDescription() {
-    }
+	public AbstractArticleDescription() {
+		registrationDate = new Date();
+	}
 
-    public AbstractArticleDescription(String name, float price, Float primordialPrice, Category category, Date restockDate, boolean active) {
-        this.name = name;
-        this.active = active;
-        this.category = category;
-        this.categoryId = category.getId();
-        this.price = price;
-        this.primordialPrice = primordialPrice;
-        this.restockDate = restockDate;
-        this.registrationDate = registrationDate;
-    }
+	@Override
+	public Long getId() {
+		return id;
+	}
 
-    @Override
-    public Long getId() {
-        return id;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String getName() {
-        return name;
-    }
+	@Override
+	public boolean isActive() {
+		return active;
+	}
 
-    @Override
-    public boolean isActive() {
-        return active;
-    }
+	@Override
+	public Category getCategory() {
+		return category;
+	}
 
-    @Override
-    public Category getCategory() {
-        return category;
-    }
+	@Override
+	public float getPrice() {
+		return price;
+	}
 
-    @Override
-    public float getPrice() {
-        return price;
-    }
+	@Override
+	public Float getPrimordialPrice() {
+		return primordialPrice;
+	}
 
-    @Override
-    public Float getPrimordialPrice() {
-        return primordialPrice;
-    }
+	@Override
+	public Date getRestockDate() {
+		return restockDate;
+	}
 
-    @Override
-    public Date getRestockDate() {
-        return restockDate;
-    }
+	@Override
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
 
-    @Override
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
+	@Override
+	public String getPreviewImageId() {
+		return previewImageId;
+	}
 
-    @Override
-    public String getPreviewImageId() {
-        return previewImageId;
-    }
+	void setName(String name) {
+		this.name = name;
+	}
 
-    void setName(String name) {
-        this.name = name;
-    }
+	void setActive(boolean active) {
+		this.active = active;
+	}
 
-    void setActive(boolean active) {
-        this.active = active;
-    }
+	void setCategory(Category category) {
+		this.category = category;
+		this.categoryId = category.getId();
+	}
 
-    void setCategory(Category category) {
-        this.category = category;
-    }
+	public void setPrice(float price) {
+		this.price = price;
+	}
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
+	public void setPrimordialPrice(Float primordialPrice) {
+		this.primordialPrice = primordialPrice;
+	}
 
-    public void setPrimordialPrice(Float primordialPrice) {
-        this.primordialPrice = primordialPrice;
-    }
+	void setRestockDate(Date restockDate) {
+		this.restockDate = restockDate;
+	}
 
-    void setRestockDate(Date restockDate) {
-        this.restockDate = restockDate;
-    }
+	void setPreviewImageId(String previewImageId) {
+		this.previewImageId = previewImageId;
+	}
 
-    void setPreviewImageId(String previewImageId) {
-        this.previewImageId = previewImageId;
-    }
+	void initialize(CategoryManager manager, AttributeManager attributeManager) {
+		this.category = manager.getCategory(categoryId);
+	}
 
-    void initialize(CategoryManager manager, AttributeManager attributeManager) {
-        this.category = manager.getCategory(categoryId);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("AbstractArticleDescription{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", active=").append(active);
-        sb.append(", categoryId=").append(categoryId);
-        sb.append(", price=").append(price);
-        sb.append(", primordialPrice=").append(primordialPrice);
-        sb.append(", registrationDate=").append(registrationDate);
-        sb.append('}');
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("AbstractArticleDescription{");
+		sb.append("id=").append(id);
+		sb.append(", name='").append(name).append('\'');
+		sb.append(", active=").append(active);
+		sb.append(", categoryId=").append(categoryId);
+		sb.append(", price=").append(price);
+		sb.append(", primordialPrice=").append(primordialPrice);
+		sb.append(", registrationDate=").append(registrationDate);
+		sb.append('}');
+		return sb.toString();
+	}
 }

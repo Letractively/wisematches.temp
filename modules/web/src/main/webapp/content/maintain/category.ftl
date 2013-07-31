@@ -73,8 +73,8 @@
                 <td valign="top" style="padding-left: 10px">
                 <#list attributes as a>
                     <div>
-                    <input id="attribute${a.id}" type="checkbox" name="attributes" value="${a.id}"
-                           <#if category?? && category.attributes.contains(a)>checked="checked"</#if>
+                        <input id="attribute${a.id}" type="checkbox" name="attributes" value="${a.id}"
+                               <#if category?? && category.attributes.contains(a)>checked="checked"</#if>>
                         <label for="attribute${a.id}">${a.name}, ${a.unit}</label>
                     </div>
                 </#list>

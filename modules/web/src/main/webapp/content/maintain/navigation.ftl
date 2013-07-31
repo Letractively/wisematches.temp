@@ -1,4 +1,4 @@
-<div id="maintain">
+<div class="navigation maintain">
     <div>
         <a href="/maintain/attribute">Создать Атрибут</a>
     </div>
