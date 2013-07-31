@@ -164,15 +164,16 @@
       <option name="fileTypeOverride" value="3" />
     </LanguageOptions>
   </component>
-  <component name="DataSourceManagerImpl" format="xml" hash="1840151189">
-    <data-source source="LOCAL" name="Data Source" uuid="e0c38fe3-49da-41a4-83b9-aa5ed9ff72b5">
+  <component name="DataSourceManagerImpl" format="xml" hash="3208379016">
+    <data-source source="LOCAL" name="Data Source [2]" uuid="506079ea-5c7c-40ee-b36f-fd6b348bd416">
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost/wisematches</jdbc-url>
-      <user-name>wisematches</user-name>
-      <user-password>dfdedfcfdfd9dfde</user-password>
+      <jdbc-url>jdbc:mysql://billiongoods.c6pay0pjz5gn.us-east-1.rds.amazonaws.com:3306/billiongoods</jdbc-url>
+      <user-name>billiongoods</user-name>
+      <user-password>dfdedfcfdfdddfd8dfdedfd9dfcedfcddfccdfcfdfd8df92dfc3dfd3dfdfdf9ddf9adf9edf98df99dfc6dfccdfd9dfcedfcc</user-password>
+      <schema-pattern>billiongoods.*</schema-pattern>
       <libraries>
         <library>
-          <url>jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar!/</url>
+          <url>jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar!/</url>
         </library>
       </libraries>
     </data-source>

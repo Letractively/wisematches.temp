@@ -1,16 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source source="LOCAL" name="Data Source" product="MySQL" version="5.5.24" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.21 ( Revision: ${bzr.revision-id} )" uuid="e0c38fe3-49da-41a4-83b9-aa5ed9ff72b5">
+  <data-source source="LOCAL" name="Data Source [2]" product="MySQL" version="5.6.12-log" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.22 ( Revision: ${bzr.revision-id} )" uuid="506079ea-5c7c-40ee-b36f-fd6b348bd416">
     <extra-name-characters>#@</extra-name-characters>
     <identifier-quote-string>`</identifier-quote-string>
     <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-    <jdbc-url>jdbc:mysql://localhost/wisematches</jdbc-url>
-    <user-name>wisematches</user-name>
-    <user-password>dfdedfcfdfd9dfde</user-password>
+    <jdbc-url>jdbc:mysql://billiongoods.c6pay0pjz5gn.us-east-1.rds.amazonaws.com:3306/billiongoods</jdbc-url>
+    <user-name>billiongoods</user-name>
+    <user-password>dfdedfcfdfdddfd8dfdedfd9dfcedfcddfccdfcfdfd8df92dfc3dfd3dfdfdf9ddf9adf9edf98df99dfc6dfccdfd9dfcedfcc</user-password>
+    <schema-pattern>billiongoods.*</schema-pattern>
     <libraries>
       <library>
-        <url>jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar!/</url>
+        <url>jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar!/</url>
       </library>
     </libraries>
+    <schema name="" catalog="billiongoods"/>
+    <table name="account_blacknames" schema="" catalog="billiongoods" type="TABLE">
+      <column name="username" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="reason" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="username"/>
+    </table>
+    <table name="account_lock" schema="" catalog="billiongoods" type="TABLE">
+      <column name="playerId" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="publicReason" sqlType="VARCHAR" length="145" precision="0" nullable="false" jdbcType="12"/>
+      <column name="privateReason" sqlType="VARCHAR" length="145" precision="0" nullable="false" jdbcType="12"/>
+      <column name="lockDate" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <column name="unlockDate" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="playerId"/>
+      <foreign-key name="fk_user_lock_user_player" columns="playerId" ref-table="account_personality" ref-schema="" ref-catalog="billiongoods" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="userId_UNIQUE" unique="true" columns="playerId"/>
+    </table>
+    <table name="account_membership" schema="" catalog="billiongoods" type="TABLE">
+      <column name="pid" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="membership" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="expiration" sqlType="DATE" length="10" precision="0" nullable="false" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="pid"/>
+    </table>
+    <table name="account_personality" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="nickname" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" length="150" precision="0" nullable="false" jdbcType="12"/>
+      <column name="language" sqlType="CHAR" length="2" precision="0" nullable="false" jdbcType="1"/>
+      <column name="timezone" sqlType="VARCHAR" length="45" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_user_lock_user_player" table="account_lock" schema="" catalog="billiongoods" columns="id"/>
+      <index name="id_UNIQUE" unique="true" columns="id"/>
+      <index name="username_UNIQUE" unique="true" columns="nickname"/>
+      <index name="email_UNIQUE" unique="true" columns="email"/>
+    </table>
+    <table name="account_recovery" schema="" catalog="billiongoods" type="TABLE">
+      <column name="account" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="token" sqlType="VARCHAR" length="45" precision="0" nullable="false" jdbcType="12"/>
+      <column name="generated" sqlType="DATETIME" length="19" precision="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="account"/>
+    </table>
+    <table name="notification_settings" schema="" catalog="billiongoods" type="TABLE">
+      <column name="pid" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="playground.game.started" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.game.turn" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.game.finished" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.game.expiration.day" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.game.expiration.half" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.game.expiration.hour" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.challenge.initiated" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.challenge.finalized.rejected" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.challenge.finalized.repudiated" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.challenge.finalized.terminated" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.challenge.expiration.days" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.challenge.expiration.day" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.message.received" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.tourney.announced" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.tourney.finished" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="playground.dictionary.approved" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <column name="playground.dictionary.rejected" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <column name="playground.award.granted" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="pid"/>
+    </table>
+    <table name="notification_timestamp" schema="" catalog="billiongoods" type="TABLE">
+      <column name="pid" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="playground.game.started" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.turn" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.finished" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.expiration.day" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.expiration.half" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.expiration.hour" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.initiated" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.finalized.rejected" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.finalized.repudiated" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.finalized.terminated" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.expiration.days" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.expiration.day" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.message.received" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.tourney.announced" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.tourney.finished" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="pid"/>
+    </table>
+    <table name="persistent_logins" schema="" catalog="billiongoods" type="TABLE">
+      <column name="series" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12"/>
+      <column name="username" sqlType="VARCHAR" length="150" precision="0" nullable="false" jdbcType="12"/>
+      <column name="token" sqlType="VARCHAR" length="64" precision="0" nullable="false" jdbcType="12"/>
+      <column name="last_used" sqlType="TIMESTAMP" length="19" precision="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
+      <primary-key name="PRIMARY" columns="series"/>
+    </table>
+    <table name="player_activity" schema="" catalog="billiongoods" type="TABLE">
+      <column name="playerId" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="lastActivityDate" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="playerId"/>
+    </table>
+    <table name="player_notification" schema="" catalog="billiongoods" type="TABLE">
+      <column name="pid" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
+      <column name="playground.game.started" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.turn" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.finished" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.expiration.day" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.expiration.half" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.game.expiration.hour" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.initiated" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.rejected" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.repudiated" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.terminated" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.expiration.days" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.challenge.expiration.day" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.message.received" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="playground.tourney.announced" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="pid"/>
+    </table>
+    <table name="store_article" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="active" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="categoryId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="price" sqlType="FLOAT" length="12" precision="0" nullable="false" jdbcType="7"/>
+      <column name="primordialPrice" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="restockDate" sqlType="DATE" length="10" precision="0" nullable="true" jdbcType="91"/>
+      <column name="registrationDate" sqlType="DATE" length="10" precision="0" nullable="false" jdbcType="91"/>
+      <column name="soldCount" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="buyPrice" sqlType="FLOAT" length="12" precision="0" nullable="false" jdbcType="7"/>
+      <column name="buyPrimordialPrice" sqlType="FLOAT" length="12" precision="0" nullable="true" jdbcType="7"/>
+      <column name="referenceId" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <column name="referenceCode" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <column name="wholesaler" sqlType="TINYINT" length="3" precision="0" nullable="true" jdbcType="-6"/>
+      <column name="validationDate" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
+      <column name="previewImageId" sqlType="VARCHAR" length="45" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="store_article_accessory" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="articleId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="accessoryId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="order" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="store_article_image" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="articleId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="imageId" sqlType="VARCHAR" length="45" precision="0" nullable="false" jdbcType="12"/>
+      <column name="order" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="store_article_option" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="articleId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="attributeId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="value" sqlType="VARCHAR" length="45" precision="0" nullable="true" jdbcType="12"/>
+      <column name="order" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="store_article_property" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="articleId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="attributeId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="value" sqlType="VARCHAR" length="45" precision="0" nullable="true" jdbcType="12"/>
+      <column name="order" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="store_attribute" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12"/>
+      <column name="unit" sqlType="VARCHAR" length="10" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="store_category" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="100" precision="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" length="65535" precision="0" nullable="true" jdbcType="-1"/>
+      <column name="parent" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="position" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6"/>
+      <column name="active" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="store_category_attribute" schema="" catalog="billiongoods" type="TABLE">
+      <column name="id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="categoryId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="attributeId" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
   </data-source>
 </component>
