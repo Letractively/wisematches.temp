@@ -4,7 +4,10 @@ import billiongoods.server.warehouse.*;
 import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -19,23 +22,22 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	private String description;
 
 	@Column(name = "imageId")
-	@IndexColumn(name = "order")
+	@IndexColumn(name = "position")
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "store_article_image", joinColumns = @JoinColumn(name = "articleId"))
 	private List<String> imageIds = new ArrayList<>();
 
-	@Column(name = "accessoryId")
-	@IndexColumn(name = "order")
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "store_article_accessory", joinColumns = @JoinColumn(name = "articleId"))
-	private List<Long> accessories = new ArrayList<>();
+	@IndexColumn(name = "position")
+	@OneToMany(fetch = FetchType.LAZY, targetEntity = HibernateArticleDescription.class)
+	@JoinTable(name = "store_article_accessory", joinColumns = @JoinColumn(name = "articleId"), inverseJoinColumns = @JoinColumn(name = "accessoryId"))
+	private List<ArticleDescription> accessories = new ArrayList<>();
 
-	@IndexColumn(name = "order")
+	@IndexColumn(name = "position")
 	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
 	@CollectionTable(name = "store_article_option", joinColumns = @JoinColumn(name = "articleId"))
 	private List<HibernateArticleProperty> optionIds = new ArrayList<>();
 
-	@IndexColumn(name = "order")
+	@IndexColumn(name = "position")
 	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
 	@CollectionTable(name = "store_article_property", joinColumns = @JoinColumn(name = "articleId"))
 	private List<HibernateArticleProperty> propertyIds = new ArrayList<>();
@@ -50,12 +52,6 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
 
 	public HibernateArticle() {
-	}
-
-	public HibernateArticle(String name, String description, Category category, float price, Float primordialPrice, Date restockDate, HibernateSupplierInfo supplierInfo, boolean active) {
-		super(name, price, primordialPrice, category, restockDate, active);
-		this.description = description;
-		this.supplierInfo = supplierInfo;
 	}
 
 	@Override
@@ -79,7 +75,7 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	}
 
 	@Override
-	public List<Long> getAccessories() {
+	public List<ArticleDescription> getAccessories() {
 		return accessories;
 	}
 
@@ -99,6 +95,34 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 
 	void setDescription(String description) {
 		this.description = description;
+	}
+
+	public void setAccessories(List<ArticleDescription> accessories) {
+		this.accessories = accessories;
+	}
+
+	void setOptions(List<Option> options) {
+		this.optionIds.clear();
+
+		this.options = options;
+		for (Option option : options) {
+			for (String value : option.getValues()) {
+				this.optionIds.add(new HibernateArticleProperty(option.getAttribute(), value));
+			}
+		}
+	}
+
+	void setProperties(List<Property> properties) {
+		this.propertyIds.clear();
+
+		this.properties = properties;
+		for (Property property : properties) {
+			this.propertyIds.add(new HibernateArticleProperty(property.getAttribute(), property.getValue()));
+		}
+	}
+
+	void setImageIds(List<String> imageIds) {
+		this.imageIds = imageIds;
 	}
 
 	@Override

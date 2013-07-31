@@ -35,7 +35,7 @@
     <table>
     <#list article.accessories as a>
         <tr>
-            <td><@bg.link.article {"id": a}>Accessory id: ${a}</@bg.link.article></td>
+            <td><@bg.link.article a>Accessory id: ${a.id} ${a.name}</@bg.link.article></td>
         </tr>
     </#list>
     </table>

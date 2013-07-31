@@ -35,10 +35,30 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	}
 
 	@Override
-	public Article createArticle(String name, String description, Category category, float price, Float primordialPrice, Date restockDate, String referenceId, String referenceCode, Supplier wholesaler, float supplierPrice, Float supplierPrimordialPrice) {
-		final HibernateSupplierInfo info = new HibernateSupplierInfo(referenceId, referenceCode, wholesaler, supplierPrice, supplierPrimordialPrice);
+	public ArticleDescription getDescription(Long id) {
+		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateArticle article = new HibernateArticle(name, description, category, price, primordialPrice, restockDate, info, true);
+		final HibernateArticleDescription article = (HibernateArticleDescription) session.get(HibernateArticleDescription.class, id);
+		if (article != null) {
+			article.initialize(catalogManager, attributeManager);
+		}
+		return article;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public Article createArticle(String name, String description, Category category,
+								 float price, Float primordialPrice, Date restockDate,
+								 String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
+								 List<Option> options, List<Property> properties,
+								 String referenceId, String referenceCode, Supplier wholesaler,
+								 float supplierPrice, Float supplierPrimordialPrice) {
+
+		final HibernateArticle article = new HibernateArticle();
+		updateArticle(article, name, description, category, price, primordialPrice,
+				restockDate, previewImage, imageIds, accessories, options, properties,
+				referenceId, referenceCode, wholesaler, supplierPrice, supplierPrimordialPrice);
+
 
 		final Session session = sessionFactory.getCurrentSession();
 		session.save(article);
@@ -46,7 +66,13 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	}
 
 	@Override
-	public Article updateArticle(Long id, String name, String description) {
+	@Transactional(propagation = Propagation.MANDATORY)
+	public Article updateArticle(Long id, String name, String description, Category category,
+								 float price, Float primordialPrice, Date restockDate,
+								 String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
+								 List<Option> options, List<Property> properties,
+								 String referenceId, String referenceCode, Supplier wholesaler,
+								 float supplierPrice, Float supplierPrimordialPrice) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
@@ -54,11 +80,39 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 			return null;
 		}
 
-		article.setName(name);
-		article.setDescription(description);
+		updateArticle(article, name, description, category, price, primordialPrice,
+				restockDate, previewImage, imageIds, accessories, options, properties,
+				referenceId, referenceCode, wholesaler, supplierPrice, supplierPrimordialPrice);
 
 		session.update(article);
 		return article;
+	}
+
+	private void updateArticle(HibernateArticle article,
+							   String name, String description, Category category,
+							   float price, Float primordialPrice, Date restockDate,
+							   String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
+							   List<Option> options, List<Property> properties,
+							   String referenceId, String referenceCode, Supplier wholesaler,
+							   float supplierPrice, Float supplierPrimordialPrice) {
+		article.setName(name);
+		article.setDescription(description);
+		article.setCategory(category);
+		article.setPrice(price);
+		article.setPrimordialPrice(primordialPrice);
+		article.setRestockDate(restockDate);
+		article.setPreviewImageId(previewImage);
+		article.setImageIds(imageIds);
+		article.setAccessories(accessories);
+		article.setOptions(options);
+		article.setProperties(properties);
+
+		final HibernateSupplierInfo supplierInfo = article.getSupplierInfo();
+		supplierInfo.setReferenceId(referenceId);
+		supplierInfo.setReferenceCode(referenceCode);
+		supplierInfo.setWholesaler(wholesaler);
+		supplierInfo.setPrice(supplierPrice);
+		supplierInfo.setPrimordialPrice(supplierPrimordialPrice);
 	}
 
 	@Override

@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -54,35 +57,48 @@ public class ArticleMaintainController extends AbstractController {
 			form.setSupplierReferenceCode(supplierInfo.getReferenceCode());
 
 			form.setPreviewImage(article.getPreviewImageId());
-
 			form.setViewImages(article.getImageIds());
 
-/*
-			if (article.getParent() != null) {
-				form.setParent(article.getParent().getId());
-			} else {
-				form.setParent(null);
-			}
-
 			int index = 0;
-			final Set<Attribute> attributes = article.getAttributes();
-			final Integer[] attrs = new Integer[attributes.size()];
-			for (Attribute attribute : attributes) {
-				attrs[index++] = attribute.getId();
-			}
-			form.setAttributes(attrs);
-*/
-		}
+			final List<Option> options = article.getOptions();
+			final Integer[] optIds = new Integer[options.size()];
+			final String[] optValues = new String[options.size()];
 
-		model.addAttribute("article", article);
+			for (Option option : options) {
+				optIds[index] = option.getAttribute().getId();
+				optValues[index] = toString(option.getValues());
+				index++;
+			}
+
+			form.setOptionIds(optIds);
+			form.setOptionValues(optValues);
+
+			index = 0;
+			final List<ArticleDescription> accessories = article.getAccessories();
+			final Long[] ids = new Long[accessories.size()];
+			for (ArticleDescription accessory : accessories) {
+				ids[index++] = accessory.getId();
+			}
+			form.setAccessories(ids);
+		}
 
 		if (form.getCategory() != null) {
 			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
 		}
-
-		model.addAttribute("catalog", categoryManager.getCatalog());
 		model.addAttribute("attributes", attributeManager.getAttributes());
 		return "/content/maintain/article";
+	}
+
+	private String toString(List<String> strings) {
+		StringBuilder b = new StringBuilder();
+		for (Iterator<String> iterator = strings.iterator(); iterator.hasNext(); ) {
+			String string = iterator.next();
+			b.append(string);
+			if (iterator.hasNext()) {
+				b.append("; ");
+			}
+		}
+		return b.toString();
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -102,19 +118,65 @@ public class ArticleMaintainController extends AbstractController {
 			}
 		}
 
+		final List<Option> options = new ArrayList<>();
+
+		final Integer[] optionIds = form.getOptionIds();
+		final String[] optionValues = form.getOptionValues();
+		for (int i = 0, optionIdsLength = optionIds.length; i < optionIdsLength; i++) {
+			Integer optionId = optionIds[i];
+			String optionValue = optionValues[i];
+
+			final String[] split = optionValue.split(";");
+			List<String> vals = new ArrayList<>();
+			for (String s : split) {
+				vals.add(s.trim());
+			}
+			options.add(new Option(attributeManager.getAttribute(optionId), vals));
+		}
+
+		final List<Property> properties = new ArrayList<>();
+		final Integer[] propertyIds = form.getPropertyIds();
+		final String[] propertyValues = form.getPropertyValues();
+		for (int i = 0; i < propertyIds.length; i++) {
+			Integer propertyId = propertyIds[i];
+			String propertyValue = propertyValues[i];
+			properties.add(new Property(attributeManager.getAttribute(propertyId), propertyValue));
+		}
+
+		final Long[] accessories = form.getAccessories();
+		final List<ArticleDescription> descriptions = new ArrayList<>();
+		for (Long accessory : accessories) {
+			final ArticleDescription articleDescription = articleManager.getDescription(accessory);
+			if (articleDescription == null) {
+				errors.rejectValue("accessories", "maintain.article.accessories.err.unknown", new Object[]{accessory}, null);
+				break;
+			}
+			descriptions.add(articleDescription);
+		}
+
 		if (!errors.hasErrors()) {
 			final Article article;
 			if (form.getId() == null) {
 				article = articleManager.createArticle(form.getName(), form.getDescription(), category,
-						form.getPrice(), form.getPrimordialPrice(), restockDate, form.getSupplierReferenceId(),
-						form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
+						form.getPrice(), form.getPrimordialPrice(), restockDate,
+						form.getPreviewImage(), form.getViewImages(), descriptions, options, properties,
+						form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
 						form.getSupplierPrimordialPrice());
 			} else {
-				article = articleManager.updateArticle(form.getId(), form.getName(), form.getDescription());
+				article = articleManager.updateArticle(form.getId(), form.getName(), form.getDescription(), category,
+						form.getPrice(), form.getPrimordialPrice(), restockDate,
+						form.getPreviewImage(), form.getViewImages(), descriptions, options, properties,
+						form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
+						form.getSupplierPrimordialPrice());
 			}
 			return "redirect:/maintain/article?id=" + article.getId();
 		}
-		return viewArticle(model, form);
+
+		if (form.getCategory() != null) {
+			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
+		}
+		model.addAttribute("attributes", attributeManager.getAttributes());
+		return "/content/maintain/article";
 	}
 
 

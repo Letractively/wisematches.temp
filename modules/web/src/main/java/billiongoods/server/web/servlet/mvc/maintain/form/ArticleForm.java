@@ -210,7 +210,7 @@ public class ArticleForm {
 		sb.append(", price=").append(price);
 		sb.append(", primordialPrice=").append(primordialPrice);
 		sb.append(", restockDate='").append(restockDate).append('\'');
-		sb.append(", accessories=").append(Arrays.toString(accessories));
+		sb.append(", accessories=").append(accessories);
 		sb.append(", propertyIds=").append(Arrays.toString(propertyIds));
 		sb.append(", propertyValues=").append(Arrays.toString(propertyValues));
 		sb.append(", optionIds=").append(Arrays.toString(optionIds));
