@@ -3,6 +3,8 @@
 
 <#-- @ftlvariable name="templateName" type="java.lang.String" -->
 <#-- @ftlvariable name="analyticsCode" type="java.lang.String" -->
+
+<#-- @ftlvariable name="hideWarehouse" type="java.lang.Boolean" -->
 <#include "/core.ftl">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -70,8 +72,10 @@
                         </td>
                         <td valign="top">
                             <div class="content">
-                                <div><#include "whereabouts.ftl"/></div>
-                                <div><#include "${templateName}"/></div>
+                            <#if !hideWarehouse>
+                                <div class="whereabouts"><#include "${department.style}/whereabouts.ftl"/></div>
+                            </#if>
+                            <#include "${templateName}"/>
                             </div>
                         </td>
                     </tr>

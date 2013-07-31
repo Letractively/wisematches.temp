@@ -22,6 +22,8 @@ public class CatalogController extends AbstractController {
 
 	@RequestMapping(value = {"", "/"})
 	public String showRootCategory(Model model) {
+		hideWarehouse(model);
+
 		model.addAttribute("catalog", categoryManager.getCatalog());
 		return "/content/warehouse/catalog";
 	}
