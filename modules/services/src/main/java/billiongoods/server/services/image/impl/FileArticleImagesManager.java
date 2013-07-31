@@ -33,9 +33,9 @@ public class FileArticleImagesManager implements ArticleImagesManager {
 	};
 	private static final String[] NO_IMAGES_RES = new String[0];
 
-	private static final Logger log = LoggerFactory.getLogger("wisematches.player.ImageManager");
+    private static final Logger log = LoggerFactory.getLogger("billiongoods.player.ImageManager");
 
-	public FileArticleImagesManager() {
+    public FileArticleImagesManager() {
 	}
 
 	@Override

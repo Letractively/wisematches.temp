@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="+">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.ids" afterPath="$PROJECT_DIR$/billiongoods.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.ipr" afterPath="$PROJECT_DIR$/billiongoods.ipr" />
+    <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/impl/FileArticleImagesManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/impl/FileArticleImagesManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/core.iml" afterPath="$PROJECT_DIR$/modules/core/core.iml" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,7 +72,17 @@
     <favorites_list name="application" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="FileArticleImagesManager.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/impl/FileArticleImagesManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="75" selection-start="1287" selection-end="1287" vertical-scroll-proportion="0.25671142" vertical-offset="170" max-vertical-offset="3009">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -92,7 +100,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateSupplierInfo.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateArticleManager.java" />
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/HibernateArticleManagerTest.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateArticleProperty.java" />
@@ -108,6 +115,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/modules/web/pom.xml" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/impl/FileArticleImagesManager.java" />
       </list>
     </option>
   </component>
@@ -1105,7 +1113,11 @@
       <created>1375212570795</created>
       <updated>1375212570795</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="+">
+      <created>1375296250934</created>
+      <updated>1375296250934</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1113,7 +1125,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31993568" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1122,6 +1134,7 @@
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41961414" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4324759" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.67903227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3279743" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1135,14 +1148,13 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2621212" sideWeight="0.6334405" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3279743" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24166666" sideWeight="0.6334405" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24166666" sideWeight="0.56752414" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36655948" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4324759" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
@@ -1264,11 +1276,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/HibernateCategoryManagerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="21" selection-start="1835" selection-end="1835" vertical-scroll-proportion="0.31879196" vertical-offset="490" max-vertical-offset="1122" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateCategoryManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="96" column="36" selection-start="3336" selection-end="3336" vertical-scroll-proportion="0.1442953" vertical-offset="1376" max-vertical-offset="1972" />
@@ -1334,7 +1341,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="26" selection-start="1629" selection-end="1629" vertical-scroll-proportion="0.50701755" vertical-offset="204" max-vertical-offset="1632" />
+        <state line="29" column="26" selection-start="1629" selection-end="1629" vertical-scroll-proportion="0.50701755" vertical-offset="204" max-vertical-offset="1632">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/config/integration.properties">
@@ -1354,6 +1363,13 @@
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/resources/config/database-config.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="54" selection-start="1073" selection-end="1073" vertical-scroll-proportion="0.44990548" vertical-offset="51" max-vertical-offset="1088">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/impl/FileArticleImagesManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="75" selection-start="1287" selection-end="1287" vertical-scroll-proportion="0.25671142" vertical-offset="170" max-vertical-offset="3009">
           <folding />
         </state>
       </provider>
