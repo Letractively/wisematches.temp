@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -72,6 +69,29 @@ public class ArticleMaintainController extends AbstractController {
 
 			form.setOptionIds(optIds);
 			form.setOptionValues(optValues);
+
+			final Map<Attribute, String> values = new HashMap<>();
+			for (Category category : article.getCategory().getGenealogy()) {
+				final Set<Attribute> attributes = category.getAttributes();
+				for (Attribute attribute : attributes) {
+					values.put(attribute, null);
+				}
+			}
+
+			for (Property property : article.getProperties()) {
+				values.put(property.getAttribute(), property.getValue());
+			}
+
+			index = 0;
+			final Integer[] propIds = new Integer[values.size()];
+			final String[] propValues = new String[values.size()];
+			for (Map.Entry<Attribute, String> entry : values.entrySet()) {
+				propIds[index] = entry.getKey().getId();
+				propValues[index] = entry.getValue();
+				index++;
+			}
+			form.setPropertyIds(propIds);
+			form.setPropertyValues(propValues);
 
 			index = 0;
 			final List<ArticleDescription> accessories = article.getAccessories();
