@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,66 +29,64 @@ import java.util.regex.Pattern;
  * @author <a href="mailto:smklimenko@gmail.com">Sergey Klimenko</a>
  */
 public class FileImageManager implements ImageManager {
-	private ImageResolver imageResolver;
+    private ImageResolver imageResolver;
 
-	public FileImageManager() {
-	}
+    public FileImageManager() {
+    }
 
-	@Override
-	public void addImage(ArticleDescription article, String code, InputStream in) throws IOException {
-		Files.createDirectories(imageResolver.resolvePath(article));
+    @Override
+    public void addImage(ArticleDescription article, String code, InputStream in) throws IOException {
+        Files.createDirectories(imageResolver.resolvePath(article));
 
-		final Path originalFiles = imageResolver.resolveFile(article, code, null);
-		Files.deleteIfExists(originalFiles);
+        final Path originalFiles = imageResolver.resolveFile(article, code, null);
+        Files.copy(in, originalFiles, StandardCopyOption.REPLACE_EXISTING);
 
-		Files.copy(in, originalFiles);
+        for (ImageSize size : ImageSize.values()) {
+            final Path path = imageResolver.resolveFile(article, code, size);
+            Files.deleteIfExists(path);
 
-		for (ImageSize size : ImageSize.values()) {
-			final Path path = imageResolver.resolveFile(article, code, size);
-			Files.deleteIfExists(path);
+            try (FileInputStream iis = new FileInputStream(originalFiles.toFile());
+                 FileOutputStream ios = new FileOutputStream(path.toFile())) {
+                size.scaleImage(iis, ios);
+            }
+        }
+    }
 
-			try (FileInputStream iis = new FileInputStream(originalFiles.toFile());
-				 FileOutputStream ios = new FileOutputStream(path.toFile())) {
-				size.scaleImage(iis, ios);
-			}
-		}
-	}
+    @Override
+    public void removeImage(ArticleDescription article, String code) throws IOException {
+        final Path originalFiles = imageResolver.resolveFile(article, code, null);
+        Files.deleteIfExists(originalFiles);
 
-	@Override
-	public void removeImage(ArticleDescription article, String code) throws IOException {
-		final Path originalFiles = imageResolver.resolveFile(article, code, null);
-		Files.deleteIfExists(originalFiles);
+        for (ImageSize size : ImageSize.values()) {
+            final Path path = imageResolver.resolveFile(article, code, size);
+            Files.deleteIfExists(path);
+        }
+    }
 
-		for (ImageSize size : ImageSize.values()) {
-			final Path path = imageResolver.resolveFile(article, code, size);
-			Files.deleteIfExists(path);
-		}
-	}
+    @Override
+    public Collection<String> getImageCodes(ArticleDescription article) throws IOException {
+        final Path path = imageResolver.resolvePath(article);
+        if (Files.notExists(path)) {
+            return Collections.emptySet();
+        }
 
-	@Override
-	public Collection<String> getImageCodes(ArticleDescription article) throws IOException {
-		final Path path = imageResolver.resolvePath(article);
-		if (Files.notExists(path)) {
-			return Collections.emptySet();
-		}
+        final Pattern p = Pattern.compile("[^_]*_([^_]*)\\.jpg");
 
-		final Pattern p = Pattern.compile("[^_]*_([^_]*)\\.jpg");
+        final Set<String> res = new HashSet<>(path.getNameCount());
+        DirectoryStream<Path> ds = Files.newDirectoryStream(path, "*.jpg");
+        for (Path file : ds) {
+            final String fileName = file.getFileName().toString();
 
-		final Set<String> res = new HashSet<>(path.getNameCount());
-		DirectoryStream<Path> ds = Files.newDirectoryStream(path, "*.jpg");
-		for (Path file : ds) {
-			final String fileName = file.getFileName().toString();
+            final Matcher matcher = p.matcher(fileName);
+            if (matcher.matches()) {
+                res.add(matcher.group(1));
+            }
+        }
+        ds.close();
+        return res;
+    }
 
-			final Matcher matcher = p.matcher(fileName);
-			if (matcher.matches()) {
-				res.add(matcher.group(1));
-			}
-		}
-		ds.close();
-		return res;
-	}
-
-	public void setImageResolver(ImageResolver imageResolver) {
-		this.imageResolver = imageResolver;
-	}
+    public void setImageResolver(ImageResolver imageResolver) {
+        this.imageResolver = imageResolver;
+    }
 }
