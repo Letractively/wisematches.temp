@@ -6,9 +6,11 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ArticleDescription {
-	Long getId();
+	Integer getId();
 
 	String getName();
+
+	String getCode();
 
 	boolean isActive();
 

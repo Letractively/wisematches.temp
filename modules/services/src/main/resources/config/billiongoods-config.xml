@@ -13,10 +13,11 @@
 
     <bean id="priceConverter" class="billiongoods.server.services.price.PriceConverter"/>
 
-    <bean id="imageResolver" class="billiongoods.server.services.image.impl.SimpleImageResolver"/>
-
-    <bean id="articleImagesManager" class="billiongoods.server.services.image.impl.FileArticleImagesManager">
+    <bean id="imageResolver" class="billiongoods.server.services.image.impl.FileImageResolver">
         <property name="imagesFolder" value="${server.images.path}"/>
+    </bean>
+
+    <bean id="articleImagesManager" class="billiongoods.server.services.image.impl.FileImageManager">
         <property name="imageResolver" ref="imageResolver"/>
     </bean>
 

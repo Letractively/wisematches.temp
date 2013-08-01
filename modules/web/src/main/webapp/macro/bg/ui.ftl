@@ -10,13 +10,11 @@
 
 <#macro static p>${staticResourcesDomain}/${p}</#macro>
 
-<#macro articleImg article img type size><img
-        src="${imageResourcesDomain}/${imageResolver.resolveImagePath(article, img, type)}" width="${size}"
-        height="${size}"></#macro>
+<#macro image article code type>${imageResourcesDomain}/${imageResolver.resolveURI(article, code, type)?replace("\\", "/")}</#macro>
 
 <#macro usd v>US$${v?string("0.00")}</#macro>
 
-<#macro rub v>${v?string("0.00")}<img src="<@static "images/ruble_gray.gif"/>" class="ruble-img"/><span
+<#macro rub v>${v?string("0.00")}<img src="<@static "images/gruble.gif"/>" class="ruble-img"/><span
         class="dot">руб.</span></#macro>
 
 <#macro price v><span class="us"><@usd v/></span>

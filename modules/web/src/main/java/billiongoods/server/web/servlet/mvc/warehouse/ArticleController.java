@@ -22,7 +22,7 @@ public class ArticleController extends AbstractController {
 	}
 
 	@RequestMapping("/{articleId}")
-	public String showSubCategory(@PathVariable("articleId") Long articleId, Model model) {
+	public String showSubCategory(@PathVariable("articleId") Integer articleId, Model model) {
 		final Article article = articleManager.getArticle(articleId);
 		if (article == null) {
 			throw new UnknownEntityException(articleId, "article");

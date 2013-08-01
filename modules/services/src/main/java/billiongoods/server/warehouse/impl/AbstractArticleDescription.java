@@ -7,6 +7,7 @@ import billiongoods.server.warehouse.CategoryManager;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Formatter;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -16,10 +17,13 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Integer id;
 
 	@Column(name = "name")
 	private String name;
+
+	@Transient
+	private String code;
 
 	@Column(name = "active")
 	private boolean active;
@@ -45,18 +49,26 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Column(name = "previewImageId")
 	private String previewImageId;
 
+	private static final StringBuilder sb = new StringBuilder();
+	private static final Formatter FORMATTER = new Formatter(sb);
+
 	public AbstractArticleDescription() {
 		registrationDate = new Date();
 	}
 
 	@Override
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public String getCode() {
+		return code;
 	}
 
 	@Override
@@ -125,6 +137,10 @@ public class AbstractArticleDescription implements ArticleDescription {
 
 	void initialize(CategoryManager manager, AttributeManager attributeManager) {
 		this.category = manager.getCategory(categoryId);
+		synchronized (FORMATTER) {
+			sb.setLength(0);
+			code = FORMATTER.format("%06d", id).toString();
+		}
 	}
 
 	@Override

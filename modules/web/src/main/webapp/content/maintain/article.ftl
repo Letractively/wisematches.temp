@@ -1,9 +1,14 @@
+<#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
+
+<#-- @ftlvariable name="imageResourcesDomain" type="java.lang.String" -->
 
 <#include "/core.ftl">
 
 <script type="text/javascript" src="<@bg.ui.static "ckeditor/ckeditor.js"/>"></script>
+<script type="text/javascript" src="<@bg.ui.static "js/jquery.ui.widget-1.10.3.js"/>"></script>
+<script type="text/javascript" src="<@bg.ui.static "js/jquery.fileupload-8.6.1.js"/>"></script>
 
 <#macro option category level selected>
 <option <#if category.id?string==selected>selected="selected"</#if> value="${category.id}"><#list 0..level as i>
@@ -24,6 +29,7 @@
     <@bg.ui.input path="form.name"/>
 
     <@bg.ui.input path="form.id" fieldType="hidden">
+        <#assign articleId=bg.ui.statusValue!""/>
         <#if bg.ui.statusValue?has_content><a href="/warehouse/article/${bg.ui.statusValue}"
                                               target="_blank">посмотреть</a></#if>
     </@bg.ui.input>
@@ -135,10 +141,6 @@
     <td><@bg.ui.input path="form.restockDate"/></td>
 </tr>
 <tr>
-    <td><label for="previewImage">Основное изображение: </label></td>
-    <td><@bg.ui.input path="form.previewImage"/></td>
-</tr>
-<tr>
     <td colspan="2">
         <hr>
     </td>
@@ -146,26 +148,30 @@
 <tr>
     <td valign="top"><label for="viewImages">Другие изображения: </label></td>
     <td>
-    <@bg.ui.field path="form.viewImages">
-        <table id="imagesTable">
-            <#if bg.ui.status.actualValue??>
-                <#list bg.ui.status.actualValue as i>
-                    <tr>
-                        <td><input name="viewImages" value="${i}"></td>
-                        <td>
-                            <button class="remove" type="button">Удалить</button>
-                        </td>
-                    </tr>
-                </#list>
-            </#if>
-            <tr id="imagesControls">
-                <td></td>
-                <td>
-                    <button class="add" type="button">добавить</button>
-                </td>
-            </tr>
-        </table>
-    </@bg.ui.field>
+        <div class="images">
+        <@bg.ui.bind path="form.viewImages"/>
+        <#assign viewImages=bg.ui.status.actualValue!""/>
+
+        <@bg.ui.bind path="form.enabledImages"/>
+        <#assign enabledImages=bg.ui.status.actualValue!""/>
+
+        <@bg.ui.bind path="form.previewImage"/>
+        <#assign previewImage=bg.ui.status.actualValue!""/>
+
+        <#list viewImages as i>
+            <div class="image">
+                <img src="<@bg.ui.image article i ImageSize.SMALL/>"/>
+                <input name="enabledImages" type="checkbox" value="${i}"
+                       <#if enabledImages?contains(i)>checked="checked"</#if>/>
+                <input name="previewImage" type="radio" value="${i}" <#if i==previewImage>checked="checked"</#if>/>
+            </div>
+        </#list>
+        </div>
+
+        <div>
+            <label for="fileupload">Добавить изображение</label>
+            <input id="fileupload" type="file" name="files[]" data-url="/maintain/article/addimg" multiple>
+        </div>
     </td>
 </tr>
 <tr>
@@ -314,5 +320,24 @@
         var id = $(this).text();
         var attr = attributes[id];
         $(this).html(attr.name + ", " + attr.unit);
+    });
+
+    $(function () {
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            done: function (e, data) {
+                var code = data.result.data.code;
+                var uri = data.result.data.uri;
+
+                var s = '';
+                s += '<div class="image">';
+                s += '<img src="${imageResourcesDomain}/' + uri.small + '"/>';
+                s += '<input name="enabledImages" type="checkbox" value="' + code + '" checked="checked"/>';
+                s += '<input name="previewImage" type="radio" value="' + code + '"/>';
+                s += '</div>';
+
+                $(".images").append($(s));
+            }
+        });
     });
 </script>

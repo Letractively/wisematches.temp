@@ -27,6 +27,10 @@
         </bean>
     </mvc:interceptors>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="2684354"/>
+    </bean>
+
     <bean id="messageSource" class="billiongoods.server.MessageFormatter">
         <property name="parentMessageSource">
             <bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -73,7 +77,7 @@
             <list>
                 <value>billiongoods.core.Language</value>
                 <value>billiongoods.core.Membership</value>
-                <value>billiongoods.server.services.image.ImageType</value>
+                <value>billiongoods.server.services.image.ImageSize</value>
             </list>
         </property>
 
