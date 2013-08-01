@@ -4,13 +4,14 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ArticleForm {
-	private Long id;
+	private Integer id;
 
 	private Integer category;
 
@@ -23,7 +24,9 @@ public class ArticleForm {
 
 	private String previewImage;
 
-	private List<String> viewImages;
+	private Collection<String> viewImages;
+
+	private List<String> enabledImages;
 
 	private float price;
 
@@ -31,7 +34,7 @@ public class ArticleForm {
 
 	private String restockDate;
 
-	private Long[] accessories;
+	private Integer[] accessories;
 
 	private Integer[] propertyIds;
 
@@ -53,11 +56,11 @@ public class ArticleForm {
 	public ArticleForm() {
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -93,11 +96,11 @@ public class ArticleForm {
 		this.previewImage = previewImage;
 	}
 
-	public List<String> getViewImages() {
+	public Collection<String> getViewImages() {
 		return viewImages;
 	}
 
-	public void setViewImages(List<String> viewImages) {
+	public void setViewImages(Collection<String> viewImages) {
 		this.viewImages = viewImages;
 	}
 
@@ -125,11 +128,11 @@ public class ArticleForm {
 		this.restockDate = restockDate;
 	}
 
-	public Long[] getAccessories() {
+	public Integer[] getAccessories() {
 		return accessories;
 	}
 
-	public void setAccessories(Long[] accessories) {
+	public void setAccessories(Integer[] accessories) {
 		this.accessories = accessories;
 	}
 
@@ -197,6 +200,13 @@ public class ArticleForm {
 		this.supplierReferenceCode = supplierReferenceCode;
 	}
 
+	public List<String> getEnabledImages() {
+		return enabledImages;
+	}
+
+	public void setEnabledImages(List<String> enabledImages) {
+		this.enabledImages = enabledImages;
+	}
 
 	@Override
 	public String toString() {

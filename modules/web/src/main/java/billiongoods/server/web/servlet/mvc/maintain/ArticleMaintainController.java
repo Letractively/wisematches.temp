@@ -1,8 +1,12 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
+import billiongoods.server.services.image.ImageManager;
+import billiongoods.server.services.image.ImageResolver;
+import billiongoods.server.services.image.ImageSize;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.ArticleForm;
+import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,8 +16,12 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,6 +32,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/maintain/article")
 public class ArticleMaintainController extends AbstractController {
+	private ImageManager imageManager;
+	private ImageResolver imageResolver;
 	private ArticleManager articleManager;
 	private CategoryManager categoryManager;
 	private AttributeManager attributeManager;
@@ -34,7 +44,7 @@ public class ArticleMaintainController extends AbstractController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String viewArticle(Model model, @ModelAttribute("form") ArticleForm form) {
+	public String viewArticle(Model model, @ModelAttribute("form") ArticleForm form) throws IOException {
 		Article article = null;
 		if (form.getId() != null) {
 			article = articleManager.getArticle(form.getId());
@@ -54,7 +64,8 @@ public class ArticleMaintainController extends AbstractController {
 			form.setSupplierReferenceCode(supplierInfo.getReferenceCode());
 
 			form.setPreviewImage(article.getPreviewImageId());
-			form.setViewImages(article.getImageIds());
+			form.setViewImages(imageManager.getImageCodes(article));
+			form.setEnabledImages(article.getImageIds());
 
 			int index = 0;
 			final List<Option> options = article.getOptions();
@@ -95,7 +106,7 @@ public class ArticleMaintainController extends AbstractController {
 
 			index = 0;
 			final List<ArticleDescription> accessories = article.getAccessories();
-			final Long[] ids = new Long[accessories.size()];
+			final Integer[] ids = new Integer[accessories.size()];
 			for (ArticleDescription accessory : accessories) {
 				ids[index++] = accessory.getId();
 			}
@@ -105,20 +116,9 @@ public class ArticleMaintainController extends AbstractController {
 		if (form.getCategory() != null) {
 			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
 		}
+		model.addAttribute("article", article);
 		model.addAttribute("attributes", attributeManager.getAttributes());
 		return "/content/maintain/article";
-	}
-
-	private String toString(List<String> strings) {
-		StringBuilder b = new StringBuilder();
-		for (Iterator<String> iterator = strings.iterator(); iterator.hasNext(); ) {
-			String string = iterator.next();
-			b.append(string);
-			if (iterator.hasNext()) {
-				b.append("; ");
-			}
-		}
-		return b.toString();
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -163,9 +163,9 @@ public class ArticleMaintainController extends AbstractController {
 			properties.add(new Property(attributeManager.getAttribute(propertyId), propertyValue));
 		}
 
-		final Long[] accessories = form.getAccessories();
+		final Integer[] accessories = form.getAccessories();
 		final List<ArticleDescription> descriptions = new ArrayList<>();
-		for (Long accessory : accessories) {
+		for (Integer accessory : accessories) {
 			final ArticleDescription articleDescription = articleManager.getDescription(accessory);
 			if (articleDescription == null) {
 				errors.rejectValue("accessories", "maintain.article.accessories.err.unknown", new Object[]{accessory}, null);
@@ -179,13 +179,13 @@ public class ArticleMaintainController extends AbstractController {
 			if (form.getId() == null) {
 				article = articleManager.createArticle(form.getName(), form.getDescription(), category,
 						form.getPrice(), form.getPrimordialPrice(), restockDate,
-						form.getPreviewImage(), form.getViewImages(), descriptions, options, properties,
+						form.getPreviewImage(), form.getEnabledImages(), descriptions, options, properties,
 						form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
 						form.getSupplierPrimordialPrice());
 			} else {
 				article = articleManager.updateArticle(form.getId(), form.getName(), form.getDescription(), category,
 						form.getPrice(), form.getPrimordialPrice(), restockDate,
-						form.getPreviewImage(), form.getViewImages(), descriptions, options, properties,
+						form.getPreviewImage(), form.getEnabledImages(), descriptions, options, properties,
 						form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
 						form.getSupplierPrimordialPrice());
 			}
@@ -199,6 +199,56 @@ public class ArticleMaintainController extends AbstractController {
 		return "/content/maintain/article";
 	}
 
+	@RequestMapping(value = "/addimg", method = RequestMethod.POST)
+	public ServiceResponse upload(@RequestParam("id") Integer id, MultipartHttpServletRequest request) throws IOException {
+		final Article article = articleManager.getArticle(id);
+		if (article == null) {
+			throw new IllegalArgumentException("Article is not specified");
+		}
+
+		final MultipartFile file = request.getFile("files[]");
+
+		String originalFilename = file.getOriginalFilename();
+		originalFilename = originalFilename.substring(0, originalFilename.indexOf("."));
+		imageManager.addImage(article, originalFilename, file.getInputStream());
+
+
+		final Map<String, String> uri = new HashMap<>();
+		uri.put("original", imageResolver.resolveURI(article, originalFilename, null));
+		uri.put("small", imageResolver.resolveURI(article, originalFilename, ImageSize.SMALL));
+		uri.put("tiny", imageResolver.resolveURI(article, originalFilename, ImageSize.TINY));
+		uri.put("medium", imageResolver.resolveURI(article, originalFilename, ImageSize.MEDIUM));
+		uri.put("large", imageResolver.resolveURI(article, originalFilename, ImageSize.LARGE));
+
+		final Map<String, Object> res = new HashMap<>();
+		res.put("code", originalFilename);
+		res.put("uri", uri);
+
+		return responseFactory.success(res);
+	}
+
+
+	private String toString(List<String> strings) {
+		StringBuilder b = new StringBuilder();
+		for (Iterator<String> iterator = strings.iterator(); iterator.hasNext(); ) {
+			String string = iterator.next();
+			b.append(string);
+			if (iterator.hasNext()) {
+				b.append("; ");
+			}
+		}
+		return b.toString();
+	}
+
+	@Autowired
+	public void setImageManager(ImageManager imageManager) {
+		this.imageManager = imageManager;
+	}
+
+	@Autowired
+	public void setImageResolver(ImageResolver imageResolver) {
+		this.imageResolver = imageResolver;
+	}
 
 	@Autowired
 	public void setArticleManager(ArticleManager articleManager) {

@@ -2,9 +2,16 @@ package billiongoods.server.services.image;
 
 import billiongoods.server.warehouse.ArticleDescription;
 
+import java.nio.file.Path;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ImageResolver {
-	String resolveImagePath(ArticleDescription article, String id, ImageType type);
+	Path resolvePath(ArticleDescription article);
+
+	Path resolveFile(ArticleDescription article, String code, ImageSize size);
+
+
+	String resolveURI(ArticleDescription article, String code, ImageSize size);
 }

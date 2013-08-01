@@ -4,8 +4,15 @@
 
 <div class="article">
     <div class="image">
-    <@bg.ui.articleImg article article.previewImageId!"" ImageType.PREVIEW 230/>
+        <img src="<@bg.ui.image article article.previewImageId ImageSize.MEDIUM/>"/>
     </div>
+
+    <div class="thimb">
+    <#list article.imageIds as i>
+        <img src="<@bg.ui.image article i ImageSize.TINY/>"/>
+    </#list>
+    </div>
+
     <div class="name">${article.name}</div>
     <div class="price"><@bg.ui.price article.price/></div>
 

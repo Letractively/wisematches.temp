@@ -10,4 +10,4 @@
 [#-- @ftlvariable name="imageResolver" type="billiongoods.server.services.image.ImageResolver" --]
 [#-- @ftlvariable name="priceConverter" type="billiongoods.server.services.price.PriceConverter" --]
 
-[#-- @ftlvariable name="ImageType" type="billiongoods.server.services.image.ImageType.static" --]
+[#-- @ftlvariable name="ImageSize" type="billiongoods.server.services.image.ImageSize.static" --]

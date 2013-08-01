@@ -24,7 +24,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Article getArticle(Long id) {
+	public Article getArticle(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
@@ -35,7 +35,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	}
 
 	@Override
-	public ArticleDescription getDescription(Long id) {
+	public ArticleDescription getDescription(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateArticleDescription article = (HibernateArticleDescription) session.get(HibernateArticleDescription.class, id);
@@ -67,7 +67,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Article updateArticle(Long id, String name, String description, Category category,
+	public Article updateArticle(Integer id, String name, String description, Category category,
 								 float price, Float primordialPrice, Date restockDate,
 								 String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
 								 List<Option> options, List<Property> properties,
