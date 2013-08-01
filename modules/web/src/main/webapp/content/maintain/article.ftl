@@ -59,19 +59,27 @@
     <td valign="top"><label for="properties">Параметры: </label></td>
     <td>
         <table>
-        <#list category.genealogy.parents as c>
-            <#list c.attributes as a>
+        <@bg.ui.bind path="form.propertyIds"/>
+        <#assign propertyIds=bg.ui.status.actualValue!""/>
+
+        <@bg.ui.bind path="form.propertyValues"/>
+        <#assign propertyValues=bg.ui.status.actualValue!""/>
+
+        <#if propertyIds?is_collection>
+            <#list 0..(propertyIds?size)-1 as i>
+                <#assign id=propertyIds[i]/>
+                <#assign value=propertyValues[i]/>
                 <tr>
                     <td>
-                        <input type="hidden" name="propertyIds" value="${a.id}">
-                        <label for="attribute${a.id}">${a.name}, ${a.unit}</label>
+                        <input type="hidden" name="propertyIds" value="${id}">
+                        <label for="property${id}" class="attribute">${id}</label>
                     </td>
                     <td>
-                        <input name="propertyValues" value="">
+                        <input id="property${id}" name="propertyValues" value="${value}">
                     </td>
                 </tr>
             </#list>
-        </#list>
+        </#if>
         </table>
     </td>
 </tr>
@@ -96,11 +104,11 @@
                 <#assign value=optionValues[i]/>
                 <tr>
                     <td>
-                        <span class="attribute">${id}</span>
+                        <label for="option${id}" class="attribute">${id}</label>
                         <input name="optionIds" type="hidden" value="${id}"/>
                     </td>
                     <td>
-                        <input name="optionValues" value="${value}"/>
+                        <input id="option${id}" name="optionValues" value="${value}"/>
                     </td>
                     <td>
                         <button class="remove" type="button">Удалить</button>
