@@ -496,3 +496,93 @@ span.dot {
 .body-maintain .images .image {
     display: inline-block;
 }
+
+.article_layout, .article_layout span, .article_layout div, .article_layout label {
+    font-size: 14px;
+}
+
+.article_layout .preview {
+    margin-bottom: 5px;
+    border: 2px solid #ebebeb;
+}
+
+.article_layout .thumb img {
+    border: 1px solid #ebebeb;
+}
+
+.article_layout .thumb div {
+    display: inline;
+}
+
+.article_layout .thumb img.selected {
+    border-color: #FF5A00;
+}
+
+.article_layout .preview img {
+    width: 272px;
+    height: 272px;
+}
+
+.article_layout .info {
+    padding-left: 5px;
+}
+
+.article_layout .name {
+    color: #303030;
+    font-size: 15px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+
+.article_layout .sku {
+    padding-right: 70px;
+}
+
+.article_layout .stock {
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    border-top: 1px dashed #ebebeb;
+}
+
+.article_layout .shipment {
+    float: right;
+    color: green;
+}
+
+.article_layout .panel {
+    background: #f3f3f3;
+    border: 1px solid #cccccc;
+}
+
+.article_layout .panel>div {
+    padding: 10px;
+}
+
+.article_layout .ops, .article_layout .price {
+    border-bottom: 1px dashed #cccccc;
+}
+
+.article_layout .stock div, .article_layout .ops div, .article_layout .action div {
+    display: inline;
+}
+
+.article_layout .option {
+    padding-left: 5px;
+}
+
+.article_layout .price span {
+    color: #fa6302;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.article_layout .price span.rub {
+    color: gray;
+    font-weight: normal;
+}
+
+.article_layout .quantity {
+    width: 30px;
+    text-align: center;
+}

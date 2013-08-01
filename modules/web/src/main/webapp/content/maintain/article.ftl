@@ -26,7 +26,9 @@
 <tr>
     <td valign="top"><label for="name">Имя: </label></td>
     <td>
-    <@bg.ui.input path="form.name"/>
+    <@bg.ui.field path="form.name">
+        <textarea rows="3" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+    </@bg.ui.field>
 
     <@bg.ui.input path="form.id" fieldType="hidden">
         <#assign articleId=bg.ui.statusValue!""/>
@@ -71,7 +73,7 @@
         <@bg.ui.bind path="form.propertyValues"/>
         <#assign propertyValues=bg.ui.status.actualValue!""/>
 
-        <#if propertyIds?is_collection>
+        <#if propertyIds?is_collection && (propertyIds?size >0)>
             <#list 0..(propertyIds?size)-1 as i>
                 <#assign id=propertyIds[i]/>
                 <#assign value=propertyValues[i]/>
@@ -104,7 +106,7 @@
         <@bg.ui.bind path="form.optionValues"/>
         <#assign optionValues=bg.ui.status.actualValue!""/>
 
-        <#if optionIds?is_collection>
+        <#if optionIds?is_collection && (optionIds?size>0)>
             <#list 0..(optionIds?size)-1 as i>
                 <#assign id=optionIds[i]/>
                 <#assign value=optionValues[i]/>
@@ -158,14 +160,16 @@
         <@bg.ui.bind path="form.previewImage"/>
         <#assign previewImage=bg.ui.status.actualValue!""/>
 
-        <#list viewImages as i>
-            <div class="image">
-                <img src="<@bg.ui.image article i ImageSize.SMALL/>"/>
-                <input name="enabledImages" type="checkbox" value="${i}"
-                       <#if enabledImages?contains(i)>checked="checked"</#if>/>
-                <input name="previewImage" type="radio" value="${i}" <#if i==previewImage>checked="checked"</#if>/>
-            </div>
-        </#list>
+        <#if viewImages?is_collection>
+            <#list viewImages as i>
+                <div class="image">
+                    <img src="<@bg.ui.image article i ImageSize.SMALL/>"/>
+                    <input name="enabledImages" type="checkbox" value="${i}"
+                           <#if enabledImages?contains(i)>checked="checked"</#if>/>
+                    <input name="previewImage" type="radio" value="${i}" <#if i==previewImage>checked="checked"</#if>/>
+                </div>
+            </#list>
+        </#if>
         </div>
 
         <div>
