@@ -28,10 +28,12 @@ public class ArticleController extends AbstractController {
 			throw new UnknownEntityException(articleId, "article");
 		}
 
-		setTitle(model, article.getName());
+		setTitle(model, article.getName() + " - " + article.getCategory().getName());
 
 		model.addAttribute("article", article);
 		model.addAttribute("category", article.getCategory());
+
+		hideNavigation(model);
 
 		return "/content/warehouse/article";
 	}

@@ -52,21 +52,23 @@ public abstract class AbstractController {
 	}
 
 
-	@ModelAttribute()
-	public void initWarehouse(HttpServletRequest request, Model model) {
+	@ModelAttribute("department")
+	public Department getDepartment(HttpServletRequest request) {
 		final String servletPath = request.getServletPath();
 		try {
-			model.addAttribute("department", Department.valueOf(servletPath.toUpperCase().substring(1)));
+			return Department.valueOf(servletPath.toUpperCase().substring(1));
 		} catch (IllegalArgumentException ex) {
-			model.addAttribute("department", Department.UNDEFINED);
+			return Department.UNDEFINED;
 		}
-		model.addAttribute("hideWarehouse", Boolean.FALSE);
 	}
 
 	protected void hideWarehouse(Model model) {
-		model.addAttribute("hideWarehouse", Boolean.TRUE);
+		model.addAttribute("showWarehouse", Boolean.FALSE);
 	}
 
+	protected void hideNavigation(Model model) {
+		model.addAttribute("showNavigation", Boolean.FALSE);
+	}
 
 	@SuppressWarnings("unchecked")
 	protected <P extends Player> P getPrincipal(Class<P> type) {

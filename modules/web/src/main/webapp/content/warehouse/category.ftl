@@ -24,7 +24,7 @@
         <div class="table-content">
             <div class="grid">
             <#list articles as a>
-                <div class="article">
+                <div class="article-grid">
                     <div class="image">
                         <@bg.link.article a><img
                                 src="<@bg.ui.image a a.previewImageId!"" ImageSize.SMALL/>"/></@bg.link.article>
