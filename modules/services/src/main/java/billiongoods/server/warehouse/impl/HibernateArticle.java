@@ -146,5 +146,9 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 		for (HibernateArticleProperty propertyId : propertyIds) {
 			properties.add(new Property(attributeManager.getAttribute(propertyId.getAttributeId()), propertyId.getValue()));
 		}
+
+		for (ArticleDescription accessory : accessories) {
+			((HibernateArticleDescription) accessory).initialize(manager, attributeManager);
+		}
 	}
 }

@@ -4,6 +4,18 @@
 bg = {};
 bg.util = {};
 
+STATE = {
+    DEFAULT: {
+        class: 'ui-state-highlight'
+    },
+    INFO: {
+        class: 'ui-state-active'
+    },
+    ERROR: {
+        class: 'ui-state-error'
+    }
+};
+
 bg.util.url = new function () {
     this.reload = function () {
         window.location.reload();
@@ -292,46 +304,6 @@ bg.ui = new function () {
         }
     };
 
-    this.player = function (player, showLink, showState, showType, waiting) {
-        showType = (showType !== undefined) ? showType : true;
-        showState = (showState !== undefined) ? showState : true;
-        showLink = (showLink !== undefined) ? showLink : true;
-        waiting = (waiting !== undefined) ? waiting : false;
-
-        var l = showLink && (player.membership != null);
-        var html = '';
-        html += '<span class="player';
-        html += ' ' + player.type.toLowerCase();
-
-        if (player.robotType != null) {
-            html += ' ' + player.robotType.toLowerCase();
-        }
-        if (player.membership != null) {
-            html += ' ' + player.membership.toLowerCase();
-        }
-        if (waiting) {
-            html += ' waiting';
-        }
-        html += '">';
-        if (showState && player.membership != null) {
-            html += '<div class="state ' + (player.online ? 'online' : 'offline') + '"></div>';
-        }
-        if (l) {
-            html += '<a href="/playground/profile/view?p=' + player.id + '">';
-        }
-        html += '<div class="nickname">' + player.nickname + '</div>';
-
-        if (showType) {
-            html += '<div class="icon"></div>';
-        }
-
-        if (l) {
-            html += "</a>";
-        }
-        html += '</span>';
-        return html;
-    };
-
     $(document).ready(function () {
         var body = $("body");
         statusWidgetPane = $("<div id='status-widget-pane' class='freeow-widget status-widget-pane'></div>").appendTo(body);
@@ -368,199 +340,6 @@ bg.ui = new function () {
     });
 };
 
-bg.ui.editor = new function () {
-    var TextEditor = function () {
-        var editor = $("<input>");
-
-        this.createEditor = function (currentValue) {
-            return editor.val(currentValue);
-        };
-
-        this.getValue = function () {
-            return editor.val();
-        };
-
-        this.getDisplayValue = function () {
-            return editor.val();
-        };
-    };
-
-    var DateEditor = function (ops) {
-        var editor = $("<div></div>").datepicker(ops);
-
-        this.createEditor = function (currentValue) {
-            return editor.datepicker("setDate", currentValue);
-        };
-
-        this.getValue = function () {
-            return $.datepicker.formatDate(ops.dateFormat, editor.datepicker("getDate"));
-        };
-
-        this.getDisplayValue = function () {
-            return $.datepicker.formatDate(ops.displayFormat, editor.datepicker("getDate"));
-        };
-    };
-
-    var SelectEditor = function (values) {
-        var editor = $('<select></select>');
-
-        $.each(values, function (key, value) {
-            editor.append($('<option value="' + key + '">' + value + '</option>'));
-        });
-
-        this.createEditor = function (currentValue) {
-            return editor.val(currentValue);
-        };
-
-        this.getValue = function () {
-            return editor.val();
-        };
-
-        this.getDisplayValue = function () {
-            return editor.children("option:selected").text();
-        };
-    };
-
-    this.Controller = function (view, committer, editorsInfo) {
-        var activeElement;
-        var activeEditor;
-        var previousValue;
-
-        var editorDialog = $("<div class='ui-widget-editor ui-widget-content'><div class='ui-layout-table'><div>" +
-                "<div class='ui-editor-label'></div>" +
-                "<div><div class='ui-editor-content'></div><div class='ui-editor-controls'>" +
-                "<div class='ui-editor-error'></div>" +
-                "<button class='ui-editor-save'>Save</button> " +
-                "<button class='ui-editor-cancel'>Cancel</button>" +
-                "</div></div>" +
-                "</div></div></div>");
-
-        var editorLabel = $(editorDialog).find('.ui-editor-label');
-        var editorContent = $(editorDialog).find('.ui-editor-content');
-
-        var saveButton = $(editorDialog).find('.ui-editor-save');
-        var cancelButton = $(editorDialog).find('.ui-editor-cancel');
-
-        var commitEditing = function () {
-            saveButton.attr('disabled', 'disabled');
-            cancelButton.attr('disabled', 'disabled');
-
-            setViewInfo(activeElement, {
-                value: activeEditor.getValue(),
-                view: activeEditor.getDisplayValue()
-            });
-
-            var values = {};
-            $.each($(view).find('input').serializeArray(), function (i, field) {
-                values[field.name] = field.value;
-            });
-            committer(activeElement.id, values, function (errorMsg) {
-                if (errorMsg != undefined) {
-                    editorDialog.addClass('ui-state-error');
-                    editorDialog.find(".ui-editor-error").html(errorMsg);
-
-                    saveButton.removeAttr('disabled');
-                    cancelButton.removeAttr('disabled');
-                } else {
-                    $.unblockUI();
-                }
-            });
-        };
-
-        var revertEditing = function () {
-            setViewInfo(activeElement, {
-                value: previousValue.value,
-                view: previousValue.view
-            });
-            $.unblockUI();
-            return false;
-        };
-
-        var createNewEditor = function (editorInfo) {
-            if (editorInfo.type == 'text') {
-                return new TextEditor();
-            } else if (editorInfo.type == 'select') {
-                return new SelectEditor(editorInfo.values);
-            } else if (editorInfo.type == 'date') {
-                return new DateEditor(editorInfo.opts || {});
-            }
-        };
-
-        var setViewInfo = function (view, info) {
-            var a = $(view).children(".ui-editor-view");
-            if (info.value == "") {
-                a.addClass('sample');
-                a.html(a.attr('label'));
-            } else {
-                a.removeClass('sample');
-                a.html(info.view);
-            }
-            $(view).children("input").val(info.value);
-        };
-
-        var getViewInfo = function (view) {
-            return {
-                label: $(view).children(".ui-editor-label").text(),
-                view: $(view).children(".ui-editor-view").html(),
-                value: $(view).children("input").val()
-            };
-        };
-
-        var closeEditor = function () {
-            saveButton.removeAttr('disabled');
-            cancelButton.removeAttr('disabled');
-
-            editorDialog.removeClass('ui-state-error');
-            editorDialog.find(".ui-editor-error").html('');
-
-            editorLabel.empty();
-            editorContent.empty();
-
-            activeEditor = null;
-            activeElement = null;
-            previousValue = null;
-        };
-
-        var openEditor = function (view, editor) {
-            activeElement = view;
-            activeEditor = editor;
-            previousValue = getViewInfo(view);
-
-            editorLabel.text(previousValue.label);
-            editorContent.append(editor.createEditor(previousValue.value));
-
-            var offset = $(view).offset();
-
-            $.blockUI({
-                message: editorDialog,
-                centerX: false,
-                centerY: false,
-                fadeIn: false,
-                fadeOut: false,
-                blockMsgClass: 'shadow',
-                css: {
-                    width: 'auto',
-                    left: offset.left + 5,
-                    top: offset.top + 5
-                },
-                draggable: false,
-                onUnblock: closeEditor
-            });
-        };
-
-        saveButton.click(commitEditing);
-        cancelButton.click(revertEditing);
-
-        $.each($(view).find('.ui-editor-item'), function (i, v) {
-            if (editorsInfo[v.id] != undefined) {
-                $(v).click(function () {
-                    openEditor(v, createNewEditor(editorsInfo[v.id]));
-                });
-            }
-        });
-    };
-};
-
 bg.ui.table = new function () {
     this.groupColumnDrawCallback = function (tableId) {
         return function (oSettings) {
@@ -587,6 +366,98 @@ bg.ui.table = new function () {
             }
         }
     };
+};
+
+bg.warehouse = {};
+
+bg.warehouse.Controller = function () {
+    var validateQuantityActions = function () {
+        var v = quantity.val();
+        if (v == 1) {
+            down.attr("disabled", "disabled");
+        } else {
+            down.removeAttr("disabled");
+        }
+    };
+
+    var addToBasket = function (callback) {
+        bg.ui.lock(null, 'Добавление в корзину. Пожалуйста, подождите...');
+        var serializeObject = $("#shoppingForm").serializeObject();
+        if (!$.isArray(serializeObject['optionIds'])) {
+            serializeObject['optionIds'] = [serializeObject['optionIds']];
+        }
+        if (!$.isArray(serializeObject['optionValues'])) {
+            serializeObject['optionValues'] = [serializeObject['optionValues']];
+        }
+        $.post("/warehouse/basket/add.ajax", JSON.stringify(serializeObject),
+                function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, "Товар добавлен в корзину", false);
+                    } else {
+                        bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
+                                "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                    }
+                    if (callback != null && callback != undefined) {
+                        callback(response.success);
+                    }
+                }, 'json');
+    };
+
+    $("#add").click(function (event) {
+        addToBasket();
+
+        event.preventDefault();
+        return false;
+    });
+
+    $("#buy").click(function (event) {
+        addToBasket(function () {
+            bg.util.url.redirect("/warehouse/basket");
+        });
+
+        event.preventDefault();
+        return false;
+    });
+
+    var quantity = $("#quantity").on('input', function () {
+        var v = quantity.val();
+        if (!$.isNumeric(v) || quantity < 1) {
+            quantity.val(1);
+        }
+        validateQuantityActions();
+    });
+
+    var up = $("#q_up").click(function (event) {
+        var v = quantity.val();
+        v++;
+        quantity.val(v);
+
+        validateQuantityActions();
+
+        event.preventDefault();
+        return false;
+    });
+
+    var down = $("#q_down").click(function (event) {
+        var v = quantity.val();
+        if (v > 1) {
+            v--;
+            quantity.val(v);
+        }
+
+        validateQuantityActions();
+
+        event.preventDefault();
+        return false;
+    });
+
+    var previewImage = $(".preview img");
+    $(".thumb img").click(function () {
+        $(".thumb img").removeClass("selected");
+        var src = $(this).addClass("selected").attr('src');
+        previewImage.attr('src', src.replace('_T', '_M'));
+    });
+    validateQuantityActions();
 };
 
 $(document).ready(function () {
@@ -697,7 +568,10 @@ $(document).ready(function () {
     });
 
     $(".bg-ui-button").click(function (el) {
-        bg.util.url.redirect($(this).find("a").attr("href"));
+        var url = $(this).find("a").attr("href");
+        if (url != undefined) {
+            bg.util.url.redirect(url);
+        }
     });
 });
 

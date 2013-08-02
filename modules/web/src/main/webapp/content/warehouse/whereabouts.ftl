@@ -4,7 +4,6 @@
 <#include "/core.ftl"/>
 
 <#if category??>
-
 <div class="title">
     <a href="/">Домашняя страница</a> >
     <#list category.genealogy.parents as g>

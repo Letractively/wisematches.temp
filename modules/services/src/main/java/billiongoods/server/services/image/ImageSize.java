@@ -14,7 +14,7 @@ import java.io.OutputStream;
 public enum ImageSize {
 	TINY(50, 50),
 	SMALL(150, 150),
-	MEDIUM(350, 350),
+	MEDIUM(280, 280),
 	LARGE(600, 600);
 
 	private final int width;

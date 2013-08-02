@@ -4,7 +4,8 @@
 <#-- @ftlvariable name="templateName" type="java.lang.String" -->
 <#-- @ftlvariable name="analyticsCode" type="java.lang.String" -->
 
-<#-- @ftlvariable name="hideWarehouse" type="java.lang.Boolean" -->
+<#-- @ftlvariable name="showWarehouse" type="java.lang.Boolean" -->
+<#-- @ftlvariable name="showNavigation" type="java.lang.Boolean" -->
 <#include "/core.ftl">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -67,12 +68,14 @@
             <td class="layout-container content-layout">
                 <table cellspacing="0" cellpadding="0" class="layout-content">
                     <tr>
+                    <#if !showNavigation?? || showNavigation>
                         <td width="210px" valign="top">
-                        <#include "${department.style}/navigation.ftl"/>
+                            <#include "${department.style}/navigation.ftl"/>
                         </td>
+                    </#if>
                         <td valign="top">
                             <div class="content">
-                            <#if !hideWarehouse>
+                            <#if !showWarehouse?? || showWarehouse>
                                 <div class="whereabouts"><#include "${department.style}/whereabouts.ftl"/></div>
                             </#if>
                             <#include "${templateName}"/>
