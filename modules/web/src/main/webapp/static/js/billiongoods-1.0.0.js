@@ -451,6 +451,10 @@ bg.warehouse.Controller = function () {
         return false;
     });
 
+    $("#sort").change(function () {
+
+    });
+
     var previewImage = $(".preview img");
     $(".thumb img").click(function () {
         $(".thumb img").removeClass("selected");

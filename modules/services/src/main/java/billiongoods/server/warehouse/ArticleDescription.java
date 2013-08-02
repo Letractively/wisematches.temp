@@ -14,8 +14,14 @@ public interface ArticleDescription {
 
 	boolean isActive();
 
-
 	Category getCategory();
+
+	/**
+	 * Returns number of sold articles.
+	 *
+	 * @return number of sold articles.
+	 */
+	int getSoldCount();
 
 
 	/**

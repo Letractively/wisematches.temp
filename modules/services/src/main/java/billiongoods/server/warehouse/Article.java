@@ -7,13 +7,6 @@ import java.util.List;
  */
 public interface Article extends ArticleDescription {
 	/**
-	 * Returns number of sold articles.
-	 *
-	 * @return number of sold articles.
-	 */
-	int getSoldCount();
-
-	/**
 	 * Returns full description for this article.
 	 *
 	 * @return the full description for this article.

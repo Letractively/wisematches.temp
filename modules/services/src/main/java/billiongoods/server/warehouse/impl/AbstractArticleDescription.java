@@ -25,6 +25,9 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Transient
 	private String code;
 
+	@Column(name = "soldCount")
+	private int soldCount;
+
 	@Column(name = "active")
 	private boolean active;
 
@@ -70,6 +73,12 @@ public class AbstractArticleDescription implements ArticleDescription {
 	public String getCode() {
 		return code;
 	}
+
+	@Override
+	public int getSoldCount() {
+		return soldCount;
+	}
+
 
 	@Override
 	public boolean isActive() {
@@ -141,6 +150,10 @@ public class AbstractArticleDescription implements ArticleDescription {
 			sb.setLength(0);
 			code = FORMATTER.format("%06d", id).toString();
 		}
+	}
+
+	void incrementSoldCount() {
+		this.soldCount++;
 	}
 
 	@Override

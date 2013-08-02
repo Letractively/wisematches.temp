@@ -6,9 +6,15 @@ import billiongoods.core.search.Range;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ItemsTableForm {
-	private int page = 0;
-	private int count = 8;
+	private int page = 1;
+	private int count = DEFAULT_COUNT_NUMBER;
 	private int totalCount;
+
+	private ItemSortType itemSortType;
+	private String sort = "bestselling";
+
+	private static final int DEFAULT_COUNT_NUMBER = 24;
+	private static final ItemSortType DEFAULT_SORT = ItemSortType.BESTSELLING;
 
 	public ItemsTableForm() {
 	}
@@ -33,14 +39,46 @@ public class ItemsTableForm {
 		return totalCount;
 	}
 
-	public void setTotalCount(int totalCount) {
+	public void validateForm(int totalCount) {
+		if (page < 1) {
+			page = 1;
+		}
+		if (count < 1) {
+			count = DEFAULT_COUNT_NUMBER;
+		}
+
+		int k = Math.round((totalCount / (float) count) + 0.5f);
+		if (page > k) {
+			page = k;
+		}
+
 		this.totalCount = totalCount;
+
+		itemSortType = DEFAULT_SORT;
+		for (ItemSortType t : ItemSortType.values()) {
+			if (t.getName().equals(sort)) {
+				itemSortType = t;
+				break;
+			}
+		}
+		sort = itemSortType.getName();
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public ItemSortType getItemSortType() {
+		return itemSortType;
 	}
 
 	public Range createRange() {
-		return Range.limit(page * count, count);
+		return Range.limit((page - 1) * count, count);
 	}
-
 
 	@Override
 	public String toString() {
