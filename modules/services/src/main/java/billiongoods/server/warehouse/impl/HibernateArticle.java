@@ -15,9 +15,6 @@ import java.util.Map;
 @Entity
 @Table(name = "store_article")
 public class HibernateArticle extends AbstractArticleDescription implements Article {
-	@Column(name = "soldCount")
-	private int soldCount;
-
 	@Column(name = "description")
 	private String description;
 
@@ -55,11 +52,6 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	}
 
 	@Override
-	public int getSoldCount() {
-		return soldCount;
-	}
-
-	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -87,10 +79,6 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	@Override
 	public HibernateSupplierInfo getSupplierInfo() {
 		return supplierInfo;
-	}
-
-	void incrementSoldCount() {
-		this.soldCount++;
 	}
 
 	void setDescription(String description) {

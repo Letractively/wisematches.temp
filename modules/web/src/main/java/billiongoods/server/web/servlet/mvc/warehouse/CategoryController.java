@@ -1,5 +1,7 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
+import billiongoods.core.search.Orders;
+import billiongoods.core.search.Range;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
@@ -18,11 +20,11 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/warehouse/category")
-public class CategoriesController extends AbstractController {
+public class CategoryController extends AbstractController {
 	private ArticleManager articleManager;
 	private CategoryManager categoryManager;
 
-	public CategoriesController() {
+	public CategoryController() {
 	}
 
 	@RequestMapping("/{categoryId}")
@@ -36,10 +38,11 @@ public class CategoriesController extends AbstractController {
 
 		final ArticleContext context = new ArticleContext(category);
 
-		final int totalCount = articleManager.getTotalCount(context);
-		final List<ArticleDescription> articles = articleManager.searchEntities(context, null, tableForm.createRange());
+		tableForm.validateForm(articleManager.getTotalCount(context));
 
-		tableForm.setTotalCount(totalCount);
+		final Range range = tableForm.createRange();
+		final Orders orders = Orders.of(tableForm.getItemSortType().getOrder());
+		final List<ArticleDescription> articles = articleManager.searchEntities(context, orders, range);
 
 		model.addAttribute("category", category);
 		model.addAttribute("articles", articles);
