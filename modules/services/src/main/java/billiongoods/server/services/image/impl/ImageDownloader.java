@@ -57,11 +57,11 @@ public class ImageDownloader {
                 final Path resolve = outPath.resolve(String.valueOf(atomicInteger.incrementAndGet()) + ".jpg");
 
                 try (InputStream inputStream = new URL(url).openStream()) {
-                    System.out.println("ERROR: [" + number + " of " + strings.size() + " ] Copy image from " + url + " to " + resolve);
+                    System.out.println("[" + number + " of " + strings.size() + " ] Copy image from " + url + " to " + resolve);
                     Files.copy(inputStream, resolve, StandardCopyOption.REPLACE_EXISTING);
                 }
             } catch (Exception ex) {
-                System.out.println("Data can't be loaded from: " + line + ". " + ex.getMessage());
+                System.out.println("ERROR: Data can't be loaded from: " + line + ". " + ex.getMessage());
             } finally {
                 number++;
             }
