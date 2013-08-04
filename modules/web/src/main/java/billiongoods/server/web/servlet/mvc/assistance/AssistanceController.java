@@ -21,8 +21,8 @@ public class AssistanceController extends AbstractController {
     }
 
     @RequestMapping({"", "/"})
-    public String helpCenterPage(Model model, Locale locale) {
-        return infoPages("general", model, locale);
+    public String helpCenterPage(Model model) {
+        return "/content/assistance/general";
     }
 
     @RequestMapping("/{pageName}")
