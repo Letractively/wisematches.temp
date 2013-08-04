@@ -375,7 +375,6 @@ span.dot {
 }
 
 .navigation.assistance {
-    margin: 0;
     padding: 0;
     border: 1px solid #ebebeb;
 }
@@ -383,10 +382,6 @@ span.dot {
 .navigation.assistance .list ul {
     margin: 0;
     padding: 0;
-}
-
-.navigation.assistance ul, .navigation.assistance li {
-    list-style: none;
 }
 
 .content .assistance {
@@ -430,6 +425,22 @@ span.dot {
 .content .assistance .des {
     text-align: justify;
     padding-left: 10px;
+}
+
+.content .assistance.item {
+    border: none;
+    padding: 10px;
+}
+
+.content .assistance.item img {
+    float: left;
+    width: 100px;
+    height: 45px;
+    padding-right: 5px;
+}
+
+.content .assistance.item .name {
+    font-weight: bold;
 }
 
 .table-view {

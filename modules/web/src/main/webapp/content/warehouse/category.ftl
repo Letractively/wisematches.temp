@@ -13,42 +13,44 @@
 <#macro tableNavigation itemsTableForm>
     <#assign page=itemsTableForm.page/>
     <#if (itemsTableForm.count > 0)>
-        <#assign count=(itemsTableForm.totalCount/itemsTableForm.count)?ceiling/>
-    <ul>
-        <#if (page > 1)>
-            <@pageLink page-1>Предыдущая</@pageLink>
-        </#if>
-
-        <#if (page - 3> 0)>
-            <@pageLink 1>1</@pageLink>
-            <li style="display: inline-block; vertical-align: top">...</li>
-        </#if>
-
-        <#list (page-2)..(page-1) as i>
-            <#if (i>0)>
-                <@pageLink i>${i}</@pageLink>
+        <#assign pagesCount=(itemsTableForm.totalCount/itemsTableForm.count)?ceiling/>
+        <#if (pagesCount > 1)>
+        <ul>
+            <#if (page > 1)>
+                <@pageLink page-1>Предыдущая</@pageLink>
             </#if>
-        </#list>
 
-
-        <@pageLink page>${page}</@pageLink>
-
-        <#list (page+1)..(page+2) as i>
-            <#if (i<=count)>
-                <@pageLink i>${i}</@pageLink>
+            <#if (page - 3> 0)>
+                <@pageLink 1>1</@pageLink>
+                <li style="display: inline-block; vertical-align: top">...</li>
             </#if>
-        </#list>
 
-        <#if (page+2<count)>
-            <li style="display: inline-block; vertical-align: top">...</li>
+            <#list (page-2)..(page-1) as i>
+                <#if (i>0)>
+                    <@pageLink i>${i}</@pageLink>
+                </#if>
+            </#list>
 
-            <@pageLink count>${count}</@pageLink>
+
+            <@pageLink page>${page}</@pageLink>
+
+            <#list (page+1)..(page+2) as i>
+                <#if (i<=pagesCount)>
+                    <@pageLink i>${i}</@pageLink>
+                </#if>
+            </#list>
+
+            <#if (page+2<pagesCount)>
+                <li style="display: inline-block; vertical-align: top">...</li>
+
+                <@pageLink pagesCount>${pagesCount}</@pageLink>
+            </#if>
+
+            <#if (page < pagesCount)>
+                <@pageLink page+1>Следующая</@pageLink>
+            </#if>
+        </ul>
         </#if>
-
-        <#if (page < count)>
-            <@pageLink page+1>Следующая</@pageLink>
-        </#if>
-    </ul>
     </#if>
 </#macro>
 
@@ -56,8 +58,12 @@
     <div class="table-view">
         <div class="table-pages">
             <div class="table-position">
+            <#if (itemsTableForm.totalCount > 0)>
                 Показано ${itemsTableForm.page + 1} - ${itemsTableForm.page + articles?size}
                 из ${itemsTableForm.totalCount} элементов
+            <#else>
+                В этой категории нет ни одного элемента
+            </#if>
             </div>
 
             <div class="table-controls">
@@ -112,7 +118,8 @@
             </table>
         <#else>
             <div style="text-align: center">
-                В этой категории еще нет ни одного товара но мы работает над их добавлением.
+                В этой категории еще нет ни одного товара но мы работает над их добавлением. Попробуйте зайте завтра, у
+                нас очень редко бывают пустые категории.
             </div>
         </#if>
         </div>
