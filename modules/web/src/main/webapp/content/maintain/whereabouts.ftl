@@ -1,6 +1,3 @@
 <#include "/core.ftl"/>
 
-<div class="title">
-    <a href="/">Домашняя страница</a> >
-    <a href="/maintain/main">Управление Магазином</a>
-</div>
+<@bg.ui.whereabouts><a href="/maintain/main">Управление Магазином</a></@bg.ui.whereabouts>

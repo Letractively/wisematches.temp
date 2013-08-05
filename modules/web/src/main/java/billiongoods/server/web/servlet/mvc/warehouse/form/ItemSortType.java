@@ -9,7 +9,7 @@ public enum ItemSortType {
 	BESTSELLING("bs", "soldCount", false),
 	PRICE_DOWN("plth", "price", true),
 	PRICE_UP("phtl", "price", false),
-	NEW_ARRIVAL("d", "registrationDate", false);
+	ARRIVAL_DATE("d", "registrationDate", false);
 
 	private final String name;
 	private final Order order;

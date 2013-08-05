@@ -582,6 +582,14 @@ $(document).ready(function () {
 $(document).ready(function () {
     var timeoutID;
 
+    $("#tableSorting").change(function () {
+        var url = null;
+        url = bg.util.url.extend(url, 'page', $("#tableFormPage").val(), true);
+        url = bg.util.url.extend(url, 'count', $("#tableFormCount").val(), true);
+        url = bg.util.url.extend(url, 'sort', $(this).val(), true);
+        bg.util.url.redirect(url);
+    });
+
     $('.dropdown')
             .mouseenter(function () {
                 var submenu = $('.sublinks').stop(false, true).hide();

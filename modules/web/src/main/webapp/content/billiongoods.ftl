@@ -46,7 +46,7 @@
 </head>
 <body>
 
-<div id="billiongoods" class="body-${department.style}">
+<div id="billiongoods" class="department-${department.style} <#if section??>section-${section}</#if>">
     <table width="100%">
         <tr>
             <td class="layout-container header-layout">

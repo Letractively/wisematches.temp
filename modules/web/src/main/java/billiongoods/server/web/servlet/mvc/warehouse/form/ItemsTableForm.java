@@ -72,6 +72,11 @@ public class ItemsTableForm {
 		this.sort = sort;
 	}
 
+	public void setItemSortType(ItemSortType itemSortType) {
+		this.sort = itemSortType.getName();
+		this.itemSortType = itemSortType;
+	}
+
 	public ItemSortType getItemSortType() {
 		return itemSortType;
 	}
@@ -88,5 +93,9 @@ public class ItemsTableForm {
 		sb.append(", totalCount=").append(totalCount);
 		sb.append('}');
 		return sb.toString();
+	}
+
+	public void disableSorting() {
+		sort = "";
 	}
 }
