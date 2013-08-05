@@ -1,10 +1,9 @@
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
-<#-- @ftlvariable name="staticContentId" type="String" -->
+<#-- @ftlvariable name="section" type="String" -->
 
 <#include "/core.ftl"/>
 
-<div class="title">
-    <a href="/">Домашняя страница</a> >
-    <a href="/assistance">Центр Поддержки</a>
-<#if staticContentModel??> > <@bg.link.assist staticContentId/></#if>
-</div>
+<@bg.ui.whereabouts>
+<a href="/assistance">Центр Поддержки</a>
+    <#if section??> > <@bg.link.assist section/></#if>
+</@bg.ui.whereabouts>

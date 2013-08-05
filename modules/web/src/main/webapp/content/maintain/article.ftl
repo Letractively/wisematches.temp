@@ -163,7 +163,7 @@
         <#if viewImages?is_collection>
             <#list viewImages as i>
                 <div class="image">
-                    <img src="<@bg.ui.image article i ImageSize.SMALL/>"/>
+                    <img src="<@bg.ui.articleImg article i ImageSize.SMALL/>"/>
                     <input name="enabledImages" type="checkbox" value="${i}"
                            <#if enabledImages?contains(i)>checked="checked"</#if>/>
                     <input name="previewImage" type="radio" value="${i}" <#if i==previewImage>checked="checked"</#if>/>

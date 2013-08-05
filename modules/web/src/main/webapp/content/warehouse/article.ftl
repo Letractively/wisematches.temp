@@ -9,13 +9,13 @@
                 <div class="view">
                     <div class="preview">
                         <img alt="${article.name}"
-                             src="<@bg.ui.image article article.previewImageId ImageSize.MEDIUM/>"/>
+                             src="<@bg.ui.articleImg article article.previewImageId ImageSize.MEDIUM/>"/>
                     </div>
 
                     <div class="thumb">
                     <#list article.imageIds as i>
                         <div><img <#if i==article.previewImageId>class="selected"</#if>
-                                src="<@bg.ui.image article i ImageSize.TINY/>" width="50px" height="50px"/></div>
+                                  src="<@bg.ui.articleImg article i ImageSize.TINY/>" width="50px" height="50px"/></div>
                     </#list>
                     </div>
                 </div>
@@ -106,49 +106,32 @@
         </tr>
     </table>
 
-    <div id="description" class="description">
-        <a name="description"></a>
-
-        <div class="tit">
-            Описание
-        </div>
-
-        <div class="cnt">
-        ${article.description!""}
-        </div>
-    </div>
-
+<#if article.description?has_content>
+    <@bg.ui.panel "Описание" "description" "description" "description">${article.description!""}</@bg.ui.panel>
+</#if>
 
 <#if article.accessories?has_content>
-    <div id="accessories" class="accessories">
-        <a name="accessories"></a>
-
-        <div class="tit">
-            Принадлежности
-        </div>
-
-        <div class="cnt">
-            <table>
-                <#list article.accessories as a>
-                    <#if a_index==0>
-                    <tr></#if>
-                    <td valign="top" width="50%">
-                        <div class="article-item list">
-                            <div class="image">
-                                <@bg.link.article a><img
-                                        alt="${a.name}"
-                                        title="${a.name}"
-                                        src="<@bg.ui.image a a.previewImageId!"" ImageSize.SMALL/>"
-                                        width="75px" height="75px"/></@bg.link.article>
-                            </div>
-                            <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                            <div class="price"><@bg.ui.price a.price/></div>
-                    </td>
-                    <#if a_index-1==0></tr></#if>
-                </#list>
-            </table>
-        </div>
-    </div>
+    <@bg.ui.panel "Принадлежности" "accessories" "accessories" "accessories">
+        <table>
+            <#list article.accessories as a>
+                <#if a_index==0>
+                <tr></#if>
+                <td valign="top" width="50%">
+                    <div class="article-item list">
+                        <div class="image">
+                            <@bg.link.article a><img
+                                    alt="${a.name}"
+                                    title="${a.name}"
+                                    src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
+                                    width="75px" height="75px"/></@bg.link.article>
+                        </div>
+                        <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
+                        <div class="price"><@bg.ui.price a.price/></div>
+                </td>
+                <#if a_index-1==0></tr></#if>
+            </#list>
+        </table>
+    </@bg.ui.panel>
 </#if>
 </div>
 

@@ -51,6 +51,15 @@ public abstract class AbstractController {
 		return PersonalityContext.getPrincipal();
 	}
 
+	@ModelAttribute("section")
+	public String getSection(HttpServletRequest request) {
+		final String pathInfo = request.getPathInfo();
+		if (pathInfo == null) {
+			return null;
+		}
+		final String[] split = pathInfo.split("/");
+		return split.length > 1 ? split[1] : null;
+	}
 
 	@ModelAttribute("department")
 	public Department getDepartment(HttpServletRequest request) {

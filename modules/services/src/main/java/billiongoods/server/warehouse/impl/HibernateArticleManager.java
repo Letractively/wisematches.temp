@@ -8,7 +8,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,6 +19,8 @@ import java.util.List;
 public class HibernateArticleManager extends EntitySearchManager<ArticleDescription, ArticleContext> implements ArticleManager {
 	private CategoryManager catalogManager;
 	private AttributeManager attributeManager;
+
+	private static final int ONE_WEEK_MILLIS = 1000 * 60 * 60 * 24 * 7;
 
 	public HibernateArticleManager() {
 		super(HibernateArticleDescription.class);
@@ -128,8 +132,30 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 	@Override
 	protected void applyRestrictions(Criteria criteria, ArticleContext context) {
-		if (context != null && context.getCategory() != null) {
-			criteria.add(Restrictions.eq("categoryId", context.getCategory().getId()));
+		if (context != null) {
+			final Category category = context.getCategory();
+			if (category != null) {
+				if (context.isSubCategories() && !category.isFinal()) {
+					final List<Integer> ids = new ArrayList<>();
+
+					final LinkedList<Category> categories = new LinkedList<>();
+					categories.add(category);
+
+					while (categories.size() != 0) {
+						final Category c = categories.removeFirst();
+
+						ids.add(c.getId());
+						categories.addAll(c.getChildren());
+					}
+					criteria.add(Restrictions.in("categoryId", ids));
+				} else {
+					criteria.add(Restrictions.eq("categoryId", category.getId()));
+				}
+			}
+
+			if (context.isArrival()) {
+				criteria.add(Restrictions.ge("registrationDate", new java.sql.Date(System.currentTimeMillis() - ONE_WEEK_MILLIS)));
+			}
 		}
 	}
 
