@@ -9,7 +9,7 @@
                 <div class="view">
                     <div class="preview">
                         <img alt="${article.name}"
-                             src="<@bg.ui.articleImg article article.previewImageId ImageSize.MEDIUM/>"/>
+                             src="<@bg.ui.articleImg article article.previewImageId!"" ImageSize.MEDIUM/>"/>
                     </div>
 
                     <div class="thumb">
@@ -38,10 +38,12 @@
                     <div class="props">
                         <table>
                             <#list article.properties as p>
-                                <tr>
-                                    <td>${p.attribute.name}</td>
-                                    <td>${p.value} ${p.attribute.unit}</td>
-                                </tr>
+                                <#if p.value?has_content>
+                                    <tr>
+                                        <td>${p.attribute.name}</td>
+                                        <td>${p.value} ${p.attribute.unit}</td>
+                                    </tr>
+                                </#if>
                             </#list>
                         </table>
 

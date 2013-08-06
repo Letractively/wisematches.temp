@@ -20,6 +20,11 @@
                 <@bg.ui.input path="form.unit"/>
                 </td>
             </tr>
+
+            <tr>
+                <td colspan="2"><@bg.ui.spring.showErrors "br"/> </td>
+            </tr>
+
             <tr>
                 <td></td>
                 <td>

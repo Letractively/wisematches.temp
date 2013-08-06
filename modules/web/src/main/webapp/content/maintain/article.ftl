@@ -1,4 +1,5 @@
-<#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Category" -->
+<#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Catalog" -->
+<#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Article" -->
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
 
@@ -10,21 +11,18 @@
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.ui.widget-1.10.3.js"/>"></script>
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.fileupload-8.6.1.js"/>"></script>
 
-<#macro option category level selected>
-<option <#if category.id?string==selected>selected="selected"</#if> value="${category.id}"><#list 0..level as i>
-    -- </#list>${category.name} /${category.id}</option>
-    <#list category.children as c>
-        <@option c level+1 selected/>
-    </#list>
-</#macro>
-
 <div style="padding: 10px; border: 1px solid gray;">
 <form action="/maintain/article" method="post">
-<@bg.ui.input path="form.category" fieldType="hidden"/>
 
 <table style="width: 100%">
 <tr>
-    <td valign="top"><label for="name">Имя: </label></td>
+    <td valign="top"><label for="category">Категория: </label></td>
+    <td>
+    <@bg.ui.selectCategory "form.category" catalog true/>
+    </td>
+</tr>
+<tr>
+<td valign="top"><label for="name">Имя: </label></td>
     <td>
     <@bg.ui.field path="form.name">
         <textarea rows="3" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
@@ -38,18 +36,33 @@
     </td>
 </tr>
 <tr>
-    <td valign="top"><label for="category">Категория: </label></td>
-    <td>
-    <#list category.genealogy.parents as c><a
-            href="/maintain/category?id=${c.id}">${c.name}</a><#if c_has_next>
-        > </#if></#list>
-    </td>
-</tr>
-<tr>
     <td colspan="2">
         <hr>
     </td>
 </tr>
+<tr>
+    <td><label for="supplierPrice">Цена поставщика: </label></td>
+    <td><@bg.ui.input path="form.supplierPrice"/></td>
+</tr>
+<tr>
+    <td><label for="supplierPrimordialPrice">Цена поставщика до скодки: </label></td>
+    <td><@bg.ui.input path="form.supplierPrimordialPrice"/></td>
+</tr>
+<tr>
+    <td><label for="supplierReferenceCode">Код поставщика: </label></td>
+    <td><@bg.ui.input path="form.supplierReferenceCode"/></td>
+</tr>
+<tr>
+    <td><label for="supplierReferenceId">Идентификатор поставщика: </label></td>
+    <td><@bg.ui.input path="form.supplierReferenceId"/></td>
+</tr>
+
+<tr>
+<td colspan="2">
+        <hr>
+    </td>
+</tr>
+
 <tr>
     <td><label for="price">Цена: </label></td>
     <td><@bg.ui.input path="form.price"/></td>
@@ -58,6 +71,8 @@
     <td><label for="primordialPrice">Цена до скидки: </label></td>
     <td><@bg.ui.input path="form.primordialPrice"/></td>
 </tr>
+
+<#if articleId?has_content>
 <tr>
     <td colspan="2">
         <hr>
@@ -67,27 +82,27 @@
     <td valign="top"><label for="properties">Параметры: </label></td>
     <td>
         <table>
-        <@bg.ui.bind path="form.propertyIds"/>
-        <#assign propertyIds=bg.ui.status.actualValue!""/>
+            <@bg.ui.bind path="form.propertyIds"/>
+            <#assign propertyIds=bg.ui.status.actualValue!""/>
 
-        <@bg.ui.bind path="form.propertyValues"/>
-        <#assign propertyValues=bg.ui.status.actualValue!""/>
+            <@bg.ui.bind path="form.propertyValues"/>
+            <#assign propertyValues=bg.ui.status.actualValue!""/>
 
-        <#if propertyIds?is_collection && (propertyIds?size >0)>
-            <#list 0..(propertyIds?size)-1 as i>
-                <#assign id=propertyIds[i]/>
-                <#assign value=propertyValues[i]/>
-                <tr>
-                    <td>
-                        <input type="hidden" name="propertyIds" value="${id}">
-                        <label for="property${id}" class="attribute">${id}</label>
-                    </td>
-                    <td>
-                        <input id="property${id}" name="propertyValues" value="${value}">
-                    </td>
-                </tr>
-            </#list>
-        </#if>
+            <#if propertyIds?is_collection && (propertyIds?size >0)>
+                <#list 0..(propertyIds?size)-1 as i>
+                    <#assign id=propertyIds[i]/>
+                    <#assign value=propertyValues[i]!""/>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="propertyIds" value="${id}">
+                            <label for="property${id}" class="attribute">${id}</label>
+                        </td>
+                        <td>
+                            <input id="property${id}" name="propertyValues" value="${value}">
+                        </td>
+                    </tr>
+                </#list>
+            </#if>
         </table>
     </td>
 </tr>
@@ -100,30 +115,30 @@
     <td valign="top"><label for="options">Опции: </label></td>
     <td>
         <table id="optionsTable">
-        <@bg.ui.bind path="form.optionIds"/>
-        <#assign optionIds=bg.ui.status.actualValue!""/>
+            <@bg.ui.bind path="form.optionIds"/>
+            <#assign optionIds=bg.ui.status.actualValue!""/>
 
-        <@bg.ui.bind path="form.optionValues"/>
-        <#assign optionValues=bg.ui.status.actualValue!""/>
+            <@bg.ui.bind path="form.optionValues"/>
+            <#assign optionValues=bg.ui.status.actualValue!""/>
 
-        <#if optionIds?is_collection && (optionIds?size>0)>
-            <#list 0..(optionIds?size)-1 as i>
-                <#assign id=optionIds[i]/>
-                <#assign value=optionValues[i]/>
-                <tr>
-                    <td>
-                        <label for="option${id}" class="attribute">${id}</label>
-                        <input name="optionIds" type="hidden" value="${id}"/>
-                    </td>
-                    <td>
-                        <input id="option${id}" name="optionValues" value="${value}"/>
-                    </td>
-                    <td>
-                        <button class="remove" type="button">Удалить</button>
-                    </td>
-                </tr>
-            </#list>
-        </#if>
+            <#if optionIds?is_collection && (optionIds?size>0)>
+                <#list 0..(optionIds?size)-1 as i>
+                    <#assign id=optionIds[i]/>
+                    <#assign value=optionValues[i]/>
+                    <tr>
+                        <td>
+                            <label for="option${id}" class="attribute">${id}</label>
+                            <input name="optionIds" type="hidden" value="${id}"/>
+                        </td>
+                        <td>
+                            <input id="option${id}" name="optionValues" value="${value}"/>
+                        </td>
+                        <td>
+                            <button class="remove" type="button">Удалить</button>
+                        </td>
+                    </tr>
+                </#list>
+            </#if>
             <tr id="optionControls">
                 <td></td>
                 <td colspan="2">
@@ -151,25 +166,26 @@
     <td valign="top"><label for="viewImages">Другие изображения: </label></td>
     <td>
         <div class="images">
-        <@bg.ui.bind path="form.viewImages"/>
-        <#assign viewImages=bg.ui.status.actualValue!""/>
+            <@bg.ui.bind path="form.viewImages"/>
+            <#assign viewImages=bg.ui.status.actualValue!""/>
 
-        <@bg.ui.bind path="form.enabledImages"/>
-        <#assign enabledImages=bg.ui.status.actualValue!""/>
+            <@bg.ui.bind path="form.enabledImages"/>
+            <#assign enabledImages=bg.ui.status.actualValue!""/>
 
-        <@bg.ui.bind path="form.previewImage"/>
-        <#assign previewImage=bg.ui.status.actualValue!""/>
+            <@bg.ui.bind path="form.previewImage"/>
+            <#assign previewImage=bg.ui.status.actualValue!""/>
 
-        <#if viewImages?is_collection>
-            <#list viewImages as i>
-                <div class="image">
-                    <img src="<@bg.ui.articleImg article i ImageSize.SMALL/>"/>
-                    <input name="enabledImages" type="checkbox" value="${i}"
-                           <#if enabledImages?contains(i)>checked="checked"</#if>/>
-                    <input name="previewImage" type="radio" value="${i}" <#if i==previewImage>checked="checked"</#if>/>
-                </div>
-            </#list>
-        </#if>
+            <#if viewImages?is_collection>
+                <#list viewImages as i>
+                    <div class="image">
+                        <img src="<@bg.ui.articleImg article i ImageSize.SMALL/>"/>
+                        <input name="enabledImages" type="checkbox" value="${i}"
+                               <#if enabledImages?contains(i)>checked="checked"</#if>/>
+                        <input name="previewImage" type="radio" value="${i}"
+                               <#if i==previewImage>checked="checked"</#if>/>
+                    </div>
+                </#list>
+            </#if>
         </div>
 
         <div>
@@ -186,49 +202,30 @@
 <tr>
     <td valign="top"><label for="viewImages">Комплектующие: </label></td>
     <td>
-    <@bg.ui.field path="form.accessories">
-        <table id="accessoriesTable">
-            <#if bg.ui.status.actualValue??>
-                <#list bg.ui.status.actualValue as i>
-                    <tr>
-                        <td><input name="accessories" value="${i}"></td>
-                        <td>
-                            <button class="remove" type="button">Удалить</button>
-                        </td>
-                    </tr>
-                </#list>
-            </#if>
-            <tr id="accessoriesControls">
-                <td></td>
-                <td>
-                    <button class="add" type="button">добавить</button>
-                </td>
-            </tr>
-        </table>
-    </@bg.ui.field>
+        <@bg.ui.field path="form.accessories">
+            <table id="accessoriesTable">
+                <#if bg.ui.status.actualValue??>
+                    <#list bg.ui.status.actualValue as i>
+                        <tr>
+                            <td><input name="accessories" value="${i}"></td>
+                            <td>
+                                <button class="remove" type="button">Удалить</button>
+                            </td>
+                        </tr>
+                    </#list>
+                </#if>
+                <tr id="accessoriesControls">
+                    <td></td>
+                    <td>
+                        <button class="add" type="button">добавить</button>
+                    </td>
+                </tr>
+            </table>
+        </@bg.ui.field>
     </td>
 </tr>
-<tr>
-    <td colspan="2">
-        <hr>
-    </td>
-</tr>
-<tr>
-    <td><label for="supplierPrice">Цена поставщика: </label></td>
-    <td><@bg.ui.input path="form.supplierPrice"/></td>
-</tr>
-<tr>
-    <td><label for="supplierPrimordialPrice">Цена поставщика до скодки: </label></td>
-    <td><@bg.ui.input path="form.supplierPrimordialPrice"/></td>
-</tr>
-<tr>
-    <td><label for="supplierReferenceCode">Код поставщика: </label></td>
-    <td><@bg.ui.input path="form.supplierReferenceCode"/></td>
-</tr>
-<tr>
-    <td><label for="supplierReferenceId">Идентификатор поставщика: </label></td>
-    <td><@bg.ui.input path="form.supplierReferenceId"/></td>
-</tr>
+</#if>
+
 <tr>
     <td colspan="2">
         <hr>
@@ -245,9 +242,13 @@
 </tr>
 
 <tr>
+    <td colspan="2"><@bg.ui.spring.showErrors "br"/> </td>
+</tr>
+
+<tr>
     <td></td>
     <td>
-    <#if article??>
+    <#if articleId?has_content>
         <button id="add" type="submit">Изменить</button>
     <#else>
         <button id="add" type="submit">Создать</button>
@@ -310,6 +311,19 @@
     var removeAccessory = function () {
         $(this).parent().parent().remove();
     };
+
+    var recalculatePrice = function (val) {
+        var f = parseFloat(val);
+        return (f + f * 0.15 + 0.3).toFixed(2); // 0.15 - percents, 0.3 - fixed paypal comission
+    };
+
+    $("#supplierPrice").change(function () {
+        $("#price").val(recalculatePrice($(this).val()));
+    });
+
+    $("#supplierPrimordialPrice").change(function () {
+        $("#primordialPrice").val(recalculatePrice($(this).val()));
+    });
 
     $("#optionsTable").find("button.add").click(addOption);
     $("#optionsTable").find("button.remove").click(removeOption);
