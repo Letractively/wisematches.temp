@@ -11,7 +11,7 @@
         <@bg.link.categoryLink category/>
     </@bg.ui.whereabouts>
 
-    <#if category.description??>
+    <#if category.description?has_content>
     <div class="description">${category.description}</div>
     </#if>
 <#elseif section??>
