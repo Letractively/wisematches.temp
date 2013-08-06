@@ -5,106 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/Basket.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/visitor/CookiesVisitorServices.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/PersonalityAuthenticationToken.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/visitor/SessionVisitorServices.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/VisitorAuthenticationToken.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/visitor/VisitorServices.java" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\security\userdetails\PlayerDetailsService.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\membership\MembershipCard.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\membership\MembershipExpiration.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\test\java\billiongoods\core\personality\player\profile\impl\CSVCountriesManagerTest.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\DefaultVisitor.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\membership\MembershipManager.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\DefaultPersonalityManager.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\membership\impl\HibernateMembershipCard.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\Membership.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\membership\MembershipListener.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\services\src\main\java\billiongoods\server\warehouse\Basket.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\profile\Country.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\membership\impl\HibernateMembershipManager.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\security\authentication\PlayerAuthenticationProvider.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\profile\CountriesManager.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\profile\impl\CSVCountriesManager.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\services\src\main\java\billiongoods\server\warehouse\BasketItem.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\DefaultMember.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\security\userdetails\PlayerDetails.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/database/billiongoods.mwb.bak" afterPath="$PROJECT_DIR$/resources/database/billiongoods.mwb.bak" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/database/billiongoods.mwb" afterPath="$PROJECT_DIR$/resources/database/billiongoods.mwb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/AlertsOriginCenter.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/AlertsOriginCenter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AuthenticationController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AuthenticationController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/AbstractHibernateBasket.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/MemoryBasketManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/Basket.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/Basket.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/converter/FreeMarkerNotificationConverter.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/converter/FreeMarkerNotificationConverter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/HibernatePlayerActivity.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/HibernatePlayerActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/HibernatePlayerStateManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/HibernatePlayerStateManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/state/impl/HibernatePlayerStateManagerTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/state/impl/HibernatePlayerStateManagerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Language.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Language.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Localization.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Localization.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/publisher/MailNotificationPublisher.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/publisher/MailNotificationPublisher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Member.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Member.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/MemberAuthenticationProvider.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/MemberAuthenticationProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/MessageFormatter.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/MessageFormatter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Personality.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Personality.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/PersonalityContext.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/PersonalityContext.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/PersonalityManager.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/PersonalityManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/PersonalityType.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/PersonalityType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Property.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Property.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/PublishNotificationService.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/PublishNotificationService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/SessionRegistryStateManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/state/impl/SessionRegistryStateManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/state/impl/SessionRegistryStateManagerTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/state/impl/SessionRegistryStateManagerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/SettingsController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/SettingsController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Visitor.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Visitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/VisitorAuthenticationFilter.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/VisitorAuthenticationFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/VisitorAuthenticationProvider.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/VisitorAuthenticationProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iml" afterPath="$PROJECT_DIR$/billiongoods.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.ipr" afterPath="$PROJECT_DIR$/billiongoods.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketItem.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketItem.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/core.iml" afterPath="$PROJECT_DIR$/modules/core/core.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/create.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/create.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/database/latest_patch.sql" afterPath="$PROJECT_DIR$/resources/database/latest_patch.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/resources/config/personality-config.xml" afterPath="$PROJECT_DIR$/modules/core/src/main/resources/config/personality-config.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/recovery_en.ftl" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/recovery_en.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/recovery_ru.ftl" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/account/recovery_ru.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/services.iml" afterPath="$PROJECT_DIR$/modules/services/services.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/web.iml" afterPath="$PROJECT_DIR$/modules/web/web.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web.xml" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\test\java\billiongoods\core\personality\player\account\impl\HibernateAccountRecoveryManagerTest.java" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/account/impl/HibernateAccountRecoveryManagerTest.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountRecoveryManager.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountRecoveryManager.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountAvailability.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountAvailability.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\impl\HibernateAccountManager.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountManager.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\impl\HibernateAccountLockManager.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountLockManager.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\UnknownAccountException.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/UnknownAccountException.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\impl\HibernateAccountNicknameLockInfo.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountNicknameLockInfo.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountListener.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountListener.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\security\authentication\PlayerAuthentication.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/MemberAuthenticationToken.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\DuplicateAccountException.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/DuplicateAccountException.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountManager.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountManager.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\impl\HibernateRecoveryToken.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateRecoveryToken.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\InadmissibleUsernameException.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/InadmissibleUsernameException.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\test\java\billiongoods\core\personality\player\account\impl\HibernateAccountManagerTest.java" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/account/impl/HibernateAccountManagerTest.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\Account.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/Account.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountEditor.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountEditor.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\impl\HibernateAccount.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccount.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\test\java\billiongoods\core\personality\player\account\impl\HibernateAccountLockManagerTest.java" afterPath="$PROJECT_DIR$/modules/core/src/test/java/billiongoods/core/account/impl/HibernateAccountLockManagerTest.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountNicknameLockInfo.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountNicknameLockInfo.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountLockInfo.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountLockInfo.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\impl\HibernateAccountRecoveryManager.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountRecoveryManager.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountLockManager.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountLockManager.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountLockListener.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountLockListener.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountNicknameLockListener.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountNicknameLockListener.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\AccountException.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountException.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\RecoveryToken.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/RecoveryToken.java" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\core\src\main\java\billiongoods\core\personality\player\account\impl\HibernateAccountLockInfo.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountLockInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/toolbar.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/toolbar.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/whereabouts.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/whereabouts.ftl" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -193,7 +106,44 @@
     <favorites_list name="application" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="BasketController.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="5" selection-start="1118" selection-end="1118" vertical-scroll-proportion="0.12091898" vertical-offset="121" max-vertical-offset="1530">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="8" selection-start="1144" selection-end="1144" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="basket.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="22" selection-start="354" selection-end="354" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="323">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="whereabouts.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/whereabouts.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="34" selection-start="412" selection-end="412" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="493">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -212,22 +162,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/DefaultPersonalityManager.java" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/resources/config/personality-config.xml" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Visitor.java" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/VisitorAuthenticationProvider.java" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/personality/DefaultMember.java" />
-        <option value="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Member.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AuthenticationController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketManager.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Options.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateArticleOption.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Option.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketItem.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/Basket.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasket.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketItem.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/MemoryBasketManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/AbstractHibernateBasket.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/toolbar.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/whereabouts.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java" />
       </list>
     </option>
   </component>
@@ -1433,6 +1383,44 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1571,6 +1559,220 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="warehouse" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="props" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="props" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="basket" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="basket" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -2411,7 +2613,11 @@
       <created>1375778122149</created>
       <updated>1375778122149</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="+">
+      <created>1375795597785</created>
+      <updated>1375795597785</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -2439,7 +2645,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1272" y="-8" width="1296" height="1010" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40679953" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2462,7 +2668,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2617504" sideWeight="0.67198175" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32590857" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2617504" sideWeight="0.6025791" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29578605" sideWeight="0.6025791" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47244734" sideWeight="0.6757991" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -2593,115 +2799,124 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountNicknameLockListener.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/Account.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="17" selection-start="130" selection-end="130" vertical-scroll-proportion="0.10278114" vertical-offset="0" max-vertical-offset="827">
+        <state line="24" column="0" selection-start="765" selection-end="888" vertical-scroll-proportion="0.0" vertical-offset="4" max-vertical-offset="1462">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountNicknameLockInfo.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccount.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="29" selection-start="241" selection-end="241" vertical-scroll-proportion="0.24667473" vertical-offset="0" max-vertical-offset="827">
+        <state line="20" column="41" selection-start="684" selection-end="684" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1802">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/Player.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/Basket.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="22" selection-start="169" selection-end="169" vertical-scroll-proportion="0.16444983" vertical-offset="0" max-vertical-offset="827">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/PersonalityManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="17" selection-start="207" selection-end="207" vertical-scroll-proportion="0.08222491" vertical-offset="0" max-vertical-offset="827">
-          <folding>
-            <element signature="docComment;class#PersonalityManager#0" expanded="false" />
-            <element signature="docComment;method#getMember#0;class#PersonalityManager#0" expanded="false" />
-            <element signature="docComment;method#getVisitor#0;class#PersonalityManager#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AuthenticationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="13" selection-start="2327" selection-end="2327" vertical-scroll-proportion="0.77272725" vertical-offset="0" max-vertical-offset="2737">
-          <folding>
-            <element signature="e#6221#6253#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="18" selection-start="1156" selection-end="1156" vertical-scroll-proportion="0.124840766" vertical-offset="293" max-vertical-offset="2924">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="14" selection-start="707" selection-end="707" vertical-scroll-proportion="0.095525995" vertical-offset="227" max-vertical-offset="1615">
+        <state line="6" column="20" selection-start="117" selection-end="117" vertical-scroll-proportion="0.123337366" vertical-offset="0" max-vertical-offset="827">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="33" selection-start="130" selection-end="130" vertical-scroll-proportion="0.06367041" vertical-offset="0" max-vertical-offset="801">
+        <state line="13" column="43" selection-start="720" selection-end="720" vertical-scroll-proportion="0.15159236" vertical-offset="102" max-vertical-offset="3230">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="42" selection-start="2538" selection-end="2538" vertical-scroll-proportion="0.5393401" vertical-offset="459" max-vertical-offset="1751">
+        <state line="16" column="22" selection-start="609" selection-end="609" vertical-scroll-proportion="0.14389358" vertical-offset="0" max-vertical-offset="1445">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/BasketManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="10" selection-start="183" selection-end="183" vertical-scroll-proportion="0.16444983" vertical-offset="0" max-vertical-offset="827">
+        <state line="19" column="70" selection-start="535" selection-end="535" vertical-scroll-proportion="0.68" vertical-offset="0" max-vertical-offset="527">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/MemoryBasketManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="26" selection-start="956" selection-end="956" vertical-scroll-proportion="0.71157897" vertical-offset="240" max-vertical-offset="1054">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="30" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="986">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/AbstractHibernateBasket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="23" selection-start="328" selection-end="328" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/3.2.3.RELEASE/spring-aop-3.2.3.RELEASE.jar!/org/springframework/aop/framework/CglibAopProxy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="35" selection-start="4081" selection-end="4081" vertical-scroll-proportion="0.35198134" vertical-offset="1005" max-vertical-offset="2890">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/3.2.3.RELEASE/spring-core-3.2.3.RELEASE.jar!/org/springframework/cglib/proxy/MethodProxy.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="55" selection-start="1901" selection-end="1901" vertical-scroll-proportion="0.46444446" vertical-offset="420" max-vertical-offset="1020">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/toolbar.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="39" selection-start="184" selection-end="184" vertical-scroll-proportion="0.108142495" vertical-offset="0" max-vertical-offset="786">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="8" selection-start="1144" selection-end="1144" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="22" selection-start="354" selection-end="354" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="323">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/whereabouts.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="34" selection-start="412" selection-end="412" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="493">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="41" selection-start="1095" selection-end="1095" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Property.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="19" selection-start="117" selection-end="117" vertical-scroll-proportion="0.10278114" vertical-offset="0" max-vertical-offset="827">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateArticle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="15" selection-start="2689" selection-end="2689" vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="2397">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Option.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="51" selection-start="427" selection-end="427" vertical-scroll-proportion="0.34945586" vertical-offset="0" max-vertical-offset="827">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateArticleProperty.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="67" selection-start="234" selection-end="234" vertical-scroll-proportion="0.14389358" vertical-offset="0" max-vertical-offset="827">
+        <state line="28" column="5" selection-start="1118" selection-end="1118" vertical-scroll-proportion="0.12091898" vertical-offset="121" max-vertical-offset="1530">
           <folding />
         </state>
       </provider>

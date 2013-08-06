@@ -3,7 +3,7 @@
 <div style="float: right">
     <ul>
         <li class="bg-ui-button tb-item-cart tb-separator-left tb-separator-right">
-            <a href="/warehouse/cart">
+            <a href="/warehouse/basket">
                 <span class="image"></span>
                 <span>Корзина</span>
             </a>
