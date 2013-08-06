@@ -7,33 +7,33 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Entity
-@Table(name = "player_activity")
+@Table(name = "account_personality")
 public class HibernatePlayerActivity {
-    @Id
-    @Column(name = "pid")
-    private long player;
+	@Id
+	@Column(name = "id")
+	private Long player;
 
-    @Column(name = "last_activity")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastActivityDate;
+	@Column(name = "last_activity")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastActivityDate;
 
-    public HibernatePlayerActivity() {
-    }
+	public HibernatePlayerActivity() {
+	}
 
-    public HibernatePlayerActivity(long player, Date lastActivityDate) {
-        this.player = player;
-        this.lastActivityDate = lastActivityDate;
-    }
+	public HibernatePlayerActivity(Long player, Date lastActivityDate) {
+		this.player = player;
+		this.lastActivityDate = lastActivityDate;
+	}
 
-    public long getPlayer() {
-        return player;
-    }
+	public Long getPlayer() {
+		return player;
+	}
 
-    public Date getLastActivityDate() {
-        return lastActivityDate;
-    }
+	public Date getLastActivityDate() {
+		return lastActivityDate;
+	}
 
-    public void setLastActivityDate(Date lastActivityDate) {
-        this.lastActivityDate = lastActivityDate;
-    }
+	public void setLastActivityDate(Date lastActivityDate) {
+		this.lastActivityDate = lastActivityDate;
+	}
 }

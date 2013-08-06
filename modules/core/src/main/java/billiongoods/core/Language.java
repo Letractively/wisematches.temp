@@ -9,7 +9,6 @@ import java.util.Locale;
  *
  * @author <a href="mailto:smklimenko@gmail.com">Sergey Klimenko</a>
  */
-@Deprecated
 public enum Language {
 	EN("UTF-8", new Locale("en"), Localization.ENGLISH),
 	RU("Cp1251", new Locale("ru"), Localization.RUSSIAN);

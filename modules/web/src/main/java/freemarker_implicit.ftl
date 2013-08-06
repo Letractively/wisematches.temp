@@ -1,7 +1,7 @@
 [#ftl]
 [#-- @implicitly included --]
 [#-- @ftlvariable name="locale" type="java.util.Locale" --]
-
+[#-- @ftlvariable name="principal" type="billiongoods.core.Personality" --]
 
 [#-- @ftlvariable name="messageSource" type="billiongoods.server.MessageFormatter" --]
 

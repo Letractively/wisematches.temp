@@ -3,8 +3,8 @@
  */
 package billiongoods.server.web.servlet.mvc.account;
 
-import billiongoods.core.personality.player.account.DuplicateAccountException;
-import billiongoods.core.personality.player.account.InadmissibleUsernameException;
+import billiongoods.core.account.DuplicateAccountException;
+import billiongoods.core.account.InadmissibleUsernameException;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -226,7 +226,7 @@ public class AccountController extends AbstractController {
         if (!form.getPassword().equals(form.getConfirm())) {
             errors.rejectValue("confirm", "account.register.pwd-cfr.err.mismatch");
         }
-        getAvailabilityStatus(form.getEmail(), form.getNickname(), errors, locale);
+        getAvailabilityStatus(form.getEmail(), form.getUsername(), errors, locale);
     }
 
     */
@@ -243,7 +243,7 @@ public class AccountController extends AbstractController {
     private Account createAccount(AccountRegistrationForm registration, HttpServletRequest request) throws AccountException {
         final AccountEditor editor = new AccountEditor();
         editor.setEmail(registration.getEmail());
-        editor.setNickname(registration.getNickname());
+        editor.setNickname(registration.getUsername());
         editor.setLanguage(Language.byCode(registration.getLanguage()));
         editor.setTimeZone(Calendar.getInstance(request.getLocale()).getTimeZone());
         return accountManager.createAccount(editor.createAccount(), registration.getPassword());

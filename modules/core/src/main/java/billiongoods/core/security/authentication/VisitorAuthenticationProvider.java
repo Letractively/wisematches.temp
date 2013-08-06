@@ -1,42 +1,28 @@
 package billiongoods.core.security.authentication;
 
-import billiongoods.core.Language;
-import billiongoods.core.security.userdetails.PlayerDetails;
+import billiongoods.core.Visitor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class VisitorAuthenticationProvider extends PlayerAuthenticationProvider {
-    private int visitorKeyHast;
+public class VisitorAuthenticationProvider implements AuthenticationProvider {
+	public VisitorAuthenticationProvider() {
+	}
 
-    public VisitorAuthenticationProvider() {
-    }
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		final AnonymousAuthenticationToken token = (AnonymousAuthenticationToken) authentication;
 
-    @Override
-    protected PlayerDetails loadValidPersonalityDetails(Authentication authentication) {
-        final AnonymousAuthenticationToken token = (AnonymousAuthenticationToken) authentication;
-        if (token.getKeyHash() != visitorKeyHast) {
-            return null;
-        }
+		final Long id = (Long) token.getPrincipal();
+		return new VisitorAuthenticationToken(new Visitor(id));
+	}
 
-        final Object principal = token.getPrincipal();
-        if (!(principal instanceof Language)) {
-            throw new BadCredentialsException("Principal must be language code");
-        }
-
-        final Language lang = (Language) principal;
-        return getPersonalityDetailsService().loadVisitorByLanguage(lang);
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return AnonymousAuthenticationToken.class.isAssignableFrom(authentication);
-    }
-
-    public void setVisitorKey(String visitorKey) {
-        this.visitorKeyHast = visitorKey.hashCode();
-    }
+	@Override
+	public boolean supports(Class<?> authentication) {
+		return AnonymousAuthenticationToken.class.isAssignableFrom(authentication);
+	}
 }

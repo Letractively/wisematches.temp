@@ -14,20 +14,22 @@ import java.util.Collection;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class PublishNotificationService implements NotificationService {
-    private TransactionalExecutor taskExecutor;
-    private NotificationManager notificationManager;
-    private NotificationConverter notificationConverter;
+	private TransactionalExecutor taskExecutor;
+	private NotificationManager notificationManager;
+	private NotificationConverter notificationConverter;
 
-    private final Collection<NotificationPublisher> publishers = new ArrayList<>();
+	private final Collection<NotificationPublisher> publishers = new ArrayList<>();
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.PublishService");
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.PublishService");
 
-    public PublishNotificationService() {
-    }
+	public PublishNotificationService() {
+	}
 
-    @Override
-    public Notification raiseNotification(String code, Member target, NotificationSender sender, Object context) throws NotificationException {
-        final NotificationScope notificationScope = notificationManager.getNotificationScope(code, target);
+	@Override
+	public Notification raiseNotification(String code, Member target, NotificationSender sender, Object context) throws NotificationException {
+		// TODO: commented
+/*
+		final NotificationScope notificationScope = notificationManager.getNotificationScope(code, target);
         final NotificationScope personalScope = notificationScope != null ? notificationScope : NotificationScope.EXTERNAL;
 
         final Notification notification = notificationConverter.createNotification(code, target, sender, context);
@@ -49,25 +51,27 @@ public class PublishNotificationService implements NotificationService {
             }
         });
         return notification;
-    }
+*/
+		throw new UnsupportedOperationException("commented");
+	}
 
-    public void setTaskExecutor(TransactionalExecutor taskExecutor) {
-        this.taskExecutor = taskExecutor;
-    }
+	public void setTaskExecutor(TransactionalExecutor taskExecutor) {
+		this.taskExecutor = taskExecutor;
+	}
 
-    public void setNotificationManager(NotificationManager notificationManager) {
-        this.notificationManager = notificationManager;
-    }
+	public void setNotificationManager(NotificationManager notificationManager) {
+		this.notificationManager = notificationManager;
+	}
 
-    public void setNotificationConverter(NotificationConverter notificationConverter) {
-        this.notificationConverter = notificationConverter;
-    }
+	public void setNotificationConverter(NotificationConverter notificationConverter) {
+		this.notificationConverter = notificationConverter;
+	}
 
-    public void setNotificationPublishers(Collection<NotificationPublisher> publishers) {
-        this.publishers.clear();
+	public void setNotificationPublishers(Collection<NotificationPublisher> publishers) {
+		this.publishers.clear();
 
-        if (publishers != null) {
-            this.publishers.addAll(publishers);
-        }
-    }
+		if (publishers != null) {
+			this.publishers.addAll(publishers);
+		}
+	}
 }

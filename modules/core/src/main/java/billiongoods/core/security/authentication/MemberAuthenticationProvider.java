@@ -1,21 +1,39 @@
 package billiongoods.core.security.authentication;
 
-import billiongoods.core.security.userdetails.PlayerDetails;
-import billiongoods.core.security.userdetails.PlayerDetailsService;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.AuthenticationException;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class MemberAuthenticationProvider extends PlayerAuthenticationProvider {
-    public MemberAuthenticationProvider() {
-    }
+public class MemberAuthenticationProvider implements AuthenticationProvider {
+	public MemberAuthenticationProvider() {
+	}
 
-    @Override
-    protected PlayerDetails loadValidPersonalityDetails(Authentication authentication) {
+	@Override
+	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		System.out.println(authentication);
+
+/*
+		final UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
+		final String username = (String) token.getPrincipal();
+		final String password = (String) token.getCredentials();
+		if (password == null) {
+			throw new BadCredentialsException("No password provided");
+		}
+*/
+
+		// load Member here and parse it.
+
+		return new MemberAuthenticationToken(null);
+	}
+
+/*
+	@Override
+    protected MemberDetails loadValidPersonalityDetails(Authentication authentication) {
         final UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) authentication;
         final String username = (String) token.getPrincipal();
         final String password = (String) token.getCredentials();
@@ -23,8 +41,8 @@ public class MemberAuthenticationProvider extends PlayerAuthenticationProvider {
             throw new BadCredentialsException("No password provided");
         }
 
-        final PlayerDetailsService detailsService = getPersonalityDetailsService();
-        final PlayerDetails details = detailsService.loadMemberByEmail(username);
+        final MemberDetailsService detailsService = getPersonalityDetailsService();
+        final MemberDetails details = detailsService.loadMemberByEmail(username);
         if (details == null) {
             throw new UsernameNotFoundException("User is unknown: " + username);
         }
@@ -34,9 +52,12 @@ public class MemberAuthenticationProvider extends PlayerAuthenticationProvider {
         }
         return details;
     }
+*/
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
-    }
+
+	@Override
+	public boolean supports(Class<?> authentication) {
+		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication) ||
+				RememberMeAuthenticationToken.class.isAssignableFrom(authentication);
+	}
 }
