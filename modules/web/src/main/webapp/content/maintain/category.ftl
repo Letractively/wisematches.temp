@@ -59,7 +59,11 @@
                         </tr>
 
                         <tr>
-                            <td></td>
+                            <td colspan="2"><@bg.ui.spring.showErrors "br"/> </td>
+                        </tr>
+
+                        <tr>
+                        <td></td>
                             <td>
                             <#if category??>
                                 <button id="add" type="submit">Изменить</button>
