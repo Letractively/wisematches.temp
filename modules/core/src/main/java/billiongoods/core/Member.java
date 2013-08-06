@@ -1,27 +1,34 @@
 package billiongoods.core;
 
-import java.util.TimeZone;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public abstract class Member extends Player {
-    private static final long serialVersionUID = -5921468650108338917L;
+public final class Member extends Personality {
+	private String email;
+	private String username;
 
-    protected Member(long id) {
-        super(id);
-    }
+	private static final long serialVersionUID = -3657252453631101842L;
 
-    public abstract String getEmail();
+	public Member(Long id, String username, String email) {
+		super(id);
+		this.email = email;
+		this.username = username;
+	}
 
-    public abstract String getNickname();
+	public String getEmail() {
+		return email;
+	}
 
-    public abstract TimeZone getTimeZone();
+	public String getUsername() {
+		return username;
+	}
 
-    public abstract Membership getMembership();
+	public Language getLanguage() {
+		return Language.RU;
+	}
 
-    @Override
-    public final PersonalityType getType() {
-        return PersonalityType.MEMBER;
-    }
+	@Override
+	public final PersonalityType getType() {
+		return PersonalityType.MEMBER;
+	}
 }

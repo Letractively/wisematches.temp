@@ -1,28 +1,18 @@
 package billiongoods.server.services.state.impl;
 
-import billiongoods.core.Language;
-import billiongoods.core.Player;
-import billiongoods.core.personality.DefaultVisitor;
-import billiongoods.core.security.userdetails.PlayerDetails;
-import billiongoods.server.services.state.PlayerStateListener;
 import org.junit.Test;
-
-import java.util.Arrays;
-
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class SessionRegistryStateManagerTest {
-    public SessionRegistryStateManagerTest() {
-    }
+	public SessionRegistryStateManagerTest() {
+	}
 
-    @Test
-    public void test() {
-        final Player player1 = new DefaultVisitor(Language.RU);
+	@Test
+	public void test() {
+/*
+		final Player player1 = new DefaultVisitor(Language.RU);
         final Player player2 = new DefaultVisitor(Language.EN);
 
         final PlayerStateListener listener = createStrictMock(PlayerStateListener.class);
@@ -39,13 +29,13 @@ public class SessionRegistryStateManagerTest {
         replay(listener);
 
         assertFalse(stateManager.isPlayerOnline(player1));
-        stateManager.registerNewSession("S1", new PlayerDetails(player1, "asd", "qwe", false, false, Arrays.asList("mock")));
+        stateManager.registerNewSession("S1", new MemberDetails(player1, "asd", "qwe", false, false, Arrays.asList("mock")));
         assertTrue(stateManager.isPlayerOnline(player1));
-        stateManager.registerNewSession("S2", new PlayerDetails(player1, "asd", "qwe", false, false, Arrays.asList("mock")));
+        stateManager.registerNewSession("S2", new MemberDetails(player1, "asd", "qwe", false, false, Arrays.asList("mock")));
         assertFalse(stateManager.isPlayerOnline(player2));
-        stateManager.registerNewSession("S3", new PlayerDetails(player2, "asd", "qwe", false, false, Arrays.asList("mock")));
+        stateManager.registerNewSession("S3", new MemberDetails(player2, "asd", "qwe", false, false, Arrays.asList("mock")));
         assertTrue(stateManager.isPlayerOnline(player2));
-        stateManager.registerNewSession("S4", new PlayerDetails(player2, "asd", "qwe", false, false, Arrays.asList("mock")));
+        stateManager.registerNewSession("S4", new MemberDetails(player2, "asd", "qwe", false, false, Arrays.asList("mock")));
         stateManager.refreshLastRequest("S5");
         stateManager.refreshLastRequest("S1");
         stateManager.refreshLastRequest("S1");
@@ -62,5 +52,7 @@ public class SessionRegistryStateManagerTest {
         assertFalse(stateManager.isPlayerOnline(player1));
 
         verify(listener);
-    }
+*/
+		throw new UnsupportedOperationException("commented");
+	}
 }

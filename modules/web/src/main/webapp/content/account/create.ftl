@@ -59,12 +59,12 @@
 
                         <tr>
                             <td>
-                            <#--@declare id="nickname"-->
-                                <label for="nickname"><@message code="account.register.nickname.label"/>:</label>
+                            <#--@declare id="username"-->
+                                <label for="username"><@message code="account.register.username.label"/>:</label>
                             </td>
                             <td>
-                            <@wm.ui.input path="registration.nickname"/>
-                                <span class="sample"><@message code="account.register.nickname.description"/></span>
+                            <@wm.ui.input path="registration.username"/>
+                                <span class="sample"><@message code="account.register.username.description"/></span>
                             </td>
                         </tr>
                     <#--

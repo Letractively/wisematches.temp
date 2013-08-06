@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="context.principal" type="billiongoods.core.personality.player.account.Account" -->
+<#-- @ftlvariable name="context.principal" type="billiongoods.core.account.Account" -->
 <#-- @ftlvariable name="context.recoveryToken" type="java.lang.String" -->
 <#import "../utils.ftl" as util>
 

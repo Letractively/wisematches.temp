@@ -1,10 +1,5 @@
 package billiongoods.server.services.state.impl;
 
-import billiongoods.core.Language;
-import billiongoods.core.Player;
-import billiongoods.core.personality.DefaultVisitor;
-import billiongoods.core.security.userdetails.PlayerDetails;
-import billiongoods.server.services.state.PlayerStateListener;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,32 +8,27 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Date;
-
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "classpath:/config/properties-config.xml",
-        "classpath:/config/database-config.xml"
+		"classpath:/config/properties-config.xml",
+		"classpath:/config/database-config.xml"
 })
 public class HibernatePlayerStateManagerTest {
-    @Autowired
-    private SessionFactory sessionFactory;
+	@Autowired
+	private SessionFactory sessionFactory;
 
-    public HibernatePlayerStateManagerTest() {
-    }
+	public HibernatePlayerStateManagerTest() {
+	}
 
-    @Test
-    public void test() throws InterruptedException {
-        final Player player1 = new DefaultVisitor(Language.RU);
-        final Player player2 = new DefaultVisitor(Language.EN);
+	@Test
+	public void test() throws InterruptedException {
+/*
+		final Visitor player1 = new DefaultVisitor(Language.RU);
+        final Visitor player2 = new DefaultVisitor(Language.EN);
 
         final PlayerStateListener listener = createStrictMock(PlayerStateListener.class);
 
@@ -68,22 +58,22 @@ public class HibernatePlayerStateManagerTest {
         assertFalse(stateManager.isPlayerOnline(player1));
 
         Thread.sleep(100);
-        stateManager.registerNewSession("S1", new PlayerDetails(player1, "asd", "qwe", false, false, Arrays.asList("mock")));
+        stateManager.registerNewSession("S1", new MemberDetails(player1, "asd", "qwe", false, false, Arrays.asList("mock")));
         assertTrue(stateManager.isPlayerOnline(player1));
         assertTrue(lastActivity1.before(lastActivity1 = stateManager.getLastActivityDate(player1)));
 
         Thread.sleep(100);
-        stateManager.registerNewSession("S2", new PlayerDetails(player1, "asd", "qwe", false, false, Arrays.asList("mock")));
+        stateManager.registerNewSession("S2", new MemberDetails(player1, "asd", "qwe", false, false, Arrays.asList("mock")));
         assertFalse(stateManager.isPlayerOnline(player2));
         assertTrue(lastActivity1.before(lastActivity1 = stateManager.getLastActivityDate(player1)));
 
         Thread.sleep(100);
-        stateManager.registerNewSession("S3", new PlayerDetails(player2, "asd", "qwe", false, false, Arrays.asList("mock")));
+        stateManager.registerNewSession("S3", new MemberDetails(player2, "asd", "qwe", false, false, Arrays.asList("mock")));
         assertTrue(stateManager.isPlayerOnline(player2));
         assertTrue(lastActivity2.before(lastActivity2 = stateManager.getLastActivityDate(player2)));
 
         Thread.sleep(100);
-        stateManager.registerNewSession("S4", new PlayerDetails(player2, "asd", "qwe", false, false, Arrays.asList("mock")));
+        stateManager.registerNewSession("S4", new MemberDetails(player2, "asd", "qwe", false, false, Arrays.asList("mock")));
         assertTrue(lastActivity2.before(lastActivity2 = stateManager.getLastActivityDate(player2)));
 
         Thread.sleep(100);
@@ -131,5 +121,8 @@ public class HibernatePlayerStateManagerTest {
         assertEquals(lastActivity2, stateManager.getLastActivityDate(player2));
 
         verify(listener);
-    }
+*/
+
+		throw new UnsupportedOperationException("commented");
+	}
 }

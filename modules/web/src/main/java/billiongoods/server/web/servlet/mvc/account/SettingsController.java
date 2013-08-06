@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SettingsController extends AbstractController {
 /*
 	private AccountManager accountManager;
-    private PlayerDetailsService detailsService;
+    private MemberDetailsService detailsService;
     private NotificationManager notificationManager;
 
     private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.SettingsController");
@@ -124,9 +124,9 @@ public class SettingsController extends AbstractController {
                 try {
                     accountManager.updateAccount(editor.createAccount(), pwd);
 
-                    final PlayerDetails details = detailsService.loadMemberByEmail(account.getEmail());
+                    final MemberDetails details = detailsService.loadMemberByEmail(account.getEmail());
                     if (details != null) {
-                        SecurityContextHolder.getContext().setAuthentication(new PlayerAuthentication(details));
+                        SecurityContextHolder.getContext().setAuthentication(new MemberAuthenticationToken(details));
                     }
                     return "redirect:/account/modify#" + form.getOpenedTab();
                 } catch (UnknownAccountException e) {
@@ -156,7 +156,7 @@ public class SettingsController extends AbstractController {
     }
 
     @Autowired
-    public void setDetailsService(PlayerDetailsService detailsService) {
+    public void setDetailsService(MemberDetailsService detailsService) {
         this.detailsService = detailsService;
     }
 
