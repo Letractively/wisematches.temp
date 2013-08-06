@@ -4,14 +4,6 @@
 
 <#include "/core.ftl">
 
-<#macro option category level selected>
-<option <#if category.id?string==selected>selected="selected"</#if> value="${category.id}"><#list 0..level as i>
-    -- </#list>${category.name} /${category.id}</option>
-    <#list category.children as c>
-        <@option c level+1 selected/>
-    </#list>
-</#macro>
-
 <div style="padding: 10px; border: 1px solid gray;">
     <form action="/maintain/category" method="post">
     <@bg.ui.input path="form.id" fieldType="hidden"/>
@@ -37,14 +29,7 @@
                         <tr>
                             <td valign="top"><label for="parent">Родитель: </label></td>
                             <td>
-                            <@bg.ui.field path="form.parent">
-                                <select name="parent">
-                                    <option value="">ROOT</option>
-                                    <#list catalog.rootCategories as c>
-                                        <@option c 0 bg.ui.statusValue/>
-                                    </#list>
-                                </select>
-                            </@bg.ui.field>
+                            <@bg.ui.selectCategory "form.parent" catalog true/>
                             </td>
                         </tr>
 
@@ -63,7 +48,7 @@
                         </tr>
 
                         <tr>
-                        <td></td>
+                            <td></td>
                             <td>
                             <#if category??>
                                 <button id="add" type="submit">Изменить</button>

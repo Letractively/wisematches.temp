@@ -46,11 +46,15 @@ public class AttributeMaintainController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String updateAttribute(@Valid @ModelAttribute("form") AttributeForm form, Model model, BindingResult result) {
-		if (form.getId() == null) {
-			final Attribute attribute = attributeManager.createAttribute(form.getName(), form.getUnit());
-			form.setId(attribute.getId());
-		} else {
-			attributeManager.updateAttribute(form.getId(), form.getName(), form.getUnit());
+		try {
+			if (form.getId() == null) {
+				final Attribute attribute = attributeManager.createAttribute(form.getName(), form.getUnit());
+				form.setId(attribute.getId());
+			} else {
+				attributeManager.updateAttribute(form.getId(), form.getName(), form.getUnit());
+			}
+		} catch (Exception ex) {
+			result.reject("internal.error", ex.getMessage());
 		}
 		return viewAttribute(model, form);
 	}

@@ -30,6 +30,11 @@
 </div>
 </#macro>
 
+<#macro categoriesTree >
+
+</#macro>
+
+
 
 <#macro articlesView items type ops={}>
     <#if type =='grid'>
@@ -228,4 +233,24 @@
            value="<#if fieldType!="password"><#if status.value?has_content>${status.value}<#else><@message code=value/></#if></#if>"</#if> ${attributes}/>
         <#nested>
     </@field>
+</#macro>
+
+<#macro categoryOption category level selected>
+<option <#if category.id?string==selected>selected="selected"</#if> value="${category.id}"><#list 0..level as i>
+    -- </#list>${category.name} /${category.id}</option>
+    <#list category.children as c>
+        <@categoryOption c level+1 selected/>
+    </#list>
+</#macro>
+
+<#macro selectCategory path catalog root=false>
+    <@bg.ui.field path>
+    <select name="${status.expression}">
+        <#if root>
+            <option value="">ROOT</option></#if>
+        <#list catalog.rootCategories as c>
+            <@categoryOption c 0 status.value!""/>
+        </#list>
+    </select>
+    </@bg.ui.field>
 </#macro>

@@ -208,6 +208,10 @@ public class ArticleForm {
 		this.enabledImages = enabledImages;
 	}
 
+	public boolean isCreating() {
+		return id == null;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("ArticleForm{");
