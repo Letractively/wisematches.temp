@@ -113,6 +113,10 @@
     <beans:bean id="visitorAuthenticationFilter"
                 class="billiongoods.server.web.security.filter.VisitorAuthenticationFilter">
         <beans:property name="authenticationManager" ref="authenticationManager"/>
+
+        <beans:property name="visitorServices">
+            <beans:bean class="billiongoods.server.web.security.filter.visitor.CookiesVisitorServices"/>
+        </beans:property>
     </beans:bean>
 
     <beans:bean id="concurrentSessionFilter"
