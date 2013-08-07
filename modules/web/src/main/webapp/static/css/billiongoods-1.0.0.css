@@ -9,7 +9,7 @@ body {
     background-color: white;
 }
 
-body, div, label, span, td {
+body, div, label, span, td, th {
     font: 13px "Trebuchet MS", "Helvetica", "Arial", "Verdana", "sans-serif";
     line-height: 1.5;
 }
@@ -713,20 +713,20 @@ span.dot {
     font-weight: normal;
 }
 
-.article_layout button {
-    border: 1px solid;
-}
-
 .article_layout .quantity {
     padding-right: 30px;
 }
 
-.article_layout .quantity input {
+.quantity button {
+    border: 1px solid;
+}
+
+.quantity input {
     width: 30px;
     text-align: center;
 }
 
-.article_layout .quantity .bg-ui-button {
+.quantity .bg-ui-button {
     padding: 0;
     width: 20px;
     height: 18px;
@@ -735,19 +735,19 @@ span.dot {
     background-color: #14be00;
 }
 
-.article_layout .quantity .bg-ui-button:hover {
+.quantity .bg-ui-button:hover {
     border-color: #0e6700;
     background-color: #149700;
 }
 
-.article_layout .quantity .bg-ui-button:disabled {
-    border-color: #020202;
-    background-color: #626262;
+.quantity .bg-ui-button:disabled {
+    border-color: #cccccc;
+    background-color: #f3f3f3;
 }
 
 .article_layout .controls .bg-ui-button {
     padding: 5px 10px 5px 20px;
-    border-color: #d67632;
+    border: 1px solid #d67632;
     background-color: #f78c40;
 }
 
@@ -880,4 +880,18 @@ span.dot {
 
 .catalog-view .tit .more {
     float: right;
+}
+
+.basket th {
+    font-weight: bold;
+    background-color: #e7e7e7;
+}
+
+.basket td, .basket th {
+    padding: 5px;
+    border: 1px solid #cccccc;
+}
+
+.basket .item li {
+    list-style: disc;
 }

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js" line="103" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" line="743" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="+">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/resources/resizeTest.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/ImageSizeTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/ImageSize.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/ImageSize.java" />
+    <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/article.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/article.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -85,21 +86,6 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/ImageSizeTest.java" line="34" class="billiongoods.server.warehouse.ImageSizeTest" package="billiongoods.server.warehouse">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
     </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
@@ -114,30 +100,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ImageSize.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/ImageSize.java">
+      <file leaf-file-name="basket.ftl" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="23" selection-start="582" selection-end="582" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImageSizeTest.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/ImageSizeTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="32" selection-start="307" selection-end="307" vertical-scroll-proportion="0.21948357" vertical-offset="0" max-vertical-offset="852">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NativeMethodAccessorImpl.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="43" selection-start="788" selection-end="788" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+            <state line="22" column="19" selection-start="824" selection-end="824" vertical-scroll-proportion="0.09443099" vertical-offset="296" max-vertical-offset="1275">
               <folding />
             </state>
           </provider>
@@ -162,22 +128,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/resources/database/latest_patch.sql" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketOption.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateArticle.java" />
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/basket/impl/HibernateBasketManagerTest.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasket.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketItem.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketManager.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml" />
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/ImageSizeTest.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/ImageSize.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/article.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl" />
       </list>
     </option>
   </component>
@@ -2257,7 +2223,7 @@
       <recent name="billiongoods.server" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ImageSizeTest">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 7">
     <configuration default="false" name="HibernateArticleManagerTest.test" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -2853,7 +2819,11 @@
       <created>1375873188185</created>
       <updated>1375873188185</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="+">
+      <created>1375878593989</created>
+      <updated>1375878593989</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -3035,53 +3005,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/VisitorAuthenticationFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="13" selection-start="1070" selection-end="1070" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1105">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/visitor/CookiesVisitorServices.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="55" selection-start="8" selection-end="55" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="25" selection-start="6152" selection-end="6152" vertical-scroll-proportion="-17.8" vertical-offset="1561" max-vertical-offset="2992">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="28" selection-start="2129" selection-end="2129" vertical-scroll-proportion="0.10278114" vertical-offset="2380" max-vertical-offset="15113">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/impl/ImageDownloader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1088">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/test/resources/test.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/impl/FileImageResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="439" selection-end="439" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11.jar!/org/junit/runners/ParentRunner.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="1" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1224">
@@ -3209,24 +3132,78 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="43" selection-start="788" selection-end="788" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+        <state line="17" column="43" selection-start="788" selection-end="788" vertical-scroll-proportion="0.32419547" vertical-offset="0" max-vertical-offset="839">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/ImageSize.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="23" selection-start="582" selection-end="582" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734">
-          <folding />
+        <state line="22" column="23" selection-start="649" selection-end="649" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1734">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/ImageSizeTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="32" selection-start="307" selection-end="307" vertical-scroll-proportion="0.21948357" vertical-offset="0" max-vertical-offset="852">
+        <state line="30" column="18" selection-start="841" selection-end="841" vertical-scroll-proportion="0.59859157" vertical-offset="0" max-vertical-offset="852">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/link.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="8" selection-start="402" selection-end="402" vertical-scroll-proportion="0.14637147" vertical-offset="0" max-vertical-offset="813">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.0.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="486" column="40" selection-start="15685" selection-end="15685" vertical-scroll-proportion="0.21096544" vertical-offset="8085" max-vertical-offset="9418">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1375881307683" expanded="false" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="8" selection-start="524" selection-end="524" vertical-scroll-proportion="0.34317344" vertical-offset="27" max-vertical-offset="4454">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/article.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="52" selection-start="4342" selection-end="4350" vertical-scroll-proportion="0.5181598" vertical-offset="1119" max-vertical-offset="2448">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-1.0.0.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="742" column="0" selection-start="11969" selection-end="11969" vertical-scroll-proportion="0.33215964" vertical-offset="12331" max-vertical-offset="15334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="63" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.43896714" vertical-offset="0" max-vertical-offset="852">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="19" selection-start="824" selection-end="824" vertical-scroll-proportion="0.09443099" vertical-offset="296" max-vertical-offset="1275">
+          <folding />
         </state>
       </provider>
     </entry>
