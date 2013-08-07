@@ -9,5 +9,9 @@ import java.util.List;
 public interface Basket {
 	Date getCreationTime();
 
+	Date getUpdatingTime();
+
+	BasketItem getBasketItem(int number);
+
 	List<BasketItem> getBasketItems();
 }
