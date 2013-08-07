@@ -296,15 +296,6 @@ bg.ui = new function () {
 bg.warehouse = {};
 
 bg.warehouse.Controller = function () {
-    var validateQuantityActions = function () {
-        var v = quantity.val();
-        if (v == 1) {
-            down.attr("disabled", "disabled");
-        } else {
-            down.removeAttr("disabled");
-        }
-    };
-
     var addToBasket = function (callback) {
         bg.ui.lock(null, 'Добавление в корзину. Пожалуйста, подождите...');
         var serializeObject = $("#shoppingForm").serializeObject();
@@ -348,49 +339,12 @@ bg.warehouse.Controller = function () {
         return false;
     });
 
-    var quantity = $("#quantity").on('input', function () {
-        var v = quantity.val();
-        if (!$.isNumeric(v) || quantity < 1) {
-            quantity.val(1);
-        }
-        validateQuantityActions();
-    });
-
-    var up = $("#q_up").click(function (event) {
-        var v = quantity.val();
-        v++;
-        quantity.val(v);
-
-        validateQuantityActions();
-
-        event.preventDefault();
-        return false;
-    });
-
-    var down = $("#q_down").click(function (event) {
-        var v = quantity.val();
-        if (v > 1) {
-            v--;
-            quantity.val(v);
-        }
-
-        validateQuantityActions();
-
-        event.preventDefault();
-        return false;
-    });
-
-    $("#sort").change(function () {
-
-    });
-
     var previewImage = $(".preview img");
     $(".thumb img").click(function () {
         $(".thumb img").removeClass("selected");
         var src = $(this).addClass("selected").attr('src');
         previewImage.attr('src', src.replace('_T', '_M'));
     });
-    validateQuantityActions();
 };
 
 $(document).ready(function () {
@@ -517,6 +471,52 @@ $(document).ready(function () {
         url = bg.util.url.extend(url, 'count', $("#tableFormCount").val(), true);
         url = bg.util.url.extend(url, 'sort', $(this).val(), true);
         bg.util.url.redirect(url);
+    });
+
+    $(".quantity").each(function (i, el) {
+        el = $(el);
+        var validateQuantityActions = function () {
+            var v = quantity.val();
+            if (v == 1) {
+                down.attr("disabled", "disabled");
+            } else {
+                down.removeAttr("disabled");
+            }
+        };
+
+        var quantity = el.find(".q_input").on('input', function () {
+            var v = quantity.val();
+            if (!$.isNumeric(v) || quantity < 1) {
+                quantity.val(1);
+            }
+            validateQuantityActions();
+        });
+
+        var up = el.find(".q_up").click(function (event) {
+            var v = quantity.val();
+            v++;
+            quantity.val(v);
+
+            validateQuantityActions();
+
+            event.preventDefault();
+            return false;
+        });
+
+        var down = el.find(".q_down").click(function (event) {
+            var v = quantity.val();
+            if (v > 1) {
+                v--;
+                quantity.val(v);
+            }
+
+            validateQuantityActions();
+
+            event.preventDefault();
+            return false;
+        });
+
+        validateQuantityActions();
     });
 
     $('.dropdown')

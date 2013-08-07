@@ -84,14 +84,11 @@
                             <div class="action">
                                 <div class="quantity">
                                     <span>Количество: </span>
-                                    <button id="q_down" disabled="disabled" class="bg-ui-button" type="button">
-                                        -
-                                    </button>
-                                    <input id="quantity" name="quantity" value="1">
-                                    <button id="q_up" class="bg-ui-button" type="button">
-                                        +
-                                    </button>
+                                    <button class="q_down bg-ui-button" disabled="disabled" type="button"> -</button>
+                                    <input class="q_input" name="quantity" value="1">
+                                    <button class="q_up bg-ui-button" type="button"> +</button>
                                 </div>
+
                                 <div class="controls">
                                     <button id="add" class="bg-ui-button" type="button">
                                         Добавить в Корзину
