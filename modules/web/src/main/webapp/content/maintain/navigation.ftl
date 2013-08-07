@@ -10,4 +10,8 @@
     <div>
         <a href="/maintain/article">Создать Товар</a>
     </div>
+
+    <div>
+        <a href="/maintain/article/import">Загрузить Товары</a>
+    </div>
 </div>
