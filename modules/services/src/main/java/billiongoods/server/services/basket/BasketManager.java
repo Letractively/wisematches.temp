@@ -17,7 +17,7 @@ public interface BasketManager {
 
 	BasketItem addBasketItem(Personality principal, ArticleDescription article, List<Property> options, int quantity);
 
-	BasketItem removeBasketItem(Personality principal, Integer basketItemId);
+	BasketItem removeBasketItem(Personality principal, int number);
 
-	BasketItem updateBasketItem(Personality principal, Integer basketItemId, int quantity);
+	BasketItem updateBasketItem(Personality principal, int number, int quantity);
 }

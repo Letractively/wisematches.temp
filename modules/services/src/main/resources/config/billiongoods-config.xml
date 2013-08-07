@@ -36,7 +36,10 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
-    <bean id="basketManager" class="billiongoods.server.services.basket.impl.MemoryBasketManager">
+    <bean id="basketManager" class="billiongoods.server.services.basket.impl.HibernateBasketManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="articleManager" ref="articleManager"/>
+        <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
     <!--

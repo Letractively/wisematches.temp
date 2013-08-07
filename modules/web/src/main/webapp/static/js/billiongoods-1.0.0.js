@@ -94,9 +94,6 @@ bg.ui = new function () {
     $.blockUI.defaults.overlayCSS = {
         opacity: 0.2,
         cursor: 'wait',
-        '-moz-border-radius': '5px',
-        '-webkit-border-radius': '5px',
-        'border-radius': '5px',
         backgroundColor: '#DFEFFC'
     };
 
@@ -105,50 +102,6 @@ bg.ui = new function () {
         dataType: 'json',
         contentType: 'application/json'
     });
-
-    var stringify_aoData = function (aoData) {
-        var o = {};
-        var modifiers = ['mDataProp_', 'sSearch_', 'iSortCol_', 'bSortable_', 'bRegex_', 'bSearchable_', 'sSortDir_'];
-        jQuery.each(aoData, function (idx, obj) {
-            if (obj.name) {
-                for (var i = 0; i < modifiers.length; i++) {
-                    if (obj.name.substring(0, modifiers[i].length) == modifiers[i]) {
-                        var index = parseInt(obj.name.substring(modifiers[i].length));
-                        var key = 'a' + modifiers[i].substring(0, modifiers[i].length - 1);
-                        if (!o[key]) {
-                            o[key] = [];
-                        }
-                        o[key][index] = obj.value;
-                        return;
-                    }
-                }
-                o[obj.name] = obj.value;
-            }
-            else {
-                o[idx] = obj;
-            }
-        });
-        return JSON.stringify(o);
-    };
-
-    $.extend($.fn.dataTable.defaults, {
-        "sUrl": "",
-        "bJQueryUI": true,
-        "sInfoPostFix": "",
-        "sPaginationType": "full_numbers",
-        "sDom": '<"data-table-top"<"ui-widget-content">><"data-table-content"t><"data-table-bottom"<"ui-widget-content"rlip>>',
-        "fnInitComplete": function () {
-            $('.dataTables_scrollBody').jScrollPane({showArrows: false});
-        },
-        "fnServerData": function (sSource, aoData, fnCallback) {
-            $.post(sSource, stringify_aoData(aoData), function (result, b, c) {
-                if (result.success) {
-                    fnCallback(result.data, b, c);
-                } else {
-                    bg.ui.unlock(null, result.message, true);
-                }
-            })
-        }});
 
     var alertTemplate = function (title, message) {
         var e;
@@ -340,34 +293,6 @@ bg.ui = new function () {
     });
 };
 
-bg.ui.table = new function () {
-    this.groupColumnDrawCallback = function (tableId) {
-        return function (oSettings) {
-            if (oSettings.aiDisplay.length == 0) {
-                return;
-            }
-
-            var nTrs = $(tableId).find('tbody tr');
-            var iColspan = nTrs[0].getElementsByTagName('td').length;
-            var sLastGroup = "";
-            for (var i = 0; i < nTrs.length; i++) {
-                var iDisplayIndex = oSettings._iDisplayStart + i;
-                var sGroup = oSettings.aoData[ oSettings.aiDisplay[iDisplayIndex] ]._aData[0];
-                if (sGroup != sLastGroup) {
-                    var nGroup = document.createElement('tr');
-                    var nCell = document.createElement('td');
-                    nCell.colSpan = iColspan;
-                    nCell.className = "group";
-                    nCell.innerHTML = sGroup;
-                    nGroup.appendChild(nCell);
-                    nTrs[i].parentNode.insertBefore(nGroup, nTrs[i]);
-                    sLastGroup = sGroup;
-                }
-            }
-        }
-    };
-};
-
 bg.warehouse = {};
 
 bg.warehouse.Controller = function () {
@@ -389,8 +314,8 @@ bg.warehouse.Controller = function () {
         if (!$.isArray(serializeObject['optionValues'])) {
             serializeObject['optionValues'] = [serializeObject['optionValues']];
         }
-        $.post("/warehouse/basket/add.ajax", JSON.stringify(serializeObject),
-                function (response) {
+        $.post("/warehouse/basket/add.ajax", JSON.stringify(serializeObject))
+                .done(function (response) {
                     if (response.success) {
                         bg.ui.unlock(null, "Товар добавлен в корзину", false);
                     } else {
@@ -400,7 +325,11 @@ bg.warehouse.Controller = function () {
                     if (callback != null && callback != undefined) {
                         callback(response.success);
                     }
-                }, 'json');
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
+                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                });
     };
 
     $("#add").click(function (event) {

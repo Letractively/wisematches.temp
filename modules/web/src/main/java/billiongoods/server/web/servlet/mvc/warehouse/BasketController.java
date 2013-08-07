@@ -42,36 +42,40 @@ public class BasketController extends AbstractController {
 	@RequestMapping("add.ajax")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse addToBasket(@RequestBody BasketItemForm form, Locale locale) {
-		final List<Property> options = new ArrayList<>();
+		try {
+			final List<Property> options = new ArrayList<>();
 
-		final Integer[] optionIds = form.getOptionIds();
-		final String[] optionValues = form.getOptionValues();
-		if (optionIds != null) {
-			for (int i = 0; i < optionIds.length; i++) {
-				final Integer optionId = optionIds[i];
-				if (optionId != null) {
-					final Attribute attribute = attributeManager.getAttribute(optionId);
-					if (attribute == null) {
-						return responseFactory.failure("unknown.attribute", new Object[]{optionIds[i]}, locale);
+			final Integer[] optionIds = form.getOptionIds();
+			final String[] optionValues = form.getOptionValues();
+			if (optionIds != null) {
+				for (int i = 0; i < optionIds.length; i++) {
+					final Integer optionId = optionIds[i];
+					if (optionId != null) {
+						final Attribute attribute = attributeManager.getAttribute(optionId);
+						if (attribute == null) {
+							return responseFactory.failure("unknown.attribute", new Object[]{optionIds[i]}, locale);
+						}
+						options.add(new Property(attribute, optionValues[i]));
 					}
-					options.add(new Property(attribute, optionValues[i]));
 				}
 			}
+
+			final ArticleDescription article = articleManager.getDescription(form.getArticle());
+			if (article == null) {
+				return responseFactory.failure("unknown.article", new Object[]{form.getArticle()}, locale);
+			}
+
+			final int quantity = form.getQuantity();
+			if (quantity <= 0) {
+				return responseFactory.failure("illegal.quantity", new Object[]{quantity}, locale);
+			}
+
+			basketManager.addBasketItem(getPrincipal(), article, options, quantity);
+
+			return responseFactory.success();
+		} catch (Exception ex) {
+			return responseFactory.failure("internal.error", locale);
 		}
-
-		final ArticleDescription article = articleManager.getDescription(form.getArticle());
-		if (article == null) {
-			return responseFactory.failure("unknown.article", new Object[]{form.getArticle()}, locale);
-		}
-
-		final int quantity = form.getQuantity();
-		if (quantity <= 0) {
-			return responseFactory.failure("illegal.quantity", new Object[]{quantity}, locale);
-		}
-
-		basketManager.addBasketItem(getPrincipal(), article, options, quantity);
-
-		return responseFactory.success();
 	}
 
 	@RequestMapping("remove.ajax")

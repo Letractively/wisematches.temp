@@ -1,7 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
 import billiongoods.server.warehouse.*;
-import org.hibernate.annotations.IndexColumn;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,23 +17,23 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	@Column(name = "description")
 	private String description;
 
+	@OrderColumn(name = "position")
 	@Column(name = "imageId")
-	@IndexColumn(name = "position")
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "store_article_image", joinColumns = @JoinColumn(name = "articleId"))
 	private List<String> imageIds = new ArrayList<>();
 
-	@IndexColumn(name = "position")
+	@OrderColumn(name = "position")
 	@OneToMany(fetch = FetchType.LAZY, targetEntity = HibernateArticleDescription.class)
 	@JoinTable(name = "store_article_accessory", joinColumns = @JoinColumn(name = "articleId"), inverseJoinColumns = @JoinColumn(name = "accessoryId"))
 	private List<ArticleDescription> accessories = new ArrayList<>();
 
-	@IndexColumn(name = "position")
+	@OrderColumn(name = "position")
 	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
 	@CollectionTable(name = "store_article_option", joinColumns = @JoinColumn(name = "articleId"))
 	private List<HibernateArticleProperty> optionIds = new ArrayList<>();
 
-	@IndexColumn(name = "position")
+	@OrderColumn(name = "position")
 	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
 	@CollectionTable(name = "store_article_property", joinColumns = @JoinColumn(name = "articleId"))
 	private List<HibernateArticleProperty> propertyIds = new ArrayList<>();

@@ -9,7 +9,7 @@ import java.util.Collection;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface BasketItem {
-	Integer getId();
+	int getNumber();
 
 	int getQuantity();
 

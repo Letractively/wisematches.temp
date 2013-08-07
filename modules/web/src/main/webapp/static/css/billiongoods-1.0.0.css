@@ -68,6 +68,107 @@ span.dot {
     text-indent: -1000em;
 }
 
+.error-layout {
+    width: 50%;
+    padding-top: 50px;
+    padding-left: 250px;
+    text-align: justify;
+}
+
+.error-layout img {
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+.error-layout h1 {
+    margin: 0 !important;
+    color: #003333;
+}
+
+.freeow-widget {
+    z-index: 9999;
+    position: fixed;
+}
+
+.status-widget-pane {
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 1px;
+    text-align: center;
+}
+
+.status-widget-pane > div {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.status-widget-pane .content {
+    margin: 2px 10px;
+}
+
+.alerts-widget-pane {
+    top: 0;
+    right: 10px;
+    width: 350px;
+    padding-top: 25px;
+}
+
+.alerts-widget-pane > div {
+    position: relative;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.alerts-widget-pane .content {
+    margin: 5px 5px 5px 69px;
+}
+
+.alerts-widget-pane h2, .alerts-widget-pane p {
+    margin: 0;
+    padding: 0;
+}
+
+.alerts-widget-pane .icon {
+    position: absolute;
+    display: block;
+    top: 5px;
+    left: 10px;
+    background: transparent no-repeat 0 0;
+    z-index: 1;
+}
+
+.alerts-widget-pane .closeInfo {
+    text-align: right;
+    font-size: 10px;
+}
+
+.alerts-widget-pane .close {
+    position: absolute;
+    display: block;
+    width: 24px;
+    height: 24px;
+    top: 8px;
+    right: 8px;
+    background: none;
+    z-index: 2;
+}
+
+.alerts-widget-pane div:hover .close {
+    background: transparent url('../images/close.png') no-repeat 0 0;
+}
+
+.shadow {
+    -webkit-box-shadow: 0 0 3px #B6B7BB;
+    -moz-box-shadow: 0 0 3px #B6B7BB;
+    box-shadow: 0 0 3px #B6B7BB;
+}
+
+.blockUI.blockOverlay {
+    background: url('../images/thumbnail.png') repeat left top;
+}
+
 #billiongoods {
     width: 100%;
 }
