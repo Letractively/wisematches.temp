@@ -42,6 +42,10 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
+    <bean id="articlesImporter" class="billiongoods.server.warehouse.impl.BanggoodArticlesImporter">
+        <property name="articleManager" ref="articleManager"/>
+    </bean>
+
     <!--
         <bean id="playerStateManager" class="billiongoods.server.services.state.impl.HibernatePlayerStateManager">
             <property name="sessionFactory" ref="sessionFactory"/>
