@@ -15,7 +15,7 @@
 
     <beans:bean id="localeResolver" class="billiongoods.server.web.i18n.PersonalityLocaleResolver"/>
 
-    <beans:bean id="sessionRegistry" class="billiongoods.server.services.state.impl.SessionRegistryStateManager"/>
+    <beans:bean id="sessionRegistry" class="billiongoods.server.test.state.impl.SessionRegistryStateManager"/>
 
     <beans:bean id="sessionRegistryFixFilter"
                 class="billiongoods.server.web.security.filter.SessionRegistryFilter">

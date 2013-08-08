@@ -4,7 +4,7 @@ package billiongoods.server.services.price;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class PriceConverter {
-	private float course = 32.23f;
+	private float course = 33.33f;
 
 	public PriceConverter() {
 	}

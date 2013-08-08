@@ -47,7 +47,7 @@
     </bean>
 
     <!--
-        <bean id="playerStateManager" class="billiongoods.server.services.state.impl.HibernatePlayerStateManager">
+        <bean id="playerStateManager" class="billiongoods.server.test.state.impl.HibernatePlayerStateManager">
             <property name="sessionFactory" ref="sessionFactory"/>
         </bean>
 
@@ -80,12 +80,12 @@
             <property name="transactionManager" ref="transactionManager"/>
         </bean>
 
-        <bean id="notificationManager" class="billiongoods.server.services.notify.impl.HibernateNotificationManager">
+        <bean id="notificationManager" class="billiongoods.server.test.notify.impl.HibernateNotificationManager">
             <property name="sessionFactory" ref="sessionFactory"/>
             <property name="notificationDescriptors" ref="notificationsList"/>
         </bean>
 
-        <bean id="notificationService" class="billiongoods.server.services.notify.impl.PublishNotificationService">
+        <bean id="notificationService" class="billiongoods.server.test.notify.impl.PublishNotificationService">
             <property name="notificationManager" ref="notificationManager"/>
 
             <property name="taskExecutor">
@@ -96,7 +96,7 @@
             </property>
 
             <property name="notificationConverter">
-                <bean class="billiongoods.server.services.notify.impl.converter.FreeMarkerNotificationConverter">
+                <bean class="billiongoods.server.test.notify.impl.converter.FreeMarkerNotificationConverter">
                     <property name="messageSource" ref="notificationMessageSource"/>
 
                     <property name="freeMarkerConfig">
@@ -124,7 +124,7 @@
 
             <property name="notificationPublishers">
                 <list>
-                    <bean class="billiongoods.server.services.notify.impl.publisher.MailNotificationPublisher">
+                    <bean class="billiongoods.server.test.notify.impl.publisher.MailNotificationPublisher">
                         <property name="mailSender" ref="notificationMailSender"/>
                         <property name="serverDescriptor" ref="serverDescriptor"/>
                         <property name="messageSource" ref="notificationMessageSource"/>
@@ -149,14 +149,14 @@
             </property>
         </bean>
 
-        <bean class="billiongoods.server.services.notify.impl.AlertsOriginCenter">
+        <bean class="billiongoods.server.test.notify.impl.AlertsOriginCenter">
             <property name="mailSender" ref="notificationMailSender"/>
             <property name="serverDescriptor" ref="serverDescriptor"/>
 
             <property name="accountManager" ref="accountManager"/>
         </bean>
 
-        <bean class="billiongoods.server.services.notify.impl.NotificationOriginCenter">
+        <bean class="billiongoods.server.test.notify.impl.NotificationOriginCenter">
             <property name="taskExecutor" ref="notificationTaskExecutor"/>
             <property name="notificationService" ref="notificationService"/>
         </bean>
