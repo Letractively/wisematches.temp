@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/account/modify")
+@Deprecated
 public class SettingsController extends AbstractController {
 /*
 	private AccountManager accountManager;

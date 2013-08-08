@@ -27,5 +27,8 @@
 
     <bean id="playerAuthenticationProvider"
           class="billiongoods.core.security.authentication.MemberAuthenticationProvider">
+        <property name="accountManager" ref="accountManager"/>
+        <property name="accountLockManager" ref="accountLockManager"/>
+        <property name="accountRecoveryManager" ref="accountRecoveryManager"/>
     </bean>
 </beans>

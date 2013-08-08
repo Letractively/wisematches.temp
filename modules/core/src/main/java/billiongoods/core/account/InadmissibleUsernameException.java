@@ -9,7 +9,7 @@ public class InadmissibleUsernameException extends AccountException {
 	private final String reason;
 
 	public InadmissibleUsernameException(Account account, String reason) {
-		super("InadmissibleUsername: " + account.getNickname(), account);
+		super("InadmissibleUsername: " + account.getUsername(), account);
 		this.reason = reason;
 	}
 

@@ -1,6 +1,5 @@
 package billiongoods.core.account.impl;
 
-import billiongoods.core.Language;
 import billiongoods.core.account.*;
 import org.easymock.EasyMock;
 import org.junit.Test;
@@ -10,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.TimeZone;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -74,7 +72,7 @@ public class HibernateAccountManagerTest {
 		final Account account = createAccount("pwd");
 
 		final AccountEditor editor = createMockEditor();
-		editor.setNickname(account.getNickname());
+		editor.setUsername(account.getUsername());
 		try {
 			accountManager.createAccount(editor.createAccount(), "pwd");
 			fail("DuplicateAccountException must be here");
@@ -84,7 +82,7 @@ public class HibernateAccountManagerTest {
 		}
 
 		final AccountEditor editor2 = createMockEditor();
-		editor2.setNickname(account.getNickname().toUpperCase());
+		editor2.setUsername(account.getUsername().toUpperCase());
 		try {
 			accountManager.createAccount(editor2.createAccount(), "pwd");
 			fail("DuplicateAccountException must be here");
@@ -124,7 +122,7 @@ public class HibernateAccountManagerTest {
 		final Account account = createAccount("pwd");
 
 		final AccountEditor editor = createMockEditor();
-		editor.setNickname(account.getNickname());
+		editor.setUsername(account.getUsername());
 		editor.setEmail(account.getEmail());
 		try {
 			accountManager.createAccount(editor.createAccount(), "pwd");
@@ -136,7 +134,7 @@ public class HibernateAccountManagerTest {
 		}
 
 		final AccountEditor editor2 = createMockEditor();
-		editor2.setNickname(account.getNickname().toUpperCase());
+		editor2.setUsername(account.getUsername().toUpperCase());
 		editor2.setEmail(account.getEmail().toUpperCase());
 		try {
 			accountManager.createAccount(editor2.createAccount(), "pwd");
@@ -158,8 +156,6 @@ public class HibernateAccountManagerTest {
 
 		final AccountEditor e = new AccountEditor(p);
 		e.setEmail("modified_" + e.getEmail());
-		e.setLanguage(Language.RU);
-		e.setTimeZone(TimeZone.getTimeZone("GMT+04:12"));
 
 		accountManager.addAccountListener(l);
 		try {
@@ -171,10 +167,7 @@ public class HibernateAccountManagerTest {
 
 		final Account player = accountManager.getAccount(p.getId());
 		assertEquals(e.getEmail(), player.getEmail());
-		assertEquals(e.getNickname(), player.getNickname());
-		assertEquals(e.getLanguage(), player.getLanguage());
-		assertEquals(e.getTimeZone(), player.getTimeZone());
-		assertEquals(TimeZone.getTimeZone("GMT+04:12"), player.getTimeZone());
+		assertEquals(e.getUsername(), player.getUsername());
 	}
 
 	@Test
@@ -199,9 +192,7 @@ public class HibernateAccountManagerTest {
 		assertNotNull(mock);
 		assertFalse(0 == mock.getId());
 		assertEquals(op.getEmail(), mock.getEmail());
-		assertEquals(op.getNickname(), mock.getNickname());
-		assertEquals(Language.DEFAULT, mock.getLanguage());
-		assertEquals(TimeZone.getDefault(), mock.getTimeZone());
+		assertEquals(op.getUsername(), mock.getUsername());
 		return mock;
 	}
 

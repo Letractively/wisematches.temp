@@ -1,8 +1,6 @@
 package billiongoods.core.account;
 
-import billiongoods.core.Language;
-
-import java.util.TimeZone;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -10,24 +8,20 @@ import java.util.TimeZone;
 public class AccountEditor {
 	private long id = 0;
 	private String email;
-	private String nickname;
-	private TimeZone timeZone = TimeZone.getDefault();
-	private Language language = Language.DEFAULT;
+	private String username;
 
 	public AccountEditor() {
 	}
 
 	public AccountEditor(Account account) {
 		this.id = account.getId();
-		this.nickname = account.getNickname();
 		this.email = account.getEmail();
-		this.language = account.getLanguage();
-		this.timeZone = account.getTimeZone();
+		this.username = account.getUsername();
 	}
 
-	public AccountEditor(String email, String nickname) {
+	public AccountEditor(String email, String username) {
 		this.email = email;
-		this.nickname = nickname;
+		this.username = username;
 	}
 
 	public String getEmail() {
@@ -39,40 +33,23 @@ public class AccountEditor {
 		return this;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getUsername() {
+		return username;
 	}
 
-	public AccountEditor setNickname(String nickname) {
-		this.nickname = nickname;
+	public AccountEditor setUsername(String username) {
+		this.username = username;
 		return this;
-	}
-
-	public Language getLanguage() {
-		return language;
-	}
-
-	public AccountEditor setLanguage(Language language) {
-		this.language = language;
-		return this;
-	}
-
-	public TimeZone getTimeZone() {
-		return timeZone;
-	}
-
-	public void setTimeZone(TimeZone timeZone) {
-		this.timeZone = timeZone;
 	}
 
 	public Account createAccount() {
 		if (email == null) {
 			throw new IllegalArgumentException("email is not specified");
 		}
-		if (nickname == null) {
-			throw new IllegalArgumentException("nickname is not specified");
+		if (username == null) {
+			throw new IllegalArgumentException("username is not specified");
 		}
-		return new AccountDetails(id, email, nickname, language, timeZone);
+		return new AccountDetails(id, email, username);
 	}
 
 	/**
@@ -82,16 +59,12 @@ public class AccountEditor {
 	 */
 	protected static class AccountDetails extends Account {
 		private final String email;
-		private final String nickname;
-		private final TimeZone timeZone;
-		private final Language language;
+		private final String username;
 
-		private AccountDetails(Long id, String email, String nickname, Language language, TimeZone timeZone) {
+		private AccountDetails(Long id, String email, String username) {
 			super(id);
 			this.email = email;
-			this.nickname = nickname;
-			this.language = language;
-			this.timeZone = timeZone;
+			this.username = username;
 		}
 
 		@Override
@@ -100,18 +73,13 @@ public class AccountEditor {
 		}
 
 		@Override
-		public String getNickname() {
-			return nickname;
+		public String getUsername() {
+			return username;
 		}
 
 		@Override
-		public Language getLanguage() {
-			return language;
-		}
-
-		@Override
-		public TimeZone getTimeZone() {
-			return timeZone;
+		public Set<String> getRoles() {
+			return null;
 		}
 	}
 }

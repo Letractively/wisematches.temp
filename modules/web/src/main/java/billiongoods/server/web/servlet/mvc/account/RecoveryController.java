@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/account/recovery")
+@Deprecated
 public class RecoveryController extends AbstractController {
 /*
 	private AccountManager accountManager;
