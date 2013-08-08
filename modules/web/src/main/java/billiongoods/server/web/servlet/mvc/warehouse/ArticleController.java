@@ -22,8 +22,13 @@ public class ArticleController extends AbstractController {
 	}
 
 	@RequestMapping("/{articleId}")
-	public String showSubCategory(@PathVariable("articleId") Integer articleId, Model model) {
-		final Article article = articleManager.getArticle(articleId);
+	public String showSubCategory(@PathVariable("articleId") String articleId, Model model) {
+		final Article article;
+		if (articleId.startsWith("SKU")) {
+			article = articleManager.getArticle(articleId);
+		} else {
+			article = articleManager.getArticle(Integer.decode(articleId));
+		}
 		if (article == null) {
 			throw new UnknownEntityException(articleId, "article");
 		}

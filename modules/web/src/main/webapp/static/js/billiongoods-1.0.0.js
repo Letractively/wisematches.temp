@@ -465,13 +465,17 @@ $(document).ready(function () {
 $(document).ready(function () {
     var timeoutID;
 
-    $("#tableSorting").change(function () {
+    var applyTableFilters = function () {
         var url = null;
         url = bg.util.url.extend(url, 'page', $("#tableFormPage").val(), true);
         url = bg.util.url.extend(url, 'count', $("#tableFormCount").val(), true);
         url = bg.util.url.extend(url, 'sort', $(this).val(), true);
+        url = bg.util.url.extend(url, 'query', $("#tableQuery").val(), true);
         bg.util.url.redirect(url);
-    });
+    };
+
+    $("#tableSorting").change(applyTableFilters);
+    $("#tableQueryButton").click(applyTableFilters);
 
     $(".quantity").each(function (i, el) {
         el = $(el);

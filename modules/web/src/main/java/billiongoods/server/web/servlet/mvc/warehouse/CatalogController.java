@@ -32,7 +32,7 @@ public class CatalogController extends AbstractController {
 
 //		model.addAttribute("topSelling", articleManager.searchEntities(null, Orders.of(Order.desc("soldCount")), Range.limit(8));
 
-		model.addAttribute("newArrival", articleManager.searchEntities(new ArticleContext(null, true, true), Orders.of(Order.desc("registrationDate")), Range.limit(itemsInGroup)));
+		model.addAttribute("newArrival", articleManager.searchEntities(new ArticleContext(null, true, null, true), Orders.of(Order.desc("registrationDate")), Range.limit(itemsInGroup)));
 
 		model.addAttribute("catalog", categoryManager.getCatalog());
 		return "/content/warehouse/catalog";

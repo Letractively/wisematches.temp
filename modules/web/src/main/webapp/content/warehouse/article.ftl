@@ -22,7 +22,14 @@
             </td>
             <td valign="top" width="100%">
                 <div class="info">
-                    <div class="name">${article.name}</div>
+                    <div class="name">
+                    ${article.name}
+                    <@bg.security.authorize "admin">
+                        <div style="float: right">
+                            <a href="/maintain/article?id=${article.id}">Изменить</a>
+                        </div>
+                    </@bg.security.authorize>
+                    </div>
 
                     <div class="articular">
                         Артикул: <span class="sku">${article.code}</span>
