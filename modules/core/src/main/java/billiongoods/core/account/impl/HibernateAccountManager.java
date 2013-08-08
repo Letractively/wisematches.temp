@@ -27,9 +27,9 @@ public class HibernateAccountManager implements AccountManager {
 	private final Collection<AccountListener> accountListeners = new CopyOnWriteArraySet<>();
 
 	private static final String CHECK_ACCOUNT_AVAILABILITY = "" +
-			"select account.nickname, account.email " +
+			"select account.username, account.email " +
 			"from HibernateAccount as account " +
-			"where account.nickname like :nick or account.email like :email";
+			"where account.username like :nick or account.email like :email";
 
 	private final Lock lock = new ReentrantLock();
 
@@ -52,7 +52,7 @@ public class HibernateAccountManager implements AccountManager {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_UNCOMMITTED)
-	public Account getAccount(long playerId) {
+	public Account getAccount(Long playerId) {
 		lock.lock();
 		try {
 			return (HibernateAccount) sessionFactory.getCurrentSession().get(HibernateAccount.class, playerId);
@@ -88,7 +88,7 @@ public class HibernateAccountManager implements AccountManager {
 
 			final Session session = sessionFactory.getCurrentSession();
 			final HibernateAccount hp = new HibernateAccount(account,
-					passwordEncoder.encodePassword(password, account.getNickname()));
+					passwordEncoder.encodePassword(password, account.getUsername()));
 			session.save(hp);
 			for (AccountListener accountListener : accountListeners) {
 				accountListener.accountCreated(hp);
@@ -110,7 +110,7 @@ public class HibernateAccountManager implements AccountManager {
 			}
 
 			if (!oldAccount.getEmail().equalsIgnoreCase(account.getEmail())) {
-				if (!checkAccountAvailable(account.getNickname(), account.getEmail()).isEmailAvailable()) {
+				if (!checkAccountAvailable(account.getUsername(), account.getEmail()).isEmailAvailable()) {
 					throw new DuplicateAccountException(account, "email");
 				}
 			}
@@ -120,7 +120,7 @@ public class HibernateAccountManager implements AccountManager {
 
 			String pwd = password;
 			if (pwd != null) {
-				pwd = passwordEncoder.encodePassword(password, account.getNickname());
+				pwd = passwordEncoder.encodePassword(password, account.getUsername());
 			}
 
 			// merge and update
@@ -159,11 +159,11 @@ public class HibernateAccountManager implements AccountManager {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_UNCOMMITTED)
-	public boolean checkAccountCredentials(long id, String password) {
+	public boolean checkAccountCredentials(Long id, String password) {
 		lock.lock();
 		try {
 			final Session session = sessionFactory.getCurrentSession();
-			final Query query = session.createQuery("select password, nickname from HibernateAccount where id=:pid");
+			final Query query = session.createQuery("select password, username from HibernateAccount where id=:pid");
 			query.setParameter("pid", id);
 
 			final Object[] o = (Object[]) query.uniqueResult();
@@ -201,12 +201,12 @@ public class HibernateAccountManager implements AccountManager {
 	}
 
 	private void checkAccount(final Account account) throws InadmissibleUsernameException, DuplicateAccountException {
-		final String reason = accountLockManager.isNicknameLocked(account.getNickname());
+		final String reason = accountLockManager.isNicknameLocked(account.getUsername());
 		if (reason != null) {
 			throw new InadmissibleUsernameException(account, reason);
 		}
 
-		final AccountAvailability a = checkAccountAvailable(account.getNickname(), account.getEmail());
+		final AccountAvailability a = checkAccountAvailable(account.getUsername(), account.getEmail());
 		if (!a.isAvailable()) {
 			if (!a.isEmailAvailable() && a.isUsernameAvailable()) {
 				throw new DuplicateAccountException(account, "email");

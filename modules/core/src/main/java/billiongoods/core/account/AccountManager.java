@@ -20,7 +20,7 @@ public interface AccountManager {
 	 * @param id the player's id.
 	 * @return the player by it's id or <code>null</code> if player is unknown.
 	 */
-	Account getAccount(long id);
+	Account getAccount(Long id);
 
 	/**
 	 * Searches a player by specified email.
@@ -74,7 +74,7 @@ public interface AccountManager {
 	 * @param password original raw password for comparation
 	 * @return valid account if password is valid for specified account or {@code null} if not.
 	 */
-	boolean checkAccountCredentials(long id, String password);
+	boolean checkAccountCredentials(Long id, String password);
 
 	/**
 	 * Checks is account with specified username and email can be created or not.

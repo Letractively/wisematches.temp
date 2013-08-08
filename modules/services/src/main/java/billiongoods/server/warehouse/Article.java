@@ -14,13 +14,6 @@ public interface Article extends ArticleDescription {
 	String getDescription();
 
 	/**
-	 * Returns ids for all available images for this article.
-	 *
-	 * @return the ids for all available images for this article.
-	 */
-	List<String> getImageIds();
-
-	/**
 	 * Returns available options for this article which customer can choice.
 	 *
 	 * @return available options for this article which customer can choice or {@code null} if there is no one.
@@ -28,11 +21,11 @@ public interface Article extends ArticleDescription {
 	List<Option> getOptions();
 
 	/**
-	 * Returns characters for this article.
+	 * Returns ids for all available images for this article.
 	 *
-	 * @return the characters for this article.
+	 * @return the ids for all available images for this article.
 	 */
-	List<Property> getProperties();
+	List<String> getImageIds();
 
 	/**
 	 * Returns reference to supplier
@@ -40,6 +33,13 @@ public interface Article extends ArticleDescription {
 	 * @return the reference to supplier
 	 */
 	SupplierInfo getSupplierInfo();
+
+	/**
+	 * Returns characters for this article.
+	 *
+	 * @return the characters for this article.
+	 */
+	List<Property> getProperties();
 
 	/**
 	 * Get accessories for this articles or {@code null} ir there is no one.

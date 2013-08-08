@@ -116,14 +116,14 @@ DROP TABLE IF EXISTS `account_personality`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `account_personality` (
   `id`       BIGINT(20)   NOT NULL AUTO_INCREMENT,
-  `nickname` VARCHAR(100) NOT NULL,
+  `username` VARCHAR(100) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `email`    VARCHAR(150) NOT NULL,
   `language` CHAR(2)      NOT NULL,
   `timezone` VARCHAR(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `username_UNIQUE` (`nickname`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 )
   ENGINE =InnoDB

@@ -12,6 +12,7 @@ public class ItemsTableForm {
 
 	private ItemSortType itemSortType;
 	private String sort = "bestselling";
+	private String query = null;
 
 	private static final int DEFAULT_COUNT_NUMBER = 24;
 	private static final ItemSortType DEFAULT_SORT = ItemSortType.BESTSELLING;
@@ -70,6 +71,14 @@ public class ItemsTableForm {
 
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
 	}
 
 	public void setItemSortType(ItemSortType itemSortType) {

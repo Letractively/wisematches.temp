@@ -69,7 +69,7 @@ public class AlertsOriginCenter {
 
 		@Override
 		public void accountCreated(Account account) {
-			raiseAlarm("ACC", "Account created: " + account.getNickname(), account.getNickname() + " (" + account.getEmail() + ")");
+			raiseAlarm("ACC", "Account created: " + account.getUsername(), account.getUsername() + " (" + account.getEmail() + ")");
 		}
 
 		@Override

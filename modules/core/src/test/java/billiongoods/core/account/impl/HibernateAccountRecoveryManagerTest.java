@@ -45,7 +45,7 @@ public class HibernateAccountRecoveryManagerTest {
 	@Test
 	public void testManager() throws InterruptedException, InadmissibleUsernameException, DuplicateAccountException, UnknownAccountException {
 		final AccountEditor editor = new AccountEditor();
-		editor.setNickname("mock");
+		editor.setUsername("mock");
 		editor.setEmail("mock@wm.net");
 
 		final Account p = accountManager.createAccount(editor.createAccount(), "mock");

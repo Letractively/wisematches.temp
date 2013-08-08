@@ -1,10 +1,8 @@
 package billiongoods.core.account;
 
-import billiongoods.core.Language;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.TimeZone;
+import java.util.Set;
 
 /**
  * The {@code Player} interface represents simple user. This interface is read-only
@@ -51,25 +49,17 @@ public abstract class Account implements Serializable {
 	 *
 	 * @return not null username of the player.
 	 */
-	public abstract String getNickname();
+	public abstract String getUsername();
 
 	/**
-	 * Returns default language of the player.
-	 * <p/>
-	 * This value can't be null.
+	 * Returns all account roles.
 	 *
-	 * @return not null default language of the player.
+	 * @return roles set or {@code null} or empty list if there are no special roles.
 	 */
-	public abstract Language getLanguage();
-
-	/**
-	 * Returns player's timezone.
-	 *
-	 * @return the player's timezone.
-	 */
-	public abstract TimeZone getTimeZone();
+	public abstract Set<String> getRoles();
 
 	@Override
+
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Account)) return false;

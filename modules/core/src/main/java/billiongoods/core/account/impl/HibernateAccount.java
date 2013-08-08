@@ -1,10 +1,10 @@
 package billiongoods.core.account.impl;
 
-import billiongoods.core.Language;
 import billiongoods.core.account.Account;
 
 import javax.persistence.*;
-import java.util.TimeZone;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Implementation of player that contains Hibernate annotations and can be stored into database using Hibernate
@@ -20,8 +20,8 @@ import java.util.TimeZone;
 @Cacheable(true)
 public class HibernateAccount extends Account {
 	@Basic
-	@Column(name = "nickname", nullable = false, length = 100, updatable = false)
-	private String nickname;
+	@Column(name = "username", nullable = false, length = 100, updatable = false)
+	private String username;
 
 	@Basic
 	@Column(name = "password", nullable = false, length = 100)
@@ -31,12 +31,10 @@ public class HibernateAccount extends Account {
 	@Column(name = "email", nullable = false, length = 150)
 	private String email;
 
-	@Column(name = "language")
-	@Enumerated(EnumType.STRING)
-	private Language language;
-
-	@Column(name = "timezone")
-	private TimeZone timeZone;
+	@Column(name = "role")
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "pid"))
+	private Set<String> roles = new HashSet<>();
 
 	/**
 	 * Hibernate only constructor
@@ -46,7 +44,7 @@ public class HibernateAccount extends Account {
 
 	public HibernateAccount(Account account, String password) {
 		super(account.getId());
-		this.nickname = account.getNickname();
+		this.username = account.getUsername();
 		this.password = password;
 		updateAccountInfo(account, password);
 	}
@@ -57,8 +55,8 @@ public class HibernateAccount extends Account {
 	}
 
 	@Override
-	public String getNickname() {
-		return nickname;
+	public String getUsername() {
+		return username;
 	}
 
 	public String getPassword() {
@@ -66,13 +64,8 @@ public class HibernateAccount extends Account {
 	}
 
 	@Override
-	public Language getLanguage() {
-		return language;
-	}
-
-	@Override
-	public TimeZone getTimeZone() {
-		return timeZone;
+	public Set<String> getRoles() {
+		return roles;
 	}
 
 	@Override
@@ -97,8 +90,6 @@ public class HibernateAccount extends Account {
 			this.password = password;
 		}
 		this.email = account.getEmail();
-		this.nickname = account.getNickname();
-		this.language = account.getLanguage();
-		this.timeZone = account.getTimeZone();
+		this.username = account.getUsername();
 	}
 }

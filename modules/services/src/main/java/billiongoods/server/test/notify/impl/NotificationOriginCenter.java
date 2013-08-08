@@ -3,7 +3,6 @@ package billiongoods.server.test.notify.impl;
 
 import billiongoods.core.Member;
 import billiongoods.core.Personality;
-import billiongoods.core.PersonalityManager;
 import billiongoods.core.task.BreakingDayListener;
 import billiongoods.server.test.notify.NotificationException;
 import billiongoods.server.test.notify.NotificationSender;
@@ -20,7 +19,6 @@ import java.util.Date;
  */
 public class NotificationOriginCenter implements BreakingDayListener, InitializingBean {
 	private TaskExecutor taskExecutor;
-	private PersonalityManager personalityManager;
 
 	private NotificationService notificationDistributor;
 
@@ -30,10 +28,12 @@ public class NotificationOriginCenter implements BreakingDayListener, Initializi
 	}
 
 	protected void processNotification(long person, String code, Object context) {
+/*
 		final Member member = personalityManager.getMember(person);
 		if (member != null) {
 			fireNotification(code, member, context);
 		}
+*/
 	}
 
 	protected void processNotification(Personality person, String code, Object context) {
