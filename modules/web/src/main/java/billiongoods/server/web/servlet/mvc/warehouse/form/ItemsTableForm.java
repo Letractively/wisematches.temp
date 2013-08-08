@@ -13,6 +13,7 @@ public class ItemsTableForm {
 	private ItemSortType itemSortType;
 	private String sort = "bestselling";
 	private String query = null;
+	private boolean inactive = false;
 
 	private static final int DEFAULT_COUNT_NUMBER = 24;
 	private static final ItemSortType DEFAULT_SORT = ItemSortType.BESTSELLING;
@@ -92,6 +93,14 @@ public class ItemsTableForm {
 
 	public Range createRange() {
 		return Range.limit((page - 1) * count, count);
+	}
+
+	public boolean isInactive() {
+		return inactive;
+	}
+
+	public void setInactive(boolean inactive) {
+		this.inactive = inactive;
 	}
 
 	@Override

@@ -851,6 +851,14 @@ span.dot {
     display: inline-block;
 }
 
+.table-filter .query {
+    float: left;
+}
+
+.table-filter .query input {
+    width: 160px;
+}
+
 .table-filter ul {
     margin: 0;
     padding: 0 0 0 6px;
@@ -867,7 +875,7 @@ span.dot {
 }
 
 .table-filter .sort {
-    padding-left: 25px;
+    padding-left: 15px;
 }
 
 .catalog-view .tit div {

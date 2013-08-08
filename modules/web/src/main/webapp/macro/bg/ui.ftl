@@ -1,5 +1,7 @@
 <#-- @ftlvariable name="imageResourcesDomain" type="java.lang.String" -->
 <#-- @ftlvariable name="staticResourcesDomain" type="java.lang.String" -->
+<#-- @ftlvariable name="itemsTableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.ItemsTableForm" -->
+
 <#setting locale="en">
 
 <#include "/core.ftl"/>
@@ -93,6 +95,11 @@
             <input id="tableFormPage" type="hidden" value="${itemsTableForm.page}"/>
             <input id="tableFormCount" type="hidden" value="${itemsTableForm.count}"/>
             <input id="tableFormSort" type="hidden" value="${itemsTableForm.sort}"/>
+
+            <div class="query">
+                <input id="tableQuery" name="query" value="${itemsTableForm.query!""}"/>
+                <button id="tableQueryButton" type="button">Искать</button>
+            </div>
 
             <div class="ipp">
                 <strong>На странице: </strong>

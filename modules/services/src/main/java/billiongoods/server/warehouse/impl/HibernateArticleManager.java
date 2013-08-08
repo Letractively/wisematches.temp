@@ -3,6 +3,7 @@ package billiongoods.server.warehouse.impl;
 import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.warehouse.*;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,6 +37,22 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 			article.initialize(catalogManager, attributeManager);
 		}
 		return article;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public Article getArticle(String sku) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateArticle a where a.supplierInfo.referenceCode=:code");
+		query.setParameter("code", sku);
+		final List list = query.list();
+		if (list.size() > 0) {
+			final HibernateArticle article = (HibernateArticle) list.get(0);
+			article.initialize(catalogManager, attributeManager);
+			return article;
+		}
+		return null;
 	}
 
 	@Override
@@ -153,8 +170,20 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 				}
 			}
 
+			if (!context.isInactive()) {
+				criteria.add(Restrictions.eq("active", Boolean.TRUE));
+			}
+
 			if (context.isArrival()) {
 				criteria.add(Restrictions.ge("registrationDate", new java.sql.Date(System.currentTimeMillis() - ONE_WEEK_MILLIS)));
+			}
+
+			if (context.getName() != null && !context.getName().trim().isEmpty()) {
+				criteria.add(
+						Restrictions.or(
+								Restrictions.like("name", "%" + context.getName() + "%")
+						)
+				);
 			}
 		}
 	}

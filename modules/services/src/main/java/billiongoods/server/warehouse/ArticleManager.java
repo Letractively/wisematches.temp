@@ -11,6 +11,8 @@ import java.util.List;
 public interface ArticleManager extends SearchManager<ArticleDescription, ArticleContext> {
 	Article getArticle(Integer id);
 
+	Article getArticle(String sku);
+
 	ArticleDescription getDescription(Integer id);
 
 	Article createArticle(String name, String description, Category category,
