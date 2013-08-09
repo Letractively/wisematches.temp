@@ -131,4 +131,16 @@ public class HibernateBasket implements Basket {
 			((HibernateBasketItem) basketItem).initialize(articleManager, attributeManager);
 		}
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("HibernateBasket{");
+		sb.append("principal=").append(principal);
+		sb.append(", creationTime=").append(creationTime);
+		sb.append(", updatingTime=").append(updatingTime);
+		sb.append(", expirationDays=").append(expirationDays);
+		sb.append(", basketItems=").append(basketItems);
+		sb.append('}');
+		return sb.toString();
+	}
 }

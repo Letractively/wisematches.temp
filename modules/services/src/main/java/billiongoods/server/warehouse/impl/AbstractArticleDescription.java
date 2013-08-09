@@ -25,6 +25,9 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Transient
 	private String code;
 
+	@Column(name = "weight")
+	private float weight;
+
 	@Column(name = "soldCount")
 	private int soldCount;
 
@@ -79,6 +82,10 @@ public class AbstractArticleDescription implements ArticleDescription {
 		return soldCount;
 	}
 
+	@Override
+	public float getWeight() {
+		return weight;
+	}
 
 	@Override
 	public boolean isActive() {
@@ -126,6 +133,10 @@ public class AbstractArticleDescription implements ArticleDescription {
 	void setCategory(Category category) {
 		this.category = category;
 		this.categoryId = category.getId();
+	}
+
+	void setWeight(float weight) {
+		this.weight = weight;
 	}
 
 	public void setPrice(float price) {

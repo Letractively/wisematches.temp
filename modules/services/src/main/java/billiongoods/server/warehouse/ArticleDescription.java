@@ -23,6 +23,12 @@ public interface ArticleDescription {
 	 */
 	int getSoldCount();
 
+	/**
+	 * Returns item weight in kg
+	 *
+	 * @return the item weight in kg
+	 */
+	float getWeight();
 
 	/**
 	 * Returns current price. If there is any discount for the article this value contains discounted price.
