@@ -114,4 +114,15 @@ public class HibernateBasketItem implements BasketItem {
 			this.basket = basket;
 		}
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("HibernateBasketItem{");
+		sb.append("pk=").append(pk);
+		sb.append(", quantity=").append(quantity);
+		sb.append(", articleId=").append(articleId);
+		sb.append(", optionIds=").append(optionIds);
+		sb.append('}');
+		return sb.toString();
+	}
 }
