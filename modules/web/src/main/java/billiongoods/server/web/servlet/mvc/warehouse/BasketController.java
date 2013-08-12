@@ -4,6 +4,9 @@ import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.basket.BasketManager;
+import billiongoods.server.services.payment.Order;
+import billiongoods.server.services.payment.OrderManager;
+import billiongoods.server.services.payment.Shipment;
 import billiongoods.server.services.payment.ShipmentType;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
@@ -29,6 +32,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/warehouse/basket")
 public class BasketController extends AbstractController {
+    private OrderManager orderManager;
     private BasketManager basketManager;
     private ArticleManager articleManager;
     private AttributeManager attributeManager;
@@ -104,18 +108,23 @@ public class BasketController extends AbstractController {
             errors.rejectValue("postalCode", "basket.error.postalCode.format");
         }
 
-        final ShipmentType shipment = form.getShipment();
-        if (shipment == null) {
+        final ShipmentType shipmentType = form.getShipment();
+        if (shipmentType == null) {
             errors.rejectValue("shipment", "basket.error.shipment.empty");
         }
+
+        final PaymentInfo paymentInfo = new PaymentInfo(basket, form.getShipment());
+        final Shipment shipment = new Shipment(paymentInfo.getShipment(), form, shipmentType);
 
         if (errors.hasErrors()) {
             hideNavigation(model);
             model.addAttribute("basket", basket);
-            model.addAttribute("payment", new PaymentInfo(basket, form.getShipment()));
+            model.addAttribute("payment", paymentInfo);
             return "/content/warehouse/basket";
         }
-        return "forward:/warehouse/order/paypal";
+
+        final Order order = orderManager.create(getPrincipal(), basket, shipment, form.isNotifications());
+        return "forward:/warehouse/paypal/checkout?order=" + order.getId();
     }
 
     private void checkAddressField(String name, String value, Errors errors) {
@@ -175,6 +184,11 @@ public class BasketController extends AbstractController {
     public ServiceResponse removeFromBasket(@RequestParam("n") Integer number) {
 
         return responseFactory.success();
+    }
+
+    @Autowired
+    public void setOrderManager(OrderManager orderManager) {
+        this.orderManager = orderManager;
     }
 
     @Autowired

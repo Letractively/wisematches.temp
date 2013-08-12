@@ -6,77 +6,84 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface PayPalTransaction {
-	Long getId();
+    Long getId();
 
-	Long getOrderId();
+    Long getOrderId();
 
-	String getToken();
+    String getToken();
 
-	float getAmount();
+    float getAmount();
 
-	float getShipment();
+    float getShipment();
 
-	Date getTimestamp();
 
-	TransactionPhase getPhase();
+    TransactionPhase getPhase();
 
-	TransactionResolution getResolution();
+    TransactionResolution getResolution();
 
-	String getAckSet();
 
-	Date getTimestampSet();
+    String getPayer();
 
-	String getAckGet();
+    String getPayerId();
 
-	Date getTimestampGet();
+    String getPayerPhone();
 
-	String getPayer();
+    String getPayerLastName();
 
-	String getPayerId();
+    String getPayerFirstName();
 
-	String getPayerPhone();
+    String getPayerCountry();
 
-	String getPayerLastName();
+    String getPayerComment();
 
-	String getPayerFirstName();
+    String getCheckoutStatus();
 
-	String getPayerCountry();
 
-	String getCheckoutStatus();
+    String getTransactionId();
 
-	String getAckDo();
+    String getTransactionType();
 
-	Date getTimestampDo();
+    String getParentTransactionId();
 
-	String getTransactionId();
 
-	String getTransactionType();
+    String getPaymentType();
 
-	String getParentTransactionId();
+    String getPaymentStatus();
 
-	String getPaymentType();
+    String getPaymentRequestId();
 
-	String getPaymentStatus();
+    Date getPaymentDate();
 
-	String getPaymentRequestId();
 
-	Date getPaymentDate();
+    float getFeeAmount();
 
-	float getFeeAmount();
+    float getGrossAmount();
 
-	float getGrossAmount();
+    float getSettleAmount();
 
-	float getSettleAmount();
+    float getTaxAmount();
 
-	float getTaxAmount();
+    String getExchangeRate();
 
-	String getExchangeRate();
+    String getReasonCode();
 
-	String getReasonCode();
+    String getPendingReason();
 
-	String getPendingReason();
+    String getHoldDecision();
 
-	String getHoldDecision();
+    String getInsuranceAmount();
 
-	String getInsuranceAmount();
+
+    Date getCreationTime();
+
+    Date getInvoicingTime();
+
+    Date getVerificationTime();
+
+    Date getConfirmationTime();
+
+    Date getFinalizationTime();
+
+
+    PayPalQueryError getLastQueryError();
 }

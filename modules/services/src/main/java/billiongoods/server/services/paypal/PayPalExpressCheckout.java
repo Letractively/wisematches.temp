@@ -24,211 +24,203 @@ import java.util.*;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class PayPalExpressCheckout implements InitializingBean {
-	private Configuration configuration;
-	private PayPalTransactionManager transactionManager;
+    private Configuration configuration;
+    private PayPalTransactionManager transactionManager;
 
-	private PayPalAPIInterfaceServiceService service;
-	private final Map<String, String> sdkConfig = new HashMap<>();
+    private PayPalAPIInterfaceServiceService service;
+    private final Map<String, String> sdkConfig = new HashMap<>();
 
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.paypal.ExpressCheckout");
+    private static final CurrencyCodeType CURRENCY_CODE = CurrencyCodeType.USD;
 
-	public PayPalExpressCheckout() {
-	}
+    private static final Logger log = LoggerFactory.getLogger("billiongoods.paypal.ExpressCheckout");
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		sdkConfig.put(Constants.MODE, configuration.getEnvironment().getCode());
+    public PayPalExpressCheckout() {
+    }
 
-		sdkConfig.put("acct1" + Constants.CREDENTIAL_USERNAME_SUFFIX, configuration.getUser());
-		sdkConfig.put("acct1" + Constants.CREDENTIAL_PASSWORD_SUFFIX, configuration.getPassword());
-		sdkConfig.put("acct1" + Constants.CREDENTIAL_SIGNATURE_SUFFIX, configuration.getSignature());
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        sdkConfig.put(Constants.MODE, configuration.getEnvironment().getCode());
 
-		sdkConfig.put(Constants.USE_HTTP_PROXY, "true");
-		sdkConfig.put(Constants.HTTP_PROXY_HOST, "surf-proxy.intranet.db.com");
-		sdkConfig.put(Constants.HTTP_PROXY_PORT, "8080");
+        sdkConfig.put("acct1" + Constants.CREDENTIAL_USERNAME_SUFFIX, configuration.getUser());
+        sdkConfig.put("acct1" + Constants.CREDENTIAL_PASSWORD_SUFFIX, configuration.getPassword());
+        sdkConfig.put("acct1" + Constants.CREDENTIAL_SIGNATURE_SUFFIX, configuration.getSignature());
 
-		service = new PayPalAPIInterfaceServiceService(sdkConfig);
-	}
+/*
+        sdkConfig.put(Constants.USE_HTTP_PROXY, "true");
+        sdkConfig.put(Constants.HTTP_PROXY_HOST, "surf-proxy.intranet.db.com");
+        sdkConfig.put(Constants.HTTP_PROXY_PORT, "8080");
+*/
 
-	public PayPalTransaction initiateExpressCheckout(Order order, String orderURL, String returnURL, String cancelURL) throws PayPalException {
-		final PayPalTransaction transaction = transactionManager.beginTransaction(order);
-		log.info("PayPal transaction started: " + transaction.getId());
+        service = new PayPalAPIInterfaceServiceService(sdkConfig);
+    }
 
-		final SetExpressCheckoutResponseType response = setExpressCheckout(transaction.getId(), order, orderURL, returnURL, cancelURL);
-		transactionManager.checkoutInitiated(transaction, response);
+    public String getExpressCheckoutEndPoint(String token) {
+        return configuration.getEnvironment().getPayPalEndpoint() + "?cmd=_express-checkout&token=" + token;
+    }
 
-		if (response.getAck() != AckCodeType.SUCCESS) {
-			dumpErrorResponse(transaction, response);
-			transactionManager.commitTransaction(transaction, TransactionResolution.FAILED);
-		}
-		return transaction;
-	}
-
-	public PayPalTransaction finalizeExpressCheckout(String token, boolean approved) throws PayPalException {
-		final GetExpressCheckoutDetailsResponseType response = getExpressCheckout(token);
-		final GetExpressCheckoutDetailsResponseDetailsType details = response.getGetExpressCheckoutDetailsResponseDetails();
-
-		final Long tnxId = Long.decode(details.getInvoiceID());
-		final PayPalTransaction transaction = transactionManager.getTransaction(tnxId);
-
-		transactionManager.checkoutValidated(transaction, response);
-
-		if (response.getAck() != AckCodeType.SUCCESS) {
-			dumpErrorResponse(transaction, response);
-		}
-
-		if (approved && response.getAck() == AckCodeType.SUCCESS) {
-			final DoExpressCheckoutPaymentResponseType doResponse = doExpressCheckout(details);
-			transactionManager.checkoutConfirmed(transaction, doResponse);
-
-			if (doResponse.getAck() == AckCodeType.SUCCESS) {
-				transactionManager.commitTransaction(transaction, TransactionResolution.VERIFIED);
-				return transaction;
-			} else {
-				dumpErrorResponse(transaction, doResponse);
-				transactionManager.commitTransaction(transaction, TransactionResolution.FAILED);
-			}
-		} else {
-			transactionManager.commitTransaction(transaction, TransactionResolution.FAILED);
-		}
-		return transaction;
-	}
-
-	public String getExpressCheckoutEndPoint(String token) {
-		return configuration.getEnvironment().getPayPalEndpoint() + "?cmd=_express-checkout&token=" + token;
-	}
-
-	public void registerIPNMessage(Map<String, String[]> parameterMap) {
-		try {
-			final PayPalMessage ipnMessage = new PayPalMessage(parameterMap, sdkConfig);
-			if (ipnMessage.validate()) {
-				final Long aLong = transactionManager.registerMessage(ipnMessage);
-				log.info("IPN message registered: " + aLong);
-			} else {
-				log.info("Invalid IPN message received: " + parameterMap);
-			}
-		} catch (Exception ex) {
-			log.error("IPN message can't be processed: " + parameterMap, ex);
-		}
-	}
+    public PayPalMessage registerIPNMessage(Map<String, String[]> parameterMap) throws PayPalException {
+        try {
+            final PayPalMessageValidator ipnMessage = new PayPalMessageValidator(parameterMap, sdkConfig);
+            if (ipnMessage.validate()) {
+                return transactionManager.registerMessage(ipnMessage.getIpnMap());
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            throw new PayPalSystemException("IPN Message can't be registered", ex);
+        }
+    }
 
 
-	private SetExpressCheckoutResponseType setExpressCheckout(Long tnxId, Order order,
-															  String orderURL, String returnURL, String cancelURL) throws PayPalException {
-		final Address address = order.getAddress();
+    public PayPalTransaction initiateExpressCheckout(Order order, String orderURL, String returnURL, String cancelURL) throws PayPalException {
+        final PayPalTransaction transaction = transactionManager.beginTransaction(order);
+        log.info("PayPal transaction started: " + transaction.getId());
 
-		final AddressType addressType = new AddressType();
-		addressType.setName(address.getName());
-		addressType.setPostalCode(address.getPostalCode());
-		addressType.setCountry(CountryCodeType.US); //TODO: for testing only: RU
-		addressType.setCityName(address.getCity());
-		addressType.setStateOrProvince(address.getRegion());
-		addressType.setStreet1(address.getStreetAddress());
+        try {
+            final SetExpressCheckoutResponseType response = setExpressCheckout(transaction.getId(), order, orderURL, returnURL, cancelURL);
+            transactionManager.checkoutInitiated(transaction, response);
+            return transaction;
+        } catch (PayPalException ex) {
+            transactionManager.rollbackTransaction(transaction, TransactionPhase.INVOICING, ex);
+            throw ex;
+        }
+    }
 
-		final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
-		request.setLocaleCode("RU");
-		request.setAddress(addressType);
-		request.setAddressOverride("0");
-		request.setSolutionType(SolutionTypeType.MARK);
-		request.setChannelType(ChannelType.MERCHANT);
-		request.setReturnURL(returnURL);
-		request.setCancelURL(cancelURL);
-		request.setPaymentDetails(Collections.singletonList(createPaymentDetails(order, orderURL)));
+    public PayPalTransaction finalizeExpressCheckout(String token, boolean approved) throws PayPalException {
+        final GetExpressCheckoutDetailsResponseType response;
+        try {
+            response = getExpressCheckout(token);
+        } catch (PayPalException ex) {
+//            transactionManager.rollbackTransaction(, TransactionPhase.VERIFICATION, ex); // rollback is not possible.
+            throw ex;
+        }
 
-		request.setInvoiceID(String.valueOf(tnxId));
+        final GetExpressCheckoutDetailsResponseDetailsType details = response.getGetExpressCheckoutDetailsResponseDetails();
+        final PayPalTransaction transaction = transactionManager.getTransaction(Long.decode(details.getInvoiceID()));
 
-		try {
-			final SetExpressCheckoutRequestType setExpressCheckoutRequest = new SetExpressCheckoutRequestType(request);
+        try {
+            transactionManager.checkoutValidated(transaction, response);
 
-			final SetExpressCheckoutReq setExpressCheckoutReq = new SetExpressCheckoutReq();
-			setExpressCheckoutReq.setSetExpressCheckoutRequest(setExpressCheckoutRequest);
-
-			return service.setExpressCheckout(setExpressCheckoutReq);
-		} catch (Exception ex) {
-			throw new PayPalException(null, "SetExpressCheckout can't be executed", ex);
-		}
-	}
-
-	private GetExpressCheckoutDetailsResponseType getExpressCheckout(String token) throws PayPalException {
-		final GetExpressCheckoutDetailsRequestType request = new GetExpressCheckoutDetailsRequestType(token);
-
-		final GetExpressCheckoutDetailsReq req = new GetExpressCheckoutDetailsReq();
-		req.setGetExpressCheckoutDetailsRequest(request);
-
-		try {
-			return service.getExpressCheckoutDetails(req);
-		} catch (Exception ex) {
-			throw new PayPalException(null, "GetExpressCheckout can't be executed", ex);
-		}
-	}
-
-	private DoExpressCheckoutPaymentResponseType doExpressCheckout(GetExpressCheckoutDetailsResponseDetailsType details) throws PayPalException {
-		final DoExpressCheckoutPaymentRequestDetailsType doExpressCheckoutPaymentRequestDetails = new DoExpressCheckoutPaymentRequestDetailsType();
-		doExpressCheckoutPaymentRequestDetails.setToken(details.getToken());
-		doExpressCheckoutPaymentRequestDetails.setPayerID(details.getPayerInfo().getPayerID());
-		doExpressCheckoutPaymentRequestDetails.setPaymentAction(PaymentActionCodeType.SALE);
-
-		final DoExpressCheckoutPaymentRequestType doExpressCheckoutPaymentRequest = new DoExpressCheckoutPaymentRequestType();
-		doExpressCheckoutPaymentRequest.setDoExpressCheckoutPaymentRequestDetails(doExpressCheckoutPaymentRequestDetails);
-
-		final DoExpressCheckoutPaymentReq doExpressCheckoutPaymentReq = new DoExpressCheckoutPaymentReq();
-		doExpressCheckoutPaymentReq.setDoExpressCheckoutPaymentRequest(doExpressCheckoutPaymentRequest);
-
-		try {
-			return service.doExpressCheckoutPayment(doExpressCheckoutPaymentReq);
-		} catch (Exception ex) {
-			throw new PayPalException(null, "DoExpressCheckout can't be executed", ex);
-		}
-	}
-
-	private void dumpErrorResponse(PayPalTransaction tnx, AbstractResponseType response) {
-		StringBuilder b = new StringBuilder();
-		for (ErrorType errorType : response.getErrors()) {
-			b.append("code=").append(errorType.getErrorCode());
-			b.append(", severity=").append(errorType.getSeverityCode());
-			b.append(", shortMessage=").append(errorType.getShortMessage());
-			b.append(", longMessage=").append(errorType.getLongMessage());
-		}
-		log.error("Unsuccess status received: " +
-				"tnx=" + tnx.getId() +
-				", ack=" + response.getAck() +
-				", timestamp=" + response.getTimestamp() +
-				", errors=[" + b + "]");
-	}
-
-	private PaymentDetailsType createPaymentDetails(Order order, String orderURL) {
-		final List<PaymentDetailsItemType> res = new ArrayList<>();
-
-		final CurrencyCodeType usd = CurrencyCodeType.USD;
-		final List<OrderItem> orderItems = order.getOrderItems();
-		for (OrderItem orderItem : orderItems) {
-			final PaymentDetailsItemType item = new PaymentDetailsItemType();
-			item.setName(orderItem.getName());
-			item.setNumber(orderItem.getCode());
-			item.setItemWeight(new MeasureType("кг", (double) orderItem.getWeight()));
-			item.setQuantity(orderItem.getQuantity());
-			item.setAmount(new BasicAmountType(usd, String.valueOf(orderItem.getAmount())));
-			item.setDescription(orderItem.getOptions());
-
-			res.add(item);
-		}
-
-		final PaymentDetailsType paymentDetails = new PaymentDetailsType();
-		paymentDetails.setOrderURL(orderURL);
-		paymentDetails.setPaymentAction(PaymentActionCodeType.SALE);
-		paymentDetails.setPaymentDetailsItem(res);
-		paymentDetails.setOrderTotal(new BasicAmountType(usd, String.valueOf(order.getAmount())));
-		paymentDetails.setShippingTotal(new BasicAmountType(usd, String.valueOf(order.getShipment())));
-
-		return paymentDetails;
-	}
+            if (approved) {
+                final DoExpressCheckoutPaymentResponseType doResponse = doExpressCheckout(details);
+                transactionManager.checkoutConfirmed(transaction, doResponse);
+            }
+            transactionManager.commitTransaction(transaction, approved);
+            return transaction;
+        } catch (PayPalException ex) {
+            transactionManager.rollbackTransaction(transaction, TransactionPhase.CONFIRMATION, ex);
+            throw ex;
+        }
+    }
 
 
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
-	}
+    private SetExpressCheckoutResponseType setExpressCheckout(Long tnxId, Order order, String orderURL,
+                                                              String returnURL, String cancelURL) throws PayPalException {
+        final Address address = order.getAddress();
 
-	public void setTransactionManager(PayPalTransactionManager transactionManager) {
-		this.transactionManager = transactionManager;
-	}
+        final AddressType addressType = new AddressType();
+        addressType.setName(address.getName());
+        addressType.setPostalCode(address.getPostalCode());
+        addressType.setCountry(CountryCodeType.US); //TODO: for testing only: RU
+        addressType.setCityName(address.getCity());
+        addressType.setStateOrProvince(address.getRegion());
+        addressType.setStreet1(address.getStreetAddress());
+
+        final List<PaymentDetailsItemType> paymentDetailsItem = new ArrayList<>();
+
+        final List<OrderItem> orderItems = order.getOrderItems();
+        for (OrderItem orderItem : orderItems) {
+            final PaymentDetailsItemType item = new PaymentDetailsItemType();
+            item.setName(orderItem.getName());
+            item.setNumber(orderItem.getCode());
+            item.setItemWeight(new MeasureType("кг", (double) orderItem.getWeight()));
+            item.setQuantity(orderItem.getQuantity());
+            item.setAmount(new BasicAmountType(CURRENCY_CODE, String.valueOf(orderItem.getAmount())));
+            item.setDescription(orderItem.getOptions());
+
+            paymentDetailsItem.add(item);
+        }
+
+        final PaymentDetailsType paymentDetails = new PaymentDetailsType();
+        paymentDetails.setOrderURL(orderURL);
+        paymentDetails.setPaymentAction(PaymentActionCodeType.SALE);
+        paymentDetails.setPaymentDetailsItem(paymentDetailsItem);
+        paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, String.valueOf(order.getAmount())));
+        paymentDetails.setShippingTotal(new BasicAmountType(CURRENCY_CODE, String.valueOf(order.getShipment())));
+
+        final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
+        request.setLocaleCode("RU");
+//        request.setAddress(addressType);
+//        request.setAddressOverride("1");
+        request.setChannelType(ChannelType.MERCHANT);
+        request.setSolutionType(SolutionTypeType.MARK);
+        request.setReturnURL(returnURL);
+        request.setCancelURL(cancelURL);
+        request.setPaymentDetails(Collections.singletonList(paymentDetails));
+
+        request.setInvoiceID(String.valueOf(tnxId));
+
+        try {
+            final SetExpressCheckoutRequestType setExpressCheckoutRequest = new SetExpressCheckoutRequestType(request);
+
+            final SetExpressCheckoutReq setExpressCheckoutReq = new SetExpressCheckoutReq();
+            setExpressCheckoutReq.setSetExpressCheckoutRequest(setExpressCheckoutRequest);
+
+            final SetExpressCheckoutResponseType response = service.setExpressCheckout(setExpressCheckoutReq);
+            if (response.getAck() != AckCodeType.SUCCESS) {
+                throw new PayPalQueryException(new PayPalQueryError(response));
+            }
+            return response;
+        } catch (Exception ex) {
+            throw new PayPalSystemException("SetExpressCheckout can't be executed. TnxId: " + tnxId, ex);
+        }
+    }
+
+    private GetExpressCheckoutDetailsResponseType getExpressCheckout(String token) throws PayPalException {
+        final GetExpressCheckoutDetailsRequestType request = new GetExpressCheckoutDetailsRequestType(token);
+
+        final GetExpressCheckoutDetailsReq req = new GetExpressCheckoutDetailsReq();
+        req.setGetExpressCheckoutDetailsRequest(request);
+
+        try {
+            final GetExpressCheckoutDetailsResponseType response = service.getExpressCheckoutDetails(req);
+            if (response.getAck() != AckCodeType.SUCCESS) {
+                throw new PayPalQueryException(new PayPalQueryError(response));
+            }
+            return response;
+        } catch (Exception ex) {
+            throw new PayPalSystemException("SetExpressCheckout can't be executed. Token: " + token, ex);
+        }
+    }
+
+    private DoExpressCheckoutPaymentResponseType doExpressCheckout(GetExpressCheckoutDetailsResponseDetailsType details) throws PayPalException {
+        final DoExpressCheckoutPaymentRequestDetailsType doExpressCheckoutPaymentRequestDetails = new DoExpressCheckoutPaymentRequestDetailsType();
+        doExpressCheckoutPaymentRequestDetails.setToken(details.getToken());
+        doExpressCheckoutPaymentRequestDetails.setPayerID(details.getPayerInfo().getPayerID());
+        doExpressCheckoutPaymentRequestDetails.setPaymentAction(PaymentActionCodeType.SALE);
+
+        final DoExpressCheckoutPaymentRequestType doExpressCheckoutPaymentRequest = new DoExpressCheckoutPaymentRequestType();
+        doExpressCheckoutPaymentRequest.setDoExpressCheckoutPaymentRequestDetails(doExpressCheckoutPaymentRequestDetails);
+
+        final DoExpressCheckoutPaymentReq doExpressCheckoutPaymentReq = new DoExpressCheckoutPaymentReq();
+        doExpressCheckoutPaymentReq.setDoExpressCheckoutPaymentRequest(doExpressCheckoutPaymentRequest);
+
+        try {
+            final DoExpressCheckoutPaymentResponseType response = service.doExpressCheckoutPayment(doExpressCheckoutPaymentReq);
+            if (response.getAck() != AckCodeType.SUCCESS) {
+                throw new PayPalQueryException(new PayPalQueryError(response));
+            }
+            return response;
+        } catch (Exception ex) {
+            throw new PayPalSystemException("SetExpressCheckout can't be executed. Token: " + details.getToken(), ex);
+        }
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    public void setTransactionManager(PayPalTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
 }

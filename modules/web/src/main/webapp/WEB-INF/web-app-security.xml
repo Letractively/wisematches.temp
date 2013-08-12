@@ -138,6 +138,7 @@
 
     <http pattern="/static/**" security="none"/>
     <http pattern="/image/**" security="none"/>
+    <http pattern="/warehouse/paypal/*" security="none"/>
 
     <http use-expressions="true">
         <intercept-url pattern="/maintain/**" access="hasRole('admin') and isFullyAuthenticated()"/>
