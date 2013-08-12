@@ -4,6 +4,7 @@ import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.payment.*;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -16,41 +17,50 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateOrderManager implements OrderManager {
-	private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-	public HibernateOrderManager() {
-	}
+    public HibernateOrderManager() {
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public Order createOrder(Personality person, Basket basket, Address address, PaymentSystem system) {
-		final Session session = sessionFactory.getCurrentSession();
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public Order createOrder(Personality person, Basket basket, Address address, PaymentSystem system) {
+        final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateOrder order = new HibernateOrder(person.getId(), null, new HibernateAddress(address));
-		session.save(order);
+        final HibernateOrder order = new HibernateOrder(person.getId(), null, new HibernateAddress(address));
+        session.save(order);
 
-		final List<OrderItem> items = new ArrayList<>();
-		for (BasketItem basketItem : basket.getBasketItems()) {
-			items.add(new HibernateOrderItem(order, basketItem));
-		}
-		order.setOrderItems(items);
-		session.update(order);
+        final List<OrderItem> items = new ArrayList<>();
+        for (BasketItem basketItem : basket.getBasketItems()) {
+            items.add(new HibernateOrderItem(order, basketItem));
+        }
+        order.setOrderItems(items);
+        session.update(order);
 
-		return order;
-	}
+        return order;
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public void deleteOrder(Long orderId) {
-		throw new UnsupportedOperationException("TODO: Not implemented");
-	}
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void deleteOrder(Long orderId) {
+        final Session session = sessionFactory.getCurrentSession();
+        final HibernateOrder order = (HibernateOrder) session.get(HibernateOrder.class, orderId);
+        if (order != null) {
+            session.delete(order);
+        }
+    }
 
-	@Override
-	public void changeState(Long orderId, OrderState state) {
-		throw new UnsupportedOperationException("TODO: Not implemented");
-	}
+    @Override
+    public void changeState(Long orderId, OrderState state) {
+        final Session session = sessionFactory.getCurrentSession();
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+        final Query query = session.createQuery("update billiongoods.server.services.payment.impl.HibernateOrder set orderState=:state where id=:id");
+        query.setParameter("id", orderId);
+        query.setParameter("state", state);
+        query.executeUpdate();
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }

@@ -110,35 +110,39 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <td colspan="2">
+
+            <#if article.description?has_content>
+                <@bg.ui.panel "Описание" "description" "description" "description">${article.description!""}</@bg.ui.panel>
+            </#if>
+
+            <#if article.accessories?has_content>
+                <@bg.ui.panel "Принадлежности" "accessories" "accessories" "accessories">
+                    <table>
+                        <#list article.accessories as a>
+                            <#if a_index==0>
+                            <tr></#if>
+                            <td valign="top" width="50%">
+                                <div class="article-item list">
+                                    <div class="image">
+                                        <@bg.link.article a><img
+                                                alt="${a.name}"
+                                                title="${a.name}"
+                                                src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
+                                                width="75px" height="75px"/></@bg.link.article>
+                                    </div>
+                                    <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
+                                    <div class="price"><@bg.ui.price a.price/></div>
+                            </td>
+                            <#if a_index-1==0></tr></#if>
+                        </#list>
+                    </table>
+                </@bg.ui.panel>
+            </#if>
+            </td>
+        </tr>
     </table>
-
-<#if article.description?has_content>
-    <@bg.ui.panel "Описание" "description" "description" "description">${article.description!""}</@bg.ui.panel>
-</#if>
-
-<#if article.accessories?has_content>
-    <@bg.ui.panel "Принадлежности" "accessories" "accessories" "accessories">
-        <table>
-            <#list article.accessories as a>
-                <#if a_index==0>
-                <tr></#if>
-                <td valign="top" width="50%">
-                    <div class="article-item list">
-                        <div class="image">
-                            <@bg.link.article a><img
-                                    alt="${a.name}"
-                                    title="${a.name}"
-                                    src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
-                                    width="75px" height="75px"/></@bg.link.article>
-                        </div>
-                        <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                        <div class="price"><@bg.ui.price a.price/></div>
-                </td>
-                <#if a_index-1==0></tr></#if>
-            </#list>
-        </table>
-    </@bg.ui.panel>
-</#if>
 </div>
 
 <script type="application/javascript">

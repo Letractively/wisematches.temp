@@ -6,12 +6,12 @@ import java.util.List;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface Basket {
-	Date getCreationTime();
+public interface Basket extends Iterable<BasketItem> {
+    Date getCreationTime();
 
-	Date getUpdatingTime();
+    Date getUpdatingTime();
 
-	BasketItem getBasketItem(int number);
+    BasketItem getBasketItem(int number);
 
-	List<BasketItem> getBasketItems();
+    List<BasketItem> getBasketItems();
 }

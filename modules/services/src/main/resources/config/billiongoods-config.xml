@@ -46,15 +46,20 @@
         <property name="articleManager" ref="articleManager"/>
     </bean>
 
+    <bean id="payPalTransactionManager" class="billiongoods.server.services.paypal.impl.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="expressCheckout" class="billiongoods.server.services.paypal.PayPalExpressCheckout">
-        <property name="settings">
-            <bean class="billiongoods.server.services.paypal.PayPalSettings">
-                <constructor-arg name="mode" value="${paypal.mode}"/>
+        <property name="configuration">
+            <bean class="billiongoods.server.services.paypal.Configuration">
+                <constructor-arg name="environment" value="${paypal.mode}"/>
                 <constructor-arg name="user" value="${paypal.user}"/>
                 <constructor-arg name="password" value="${paypal.password}"/>
                 <constructor-arg name="signature" value="${paypal.signature}"/>
             </bean>
         </property>
+        <property name="transactionManager" ref="payPalTransactionManager"/>
     </bean>
 
     <bean id="orderManager" class="billiongoods.server.services.payment.impl.HibernateOrderManager">
