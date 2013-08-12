@@ -15,11 +15,11 @@
 
 <#macro usd v>US$${v?string("0.00")}</#macro>
 
-<#macro rub v>${v?string("0.00")}<img src="<@static "images/gruble.gif"/>" class="ruble-img"/><span
+<#macro rub v c="g">${v?string("0.00")}<img src="<@static "images/${c}ruble.gif"/>" class="ruble-img"/><span
         class="dot">руб.</span></#macro>
 
-<#macro price v><span class="us"><@usd v/></span>
-<span class="rub">(~<@rub priceConverter.convertPrice(v)/>)</span></#macro>
+<#macro price v c="g"><span class="usd"><@usd v/></span>
+<span class="rub">(~<@rub priceConverter.convertPrice(v) c/>)</span></#macro>
 
 
 <#macro panel caption name="" id="" class="">

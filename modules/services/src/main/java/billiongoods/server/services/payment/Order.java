@@ -6,15 +6,21 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface Order {
-	Long getId();
+    Long getId();
 
-	Long getBuyer();
+    Long getBuyer();
 
-	String getCode();
+    String getCode();
 
-	Address getAddress();
+    float getShipment();
 
-	OrderState getOrderState();
+    float getTotalAmount();
 
-	List<OrderItem> getOrderItems();
+    ShipmentType getShipmentType();
+
+    Address getAddress();
+
+    OrderState getOrderState();
+
+    List<OrderItem> getOrderItems();
 }

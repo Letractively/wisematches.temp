@@ -3,17 +3,15 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 import billiongoods.core.Personality;
 import billiongoods.server.services.ServerDescriptor;
 import billiongoods.server.services.basket.Basket;
-import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.basket.BasketManager;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.payment.PaymentSystem;
-import billiongoods.server.services.paypal.CheckoutToken;
 import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.services.paypal.PayPalExpressCheckout;
-import billiongoods.server.services.paypal.WebAddressResolver;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import billiongoods.server.web.servlet.mvc.warehouse.form.OrderConfirmForm;
+import billiongoods.server.web.servlet.mvc.warehouse.form.OrderForm;
+import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +22,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -35,124 +34,127 @@ import java.util.Arrays;
 @Controller
 @RequestMapping("/warehouse/order/paypal")
 public class PayPalController extends AbstractController {
-	private OrderManager orderManager;
-	private BasketManager basketManager;
-	private ServerDescriptor serverDescriptor;
-	private PayPalExpressCheckout expressCheckout;
+    private OrderManager orderManager;
+    private BasketManager basketManager;
+    private ServerDescriptor serverDescriptor;
+    private PayPalExpressCheckout expressCheckout;
 
-	private final WebAddressResolver addressResolver = new TheWebAddressResolver();
+    private final WebAddressResolver addressResolver = new TheWebAddressResolver();
 
-	private static final String RUSSIAN_FEDERATION = "Russian Federation";
+    private static final Logger log = LoggerFactory.getLogger("billiongoods.order.PayPalController");
 
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.PayPalController");
+    public PayPalController() {
+    }
 
-	public PayPalController() {
-	}
+    @RequestMapping("")
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public String placeOrder(@ModelAttribute("order") OrderForm form, Errors errors, Model model) {
+        final Personality principal = getPrincipal();
+        final Basket basket = basketManager.getBasket(principal);
 
-	@RequestMapping("")
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String placeOrder(@ModelAttribute("order") OrderConfirmForm form, Errors errors, Model model) {
-		final Personality principal = getPrincipal();
+        final Order order = orderManager.createOrder(getPrincipal(), basket, form, PaymentSystem.PAY_PAL);
 
-		final Basket basket = basketManager.getBasket(principal);
+        log.info("Order for personal " + getPrincipal() + " has been created.");
 
-		final Integer[] itemNumbers = form.getItemNumbers();
-		final int[] itemQuantities = form.getItemQuantities();
+        try {
+            final String redirect = expressCheckout.initiateExpressCheckout(order, addressResolver);
+            log.info("PayPal token has been generated: " + token);
 
-		for (BasketItem item : new ArrayList<>(basket.getBasketItems())) {
-			final int number = item.getNumber();
+            return "redirect:" +;
+        } catch (PayPalException ex) {
+            log.error("PayPal processing error: " + ex.getMessage(), ex);
+            orderManager.deleteOrder(order.getId());
 
-			int index = Arrays.binarySearch(itemNumbers, number);
-			if (index < 0) {
-				basketManager.removeBasketItem(principal, number);
-			}
+            errors.reject("error.internal");
 
-			if (item.getQuantity() != itemQuantities[index]) {
-				basketManager.updateBasketItem(principal, number, itemQuantities[index]);
-			}
-		}
+            return "forward:/warehouse/basket/rollback";
+        }
+    }
 
-		final Order order = orderManager.createOrder(getPrincipal(), basket, form, PaymentSystem.PAY_PAL);
+    @RequestMapping("/accepted")
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public String orderAccepted(Model model, @RequestParam("token") String token, @RequestParam("PayerID") String payerId) {
+        try {
+            expressCheckout.approveExpressCheckout(token, payerId);
+            return "/content/warehouse/order/accepted";
+        } catch (PayPalException ex) {
+            log.error("Payment can't be processed: " + token, ex);
 
-		log.info("Order for personal " + getPrincipal() + " has been created.");
+            model.addAttribute("exception", ex);
+            return "/content/warehouse/order/failed";
+        }
+    }
 
-		try {
-			final String endpoint = expressCheckout.getMode().getPayPalEndpoint();
+    @RequestMapping("/rejected")
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public String orderRejected(@RequestParam("token") String token) {
+        // TODO: reject order by token and basket
+        try {
+            expressCheckout.rejectExpressCheckout(token);
+        } catch (PayPalException ex) {
+            log.error("Payment can't be processed: " + token, ex);
+        }
 
-			final CheckoutToken token = expressCheckout.createExpressCheckout(order, addressResolver);
-			log.info("PayPal token has been generated: " + token);
 
-			return "redirect:" + endpoint + "?_express-checkout&token=" + token.getToken();
-		} catch (PayPalException ex) {
-			orderManager.deleteOrder(order.getId());
+        return "/content/warehouse/order/rejected";
+    }
 
-			return "redirect:http://paypal.ru/asdadfsaf.sdsa/fasdfs?cmd";
-		}
-	}
+    /**
+     * https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/
+     */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @RequestMapping(value = "/ipn", method = RequestMethod.POST)
+    public ServiceResponse orderPayPalIPN(Model model, HttpServletRequest request) {
+        final Map<String, String[]> parameterMap = request.getParameterMap();
+        log.info("IPN message received: " + parameterMap);
 
-	@RequestMapping("/accepted")
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String orderAccepted(Model model, HttpServletRequest request) {
-		return "/content/warehouse/order/accepted";
-	}
+        expressCheckout.registerIPNMessage(parameterMap);
 
-	@RequestMapping("/rejected")
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String orderRejected(Model model, HttpServletRequest request) {
-		return "/content/warehouse/order/rejected";
-	}
+        return responseFactory.success();
+    }
 
-	/**
-	 * https://developer.paypal.com/webapps/developer/docs/classic/ipn/integration-guide/IPNIntro/
-	 */
-	@RequestMapping("/ipn")
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String orderPayPalIPN(Model model, HttpServletRequest request) {
-		return "/";
-	}
+    @Autowired
+    public void setOrderManager(OrderManager orderManager) {
+        this.orderManager = orderManager;
+    }
 
-	@Autowired
-	public void setOrderManager(OrderManager orderManager) {
-		this.orderManager = orderManager;
-	}
+    @Autowired
+    public void setBasketManager(BasketManager basketManager) {
+        this.basketManager = basketManager;
+    }
 
-	@Autowired
-	public void setBasketManager(BasketManager basketManager) {
-		this.basketManager = basketManager;
-	}
+    @Autowired
+    public void setServerDescriptor(ServerDescriptor serverDescriptor) {
+        this.serverDescriptor = serverDescriptor;
+    }
 
-	@Autowired
-	public void setServerDescriptor(ServerDescriptor serverDescriptor) {
-		this.serverDescriptor = serverDescriptor;
-	}
+    @Autowired
+    public void setExpressCheckout(PayPalExpressCheckout expressCheckout) {
+        this.expressCheckout = expressCheckout;
+    }
 
-	@Autowired
-	public void setExpressCheckout(PayPalExpressCheckout expressCheckout) {
-		this.expressCheckout = expressCheckout;
-	}
+    private class TheWebAddressResolver implements WebAddressResolver {
+        private TheWebAddressResolver() {
+        }
 
-	private class TheWebAddressResolver implements WebAddressResolver {
-		private TheWebAddressResolver() {
-		}
+        @Override
+        public String getReturnURL() {
+            return serverDescriptor.getWebHostName() + "/warehouse/order/accepted";
+        }
 
-		@Override
-		public String getReturnURL() {
-			return serverDescriptor.getWebHostName() + "/warehouse/order/accepted";
-		}
+        @Override
+        public String getCancelURL() {
+            return serverDescriptor.getWebHostName() + "/warehouse/order/rejected";
+        }
 
-		@Override
-		public String getCancelURL() {
-			return serverDescriptor.getWebHostName() + "/warehouse/order/rejected";
-		}
+        @Override
+        public String getOrderURL(Order order) {
+            return serverDescriptor.getWebHostName() + "/warehouse/order/view";
+        }
 
-		@Override
-		public String getOrderURL(Order order) {
-			return serverDescriptor.getWebHostName() + "/warehouse/order/view";
-		}
-
-		@Override
-		public String getArticleURL(Integer number) {
-			return serverDescriptor.getWebHostName() + "/warehouse/article/" + number;
-		}
-	}
+        @Override
+        public String getArticleURL(Integer number) {
+            return serverDescriptor.getWebHostName() + "/warehouse/article/" + number;
+        }
+    }
 }
