@@ -18,116 +18,121 @@ import java.util.List;
 @Entity
 @Table(name = "store_basket_item")
 public class HibernateBasketItem implements BasketItem {
-    @EmbeddedId
-    private Pk pk;
+	@EmbeddedId
+	private Pk pk;
 
-    @Column(name = "quantity")
-    private int quantity;
+	@Column(name = "quantity")
+	private int quantity;
 
-    @Column(name = "article")
-    private Integer articleId;
+	@Column(name = "article")
+	private Integer articleId;
 
-    @OrderColumn(name = "position")
-    @ElementCollection(targetClass = HibernateBasketOption.class)
-    @CollectionTable(name = "store_basket_option", joinColumns = {
-            @JoinColumn(name = "basketId", referencedColumnName = "basket"),
-            @JoinColumn(name = "basketItemId", referencedColumnName = "number")
-    })
-    private List<HibernateBasketOption> optionIds = new ArrayList<>();
+	@OrderColumn(name = "position")
+	@ElementCollection(targetClass = HibernateBasketOption.class)
+	@CollectionTable(name = "store_basket_option", joinColumns = {
+			@JoinColumn(name = "basketId", referencedColumnName = "basket"),
+			@JoinColumn(name = "basketItemId", referencedColumnName = "number")
+	})
+	private List<HibernateBasketOption> optionIds = new ArrayList<>();
 
-    @Transient
-    private ArticleDescription article;
+	@Transient
+	private ArticleDescription article;
 
-    @Transient
-    private Collection<Property> options = new ArrayList<>();
+	@Transient
+	private Collection<Property> options = new ArrayList<>();
 
-    public HibernateBasketItem() {
-    }
+	public HibernateBasketItem() {
+	}
 
-    public HibernateBasketItem(ArticleDescription article, List<Property> options, int quantity) {
-        this.article = article;
-        this.articleId = article.getId();
+	public HibernateBasketItem(ArticleDescription article, List<Property> options, int quantity) {
+		this.article = article;
+		this.articleId = article.getId();
 
-        this.quantity = quantity;
+		this.quantity = quantity;
 
-        if (options != null) {
-            this.options = options;
-            for (Property option : options) {
-                optionIds.add(new HibernateBasketOption(option.getAttribute(), option.getValue()));
-            }
-        }
-    }
+		if (options != null) {
+			this.options = options;
+			for (Property option : options) {
+				optionIds.add(new HibernateBasketOption(option.getAttribute(), option.getValue()));
+			}
+		}
+	}
 
-    Long getBasket() {
-        return pk.basket;
-    }
+	Long getBasket() {
+		return pk.basket;
+	}
 
-    @Override
-    public int getNumber() {
-        return pk.number;
-    }
+	@Override
+	public int getNumber() {
+		return pk.number;
+	}
 
-    @Override
-    public int getQuantity() {
-        return quantity;
-    }
+	@Override
+	public int getQuantity() {
+		return quantity;
+	}
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+	@Override
+	public float getAmount() {
+		return article.getPrice() * quantity;
+	}
 
-    @Override
-    public ArticleDescription getArticle() {
-        return article;
-    }
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
-    @Override
-    public Collection<Property> getOptions() {
-        return options;
-    }
+	@Override
+	public ArticleDescription getArticle() {
+		return article;
+	}
 
-    void associate(HibernateBasket basket, int number) {
-        this.pk = new Pk(basket.getId(), number);
-    }
+	@Override
+	public Collection<Property> getOptions() {
+		return options;
+	}
 
-    void initialize(ArticleManager articleManager, AttributeManager attributeManager) {
-        if (this.article == null || !this.article.getId().equals(articleId)) {
-            this.article = articleManager.getDescription(articleId);
-        }
+	void associate(HibernateBasket basket, int number) {
+		this.pk = new Pk(basket.getId(), number);
+	}
 
-        if (options.isEmpty()) {
-            options.clear();
-            for (HibernateBasketOption optionId : optionIds) {
-                options.add(new Property(attributeManager.getAttribute(optionId.getAttributeId()), optionId.getValue()));
-            }
-        }
-    }
+	void initialize(ArticleManager articleManager, AttributeManager attributeManager) {
+		if (this.article == null || !this.article.getId().equals(articleId)) {
+			this.article = articleManager.getDescription(articleId);
+		}
 
-    @Embeddable
-    public static class Pk implements Serializable {
-        @Column(name = "number")
-        private int number;
+		if (options.isEmpty()) {
+			options.clear();
+			for (HibernateBasketOption optionId : optionIds) {
+				options.add(new Property(attributeManager.getAttribute(optionId.getAttributeId()), optionId.getValue()));
+			}
+		}
+	}
 
-        @Column(name = "basket")
-        private Long basket;
+	@Embeddable
+	public static class Pk implements Serializable {
+		@Column(name = "number")
+		private int number;
 
-        public Pk() {
-        }
+		@Column(name = "basket")
+		private Long basket;
 
-        public Pk(Long basket, int number) {
-            this.number = number;
-            this.basket = basket;
-        }
-    }
+		public Pk() {
+		}
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("HibernateBasketItem{");
-        sb.append("pk=").append(pk);
-        sb.append(", quantity=").append(quantity);
-        sb.append(", articleId=").append(articleId);
-        sb.append(", optionIds=").append(optionIds);
-        sb.append('}');
-        return sb.toString();
-    }
+		public Pk(Long basket, int number) {
+			this.number = number;
+			this.basket = basket;
+		}
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("HibernateBasketItem{");
+		sb.append("pk=").append(pk);
+		sb.append(", quantity=").append(quantity);
+		sb.append(", articleId=").append(articleId);
+		sb.append(", optionIds=").append(optionIds);
+		sb.append('}');
+		return sb.toString();
+	}
 }

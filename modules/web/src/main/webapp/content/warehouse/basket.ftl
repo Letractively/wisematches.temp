@@ -214,7 +214,7 @@
                                     </span>
                             </td>
                             <td>
-                                <span class="price"><@bg.ui.price payment.order "b"/></span>
+                                <span class="price"><@bg.ui.price payment.amount "b"/></span>
                             </td>
                         </tr>
                         <tr class="payment-shipment">

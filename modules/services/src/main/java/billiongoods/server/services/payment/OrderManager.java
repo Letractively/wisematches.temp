@@ -7,10 +7,27 @@ import billiongoods.server.services.basket.Basket;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface OrderManager {
-	Order createOrder(Personality person, Basket basket, Address address, PaymentSystem system);
+	void addOrderListener(OrderListener l);
 
-	void deleteOrder(Long orderId);
+	void removeOrderListener(OrderListener l);
+
+	Order getOrder(Long id);
 
 
-	void changeState(Long orderId, OrderState state);
+	Order create(Personality person, Basket basket, Shipment shipment, boolean track);
+
+	void bill(Long orderId, String token);
+
+	void accept(Long orderId, String person);
+
+	void reject(Long orderId, String person);
+
+	void processing(Long orderId, String number);
+
+	void shipping(Long orderId, String number);
+
+	void shipped(Long orderId, String number);
+
+
+	void failed(Long orderId, String reason);
 }
