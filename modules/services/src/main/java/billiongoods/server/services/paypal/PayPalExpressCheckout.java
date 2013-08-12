@@ -28,10 +28,8 @@ public class PayPalExpressCheckout implements InitializingBean {
 	private PayPalTransactionManager transactionManager;
 
 	private PayPalAPIInterfaceServiceService service;
-
 	private final Map<String, String> sdkConfig = new HashMap<>();
 
-	private static final String ENCODING = "windows-1252";
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.paypal.ExpressCheckout");
 
 	public PayPalExpressCheckout() {
@@ -44,12 +42,10 @@ public class PayPalExpressCheckout implements InitializingBean {
 		sdkConfig.put("acct1" + Constants.CREDENTIAL_USERNAME_SUFFIX, configuration.getUser());
 		sdkConfig.put("acct1" + Constants.CREDENTIAL_PASSWORD_SUFFIX, configuration.getPassword());
 		sdkConfig.put("acct1" + Constants.CREDENTIAL_SIGNATURE_SUFFIX, configuration.getSignature());
-/*
 
 		sdkConfig.put(Constants.USE_HTTP_PROXY, "true");
 		sdkConfig.put(Constants.HTTP_PROXY_HOST, "surf-proxy.intranet.db.com");
 		sdkConfig.put(Constants.HTTP_PROXY_PORT, "8080");
-*/
 
 		service = new PayPalAPIInterfaceServiceService(sdkConfig);
 	}
@@ -61,13 +57,11 @@ public class PayPalExpressCheckout implements InitializingBean {
 		final SetExpressCheckoutResponseType response = setExpressCheckout(transaction.getId(), order, orderURL, returnURL, cancelURL);
 		transactionManager.checkoutInitiated(transaction, response);
 
-		if (response.getAck() == AckCodeType.SUCCESS) {
-			return transaction;
-		} else {
+		if (response.getAck() != AckCodeType.SUCCESS) {
 			dumpErrorResponse(transaction, response);
 			transactionManager.commitTransaction(transaction, TransactionResolution.FAILED);
 		}
-		return null;
+		return transaction;
 	}
 
 	public PayPalTransaction finalizeExpressCheckout(String token, boolean approved) throws PayPalException {
@@ -79,7 +73,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		transactionManager.checkoutValidated(transaction, response);
 
-		if (response.getAck() == AckCodeType.SUCCESS) {
+		if (response.getAck() != AckCodeType.SUCCESS) {
 			dumpErrorResponse(transaction, response);
 		}
 
@@ -91,7 +85,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 				transactionManager.commitTransaction(transaction, TransactionResolution.VERIFIED);
 				return transaction;
 			} else {
-				dumpErrorResponse(transaction, response);
+				dumpErrorResponse(transaction, doResponse);
 				transactionManager.commitTransaction(transaction, TransactionResolution.FAILED);
 			}
 		} else {
@@ -103,7 +97,6 @@ public class PayPalExpressCheckout implements InitializingBean {
 	public String getExpressCheckoutEndPoint(String token) {
 		return configuration.getEnvironment().getPayPalEndpoint() + "?cmd=_express-checkout&token=" + token;
 	}
-
 
 	public void registerIPNMessage(Map<String, String[]> parameterMap) {
 		try {
@@ -135,7 +128,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 		final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
 		request.setLocaleCode("RU");
 		request.setAddress(addressType);
-		request.setAddressOverride("1");
+		request.setAddressOverride("0");
 		request.setSolutionType(SolutionTypeType.MARK);
 		request.setChannelType(ChannelType.MERCHANT);
 		request.setReturnURL(returnURL);
@@ -196,7 +189,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 			b.append(", shortMessage=").append(errorType.getShortMessage());
 			b.append(", longMessage=").append(errorType.getLongMessage());
 		}
-		log.error("Unsuccess SetExpressCheckout status received: " +
+		log.error("Unsuccess status received: " +
 				"tnx=" + tnx.getId() +
 				", ack=" + response.getAck() +
 				", timestamp=" + response.getTimestamp() +

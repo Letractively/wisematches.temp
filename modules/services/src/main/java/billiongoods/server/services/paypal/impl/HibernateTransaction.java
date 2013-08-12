@@ -139,6 +139,10 @@ public class HibernateTransaction implements PayPalTransaction {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = HibernateTransactionError.class)
 	private List<HibernateTransactionError> transactionErrors = new ArrayList<>();
 
+	@Deprecated
+	HibernateTransaction() {
+	}
+
 	public HibernateTransaction(Long orderId, float amount, float shipment) {
 		this.orderId = orderId;
 		this.amount = amount;

@@ -10,6 +10,7 @@ import billiongoods.server.services.payment.Shipment;
 import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.services.paypal.PayPalExpressCheckout;
 import billiongoods.server.services.paypal.PayPalTransaction;
+import billiongoods.server.services.paypal.TransactionResolution;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.PaymentInfo;
@@ -60,42 +61,42 @@ public class PayPalController extends AbstractController {
 
 		try {
 			final String orderUrl = serverDescriptor.getWebHostName() + "/warehouse/order/view";
-			final String returnUrl = serverDescriptor.getWebHostName() + "/warehouse/order/accepted";
-			final String cancelUrl = serverDescriptor.getWebHostName() + "/warehouse/order/rejected";
+			final String returnUrl = serverDescriptor.getWebHostName() + "/warehouse/order/paypal/accepted";
+			final String cancelUrl = serverDescriptor.getWebHostName() + "/warehouse/order/paypal/rejected";
 
 			final PayPalTransaction transaction = expressCheckout.initiateExpressCheckout(order, orderUrl, returnUrl, cancelUrl);
 			log.info("PayPal token has been generated: " + transaction.getToken());
 
-			orderManager.bill(order.getId(), transaction.getToken());
-
-			return "redirect:" + expressCheckout.getExpressCheckoutEndPoint(transaction.getToken());
+			if (transaction.getResolution() == TransactionResolution.FAILED) {
+				errors.reject("error.internal");
+				return "forward:/warehouse/basket/rollback";
+			} else {
+				orderManager.bill(order.getId(), transaction.getToken());
+				return "redirect:" + expressCheckout.getExpressCheckoutEndPoint(transaction.getToken());
+			}
 		} catch (PayPalException ex) {
 			log.error("PayPal processing error: " + ex.getMessage(), ex);
 
 			orderManager.failed(order.getId(), ex.getMessage());
-
 			errors.reject("error.internal");
-
 			return "forward:/warehouse/basket/rollback";
 		}
 	}
 
 	@RequestMapping("/accepted")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String orderAccepted(Model model, @RequestParam("token") String token, @RequestParam("PayerID") String payerId) {
+	public String orderAccepted(@RequestParam("token") String token) {
 		try {
 			final PayPalTransaction transaction = expressCheckout.finalizeExpressCheckout(token, true);
-
 			orderManager.accept(transaction.getOrderId(), transaction.getPayer());
-
-			return "/content/warehouse/order/accepted";
+			return "redirect:/warehouse/order/accepted?o=" + transaction.getOrderId();
 		} catch (PayPalException ex) {
 			log.error("Payment can't be processed: " + token, ex);
 
 			if (ex.getTransaction() != null) {
 				orderManager.failed(ex.getTransaction().getId(), ex.getMessage());
 			}
-			return "/content/warehouse/order/failed";
+			return "redirect:/warehouse/order/failed?t=" + token;
 		}
 	}
 
@@ -104,15 +105,14 @@ public class PayPalController extends AbstractController {
 	public String orderRejected(@RequestParam("token") String token) {
 		try {
 			final PayPalTransaction transaction = expressCheckout.finalizeExpressCheckout(token, false);
-
-			return "/content/warehouse/order/rejected";
+			return "redirect:/warehouse/order/rejected?o=" + transaction.getId();
 		} catch (PayPalException ex) {
 			log.error("Payment can't be processed: " + token, ex);
 
 			if (ex.getTransaction() != null) {
 				orderManager.failed(ex.getTransaction().getId(), ex.getMessage());
 			}
-			return "/content/warehouse/order/failed";
+			return "redirect:/warehouse/order/failed?t=" + token;
 		}
 	}
 
