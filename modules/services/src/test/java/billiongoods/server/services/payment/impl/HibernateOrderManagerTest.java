@@ -68,6 +68,7 @@ public class HibernateOrderManagerTest {
 		replay(item2);
 
 		final Basket basket = createMock(Basket.class);
+		expect(basket.getAmount()).andReturn(123.9f);
 		expect(basket.getBasketItems()).andReturn(Arrays.asList(item1, item2));
 		replay(basket);
 
@@ -78,11 +79,12 @@ public class HibernateOrderManagerTest {
 		address.setRegion("MockRegion");
 		address.setStreetAddress("MockStreet, d.344/2 k.1, kv. 9881");
 
-		final Order order = orderManager.createOrder(new Visitor(123L), basket, address, PaymentSystem.PAY_PAL);
-		assertNotNull(order);
-		System.out.println(order);
+		Order order = orderManager.create(new Visitor(123L), basket, new Shipment(1.70f, address, ShipmentType.REGISTERED), true);
 
 		assertNotNull(order.getId());
+		assertEquals(123.9f, order.getAmount(), 0.0000001f);
+		assertEquals(1.7f, order.getShipment(), 0.0000001f);
+		assertEquals(ShipmentType.REGISTERED, order.getShipmentType());
 		assertEquals(123, order.getBuyer().longValue());
 		assertEquals(OrderState.NEW, order.getOrderState());
 
@@ -111,6 +113,41 @@ public class HibernateOrderManagerTest {
 		assertEquals("000002", oi1.getCode());
 		assertEquals(2.21f, oi1.getWeight(), 0.0000f);
 		assertEquals(342.21f, oi1.getAmount(), 0.0000f);
+
+		order = orderManager.getOrder(order.getId());
+		orderManager.bill(order.getId(), "1234567890987654321");
+		assertEquals("1234567890987654321", order.getToken());
+		assertEquals(OrderState.BILLING, order.getOrderState());
+
+		order = orderManager.getOrder(order.getId());
+		orderManager.accept(order.getId(), "mock1@mock.mock");
+		assertEquals("mock1@mock.mock", order.getPayer());
+		assertEquals(OrderState.ACCEPTED, order.getOrderState());
+
+		order = orderManager.getOrder(order.getId());
+		orderManager.reject(order.getId(), "mock2@mock.mock");
+		assertEquals("mock2@mock.mock", order.getPayer());
+		assertEquals(OrderState.REJECTED, order.getOrderState());
+
+		order = orderManager.getOrder(order.getId());
+		orderManager.processing(order.getId(), "124343");
+		assertEquals("124343", order.getReferenceTracking());
+		assertEquals(OrderState.PROCESSING, order.getOrderState());
+
+		order = orderManager.getOrder(order.getId());
+		orderManager.shipping(order.getId(), "6564564");
+		assertEquals("6564564", order.getChinaMailTracking());
+		assertEquals(OrderState.SHIPPING, order.getOrderState());
+
+		order = orderManager.getOrder(order.getId());
+		orderManager.shipped(order.getId(), "EW32143523TR");
+		assertEquals("EW32143523TR", order.getInternationalTracking());
+		assertEquals(OrderState.SHIPPED, order.getOrderState());
+
+		order = orderManager.getOrder(order.getId());
+		orderManager.failed(order.getId(), "They, close");
+		assertEquals("They, close", order.getComment());
+		assertEquals(OrderState.FAILED, order.getOrderState());
 
 		verify(desc);
 	}

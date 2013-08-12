@@ -6,21 +6,36 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface Order {
-    Long getId();
+	Long getId();
 
-    Long getBuyer();
+	Long getBuyer();
 
-    String getCode();
+	String getToken();
 
-    float getShipment();
+	float getAmount();
 
-    float getTotalAmount();
+	float getShipment();
 
-    ShipmentType getShipmentType();
+	ShipmentType getShipmentType();
 
-    Address getAddress();
 
-    OrderState getOrderState();
+	Address getAddress();
 
-    List<OrderItem> getOrderItems();
+	OrderState getOrderState();
+
+	List<OrderItem> getOrderItems();
+
+
+	String getPayer();
+
+	boolean isTracking();
+
+	String getComment();
+
+
+	String getReferenceTracking();
+
+	String getChinaMailTracking();
+
+	String getInternationalTracking();
 }

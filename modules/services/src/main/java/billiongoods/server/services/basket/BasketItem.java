@@ -13,6 +13,8 @@ public interface BasketItem {
 
 	int getQuantity();
 
+	float getAmount();
+
 	ArticleDescription getArticle();
 
 	Collection<Property> getOptions();
