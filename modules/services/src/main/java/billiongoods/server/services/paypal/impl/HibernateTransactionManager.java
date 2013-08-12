@@ -29,7 +29,7 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 	private static final ThreadLocal<DateFormat> FORMAT_THREAD_LOCAL = new ThreadLocal<DateFormat>() {
 		@Override
 		protected DateFormat initialValue() {
-			return new SimpleDateFormat("yyyy.MM.dd'T'HH:mm:ss'Z'");
+			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 		}
 	};
 
@@ -66,10 +66,10 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		} catch (ParseException ex) {
 			log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
 		}
-		transaction.addErrors(convertErrors(TransactionPhase.INITIATED, response.getErrors()));
 
 		transaction.setToken(response.getToken());
 		transaction.setPhase(TransactionPhase.INITIATED);
+		transaction.addErrors(convertErrors(transaction, response.getErrors()));
 		session.update(transaction);
 	}
 
@@ -87,7 +87,6 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		} catch (ParseException ex) {
 			log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
 		}
-		transaction.addErrors(convertErrors(TransactionPhase.VALIDATED, response.getErrors()));
 
 		final GetExpressCheckoutDetailsResponseDetailsType details = response.getGetExpressCheckoutDetailsResponseDetails();
 
@@ -99,10 +98,10 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		transaction.setPayerLastName(payerInfo.getPayerName().getLastName());
 		transaction.setPayerFirstName(payerInfo.getPayerName().getFirstName());
 		transaction.setPayerCountry(payerInfo.getPayerCountry().getValue());
-
 		transaction.setCheckoutStatus(details.getCheckoutStatus());
 
 		transaction.setPhase(TransactionPhase.VALIDATED);
+		transaction.addErrors(convertErrors(transaction, response.getErrors()));
 		session.update(transaction);
 	}
 
@@ -120,46 +119,48 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		} catch (ParseException ex) {
 			log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
 		}
-		transaction.addErrors(convertErrors(TransactionPhase.CONFIRMED, response.getErrors()));
 
 		final DoExpressCheckoutPaymentResponseDetailsType details = response.getDoExpressCheckoutPaymentResponseDetails();
-		final List<PaymentInfoType> paymentInfo = details.getPaymentInfo();
-		if (paymentInfo.size() != 1) {
-			log.info("Incorrect payments count: " + paymentInfo.size());
-		} else {
-			final PaymentInfoType info = paymentInfo.get(0);
+		if (details != null) {
+			final List<PaymentInfoType> paymentInfo = details.getPaymentInfo();
+			if (paymentInfo.size() != 1) {
+				log.info("Incorrect payments count: " + paymentInfo.size());
+			} else {
+				final PaymentInfoType info = paymentInfo.get(0);
 
-			transaction.setTransactionId(info.getTransactionID());
-			transaction.setTransactionType(info.getTransactionType().getValue());
-			transaction.setParentTransactionId(info.getParentTransactionID());
+				transaction.setTransactionId(info.getTransactionID());
+				transaction.setTransactionType(info.getTransactionType().getValue());
+				transaction.setParentTransactionId(info.getParentTransactionID());
 
-			transaction.setPaymentType(info.getPaymentType().getValue());
-			transaction.setPaymentStatus(info.getPaymentStatus().getValue());
-			transaction.setPaymentRequestId(info.getPaymentRequestID());
+				transaction.setPaymentType(info.getPaymentType().getValue());
+				transaction.setPaymentStatus(info.getPaymentStatus().getValue());
+				transaction.setPaymentRequestId(info.getPaymentRequestID());
 
-			if (info.getPaymentError() != null) {
-				transaction.addErrors(convertErrors(TransactionPhase.CONFIRMED, Collections.singletonList(info.getPaymentError())));
+				if (info.getPaymentError() != null) {
+					transaction.addErrors(convertErrors(transaction, Collections.singletonList(info.getPaymentError())));
+				}
+
+				try {
+					transaction.setPaymentDate(FORMAT_THREAD_LOCAL.get().parse(info.getPaymentDate()));
+				} catch (ParseException ex) {
+					log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
+				}
+
+				transaction.setFeeAmount(parseFloat(info.getFeeAmount().getValue()));
+				transaction.setGrossAmount(parseFloat(info.getGrossAmount().getValue()));
+				transaction.setSettleAmount(parseFloat(info.getSettleAmount().getValue()));
+				transaction.setTaxAmount(parseFloat(info.getTaxAmount().getValue()));
+				transaction.setExchangeRate(info.getExchangeRate());
+
+				transaction.setReasonCode(info.getReasonCode().getValue());
+				transaction.setPendingReason(info.getPendingReason().getValue());
+				transaction.setHoldDecision(info.getHoldDecision());
+
+				transaction.setInsuranceAmount(info.getInsuranceAmount());
 			}
-
-			try {
-				transaction.setPaymentDate(FORMAT_THREAD_LOCAL.get().parse(info.getPaymentDate()));
-			} catch (ParseException ex) {
-				log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
-			}
-
-			transaction.setFeeAmount(parseFloat(info.getFeeAmount().getValue()));
-			transaction.setGrossAmount(parseFloat(info.getGrossAmount().getValue()));
-			transaction.setSettleAmount(parseFloat(info.getSettleAmount().getValue()));
-			transaction.setTaxAmount(parseFloat(info.getTaxAmount().getValue()));
-			transaction.setExchangeRate(info.getExchangeRate());
-
-			transaction.setReasonCode(info.getReasonCode().getValue());
-			transaction.setPendingReason(info.getPendingReason().getValue());
-			transaction.setHoldDecision(info.getHoldDecision());
-
-			transaction.setInsuranceAmount(info.getInsuranceAmount());
 		}
 		transaction.setPhase(TransactionPhase.CONFIRMED);
+		transaction.addErrors(convertErrors(transaction, response.getErrors()));
 		session.update(transaction);
 	}
 
@@ -181,14 +182,14 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		return ((Number) session.save(new HibernateIPNMessage(message))).longValue();
 	}
 
-	private List<HibernateTransactionError> convertErrors(TransactionPhase phase, List<ErrorType> errors) {
+	private List<HibernateTransactionError> convertErrors(PayPalTransaction transaction, List<ErrorType> errors) {
 		if (errors == null) {
 			return null;
 		}
 
 		final List<HibernateTransactionError> res = new ArrayList<>();
 		for (ErrorType error : errors) {
-			res.add(new HibernateTransactionError(error.getErrorCode(), error.getSeverityCode().getValue(), phase, error.getShortMessage(), error.getLongMessage()));
+			res.add(new HibernateTransactionError(transaction.getId(), error.getErrorCode(), error.getSeverityCode().getValue(), transaction.getPhase(), error.getShortMessage(), error.getLongMessage()));
 		}
 		return res;
 	}

@@ -53,7 +53,7 @@
     <bean id="expressCheckout" class="billiongoods.server.services.paypal.PayPalExpressCheckout">
         <property name="configuration">
             <bean class="billiongoods.server.services.paypal.Configuration">
-                <constructor-arg name="environment" value="${paypal.mode}"/>
+                <constructor-arg name="environment" value="${paypal.environment}"/>
                 <constructor-arg name="user" value="${paypal.user}"/>
                 <constructor-arg name="password" value="${paypal.password}"/>
                 <constructor-arg name="signature" value="${paypal.signature}"/>

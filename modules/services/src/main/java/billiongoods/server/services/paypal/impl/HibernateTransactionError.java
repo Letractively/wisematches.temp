@@ -38,7 +38,8 @@ public class HibernateTransactionError {
 	HibernateTransactionError() {
 	}
 
-	public HibernateTransactionError(String code, String severity, TransactionPhase phase, String shortMessage, String longMessage) {
+	public HibernateTransactionError(Long tnxId, String code, String severity, TransactionPhase phase, String shortMessage, String longMessage) {
+		this.tnxId = tnxId;
 		this.code = code;
 		this.severity = severity;
 		this.phase = phase;
