@@ -3,15 +3,12 @@ package billiongoods.server.services.paypal;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class PayPalException extends Exception {
-	private final PayPalTransaction transaction;
+public abstract class PayPalException extends Exception {
+    protected PayPalException(String message) {
+        super(message);
+    }
 
-	public PayPalException(PayPalTransaction transaction, String message, Throwable cause) {
-		super(message, cause);
-		this.transaction = transaction;
-	}
-
-	public PayPalTransaction getTransaction() {
-		return transaction;
-	}
+    protected PayPalException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

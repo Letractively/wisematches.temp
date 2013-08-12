@@ -4,9 +4,9 @@ package billiongoods.server.services.paypal;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public enum TransactionPhase {
-	NEW,
-	INITIATED,
-	VALIDATED,
-	CONFIRMED,
-	DONE
+    CREATED,
+    INVOICING, // SetExpressCheckout sent and answer received
+    VERIFICATION, // GetExpressCheckout sent and answer received
+    CONFIRMATION, // DoExpressCheckout sent and answer received
+    FINISHED
 }

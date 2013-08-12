@@ -5,23 +5,29 @@ import urn.ebay.api.PayPalAPI.DoExpressCheckoutPaymentResponseType;
 import urn.ebay.api.PayPalAPI.GetExpressCheckoutDetailsResponseType;
 import urn.ebay.api.PayPalAPI.SetExpressCheckoutResponseType;
 
+import java.util.Map;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface PayPalTransactionManager {
-	PayPalTransaction getTransaction(Long id);
+    PayPalTransaction getTransaction(Long id);
 
 
-	PayPalTransaction beginTransaction(Order order);
-
-	void checkoutInitiated(PayPalTransaction tnxId, SetExpressCheckoutResponseType response);
-
-	void checkoutValidated(PayPalTransaction tnxId, GetExpressCheckoutDetailsResponseType response);
-
-	void checkoutConfirmed(PayPalTransaction tnxId, DoExpressCheckoutPaymentResponseType response);
-
-	void commitTransaction(PayPalTransaction tnxId, TransactionResolution resolution);
+    PayPalTransaction beginTransaction(Order order);
 
 
-	Long registerMessage(PayPalMessage message);
+    void checkoutInitiated(PayPalTransaction tnxId, SetExpressCheckoutResponseType response);
+
+    void checkoutValidated(PayPalTransaction tnxId, GetExpressCheckoutDetailsResponseType response);
+
+    void checkoutConfirmed(PayPalTransaction tnxId, DoExpressCheckoutPaymentResponseType response);
+
+
+    void commitTransaction(PayPalTransaction tnxId, boolean approved);
+
+    void rollbackTransaction(PayPalTransaction tnx, TransactionPhase phase, PayPalException exception);
+
+
+    PayPalMessage registerMessage(Map<String, String> values);
 }
