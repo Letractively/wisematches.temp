@@ -60,6 +60,7 @@ public class HibernateBasketManager implements BasketManager {
 
 		final Basket basket = (Basket) session.get(HibernateBasket.class, principal.getId());
 		session.delete(basket);
+
 		return basket;
 	}
 

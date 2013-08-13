@@ -62,8 +62,12 @@
         <property name="transactionManager" ref="payPalTransactionManager"/>
     </bean>
 
+    <bean id="shipmentManager" class="billiongoods.server.services.payment.impl.DefaultShipmentManager">
+    </bean>
+
     <bean id="orderManager" class="billiongoods.server.services.payment.impl.HibernateOrderManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="shipmentManager" ref="shipmentManager"/>
     </bean>
 
     <!--

@@ -9,6 +9,8 @@ import java.util.List;
 public interface Basket extends Iterable<BasketItem> {
 	float getAmount();
 
+	float getWeight();
+
 	Date getCreationTime();
 
 	Date getUpdatingTime();

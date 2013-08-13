@@ -75,5 +75,9 @@ public class HibernateBasketManagerTest {
 
 		final BasketItem basketItem = manager.updateBasketItem(person, 1, 20);
 		assertEquals(20, basketItem.getQuantity());
+
+		manager.closeBasket(person);
+
+		assertNull(manager.getBasket(person));
 	}
 }
