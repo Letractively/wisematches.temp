@@ -43,6 +43,7 @@ public class HibernateOrderManagerTest {
 	public void test() {
 		HibernateOrderManager orderManager = new HibernateOrderManager();
 		orderManager.setSessionFactory(sessionFactory);
+		orderManager.setShipmentManager(new DefaultShipmentManager());
 
 		final ArticleDescription desc = createMock(ArticleDescription.class);
 		expect(desc.getName()).andReturn("Item1").andReturn("Item2");
@@ -68,7 +69,7 @@ public class HibernateOrderManagerTest {
 		replay(item2);
 
 		final Basket basket = createMock(Basket.class);
-		expect(basket.getAmount()).andReturn(123.9f);
+		expect(basket.getAmount()).andReturn(23.9f).times(2);
 		expect(basket.getBasketItems()).andReturn(Arrays.asList(item1, item2));
 		replay(basket);
 
@@ -79,10 +80,10 @@ public class HibernateOrderManagerTest {
 		address.setRegion("MockRegion");
 		address.setStreetAddress("MockStreet, d.344/2 k.1, kv. 9881");
 
-		Order order = orderManager.create(new Visitor(123L), basket, new Shipment(1.70f, address, ShipmentType.REGISTERED), true);
+		Order order = orderManager.create(new Visitor(123L), basket, address, ShipmentType.REGISTERED, true);
 
 		assertNotNull(order.getId());
-		assertEquals(123.9f, order.getAmount(), 0.0000001f);
+		assertEquals(23.9f, order.getAmount(), 0.0000001f);
 		assertEquals(1.7f, order.getShipment(), 0.0000001f);
 		assertEquals(ShipmentType.REGISTERED, order.getShipmentType());
 		assertEquals(123, order.getBuyer().longValue());

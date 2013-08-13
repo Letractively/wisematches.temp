@@ -295,6 +295,12 @@ bg.ui = new function () {
 
 bg.warehouse = {};
 
+bg.warehouse.Basket = function () {
+    $(".basket .removeItem").click(function () {
+        $(this).closest("tr").detach();
+    });
+};
+
 bg.warehouse.Controller = function () {
     var addToBasket = function (callback) {
         bg.ui.lock(null, 'Добавление в корзину. Пожалуйста, подождите...');

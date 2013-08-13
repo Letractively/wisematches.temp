@@ -30,9 +30,8 @@ public class HibernateBasket implements Basket {
 	@Column(name = "expirationDays")
 	private Integer expirationDays;
 
-	@JoinColumn(name = "basket")
 	@OrderColumn(name = "number")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = HibernateBasketItem.class)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pk.basket", targetEntity = HibernateBasketItem.class)
 	private List<BasketItem> basketItems = new ArrayList<>();
 
 	public HibernateBasket() {
@@ -57,6 +56,15 @@ public class HibernateBasket implements Basket {
 		float res = .0f;
 		for (BasketItem basketItem : basketItems) {
 			res += basketItem.getAmount();
+		}
+		return res;
+	}
+
+	@Override
+	public float getWeight() {
+		float res = .0f;
+		for (BasketItem basketItem : basketItems) {
+			res += basketItem.getArticle().getWeight();
 		}
 		return res;
 	}
