@@ -130,7 +130,7 @@ public class HibernateTransactionManagerTest {
         assertEquals(TransactionPhase.FINISHED, tnx.getPhase());
         assertEquals(TransactionResolution.REJECTED, tnx.getResolution());
 
-        manager.rollbackTransaction(tnx, TransactionPhase.CONFIRMATION, new PayPalQueryException(new PayPalQueryError(o)));
+        manager.rollbackTransaction(tnx, TransactionPhase.CONFIRMATION, new PayPalQueryException("ID" + tnx.getId(), new PayPalQueryError(o)));
 
         final HibernateTransaction transaction = manager.getTransaction(tnx.getId());
         assertEquals(tnx.getId(), transaction.getId());
