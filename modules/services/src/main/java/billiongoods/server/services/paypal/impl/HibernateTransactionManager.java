@@ -2,6 +2,7 @@ package billiongoods.server.services.paypal.impl;
 
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.paypal.*;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -44,6 +45,19 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public HibernateTransaction getTransaction(Long id) {
 		return (HibernateTransaction) sessionFactory.getCurrentSession().get(HibernateTransaction.class, id);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public PayPalTransaction getTransaction(String token) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("from billiongoods.server.services.paypal.impl.HibernateTransaction where token=:token");
+		query.setParameter("token", token);
+		try {
+			return (HibernateTransaction) query.uniqueResult();
+		} catch (Exception ex) {
+			return null;
+		}
 	}
 
 	@Override
