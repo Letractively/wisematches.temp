@@ -3,6 +3,7 @@ package billiongoods.server.services.basket.impl;
 import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
+import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.warehouse.ArticleManager;
 import billiongoods.server.warehouse.AttributeManager;
 
@@ -57,7 +58,7 @@ public class HibernateBasket implements Basket {
 		for (BasketItem basketItem : basketItems) {
 			res += basketItem.getAmount();
 		}
-		return res;
+		return PriceConverter.roundPrice(res);
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class HibernateBasket implements Basket {
 		for (BasketItem basketItem : basketItems) {
 			res += basketItem.getArticle().getWeight();
 		}
-		return res;
+		return PriceConverter.roundPrice(res);
 	}
 
 	public Integer getExpirationDays() {

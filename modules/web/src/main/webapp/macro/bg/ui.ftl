@@ -13,13 +13,14 @@
 <#macro static p>${staticResourcesDomain}/${p}</#macro>
 
 
-<#macro usd v>US$${v?string("0.00")}</#macro>
+<#macro usd v><span class="usd">US$<span class="usd v">${v?string("0.00")}</span></span></#macro>
 
-<#macro rub v c="g">${v?string("0.00")}<img src="<@static "images/${c}ruble.gif"/>" class="ruble-img"/><span
+<#macro rub v c="g"><span class="rub v">${v?string("0.00")}</span><img
+        src="<@static "images/${c}ruble.gif"/>"
+        class="ruble-img"/><span
         class="dot">руб.</span></#macro>
 
-<#macro price v c="g"><span class="usd"><@usd v/></span>
-<span class="rub">(~<@rub priceConverter.convertPrice(v) c/>)</span></#macro>
+<#macro price v c="g"><@usd v/> <span class="rub">(~<@rub priceConverter.convertPrice(v) c/>)</span></#macro>
 
 
 <#macro panel caption name="" id="" class="">
@@ -215,6 +216,7 @@
 
     <#assign status=spring.status>
     <#assign statusValue=spring.stringStatusValue>
+    <#if status.actualValue??><#assign actualValue=status.actualValue></#if>
 </#macro>
 
 <#macro field path id="" class="">

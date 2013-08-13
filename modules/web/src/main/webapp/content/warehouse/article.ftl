@@ -64,9 +64,7 @@
                         <input type="hidden" name="article" value="${article.id}"/>
 
                         <div class="panel">
-                            <div class="price">
-                            <@bg.ui.price article.price/>
-                            </div>
+                            <div class="price"><@bg.ui.price article.price/></div>
 
                         <#if article.options?has_content>
                             <div class="ops">

@@ -20,4 +20,8 @@ public class PriceConverter {
 	public void setCourse(float course) {
 		this.course = course;
 	}
+
+	public static float roundPrice(float price) {
+		return Math.round(price * 100f) / 100f;
+	}
 }

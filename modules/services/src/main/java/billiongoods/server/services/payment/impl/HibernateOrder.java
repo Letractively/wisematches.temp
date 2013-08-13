@@ -165,7 +165,11 @@ public class HibernateOrder implements Order {
 	}
 
 	void setComment(String comment) {
-		this.comment = comment;
+		if (comment != null && comment.length() > 254) {
+			this.comment = comment.substring(0, 254);
+		} else {
+			this.comment = comment;
+		}
 	}
 
 	void setOrderState(OrderState orderState) {
