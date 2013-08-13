@@ -86,17 +86,20 @@ public class PayPalExpressCheckout implements InitializingBean {
 	}
 
 	public PayPalTransaction finalizeExpressCheckout(String token, boolean approved) throws PayPalException {
+		final PayPalTransaction transaction = transactionManager.getTransaction(token);
+		if (transaction == null) {
+			throw new PayPalSystemException("There is no transaction for token: " + token);
+		}
+
 		final GetExpressCheckoutDetailsResponseType response;
 		try {
 			response = getExpressCheckout(token);
 		} catch (PayPalException ex) {
-//            transactionManager.rollbackTransaction(, TransactionPhase.VERIFICATION, ex); // rollback is not possible.
+			transactionManager.rollbackTransaction(transaction, TransactionPhase.VERIFICATION, ex); // rollback is not possible.
 			throw ex;
 		}
 
 		final GetExpressCheckoutDetailsResponseDetailsType details = response.getGetExpressCheckoutDetailsResponseDetails();
-		final PayPalTransaction transaction = transactionManager.getTransaction(Long.decode(details.getInvoiceID()));
-
 		try {
 			transactionManager.checkoutValidated(transaction, response);
 

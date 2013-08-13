@@ -13,8 +13,10 @@ import java.util.Map;
 public interface PayPalTransactionManager {
     PayPalTransaction getTransaction(Long id);
 
+	PayPalTransaction getTransaction(String token);
 
-    PayPalTransaction beginTransaction(Order order);
+
+	PayPalTransaction beginTransaction(Order order);
 
 
     void checkoutInitiated(PayPalTransaction tnxId, SetExpressCheckoutResponseType response);
