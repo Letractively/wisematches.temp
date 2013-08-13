@@ -295,9 +295,73 @@ bg.ui = new function () {
 
 bg.warehouse = {};
 
-bg.warehouse.Basket = function () {
-    $(".basket .removeItem").click(function () {
+bg.warehouse.Basket = function (cource) {
+    var basket = $(".basket");
+
+    var updatePrice = function (el, price) {
+        el.find('.usd .v').text(price.toFixed(2));
+        el.find('.rub .v').text((price * cource).toFixed(2));
+    };
+
+    var recalculateTotal = function () {
+        var totalAmount = 0;
+        var totalWeight = 0;
+
+        basket.find('.cnt tr.item').each(function (i, el) {
+            var row = $(el);
+            var quantity = row.find('[name="itemQuantities"]').val();
+
+            totalAmount += quantity * row.find('[name="itemAmounts"]').val();
+            totalWeight += quantity * row.find('[name="itemWeights"]').val();
+        });
+
+        var shipmentItem = basket.find('[name="shipment"]:checked');
+        var shipmentType = shipmentItem.val();
+
+        var shipmentAmount = 0;
+        if (totalAmount < 25) {
+            basket.find('.unregistered').slideDown('fast');
+            if (shipmentType == 'REGISTERED') {
+                shipmentAmount = 1.70;
+            }
+            basket.find('#shipmentFree').removeAttr('disabled');
+            basket.find('#freeRegisteredShipment').hide();
+            basket.find('#paidRegisteredShipment').show();
+        } else {
+            basket.find('.unregistered').slideUp('fast');
+            basket.find('#shipmentRegistered').prop('checked', true);
+            basket.find('#shipmentFree').attr('disabled', 'disabled');
+            basket.find('#freeRegisteredShipment').show();
+            basket.find('#paidRegisteredShipment').hide();
+        }
+
+        updatePrice(basket.find('.unregistered .price'), 25 - totalAmount);
+
+        updatePrice(basket.find('.payment-order .price'), totalAmount);
+        updatePrice(basket.find('.payment-shipment .price'), shipmentAmount);
+        updatePrice(basket.find('.payment-total .price'), totalAmount + shipmentAmount);
+    };
+
+    basket.find('[name="shipment"]').change(function () {
+        recalculateTotal();
+    });
+
+    basket.find(".q_input").change(function () {
+        var row = $(this).closest("tr");
+
+        var amount = row.find('[name="itemAmounts"]').val();
+        var weight = row.find('[name="itemWeights"]').val();
+        var quantity = row.find('[name="itemQuantities"]').val();
+
+        row.find(".itemWeight").text((weight * quantity).toFixed(2) + " кг");
+        updatePrice(row.find(".itemAmount"), amount * quantity);
+
+        recalculateTotal();
+    });
+
+    basket.find(".removeItem").click(function () {
         $(this).closest("tr").detach();
+        recalculateTotal();
     });
 };
 
@@ -485,6 +549,12 @@ $(document).ready(function () {
 
     $(".quantity").each(function (i, el) {
         el = $(el);
+
+        var changeValue = function (v) {
+            quantity.val(v);
+            quantity.trigger('change');
+        };
+
         var validateQuantityActions = function () {
             var v = quantity.val();
             if (v == 1) {
@@ -497,7 +567,7 @@ $(document).ready(function () {
         var quantity = el.find(".q_input").on('input', function () {
             var v = quantity.val();
             if (!$.isNumeric(v) || quantity < 1) {
-                quantity.val(1);
+                changeValue(1);
             }
             validateQuantityActions();
         });
@@ -505,7 +575,7 @@ $(document).ready(function () {
         var up = el.find(".q_up").click(function (event) {
             var v = quantity.val();
             v++;
-            quantity.val(v);
+            changeValue(v);
 
             validateQuantityActions();
 
@@ -517,7 +587,7 @@ $(document).ready(function () {
             var v = quantity.val();
             if (v > 1) {
                 v--;
-                quantity.val(v);
+                changeValue(v);
             }
 
             validateQuantityActions();
