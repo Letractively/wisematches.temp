@@ -6,8 +6,8 @@ package billiongoods.server.services.paypal;
 public class PayPalQueryException extends PayPalException {
     private final PayPalQueryError queryError;
 
-    public PayPalQueryException(PayPalQueryError queryError) {
-        super("PayPal query error received: " + queryError);
+    public PayPalQueryException(String tnxId, PayPalQueryError queryError) {
+        super(tnxId, "ERROR-" + queryError.getCode() + ": " + queryError.getLongMessage());
         this.queryError = queryError;
     }
 

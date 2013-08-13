@@ -1,5 +1,6 @@
 package billiongoods.server.web.servlet.mvc;
 
+import billiongoods.server.services.paypal.PayPalException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.authentication.rememberme.CookieTheftException;
 import org.springframework.stereotype.Controller;
@@ -19,51 +20,61 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @ControllerAdvice
 public class CentralController extends AbstractController {
-	public CentralController() {
-	}
+    public CentralController() {
+    }
 
-	@RequestMapping(value = {"/", "/index"})
-	public final String mainPage() {
-		return "forward:/warehouse/catalog";
-	}
+    @RequestMapping(value = {"/", "/index"})
+    public final String mainPage() {
+        return "forward:/warehouse/catalog";
+    }
 
-	@RequestMapping(value = "/assistance/error")
-	public ModelAndView processException(HttpServletRequest request, HttpServletResponse response) {
-		return processException(String.valueOf(response.getStatus()), null, request, request.getRequestURI());
-	}
+    @RequestMapping(value = "/assistance/error")
+    public ModelAndView processException(HttpServletRequest request, HttpServletResponse response) {
+        return processException(String.valueOf(response.getStatus()), null, request, request.getRequestURI());
+    }
 
-	@ExceptionHandler(AccessDeniedException.class)
-	public ModelAndView processAccessException(Exception exception, HttpServletRequest request) {
-		return processException("access", exception, request);
-	}
+    @ExceptionHandler(AccessDeniedException.class)
+    public ModelAndView processAccessException(Exception exception, HttpServletRequest request) {
+        return processException("access", null, request);
+    }
 
-	@ExceptionHandler(UnknownEntityException.class)
-	public ModelAndView processUnknownEntity(UnknownEntityException exception, HttpServletRequest request) {
-		return processException("unknown." + exception.getEntityType(), null, request, exception.getEntityId());
-	}
+    @ExceptionHandler(UnknownEntityException.class)
+    public ModelAndView processUnknownEntity(UnknownEntityException exception, HttpServletRequest request) {
+        return processException("unknown." + exception.getEntityType(), null, request, exception.getEntityId());
+    }
 
-	@ExceptionHandler(CookieTheftException.class)
-	public String cookieTheftException(CookieTheftException ex) {
-		return "forward:/account/loginAuth?error=insufficient";
-	}
+    @ExceptionHandler(ExpiredParametersException.class)
+    public ModelAndView processExpiredParametersException(ExpiredParametersException exception, HttpServletRequest request) {
+        return processException("expired", "expired.ftl", request, exception);
+    }
 
-	private ModelAndView processException(String errorCode, Exception exception, HttpServletRequest request, Object... arguments) {
-		final Model model = new ExtendedModelMap();
-		final ModelAndView res = new ModelAndView("/content/errors");
+    @ExceptionHandler(PayPalException.class)
+    public ModelAndView processPayPalException(PayPalException exception, HttpServletRequest request) {
+        return processException("paypal", "paypal/failed.ftl", request, exception);
+    }
 
-		model.addAttribute("title", getTitle(request));
-		model.addAttribute("principal", getPrincipal());
-		model.addAttribute("department", getDepartment(request));
+    @ExceptionHandler(CookieTheftException.class)
+    public String cookieTheftException(CookieTheftException ex) {
+        return "forward:/account/loginAuth?error=insufficient";
+    }
 
-		model.addAttribute("errorCode", errorCode);
-		model.addAttribute("errorArguments", arguments);
-		model.addAttribute("errorException", exception);
+    private ModelAndView processException(String errorCode, String template, HttpServletRequest request, Object... arguments) {
+        final Model model = new ExtendedModelMap();
+        final ModelAndView res = new ModelAndView("/content/assistance/errors");
 
-		hideWarehouse(model);
-		hideNavigation(model);
+        model.addAttribute("title", getTitle(request));
+        model.addAttribute("principal", getPrincipal());
+        model.addAttribute("department", getDepartment(request));
 
-		res.addAllObjects(model.asMap());
+        model.addAttribute("errorCode", errorCode);
+        model.addAttribute("errorTemplate", template);
+        model.addAttribute("errorArguments", arguments);
 
-		return res;
-	}
+        hideWarehouse(model);
+        hideNavigation(model);
+
+        res.addAllObjects(model.asMap());
+
+        return res;
+    }
 }
