@@ -7,14 +7,14 @@ import billiongoods.server.services.ServerDescriptor;
  */
 public enum Sender {
 	/**
-	 * This is abstract e-mail notification.
-	 */
-	UNDEFINED("noreply"),
-
-	/**
 	 * From address is bugs reporter.
 	 */
 	SUPPORT("support"),
+
+	/**
+	 * This is abstract e-mail notification.
+	 */
+	UNDEFINED("noreply"),
 
 	/**
 	 * Mail was sent from accounts support team.

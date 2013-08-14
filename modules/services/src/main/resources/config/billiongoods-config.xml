@@ -154,7 +154,8 @@
     </bean>
 
     <bean class="billiongoods.server.services.notify.impl.center.NotificationOriginCenter">
-        <property name="taskExecutor" ref="notificationTaskExecutor"/>
+        <property name="orderManager" ref="orderManager"/>
+
         <property name="notificationService" ref="notificationService"/>
     </bean>
 
