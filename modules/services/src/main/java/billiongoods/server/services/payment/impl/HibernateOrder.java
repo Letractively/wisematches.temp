@@ -14,240 +14,254 @@ import java.util.List;
 @Entity
 @Table(name = "store_order")
 public class HibernateOrder implements Order {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@Column(name = "buyer")
-	private Long buyer;
+    @Column(name = "buyer")
+    private Long buyer;
 
-	@Column(name = "token")
-	private String token;
+    @Column(name = "token")
+    private String token;
 
-	@Column(name = "amount")
-	private float amount;
+    @Column(name = "amount")
+    private float amount;
 
-	@Column(name = "shipment")
-	private float shipment;
+    @Column(name = "shipment")
+    private float shipment;
 
-	@Column(name = "shipmentType")
-	@Enumerated(EnumType.ORDINAL)
-	private ShipmentType shipmentType;
+    @Column(name = "shipmentType")
+    @Enumerated(EnumType.ORDINAL)
+    private ShipmentType shipmentType;
 
-	@Column(name = "timestamp")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timestamp;
+    @Column(name = "timestamp")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
-	@Column(name = "payer")
-	private String payer;
+    @Column(name = "creationTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationTime;
 
-	@Column(name = "tracking")
-	private boolean tracking;
+    @Column(name = "payer")
+    private String payer;
 
-	@Column(name = "comment")
-	private String comment;
+    @Column(name = "tracking")
+    private boolean tracking;
 
-	@Column(name = "referenceTracking")
-	private String referenceTracking;
+    @Column(name = "comment")
+    private String comment;
 
-	@Column(name = "chinaMailTracking")
-	private String chinaMailTracking;
+    @Column(name = "referenceTracking")
+    private String referenceTracking;
 
-	@Column(name = "internationalTracking")
-	private String internationalTracking;
+    @Column(name = "chinaMailTracking")
+    private String chinaMailTracking;
 
-	@Embedded
-	private HibernateAddress address;
+    @Column(name = "internationalTracking")
+    private String internationalTracking;
 
-	@Column(name = "state")
-	@Enumerated(EnumType.ORDINAL)
-	private OrderState orderState = OrderState.NEW;
+    @Embedded
+    private HibernateAddress address;
 
-	@OrderColumn(name = "number")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pk.orderId", targetEntity = HibernateOrderItem.class)
-	private List<OrderItem> orderItems;
+    @Column(name = "state")
+    @Enumerated(EnumType.ORDINAL)
+    private OrderState orderState = OrderState.NEW;
 
-	@OrderBy("timestamp desc")
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderId", targetEntity = HibernateOrderLog.class)
-	private List<OrderLog> orderLogs = new ArrayList<>();
+    @OrderBy("number")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pk.orderId", targetEntity = HibernateOrderItem.class)
+    private List<OrderItem> orderItems;
 
-	@Deprecated
-	HibernateOrder() {
-	}
+    @OrderBy("timestamp desc")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderId", targetEntity = HibernateOrderLog.class)
+    private List<OrderLog> orderLogs = new ArrayList<>();
 
-	public HibernateOrder(Long buyer, Basket basket, Shipment shipment, boolean tracking) {
-		this.buyer = buyer;
-		this.amount = basket.getAmount();
-		this.shipment = shipment.getAmount();
-		this.shipmentType = shipment.getType();
-		this.address = new HibernateAddress(shipment.getAddress());
-		this.tracking = tracking;
-		this.orderState = OrderState.NEW;
-		timestamp = new Date();
-	}
+    @Deprecated
+    HibernateOrder() {
+    }
 
-	@Override
-	public Long getId() {
-		return id;
-	}
+    public HibernateOrder(Long buyer, Basket basket, Shipment shipment, boolean tracking) {
+        this.buyer = buyer;
+        this.amount = basket.getAmount();
+        this.shipment = shipment.getAmount();
+        this.shipmentType = shipment.getType();
+        this.address = new HibernateAddress(shipment.getAddress());
+        this.tracking = tracking;
+        this.orderState = OrderState.NEW;
+        timestamp = new Date();
+        creationTime = new Date();
+    }
 
-	@Override
-	public Long getBuyer() {
-		return buyer;
-	}
+    @Override
+    public Long getId() {
+        return id;
+    }
 
-	@Override
-	public String getToken() {
-		return token;
-	}
+    @Override
+    public Long getBuyer() {
+        return buyer;
+    }
 
-	@Override
-	public float getAmount() {
-		return amount;
-	}
+    @Override
+    public String getToken() {
+        return token;
+    }
 
-	@Override
-	public float getShipment() {
-		return shipment;
-	}
+    @Override
+    public float getAmount() {
+        return amount;
+    }
 
-	@Override
-	public ShipmentType getShipmentType() {
-		return shipmentType;
-	}
+    @Override
+    public float getShipment() {
+        return shipment;
+    }
 
-	@Override
-	public Address getAddress() {
-		return address;
-	}
+    @Override
+    public ShipmentType getShipmentType() {
+        return shipmentType;
+    }
 
-	@Override
-	public Date getTimestamp() {
-		return timestamp;
-	}
+    @Override
+    public Address getAddress() {
+        return address;
+    }
 
-	@Override
-	public OrderState getOrderState() {
-		return orderState;
-	}
+    @Override
+    public Date getTimestamp() {
+        return timestamp;
+    }
 
-	@Override
-	public String getPayer() {
-		return payer;
-	}
+    @Override
+    public Date getCreationTime() {
+        return creationTime;
+    }
 
-	@Override
-	public boolean isTracking() {
-		return tracking;
-	}
+    @Override
+    public OrderState getOrderState() {
+        return orderState;
+    }
 
-	@Override
-	public String getComment() {
-		return comment;
-	}
+    @Override
+    public String getPayer() {
+        return payer;
+    }
 
-	@Override
-	public String getReferenceTracking() {
-		return referenceTracking;
-	}
+    @Override
+    public boolean isTracking() {
+        return tracking;
+    }
 
-	@Override
-	public String getChinaMailTracking() {
-		return chinaMailTracking;
-	}
+    @Override
+    public String getComment() {
+        return comment;
+    }
 
-	@Override
-	public String getInternationalTracking() {
-		return internationalTracking;
-	}
+    @Override
+    public String getReferenceTracking() {
+        return referenceTracking;
+    }
 
-	@Override
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
+    @Override
+    public String getChinaMailTracking() {
+        return chinaMailTracking;
+    }
 
-	@Override
-	public List<OrderLog> getOrderLogs() {
-		return orderLogs;
-	}
+    @Override
+    public String getInternationalTracking() {
+        return internationalTracking;
+    }
 
-	void bill(String token) {
-		this.token = token;
-		this.timestamp = new Date();
-		this.orderState = OrderState.BILLING;
-		orderLogs.add(new HibernateOrderLog(id, "billing", token, OrderState.BILLING));
-	}
+    @Override
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
 
-	void accept(String payer) {
-		this.payer = payer;
-		this.timestamp = new Date();
-		this.orderState = OrderState.ACCEPTED;
-		orderLogs.add(new HibernateOrderLog(id, "accepted", payer, OrderState.ACCEPTED));
-	}
+    @Override
+    public List<OrderLog> getOrderLogs() {
+        return orderLogs;
+    }
 
-	void reject(String payer) {
-		this.payer = payer;
-		this.timestamp = new Date();
-		this.orderState = OrderState.REJECTED;
-		orderLogs.add(new HibernateOrderLog(id, "rejected", payer, OrderState.REJECTED));
-	}
+    void bill(String token) {
+        this.token = token;
+        this.timestamp = new Date();
+        this.orderState = OrderState.BILLING;
+        orderLogs.add(new HibernateOrderLog(id, "billing", token, OrderState.BILLING));
+    }
 
-	void processing(String referenceTracking) {
-		this.referenceTracking = referenceTracking;
-		this.timestamp = new Date();
-		this.orderState = OrderState.PROCESSING;
-		orderLogs.add(new HibernateOrderLog(id, "processing", referenceTracking, OrderState.PROCESSING));
-	}
+    void accept(String payer) {
+        this.payer = payer;
+        this.timestamp = new Date();
+        this.orderState = OrderState.ACCEPTED;
+        orderLogs.add(new HibernateOrderLog(id, "accepted", payer, OrderState.ACCEPTED));
+    }
 
-	void shipping(String chinaMailTracking) {
-		this.chinaMailTracking = chinaMailTracking;
-		this.timestamp = new Date();
-		this.orderState = OrderState.SHIPPING;
-		orderLogs.add(new HibernateOrderLog(id, "shipping", chinaMailTracking, OrderState.SHIPPING));
-	}
+    void reject(String payer) {
+        this.payer = payer;
+        this.timestamp = new Date();
+        this.orderState = OrderState.REJECTED;
+        orderLogs.add(new HibernateOrderLog(id, "rejected", payer, OrderState.REJECTED));
+    }
 
-	void shipped(String internationalTracking) {
-		this.internationalTracking = internationalTracking;
-		this.timestamp = new Date();
-		this.orderState = OrderState.SHIPPED;
-		orderLogs.add(new HibernateOrderLog(id, "shipped", internationalTracking, OrderState.SHIPPED));
-	}
+    void processing(String referenceTracking) {
+        this.referenceTracking = referenceTracking;
+        this.timestamp = new Date();
+        this.orderState = OrderState.PROCESSING;
+        orderLogs.add(new HibernateOrderLog(id, "processing", referenceTracking, OrderState.PROCESSING));
+    }
 
-	void failed(String comment) {
-		if (comment != null && comment.length() > 254) {
-			this.comment = comment.substring(0, 254);
-		} else {
-			this.comment = comment;
-		}
-		this.orderState = OrderState.FAILED;
-		orderLogs.add(new HibernateOrderLog(id, "failed", comment, OrderState.FAILED));
-	}
+    void shipping(String chinaMailTracking) {
+        this.chinaMailTracking = chinaMailTracking;
+        this.timestamp = new Date();
+        this.orderState = OrderState.SHIPPING;
+        orderLogs.add(new HibernateOrderLog(id, "shipping", chinaMailTracking, OrderState.SHIPPING));
+    }
 
-	void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
-	}
+    void shipped(String internationalTracking) {
+        this.internationalTracking = internationalTracking;
+        this.timestamp = new Date();
+        this.orderState = OrderState.SHIPPED;
+        orderLogs.add(new HibernateOrderLog(id, "shipped", internationalTracking, OrderState.SHIPPED));
+    }
 
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("HibernateOrder{");
-		sb.append("id=").append(id);
-		sb.append(", buyer=").append(buyer);
-		sb.append(", token='").append(token).append('\'');
-		sb.append(", amount=").append(amount);
-		sb.append(", shipment=").append(shipment);
-		sb.append(", shipmentType=").append(shipmentType);
-		sb.append(", payer='").append(payer).append('\'');
-		sb.append(", tracking=").append(tracking);
-		sb.append(", comment='").append(comment).append('\'');
-		sb.append(", referenceTracking='").append(referenceTracking).append('\'');
-		sb.append(", chinaMailTracking='").append(chinaMailTracking).append('\'');
-		sb.append(", internationalTracking='").append(internationalTracking).append('\'');
-		sb.append(", address=").append(address);
-		sb.append(", orderState=").append(orderState);
-		sb.append(", orderItems=").append(orderItems);
-		sb.append(", orderLogs=").append(orderLogs);
-		sb.append('}');
-		return sb.toString();
-	}
+    void failed(String comment) {
+        if (comment != null && comment.length() > 254) {
+            this.comment = comment.substring(0, 254);
+        } else {
+            this.comment = comment;
+        }
+        this.orderState = OrderState.FAILED;
+        orderLogs.add(new HibernateOrderLog(id, "failed", comment, OrderState.FAILED));
+    }
+
+    void setTracking(boolean tracking) {
+        this.tracking = tracking;
+    }
+
+    void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("HibernateOrder{");
+        sb.append("id=").append(id);
+        sb.append(", buyer=").append(buyer);
+        sb.append(", token='").append(token).append('\'');
+        sb.append(", amount=").append(amount);
+        sb.append(", shipment=").append(shipment);
+        sb.append(", shipmentType=").append(shipmentType);
+        sb.append(", payer='").append(payer).append('\'');
+        sb.append(", tracking=").append(tracking);
+        sb.append(", comment='").append(comment).append('\'');
+        sb.append(", referenceTracking='").append(referenceTracking).append('\'');
+        sb.append(", chinaMailTracking='").append(chinaMailTracking).append('\'');
+        sb.append(", internationalTracking='").append(internationalTracking).append('\'');
+        sb.append(", address=").append(address);
+        sb.append(", orderState=").append(orderState);
+        sb.append(", orderItems=").append(orderItems);
+        sb.append(", orderLogs=").append(orderLogs);
+        sb.append('}');
+        return sb.toString();
+    }
 }

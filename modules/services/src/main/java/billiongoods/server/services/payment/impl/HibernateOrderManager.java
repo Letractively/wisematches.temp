@@ -56,9 +56,10 @@ public class HibernateOrderManager implements OrderManager {
         final HibernateOrder order = new HibernateOrder(person.getId(), basket, shipment, track);
         session.save(order);
 
+        int index = 0;
         final List<OrderItem> items = new ArrayList<>();
         for (BasketItem basketItem : basket.getBasketItems()) {
-            items.add(new HibernateOrderItem(order, basketItem));
+            items.add(new HibernateOrderItem(order, basketItem, index++));
         }
         order.setOrderItems(items);
         session.update(order);
@@ -177,6 +178,7 @@ public class HibernateOrderManager implements OrderManager {
     }
 
     @Override
+    @Transactional(propagation = Propagation.MANDATORY)
     public void failed(String token, String reason) {
         final Session session = sessionFactory.getCurrentSession();
 
@@ -196,6 +198,14 @@ public class HibernateOrderManager implements OrderManager {
         } catch (Exception ex) {
             log.warn("Where is no order for token: {}", token);
         }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void setOrderTracking(Order order, boolean enable) {
+        final HibernateOrder ho = (HibernateOrder) order;
+        ho.setTracking(enable);
+        sessionFactory.getCurrentSession().update(ho);
     }
 
     @Override
