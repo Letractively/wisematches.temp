@@ -66,8 +66,6 @@ public class NotificationOriginCenterTest {
 		} else {
 			fail("NotificationService is not DistributedNotificationService");
 		}
-
-		publisherCenter.setTaskExecutor(new SyncTaskExecutor());
 	}
 
 	@After
