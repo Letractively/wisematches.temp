@@ -1,44 +1,47 @@
 package billiongoods.server.services.payment;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface Order {
-    Long getId();
+	Long getId();
 
-    Long getBuyer();
+	Long getBuyer();
 
-    String getToken();
+	String getToken();
 
-    float getAmount();
+	float getAmount();
 
-    float getShipment();
+	float getShipment();
 
-    ShipmentType getShipmentType();
+	Address getAddress();
 
-
-    Address getAddress();
-
-    OrderState getOrderState();
-
-    List<OrderItem> getOrderItems();
+	ShipmentType getShipmentType();
 
 
-    String getPayer();
+	Date getTimestamp();
 
-    boolean isTracking();
+	OrderState getOrderState();
 
-    String getComment();
-
-
-    String getReferenceTracking();
-
-    String getChinaMailTracking();
-
-    String getInternationalTracking();
+	List<OrderItem> getOrderItems();
 
 
-    List<OrderLog> getOrderLogs();
+	String getPayer();
+
+	boolean isTracking();
+
+	String getComment();
+
+
+	String getReferenceTracking();
+
+	String getChinaMailTracking();
+
+	String getInternationalTracking();
+
+
+	List<OrderLog> getOrderLogs();
 }

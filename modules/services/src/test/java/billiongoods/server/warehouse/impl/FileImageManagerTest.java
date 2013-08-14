@@ -42,7 +42,6 @@ public class FileImageManagerTest {
 
 		description = createMock(ArticleDescription.class);
 		expect(description.getId()).andReturn(123).anyTimes();
-		expect(description.getCode()).andReturn("000123").anyTimes();
 		expect(description.getCategory()).andReturn(category).anyTimes();
 		replay(description);
 

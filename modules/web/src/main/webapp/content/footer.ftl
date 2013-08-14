@@ -16,7 +16,7 @@
             <div class="footer-info">
                 <div class="footer-info-title">Личный кабинет</div>
                 <ul class="footer-info-list">
-                    <li><a href="/warehouse/tracking">Отслеживание заказов</a></li>
+                    <li><a href="/warehouse/order/status">Отслеживание заказов</a></li>
                 <#--<li><a href="/account/login">Войти / Зарегистрироваться</a></li>-->
                 <#--<li><a href="/account/profile">Мой профиль</a></li>-->
                 <#--<li><a href="/account/address">Мои адреса</a></li>-->

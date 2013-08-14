@@ -263,3 +263,9 @@
     </select>
     </@bg.ui.field>
 </#macro>
+
+
+<#macro showErrors separator>
+springMacroRequestContext.
+
+</#macro>

@@ -21,7 +21,7 @@ public class FileImageResolver implements ImageResolver {
 
 	@Override
 	public String resolveURI(ArticleDescription article, String code, ImageSize size) {
-		return article.getCategory().getId() + File.separator + article.getId() + File.separator + article.getCode() + "_" + code + (size != null ? "_" + size.getCode() : "") + ".jpg";
+		return article.getCategory().getId() + File.separator + article.getId() + File.separator + article.getId() + "_" + code + (size != null ? "_" + size.getCode() : "") + ".jpg";
 	}
 
 	@Override

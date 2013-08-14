@@ -10,8 +10,6 @@ public interface ArticleDescription {
 
 	String getName();
 
-	String getCode();
-
 	boolean isActive();
 
 	Category getCategory();

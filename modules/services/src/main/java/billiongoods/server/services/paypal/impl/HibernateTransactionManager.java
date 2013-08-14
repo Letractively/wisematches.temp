@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import urn.ebay.api.PayPalAPI.DoExpressCheckoutPaymentResponseType;
 import urn.ebay.api.PayPalAPI.GetExpressCheckoutDetailsResponseType;
 import urn.ebay.api.PayPalAPI.SetExpressCheckoutResponseType;
-import urn.ebay.apis.eBLBaseComponents.DoExpressCheckoutPaymentResponseDetailsType;
-import urn.ebay.apis.eBLBaseComponents.GetExpressCheckoutDetailsResponseDetailsType;
-import urn.ebay.apis.eBLBaseComponents.PayerInfoType;
-import urn.ebay.apis.eBLBaseComponents.PaymentInfoType;
+import urn.ebay.apis.CoreComponentTypes.BasicAmountType;
+import urn.ebay.apis.eBLBaseComponents.*;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -155,8 +153,14 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 				transaction.setTransactionType(info.getTransactionType().getValue());
 				transaction.setParentTransactionId(info.getParentTransactionID());
 
-				transaction.setPaymentType(info.getPaymentType().getValue());
-				transaction.setPaymentStatus(info.getPaymentStatus().getValue());
+				final PaymentCodeType paymentType = info.getPaymentType();
+				if (paymentType != null) {
+					transaction.setPaymentType(paymentType.getValue());
+				}
+				final PaymentStatusCodeType paymentStatus = info.getPaymentStatus();
+				if (paymentStatus != null) {
+					transaction.setPaymentStatus(paymentStatus.getValue());
+				}
 				transaction.setPaymentRequestId(info.getPaymentRequestID());
 
 				if (info.getPaymentError() != null) {
@@ -169,14 +173,34 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 					log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
 				}
 
-				transaction.setFeeAmount(parseFloat(info.getFeeAmount().getValue()));
-				transaction.setGrossAmount(parseFloat(info.getGrossAmount().getValue()));
-				transaction.setSettleAmount(parseFloat(info.getSettleAmount().getValue()));
-				transaction.setTaxAmount(parseFloat(info.getTaxAmount().getValue()));
+				final BasicAmountType feeAmount = info.getFeeAmount();
+				if (feeAmount != null) {
+					transaction.setFeeAmount(parseFloat(feeAmount.getValue()));
+				}
+
+				final BasicAmountType grossAmount = info.getGrossAmount();
+				if (grossAmount != null) {
+					transaction.setGrossAmount(parseFloat(grossAmount.getValue()));
+				}
+
+				final BasicAmountType settleAmount = info.getSettleAmount();
+				if (settleAmount != null) {
+					transaction.setSettleAmount(parseFloat(settleAmount.getValue()));
+				}
+				final BasicAmountType taxAmount = info.getTaxAmount();
+				if (taxAmount != null) {
+					transaction.setTaxAmount(parseFloat(taxAmount.getValue()));
+				}
 				transaction.setExchangeRate(info.getExchangeRate());
 
-				transaction.setReasonCode(info.getReasonCode().getValue());
-				transaction.setPendingReason(info.getPendingReason().getValue());
+				final ReversalReasonCodeType reasonCode = info.getReasonCode();
+				if (reasonCode != null) {
+					transaction.setReasonCode(reasonCode.getValue());
+				}
+				final PendingStatusCodeType pendingReason = info.getPendingReason();
+				if (pendingReason != null) {
+					transaction.setPendingReason(pendingReason.getValue());
+				}
 				transaction.setHoldDecision(info.getHoldDecision());
 
 				transaction.setInsuranceAmount(info.getInsuranceAmount());

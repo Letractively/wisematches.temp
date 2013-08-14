@@ -273,6 +273,22 @@ span.dot {
     background-color: #c3692c;
 }
 
+button.bg-ui-button {
+    padding: 5px 10px 5px 20px;
+    border: 1px solid #d67632;
+    background-color: #f78c40;
+}
+
+button.bg-ui-button:hover {
+    border-color: #985813;
+    background-color: #c3692c;
+}
+
+button.bg-ui-button.selected {
+    border-color: #d67632;
+    background-color: #f78c40;
+}
+
 .toolbar-content, .header-content {
     margin-top: 0;
     margin-bottom: 0;
@@ -750,17 +766,6 @@ span.dot {
     background-color: #f3f3f3;
 }
 
-.article_layout .controls .bg-ui-button {
-    padding: 5px 10px 5px 20px;
-    border: 1px solid #d67632;
-    background-color: #f78c40;
-}
-
-.article_layout .controls .bg-ui-button:hover {
-    border-color: #985813;
-    background-color: #c3692c;
-}
-
 .article_layout .ops input[type=radio] {
     display: none;
     margin: 10px;
@@ -1025,4 +1030,85 @@ span.dot {
     text-align: left;
     font-weight: bold;
     white-space: nowrap;
+}
+
+.order {
+    padding-top: 10px;
+}
+
+.order .tit div {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.order .info {
+    border: 1px solid #e9e9e9;
+}
+
+.order label {
+    font-weight: bold;
+}
+
+.order td, .order-status td {
+    padding: 5px;
+}
+
+.order .basket {
+    padding-top: 20px;
+}
+
+.order-status table {
+    width: auto;
+}
+
+#basic-modal-content {
+    display: none;
+}
+
+#simplemodal-overlay {
+    background-color: #000;
+}
+
+/* Container */
+#simplemodal-container {
+    height: 360px;
+    width: 600px;
+    color: #bbb;
+    background-color: #333;
+    border: 4px solid #444;
+    padding: 12px;
+}
+
+#simplemodal-container .simplemodal-data {
+    padding: 8px;
+}
+
+#simplemodal-container code {
+    background: #141414;
+    border-left: 3px solid #65B43D;
+    color: #bbb;
+    display: block;
+    font-size: 12px;
+    margin-bottom: 12px;
+    padding: 4px 6px 6px;
+}
+
+#simplemodal-container a {
+    color: #ddd;
+}
+
+#simplemodal-container a.modalCloseImg {
+    background: url(../images/close.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
+#simplemodal-container h3 {
+    color: #84b8d9;
 }
