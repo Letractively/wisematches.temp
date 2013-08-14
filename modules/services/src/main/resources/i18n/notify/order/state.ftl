@@ -45,7 +45,7 @@
     <#if order.internationalTracking?has_content>
         Ваш номер для отслеживания посылки на сайте почты России: ${order.internationalTracking}. Вы так же
         можете отслеживать теперь свой заказ с помощью сервиса <a
-            href="http://gdeposylka.ru/${order.internationalTracking}?tos=accept&country=RU">ГдеПосылка.ру</a>
+            href="http://gdeposylka.ru/${order.internationalTracking}?tos=accept&apikey=418832.b3a52a082d&country=RU">ГдеПосылка.ру</a>
     <#else>
         К сожалению, ваш заказ не предусматривает получение международного номер для отслеживания.
     </#if>

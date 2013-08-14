@@ -174,6 +174,39 @@ span.dot {
     background: url('../images/thumbnail.png') repeat left top;
 }
 
+#basic-modal-content {
+    display: none;
+}
+
+#simplemodal-overlay {
+    background-color: #000;
+}
+
+#simplemodal-container {
+    height: 360px;
+    width: 800px;
+    border: 4px solid #cccccc;
+    background-color: #e7e7e7;
+    padding: 12px;
+    overflow-style: auto;
+}
+
+#simplemodal-container .simplemodal-data {
+    padding: 8px;
+}
+
+#simplemodal-container a.modalCloseImg {
+    background: url(../images/close.png) no-repeat;
+    width: 25px;
+    height: 29px;
+    display: inline;
+    z-index: 3200;
+    position: absolute;
+    top: -15px;
+    right: -16px;
+    cursor: pointer;
+}
+
 #billiongoods {
     width: 100%;
 }
@@ -962,6 +995,10 @@ button.bg-ui-button.selected {
     font-weight: bold;
 }
 
+.basket .shipment input {
+    margin-top: 4px;
+}
+
 .basket .shipment .price span {
     font-size: 13px;
 }
@@ -1057,58 +1094,35 @@ button.bg-ui-button.selected {
     padding-top: 20px;
 }
 
+#orderLogs.simplemodal-data td {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #cccccc;
+}
+
 .order-status table {
     width: auto;
 }
 
-#basic-modal-content {
-    display: none;
+.order .info {
+    background: #f6f6f6;
+    font-size: larger;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-#simplemodal-overlay {
-    background-color: #000;
+.order .status {
+    font-weight: bold;
 }
 
-/* Container */
-#simplemodal-container {
-    height: 360px;
-    width: 600px;
-    color: #bbb;
-    background-color: #333;
-    border: 4px solid #444;
-    padding: 12px;
+.order.rejected .status {
+    color: darkred;
 }
 
-#simplemodal-container .simplemodal-data {
-    padding: 8px;
+.order.failed .status {
+    color: red;
 }
 
-#simplemodal-container code {
-    background: #141414;
-    border-left: 3px solid #65B43D;
-    color: #bbb;
-    display: block;
-    font-size: 12px;
-    margin-bottom: 12px;
-    padding: 4px 6px 6px;
-}
-
-#simplemodal-container a {
-    color: #ddd;
-}
-
-#simplemodal-container a.modalCloseImg {
-    background: url(../images/close.png) no-repeat;
-    width: 25px;
-    height: 29px;
-    display: inline;
-    z-index: 3200;
-    position: absolute;
-    top: -15px;
-    right: -16px;
-    cursor: pointer;
-}
-
-#simplemodal-container h3 {
-    color: #84b8d9;
+.order.shipped .status {
+    color: green;
 }

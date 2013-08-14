@@ -1,18 +1,37 @@
 <#-- @ftlvariable name="order" type="billiongoods.server.services.payment.Order" -->
+<#-- @ftlvariable name="orderIsNew" type="boolean" -->
 <#-- @ftlvariable name="articleManager" type="billiongoods.server.warehouse.ArticleManager" -->
 
 <#include "/core.ftl"/>
 
+<#assign state=order.orderState/>
+<#assign stateName=state.name()?lower_case/>
+
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.simplemodal.js"/>"></script>
 
-<div class="order">
+<div class="order ${stateName}">
+<#if orderIsNew?? && orderIsNew>
+    <div class="info">
+        <#if state.accepted>
+            Ваш заказ принят в обработку. Вы можете посмотреть параметры вашего заказа ниже. Пожалуйста, если вы не
+            включали
+            уведомления о состоянии заказа, мы рекомендуем записать вам его номер для дальнейшего самостоятельного
+            отслеживания.
+        <#elseif state.failed>
+            Мы приносим свои извинения, но мы не смогли обработать ваш заказ. Мы знаем об этой ошибке и постараемся ее
+            осправить как можно скорее. Обращаем ваше внимание, что данный заказ будет удален из системы в ближайщем
+            будущем без каких-либо уведомлений с нашей стороны но мы сохраним все данные о транзакции с PayPal.
+        </#if>
+    </div>
+</#if>
+
     <div class="tit">
         <div style="display: inline-block">
-            Заказ #${order.id}
+            Заказ #${order.id} от ${messageSource.formatDate(order.creationTime, locale)}
         </div>
         <div style="display: inline-block; float: right">
         <#if order.internationalTracking?has_content>
-            <a href="http://gdeposylka.ru/${order.internationalTracking}?tos=accept&country=RU">${order.internationalTracking}</a>
+            <@bg.link.tracking order.internationalTracking/>
         </#if>
         </div>
     </div>
@@ -24,10 +43,11 @@
             </td>
             <td>
                 <div style="display: inline-block">
+                    <span class="status"><@message code="order.status.${stateName}.label"/></span>,
                 ${messageSource.formatDate(order.timestamp, locale)}
-                <@message code="order.status.${order.orderState.name()?lower_case}.label"/>
+
                     <div class="sample">
-                    <@message code="order.status.${order.orderState.name()?lower_case}.description"/>
+                    <@message code="order.status.${stateName}.description"/>
                     </div>
                 </div>
                 <div style="display: inline-block; float: right">
@@ -36,11 +56,32 @@
                     <div id="orderLogs" style="display: none">
                         <table>
                         <#list order.orderLogs as l>
+                            <#assign state=l.orderState/>
+                            <#assign stateName=state.name()?lower_case/>
                             <tr>
-                                <td>${messageSource.formatTime(l.timeStamp, locale)}</td>
-                                <td>${l.code}</td>
-                                <td>${l.orderState}</td>
-                                <td>${l.parameter}</td>
+                                <td valign="top" nowrap="nowrap">${messageSource.formatDate(l.timeStamp, locale)}
+                                    <br>${messageSource.formatTime(l.timeStamp, locale)}</td>
+                                <td valign="top">
+                                    <@message code="order.status.${stateName}.label"/>
+                                    <div class="sample">
+                                        <@message code="order.status.${stateName}.description"/>
+                                    </div>
+                                </td valign="top">
+                                <td valign="top" width="20%">
+                                    <#if state.billing>
+                                        Номер платежа:
+                                    <#elseif state.accepted || state.rejected>
+                                        PayPal аккаунт:
+                                    <#elseif state.shipping>
+                                        Код почты Китая:
+                                    <#elseif state.shipped>
+                                        Международный код:
+                                    <#elseif  state.failed>
+                                        Ошибка отказа:
+                                    </#if>
+                                    <br>
+                                ${l.parameter}
+                                </td>
                             </tr>
                         </#list>
                         </table>
@@ -51,20 +92,19 @@
 
         <tr>
             <td valign="top">
-                <label for="">Доставки заказа:</label>
+                <label for="">Доставка заказа:</label>
             </td>
             <td>
                 <div class="shipment" style="padding-bottom: 10px">
                 <#if order.shipmentType==ShipmentType.FREE>
                     Бесплатная доставка без номера отслеживания
                 <#elseif order.shipmentType==ShipmentType.REGISTERED>
-                    <#if order.shipment == 0>
-                        Бесплатная доставка с номером отслеживания
+                    <#if order.internationalTracking?has_content>
+                        Отслеживоемое отправление: <strong><@bg.link.tracking order.internationalTracking/></strong>
                     <#else>
-                        Отслеживоемое отправление <span class="price"><@bg.ui.price order.shipment/></span>
+                        Отслеживаемое отправление: номер отслеживания еще не назначен
                     </#if>
                 </#if>
-
                 </div>
 
             <#assign address=order.address/>
@@ -75,6 +115,20 @@
             ${address.city}, ${address.region}, ${address.postalCode}
             </td>
         </tr>
+    <#if order.payer?has_content>
+        <tr>
+            <td colspan="2" align="right">
+                <div class="tracking">
+                    <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
+                        уведомления по e-mail
+                    </button>
+                    <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>Отключить
+                        уведомления по e-mail
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </#if>
     </table>
 
     <div class="basket">
@@ -110,15 +164,27 @@
             </tr>
         </#list>
             <tr>
-                <th colspan="2" nowrap="nowrap" align="left">Итого</th>
+                <th colspan="2" nowrap="nowrap" align="left">Всего за товары</th>
                 <th nowrap="nowrap">
                 ${totalCount}
                 </th>
                 <th nowrap="nowrap">
                 ${totalWeight?string("0.00")} кг
                 </th>
-                <th nowrap="nowrap">
+                <th nowrap="nowrap" align="left">
                     <div class="price"><@bg.ui.price order.amount/></div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="4" nowrap="nowrap" align="left">Стоимость доставки</th>
+                <th nowrap="nowrap" align="left">
+                    <div class="price"><@bg.ui.price order.shipment/></div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="4" nowrap="nowrap" align="left">Итоговая сумма заказа</th>
+                <th nowrap="nowrap" align="left">
+                    <div class="price"><@bg.ui.price order.amount + order.shipment/></div>
                 </th>
             </tr>
         </table>
@@ -127,6 +193,15 @@
 
 <script type="application/javascript">
     $("#showOrderLogs").click(function () {
-        $("#orderLogs").modal();
+        $("#orderLogs").modal({overlayClose: true});
     });
+
+    <#if order.payer?has_content>
+    var order = new bg.warehouse.Order();
+    $(".tracking button").click(function () {
+        order.changeTracking(${order.id}, "${order.payer}", $(this).val() === 'true', function () {
+            $(".tracking button").toggle();
+        });
+    });
+    </#if>
 </script>

@@ -16,151 +16,151 @@ import java.util.*;
 @Entity
 @Table(name = "store_basket")
 public class HibernateBasket implements Basket {
-	@Id
-	@Column(name = "pid", nullable = false, updatable = false, unique = true)
-	private Long principal;
+    @Id
+    @Column(name = "pid", nullable = false, updatable = false, unique = true)
+    private Long principal;
 
-	@Column(name = "creationTime", updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationTime;
+    @Column(name = "creationTime", updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationTime;
 
-	@Column(name = "updatingTime")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updatingTime;
+    @Column(name = "updatingTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatingTime;
 
-	@Column(name = "expirationDays")
-	private Integer expirationDays;
+    @Column(name = "expirationDays")
+    private Integer expirationDays;
 
-	@OrderColumn(name = "number")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pk.basket", targetEntity = HibernateBasketItem.class)
-	private List<BasketItem> basketItems = new ArrayList<>();
+    @OrderBy("number")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pk.basket", targetEntity = HibernateBasketItem.class)
+    private List<BasketItem> basketItems = new ArrayList<>();
 
-	public HibernateBasket() {
-	}
+    public HibernateBasket() {
+    }
 
-	public HibernateBasket(Personality personality) {
-		this(personality, null);
-	}
+    public HibernateBasket(Personality personality) {
+        this(personality, null);
+    }
 
-	public HibernateBasket(Personality personality, Integer expirationDays) {
-		this.principal = personality.getId();
-		this.expirationDays = expirationDays;
-		this.creationTime = this.updatingTime = new Date();
-	}
+    public HibernateBasket(Personality personality, Integer expirationDays) {
+        this.principal = personality.getId();
+        this.expirationDays = expirationDays;
+        this.creationTime = this.updatingTime = new Date();
+    }
 
-	Long getId() {
-		return principal;
-	}
+    Long getId() {
+        return principal;
+    }
 
-	@Override
-	public float getAmount() {
-		float res = .0f;
-		for (BasketItem basketItem : basketItems) {
-			res += basketItem.getAmount();
-		}
-		return PriceConverter.roundPrice(res);
-	}
+    @Override
+    public float getAmount() {
+        float res = .0f;
+        for (BasketItem basketItem : basketItems) {
+            res += basketItem.getAmount();
+        }
+        return PriceConverter.roundPrice(res);
+    }
 
-	@Override
-	public float getWeight() {
-		float res = .0f;
-		for (BasketItem basketItem : basketItems) {
-			res += basketItem.getArticle().getWeight();
-		}
-		return PriceConverter.roundPrice(res);
-	}
+    @Override
+    public float getWeight() {
+        float res = .0f;
+        for (BasketItem basketItem : basketItems) {
+            res += basketItem.getArticle().getWeight();
+        }
+        return PriceConverter.roundPrice(res);
+    }
 
-	public Integer getExpirationDays() {
-		return expirationDays;
-	}
+    public Integer getExpirationDays() {
+        return expirationDays;
+    }
 
-	@Override
-	public Date getCreationTime() {
-		return creationTime;
-	}
+    @Override
+    public Date getCreationTime() {
+        return creationTime;
+    }
 
-	@Override
-	public Date getUpdatingTime() {
-		return updatingTime;
-	}
+    @Override
+    public Date getUpdatingTime() {
+        return updatingTime;
+    }
 
-	@Override
-	public Iterator<BasketItem> iterator() {
-		return basketItems.iterator();
-	}
+    @Override
+    public Iterator<BasketItem> iterator() {
+        return basketItems.iterator();
+    }
 
-	@Override
-	public List<BasketItem> getBasketItems() {
-		return basketItems;
-	}
+    @Override
+    public List<BasketItem> getBasketItems() {
+        return basketItems;
+    }
 
 
-	@Override
-	public HibernateBasketItem getBasketItem(int number) {
-		for (BasketItem basketItem : basketItems) {
-			if (basketItem.getNumber() == number) {
-				return (HibernateBasketItem) basketItem;
-			}
-		}
-		return null;
-	}
+    @Override
+    public HibernateBasketItem getBasketItem(int number) {
+        for (BasketItem basketItem : basketItems) {
+            if (basketItem.getNumber() == number) {
+                return (HibernateBasketItem) basketItem;
+            }
+        }
+        return null;
+    }
 
-	void addBasketItem(HibernateBasketItem item) {
-		item.associate(this, getAvailableItemIndex());
-		basketItems.add(item);
-		this.updatingTime = new Date();
-	}
+    void addBasketItem(HibernateBasketItem item) {
+        item.associate(this, getAvailableItemIndex());
+        basketItems.add(item);
+        this.updatingTime = new Date();
+    }
 
-	void removeBasketItem(HibernateBasketItem item) {
-		if (basketItems.remove(item)) {
-			this.updatingTime = new Date();
-		}
-	}
+    void removeBasketItem(HibernateBasketItem item) {
+        if (basketItems.remove(item)) {
+            this.updatingTime = new Date();
+        }
+    }
 
-	private int getAvailableItemIndex() {
-		int i = 0;
-		final int[] indexes = new int[basketItems.size()];
-		for (BasketItem basketItem : basketItems) {
-			indexes[i++] = basketItem.getNumber();
-		}
-		Arrays.sort(indexes);
+    private int getAvailableItemIndex() {
+        int i = 0;
+        final int[] indexes = new int[basketItems.size()];
+        for (BasketItem basketItem : basketItems) {
+            indexes[i++] = basketItem.getNumber();
+        }
+        Arrays.sort(indexes);
 
-		int p = 0;
-		if (indexes.length == 0) {
-			p = 0;
-		} else if (indexes.length == 1) {
-			p = indexes[0] + 1;
-		} else {
-			for (int j = 0; j < indexes.length - 1 && p == 0; j++) {
-				int a = indexes[j];
-				int b = indexes[j + 1];
-				if (b - a != 1) {
-					p = a + 1;
-				}
-			}
+        int p = 0;
+        if (indexes.length == 0) {
+            p = 0;
+        } else if (indexes.length == 1) {
+            p = indexes[0] + 1;
+        } else {
+            for (int j = 0; j < indexes.length - 1 && p == 0; j++) {
+                int a = indexes[j];
+                int b = indexes[j + 1];
+                if (b - a != 1) {
+                    p = a + 1;
+                }
+            }
 
-			if (p == 0) {
-				p = indexes[indexes.length - 1] + 1;
-			}
-		}
-		return p;
-	}
+            if (p == 0) {
+                p = indexes[indexes.length - 1] + 1;
+            }
+        }
+        return p;
+    }
 
-	void initialize(ArticleManager articleManager, AttributeManager attributeManager) {
-		for (BasketItem basketItem : basketItems) {
-			((HibernateBasketItem) basketItem).initialize(articleManager, attributeManager);
-		}
-	}
+    void initialize(ArticleManager articleManager, AttributeManager attributeManager) {
+        for (BasketItem basketItem : basketItems) {
+            ((HibernateBasketItem) basketItem).initialize(articleManager, attributeManager);
+        }
+    }
 
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("HibernateBasket{");
-		sb.append("principal=").append(principal);
-		sb.append(", creationTime=").append(creationTime);
-		sb.append(", updatingTime=").append(updatingTime);
-		sb.append(", expirationDays=").append(expirationDays);
-		sb.append(", basketItems=").append(basketItems);
-		sb.append('}');
-		return sb.toString();
-	}
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("HibernateBasket{");
+        sb.append("principal=").append(principal);
+        sb.append(", creationTime=").append(creationTime);
+        sb.append(", updatingTime=").append(updatingTime);
+        sb.append(", expirationDays=").append(expirationDays);
+        sb.append(", basketItems=").append(basketItems);
+        sb.append('}');
+        return sb.toString();
+    }
 }
