@@ -4,6 +4,10 @@
 package billiongoods.server.web.servlet.mvc.account;
 
 import billiongoods.core.account.*;
+import billiongoods.server.services.notify.NotificationException;
+import billiongoods.server.services.notify.NotificationService;
+import billiongoods.server.services.notify.Recipient;
+import billiongoods.server.services.notify.Sender;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.account.form.AccountLoginForm;
 import billiongoods.server.web.servlet.mvc.account.form.AccountRegistrationForm;
@@ -42,7 +46,7 @@ import java.util.Set;
 @RequestMapping("/account")
 public class AuthorizationController extends AbstractController {
 	private AccountManager accountManager;
-//    private NotificationService notificationService;
+	private NotificationService notificationService;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.AccountController");
 
@@ -128,6 +132,11 @@ public class AuthorizationController extends AbstractController {
 			log.info("Account has been created.");
 
 			status.setComplete();
+			try {
+				notificationService.raiseNotification("account.created", new Recipient(account), Sender.ACCOUNTS, account);
+			} catch (NotificationException e) {
+				log.error("Notification about new account can't be sent", e);
+			}
 			return forwardToAuthentication(form.getEmail(), form.getPassword(), form.isRememberMe());
 		}
 	}
@@ -209,108 +218,8 @@ public class AuthorizationController extends AbstractController {
 		this.accountManager = accountManager;
 	}
 
-	/**
-	 * This is basic form form. Just forward it to appropriate FTL page.
-	 *
-	 * @param model the associated model where {@code accountBodyPageName} parameter will be stored.
-	 * @param form  the form form.
-	 * @return the FTL full page name without extension
-	 *//*
-
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String createAccountPage(Model model, @ModelAttribute("registration") AccountRegistrationForm form) {
-        model.addAttribute("infoId", "create");
-        return "/content/account/create";
-    }
-
-    */
-/**
- * This is action publisher for new account. Get model from HTTP POST request and creates new account, if possible.	 *
- *
- * @param model    the all model
- * @param request  original http request
- * @param response original http response
- * @param form     the form request form
- * @param result   the errors errors
- * @param status   the session status. Will be cleared in case of success
- * @return the create account page in case of error of forward to {@code authMember} page in case of success.
- *//*
-
-
-    */
-/**
- * This is action publisher for new account. Get model from HTTP POST request and creates new account, if possible.	 *
- *
- * @param request original http request
- * @param form    the form request form
- * @return the create account page in case of error of forward to {@code authMember} page in case of success.
- *//*
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
-    @RequestMapping(value = "create.ajax", method = RequestMethod.POST)
-    public ServiceResponse createAccountService(HttpServletRequest request,
-                                                @Valid @RequestBody AccountRegistrationForm form,
-                                                BindingResult result, Model model, Locale locale) {
-        log.info("Create new account request (ajax): {}", form);
-
-        if (result.hasErrors()) {
-            final FieldError fieldError = result.getFieldError();
-            return new ServiceResponse(new ServiceResponse.Failure(fieldError.getCode(), fieldError.getDefaultMessage()));
-        }
-
-        if (!form.getPassword().equals(form.getConfirm())) {
-            responseFactory.failure("account.register.pwd-cfr.err.mismatch", locale);
-        }
-
-        try {
-            final Member member = new DefaultMember(createAccount(form, request), Membership.BASIC);
-            log.info("Account has been created.");
-
-            try {
-                notificationService.raiseNotification("account.created", member, NotificationSender.ACCOUNTS, null);
-            } catch (NotificationException e) {
-                log.error("Notification about new account can't be sent", e);
-            }
-            return responseFactory.success(member);
-        } catch (DuplicateAccountException ex) {
-            final Set<String> fieldNames = ex.getFieldNames();
-            if (fieldNames.contains("email")) {
-                return responseFactory.failure("account.register.email.err.busy", locale);
-            }
-            if (fieldNames.contains("nickname")) {
-                return responseFactory.failure("account.register.nickname.err.busy", locale);
-            }
-            return responseFactory.failure("billiongoods.error.internal", locale);
-        } catch (InadmissibleUsernameException ex) {
-            return responseFactory.failure("account.register.nickname.err.incorrect", locale);
-        } catch (Exception ex) {
-            log.error("Account can't be created", ex);
-            return responseFactory.failure("billiongoods.error.internal", locale);
-        }
-    }
-
-    */
-/**
- * JSON request for email and username validation.
- *
- * @param email    the email to to checked.
- * @param nickname the nickname to be checked
- * @param result   the bind errors that will be filled in case of any errors.
- * @return the service response that also contains information about errors.
- *//*
-
-
-    @Autowired
-    public void setAccountManager(AccountManager accountManager) {
-        this.accountManager = accountManager;
-    }
-
-    @Autowired
-    public void setNotificationService(NotificationService notificationService) {
-        this.notificationService = notificationService;
-    }
-
-
-
-    */
+	@Autowired
+	public void setNotificationService(NotificationService notificationService) {
+		this.notificationService = notificationService;
+	}
 }

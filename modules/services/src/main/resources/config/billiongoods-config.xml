@@ -70,93 +70,98 @@
         <property name="shipmentManager" ref="shipmentManager"/>
     </bean>
 
+    <bean id="notificationMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.server.host}"/>
+        <property name="port" value="${mail.server.port}"/>
+        <property name="username" value="${mail.server.username}"/>
+        <property name="password" value="${mail.server.password}"/>
+    </bean>
+
+    <bean id="notificationMessageSource" class="billiongoods.server.MessageFormatter">
+        <property name="parentMessageSource">
+            <bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+                <property name="defaultEncoding" value="UTF-8"/>
+                <property name="fallbackToSystemLocale" value="false"/>
+                <property name="useCodeAsDefaultMessage" value="true"/>
+                <property name="basename" value="classpath:/i18n/notify"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="notificationTaskExecutor" class="billiongoods.core.task.executor.TransactionAwareExecutor">
+        <property name="taskExecutor">
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+                <property name="poolSize" value="1"/>
+                <property name="threadNamePrefix" value="NotificationManager"/>
+                <property name="waitForTasksToCompleteOnShutdown" value="true"/>
+            </bean>
+        </property>
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <bean id="notificationService" class="billiongoods.server.services.notify.impl.DistributedNotificationService">
+        <property name="taskExecutor">
+            <bean class="billiongoods.core.task.executor.TransactionAwareExecutor">
+                <property name="taskExecutor" ref="notificationTaskExecutor"/>
+                <property name="transactionManager" ref="transactionManager"/>
+            </bean>
+        </property>
+
+        <property name="notificationConverter">
+            <bean class="billiongoods.server.services.notify.impl.converter.FreeMarkerNotificationConverter">
+                <property name="messageSource" ref="notificationMessageSource"/>
+
+                <property name="freeMarkerConfig">
+                    <bean class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+                        <property name="defaultEncoding" value="UTF-8"/>
+                        <property name="preferFileSystemAccess" value="false"/>
+                        <property name="templateLoaderPath" value="classpath:/i18n/notify"/>
+                        <property name="freemarkerVariables">
+                            <map merge="true">
+                                <entry key="serverDescriptor" value-ref="serverDescriptor"/>
+                                <entry key="messageSource" value-ref="notificationMessageSource"/>
+                            </map>
+                        </property>
+                        <property name="freemarkerSettings">
+                            <props>
+                                <prop key="number_format">computer</prop>
+                                <prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
+                                <prop key="template_exception_handler">rethrow</prop>
+                            </props>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+
+        <property name="notificationPublishers">
+            <list>
+                <bean class="billiongoods.server.services.notify.impl.publisher.MailNotificationPublisher">
+                    <property name="mailSender" ref="notificationMailSender"/>
+                    <property name="serverDescriptor" ref="serverDescriptor"/>
+                    <property name="messageSource" ref="notificationMessageSource"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="billiongoods.server.services.notify.impl.center.AlertsOriginCenter">
+        <property name="serverDescriptor" ref="serverDescriptor"/>
+        <property name="notificationService" ref="notificationService"/>
+
+        <property name="orderManager" ref="orderManager"/>
+        <property name="accountManager" ref="accountManager"/>
+    </bean>
+
+    <bean class="billiongoods.server.services.notify.impl.center.NotificationOriginCenter">
+        <property name="taskExecutor" ref="notificationTaskExecutor"/>
+        <property name="notificationService" ref="notificationService"/>
+    </bean>
+
     <!--
         <bean id="playerStateManager" class="billiongoods.server.test.state.impl.HibernatePlayerStateManager">
             <property name="sessionFactory" ref="sessionFactory"/>
         </bean>
-
-        <bean id="notificationMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-            <property name="host" value="${mail.server.host}"/>
-            <property name="port" value="${mail.server.port}"/>
-            <property name="username" value="${mail.server.username}"/>
-            <property name="password" value="${mail.server.password}"/>
-        </bean>
-
-        <bean id="notificationMessageSource" class="billiongoods.server.MessageFormatter">
-            <property name="parentMessageSource">
-                <bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-                    <property name="defaultEncoding" value="UTF-8"/>
-                    <property name="fallbackToSystemLocale" value="false"/>
-                    <property name="useCodeAsDefaultMessage" value="true"/>
-                    <property name="basename" value="classpath:/i18n/notify"/>
-                </bean>
-            </property>
-        </bean>
-
-        <bean id="notificationTaskExecutor" class="billiongoods.core.task.executor.TransactionAwareExecutor">
-            <property name="taskExecutor">
-                <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
-                    <property name="poolSize" value="1"/>
-                    <property name="threadNamePrefix" value="NotificationManager"/>
-                    <property name="waitForTasksToCompleteOnShutdown" value="true"/>
-                </bean>
-            </property>
-            <property name="transactionManager" ref="transactionManager"/>
-        </bean>
-
-        <bean id="notificationManager" class="billiongoods.server.test.notify.impl.HibernateNotificationManager">
-            <property name="sessionFactory" ref="sessionFactory"/>
-            <property name="notificationDescriptors" ref="notificationsList"/>
-        </bean>
-
-        <bean id="notificationService" class="billiongoods.server.test.notify.impl.PublishNotificationService">
-            <property name="notificationManager" ref="notificationManager"/>
-
-            <property name="taskExecutor">
-                <bean class="billiongoods.core.task.executor.TransactionAwareExecutor">
-                    <property name="taskExecutor" ref="notificationTaskExecutor"/>
-                    <property name="transactionManager" ref="transactionManager"/>
-                </bean>
-            </property>
-
-            <property name="notificationConverter">
-                <bean class="billiongoods.server.test.notify.impl.converter.FreeMarkerNotificationConverter">
-                    <property name="messageSource" ref="notificationMessageSource"/>
-
-                    <property name="freeMarkerConfig">
-                        <bean class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
-                            <property name="defaultEncoding" value="UTF-8"/>
-                            <property name="preferFileSystemAccess" value="false"/>
-                            <property name="templateLoaderPath" value="classpath:/i18n/notify"/>
-                            <property name="freemarkerVariables">
-                                <map merge="true">
-                                    <entry key="serverDescriptor" value-ref="serverDescriptor"/>
-                                    <entry key="messageSource" value-ref="notificationMessageSource"/>
-                                </map>
-                            </property>
-                            <property name="freemarkerSettings">
-                                <props>
-                                    <prop key="number_format">computer</prop>
-                                    <prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
-                                    <prop key="template_exception_handler">rethrow</prop>
-                                </props>
-                            </property>
-                        </bean>
-                    </property>
-                </bean>
-            </property>
-
-            <property name="notificationPublishers">
-                <list>
-                    <bean class="billiongoods.server.test.notify.impl.publisher.MailNotificationPublisher">
-                        <property name="mailSender" ref="notificationMailSender"/>
-                        <property name="serverDescriptor" ref="serverDescriptor"/>
-                        <property name="messageSource" ref="notificationMessageSource"/>
-                    </bean>
-                </list>
-            </property>
-        </bean>
-
 
         <bean id="applicationEventMulticaster" class="org.springframework.context.event.SimpleApplicationEventMulticaster">
             <property name="taskExecutor">
@@ -172,45 +177,34 @@
                 </bean>
             </property>
         </bean>
+-->
 
-        <bean class="billiongoods.server.test.notify.impl.AlertsOriginCenter">
-            <property name="mailSender" ref="notificationMailSender"/>
-            <property name="serverDescriptor" ref="serverDescriptor"/>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+                    <!--run every morning at 00:00:00.000-->
+                    <property name="cronExpression" value="0 0 0 * * ?"/>
+                    <property name="jobDetail">
+                        <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+                            <property name="name" value="breakingDayNotification"/>
+                            <property name="jobClass" value="billiongoods.core.task.scheduler.BreakingDayExecutorJob"/>
+                        </bean>
+                    </property>
+                </bean>
 
-            <property name="accountManager" ref="accountManager"/>
-        </bean>
-
-        <bean class="billiongoods.server.test.notify.impl.NotificationOriginCenter">
-            <property name="taskExecutor" ref="notificationTaskExecutor"/>
-            <property name="notificationService" ref="notificationService"/>
-        </bean>
-
-        <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-            <property name="triggers">
-                <list>
-                    <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-                        &lt;!&ndash; run every morning at 00:00:00.000 &ndash;&gt;
-                        <property name="cronExpression" value="0 0 0 * * ?"/>
-                        <property name="jobDetail">
-                            <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-                                <property name="name" value="breakingDayNotification"/>
-                                <property name="jobClass" value="billiongoods.core.task.scheduler.BreakingDayExecutorJob"/>
-                            </bean>
-                        </property>
-                    </bean>
-
-                    <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-                        &lt;!&ndash; run every morning at 2 AM &ndash;&gt;
-                        <property name="cronExpression" value="0 0 2 * * ?"/>
-                        <property name="jobDetail">
-                            <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-                                <property name="name" value="cleaningDayNotification"/>
-                                <property name="jobClass" value="billiongoods.core.task.scheduler.CleaningDayExecutorJob"/>
-                            </bean>
-                        </property>
-                    </bean>
-                </list>
-            </property>
-            <property name="applicationContextSchedulerContextKey" value="SpringApplicationContext"/>
-        </bean>-->
+                <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+                    <!--run every morning at 2 AM-->
+                    <property name="cronExpression" value="0 0 2 * * ?"/>
+                    <property name="jobDetail">
+                        <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+                            <property name="name" value="cleaningDayNotification"/>
+                            <property name="jobClass" value="billiongoods.core.task.scheduler.CleaningDayExecutorJob"/>
+                        </bean>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="applicationContextSchedulerContextKey" value="SpringApplicationContext"/>
+    </bean>
 </beans>

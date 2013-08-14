@@ -41,7 +41,7 @@ public class RecoveryController extends AbstractController {
                     mailModel.put("recoveryToken", token.getToken());
 
                     final Member member = personalityManager.getMember(account.getId());
-                    notificationService.raiseNotification("account.recovery", member, NotificationSender.ACCOUNTS, mailModel);
+                    notificationService.raiseNotification("account.recovery", member, Sender.ACCOUNTS, mailModel);
                     session.setAttribute(RECOVERING_PLAYER_EMAIL, account.getEmail());
                     return "redirect:/account/recovery/confirmation";
                 } else {
@@ -85,7 +85,7 @@ public class RecoveryController extends AbstractController {
                     accountManager.updateAccount(e.createAccount(), form.getPassword());
 
                     final Member member = personalityManager.getMember(account.getId());
-                    notificationService.raiseNotification("account.updated", member, NotificationSender.ACCOUNTS, member);
+                    notificationService.raiseNotification("account.updated", member, Sender.ACCOUNTS, member);
                     return AccountController.forwardToAuthentication(form.getEmail(), form.getPassword(), form.isRememberMe());
                 } catch (Exception e1) {
                     result.rejectValue("email", "account.recovery.err.system");
