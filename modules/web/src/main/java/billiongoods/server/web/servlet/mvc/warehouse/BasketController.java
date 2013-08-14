@@ -34,179 +34,192 @@ import java.util.*;
 @Controller
 @RequestMapping("/warehouse/basket")
 public class BasketController extends AbstractController {
-    private OrderManager orderManager;
-    private BasketManager basketManager;
-    private ArticleManager articleManager;
-    private ShipmentManager shipmentManager;
-    private AttributeManager attributeManager;
+	private OrderManager orderManager;
+	private BasketManager basketManager;
+	private ArticleManager articleManager;
+	private ShipmentManager shipmentManager;
+	private AttributeManager attributeManager;
 
-    private static final CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
+	private static final CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
 
-    public BasketController() {
-    }
+	public BasketController() {
+	}
 
-    @RequestMapping(value = {""}, method = RequestMethod.GET)
-    public String viewBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
-        final Basket basket = basketManager.getBasket(getPrincipal());
-        return prepareBasketView(basket, model);
-    }
+	@RequestMapping(value = {""}, method = RequestMethod.GET)
+	public String viewBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+		final Basket basket = basketManager.getBasket(getPrincipal());
+		return prepareBasketView(basket, model);
+	}
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @RequestMapping(value = "", method = RequestMethod.POST, params = "action=clear")
-    public String processBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
-        final Personality principal = getPrincipal();
-        basketManager.closeBasket(principal);
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=clear")
+	public String processBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+		final Personality principal = getPrincipal();
+		basketManager.closeBasket(principal);
 
-        final Basket basket = basketManager.getBasket(principal);
-        return prepareBasketView(basket, model);
-    }
+		final Basket basket = basketManager.getBasket(principal);
+		return prepareBasketView(basket, model);
+	}
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @RequestMapping(value = "", method = RequestMethod.POST, params = "action=update")
-    public String validateBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
-        final Personality principal = getPrincipal();
-        final Basket basket = basketManager.getBasket(principal);
-        validateBasket(basket, principal, form);
-        return prepareBasketView(basket, model);
-    }
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=update")
+	public String validateBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+		final Personality principal = getPrincipal();
+		final Basket basket = validateBasket(principal, form);
+		return prepareBasketView(basket, model);
+	}
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @RequestMapping(value = "", method = RequestMethod.POST, params = "action=checkout")
-    public String processBasket(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model) {
-        final Personality principal = getPrincipal();
-        final Basket basket = basketManager.getBasket(principal);
-        validateBasket(basket, principal, form);
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=rollback")
+	public String rollbackBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+		return viewBasket(form, model);
+	}
 
-        checkAddressField("name", form.getName(), errors);
-        checkAddressField("city", form.getCity(), errors);
-        checkAddressField("region", form.getRegion(), errors);
-        checkAddressField("postalCode", form.getPostalCode(), errors);
-        checkAddressField("streetAddress", form.getStreetAddress(), errors);
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=checkout")
+	public String processBasket(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model) {
+		final Personality principal = getPrincipal();
+		final Basket basket = validateBasket(principal, form);
+		if (basket == null) {
+			return prepareBasketView(null, model);
+		}
 
-        if (!form.getPostalCode().matches("\\d{6}+")) {
-            errors.rejectValue("postalCode", "basket.error.postalCode.format");
-        }
+		checkAddressField("name", form.getName(), errors);
+		checkAddressField("city", form.getCity(), errors);
+		checkAddressField("region", form.getRegion(), errors);
+		checkAddressField("postalCode", form.getPostalCode(), errors);
+		checkAddressField("streetAddress", form.getStreetAddress(), errors);
 
-        final ShipmentType shipmentType = form.getShipment();
-        if (shipmentType == null) {
-            errors.rejectValue("shipment", "basket.error.shipment.empty");
-        }
+		if (!form.getPostalCode().matches("\\d{6}+")) {
+			errors.rejectValue("postalCode", "basket.error.postalCode.format");
+		}
 
-        if (!errors.hasErrors()) {
-            final Order order = orderManager.create(getPrincipal(), basket, form, form.getShipment(), form.isNotifications());
-            return "forward:/warehouse/paypal/checkout?order=" + order.getId();
-        }
-        return prepareBasketView(basket, model);
-    }
+		final ShipmentType shipmentType = form.getShipment();
+		if (shipmentType == null) {
+			errors.rejectValue("shipment", "basket.error.shipment.empty");
+		}
 
-    @RequestMapping("rollback")
-    public String rollbackOrder(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model) {
-        model.addAttribute("rollback", Boolean.TRUE);
-        return viewBasket(form, model);
-    }
+		if (!errors.hasErrors()) {
+			final Order order = orderManager.create(getPrincipal(), basket, form, form.getShipment(), form.isNotifications());
+			return "forward:/warehouse/paypal/checkout?order=" + order.getId();
+		}
+		return prepareBasketView(basket, model);
+	}
 
-    @RequestMapping("add.ajax")
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public ServiceResponse addToBasket(@RequestBody BasketItemForm form, Locale locale) {
-        try {
-            final List<Property> options = new ArrayList<>();
+	@RequestMapping("rollback")
+	public String rollbackOrder(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model) {
+		model.addAttribute("rollback", Boolean.TRUE);
+		return viewBasket(form, model);
+	}
 
-            final Integer[] optionIds = form.getOptionIds();
-            final String[] optionValues = form.getOptionValues();
-            if (optionIds != null) {
-                for (int i = 0; i < optionIds.length; i++) {
-                    final Integer optionId = optionIds[i];
-                    if (optionId != null) {
-                        final Attribute attribute = attributeManager.getAttribute(optionId);
-                        if (attribute == null) {
-                            return responseFactory.failure("unknown.attribute", new Object[]{optionIds[i]}, locale);
-                        }
-                        options.add(new Property(attribute, optionValues[i]));
-                    }
-                }
-            }
+	@RequestMapping("add.ajax")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse addToBasket(@RequestBody BasketItemForm form, Locale locale) {
+		try {
+			final List<Property> options = new ArrayList<>();
 
-            final ArticleDescription article = articleManager.getDescription(form.getArticle());
-            if (article == null) {
-                return responseFactory.failure("unknown.article", new Object[]{form.getArticle()}, locale);
-            }
+			final Integer[] optionIds = form.getOptionIds();
+			final String[] optionValues = form.getOptionValues();
+			if (optionIds != null) {
+				for (int i = 0; i < optionIds.length; i++) {
+					final Integer optionId = optionIds[i];
+					if (optionId != null) {
+						final Attribute attribute = attributeManager.getAttribute(optionId);
+						if (attribute == null) {
+							return responseFactory.failure("unknown.attribute", new Object[]{optionIds[i]}, locale);
+						}
+						options.add(new Property(attribute, optionValues[i]));
+					}
+				}
+			}
 
-            final int quantity = form.getQuantity();
-            if (quantity <= 0) {
-                return responseFactory.failure("illegal.quantity", new Object[]{quantity}, locale);
-            }
+			final ArticleDescription article = articleManager.getDescription(form.getArticle());
+			if (article == null) {
+				return responseFactory.failure("unknown.article", new Object[]{form.getArticle()}, locale);
+			}
 
-            basketManager.addBasketItem(getPrincipal(), article, options, quantity);
+			final int quantity = form.getQuantity();
+			if (quantity <= 0) {
+				return responseFactory.failure("illegal.quantity", new Object[]{quantity}, locale);
+			}
 
-            return responseFactory.success();
-        } catch (Exception ex) {
-            return responseFactory.failure("internal.error", locale);
-        }
-    }
+			basketManager.addBasketItem(getPrincipal(), article, options, quantity);
 
-    private void checkAddressField(String name, String value, Errors errors) {
-        if (value == null || value.trim().isEmpty() || !asciiEncoder.canEncode(value)) {
-            errors.rejectValue(name, "basket.error." + name + ".empty");
-        }
-    }
+			return responseFactory.success();
+		} catch (Exception ex) {
+			return responseFactory.failure("internal.error", locale);
+		}
+	}
 
-    private void validateBasket(Basket basket, Personality principal, OrderCheckoutForm form) {
-        final Set<Integer> numbers = new HashSet<>();
-        for (BasketItem basketItem : basket.getBasketItems()) {
-            numbers.add(basketItem.getNumber());
-        }
-        final Integer[] itemNumbers = form.getItemNumbers();
-        for (Integer itemNumber : itemNumbers) {
-            numbers.remove(itemNumber);
-        }
+	private void checkAddressField(String name, String value, Errors errors) {
+		if (value == null || value.trim().isEmpty() || !asciiEncoder.canEncode(value)) {
+			errors.rejectValue(name, "basket.error." + name + ".empty");
+		}
+	}
 
-        for (Integer number : numbers) {
-            basketManager.removeBasketItem(principal, number);
-        }
+	private Basket validateBasket(Personality principal, OrderCheckoutForm form) {
+		Basket basket = basketManager.getBasket(principal);
+		final Set<Integer> numbers = new HashSet<>();
+		for (BasketItem basketItem : basket.getBasketItems()) {
+			numbers.add(basketItem.getNumber());
+		}
+		final Integer[] itemNumbers = form.getItemNumbers();
+		if (itemNumbers == null || itemNumbers.length == 0) {
+			basketManager.closeBasket(principal);
+			return null;
+		}
+		for (Integer itemNumber : itemNumbers) {
+			numbers.remove(itemNumber);
+		}
 
-        for (int i = 0; i < form.getItemNumbers().length; i++) {
-            final Integer number = form.getItemNumbers()[i];
-            final int quantity = form.getItemQuantities()[i];
+		for (Integer number : numbers) {
+			basketManager.removeBasketItem(principal, number);
+		}
 
-            if (quantity != basket.getBasketItem(number).getQuantity()) {
-                basketManager.updateBasketItem(principal, number, quantity);
-            }
-        }
-    }
+		for (int i = 0; i < itemNumbers.length; i++) {
+			final Integer number = itemNumbers[i];
+			final int quantity = form.getItemQuantities()[i];
 
-    private String prepareBasketView(Basket basket, Model model) {
-        hideNavigation(model);
-        model.addAttribute("basket", basket);
+			if (quantity != basket.getBasketItem(number).getQuantity()) {
+				basketManager.updateBasketItem(principal, number, quantity);
+			}
+		}
+		return basket;
+	}
 
-        if (basket != null) {
-            model.addAttribute("shipmentRates", shipmentManager.getShipmentRates(basket));
-        }
+	private String prepareBasketView(Basket basket, Model model) {
+		hideNavigation(model);
+		model.addAttribute("basket", basket);
 
-        return "/content/warehouse/basket";
-    }
+		if (basket != null) {
+			model.addAttribute("shipmentRates", shipmentManager.getShipmentRates(basket));
+		}
 
-    @Autowired
-    public void setOrderManager(OrderManager orderManager) {
-        this.orderManager = orderManager;
-    }
+		return "/content/warehouse/basket";
+	}
 
-    @Autowired
-    public void setBasketManager(BasketManager basketManager) {
-        this.basketManager = basketManager;
-    }
+	@Autowired
+	public void setOrderManager(OrderManager orderManager) {
+		this.orderManager = orderManager;
+	}
 
-    @Autowired
-    public void setArticleManager(ArticleManager articleManager) {
-        this.articleManager = articleManager;
-    }
+	@Autowired
+	public void setBasketManager(BasketManager basketManager) {
+		this.basketManager = basketManager;
+	}
 
-    @Autowired
-    public void setShipmentManager(ShipmentManager shipmentManager) {
-        this.shipmentManager = shipmentManager;
-    }
+	@Autowired
+	public void setArticleManager(ArticleManager articleManager) {
+		this.articleManager = articleManager;
+	}
 
-    @Autowired
-    public void setAttributeManager(AttributeManager attributeManager) {
-        this.attributeManager = attributeManager;
-    }
+	@Autowired
+	public void setShipmentManager(ShipmentManager shipmentManager) {
+		this.shipmentManager = shipmentManager;
+	}
+
+	@Autowired
+	public void setAttributeManager(AttributeManager attributeManager) {
+		this.attributeManager = attributeManager;
+	}
 }

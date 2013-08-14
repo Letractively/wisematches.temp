@@ -303,6 +303,10 @@ bg.warehouse.Basket = function (cource) {
         el.find('.rub .v').text((price * cource).toFixed(2));
     };
 
+    var showChangedWarning = function () {
+        basket.find(".changeWarning").show('slow');
+    };
+
     var recalculateTotal = function () {
         var totalAmount = 0;
         var totalWeight = 0;
@@ -357,11 +361,21 @@ bg.warehouse.Basket = function (cource) {
         updatePrice(row.find(".itemAmount"), amount * quantity);
 
         recalculateTotal();
+        showChangedWarning();
     });
 
     basket.find(".removeItem").click(function () {
         $(this).closest("tr").detach();
         recalculateTotal();
+        showChangedWarning();
+    });
+
+    basket.find("#saveChanges").click(function () {
+        basket.find("form").append($("<input name='action' value='update' type='hidden'/>")).submit();
+    });
+
+    basket.find("#revertChanges").click(function () {
+        basket.find("form").append($("<input name='action' value='rollback' type='hidden'/>")).submit();
     });
 };
 
