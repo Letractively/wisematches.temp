@@ -4,58 +4,42 @@ package billiongoods.server.web.servlet.mvc.warehouse.form;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class OrderViewForm {
-    private Long order;
-    private String token;
-    private TokenType tokenType;
+	private Long order;
+	private String email;
 
-    public OrderViewForm() {
-    }
+	public OrderViewForm() {
+	}
 
-    public OrderViewForm(Long order, String token, TokenType tokenType) {
-        this.order = order;
-        this.token = token;
-        this.tokenType = tokenType;
-    }
+	public OrderViewForm(Long order, String email) {
+		this.order = order;
+		this.email = email;
+	}
 
-    public Long getOrder() {
-        return order;
-    }
+	public Long getOrder() {
+		return order;
+	}
 
-    public void setOrder(Long order) {
-        this.order = order;
-    }
+	public void setOrder(Long order) {
+		this.order = order;
+	}
 
-    public String getToken() {
-        return token;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public TokenType getTokenType() {
-        return tokenType;
-    }
+	public boolean isEmpty() {
+		return order == null && email == null;
+	}
 
-    public void setTokenType(TokenType tokenType) {
-        this.tokenType = tokenType;
-    }
-
-    public boolean isEmpty() {
-        return tokenType == null;
-    }
-
-    public static enum TokenType {
-        EMAIL,
-        TOKEN
-    }
-
-    @Override
-    public String toString() {
-        return "OrderViewForm{" +
-                "order=" + order +
-                ", token='" + token + '\'' +
-                ", tokenType=" + tokenType +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "OrderViewForm{" +
+				"order=" + order +
+				", email='" + email + '\'' +
+				'}';
+	}
 }

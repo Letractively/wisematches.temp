@@ -23,7 +23,7 @@
         -->
 
             <div class="table-cell header-links">
-                <div><a href="/warehouse/tracking">Отслеживание заказов</a></div>
+                <div><a href="/warehouse/order/status">Отслеживание заказов</a></div>
 
                 <div class="divider">|</div>
                 <div><a href="/assistance/payment">Оплата</a></div>

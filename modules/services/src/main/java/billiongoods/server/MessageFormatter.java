@@ -2,6 +2,7 @@ package billiongoods.server;
 
 import billiongoods.core.Language;
 import billiongoods.core.Localization;
+import billiongoods.server.warehouse.ArticleDescription;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
@@ -10,6 +11,7 @@ import org.springframework.context.support.DelegatingMessageSource;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,6 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class MessageFormatter extends DelegatingMessageSource implements MessageSource {
+	private static final StringBuilder sb = new StringBuilder();
+	private static final Formatter FORMATTER = new Formatter(sb);
+
 	private static final Map<Locale, DateFormat> DATE_FORMATTER = new ConcurrentHashMap<>();
 	private static final Map<Locale, DateFormat> TIME_FORMATTER = new ConcurrentHashMap<>();
 
@@ -30,6 +35,18 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 
 	public MessageFormatter() {
 	}
+
+	public static String getArticleCode(Integer id) {
+		synchronized (FORMATTER) {
+			sb.setLength(0);
+			return FORMATTER.format("%06d", id).toString();
+		}
+	}
+
+	public static String getArticleCode(ArticleDescription art) {
+		return getArticleCode(art.getId());
+	}
+
 
 	public String getMessage(String code, Locale locale) {
 		return super.getMessage(code, null, locale);

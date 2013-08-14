@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="articular">
-                        Артикул: <span class="sku">${article.code}</span>
+                        Артикул: <span class="sku">${messageSource.getArticleCode(article)}</span>
                     <#--Продано: <span class="sold">${article.soldCount}</span>-->
                     </div>
 

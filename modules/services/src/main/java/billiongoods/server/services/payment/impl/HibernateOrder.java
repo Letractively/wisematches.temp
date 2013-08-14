@@ -5,6 +5,7 @@ import billiongoods.server.services.payment.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +34,10 @@ public class HibernateOrder implements Order {
 	@Column(name = "shipmentType")
 	@Enumerated(EnumType.ORDINAL)
 	private ShipmentType shipmentType;
+
+	@Column(name = "timestamp")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date timestamp;
 
 	@Column(name = "payer")
 	private String payer;
@@ -79,6 +84,7 @@ public class HibernateOrder implements Order {
 		this.address = new HibernateAddress(shipment.getAddress());
 		this.tracking = tracking;
 		this.orderState = OrderState.NEW;
+		timestamp = new Date();
 	}
 
 	@Override
@@ -114,6 +120,11 @@ public class HibernateOrder implements Order {
 	@Override
 	public Address getAddress() {
 		return address;
+	}
+
+	@Override
+	public Date getTimestamp() {
+		return timestamp;
 	}
 
 	@Override
@@ -163,36 +174,42 @@ public class HibernateOrder implements Order {
 
 	void bill(String token) {
 		this.token = token;
+		this.timestamp = new Date();
 		this.orderState = OrderState.BILLING;
 		orderLogs.add(new HibernateOrderLog(id, "billing", token, OrderState.BILLING));
 	}
 
 	void accept(String payer) {
 		this.payer = payer;
+		this.timestamp = new Date();
 		this.orderState = OrderState.ACCEPTED;
 		orderLogs.add(new HibernateOrderLog(id, "accepted", payer, OrderState.ACCEPTED));
 	}
 
 	void reject(String payer) {
 		this.payer = payer;
+		this.timestamp = new Date();
 		this.orderState = OrderState.REJECTED;
 		orderLogs.add(new HibernateOrderLog(id, "rejected", payer, OrderState.REJECTED));
 	}
 
 	void processing(String referenceTracking) {
 		this.referenceTracking = referenceTracking;
+		this.timestamp = new Date();
 		this.orderState = OrderState.PROCESSING;
 		orderLogs.add(new HibernateOrderLog(id, "processing", referenceTracking, OrderState.PROCESSING));
 	}
 
 	void shipping(String chinaMailTracking) {
 		this.chinaMailTracking = chinaMailTracking;
+		this.timestamp = new Date();
 		this.orderState = OrderState.SHIPPING;
 		orderLogs.add(new HibernateOrderLog(id, "shipping", chinaMailTracking, OrderState.SHIPPING));
 	}
 
 	void shipped(String internationalTracking) {
 		this.internationalTracking = internationalTracking;
+		this.timestamp = new Date();
 		this.orderState = OrderState.SHIPPED;
 		orderLogs.add(new HibernateOrderLog(id, "shipped", internationalTracking, OrderState.SHIPPED));
 	}

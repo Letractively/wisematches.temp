@@ -18,11 +18,11 @@ public class HibernateOrderItem implements OrderItem {
 	@EmbeddedId
 	private Pk pk;
 
-	@Column(name = "code")
-	private String code;
-
 	@Column(name = "name")
 	private String name;
+
+	@Column(name = "article")
+	private Integer article;
 
 	@Column(name = "quantity")
 	private int quantity;
@@ -45,8 +45,8 @@ public class HibernateOrderItem implements OrderItem {
 
 		final ArticleDescription article = item.getArticle();
 
-		this.code = article.getCode();
 		this.name = article.getName();
+		this.article = article.getId();
 		this.quantity = item.getQuantity();
 		this.amount = article.getPrice();
 		this.weight = article.getWeight();
@@ -65,14 +65,13 @@ public class HibernateOrderItem implements OrderItem {
 		this.options = sb.toString();
 	}
 
-	@Override
 	public Integer getNumber() {
 		return pk.number;
 	}
 
 	@Override
-	public String getCode() {
-		return code;
+	public Integer getArticle() {
+		return article;
 	}
 
 	@Override
