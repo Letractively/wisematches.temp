@@ -20,7 +20,7 @@
         class="ruble-img"/><span
         class="dot">руб.</span></#macro>
 
-<#macro price v c="g"><@usd v/> <span class="rub">(~<@rub priceConverter.convertPrice(v) c/>)</span></#macro>
+<#macro price v c="g" r=priceConverter.exchangeRate><@usd v/> <span class="rub">(~<@rub v*r c/>)</span></#macro>
 
 
 <#macro panel caption name="" id="" class="">

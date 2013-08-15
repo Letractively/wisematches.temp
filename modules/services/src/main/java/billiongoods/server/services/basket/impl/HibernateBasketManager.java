@@ -56,12 +56,16 @@ public class HibernateBasketManager implements BasketManager {
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public Basket closeBasket(Personality principal) {
-		final Session session = sessionFactory.getCurrentSession();
+		if (principal != null) {
+			final Session session = sessionFactory.getCurrentSession();
 
-		final Basket basket = (Basket) session.get(HibernateBasket.class, principal.getId());
-		session.delete(basket);
-
-		return basket;
+			final Basket basket = (Basket) session.get(HibernateBasket.class, principal.getId());
+			if (basket != null) {
+				session.delete(basket);
+			}
+			return basket;
+		}
+		return null;
 	}
 
 	@Override
