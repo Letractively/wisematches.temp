@@ -32,6 +32,8 @@ public class ArticleForm {
 
 	private Float primordialPrice;
 
+	private float weight;
+
 	private String restockDate;
 
 	private Integer[] accessories;
@@ -118,6 +120,14 @@ public class ArticleForm {
 
 	public void setPrimordialPrice(Float primordialPrice) {
 		this.primordialPrice = primordialPrice;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
 	}
 
 	public String getRestockDate() {

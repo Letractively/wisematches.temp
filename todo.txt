@@ -1,15 +1,15 @@
-- Change article weight
-- Parse article weight in importer
-- Enable/disable article
-
 - Set PriceConverter value in admin
-
 - Callback form
-
 - Orders admin page
+- Show number basket's items in header
 
-- Number items in basket
+- Parse article weight in importer (to be checked. Not sure about column number)
 
++ show only enabled articles
++ show link to BangGood in article for admins
++ ability to show inactive articles
++ Enable/disable article
++ Change article weight
 + Clear basket after success payment
 + Add currency rate to order (can be used in history)
 + Check transaction ID before accept order (add transactionID to order)

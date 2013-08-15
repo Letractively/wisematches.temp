@@ -64,7 +64,7 @@ public class CategoryController extends AbstractController {
 			category = categoryManager.getCategory(categoryId);
 		}
 
-		final ArticleContext context = new ArticleContext(category, true, tableForm.getQuery(), tableForm.isInactive(), arrivals);
+		final ArticleContext context = new ArticleContext(category, true, tableForm.getQuery(), arrivals, tableForm.isInactive());
 		tableForm.validateForm(articleManager.getTotalCount(context));
 
 		final Range range = tableForm.createRange();

@@ -15,6 +15,11 @@
 <form action="/maintain/article" method="post">
 
 <table style="width: 100%">
+<tr id="inactiveWarning" <#if article.active>style="display: none"</#if>>
+    <td colspan="2" align="center" style="background: #990000; font-weight: bold; color: #ffffff">
+        Внимание! Товар выключен!
+    </td>
+</tr>
 <tr>
     <td valign="top"><label for="category">Категория: </label></td>
     <td>
@@ -22,7 +27,7 @@
     </td>
 </tr>
 <tr>
-<td valign="top"><label for="name">Имя: </label></td>
+    <td valign="top"><label for="name">Имя: </label></td>
     <td>
     <@bg.ui.field path="form.name">
         <textarea rows="3" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
@@ -58,7 +63,7 @@
 </tr>
 
 <tr>
-<td colspan="2">
+    <td colspan="2">
         <hr>
     </td>
 </tr>
@@ -70,6 +75,10 @@
 <tr>
     <td><label for="primordialPrice">Цена до скидки: </label></td>
     <td><@bg.ui.input path="form.primordialPrice"/></td>
+</tr>
+<tr>
+    <td><label for="weight">Вес: </label></td>
+    <td><@bg.ui.input path="form.weight"/></td>
 </tr>
 
 <#if articleId?has_content>
@@ -253,6 +262,10 @@
     <#else>
         <button id="add" type="submit">Создать</button>
     </#if>
+
+
+        <button id="active" type="button" value="${(!article.active)?string}"><#if article.active>Отключить<#else>
+            Включить</#if></button>
     </td>
 </tr>
 </table>
@@ -338,6 +351,28 @@
         var id = $(this).text();
         var attr = attributes[id];
         $(this).html(attr.name + ", " + attr.unit);
+    });
+
+    $("#active").click(function () {
+        var val = $(this).val() === 'true';
+        bg.ui.lock(null, 'Влючение товара. Пожалуйста, подождите...');
+        $.post("/maintain/article/activate.ajax?id=${article.id}&a=" + val)
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, val ? "Товар успешно включен" : "Товар успешно выключен", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "Товар не может быть включен по техническим причинам", true);
+                });
+        if (val) {
+            $("#inactiveWarning").hide();
+        } else {
+            $("#inactiveWarning").show();
+        }
+        $(this).text(val ? "Отключить" : "Включить").val(!val);
     });
 
     $(function () {
