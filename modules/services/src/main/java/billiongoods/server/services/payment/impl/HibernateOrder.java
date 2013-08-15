@@ -75,7 +75,7 @@ public class HibernateOrder implements Order {
 	private OrderState orderState = OrderState.NEW;
 
 	@OrderBy("number")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pk.orderId", targetEntity = HibernateOrderItem.class)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pk.orderId", targetEntity = HibernateOrderItem.class)
 	private List<OrderItem> orderItems;
 
 	@OrderBy("timestamp desc")

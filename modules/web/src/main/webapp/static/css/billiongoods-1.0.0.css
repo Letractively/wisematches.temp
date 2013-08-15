@@ -1106,7 +1106,6 @@ button.bg-ui-button.selected {
 
 .order .info {
     background: #f6f6f6;
-    font-size: larger;
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -1125,4 +1124,33 @@ button.bg-ui-button.selected {
 
 .order.shipped .status {
     color: green;
+}
+
+.orders .states div {
+    margin: 3px;
+    display: inline-block;
+}
+
+.orders .states input[type=radio] {
+    display: none;
+    margin: 10px;
+}
+
+.orders .states input[type=radio] + label {
+    cursor: pointer;
+    display: inline-block;
+    margin: -2px;
+    padding: 1px 12px;
+    border: 2px solid #cccccc;
+    background-color: #e7e7e7;
+}
+
+.orders .states input[type=radio]:checked + label {
+    border-color: #d67632;
+}
+
+.orders .cnt {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid #cccccc;
 }

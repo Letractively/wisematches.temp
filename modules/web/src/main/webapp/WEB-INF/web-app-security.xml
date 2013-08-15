@@ -102,6 +102,7 @@
     </beans:bean>
 
     <beans:bean id="accessDeniedHandler" class="billiongoods.server.web.security.access.WMAccessDeniedHandler">
+        <beans:property name="restrictedErrorPage" value="/account/login"/>
         <beans:property name="insufficientErrorPage" value="/account/loginAuth?error=insufficient"/>
     </beans:bean>
 

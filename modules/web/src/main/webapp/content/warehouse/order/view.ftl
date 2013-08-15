@@ -38,7 +38,7 @@
 
     <table class="info">
         <tr>
-            <td valign="top">
+            <td valign="top" nowrap="nowrap">
                 <label>Статус заказа:</label>
             </td>
             <td>
@@ -72,6 +72,8 @@
                                         Номер счета:
                                     <#elseif state.accepted || state.rejected>
                                         Номер платежа:
+                                    <#elseif state.processing>
+                                        Номер комплектации:
                                     <#elseif state.shipping>
                                         Код почты Китая:
                                     <#elseif state.shipped>
@@ -91,7 +93,7 @@
         </tr>
 
         <tr>
-            <td valign="top">
+            <td valign="top" nowrap="nowrap">
                 <label for="">Доставка заказа:</label>
             </td>
             <td>
