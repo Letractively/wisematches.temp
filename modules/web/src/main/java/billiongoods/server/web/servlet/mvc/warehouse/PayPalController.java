@@ -81,10 +81,10 @@ public class PayPalController extends AbstractController {
 				if (transaction.getTransactionId() == null) {
 					throw new PayPalSystemException(token, "There is no transactionID: payment is not approved by PayPal");
 				}
-				orderManager.accept(transaction.getOrderId(), transaction.getPayer(), transaction.getTransactionId());
+				orderManager.accept(transaction.getOrderId(), transaction.getPayer(), transaction.getTransactionId(), transaction.getPayerNote());
 				return "forward:/warehouse/order/accepted";
 			} else if (transaction.getResolution() == TransactionResolution.REJECTED) {
-				orderManager.reject(transaction.getOrderId(), transaction.getPayer(), transaction.getTransactionId());
+				orderManager.reject(transaction.getOrderId(), transaction.getPayer(), transaction.getTransactionId(), transaction.getPayerNote());
 				return "forward:/warehouse/order/rejected";
 			}
 			throw new UnknownEntityException(token, "transaction");

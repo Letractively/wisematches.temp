@@ -94,12 +94,12 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void accept(Long orderId, String payer, String paymentId) {
+	public void accept(Long orderId, String payer, String paymentId, String note) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
 		final OrderState state = order.getOrderState();
-		order.accept(payer, paymentId);
+		order.accept(payer, paymentId, note);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -109,12 +109,12 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void reject(Long orderId, String payer, String paymentId) {
+	public void reject(Long orderId, String payer, String paymentId, String note) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
 		final OrderState state = order.getOrderState();
-		order.reject(payer, paymentId);
+		order.reject(payer, paymentId, note);
 		session.update(order);
 
 		notifyOrderState(order, state);

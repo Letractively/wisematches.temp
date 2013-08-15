@@ -49,14 +49,17 @@ public class HibernateOrder implements Order {
 	@Column(name = "payer")
 	private String payer;
 
+	@Column(name = "payerNote")
+	private String payerNote;
+
 	@Column(name = "paymentId")
 	private String paymentId;
 
 	@Column(name = "tracking")
 	private boolean tracking;
 
-	@Column(name = "comment")
-	private String comment;
+	@Column(name = "failureComment")
+	private String failureComment;
 
 	@Column(name = "referenceTracking")
 	private String referenceTracking;
@@ -160,6 +163,11 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public String getPayerNote() {
+		return payerNote;
+	}
+
+	@Override
 	public String getPaymentId() {
 		return paymentId;
 	}
@@ -170,8 +178,8 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public String getComment() {
-		return comment;
+	public String getFailureComment() {
+		return failureComment;
 	}
 
 	@Override
@@ -206,16 +214,18 @@ public class HibernateOrder implements Order {
 		orderLogs.add(new HibernateOrderLog(id, "billing", token, OrderState.BILLING));
 	}
 
-	void accept(String payer, String paymentId) {
+	void accept(String payer, String paymentId, String note) {
 		this.payer = payer;
+		this.payerNote = note;
 		this.paymentId = paymentId;
 		this.timestamp = new Date();
 		this.orderState = OrderState.ACCEPTED;
 		orderLogs.add(new HibernateOrderLog(id, "accepted", paymentId, OrderState.ACCEPTED));
 	}
 
-	void reject(String payer, String paymentId) {
+	void reject(String payer, String paymentId, String note) {
 		this.payer = payer;
+		this.payerNote = note;
 		this.paymentId = paymentId;
 		this.timestamp = new Date();
 		this.orderState = OrderState.REJECTED;
@@ -245,9 +255,9 @@ public class HibernateOrder implements Order {
 
 	void failed(String comment) {
 		if (comment != null && comment.length() > 254) {
-			this.comment = comment.substring(0, 254);
+			this.failureComment = comment.substring(0, 254);
 		} else {
-			this.comment = comment;
+			this.failureComment = comment;
 		}
 		this.orderState = OrderState.FAILED;
 		orderLogs.add(new HibernateOrderLog(id, "failed", comment, OrderState.FAILED));
@@ -272,7 +282,8 @@ public class HibernateOrder implements Order {
 		sb.append(", shipmentType=").append(shipmentType);
 		sb.append(", payer='").append(payer).append('\'');
 		sb.append(", tracking=").append(tracking);
-		sb.append(", comment='").append(comment).append('\'');
+		sb.append(", payerNote='").append(payerNote).append('\'');
+		sb.append(", failureComment='").append(failureComment).append('\'');
 		sb.append(", referenceTracking='").append(referenceTracking).append('\'');
 		sb.append(", chinaMailTracking='").append(chinaMailTracking).append('\'');
 		sb.append(", internationalTracking='").append(internationalTracking).append('\'');

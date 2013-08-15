@@ -103,8 +103,8 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 
 		if (details != null) {
 			final PayerInfoType payerInfo = details.getPayerInfo();
+			transaction.setPayerNote(details.getNote());
 			transaction.setCheckoutStatus(details.getCheckoutStatus());
-			transaction.setPayerComment(details.getNote());
 
 			if (payerInfo != null) {
 				transaction.setPayer(payerInfo.getPayer());
