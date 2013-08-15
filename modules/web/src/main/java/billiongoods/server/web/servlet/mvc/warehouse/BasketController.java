@@ -4,8 +4,6 @@ import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.basket.BasketManager;
-import billiongoods.server.services.payment.Order;
-import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.payment.ShipmentManager;
 import billiongoods.server.services.payment.ShipmentType;
 import billiongoods.server.warehouse.*;
@@ -23,6 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.WebRequest;
 
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
@@ -34,7 +34,6 @@ import java.util.*;
 @Controller
 @RequestMapping("/warehouse/basket")
 public class BasketController extends AbstractController {
-	private OrderManager orderManager;
 	private BasketManager basketManager;
 	private ArticleManager articleManager;
 	private ShipmentManager shipmentManager;
@@ -77,7 +76,7 @@ public class BasketController extends AbstractController {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=checkout")
-	public String processBasket(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model) {
+	public String checkoutBasket(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model, WebRequest request) {
 		final Personality principal = getPrincipal();
 		final Basket basket = validateBasket(principal, form);
 		if (basket == null) {
@@ -100,14 +99,15 @@ public class BasketController extends AbstractController {
 		}
 
 		if (!errors.hasErrors()) {
-			final Order order = orderManager.create(getPrincipal(), basket, form, form.getShipment(), form.isNotifications());
-			return "forward:/warehouse/paypal/checkout?order=" + order.getId();
+			request.setAttribute("form", form, RequestAttributes.SCOPE_REQUEST);
+			request.setAttribute("basket", basket, RequestAttributes.SCOPE_REQUEST);
+			return "forward:/warehouse/order/checkout";
 		}
 		return prepareBasketView(basket, model);
 	}
 
 	@RequestMapping("rollback")
-	public String rollbackOrder(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model) {
+	public String rollbackOrder(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
 		model.addAttribute("rollback", Boolean.TRUE);
 		return viewBasket(form, model);
 	}
@@ -196,11 +196,6 @@ public class BasketController extends AbstractController {
 		}
 
 		return "/content/warehouse/basket";
-	}
-
-	@Autowired
-	public void setOrderManager(OrderManager orderManager) {
-		this.orderManager = orderManager;
 	}
 
 	@Autowired

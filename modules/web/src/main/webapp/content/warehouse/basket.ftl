@@ -58,7 +58,7 @@
                 <span class="itemWeight">${article.weight?string("0.00")} кг</span>
             </td>
             <td valign="middle" nowrap="nowrap" align="left">
-                <span class="itemAmount"><@bg.ui.price article.price * i.quantity/></span>
+                <span class="itemAmount"><@bg.ui.price article.price * i.quantity "b"/></span>
             </td>
         </tr>
     </#list>
@@ -76,7 +76,7 @@
 <div class="unregistered" <#if shipmentRates.isFreeShipment(ShipmentType.REGISTERED)>style="display: none"</#if>>
     Вы можете получить бесплатный номер для отслеживания (зарегистрированное отправление) добавив еще товара на
     сумму
-    <span class="price"><@bg.ui.price 25.0-shipmentRates.amount/></span>
+    <span class="price"><@bg.ui.price 25.0-shipmentRates.amount "b"/></span>
 </div>
 
 <div class="order">
@@ -276,5 +276,5 @@
 </div>
 
 <script type="application/javascript">
-    new bg.warehouse.Basket(${priceConverter.course});
+    new bg.warehouse.Basket(${priceConverter.exchangeRate});
 </script>

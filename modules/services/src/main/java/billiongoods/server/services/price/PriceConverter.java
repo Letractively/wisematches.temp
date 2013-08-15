@@ -4,21 +4,25 @@ package billiongoods.server.services.price;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class PriceConverter {
-	private float course = 33.33f;
+	private float exchangeRate = 33.33f;
 
 	public PriceConverter() {
 	}
 
 	public float convertPrice(float price) {
-		return price * course;
+		return convertPrice(price, exchangeRate);
 	}
 
-	public float getCourse() {
-		return course;
+	public float convertPrice(float price, float rate) {
+		return price * rate;
 	}
 
-	public void setCourse(float course) {
-		this.course = course;
+	public float getExchangeRate() {
+		return exchangeRate;
+	}
+
+	public void setExchangeRate(float exchangeRate) {
+		this.exchangeRate = exchangeRate;
 	}
 
 	public static float roundPrice(float price) {

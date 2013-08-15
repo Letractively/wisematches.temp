@@ -69,9 +69,9 @@
                                 </td valign="top">
                                 <td valign="top" width="20%">
                                     <#if state.billing>
-                                        Номер платежа:
+                                        Номер счета:
                                     <#elseif state.accepted || state.rejected>
-                                        PayPal аккаунт:
+                                        Номер платежа:
                                     <#elseif state.shipping>
                                         Код почты Китая:
                                     <#elseif state.shipped>
@@ -80,7 +80,7 @@
                                         Ошибка отказа:
                                     </#if>
                                     <br>
-                                ${l.parameter}
+                                ${l.parameter!""}
                                 </td>
                             </tr>
                         </#list>
@@ -159,7 +159,7 @@
                     <span class="itemWeight">${i.weight?string("0.00")} кг</span>
                 </td>
                 <td valign="middle" nowrap="nowrap" align="left">
-                    <span class="itemAmount"><@bg.ui.price i.amount * i.quantity/></span>
+                    <span class="itemAmount"><@bg.ui.price i.amount * i.quantity "b" order.exchangeRate/></span>
                 </td>
             </tr>
         </#list>
@@ -172,19 +172,19 @@
                 ${totalWeight?string("0.00")} кг
                 </th>
                 <th nowrap="nowrap" align="left">
-                    <div class="price"><@bg.ui.price order.amount/></div>
+                    <div class="price"><@bg.ui.price order.amount "g" order.exchangeRate/></div>
                 </th>
             </tr>
             <tr>
                 <th colspan="4" nowrap="nowrap" align="left">Стоимость доставки</th>
                 <th nowrap="nowrap" align="left">
-                    <div class="price"><@bg.ui.price order.shipment/></div>
+                    <div class="price"><@bg.ui.price order.shipment "g" order.exchangeRate/></div>
                 </th>
             </tr>
             <tr>
                 <th colspan="4" nowrap="nowrap" align="left">Итоговая сумма заказа</th>
                 <th nowrap="nowrap" align="left">
-                    <div class="price"><@bg.ui.price order.amount + order.shipment/></div>
+                    <div class="price"><@bg.ui.price order.amount + order.shipment "g" order.exchangeRate/></div>
                 </th>
             </tr>
         </table>

@@ -1,11 +1,19 @@
-- Enable/disable article
 - Change article weight
 - Parse article weight in importer
-- Orders admin page
-- Callback form
-- Incorrect address in PayPal
-- Clear basket after success payment
+- Enable/disable article
 
+- Set PriceConverter value in admin
+
+- Callback form
+
+- Orders admin page
+
+- Number items in basket
+
++ Clear basket after success payment
++ Add currency rate to order (can be used in history)
++ Check transaction ID before accept order (add transactionID to order)
++ Incorrect address in PayPal
 + Order accepted/rejected page
 + Orders tracking
 + Notifications about order state

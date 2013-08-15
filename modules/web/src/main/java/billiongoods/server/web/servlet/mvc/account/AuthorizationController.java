@@ -200,7 +200,7 @@ public class AuthorizationController extends AbstractController {
 			b.append("&");
 			b.append("j_password=").append(URLEncoder.encode(password, "UTF-8"));
 			b.append("&");
-			b.append("continue=").append("/playground/welcome");
+			b.append("continue=").append("/");
 			if (rememberMe) {
 				b.append("&").append("rememberMe=true");
 			}

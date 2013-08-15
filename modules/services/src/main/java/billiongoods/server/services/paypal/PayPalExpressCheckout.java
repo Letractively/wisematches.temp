@@ -157,8 +157,10 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
 		request.setLocaleCode("RU");
-//		request.setAddress(addressType);
+		request.setAddress(addressType);
 		request.setAddressOverride("0");
+		request.setNoShipping("1");
+		request.setReqConfirmShipping("0");
 		request.setChannelType(ChannelType.MERCHANT);
 		request.setSolutionType(SolutionTypeType.MARK);
 		request.setReturnURL(returnURL);

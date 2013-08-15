@@ -120,12 +120,12 @@ public class HibernateOrderManagerTest {
 		assertEquals(OrderState.BILLING, order.getOrderState());
 
 		order = orderManager.getOrder(order.getId());
-		orderManager.accept(order.getId(), "mock1@mock.mock");
+		orderManager.accept(order.getId(), "mock1@mock.mock", "ASDAWEQWEASD");
 		assertEquals("mock1@mock.mock", order.getPayer());
 		assertEquals(OrderState.ACCEPTED, order.getOrderState());
 
 		order = orderManager.getOrder(order.getId());
-		orderManager.reject(order.getId(), "mock2@mock.mock");
+		orderManager.reject(order.getId(), "mock2@mock.mock", "ASDAWEQWEASD");
 		assertEquals("mock2@mock.mock", order.getPayer());
 		assertEquals(OrderState.REJECTED, order.getOrderState());
 
