@@ -1,12 +1,13 @@
 package billiongoods.server.services.payment;
 
 import billiongoods.core.Personality;
+import billiongoods.core.search.SearchManager;
 import billiongoods.server.services.basket.Basket;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface OrderManager {
+public interface OrderManager extends SearchManager<Order, OrderContext> {
 	void addOrderListener(OrderListener l);
 
 	void removeOrderListener(OrderListener l);
@@ -14,7 +15,10 @@ public interface OrderManager {
 
 	Order getOrder(Long id);
 
-	Order getOrder(String token);
+	Order getByToken(String token);
+
+	Order getByReference(String reference);
+
 
 	Order create(Personality person, Basket basket, Address address, ShipmentType shipmentType, boolean track);
 

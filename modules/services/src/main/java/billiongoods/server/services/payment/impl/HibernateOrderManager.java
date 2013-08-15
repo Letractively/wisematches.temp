@@ -1,13 +1,15 @@
 package billiongoods.server.services.payment.impl;
 
 import billiongoods.core.Personality;
+import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.payment.*;
 import billiongoods.server.services.price.PriceConverter;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,9 +23,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernateOrderManager implements OrderManager {
+public class HibernateOrderManager extends EntitySearchManager<Order, OrderContext> implements OrderManager {
 	private PriceConverter priceConverter;
-	private SessionFactory sessionFactory;
 	private ShipmentManager shipmentManager;
 
 	private final Collection<OrderListener> listeners = new CopyOnWriteArrayList<>();
@@ -31,6 +32,7 @@ public class HibernateOrderManager implements OrderManager {
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderManager");
 
 	public HibernateOrderManager() {
+		super(Order.class);
 	}
 
 	@Override
@@ -186,7 +188,7 @@ public class HibernateOrderManager implements OrderManager {
 		final Session session = sessionFactory.getCurrentSession();
 
 		try {
-			final HibernateOrder order = getOrder(token);
+			final HibernateOrder order = getByToken(token);
 			if (order != null) {
 				final OrderState state = order.getOrderState();
 				order.failed(reason);
@@ -219,12 +221,35 @@ public class HibernateOrderManager implements OrderManager {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public HibernateOrder getOrder(String token) {
+	public HibernateOrder getByToken(String token) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.token=:token");
 		query.setParameter("token", token);
 		return (HibernateOrder) query.uniqueResult();
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public Order getByReference(String reference) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.referenceTracking=:ref");
+		query.setParameter("ref", reference);
+		return (HibernateOrder) query.uniqueResult();
+	}
+
+	@Override
+	protected void applyRestrictions(Criteria criteria, OrderContext context) {
+	}
+
+	@Override
+	protected void applyProjections(Criteria criteria, OrderContext context) {
+		if (context != null) {
+			if (context.getOrderState() != null) {
+				criteria.add(Restrictions.eq("orderState", context.getOrderState()));
+			}
+		}
 	}
 
 	private void notifyOrderState(Order order, OrderState oldState) {
@@ -235,10 +260,6 @@ public class HibernateOrderManager implements OrderManager {
 
 	public void setPriceConverter(PriceConverter priceConverter) {
 		this.priceConverter = priceConverter;
-	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
 	}
 
 	public void setShipmentManager(ShipmentManager shipmentManager) {
