@@ -11,7 +11,9 @@
         <constructor-arg name="alertsMailBox" value="${server.alerts.box}"/>
     </bean>
 
-    <bean id="priceConverter" class="billiongoods.server.services.price.PriceConverter"/>
+    <bean id="priceConverter" class="billiongoods.server.services.price.impl.HibernatePriceConverter">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
     <bean id="imageResolver" class="billiongoods.server.services.image.impl.FileImageResolver">
         <property name="imagesFolder" value="${server.images.path}"/>

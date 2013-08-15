@@ -3,27 +3,21 @@ package billiongoods.server.services.price;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class PriceConverter {
-	private float exchangeRate = 33.33f;
-
-	public PriceConverter() {
+public abstract class PriceConverter {
+	protected PriceConverter() {
 	}
 
 	public float convertPrice(float price) {
-		return convertPrice(price, exchangeRate);
+		return convertPrice(price, getExchangeRate());
 	}
 
 	public float convertPrice(float price, float rate) {
 		return price * rate;
 	}
 
-	public float getExchangeRate() {
-		return exchangeRate;
-	}
+	public abstract float getExchangeRate();
 
-	public void setExchangeRate(float exchangeRate) {
-		this.exchangeRate = exchangeRate;
-	}
+	public abstract void setExchangeRate(float exchangeRate);
 
 	public static float roundPrice(float price) {
 		return Math.round(price * 100f) / 100f;
