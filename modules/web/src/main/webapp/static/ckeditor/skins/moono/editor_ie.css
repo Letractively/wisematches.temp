@@ -83,11 +83,11 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
     padding: 0
 }
 
-.cke_float {
+.cke_double {
     border: 0
 }
 
-.cke_float .cke_inner {
+.cke_double .cke_inner {
     padding-bottom: 0
 }
 
@@ -113,7 +113,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
     filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#f5f5f5', endColorstr='#cfd1cf')
 }
 
-.cke_float .cke_top {
+.cke_double .cke_top {
     border: 1px solid #b6b6b6;
     border-bottom-color: #999
 }

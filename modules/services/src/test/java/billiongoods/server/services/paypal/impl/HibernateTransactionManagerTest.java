@@ -44,8 +44,8 @@ public class HibernateTransactionManagerTest {
 
         final Order order = createMock(Order.class);
         expect(order.getId()).andReturn(12L);
-        expect(order.getAmount()).andReturn(123.45f);
-        expect(order.getShipment()).andReturn(1.70f);
+        expect(order.getAmount()).andReturn(123.45d);
+        expect(order.getShipment()).andReturn(1.70d);
         replay(order);
 
         final PayPalTransaction tnx = manager.beginTransaction(order);

@@ -6,84 +6,84 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface PayPalTransaction {
-	Long getId();
+    Long getId();
 
-	Long getOrderId();
+    Long getOrderId();
 
-	String getToken();
+    String getToken();
 
-	float getAmount();
+    double getAmount();
 
-	float getShipment();
-
-
-	TransactionPhase getPhase();
-
-	TransactionResolution getResolution();
+    double getShipment();
 
 
-	String getPayer();
+    TransactionPhase getPhase();
 
-	String getPayerId();
-
-	String getPayerNote();
-
-	String getPayerPhone();
-
-	String getPayerLastName();
-
-	String getPayerFirstName();
-
-	String getPayerCountry();
-
-	String getCheckoutStatus();
+    TransactionResolution getResolution();
 
 
-	String getTransactionId();
+    String getPayer();
 
-	String getTransactionType();
+    String getPayerId();
 
-	String getParentTransactionId();
+    String getPayerNote();
 
+    String getPayerPhone();
 
-	String getPaymentType();
+    String getPayerLastName();
 
-	String getPaymentStatus();
+    String getPayerFirstName();
 
-	String getPaymentRequestId();
+    String getPayerCountry();
 
-	Date getPaymentDate();
-
-
-	float getFeeAmount();
-
-	float getGrossAmount();
-
-	float getSettleAmount();
-
-	float getTaxAmount();
-
-	String getExchangeRate();
-
-	String getReasonCode();
-
-	String getPendingReason();
-
-	String getHoldDecision();
-
-	String getInsuranceAmount();
+    String getCheckoutStatus();
 
 
-	Date getCreationTime();
+    String getTransactionId();
 
-	Date getInvoicingTime();
+    String getTransactionType();
 
-	Date getVerificationTime();
-
-	Date getConfirmationTime();
-
-	Date getFinalizationTime();
+    String getParentTransactionId();
 
 
-	PayPalQueryError getLastQueryError();
+    String getPaymentType();
+
+    String getPaymentStatus();
+
+    String getPaymentRequestId();
+
+    Date getPaymentDate();
+
+
+    double getFeeAmount();
+
+    double getGrossAmount();
+
+    double getSettleAmount();
+
+    double getTaxAmount();
+
+    String getExchangeRate();
+
+    String getReasonCode();
+
+    String getPendingReason();
+
+    String getHoldDecision();
+
+    String getInsuranceAmount();
+
+
+    Date getCreationTime();
+
+    Date getInvoicingTime();
+
+    Date getVerificationTime();
+
+    Date getConfirmationTime();
+
+    Date getFinalizationTime();
+
+
+    PayPalQueryError getLastQueryError();
 }

@@ -7,48 +7,48 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface Order {
-	Long getId();
+    Long getId();
 
-	Long getBuyer();
-
-
-	String getToken();
-
-	float getAmount();
-
-	float getShipment();
-
-	float getExchangeRate();
-
-	Address getAddress();
-
-	ShipmentType getShipmentType();
-
-	Date getTimestamp();
-
-	Date getCreationTime();
-
-	OrderState getOrderState();
-
-	List<OrderItem> getOrderItems();
+    Long getBuyer();
 
 
-	String getPayer();
+    String getToken();
 
-	String getPayerNote();
+    double getAmount();
 
-	String getPaymentId();
+    double getShipment();
 
-	boolean isTracking();
+    double getExchangeRate();
+
+    Address getAddress();
+
+    ShipmentType getShipmentType();
+
+    Date getTimestamp();
+
+    Date getCreationTime();
+
+    OrderState getOrderState();
+
+    List<OrderItem> getOrderItems();
 
 
-	String getReferenceTracking();
+    String getPayer();
 
-	String getChinaMailTracking();
+    String getPayerNote();
 
-	String getInternationalTracking();
+    String getPaymentId();
 
-	String getFailureComment();
+    boolean isTracking();
 
-	List<OrderLog> getOrderLogs();
+
+    String getReferenceTracking();
+
+    String getChinaMailTracking();
+
+    String getInternationalTracking();
+
+    String getFailureComment();
+
+    List<OrderLog> getOrderLogs();
 }

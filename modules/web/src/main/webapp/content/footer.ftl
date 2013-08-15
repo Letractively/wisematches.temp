@@ -31,6 +31,7 @@
                 <ul class="footer-info-list">
                     <li><a href="/assistance/about">О нас</a></li>
                     <li><a href="/assistance/">Центр Поддержки</a></li>
+                    <li><a href="/assistance/contacts">Сообщить о проблеме</a></li>
                 <#--<li><a href="/assistance/advantage">Наши преимущества</a></li>-->
                 </ul>
             </div>

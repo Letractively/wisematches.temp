@@ -11,7 +11,7 @@
         <constructor-arg name="alertsMailBox" value="${server.alerts.box}"/>
     </bean>
 
-    <bean id="priceConverter" class="billiongoods.server.services.price.impl.HibernatePriceConverter">
+    <bean id="exchangeManager" class="billiongoods.server.services.price.impl.HibernateExchangeManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -68,7 +68,7 @@
     </bean>
 
     <bean id="orderManager" class="billiongoods.server.services.payment.impl.HibernateOrderManager">
-        <property name="priceConverter" ref="priceConverter"/>
+        <property name="exchangeManager" ref="exchangeManager"/>
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="shipmentManager" ref="shipmentManager"/>
     </bean>
@@ -149,7 +149,6 @@
     </bean>
 
     <bean class="billiongoods.server.services.notify.impl.center.AlertsOriginCenter">
-        <property name="serverDescriptor" ref="serverDescriptor"/>
         <property name="notificationService" ref="notificationService"/>
 
         <property name="orderManager" ref="orderManager"/>

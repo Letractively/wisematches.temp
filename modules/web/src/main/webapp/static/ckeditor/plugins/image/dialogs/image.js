@@ -25,79 +25,79 @@
         }
 
         var f = 1, k = /^\s*(\d+)((px)|\%)?\s*$/i, v = /(^\s*(\d+)((px)|\%)?\s*$)|^$/i, o = /^\d+px$/,
-                w = function () {
-                    var a = this.getValue(), b = this.getDialog(), d = a.match(k);
-                    d && ("%" == d[2] && l(b, !1), a = d[1]);
-                    b.lockRatio && (d = b.originalElement, "true" == d.getCustomData("isReady") && ("txtHeight" == this.id ? (a && "0" != a && (a = Math.round(d.$.width * (a / d.$.height))), isNaN(a) || b.setValueOf("info", "txtWidth", a)) : (a && "0" != a && (a = Math.round(d.$.height * (a / d.$.width))), isNaN(a) || b.setValueOf("info", "txtHeight", a))));
-                    g(b)
-                }, g = function (a) {
-                    if (!a.originalElement || !a.preview)return 1;
-                    a.commitContent(4, a.preview);
-                    return 0
-                }, s, l = function (a, b) {
-                    if (!a.getContentElement("info", "ratioLock"))return null;
-                    var d = a.originalElement;
-                    if (!d)return null;
-                    if ("check" == b) {
-                        if (!a.userlockRatio && "true" == d.getCustomData("isReady")) {
-                            var e = a.getValueOf("info", "txtWidth"), c = a.getValueOf("info", "txtHeight"), d = 1E3 * d.$.width / d.$.height, f = 1E3 * e / c;
-                            a.lockRatio = !1;
-                            !e && !c ? a.lockRatio = !0 : !isNaN(d) && !isNaN(f) && Math.round(d) == Math.round(f) && (a.lockRatio = !0)
-                        }
-                    } else void 0 != b ? a.lockRatio = b : (a.userlockRatio = 1, a.lockRatio = !a.lockRatio);
-                    e = CKEDITOR.document.getById(p);
-                    a.lockRatio ?
-                            e.removeClass("cke_btn_unlocked") : e.addClass("cke_btn_unlocked");
-                    e.setAttribute("aria-checked", a.lockRatio);
-                    CKEDITOR.env.hc && e.getChild(0).setHtml(a.lockRatio ? CKEDITOR.env.ie ? "■" : "▣" : CKEDITOR.env.ie ? "□" : "▢");
-                    return a.lockRatio
-                }, x = function (a) {
-                    var b = a.originalElement;
-                    if ("true" == b.getCustomData("isReady")) {
-                        var d = a.getContentElement("info", "txtWidth"), e = a.getContentElement("info", "txtHeight");
-                        d && d.setValue(b.$.width);
-                        e && e.setValue(b.$.height)
+            w = function () {
+                var a = this.getValue(), b = this.getDialog(), d = a.match(k);
+                d && ("%" == d[2] && l(b, !1), a = d[1]);
+                b.lockRatio && (d = b.originalElement, "true" == d.getCustomData("isReady") && ("txtHeight" == this.id ? (a && "0" != a && (a = Math.round(d.$.width * (a / d.$.height))), isNaN(a) || b.setValueOf("info", "txtWidth", a)) : (a && "0" != a && (a = Math.round(d.$.height * (a / d.$.width))), isNaN(a) || b.setValueOf("info", "txtHeight", a))));
+                g(b)
+            }, g = function (a) {
+                if (!a.originalElement || !a.preview)return 1;
+                a.commitContent(4, a.preview);
+                return 0
+            }, s, l = function (a, b) {
+                if (!a.getContentElement("info", "ratioLock"))return null;
+                var d = a.originalElement;
+                if (!d)return null;
+                if ("check" == b) {
+                    if (!a.userlockRatio && "true" == d.getCustomData("isReady")) {
+                        var e = a.getValueOf("info", "txtWidth"), c = a.getValueOf("info", "txtHeight"), d = 1E3 * d.$.width / d.$.height, f = 1E3 * e / c;
+                        a.lockRatio = !1;
+                        !e && !c ? a.lockRatio = !0 : !isNaN(d) && !isNaN(f) && Math.round(d) == Math.round(f) && (a.lockRatio = !0)
                     }
-                    g(a)
-                }, y = function (a, b) {
-                    function d(a, b) {
-                        var d = a.match(k);
-                        return d ?
-                                ("%" == d[2] && (d[1] += "%", l(e, !1)), d[1]) : b
-                    }
+                } else void 0 != b ? a.lockRatio = b : (a.userlockRatio = 1, a.lockRatio = !a.lockRatio);
+                e = CKEDITOR.document.getById(p);
+                a.lockRatio ?
+                    e.removeClass("cke_btn_unlocked") : e.addClass("cke_btn_unlocked");
+                e.setAttribute("aria-checked", a.lockRatio);
+                CKEDITOR.env.hc && e.getChild(0).setHtml(a.lockRatio ? CKEDITOR.env.ie ? "■" : "▣" : CKEDITOR.env.ie ? "□" : "▢");
+                return a.lockRatio
+            }, x = function (a) {
+                var b = a.originalElement;
+                if ("true" == b.getCustomData("isReady")) {
+                    var d = a.getContentElement("info", "txtWidth"), e = a.getContentElement("info", "txtHeight");
+                    d && d.setValue(b.$.width);
+                    e && e.setValue(b.$.height)
+                }
+                g(a)
+            }, y = function (a, b) {
+                function d(a, b) {
+                    var d = a.match(k);
+                    return d ?
+                        ("%" == d[2] && (d[1] += "%", l(e, !1)), d[1]) : b
+                }
 
-                    if (a == f) {
-                        var e = this.getDialog(), c = "", g = "txtWidth" == this.id ? "width" : "height", h = b.getAttribute(g);
-                        h && (c = d(h, c));
-                        c = d(b.getStyle(g), c);
-                        this.setValue(c)
-                    }
-                }, t, q = function () {
-                    var a = this.originalElement;
-                    a.setCustomData("isReady", "true");
-                    a.removeListener("load", q);
-                    a.removeListener("error", h);
-                    a.removeListener("abort", h);
-                    CKEDITOR.document.getById(m).setStyle("display", "none");
-                    this.dontResetSize || x(this);
-                    this.firstLoad && CKEDITOR.tools.setTimeout(function () {
-                                l(this, "check")
-                            },
-                            0, this);
-                    this.dontResetSize = this.firstLoad = !1
-                }, h = function () {
-                    var a = this.originalElement;
-                    a.removeListener("load", q);
-                    a.removeListener("error", h);
-                    a.removeListener("abort", h);
-                    a = CKEDITOR.getUrl(CKEDITOR.plugins.get("image").path + "images/noimage.png");
-                    this.preview && this.preview.setAttribute("src", a);
-                    CKEDITOR.document.getById(m).setStyle("display", "none");
-                    l(this, !1)
-                }, n = function (a) {
-                    return CKEDITOR.tools.getNextId() + "_" + a
-                }, p = n("btnLockSizes"), u = n("btnResetSize"), m = n("ImagePreviewLoader"), A = n("previewLink"),
-                z = n("previewImage");
+                if (a == f) {
+                    var e = this.getDialog(), c = "", g = "txtWidth" == this.id ? "width" : "height", h = b.getAttribute(g);
+                    h && (c = d(h, c));
+                    c = d(b.getStyle(g), c);
+                    this.setValue(c)
+                }
+            }, t, q = function () {
+                var a = this.originalElement;
+                a.setCustomData("isReady", "true");
+                a.removeListener("load", q);
+                a.removeListener("error", h);
+                a.removeListener("abort", h);
+                CKEDITOR.document.getById(m).setStyle("display", "none");
+                this.dontResetSize || x(this);
+                this.firstLoad && CKEDITOR.tools.setTimeout(function () {
+                        l(this, "check")
+                    },
+                    0, this);
+                this.dontResetSize = this.firstLoad = !1
+            }, h = function () {
+                var a = this.originalElement;
+                a.removeListener("load", q);
+                a.removeListener("error", h);
+                a.removeListener("abort", h);
+                a = CKEDITOR.getUrl(CKEDITOR.plugins.get("image").path + "images/noimage.png");
+                this.preview && this.preview.setAttribute("src", a);
+                CKEDITOR.document.getById(m).setStyle("display", "none");
+                l(this, !1)
+            }, n = function (a) {
+                return CKEDITOR.tools.getNextId() + "_" + a
+            }, p = n("btnLockSizes"), u = n("btnResetSize"), m = n("ImagePreviewLoader"), A = n("previewLink"),
+            z = n("previewImage");
         return{title: c.lang.image["image" == j ? "title" : "titleButton"], minWidth: 420, minHeight: 360, onShow: function () {
             this.linkEditMode = this.imageEditMode = this.linkElement = this.imageElement = !1;
             this.lockRatio = !0;
@@ -127,24 +127,24 @@
             this.imageEditMode ? (this.cleanImageElement = this.imageElement, this.imageElement = this.cleanImageElement.clone(!0, !0), this.setupContent(f, this.imageElement)) : this.imageElement = a.document.createElement("img");
             l(this, !0);
             CKEDITOR.tools.trim(this.getValueOf("info", "txtUrl")) || (this.preview.removeAttribute("src"), this.preview.setStyle("display",
-                    "none"))
+                "none"))
         }, onOk: function () {
             if (this.imageEditMode) {
                 var a = this.imageEditMode;
                 "image" == j && "input" == a && confirm(c.lang.image.button2Img) ? (this.imageElement = c.document.createElement("img"), this.imageElement.setAttribute("alt", ""), c.insertElement(this.imageElement)) : "image" != j && "img" == a && confirm(c.lang.image.img2Button) ? (this.imageElement = c.document.createElement("input"), this.imageElement.setAttributes({type: "image", alt: ""}), c.insertElement(this.imageElement)) : (this.imageElement = this.cleanImageElement, delete this.cleanImageElement)
             } else"image" ==
-                    j ? this.imageElement = c.document.createElement("img") : (this.imageElement = c.document.createElement("input"), this.imageElement.setAttribute("type", "image")), this.imageElement.setAttribute("alt", "");
+                j ? this.imageElement = c.document.createElement("img") : (this.imageElement = c.document.createElement("input"), this.imageElement.setAttribute("type", "image")), this.imageElement.setAttribute("alt", "");
             this.linkEditMode || (this.linkElement = c.document.createElement("a"));
             this.commitContent(f, this.imageElement);
             this.commitContent(2, this.linkElement);
             this.imageElement.getAttribute("style") || this.imageElement.removeAttribute("style");
             this.imageEditMode ? !this.linkEditMode && this.addLink ? (c.insertElement(this.linkElement),
-                    this.imageElement.appendTo(this.linkElement)) : this.linkEditMode && !this.addLink && (c.getSelection().selectElement(this.linkElement), c.insertElement(this.imageElement)) : this.addLink ? this.linkEditMode ? c.insertElement(this.imageElement) : (c.insertElement(this.linkElement), this.linkElement.append(this.imageElement, !1)) : c.insertElement(this.imageElement)
+                this.imageElement.appendTo(this.linkElement)) : this.linkEditMode && !this.addLink && (c.getSelection().selectElement(this.linkElement), c.insertElement(this.imageElement)) : this.addLink ? this.linkEditMode ? c.insertElement(this.imageElement) : (c.insertElement(this.linkElement), this.linkElement.append(this.imageElement, !1)) : c.insertElement(this.imageElement)
         }, onLoad: function () {
             "image" != j && this.hidePage("Link");
             var a = this._.element.getDocument();
             this.getContentElement("info", "ratioLock") && (this.addFocusable(a.getById(u),
-                    5), this.addFocusable(a.getById(p), 5));
+                5), this.addFocusable(a.getById(p), 5));
             this.commitContent = r
         }, onHide: function () {
             this.preview && this.commitContent(8, this.preview);
@@ -206,7 +206,7 @@
                                 }, setup: y, commit: function (a, b, d) {
                                     var c = this.getValue();
                                     a == f ? (c ? b.setStyle("width",
-                                            CKEDITOR.tools.cssLength(c)) : b.removeStyle("width"), !d && b.removeAttribute("width")) : 4 == a ? c.match(k) ? b.setStyle("width", CKEDITOR.tools.cssLength(c)) : (a = this.getDialog().originalElement, "true" == a.getCustomData("isReady") && b.setStyle("width", a.$.width + "px")) : 8 == a && (b.removeAttribute("width"), b.removeStyle("width"))
+                                        CKEDITOR.tools.cssLength(c)) : b.removeStyle("width"), !d && b.removeAttribute("width")) : 4 == a ? c.match(k) ? b.setStyle("width", CKEDITOR.tools.cssLength(c)) : (a = this.getDialog().originalElement, "true" == a.getCustomData("isReady") && b.setStyle("width", a.$.width + "px")) : 8 == a && (b.removeAttribute("width"), b.removeStyle("width"))
                                 }},
                                 {type: "text", id: "txtHeight", width: "45px", label: c.lang.common.height, onKeyUp: w, onChange: function () {
                                     i.call(this, "advanced:txtdlgGenStyle")
@@ -235,7 +235,7 @@
                                     var b = this.originalElement, c = this.getValueOf("info", "txtWidth");
                                     if (b.getCustomData("isReady") == "true" && c) {
                                         b =
-                                                b.$.height / b.$.width * c;
+                                            b.$.height / b.$.width * c;
                                         if (!isNaN(b)) {
                                             this.setValueOf("info", "txtHeight", Math.round(b));
                                             g(this)
@@ -248,7 +248,7 @@
                                     this.removeClass("cke_btn_over")
                                 }, b))
                             }, html: '<div><a href="javascript:void(0)" tabindex="-1" title="' + c.lang.image.lockRatio + '" class="cke_btn_locked" id="' + p + '" role="checkbox"><span class="cke_icon"></span><span class="cke_label">' + c.lang.image.lockRatio + '</span></a><a href="javascript:void(0)" tabindex="-1" title="' +
-                                    c.lang.image.resetSize + '" class="cke_btn_reset" id="' + u + '" role="button"><span class="cke_label">' + c.lang.image.resetSize + "</span></a></div>"}
+                                c.lang.image.resetSize + '" class="cke_btn_reset" id="' + u + '" role="button"><span class="cke_label">' + c.lang.image.resetSize + "</span></a></div>"}
                         ]},
                         {type: "vbox", padding: 1, children: [
                             {type: "text", id: "txtBorder", requiredContent: "img{border-width}", width: "60px", label: c.lang.image.border, "default": "", onKeyUp: function () {
@@ -259,14 +259,14 @@
                                 if (a == f) {
                                     var d;
                                     d =
-                                            (d = (d = b.getStyle("border-width")) && d.match(/^(\d+px)(?: \1 \1 \1)?$/)) && parseInt(d[1], 10);
+                                        (d = (d = b.getStyle("border-width")) && d.match(/^(\d+px)(?: \1 \1 \1)?$/)) && parseInt(d[1], 10);
                                     isNaN(parseInt(d, 10)) && (d = b.getAttribute("border"));
                                     this.setValue(d)
                                 }
                             }, commit: function (a, b, d) {
                                 var c = parseInt(this.getValue(), 10);
                                 a == f || 4 == a ? (isNaN(c) ? !c && this.isChanged() && b.removeStyle("border") : (b.setStyle("border-width", CKEDITOR.tools.cssLength(c)), b.setStyle("border-style", "solid")), !d && a == f && b.removeAttribute("border")) : 8 == a && (b.removeAttribute("border"), b.removeStyle("border-width"), b.removeStyle("border-style"),
-                                        b.removeStyle("border-color"))
+                                    b.removeStyle("border-color"))
                             }},
                             {type: "text", id: "txtHSpace", requiredContent: "img{margin-left,margin-right}", width: "60px", label: c.lang.image.hSpace, "default": "", onKeyUp: function () {
                                 g(this.getDialog())
@@ -312,7 +312,7 @@
                                     var e = parseInt(this.getValue(), 10);
                                     a == f || 4 == a ? (isNaN(e) ? !e && this.isChanged() && (b.removeStyle("margin-top"), b.removeStyle("margin-bottom")) : (b.setStyle("margin-top", CKEDITOR.tools.cssLength(e)), b.setStyle("margin-bottom", CKEDITOR.tools.cssLength(e))), !c && a == f && b.removeAttribute("vspace")) : 8 == a && (b.removeAttribute("vspace"), b.removeStyle("margin-top"), b.removeStyle("margin-bottom"))
                                 }},
-                            {id: "cmbAlign", requiredContent: "img{float}", type: "select", widths: ["35%", "65%"], style: "width:90px",
+                            {id: "cmbAlign", requiredContent: "img{double}", type: "select", widths: ["35%", "65%"], style: "width:90px",
                                 label: c.lang.common.align, "default": "", items: [
                                 [c.lang.common.notSet, ""],
                                 [c.lang.common.alignLeft, "left"],
@@ -322,7 +322,7 @@
                                 i.call(this, "advanced:txtdlgGenStyle")
                             }, setup: function (a, b) {
                                 if (a == f) {
-                                    var c = b.getStyle("float");
+                                    var c = b.getStyle("double");
                                     switch (c) {
                                         case "inherit":
                                         case "none":
@@ -334,20 +334,20 @@
                             }, commit: function (a, b, c) {
                                 var e = this.getValue();
                                 if (a == f || 4 == a) {
-                                    if (e ? b.setStyle("float", e) : b.removeStyle("float"), !c &&
-                                            a == f)switch (e = (b.getAttribute("align") || "").toLowerCase(), e) {
+                                    if (e ? b.setStyle("double", e) : b.removeStyle("double"), !c &&
+                                        a == f)switch (e = (b.getAttribute("align") || "").toLowerCase(), e) {
                                         case "left":
                                         case "right":
                                             b.removeAttribute("align")
                                     }
-                                } else 8 == a && b.removeStyle("float")
+                                } else 8 == a && b.removeStyle("double")
                             }}
                         ]}
                     ]},
                     {type: "vbox", height: "250px", children: [
                         {type: "html", id: "htmlPreview", style: "width:95%;", html: "<div>" + CKEDITOR.tools.htmlEncode(c.lang.common.preview) + '<br><div id="' + m + '" class="ImagePreviewLoader" style="display:none"><div class="loading">&nbsp;</div></div><div class="ImagePreviewBox"><table><tr><td><a href="javascript:void(0)" target="_blank" onclick="return false;" id="' +
-                                A + '"><img id="' + z + '" alt="" /></a>' + (c.config.image_previewText || "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.") +
-                                "</td></tr></table></div></div>"}
+                            A + '"><img id="' + z + '" alt="" /></a>' + (c.config.image_previewText || "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.") +
+                            "</td></tr></table></div></div>"}
                     ]}
                 ]}
             ]},
@@ -375,7 +375,7 @@
                     [c.lang.common.targetParent, "_parent"]
                 ], setup: function (a, b) {
                     2 == a && this.setValue(b.getAttribute("target") ||
-                            "")
+                        "")
                 }, commit: function (a, b) {
                     2 == a && (this.getValue() || this.isChanged()) && b.setAttribute("target", this.getValue())
                 }}

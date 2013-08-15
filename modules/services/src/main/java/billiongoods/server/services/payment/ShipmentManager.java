@@ -6,7 +6,7 @@ import billiongoods.server.services.basket.Basket;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ShipmentManager {
-	ShipmentRates getShipmentRates(Basket basket);
+    ShipmentRates getShipmentRates(Basket basket);
 
-	float getShipmentCost(Basket basket, ShipmentType shipmentType);
+    double getShipmentCost(Basket basket, ShipmentType shipmentType);
 }
