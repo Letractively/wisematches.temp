@@ -276,5 +276,5 @@
 </div>
 
 <script type="application/javascript">
-    new bg.warehouse.Basket(${priceConverter.exchangeRate});
+    new bg.warehouse.Basket(${exchangeManager.exchangeRate});
 </script>

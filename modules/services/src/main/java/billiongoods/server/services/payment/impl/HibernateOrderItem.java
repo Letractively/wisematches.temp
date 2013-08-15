@@ -28,10 +28,10 @@ public class HibernateOrderItem implements OrderItem {
     private int quantity;
 
     @Column(name = "amount")
-    private float amount;
+    private double amount;
 
     @Column(name = "weight")
-    private float weight;
+    private double weight;
 
     @Column(name = "options")
     private String options;
@@ -85,12 +85,12 @@ public class HibernateOrderItem implements OrderItem {
     }
 
     @Override
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 
     @Override
-    public float getWeight() {
+    public double getWeight() {
         return weight;
     }
 

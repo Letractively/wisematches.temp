@@ -94,7 +94,7 @@
                         <entry key="messageSource" value-ref="messageSource"/>
 
                         <entry key="imageResolver" value-ref="imageResolver"/>
-                        <entry key="priceConverter" value-ref="priceConverter"/>
+                        <entry key="exchangeManager" value-ref="exchangeManager"/>
 
                         <entry key="imageResourcesDomain" value="${server.image.domain}"/>
                         <entry key="staticResourcesDomain" value="${server.static.domain}"/>

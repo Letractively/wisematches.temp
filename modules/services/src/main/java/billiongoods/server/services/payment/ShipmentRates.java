@@ -4,29 +4,29 @@ package billiongoods.server.services.payment;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ShipmentRates {
-	private float amount;
-	private float weight;
-	private float[] rates;
+    private double amount;
+    private double weight;
+    private double[] rates;
 
-	public ShipmentRates(float amount, float weight, float[] rates) {
-		this.amount = amount;
-		this.weight = weight;
-		this.rates = rates;
-	}
+    public ShipmentRates(double amount, double weight, double[] rates) {
+        this.amount = amount;
+        this.weight = weight;
+        this.rates = rates;
+    }
 
-	public float getAmount() {
-		return amount;
-	}
+    public double getAmount() {
+        return amount;
+    }
 
-	public float getWeight() {
-		return weight;
-	}
+    public double getWeight() {
+        return weight;
+    }
 
-	public float getShipmentCost(ShipmentType type) {
-		return rates[type.ordinal()];
-	}
+    public double getShipmentCost(ShipmentType type) {
+        return rates[type.ordinal()];
+    }
 
-	public boolean isFreeShipment(ShipmentType type) {
-		return Float.compare(rates[type.ordinal()], 0.0f) == 0;
-	}
+    public boolean isFreeShipment(ShipmentType type) {
+        return Double.compare(rates[type.ordinal()], 0.0f) == 0;
+    }
 }

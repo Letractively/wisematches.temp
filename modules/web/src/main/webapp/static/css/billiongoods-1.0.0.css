@@ -1154,3 +1154,31 @@ button.bg-ui-button.selected {
     padding-top: 10px;
     border-top: 2px solid #cccccc;
 }
+
+.assistance .question {
+    padding: 5px;
+    margin-left: 10px;
+    border: 2px solid #cccccc;
+    background-color: #e7e7e7;
+}
+
+.assistance .question > div {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.assistance .question label {
+    font-weight: bold;
+}
+
+.assistance .question .button {
+    text-align: right;
+}
+
+.assistance .question input {
+    width: 280px;
+}
+
+.assistance .question textarea {
+    width: 100%;
+}

@@ -9,13 +9,13 @@ import java.util.Collection;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface BasketItem {
-	int getNumber();
+    int getNumber();
 
-	int getQuantity();
+    int getQuantity();
 
-	float getAmount();
+    double getAmount();
 
-	ArticleDescription getArticle();
+    ArticleDescription getArticle();
 
-	Collection<Property> getOptions();
+    Collection<Property> getOptions();
 }

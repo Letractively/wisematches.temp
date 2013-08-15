@@ -4,17 +4,17 @@ package billiongoods.server.services.payment;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface OrderItem {
-	String getName();
+    String getName();
 
-	Integer getArticle();
-
-
-	int getQuantity();
-
-	float getAmount();
+    Integer getArticle();
 
 
-	float getWeight();
+    int getQuantity();
 
-	String getOptions();
+    double getAmount();
+
+
+    double getWeight();
+
+    String getOptions();
 }

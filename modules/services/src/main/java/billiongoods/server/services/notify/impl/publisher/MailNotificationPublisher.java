@@ -27,125 +27,131 @@ import java.util.Map;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class MailNotificationPublisher implements NotificationPublisher {
-	private JavaMailSender mailSender;
-	private MessageSource messageSource;
-	private ServerDescriptor serverDescriptor;
+    private JavaMailSender mailSender;
+    private MessageSource messageSource;
+    private ServerDescriptor serverDescriptor;
 
-	private final Map<SenderKey, InternetAddress> addressesCache = new HashMap<>();
+    private final Map<SenderKey, InternetAddress> addressesCache = new HashMap<>();
 
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.MailPublisher");
+    private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.MailPublisher");
 
-	public MailNotificationPublisher() {
-	}
+    public MailNotificationPublisher() {
+    }
 
-	@Override
-	public String getName() {
-		return "email";
-	}
+    @Override
+    public String getName() {
+        return "email";
+    }
 
-	@Override
-	public void publishNotification(final Notification notification) throws PublicationException {
-		log.debug("Send mail notification '{}' to {}", notification.getCode(), notification.getRecipient());
-		final MimeMessagePreparator mm = new MimeMessagePreparator() {
-			public void prepare(MimeMessage mimeMessage) throws Exception {
-				final Language language = Language.RU;
-				final Recipient recipient = notification.getRecipient();
+    @Override
+    public void publishNotification(final Notification notification) throws PublicationException {
+        log.debug("Send mail notification '{}' to {}", notification.getCode(), notification.getRecipient());
+        final MimeMessagePreparator mm = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                final Language language = Language.RU;
+                final Recipient recipient = notification.getRecipient();
 
-				final InternetAddress to = new InternetAddress(recipient.getEmail(), recipient.getUsername(), "UTF-8");
-				final InternetAddress from = getInternetAddress(notification.getSender(), language);
+                String email = recipient.getEmail();
+                String username = recipient.getUsername();
 
-				final MimeMessageHelper msg = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-				msg.setFrom(from);
-				msg.setTo(to);
-				msg.setSubject(notification.getSubject());
+                if (recipient == Recipient.ALERTS_BOX) {
+                    email = serverDescriptor.getAlertsMailBox();
+                }
+                final InternetAddress to = new InternetAddress(email, username, "UTF-8");
+                final InternetAddress from = getInternetAddress(notification.getSender(), language);
 
-				final StringBuilder m = new StringBuilder();
-				final Locale locale = language.getLocale();
-				m.append(messageSource.getMessage("notify.mail.header", null, locale));
-				if (recipient.getUsername() != null) {
-					m.append(" <b>").append(recipient.getUsername()).append("</b>.");
-				} else {
-					m.append(" <b>").append(messageSource.getMessage("notify.mail.customer", null, locale)).append("</b>.");
-				}
-				m.append(notification.getMessage());
-				m.append("<p><hr><br>");
-				m.append(messageSource.getMessage("notify.mail.footer", null, locale));
-				m.append("</p>");
-				msg.setText(m.toString(), true);
-			}
-		};
-		try {
-			mailSender.send(mm);
-		} catch (MailException ex) {
-			throw new PublicationException(ex);
-		}
-	}
+                final MimeMessageHelper msg = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+                msg.setFrom(from);
+                msg.setTo(to);
+                msg.setSubject(notification.getSubject());
 
-	protected InternetAddress getInternetAddress(Sender sender, Language language) {
-		return addressesCache.get(new SenderKey(sender, language));
-	}
+                final StringBuilder m = new StringBuilder();
+                final Locale locale = language.getLocale();
+                m.append(messageSource.getMessage("notify.mail.header", null, locale));
+                if (recipient.getUsername() != null) {
+                    m.append(" <b>").append(recipient.getUsername()).append("</b>.");
+                } else {
+                    m.append(" <b>").append(messageSource.getMessage("notify.mail.customer", null, locale)).append("</b>.");
+                }
+                m.append(notification.getMessage());
+                m.append("<p><hr><br>");
+                m.append(messageSource.getMessage("notify.mail.footer", null, locale));
+                m.append("</p>");
+                msg.setText(m.toString(), true);
+            }
+        };
+        try {
+            mailSender.send(mm);
+        } catch (MailException ex) {
+            throw new PublicationException(ex);
+        }
+    }
 
-	private void validateAddressesCache() {
-		addressesCache.clear();
+    protected InternetAddress getInternetAddress(Sender sender, Language language) {
+        return addressesCache.get(new SenderKey(sender, language));
+    }
 
-		if (messageSource == null || serverDescriptor == null) {
-			return;
-		}
+    private void validateAddressesCache() {
+        addressesCache.clear();
 
-		for (Sender sender : Sender.values()) {
-			for (Language language : Language.values()) {
-				try {
-					final String address = messageSource.getMessage("mail.address." + sender.getUserInfo(),
-							null, sender.getMailAddress(serverDescriptor), language.getLocale());
+        if (messageSource == null || serverDescriptor == null) {
+            return;
+        }
 
-					final String personal = messageSource.getMessage("mail.personal." + sender.getUserInfo(),
-							null, sender.name(), language.getLocale());
+        for (Sender sender : Sender.values()) {
+            for (Language language : Language.values()) {
+                try {
+                    final String address = messageSource.getMessage("mail.address." + sender.getUserInfo(),
+                            null, sender.getMailAddress(serverDescriptor), language.getLocale());
 
-					addressesCache.put(new SenderKey(sender, language), new InternetAddress(address, personal, "UTF-8"));
-				} catch (UnsupportedEncodingException ex) {
-					log.error("JAVA SYSTEM ERROR - NOT UTF8!", ex);
-				}
-			}
-		}
-	}
+                    final String personal = messageSource.getMessage("mail.personal." + sender.getUserInfo(),
+                            null, sender.name(), language.getLocale());
 
-	public void setMailSender(JavaMailSender mailSender) {
-		this.mailSender = mailSender;
-	}
+                    addressesCache.put(new SenderKey(sender, language), new InternetAddress(address, personal, "UTF-8"));
+                } catch (UnsupportedEncodingException ex) {
+                    log.error("JAVA SYSTEM ERROR - NOT UTF8!", ex);
+                }
+            }
+        }
+    }
 
-	public void setMessageSource(MessageSource messageSource) {
-		this.messageSource = messageSource;
-		validateAddressesCache();
-	}
+    public void setMailSender(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
-	public void setServerDescriptor(ServerDescriptor serverDescriptor) {
-		this.serverDescriptor = serverDescriptor;
-		validateAddressesCache();
-	}
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+        validateAddressesCache();
+    }
 
-	private static final class SenderKey {
-		private final Language language;
-		private final Sender sender;
+    public void setServerDescriptor(ServerDescriptor serverDescriptor) {
+        this.serverDescriptor = serverDescriptor;
+        validateAddressesCache();
+    }
 
-		private SenderKey(Sender sender, Language language) {
-			this.sender = sender;
-			this.language = language;
-		}
+    private static final class SenderKey {
+        private final Language language;
+        private final Sender sender;
 
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
+        private SenderKey(Sender sender, Language language) {
+            this.sender = sender;
+            this.language = language;
+        }
 
-			SenderKey senderKey = (SenderKey) o;
-			return language == senderKey.language && sender == senderKey.sender;
-		}
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
 
-		@Override
-		public int hashCode() {
-			int result = language.hashCode();
-			result = 31 * result + sender.hashCode();
-			return result;
-		}
-	}
+            SenderKey senderKey = (SenderKey) o;
+            return language == senderKey.language && sender == senderKey.sender;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = language.hashCode();
+            result = 31 * result + sender.hashCode();
+            return result;
+        }
+    }
 }
