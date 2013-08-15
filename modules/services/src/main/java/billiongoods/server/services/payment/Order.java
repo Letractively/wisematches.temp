@@ -35,9 +35,9 @@ public interface Order {
 
 	String getPayer();
 
-	String getPaymentId();
+	String getPayerNote();
 
-	String getComment();
+	String getPaymentId();
 
 	boolean isTracking();
 
@@ -48,6 +48,7 @@ public interface Order {
 
 	String getInternationalTracking();
 
+	String getFailureComment();
 
 	List<OrderLog> getOrderLogs();
 }

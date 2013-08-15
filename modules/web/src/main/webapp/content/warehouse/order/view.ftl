@@ -117,6 +117,18 @@
             ${address.city}, ${address.region}, ${address.postalCode}
             </td>
         </tr>
+
+    <#if order.payerNote?has_content>
+        <tr>
+            <td valign="top" nowrap="nowrap">
+                <label for="">Ваш комментарий:</label>
+            </td>
+            <td>
+            ${order.payerNote}
+            </td>
+        </tr>
+    </#if>
+
     <#if order.payer?has_content>
         <tr>
             <td colspan="2" align="right">

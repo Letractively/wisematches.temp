@@ -24,9 +24,9 @@ public interface OrderManager extends SearchManager<Order, OrderContext> {
 
 	void bill(Long orderId, String token);
 
-	void accept(Long orderId, String person, String paymentId);
+	void accept(Long orderId, String person, String paymentId, String note);
 
-	void reject(Long orderId, String person, String paymentId);
+	void reject(Long orderId, String person, String paymentId, String note);
 
 	void processing(Long orderId, String number);
 
