@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="stock">
-                        <div class="ability">${article.restockDate!"В наличии, доставка в текечии 2х рабочих дней"}</div>
+                        <div class="ability">${article.restockDate!"В наличии, отправка в течение 2х рабочих дней"}</div>
                         <div class="shipment">Бесплатная доставка</div>
                     </div>
 
@@ -120,24 +120,23 @@
             </#if>
 
             <#if article.accessories?has_content>
-                <@bg.ui.panel "Принадлежности" "accessories" "accessories" "accessories">
+                <@bg.ui.panel "Аксессуары" "accessories" "accessories" "accessories">
                     <table>
                         <#list article.accessories as a>
-                            <#if a_index==0>
-                            <tr></#if>
-                            <td valign="top" width="50%">
-                                <div class="article-item list">
-                                    <div class="image">
-                                        <@bg.link.article a><img
-                                                alt="${a.name}"
-                                                title="${a.name}"
-                                                src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
-                                                width="75px" height="75px"/></@bg.link.article>
-                                    </div>
-                                    <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                                    <div class="price"><@bg.ui.price a.price/></div>
-                            </td>
-                            <#if a_index-1==0></tr></#if>
+                            <@bg.ui.tableSplit article.accessories?size 2 a_index>
+                                <td valign="top">
+                                    <div class="article-item list">
+                                        <div class="image">
+                                            <@bg.link.article a><img
+                                                    alt="${a.name}"
+                                                    title="${a.name}"
+                                                    src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
+                                                    width="75px" height="75px"/></@bg.link.article>
+                                        </div>
+                                        <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
+                                        <div class="price"><@bg.ui.price a.price/></div>
+                                </td>
+                            </@bg.ui.tableSplit>
                         </#list>
                     </table>
                 </@bg.ui.panel>

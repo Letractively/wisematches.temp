@@ -48,25 +48,24 @@
 <#macro articlesViewGrid articles ops={}>
 <table>
     <#list articles as a>
-        <#if a_index%4==0>
-        <tr></#if>
-        <td>
-            <div class="article-item grid">
-                <div class="image">
-                    <@bg.link.article a><img
-                            alt="${a.name}"
-                            title="${a.name}"
-                            src="<@articleImg a a.previewImageId!"" ImageSize.SMALL/>"
-                            width="150px" height="150px"/></@bg.link.article>
+        <@bg.ui.tableSplit articles?size 4 a_index>
+            <td valign="top" width="25%">
+                <div class="article-item grid">
+                    <div class="image">
+                        <@bg.link.article a><img
+                                alt="${a.name}"
+                                title="${a.name}"
+                                src="<@articleImg a a.previewImageId!"" ImageSize.SMALL/>"
+                                width="150px" height="150px"/></@bg.link.article>
+                    </div>
+                    <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
+                    <div class="price"><@bg.ui.price a.price/></div>
+                    <#if ops["showCategory"]?? && ops["showCategory"]>
+                        <div class="category">раздел <@bg.link.categoryLink a.category/></div>
+                    </#if>
                 </div>
-                <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                <div class="price"><@bg.ui.price a.price/></div>
-                <#if ops["showCategory"]?? && ops["showCategory"]>
-                    <div class="category">раздел <@bg.link.categoryLink a.category/></div>
-                </#if>
-            </div>
-        </td>
-        <#if (a_index-3)%4==0></tr></#if>
+            </td>
+        </@bg.ui.tableSplit>
     </#list>
 </table>
 </#macro>
@@ -151,6 +150,19 @@
 </div>
 </#macro>
 
+<#macro tableSplit cells columns index tag="tr" style="">
+    <#if index%columns==0><${tag}<#if style?has_content> style="${style}"</#if>></#if>
+    <#nested/>
+    <#if (index-(columns-1))%columns==0>
+    </${tag}>
+    <#else>
+        <#if cells-1==index>
+            <#list index%columns..(columns-2) as i>
+            <td></td></#list>
+        </${tag}>
+        </#if>
+    </#if>
+</#macro>
 
 <#macro tableNavigation itemsTableForm>
     <#assign page=itemsTableForm.page/>
@@ -262,10 +274,4 @@
         </#list>
     </select>
     </@bg.ui.field>
-</#macro>
-
-
-<#macro showErrors separator>
-springMacroRequestContext.
-
 </#macro>

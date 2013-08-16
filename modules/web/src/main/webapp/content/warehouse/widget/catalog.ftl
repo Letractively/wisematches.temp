@@ -30,7 +30,7 @@
                         <#if (category.children?size>5)>
                             <li class="ct-list-cnt"><@bg.link.categoryLink category "highlight" "все элементы"/></li></#if>
                     </ul>
-                    <#if (category_index-2)%3==0></div></#if>
+                    <#if (category_index-2)%3==0 || !category_has_next></div></#if>
                 </#list>
             </div>
         </li>
