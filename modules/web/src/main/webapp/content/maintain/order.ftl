@@ -6,7 +6,17 @@
 <div class="order">
     <form action="/maintain/order/promote" method="post">
         <div class="info">
-            Перевести в состояние:<br>
+            <strong>Перевести в состояние</strong>
+
+            <br>
+
+            <#if order.orderState==OrderState.ACCEPTED>
+                Внутренний номер поставщика:
+            <#elseif order.orderState==OrderState.PROCESSING>
+                Номер доставки почты Китая:
+            <#elseif order.orderState==OrderState.SHIPPING>
+                Международный номер доставки (если есть):
+            </#if>
             <input name="id" type="hidden" value="${order.id}">
 
             <@bg.ui.input "form.value">

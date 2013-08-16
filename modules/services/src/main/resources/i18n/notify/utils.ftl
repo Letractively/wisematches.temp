@@ -5,6 +5,6 @@
     @${serverDescriptor.mailHostName}</a></#macro>-->
 
 <#macro link href target=""><#local content><#nested></#local><a
-        href="http://${serverDescriptor.webHostName}/${href}"<#if target?has_content>
+        href="http://${serverDescriptor.webHostName}${href}"<#if target?has_content>
         target="${target}"</#if>><#if content?has_content>${content?string}<#else>http://${serverDescriptor.webHostName}
     /${href}</#if></a></#macro>
