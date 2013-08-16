@@ -28,7 +28,7 @@
     </mvc:interceptors>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="2684354"/>
+        <property name="maxUploadSize" value="26843540"/>
     </bean>
 
     <bean id="messageSource" class="billiongoods.server.MessageFormatter">

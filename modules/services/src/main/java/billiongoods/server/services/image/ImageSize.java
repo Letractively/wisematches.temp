@@ -59,7 +59,7 @@ public enum ImageSize {
         final BufferedImage read = imgReader.read(0);
         final BufferedImage bufferedImage = scaleImage(read);
 
-        final IIOImage image = new IIOImage(bufferedImage, null, imgReader.getImageMetadata(0));
+        final IIOImage image = new IIOImage(bufferedImage, null, null);
 
         final JPEGImageWriteParam params = (JPEGImageWriteParam) imgWriter.getDefaultWriteParam();
         params.setCompressionMode(JPEGImageWriteParam.MODE_EXPLICIT);
