@@ -32,7 +32,7 @@ public class OrderViewForm {
 	}
 
 	public boolean isEmpty() {
-		return order == null && email == null;
+		return order == null || email == null;
 	}
 
 	@Override

@@ -1,4 +1,6 @@
-<#-- @ftlvariable name="order" type="billiongoods.server.services.payment.Order" -->
+<#-- @ftlvariable name="context.order" type="billiongoods.server.services.payment.Order" -->
+
+<#assign order=context.order/>
 
 <#import "../utils.ftl" as util>
 
@@ -16,7 +18,7 @@
 </p>
 <#elseif order.orderState.accepted>
 <p>
-    Мы получили подтверждения оплаты счета #${order.id}. В ближайщее время мы отправим заказ на формирования.
+    Мы получили подтверждения оплаты заказа #${order.id}. В ближайщее время мы отправим заказ на формирования.
 </p>
 <#elseif order.orderState.rejected>
 <p>
@@ -59,3 +61,11 @@ ${order.orderState.name()}.
     Пожалуйста, обратитесь в службу поддержки <@util.mailto "support"/> для получения более подробной информации.
 </p>
 </#if>
+<p>
+    Вы можете посмотреть детали вашего заказа и историю изменений на
+    странице <@util.link "/warehouse/order/status?order=${order.id}">
+    Отслеживания заказов</@util.link>.
+    <br>Пожалуйста,
+    укажите номер вашего заказа ${order.id} и адрес электронной почты PayPal, с которого осуществлялась оплата его
+    оплата.
+</p>

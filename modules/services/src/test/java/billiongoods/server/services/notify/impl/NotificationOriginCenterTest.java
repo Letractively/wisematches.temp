@@ -1,12 +1,16 @@
 package billiongoods.server.services.notify.impl;
 
-import billiongoods.core.Member;
 import billiongoods.core.task.executor.TransactionAwareExecutor;
+import billiongoods.server.services.basket.impl.HibernateBasket;
 import billiongoods.server.services.notify.Notification;
 import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.impl.center.NotificationOriginCenter;
+import billiongoods.server.services.payment.*;
+import billiongoods.server.services.payment.impl.HibernateAddress;
+import billiongoods.server.services.payment.impl.HibernateOrder;
 import org.easymock.Capture;
 import org.easymock.CaptureType;
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,12 +42,12 @@ public class NotificationOriginCenterTest {
 	private final Capture<Notification> publishedNotifications = new Capture<>(CaptureType.ALL);
 	@Autowired
 	private NotificationService notificationService;
+
 	@Autowired
 	private NotificationOriginCenter publisherCenter;
+
 	@Autowired
 	private PlatformTransactionManager transactionManager;
-	private Member p1;
-	private Member p2;
 
 	public NotificationOriginCenterTest() {
 	}
@@ -76,6 +80,24 @@ public class NotificationOriginCenterTest {
 	}
 
 	@Test
-	public void empty() {
+	public void testOrderNotifications() {
+		final Capture<OrderListener> listenerCapture = new Capture<>();
+
+		final OrderManager orderManager = EasyMock.createMock(OrderManager.class);
+		orderManager.addOrderListener(capture(listenerCapture));
+		orderManager.removeOrderListener(isA(OrderListener.class));
+		replay(orderManager);
+
+		publisherCenter.setOrderManager(orderManager);
+
+		final HibernateBasket basket = new HibernateBasket();
+		final HibernateAddress address = new HibernateAddress();
+
+		final Order order = new HibernateOrder(123L, basket, new Shipment(12d, address, ShipmentType.REGISTERED), 12d, true);
+
+		final OrderListener listener = listenerCapture.getValue();
+		listener.orderStateChange(order, null, OrderState.NEW);
+
+		publisherCenter.setOrderManager(null);
 	}
 }
