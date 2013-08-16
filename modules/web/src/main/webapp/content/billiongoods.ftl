@@ -25,8 +25,8 @@
     <script type="text/javascript" src="<@bg.ui.static "js/jquery.timers-1.2.0.js"/>"></script>
     <script type="text/javascript" src="<@bg.ui.static "js/json2-2.1.8.min.js"/>"></script>
 
-    <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/billiongoods-1.0.0.css"/>"/>
-    <script type="text/javascript" src="<@bg.ui.static "js/billiongoods-1.0.0.js"/>"></script>
+    <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/billiongoods-1.1.0.css"/>"/>
+    <script type="text/javascript" src="<@bg.ui.static "js/billiongoods-1.1.0.js"/>"></script>
 
     <script type="text/javascript">
         var _gaq = _gaq || [];
