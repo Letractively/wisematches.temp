@@ -3,6 +3,9 @@ package billiongoods.server.web.servlet.mvc;
 import billiongoods.core.Personality;
 import billiongoods.core.security.PersonalityContext;
 import billiongoods.server.MessageFormatter;
+import billiongoods.server.services.basket.Basket;
+import billiongoods.server.services.basket.BasketItem;
+import billiongoods.server.services.basket.BasketManager;
 import billiongoods.server.web.servlet.sdo.ServiceResponseFactory;
 import billiongoods.server.web.servlet.view.StaticContentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public abstract class AbstractController {
+	private BasketManager basketManager;
+
 	protected MessageFormatter messageSource;
 	protected ServiceResponseFactory responseFactory;
 	protected StaticContentGenerator staticContentGenerator;
@@ -68,12 +73,31 @@ public abstract class AbstractController {
 		}
 	}
 
+	@ModelAttribute("basketQuantity")
+	public int getBasketQuantity() {
+		final Basket basket = basketManager.getBasket(getPrincipal());
+		if (basket == null) {
+			return 0;
+		}
+
+		int quantity = 0;
+		for (BasketItem basketItem : basket) {
+			quantity += basketItem.getQuantity();
+		}
+		return quantity;
+	}
+
 	protected void hideWarehouse(Model model) {
 		model.addAttribute("showWarehouse", Boolean.FALSE);
 	}
 
 	protected void hideNavigation(Model model) {
 		model.addAttribute("showNavigation", Boolean.FALSE);
+	}
+
+	@Autowired
+	public void setBasketManager(BasketManager basketManager) {
+		this.basketManager = basketManager;
 	}
 
 	@Autowired

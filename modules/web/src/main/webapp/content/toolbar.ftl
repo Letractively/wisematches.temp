@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="basketQuantity" type="java.lang.Integer" -->
+
 <#include "/core.ftl"/>
 
 <div style="float: right">
@@ -5,8 +7,13 @@
         <li class="bg-ui-button tb-item-cart tb-separator-left tb-separator-right">
             <a href="/warehouse/basket">
                 <span class="image"></span>
-                <span>Корзина</span>
+                <span style="margin-right: 30px">Корзина</span>
+
+            <#if basketQuantity??>
+                <div id="basketQuantity">${basketQuantity}</div>
+            </#if>
             </a>
+        </li>
     </ul>
 </div>
 

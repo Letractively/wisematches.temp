@@ -1,6 +1,21 @@
-- Export order
-- Show number basket's items in header
+============== WORKING ===============
 
+============== ISSUES ================
+- Export order
+
+============= PLAN ====================
+- Gadgets categories by prise: $0.99, $1.99, $2.99, $4.99, $9.99, $15.99, $20.99+
+- Show discount label for a product
+
+- Accounts and personal info
+- Hot products view
+- Forums
+
+============= DONE ====================
++ Arrivals must be selected by enable date
++ Update quantity in basket instead of new position
++ Show number basket's items in header
++ Article sold could is not updating
 + Notifications about order: no template
 + Callback form must be added
 + Hibernate PriceConverter->ExchangeManager
