@@ -9,26 +9,28 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ArticleManager extends SearchManager<ArticleDescription, ArticleContext> {
-    Article getArticle(Integer id);
+	Article getArticle(Integer id);
 
-    Article getArticle(String sku);
+	Article getArticle(String sku);
 
-    ArticleDescription getDescription(Integer id);
+	ArticleDescription getDescription(Integer id);
 
 
-    Article createArticle(String name, String description, Category category,
-                          double price, Float primordialPrice, double weight, Date restockDate,
-                          String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
-                          List<Option> options, List<Property> properties,
-                          String referenceId, String referenceCode, Supplier wholesaler,
-                          double supplierPrice, Float supplierPrimordialPrice);
+	Article createArticle(String name, String description, Category category,
+						  double price, Float primordialPrice, double weight, Date restockDate,
+						  String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
+						  List<Option> options, List<Property> properties,
+						  String referenceId, String referenceCode, Supplier wholesaler,
+						  double supplierPrice, Float supplierPrimordialPrice);
 
-    Article updateArticle(Integer id, String name, String description, Category category,
-                          double price, Float primordialPrice, double weight, Date restockDate,
-                          String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
-                          List<Option> options, List<Property> properties,
-                          String referenceId, String referenceCode, Supplier wholesaler,
-                          double supplierPrice, Float supplierPrimordialPrice);
+	Article updateArticle(Integer id, String name, String description, Category category,
+						  double price, Float primordialPrice, double weight, Date restockDate,
+						  String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
+						  List<Option> options, List<Property> properties,
+						  String referenceId, String referenceCode, Supplier wholesaler,
+						  double supplierPrice, Float supplierPrimordialPrice);
 
-    void updateState(Integer id, boolean active);
+	void updateSold(Integer id, int quantity);
+
+	void updateState(Integer id, boolean active);
 }

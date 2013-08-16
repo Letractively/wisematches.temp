@@ -14,7 +14,7 @@
 
                     <div class="thumb">
                     <#list article.imageIds as i>
-                        <div><img <#if i==article.previewImageId>class="selected"</#if>
+                        <div><img <#if i==article.previewImageId!"">class="selected"</#if>
                                   src="<@bg.ui.articleImg article i ImageSize.TINY/>" width="50px" height="50px"/></div>
                     </#list>
                     </div>

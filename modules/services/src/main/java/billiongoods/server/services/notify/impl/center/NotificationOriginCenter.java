@@ -37,7 +37,7 @@ public class NotificationOriginCenter implements BreakingDayListener, Initializi
 
 	private void processOrderState(Order order) {
 		if (order.isTracking() && order.getPayer() != null) {
-			fireNotification("order.state", new Recipient(order.getPayer()), Sender.UNDEFINED);
+			fireNotification("order.state", new Recipient(order.getPayer()), order);
 		}
 	}
 

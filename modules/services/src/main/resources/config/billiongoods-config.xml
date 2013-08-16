@@ -73,6 +73,11 @@
         <property name="shipmentManager" ref="shipmentManager"/>
     </bean>
 
+    <bean class="billiongoods.server.warehouse.impl.ArticleTrackerCenter">
+        <property name="orderManager" ref="orderManager"/>
+        <property name="articleManager" ref="articleManager"/>
+    </bean>
+
     <bean id="notificationMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${mail.server.host}"/>
         <property name="port" value="${mail.server.port}"/>

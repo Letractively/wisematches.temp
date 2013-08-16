@@ -15,11 +15,13 @@
 <form action="/maintain/article" method="post">
 
 <table style="width: 100%">
+<#if article??>
 <tr id="inactiveWarning" <#if article.active>style="display: none"</#if>>
     <td colspan="2" align="center" style="background: #990000; font-weight: bold; color: #ffffff">
         Внимание! Товар выключен!
     </td>
 </tr>
+</#if>
 <tr>
     <td valign="top"><label for="category">Категория: </label></td>
     <td>

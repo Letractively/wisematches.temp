@@ -133,18 +133,30 @@ public class BasketController extends AbstractController {
 				}
 			}
 
-			final ArticleDescription article = articleManager.getDescription(form.getArticle());
-			if (article == null) {
-				return responseFactory.failure("unknown.article", new Object[]{form.getArticle()}, locale);
-			}
-
 			final int quantity = form.getQuantity();
 			if (quantity <= 0) {
 				return responseFactory.failure("illegal.quantity", new Object[]{quantity}, locale);
 			}
 
-			basketManager.addBasketItem(getPrincipal(), article, options, quantity);
+			final ArticleDescription article = articleManager.getDescription(form.getArticle());
+			if (article == null) {
+				return responseFactory.failure("unknown.article", new Object[]{form.getArticle()}, locale);
+			}
 
+			final Personality principal = getPrincipal();
+
+			final Basket basket = basketManager.getBasket(principal);
+			if (basket != null) {
+				final List<BasketItem> basketItems = basket.getBasketItems();
+				for (BasketItem basketItem : basketItems) {
+					if (basketItem.getArticle().getId().equals(article.getId()) && basketItem.getOptions().equals(options)) {
+						basketManager.updateBasketItem(principal, basketItem.getNumber(), basketItem.getQuantity() + quantity);
+						return responseFactory.success();
+					}
+				}
+			}
+
+			basketManager.addBasketItem(principal, article, options, quantity);
 			return responseFactory.success();
 		} catch (Exception ex) {
 			return responseFactory.failure("internal.error", locale);
