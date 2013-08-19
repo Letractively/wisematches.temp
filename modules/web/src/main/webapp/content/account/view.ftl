@@ -2,6 +2,6 @@
 
 <#include "/core.ftl"/>
 
-<@bg.security.authorize "admin">
+<@bg.security.authorized "admin">
 Точняк, вы админ. Сюда, пожалуйста: <a href="/maintain/main">Администрирование</a>
-</@bg.security.authorize>
+</@bg.security.authorized>

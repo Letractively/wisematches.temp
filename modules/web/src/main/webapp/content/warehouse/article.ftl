@@ -24,19 +24,19 @@
                 <div class="info">
                     <div class="name">
                     ${article.name}
-                    <@bg.security.authorize "admin">
+                    <@bg.security.authorized "moderator">
                         <div style="float: right">
                             <a href="/maintain/article?id=${article.id}">Изменить</a>
                         </div>
-                    </@bg.security.authorize>
+                    </@bg.security.authorized>
                     </div>
 
                     <div class="articular">
                         Артикул: <span class="sku">${messageSource.getArticleCode(article)}</span>
-                    <@bg.security.authorize "admin">
+                    <@bg.security.authorized "moderator">
                         (<a href="http://banggood.com/-p-${article.supplierInfo.referenceId}.html"
-                            target="_blank">SKU${article.supplierInfo.referenceCode}</a>)
-                    </@bg.security.authorize>
+                            target="_blank">${article.supplierInfo.referenceCode}</a>)
+                    </@bg.security.authorized>
                     <#--Продано: <span class="sold">${article.soldCount}</span>-->
                     </div>
 

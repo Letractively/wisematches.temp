@@ -95,6 +95,10 @@ public abstract class AbstractController {
 		model.addAttribute("showNavigation", Boolean.FALSE);
 	}
 
+	protected boolean hasRole(String role) {
+		return PersonalityContext.hasRole(role);
+	}
+
 	@Autowired
 	public void setBasketManager(BasketManager basketManager) {
 		this.basketManager = basketManager;

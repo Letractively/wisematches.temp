@@ -265,9 +265,10 @@
         <button id="add" type="submit">Создать</button>
     </#if>
 
-
+    <#if article??>
         <button id="active" type="button" value="${(!article.active)?string}"><#if article.active>Отключить<#else>
             Включить</#if></button>
+    </#if>
     </td>
 </tr>
 </table>
@@ -328,8 +329,7 @@
     };
 
     var recalculatePrice = function (val) {
-        var f = parseFloat(val);
-        return (f + f * 0.15 + 0.3).toFixed(2); // 0.15 - percents, 0.3 - fixed paypal comission
+        return ${exchangeManager.markupCalculator.getJavaScriptFunction("parseFloat(val)")};
     };
 
     $("#supplierPrice").change(function () {
@@ -355,6 +355,7 @@
         $(this).html(attr.name + ", " + attr.unit);
     });
 
+    <#if article??>
     $("#active").click(function () {
         var val = $(this).val() === 'true';
         bg.ui.lock(null, 'Влючение товара. Пожалуйста, подождите...');
@@ -395,4 +396,5 @@
             }
         });
     });
+    </#if>
 </script>
