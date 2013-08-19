@@ -1,4 +1,35 @@
 ============== WORKING ===============
+- Scale is not correct for not squar images
+- add new role: hidden - no trackers for this user.
+- In search view show inactive items somehow
+- In edit mode show article ID
+- In view mode articles sorted incorrect. The same article can be shown more when once.
+- In view mode search must be done by enter as well
+- Show hi resolution images by click in view
+- Price tracker
+- after search accessories (by keyword)
+- assign accessory to an article (don't have to open all articles)
+- Exception
+    Date	Thread	Level	Logger	MDC	Message
+    2013-08-18 16:10:00,685	http-bio-8080-exec-8	ERROR	billiongoods.web.Servlet		Handled exception received: Unknown entity: billiongoods.server.services.payment.Order
+    org.hibernate.MappingException: Unknown entity: billiongoods.server.services.payment.Order
+        at org.hibernate.internal.SessionFactoryImpl.getEntityPersister(SessionFactoryImpl.java:1092)
+        at org.hibernate.internal.SessionImpl.getOuterJoinLoadable(SessionImpl.java:1693)
+        at org.hibernate.internal.SessionImpl.list(SessionImpl.java:1599)
+        at org.hibernate.internal.CriteriaImpl.list(CriteriaImpl.java:374)
+        at billiongoods.core.search.entity.EntitySearchManager.searchEntities(EntitySearchManager.java:46)
+        at sun.reflect.GeneratedMethodAccessor170.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:606)
+        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:198)
+        at com.sun.proxy.$Proxy44.searchEntities(Unknown Source)
+        at billiongoods.server.web.servlet.mvc.maintain.OrderMaintainController.viewOrders(OrderMaintainController.java:43)
+        at billiongoods.server.web.servlet.mvc.maintain.OrderMaintainController$$FastClassByCGLIB$$655feb9b.invoke(<generated>)
+- Remove SKU from article description
+- Search by article
+- For admin all articles must be shown by default.
+- remove article button
 
 ============== ISSUES ================
 - Export order
