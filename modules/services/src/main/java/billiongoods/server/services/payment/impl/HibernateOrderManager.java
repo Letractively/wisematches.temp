@@ -32,7 +32,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
     private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderManager");
 
     public HibernateOrderManager() {
-        super(Order.class);
+        super(HibernateOrder.class);
     }
 
     @Override

@@ -123,6 +123,26 @@ public class HibernateBasketItem implements BasketItem {
             this.number = number;
             this.basket = basket;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Pk pk = (Pk) o;
+
+            if (number != pk.number) return false;
+            if (basket != null ? !basket.equals(pk.basket) : pk.basket != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = number;
+            result = 31 * result + (basket != null ? basket.hashCode() : 0);
+            return result;
+        }
     }
 
     @Override

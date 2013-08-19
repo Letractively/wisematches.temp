@@ -114,5 +114,25 @@ public class HibernateOrderItem implements OrderItem {
             this.number = number;
             this.orderId = orderId;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Pk pk = (Pk) o;
+
+            if (number != null ? !number.equals(pk.number) : pk.number != null) return false;
+            if (orderId != null ? !orderId.equals(pk.orderId) : pk.orderId != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = orderId != null ? orderId.hashCode() : 0;
+            result = 31 * result + (number != null ? number.hashCode() : 0);
+            return result;
+        }
     }
 }
