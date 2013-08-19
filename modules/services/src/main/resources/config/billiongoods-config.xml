@@ -38,6 +38,11 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
+    <bean id="relationshipManager" class="billiongoods.server.warehouse.impl.HibernateRelationshipManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="articleManager" ref="articleManager"/>
+    </bean>
+
     <bean id="basketManager" class="billiongoods.server.services.basket.impl.HibernateBasketManager">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="articleManager" ref="articleManager"/>

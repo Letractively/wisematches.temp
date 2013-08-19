@@ -81,6 +81,11 @@ public class AbstractArticleDescription implements ArticleDescription {
 	}
 
 	@Override
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+
+	@Override
 	public Category getCategory() {
 		return category;
 	}
@@ -150,6 +155,20 @@ public class AbstractArticleDescription implements ArticleDescription {
 
 	void incrementSoldCount() {
 		this.soldCount++;
+	}
+
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof AbstractArticleDescription)) return false;
+
+		AbstractArticleDescription that = (AbstractArticleDescription) o;
+		return !(id != null ? !id.equals(that.id) : that.id != null);
+	}
+
+	@Override
+	public final int hashCode() {
+		return id != null ? id.hashCode() : 0;
 	}
 
 	@Override

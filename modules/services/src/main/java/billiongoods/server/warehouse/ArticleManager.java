@@ -18,15 +18,13 @@ public interface ArticleManager extends SearchManager<ArticleDescription, Articl
 
 	Article createArticle(String name, String description, Category category,
 						  double price, Float primordialPrice, double weight, Date restockDate,
-						  String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
-						  List<Option> options, List<Property> properties,
+						  String previewImage, List<String> imageIds, List<Option> options, List<Property> properties,
 						  String referenceId, String referenceCode, Supplier wholesaler,
 						  double supplierPrice, Float supplierPrimordialPrice);
 
 	Article updateArticle(Integer id, String name, String description, Category category,
 						  double price, Float primordialPrice, double weight, Date restockDate,
-						  String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
-						  List<Option> options, List<Property> properties,
+						  String previewImage, List<String> imageIds, List<Option> options, List<Property> properties,
 						  String referenceId, String referenceCode, Supplier wholesaler,
 						  double supplierPrice, Float supplierPrimordialPrice);
 

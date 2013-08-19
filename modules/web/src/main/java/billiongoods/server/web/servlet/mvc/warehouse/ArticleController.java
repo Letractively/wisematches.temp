@@ -2,6 +2,7 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.server.warehouse.Article;
 import billiongoods.server.warehouse.ArticleManager;
+import billiongoods.server.warehouse.RelationshipManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/warehouse/article")
 public class ArticleController extends AbstractController {
 	private ArticleManager articleManager;
+	private RelationshipManager relationshipManager;
 
 	public ArticleController() {
 	}
@@ -37,6 +39,7 @@ public class ArticleController extends AbstractController {
 
 		model.addAttribute("article", article);
 		model.addAttribute("category", article.getCategory());
+		model.addAttribute("relationships", relationshipManager.getRelationships(article));
 
 		hideNavigation(model);
 
@@ -46,5 +49,10 @@ public class ArticleController extends AbstractController {
 	@Autowired
 	public void setArticleManager(ArticleManager articleManager) {
 		this.articleManager = articleManager;
+	}
+
+	@Autowired
+	public void setRelationshipManager(RelationshipManager relationshipManager) {
+		this.relationshipManager = relationshipManager;
 	}
 }
