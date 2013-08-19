@@ -303,18 +303,18 @@ bg.assistance.SupportForm = function () {
             bg.ui.lock(null, 'Отправка вашего сообщения. Пожалуйста, подождите...');
             var serializeObject = form.serializeObject();
             $.post("/assistance/question.ajax", JSON.stringify(serializeObject))
-                    .done(function (response) {
-                        if (response.success) {
-                            form.find("input[type=text], textarea").val("");
-                            bg.ui.unlock(null, "Сообщение успешно отправлено", false);
-                        } else {
-                            bg.ui.unlock(null, response.message, true);
-                        }
-                    })
-                    .fail(function (jqXHR, textStatus, errorThrown) {
-                        bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                                "Пожалуйста, попробуйте отправить сообщение позже.", true);
-                    });
+                .done(function (response) {
+                    if (response.success) {
+                        form.find("input[type=text], textarea").val("");
+                        bg.ui.unlock(null, "Сообщение успешно отправлено", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                        "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                });
         });
     }
 };
@@ -409,18 +409,18 @@ bg.warehouse.Order = function () {
     this.changeTracking = function (order, email, tracking, successor) {
         bg.ui.lock(null, 'Изменение подписки. Пожалуйста, подождите...');
         $.post("/warehouse/order/tracking.ajax", JSON.stringify({"order": order, "email": email, "enable": tracking}))
-                .done(function (response) {
-                    if (response.success) {
-                        successor();
-                        bg.ui.unlock(null, tracking ? "Вы успешно подписаны на обновления." : "Вы успешно отписаны от обновлений.", false);
-                    } else {
-                        bg.ui.unlock(null, response.message, true);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "Подписка не может быть изменения в связи с внутренней ошибкой. Если проблема " +
-                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
-                });
+            .done(function (response) {
+                if (response.success) {
+                    successor();
+                    bg.ui.unlock(null, tracking ? "Вы успешно подписаны на обновления." : "Вы успешно отписаны от обновлений.", false);
+                } else {
+                    bg.ui.unlock(null, response.message, true);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                bg.ui.unlock(null, "Подписка не может быть изменения в связи с внутренней ошибкой. Если проблема " +
+                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
+            });
     };
 };
 
@@ -435,25 +435,25 @@ bg.warehouse.Controller = function () {
             serializeObject['optionValues'] = [serializeObject['optionValues']];
         }
         $.post("/warehouse/basket/add.ajax", JSON.stringify(serializeObject))
-                .done(function (response) {
-                    if (response.success) {
-                        var bq = $("#basketQuantity");
-                        var qi = $("#shoppingForm").find("[name='quantity']");
-                        bq.text(parseInt(bq.text()) + parseInt(qi.val()));
+            .done(function (response) {
+                if (response.success) {
+                    var bq = $("#basketQuantity");
+                    var qi = $("#shoppingForm").find("[name='quantity']");
+                    bq.text(parseInt(bq.text()) + parseInt(qi.val()));
 
-                        bg.ui.unlock(null, "Товар добавлен в корзину", false);
-                    } else {
-                        bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
-                                "не исчезла, пожалуйста, свяжитесь с нами.", true);
-                    }
-                    if (callback != null && callback != undefined) {
-                        callback(response.success);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "Товар добавлен в корзину", false);
+                } else {
                     bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
-                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
-                });
+                        "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                }
+                if (callback != null && callback != undefined) {
+                    callback(response.success);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
+                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
+            });
     };
 
     $("#add").click(function (event) {
@@ -514,16 +514,16 @@ $(document).ready(function () {
     $('[title]').cluetip({ showTitle: false, activation: 'hover', local: true});
 
     $(".quickInfo").addClass('ui-state-default').hover(
-            function () {
-                if (!$(this).hasClass('ui-state-active')) {
-                    $(this).attr('class', 'quickInfo ui-state-hover');
-                }
-            },
-            function () {
-                if (!$(this).hasClass('ui-state-active')) {
-                    $(this).attr('class', 'quickInfo ui-state-default');
-                }
-            });
+        function () {
+            if (!$(this).hasClass('ui-state-active')) {
+                $(this).attr('class', 'quickInfo ui-state-hover');
+            }
+        },
+        function () {
+            if (!$(this).hasClass('ui-state-active')) {
+                $(this).attr('class', 'quickInfo ui-state-default');
+            }
+        });
 
     var activeQuickInfo = undefined;
     $(".quickInfo.ajax a").cluetip({
@@ -668,30 +668,30 @@ $(document).ready(function () {
     });
 
     $('.dropdown')
-            .mouseenter(function () {
-                var submenu = $('.sublinks').stop(false, true).hide();
-                window.clearTimeout(timeoutID);
+        .mouseenter(function () {
+            var submenu = $('.sublinks').stop(false, true).hide();
+            window.clearTimeout(timeoutID);
 
-                submenu.css({
-                    width: $(this).width() + 20 + 'px',
-                    top: $(this).offset().top + $(this).height() + 7 + 'px',
-                    left: $(this).offset().left + 'px'
-                });
-
-                submenu.stop().slideDown(300);
-
-                submenu.mouseleave(function () {
-                    $(this).slideUp(300);
-                });
-
-                submenu.mouseenter(function () {
-                    window.clearTimeout(timeoutID);
-                });
-
-            })
-            .mouseleave(function () {
-                timeoutID = window.setTimeout(function () {
-                    $('.sublinks').stop(false, true).slideUp(300);
-                }, 250);
+            submenu.css({
+                width: $(this).width() + 20 + 'px',
+                top: $(this).offset().top + $(this).height() + 7 + 'px',
+                left: $(this).offset().left + 'px'
             });
+
+            submenu.stop().slideDown(300);
+
+            submenu.mouseleave(function () {
+                $(this).slideUp(300);
+            });
+
+            submenu.mouseenter(function () {
+                window.clearTimeout(timeoutID);
+            });
+
+        })
+        .mouseleave(function () {
+            timeoutID = window.setTimeout(function () {
+                $('.sublinks').stop(false, true).slideUp(300);
+            }, 250);
+        });
 });

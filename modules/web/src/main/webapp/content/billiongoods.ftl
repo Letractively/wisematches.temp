@@ -8,6 +8,8 @@
 <#-- @ftlvariable name="showNavigation" type="java.lang.Boolean" -->
 <#include "/core.ftl">
 
+<#assign libsVersion="1.2.0"/>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title><@message code=title!"title.default"/><#if titleExtension?has_content>${titleExtension}</#if></title>
@@ -25,8 +27,8 @@
     <script type="text/javascript" src="<@bg.ui.static "js/jquery.timers-1.2.0.js"/>"></script>
     <script type="text/javascript" src="<@bg.ui.static "js/json2-2.1.8.min.js"/>"></script>
 
-    <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/billiongoods-1.1.0.css"/>"/>
-    <script type="text/javascript" src="<@bg.ui.static "js/billiongoods-1.1.0.js"/>"></script>
+    <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/billiongoods-${libsVersion}.css"/>"/>
+    <script type="text/javascript" src="<@bg.ui.static "js/billiongoods-${libsVersion}.js"/>"></script>
 
 <@bg.security.unauthorized "moderator">
     <script type="text/javascript">
