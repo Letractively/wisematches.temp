@@ -3,7 +3,7 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--<import resource="notifications-config.xml"/>-->
+    <import resource="cache-config.xml"/>
 
     <bean id="serverDescriptor" class="billiongoods.server.services.ServerDescriptor">
         <constructor-arg name="webHostName" value="${server.web.host}"/>

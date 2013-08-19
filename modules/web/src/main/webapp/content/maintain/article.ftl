@@ -21,6 +21,16 @@
         Внимание! Товар выключен!
     </td>
 </tr>
+<tr>
+    <td valign="top"><label for="category">Артикул: </label></td>
+    <td>
+        <@bg.ui.input path="form.id" fieldType="hidden">
+            <#assign articleId=bg.ui.statusValue!""/>
+            <#if bg.ui.statusValue?has_content><a href="/warehouse/article/${bg.ui.statusValue}"
+                                                  target="_blank">${messageSource.getArticleCode(article)}</a></#if>
+        </@bg.ui.input>
+    </td>
+</tr>
 </#if>
 <tr>
     <td valign="top"><label for="category">Категория: </label></td>
@@ -34,12 +44,6 @@
     <@bg.ui.field path="form.name">
         <textarea rows="3" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
     </@bg.ui.field>
-
-    <@bg.ui.input path="form.id" fieldType="hidden">
-        <#assign articleId=bg.ui.statusValue!""/>
-        <#if bg.ui.statusValue?has_content><a href="/warehouse/article/${bg.ui.statusValue}"
-                                              target="_blank">посмотреть</a></#if>
-    </@bg.ui.input>
     </td>
 </tr>
 <tr>

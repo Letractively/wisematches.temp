@@ -1,30 +1,8 @@
-- Basket is loaded every time for each request (to get it's size)
-
+- Extended
 - Scale is not correct for not squar images
-- In edit mode show article ID
-- In edit mode show category ID
 - Price tracker
-- after search accessories (by keyword)
 - assign accessory to an article (don't have to open all articles)
-- Exception
-    Date	Thread	Level	Logger	MDC	Message
-    2013-08-18 16:10:00,685	http-bio-8080-exec-8	ERROR	billiongoods.web.Servlet		Handled exception received: Unknown entity: billiongoods.server.services.payment.Order
-    org.hibernate.MappingException: Unknown entity: billiongoods.server.services.payment.Order
-        at org.hibernate.internal.SessionFactoryImpl.getEntityPersister(SessionFactoryImpl.java:1092)
-        at org.hibernate.internal.SessionImpl.getOuterJoinLoadable(SessionImpl.java:1693)
-        at org.hibernate.internal.SessionImpl.list(SessionImpl.java:1599)
-        at org.hibernate.internal.CriteriaImpl.list(CriteriaImpl.java:374)
-        at billiongoods.core.search.entity.EntitySearchManager.searchEntities(EntitySearchManager.java:46)
-        at sun.reflect.GeneratedMethodAccessor170.invoke(Unknown Source)
-        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-        at java.lang.reflect.Method.invoke(Method.java:606)
-        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
-        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:198)
-        at com.sun.proxy.$Proxy44.searchEntities(Unknown Source)
-        at billiongoods.server.web.servlet.mvc.maintain.OrderMaintainController.viewOrders(OrderMaintainController.java:43)
-        at billiongoods.server.web.servlet.mvc.maintain.OrderMaintainController$$FastClassByCGLIB$$655feb9b.invoke(<generated>)
 - Search by article
-- remove article ability
 
 ============= PLAN ====================
 - Show hi resolution images by click in view
@@ -38,6 +16,9 @@
 
 ============= DONE ====================
 19.08
++ In edit mode show article ID
++ In edit mode show category ID
++ Basket is loaded every time for each request: cache abstraction added to basket
 + In view mode search must be done by enter as well
 + In view show inactive items somehow (red background)
 + add new role: moderator - no trackers for this user.
