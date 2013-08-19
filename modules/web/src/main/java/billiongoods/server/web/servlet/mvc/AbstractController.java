@@ -3,8 +3,6 @@ package billiongoods.server.web.servlet.mvc;
 import billiongoods.core.Personality;
 import billiongoods.core.security.PersonalityContext;
 import billiongoods.server.MessageFormatter;
-import billiongoods.server.services.basket.Basket;
-import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.basket.BasketManager;
 import billiongoods.server.web.servlet.sdo.ServiceResponseFactory;
 import billiongoods.server.web.servlet.view.StaticContentGenerator;
@@ -75,16 +73,7 @@ public abstract class AbstractController {
 
 	@ModelAttribute("basketQuantity")
 	public int getBasketQuantity() {
-		final Basket basket = basketManager.getBasket(getPrincipal());
-		if (basket == null) {
-			return 0;
-		}
-
-		int quantity = 0;
-		for (BasketItem basketItem : basket) {
-			quantity += basketItem.getQuantity();
-		}
-		return quantity;
+		return basketManager.getBasketSize(getPrincipal());
 	}
 
 	protected void hideWarehouse(Model model) {

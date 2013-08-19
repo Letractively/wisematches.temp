@@ -6,12 +6,21 @@
 
 <div style="padding: 10px; border: 1px solid gray;">
     <form action="/maintain/category" method="post">
-    <@bg.ui.input path="form.id" fieldType="hidden"/>
 
         <table>
             <tr>
                 <td valign="top">
                     <table style="width: 100%">
+                    <#if category??>
+                        <tr>
+                            <td valign="top"><label for="id">Номер: </label></td>
+                            <td>
+                                <@bg.ui.input path="form.id" fieldType="hidden">
+                                        ${bg.ui.status.value!""}
+                                </@bg.ui.input>
+                            </td>
+                        </tr>
+                    </#if>
                         <tr>
                             <td valign="top"><label for="name">Имя: </label></td>
                             <td>
