@@ -21,12 +21,12 @@ public class FileImageResolver implements ImageResolver {
 
 	@Override
 	public String resolveURI(ArticleDescription article, String code, ImageSize size) {
-		return article.getCategory().getId() + File.separator + article.getId() + File.separator + article.getId() + "_" + code + (size != null ? "_" + size.getCode() : "") + ".jpg";
+		return article.getCategoryId() + File.separator + article.getId() + File.separator + article.getId() + "_" + code + (size != null ? "_" + size.getCode() : "") + ".jpg";
 	}
 
 	@Override
 	public Path resolvePath(ArticleDescription article) {
-		return imagesFolder.resolve(article.getCategory().getId() + File.separator + article.getId());
+		return imagesFolder.resolve(article.getCategoryId() + File.separator + article.getId());
 	}
 
 	@Override

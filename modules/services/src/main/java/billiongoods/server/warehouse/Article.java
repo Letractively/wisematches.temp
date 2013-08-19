@@ -40,11 +40,4 @@ public interface Article extends ArticleDescription {
 	 * @return the characters for this article.
 	 */
 	List<Property> getProperties();
-
-	/**
-	 * Get accessories for this articles or {@code null} ir there is no one.
-	 *
-	 * @return accessories for this articles or {@code null} ir there is no one.
-	 */
-	List<ArticleDescription> getAccessories();
 }

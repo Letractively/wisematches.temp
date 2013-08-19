@@ -141,14 +141,6 @@ public class ArticleMaintainController extends AbstractController {
 			}
 			form.setPropertyIds(propIds);
 			form.setPropertyValues(propValues);
-
-			index = 0;
-			final List<ArticleDescription> accessories = article.getAccessories();
-			final Integer[] ids = new Integer[accessories.size()];
-			for (ArticleDescription accessory : accessories) {
-				ids[index++] = accessory.getId();
-			}
-			form.setAccessories(ids);
 		}
 
 		if (form.getCategory() != null) {
@@ -205,6 +197,7 @@ public class ArticleMaintainController extends AbstractController {
 				properties.add(new Property(attributeManager.getAttribute(propertyId), propertyValue));
 			}
 		}
+/*
 
 		final Integer[] accessories = form.getAccessories();
 		final List<ArticleDescription> descriptions = new ArrayList<>();
@@ -218,6 +211,7 @@ public class ArticleMaintainController extends AbstractController {
 				descriptions.add(articleDescription);
 			}
 		}
+*/
 
 		try {
 			if (!errors.hasErrors()) {
@@ -225,13 +219,13 @@ public class ArticleMaintainController extends AbstractController {
 				if (form.getId() == null) {
 					article = articleManager.createArticle(form.getName(), form.getDescription(), category,
 							form.getPrice(), form.getPrimordialPrice(), form.getWeight(), restockDate,
-							form.getPreviewImage(), form.getEnabledImages(), descriptions, options, properties,
+							form.getPreviewImage(), form.getEnabledImages(), options, properties,
 							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
 							form.getSupplierPrimordialPrice());
 				} else {
 					article = articleManager.updateArticle(form.getId(), form.getName(), form.getDescription(), category,
 							form.getPrice(), form.getPrimordialPrice(), form.getWeight(), restockDate,
-							form.getPreviewImage(), form.getEnabledImages(), descriptions, options, properties,
+							form.getPreviewImage(), form.getEnabledImages(), options, properties,
 							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
 							form.getSupplierPrimordialPrice());
 				}

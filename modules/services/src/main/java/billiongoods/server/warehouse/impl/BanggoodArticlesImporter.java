@@ -36,7 +36,7 @@ public class BanggoodArticlesImporter {
 
 			final double price1 = exchangeManager.getMarkupCalculator().calculateFinalPrice(price);
 
-			articleManager.createArticle(name, desc, category, price1, null, weight, null, null, null, null, null, null, id, sku, Supplier.BANGGOOD, price, null);
+			articleManager.createArticle(name, desc, category, price1, null, weight, null, null, null, null, null, id, sku, Supplier.BANGGOOD, price, null);
 		}
 	}
 

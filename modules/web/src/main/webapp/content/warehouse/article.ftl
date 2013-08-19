@@ -1,4 +1,5 @@
 <#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Article" -->
+<#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationships" -->
 
 <#include "/core.ftl">
 
@@ -116,31 +117,34 @@
             <td colspan="2">
 
             <#if article.description?has_content>
-                <@bg.ui.panel "Описание" "description" "description" "description">${article.description!""}</@bg.ui.panel>
+                <@bg.ui.panel "Описание" "description">${article.description!""}</@bg.ui.panel>
             </#if>
 
-            <#if article.accessories?has_content>
-                <@bg.ui.panel "Аксессуары" "accessories" "accessories" "accessories">
-                    <table>
-                        <#list article.accessories as a>
-                            <@bg.ui.tableSplit article.accessories?size 2 a_index>
-                                <td valign="top">
-                                    <div class="article-item list">
-                                        <div class="image">
-                                            <@bg.link.article a><img
-                                                    alt="${a.name}"
-                                                    title="${a.name}"
-                                                    src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
-                                                    width="75px" height="75px"/></@bg.link.article>
-                                        </div>
-                                        <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                                        <div class="price"><@bg.ui.price a.price/></div>
-                                </td>
-                            </@bg.ui.tableSplit>
-                        </#list>
-                    </table>
-                </@bg.ui.panel>
-            </#if>
+            <#list RelationshipType.values() as t>
+                <#assign articles=relationships.getAssociations(t)!""/>
+                <#if articles?has_content>
+                    <@bg.ui.panel messageSource.getMessage("relationship.${t.name()?lower_case}.label", locale) t.name()?lower_case>
+                        <table>
+                            <#list articles as a>
+                                <@bg.ui.tableSplit articles?size 2 a_index>
+                                    <td valign="top">
+                                        <div class="article-item list">
+                                            <div class="image">
+                                                <@bg.link.article a><img
+                                                        alt="${a.name}"
+                                                        title="${a.name}"
+                                                        src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
+                                                        width="75px" height="75px"/></@bg.link.article>
+                                            </div>
+                                            <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
+                                            <div class="price"><@bg.ui.price a.price/></div>
+                                    </td>
+                                </@bg.ui.tableSplit>
+                            </#list>
+                        </table>
+                    </@bg.ui.panel>
+                </#if>
+            </#list>
             </td>
         </tr>
     </table>

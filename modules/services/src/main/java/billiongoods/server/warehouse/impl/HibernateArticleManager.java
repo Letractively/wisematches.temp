@@ -72,14 +72,14 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Transactional(propagation = Propagation.MANDATORY)
 	public Article createArticle(String name, String description, Category category,
 								 double price, Float primordialPrice, double weight, Date restockDate,
-								 String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
+								 String previewImage, List<String> imageIds,
 								 List<Option> options, List<Property> properties,
 								 String referenceId, String referenceCode, Supplier wholesaler,
 								 double supplierPrice, Float supplierPrimordialPrice) {
 
 		final HibernateArticle article = new HibernateArticle();
 		updateArticle(article, name, description, category, price, primordialPrice, weight,
-				restockDate, previewImage, imageIds, accessories, options, properties,
+				restockDate, previewImage, imageIds, options, properties,
 				referenceId, referenceCode, wholesaler, supplierPrice, supplierPrimordialPrice);
 
 
@@ -92,7 +92,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Transactional(propagation = Propagation.MANDATORY)
 	public Article updateArticle(Integer id, String name, String description, Category category,
 								 double price, Float primordialPrice, double weight, Date restockDate,
-								 String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
+								 String previewImage, List<String> imageIds,
 								 List<Option> options, List<Property> properties,
 								 String referenceId, String referenceCode, Supplier wholesaler,
 								 double supplierPrice, Float supplierPrimordialPrice) {
@@ -104,7 +104,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 		}
 
 		updateArticle(article, name, description, category, price, primordialPrice, weight,
-				restockDate, previewImage, imageIds, accessories, options, properties,
+				restockDate, previewImage, imageIds, options, properties,
 				referenceId, referenceCode, wholesaler, supplierPrice, supplierPrimordialPrice);
 
 		session.update(article);
@@ -114,7 +114,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	private void updateArticle(HibernateArticle article,
 							   String name, String description, Category category,
 							   double price, Float primordialPrice, double weight, Date restockDate,
-							   String previewImage, List<String> imageIds, List<ArticleDescription> accessories,
+							   String previewImage, List<String> imageIds,
 							   List<Option> options, List<Property> properties,
 							   String referenceId, String referenceCode, Supplier wholesaler,
 							   double supplierPrice, Float supplierPrimordialPrice) {
@@ -127,7 +127,6 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 		article.setRestockDate(restockDate);
 		article.setPreviewImageId(previewImage);
 		article.setImageIds(imageIds);
-		article.setAccessories(accessories);
 		article.setOptions(options);
 		article.setProperties(properties);
 

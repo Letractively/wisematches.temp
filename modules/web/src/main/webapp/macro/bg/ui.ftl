@@ -23,7 +23,7 @@
 <#macro price v c="g" r=exchangeManager.exchangeRate><@usd v/> <span class="rub">(~<@rub v*r c/>)</span></#macro>
 
 
-<#macro panel caption name="" id="" class="">
+<#macro panel caption id="" class=id name=id>
 <div <#if id?has_content>id="${id}"</#if> class="info-panel<#if class?has_content> ${class}"</#if>>
     <#if name?has_content><a name="${name}"></a></#if>
 
