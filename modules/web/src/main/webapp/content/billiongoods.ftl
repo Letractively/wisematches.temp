@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/billiongoods-1.1.0.css"/>"/>
     <script type="text/javascript" src="<@bg.ui.static "js/billiongoods-1.1.0.js"/>"></script>
 
+<@bg.security.unauthorized "moderator">
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '${analyticsCode!""}']);
@@ -42,6 +43,7 @@
             s.parentNode.insertBefore(ga, s);
         })();
     </script>
+</@bg.security.unauthorized>
 </head>
 <body>
 

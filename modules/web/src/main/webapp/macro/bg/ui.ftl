@@ -50,7 +50,7 @@
     <#list articles as a>
         <@bg.ui.tableSplit articles?size 4 a_index>
             <td valign="top" width="25%">
-                <div class="article-item grid">
+                <div class="article-item grid<#if !a.active> inactive</#if>">
                     <div class="image">
                         <@bg.link.article a><img
                                 alt="${a.name}"
@@ -82,7 +82,8 @@
                     Показано ${itemsTableForm.page + 1} - ${itemsTableForm.page + articles?size}
                     из ${itemsTableForm.totalCount} элементов
                 <#else>
-                    В этой категории нет ни одного элемента
+                    В этой категории нет ни одного элемента <#if itemsTableForm.query?has_content>по ключевому
+                    слову <strong>${itemsTableForm.query}</strong></#if>
                 </#if>
             </div>
 
@@ -106,7 +107,7 @@
                 <ul>
                     <#list [12,24,36] as i>
                         <li class="bg-ui-button<#if itemsTableForm.count==i> selected</#if>">
-                            <a href="?<@tableNavigationParams itemsTableForm.page i itemsTableForm.sort/>">${i}</a>
+                            <a href="?<@tableNavigationParams itemsTableForm.page i itemsTableForm.sort itemsTableForm.query!""/>">${i}</a>
                         </li>
                     </#list>
                 </ul>
@@ -130,9 +131,14 @@
                 <@articlesView articles 'grid'/>
             <#else>
                 <div style="text-align: center">
-                    В этой категории еще нет ни одного товара но мы работает над их добавлением. Попробуйте зайте
-                    завтра, у
-                    нас очень редко бывают пустые категории.
+                    <#if itemsTableForm.query?has_content>
+                        В этой категории нет ни одного товара с ключевым словом <strong>${itemsTableForm.query}</strong>.
+                        Попробуйте изменить либо убрать ключевое слово из поиска.
+                    <#else>
+                        В этой категории еще нет ни одного товара но мы работает над их добавлением. Попробуйте зайте
+                        завтра, у
+                        нас очень редко бывают пустые категории.
+                    </#if>
                 </div>
             </#if>
         </div>
@@ -208,11 +214,11 @@
     </#if>
 </#macro>
 
-<#macro tableNavigationParams page count sort>page=${page}&count=${count}&sort=${sort}</#macro>
+<#macro tableNavigationParams page count sort query>page=${page}&count=${count}&sort=${sort}<#if query?has_content>&query=${query}</#if></#macro>
 
 <#macro tableNavigationPageLink itemsTableForm page>
 <li class="bg-ui-button<#if page==itemsTableForm.page> selected</#if>">
-    <a href="?<@tableNavigationParams page itemsTableForm.count itemsTableForm.sort/>"><#nested/></a>
+    <a href="?<@tableNavigationParams page itemsTableForm.count itemsTableForm.sort itemsTableForm.query!""/>"><#nested/></a>
 </li>
 </#macro>
 

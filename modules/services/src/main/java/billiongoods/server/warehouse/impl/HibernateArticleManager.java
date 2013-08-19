@@ -1,10 +1,12 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.core.search.Orders;
 import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.warehouse.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -164,6 +166,12 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 	@Override
 	protected void applyProjections(Criteria criteria, ArticleContext context) {
+	}
+
+	@Override
+	protected void applyOrders(Criteria criteria, Orders orders) {
+		super.applyOrders(criteria, orders);
+		criteria.addOrder(Order.asc("id"));// always sort by id at the end
 	}
 
 	@Override

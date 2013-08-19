@@ -10,11 +10,11 @@
         </#list>
         <@bg.link.categoryLink category/>
 
-        <@bg.security.authorize "admin">
+        <@bg.security.authorized "moderator">
         <div style="display: inline-block; float: right">
             <a href="/maintain/category?id=${category.id}">Редактировать</a>
         </div>
-        </@bg.security.authorize>
+        </@bg.security.authorized>
     </@bg.ui.whereabouts>
 
     <#if category.description?has_content>

@@ -826,6 +826,10 @@ button.bg-ui-button.selected {
     border-bottom: 1px dashed #ebebeb;
 }
 
+.article-item.inactive .image {
+    background: red;
+}
+
 .article-item .image img {
     border: 1px solid #ebebeb;
 }

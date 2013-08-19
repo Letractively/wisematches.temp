@@ -1,7 +1,8 @@
 <#include "/macro/message.ftl"/>
 
-<#macro observed nbsp=false>
-    <#if !restriction??><#nested><#elseif nbsp>&nbsp;</#if>
-</#macro>
+<#macro permitted role><#nested springSecurityContext.hasRole(role)/></#macro>
 
-<#macro authorize granted><#if springSecurityContext.hasRole(granted)><#nested/></#if></#macro>
+<#macro authorized role><@permitted role;allowed><#if allowed><#nested/></#if></@permitted></#macro>
+
+<#macro unauthorized role><@permitted role;allowed><#if !allowed><#nested/></#if></@permitted></#macro>
+

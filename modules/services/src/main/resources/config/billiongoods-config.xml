@@ -46,6 +46,7 @@
 
     <bean id="articlesImporter" class="billiongoods.server.warehouse.impl.BanggoodArticlesImporter">
         <property name="articleManager" ref="articleManager"/>
+        <property name="exchangeManager" ref="exchangeManager"/>
     </bean>
 
     <bean id="payPalTransactionManager" class="billiongoods.server.services.paypal.impl.HibernateTransactionManager">
