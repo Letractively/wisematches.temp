@@ -63,7 +63,7 @@
     <td><@bg.ui.input path="form.supplierPrimordialPrice"/></td>
 </tr>
 <tr>
-    <td><label for="supplierReferenceCode">Код поставщика: </label></td>
+    <td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
     <td><@bg.ui.input path="form.supplierReferenceCode"/></td>
 </tr>
 <tr>

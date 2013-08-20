@@ -49,6 +49,13 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
+    <bean id="priceValidator" class="billiongoods.server.warehouse.impl.BanggoodPriceValidator">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="articleManager" ref="articleManager"/>
+        <property name="categoryManager" ref="catalogManager"/>
+        <property name="exchangeManager" ref="exchangeManager"/>
+    </bean>
+
     <bean id="articlesImporter" class="billiongoods.server.warehouse.impl.BanggoodArticlesImporter">
         <property name="articleManager" ref="articleManager"/>
         <property name="exchangeManager" ref="exchangeManager"/>

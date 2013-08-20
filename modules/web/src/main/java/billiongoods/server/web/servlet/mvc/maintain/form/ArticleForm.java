@@ -31,7 +31,7 @@ public class ArticleForm {
 
 	private double price;
 
-	private Float primordialPrice;
+	private Double primordialPrice;
 
 	private double weight;
 
@@ -53,7 +53,7 @@ public class ArticleForm {
 
 	private double supplierPrice;
 
-	private Float supplierPrimordialPrice;
+	private Double supplierPrimordialPrice;
 
 	private String supplierReferenceId;
 
@@ -119,11 +119,11 @@ public class ArticleForm {
 		this.price = price;
 	}
 
-	public Float getPrimordialPrice() {
+	public Double getPrimordialPrice() {
 		return primordialPrice;
 	}
 
-	public void setPrimordialPrice(Float primordialPrice) {
+	public void setPrimordialPrice(Double primordialPrice) {
 		this.primordialPrice = primordialPrice;
 	}
 
@@ -207,11 +207,11 @@ public class ArticleForm {
 		this.supplierPrice = supplierPrice;
 	}
 
-	public Float getSupplierPrimordialPrice() {
+	public Double getSupplierPrimordialPrice() {
 		return supplierPrimordialPrice;
 	}
 
-	public void setSupplierPrimordialPrice(Float supplierPrimordialPrice) {
+	public void setSupplierPrimordialPrice(Double supplierPrimordialPrice) {
 		this.supplierPrimordialPrice = supplierPrimordialPrice;
 	}
 

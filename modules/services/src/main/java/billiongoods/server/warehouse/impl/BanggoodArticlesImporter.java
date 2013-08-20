@@ -2,9 +2,12 @@ package billiongoods.server.warehouse.impl;
 
 import au.com.bytecode.opencsv.CSVReader;
 import billiongoods.server.services.price.ExchangeManager;
+import billiongoods.server.warehouse.Article;
 import billiongoods.server.warehouse.ArticleManager;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Supplier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +20,8 @@ public class BanggoodArticlesImporter {
 	private ArticleManager articleManager;
 	private ExchangeManager exchangeManager;
 
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.BanggoodArticlesImporter");
+
 	public BanggoodArticlesImporter() {
 	}
 
@@ -27,8 +32,8 @@ public class BanggoodArticlesImporter {
 		while ((nextLine = reader.readNext()) != null) {
 			final String sku = nextLine[0];
 			final String name = nextLine[1];
-			final double price = Float.parseFloat(nextLine[3]);
-			final double weight = Float.parseFloat(nextLine[4]);
+			final double price = Double.parseDouble(nextLine[3]);
+			final double weight = Double.parseDouble(nextLine[4]);
 			final String desc = nextLine[5];
 
 			String id = nextLine[6];
@@ -36,7 +41,9 @@ public class BanggoodArticlesImporter {
 
 			final double price1 = exchangeManager.getMarkupCalculator().calculateFinalPrice(price);
 
-			articleManager.createArticle(name, desc, category, price1, null, weight, null, null, null, null, null, id, sku, Supplier.BANGGOOD, price, null);
+			final Article article = articleManager.createArticle(name, desc, category, price1, null, weight, null, null, null, null, null, id, sku, Supplier.BANGGOOD, price, null);
+
+			log.info("Article imported: {}", article.getId());
 		}
 	}
 

@@ -44,7 +44,7 @@ public interface ArticleDescription {
 	 *
 	 * @return the primordial supplier's price or {@code null} if there is no any discount.
 	 */
-	Float getPrimordialPrice();
+	Double getPrimordialPrice();
 
 
 	/**

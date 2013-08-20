@@ -22,6 +22,13 @@ public class MarkupCalculator {
 		return PriceMath.round(price + price * markupPercents + markupFixed);
 	}
 
+	public Double calculateFinalPrice(Double price) {
+		if (price == null) {
+			return null;
+		}
+		return calculateFinalPrice(price.doubleValue());
+	}
+
 	public String getJavaScriptFunction(String price) {
 		return "(function(price) {return (price + price * " + markupPercents + " + " + markupFixed + ").toFixed(2)})(" + price + ")";
 	}
