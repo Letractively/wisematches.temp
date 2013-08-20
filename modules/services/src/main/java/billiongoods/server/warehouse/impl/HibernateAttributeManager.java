@@ -68,7 +68,6 @@ public class HibernateAttributeManager implements AttributeManager, Initializing
 		final Session session = sessionFactory.getCurrentSession();
 		final HibernateAttribute a = new HibernateAttribute(name, unit);
 		session.save(a);
-		session.evict(a);
 		attributeMap.put(a.getId(), a);
 		return a;
 	}
@@ -85,7 +84,6 @@ public class HibernateAttributeManager implements AttributeManager, Initializing
 		ha.setName(name);
 		ha.setUnit(unit);
 		session.update(ha);
-		session.evict(ha);
 		attributeMap.put(ha.getId(), ha);
 		return ha;
 	}

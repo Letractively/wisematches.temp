@@ -77,11 +77,11 @@ public abstract class AbstractController {
 	}
 
 	protected void hideWarehouse(Model model) {
-		model.addAttribute("showWarehouse", Boolean.FALSE);
+		model.addAttribute("hideWarehouse", Boolean.TRUE);
 	}
 
 	protected void hideNavigation(Model model) {
-		model.addAttribute("showNavigation", Boolean.FALSE);
+		model.addAttribute("hideNavigation", Boolean.TRUE);
 	}
 
 	protected boolean hasRole(String role) {

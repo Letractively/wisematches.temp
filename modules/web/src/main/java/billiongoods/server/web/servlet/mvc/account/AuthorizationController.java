@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -53,11 +54,15 @@ public class AuthorizationController extends AbstractController {
 	public AuthorizationController() {
 	}
 
+	@ModelAttribute("hideNavigation")
+	public boolean isHideNavigation() {
+		return true;
+	}
+
 	@RequestMapping("login")
 	public String loginPage(@ModelAttribute("login") AccountLoginForm login,
-							@ModelAttribute("registration") AccountRegistrationForm register) {
-
-
+							@ModelAttribute("registration") AccountRegistrationForm register, Model model) {
+		hideNavigation(model);
 		return "/content/account/authorization";
 	}
 

@@ -8,18 +8,22 @@
     </div>
 
     <div>
-        <a href="/maintain/article">Создать Товар</a>
+        <a href="/maintain/group">Создать Группу</a>
     </div>
 
+    <div>&nbsp;</div>
+
     <div>
-        <a href="/maintain/group">Создать Группу</a>
+        <a href="/maintain/article">Создать Товар</a>
     </div>
 
     <div>
         <a href="/maintain/article/import">Загрузить Товары</a>
     </div>
 
-    <div style="padding-top: 10px">
-        <a href="/maintain/order">Текущие заказы</a>
+    <div>&nbsp;</div>
+
+    <div>
+    <a href="/maintain/order">Текущие заказы</a>
     </div>
 </div>

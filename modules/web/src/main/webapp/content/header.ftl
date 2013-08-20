@@ -23,6 +23,11 @@
         -->
 
             <div class="table-cell header-links">
+            <@bg.security.authorized "moderator">
+                <div><a href="/maintain/main">Поддержка</a></div>
+                <div class="divider">|</div>
+            </@bg.security.authorized>
+
                 <div><a href="/warehouse/order/status">Отслеживание заказов</a></div>
 
                 <div class="divider">|</div>
