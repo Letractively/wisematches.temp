@@ -41,6 +41,8 @@ public class CategoryMaintainController extends AbstractController {
 		if (category != null) {
 			form.setName(category.getName());
 			form.setDescription(category.getDescription());
+			form.setPosition(category.getPosition());
+
 			if (category.getParent() != null) {
 				form.setParent(category.getParent().getId());
 			} else {

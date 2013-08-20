@@ -7,27 +7,29 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface Category {
-    Integer getId();
+	Integer getId();
+
+	String getName();
+
+	String getDescription();
 
 
-    int getLevel();
+	int getLevel();
 
-    String getName();
-
-    String getDescription();
+	int getPosition();
 
 
-    boolean isFinal();
+	boolean isFinal();
 
-    boolean isActive();
-
-
-    Category getParent();
-
-    Genealogy getGenealogy();
+	boolean isActive();
 
 
-    List<Category> getChildren();
+	Category getParent();
 
-    Set<Attribute> getAttributes();
+	Genealogy getGenealogy();
+
+
+	List<Category> getChildren();
+
+	Set<Attribute> getAttributes();
 }
