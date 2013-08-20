@@ -132,7 +132,8 @@ public class HibernateCategory implements Category {
 		return attributes;
 	}
 
-	int getPosition() {
+	@Override
+	public int getPosition() {
 		return position;
 	}
 
@@ -153,7 +154,7 @@ public class HibernateCategory implements Category {
 	}
 
 	void initialize(AttributeManager attributeManager) {
-		Collections.sort(children, COMPARATOR);
+		Collections.sort(children, DefaultCatalog.COMPARATOR);
 
 		for (Integer attributeId : attributeIds) {
 			final Attribute attribute = attributeManager.getAttribute(attributeId);
@@ -207,12 +208,19 @@ public class HibernateCategory implements Category {
 		}
 	}
 
-	static final Comparator<Category> COMPARATOR = new Comparator<Category>() {
-		@Override
-		public int compare(Category o1, Category o2) {
-			return ((HibernateCategory) o1).position - ((HibernateCategory) o2).position;
-		}
-	};
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof HibernateCategory)) return false;
+
+		HibernateCategory category = (HibernateCategory) o;
+		return !(id != null ? !id.equals(category.id) : category.id != null);
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
 
 	@Override
 	public String toString() {

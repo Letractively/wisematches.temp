@@ -52,7 +52,6 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 				rootCategories.add(category);
 			}
 		}
-		Collections.sort(rootCategories, HibernateCategory.COMPARATOR);
 		catalog.setRootCategories(rootCategories);
 
 		log.info("Found {} categories", categoryMap.size());
@@ -77,7 +76,6 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 		final HibernateCategory i = new HibernateCategory(name, description, p, position, attributes);
 
 		session.save(i);
-		session.evict(i);
 		categoryMap.put(i.getId(), i);
 
 		if (parent == null) {
@@ -92,13 +90,13 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 	public Category updateCategory(Integer id, String name, String description, Set<Attribute> attributes, Category parent, int position) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateCategory hc = categoryMap.get(id);
+		final HibernateCategory hc = (HibernateCategory) session.get(HibernateCategory.class, id);
 		if (hc == null) {
 			throw new IllegalArgumentException("There is no category: " + id);
 		}
 
 		final Category parent1 = hc.getParent();
-		if (parent1 != null) {
+		if (parent1 == null) {
 			catalog.removeRootCategory(hc);
 		}
 
@@ -108,8 +106,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 		hc.setPosition(position);
 		hc.setAttributes(attributes);
 
-		session.merge(hc);
-		session.evict(hc);
+		session.update(hc);
 		categoryMap.put(hc.getId(), hc);
 
 		if (hc.getParent() == null) {
