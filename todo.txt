@@ -1,13 +1,12 @@
-- Scale is not correct for not squar images
 - Price tracker
-- Search by article
-- Sort main view items by date
+- Show discount label for a product
 
 ============= PLAN ====================
+- Scale is not correct for not squar images
+- Search by article
 - Show hi resolution images by click in view
 - Export order
 - Gadgets categories by prise: $0.99, $1.99, $2.99, $4.99, $9.99, $15.99, $20.99+
-- Show discount label for a product
 
 - Accounts and personal info
 - Hot products view
@@ -15,10 +14,11 @@
 
 ============= DONE ====================
 20.08
++ Sort main view items by date // type was date instead of datetime
 + Category update makes catalog broken
 + Attribute name can't be updated
 + Extended relationships between articles
-+ Assign accessory to an article (don't have to open all articles) / assign to a group now
++ Assign accessory to an article (don't have to open all articles) // assign to a group now
 
 19.08
 + In edit mode show article ID
