@@ -40,7 +40,7 @@ public class AbstractArticleDescription implements ArticleDescription {
 	private double price;
 
 	@Column(name = "primordialPrice")
-	private Float primordialPrice;
+	private Double primordialPrice;
 
 	@Column(name = "restockDate")
 	@Temporal(TemporalType.DATE)
@@ -98,7 +98,7 @@ public class AbstractArticleDescription implements ArticleDescription {
 	}
 
 	@Override
-	public Float getPrimordialPrice() {
+	public Double getPrimordialPrice() {
 		return primordialPrice;
 	}
 
@@ -139,7 +139,7 @@ public class AbstractArticleDescription implements ArticleDescription {
 		this.price = price;
 	}
 
-	public void setPrimordialPrice(Float primordialPrice) {
+	public void setPrimordialPrice(Double primordialPrice) {
 		this.primordialPrice = primordialPrice;
 	}
 

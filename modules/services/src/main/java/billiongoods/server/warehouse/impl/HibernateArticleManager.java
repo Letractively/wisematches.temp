@@ -71,11 +71,11 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public Article createArticle(String name, String description, Category category,
-								 double price, Float primordialPrice, double weight, Date restockDate,
+								 double price, Double primordialPrice, double weight, Date restockDate,
 								 String previewImage, List<String> imageIds,
 								 List<Option> options, List<Property> properties,
 								 String referenceId, String referenceCode, Supplier wholesaler,
-								 double supplierPrice, Float supplierPrimordialPrice) {
+								 double supplierPrice, Double supplierPrimordialPrice) {
 
 		final HibernateArticle article = new HibernateArticle();
 		updateArticle(article, name, description, category, price, primordialPrice, weight,
@@ -91,11 +91,11 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public Article updateArticle(Integer id, String name, String description, Category category,
-								 double price, Float primordialPrice, double weight, Date restockDate,
+								 double price, Double primordialPrice, double weight, Date restockDate,
 								 String previewImage, List<String> imageIds,
 								 List<Option> options, List<Property> properties,
 								 String referenceId, String referenceCode, Supplier wholesaler,
-								 double supplierPrice, Float supplierPrimordialPrice) {
+								 double supplierPrice, Double supplierPrimordialPrice) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
@@ -113,11 +113,11 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 	private void updateArticle(HibernateArticle article,
 							   String name, String description, Category category,
-							   double price, Float primordialPrice, double weight, Date restockDate,
+							   double price, Double primordialPrice, double weight, Date restockDate,
 							   String previewImage, List<String> imageIds,
 							   List<Option> options, List<Property> properties,
 							   String referenceId, String referenceCode, Supplier wholesaler,
-							   double supplierPrice, Float supplierPrimordialPrice) {
+							   double supplierPrice, Double supplierPrimordialPrice) {
 		article.setName(name);
 		article.setDescription(description);
 		article.setCategory(category);
@@ -153,6 +153,18 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.active=:active where a.id=:id");
 		query.setParameter("id", id);
 		query.setParameter("active", active);
+		query.executeUpdate();
+	}
+
+	@Override
+	public void updatePrice(Integer id, double price, Double primordialPrice, double supplierPrice, Double supplierPrimordialPrice) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.price=:price, a.primordialPrice=:primordialPrice, a.supplierInfo.price=:supplierPrice, a.supplierInfo.primordialPrice=:supplierPrimordialPrice where a.id=:id");
+		query.setParameter("id", id);
+		query.setParameter("price", price);
+		query.setParameter("primordialPrice", primordialPrice);
+		query.setParameter("supplierPrice", supplierPrice);
+		query.setParameter("supplierPrimordialPrice", supplierPrimordialPrice);
 		query.executeUpdate();
 	}
 
