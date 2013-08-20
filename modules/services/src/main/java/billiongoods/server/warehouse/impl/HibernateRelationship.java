@@ -1,6 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
 import billiongoods.server.warehouse.ArticleDescription;
+import billiongoods.server.warehouse.Relationship;
 import billiongoods.server.warehouse.RelationshipType;
 
 import javax.persistence.*;
@@ -12,74 +13,53 @@ import java.util.List;
  */
 @Entity
 @Table(name = "store_article_relationship")
-public class HibernateRelationship {
+public class HibernateRelationship implements Relationship {
 	@EmbeddedId
 	private Pk pk;
-
-	@OneToOne(fetch = FetchType.EAGER, optional = true, orphanRemoval = false)
-	@JoinColumn(name = "groupId")
-	private HibernateGroup group;
 
 	@Deprecated
 	public HibernateRelationship() {
 	}
 
-	public HibernateRelationship(Integer articleId, RelationshipType relationshipType, HibernateGroup group) {
-		this.pk = new Pk(articleId, relationshipType);
-		this.group = group;
+	public HibernateRelationship(HibernateGroup group, RelationshipType type, Integer articleId) {
+		this.pk = new Pk(articleId, type, group);
 	}
 
+	@Override
+	public RelationshipType getType() {
+		return pk.type;
+	}
+
+	@Override
 	public HibernateGroup getGroup() {
-		return group;
+		return pk.group;
 	}
 
-	public RelationshipType getRelationshipType() {
-		return pk.relationshipType;
-	}
-
+	@Override
 	public List<ArticleDescription> getDescriptions() {
-		return group.getDescriptions();
+		return pk.group.getDescriptions();
 	}
 
-	void setGroup(HibernateGroup group) {
-		this.group = group;
-	}
-
-	@Embeddable
 	public static class Pk implements Serializable {
 		@Column(name = "articleId")
 		private Integer articleId;
 
 		@Column(name = "type")
 		@Enumerated(EnumType.ORDINAL)
-		private RelationshipType relationshipType;
+		private RelationshipType type;
 
+		@OneToOne(fetch = FetchType.EAGER, optional = true, orphanRemoval = false)
+		@JoinColumn(name = "groupId")
+		private HibernateGroup group;
+
+		@Deprecated
 		public Pk() {
 		}
 
-		public Pk(Integer articleId, RelationshipType relationshipType) {
+		public Pk(Integer articleId, RelationshipType type, HibernateGroup group) {
 			this.articleId = articleId;
-			this.relationshipType = relationshipType;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) return true;
-			if (!(o instanceof Pk)) return false;
-
-			Pk pk = (Pk) o;
-
-			if (!articleId.equals(pk.articleId)) return false;
-			if (relationshipType != pk.relationshipType) return false;
-
-			return true;
-		}
-
-		@Override
-		public int hashCode() {
-			int result = articleId.hashCode();
-			result = 31 * result + relationshipType.hashCode();
-			return result;
+			this.type = type;
+			this.group = group;
 		}
 	}
 }

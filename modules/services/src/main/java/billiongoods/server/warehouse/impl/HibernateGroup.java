@@ -21,7 +21,7 @@ public class HibernateGroup implements Group {
 	@Column(name = "name")
 	private String name;
 
-	@ManyToMany(cascade = CascadeType.ALL, targetEntity = HibernateArticleDescription.class)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = HibernateArticleDescription.class)
 	@JoinTable(name = "store_group_item", joinColumns = @JoinColumn(name = "groupId"), inverseJoinColumns = @JoinColumn(name = "articleId"))
 	private List<ArticleDescription> articles = new ArrayList<>();
 
@@ -53,6 +53,10 @@ public class HibernateGroup implements Group {
 
 	boolean removeArticle(ArticleDescription article) {
 		return this.articles.remove(article);
+	}
+
+	void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

@@ -120,7 +120,7 @@
                 <@bg.ui.panel "Описание" "description">${article.description!""}</@bg.ui.panel>
             </#if>
 
-            <#list RelationshipType.values() as t>
+            <#list [RelationshipType.ACCESSORIES, RelationshipType.MODE] as t>
                 <#assign articles=relationships.getAssociations(t)!""/>
                 <#if articles?has_content>
                     <@bg.ui.panel messageSource.getMessage("relationship.${t.name()?lower_case}.label", locale) t.name()?lower_case>

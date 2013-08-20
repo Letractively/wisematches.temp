@@ -6,9 +6,14 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface RelationshipManager {
+	Group getGroup(Integer id);
+
 	Group createGroup(String name);
 
-	Group deleteGroup(Integer id);
+	Group removeGroup(Integer id);
+
+	Group updateGroup(Integer id, String name);
+
 
 	List<Group> getGroups(Integer articleId);
 
@@ -17,7 +22,9 @@ public interface RelationshipManager {
 	Group removeGroupItem(Integer groupId, Integer article);
 
 
-	Relationships getRelationships(ArticleDescription description);
+	List<Relationship> getRelationships(Integer articleId);
 
-	void changeRelationship(Integer articleId, RelationshipType type, Integer groupId);
+	void addRelationship(Integer articleId, Integer groupId, RelationshipType type);
+
+	void removeRelationship(Integer articleId, Integer groupId, RelationshipType type);
 }
