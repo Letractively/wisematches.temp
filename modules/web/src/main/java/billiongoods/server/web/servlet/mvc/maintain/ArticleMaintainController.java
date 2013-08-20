@@ -204,50 +204,55 @@ public class ArticleMaintainController extends AbstractController {
 		}
 
 		final Integer articleId = form.getId();
+		if (articleId != null) {
+			final List<Integer> groups = new ArrayList<>();
+			for (Group group : relationshipManager.getGroups(articleId)) {
+				groups.add(group.getId());
+			}
+			final List<Integer> participatedGroups = new ArrayList<>();
+			if (form.getParticipatedGroups() != null) {
+				participatedGroups.addAll(Arrays.asList(form.getParticipatedGroups()));
+			}
 
-		final List<Integer> groups = new ArrayList<>();
-		for (Group group : relationshipManager.getGroups(articleId)) {
-			groups.add(group.getId());
-		}
-		final List<Integer> participatedGroups = Arrays.asList(form.getParticipatedGroups());
+			final List<Integer> removedGroups = new ArrayList<>(groups);
+			removedGroups.removeAll(participatedGroups);
+			for (Integer removedGroup : removedGroups) {
+				relationshipManager.removeGroupItem(removedGroup, articleId);
+			}
 
-		final List<Integer> removedGroups = new ArrayList<>(groups);
-		removedGroups.removeAll(participatedGroups);
-		for (Integer removedGroup : removedGroups) {
-			relationshipManager.removeGroupItem(removedGroup, articleId);
-		}
+			final List<Integer> addedGroups = new ArrayList<>(participatedGroups);
+			addedGroups.removeAll(groups);
+			for (Integer addedGroup : addedGroups) {
+				relationshipManager.addGroupItem(addedGroup, articleId);
+			}
 
-		final List<Integer> addedGroups = new ArrayList<>(participatedGroups);
-		addedGroups.removeAll(groups);
-		for (Integer addedGroup : addedGroups) {
-			relationshipManager.addGroupItem(addedGroup, articleId);
-		}
+			final Integer[] relationshipGroups = form.getRelationshipGroups();
+			final RelationshipType[] relationshipTypes = form.getRelationshipTypes();
+			final List<Relationship> relationships = new ArrayList<>(relationshipManager.getRelationships(articleId));
+			if (relationshipGroups != null) {
+				for (int i = 0, relationshipGroupsLength = relationshipGroups.length; i < relationshipGroupsLength; i++) {
+					final Integer group = relationshipGroups[i];
+					final RelationshipType type = relationshipTypes[i];
 
-		final Integer[] relationshipGroups = form.getRelationshipGroups();
-		final RelationshipType[] relationshipTypes = form.getRelationshipTypes();
+					Relationship rs = null;
+					for (Relationship relationship : relationships) {
+						if (relationship.getType() == type && relationship.getGroup().getId().equals(group)) {
+							rs = relationship;
+							break;
+						}
+					}
 
-		final List<Relationship> relationships = new ArrayList<>(relationshipManager.getRelationships(articleId));
-		for (int i = 0, relationshipGroupsLength = relationshipGroups.length; i < relationshipGroupsLength; i++) {
-			final Integer group = relationshipGroups[i];
-			final RelationshipType type = relationshipTypes[i];
-
-			Relationship rs = null;
-			for (Relationship relationship : relationships) {
-				if (relationship.getType() == type && relationship.getGroup().getId().equals(group)) {
-					rs = relationship;
-					break;
+					if (rs != null) {
+						relationships.remove(rs);
+					} else {
+						relationshipManager.addRelationship(articleId, group, type);
+					}
 				}
 			}
 
-			if (rs != null) {
-				relationships.remove(rs);
-			} else {
-				relationshipManager.addRelationship(articleId, group, type);
+			for (Relationship r : relationships) {
+				relationshipManager.removeRelationship(articleId, r.getGroup().getId(), r.getType());
 			}
-		}
-
-		for (Relationship r : relationships) {
-			relationshipManager.removeRelationship(articleId, r.getGroup().getId(), r.getType());
 		}
 
 		try {

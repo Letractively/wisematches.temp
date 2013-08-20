@@ -43,9 +43,11 @@ public class AbstractArticleDescription implements ArticleDescription {
 	private Float primordialPrice;
 
 	@Column(name = "restockDate")
+	@Temporal(TemporalType.DATE)
 	private Date restockDate;
 
 	@Column(name = "registrationDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date registrationDate;
 
 	@Column(name = "previewImageId")
