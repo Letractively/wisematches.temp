@@ -41,6 +41,7 @@ public class ArticleMaintainController extends AbstractController {
 	private ArticleManager articleManager;
 	private CategoryManager categoryManager;
 	private AttributeManager attributeManager;
+	private RelationshipManager relationshipManager;
 	private BanggoodArticlesImporter articlesImporter;
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
@@ -146,6 +147,11 @@ public class ArticleMaintainController extends AbstractController {
 		if (form.getCategory() != null) {
 			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
 		}
+		if (article != null) {
+			model.addAttribute("groups", relationshipManager.getGroups(article.getId()));
+			model.addAttribute("relationships", relationshipManager.getRelationships(article.getId()));
+		}
+
 		model.addAttribute("article", article);
 		model.addAttribute("catalog", categoryManager.getCatalog());
 		model.addAttribute("attributes", attributeManager.getAttributes());
@@ -170,7 +176,6 @@ public class ArticleMaintainController extends AbstractController {
 		}
 
 		final List<Option> options = new ArrayList<>();
-
 		final Integer[] optionIds = form.getOptionIds();
 		final String[] optionValues = form.getOptionValues();
 		if (optionIds != null) {
@@ -197,33 +202,65 @@ public class ArticleMaintainController extends AbstractController {
 				properties.add(new Property(attributeManager.getAttribute(propertyId), propertyValue));
 			}
 		}
-/*
 
-		final Integer[] accessories = form.getAccessories();
-		final List<ArticleDescription> descriptions = new ArrayList<>();
-		if (accessories != null) {
-			for (Integer accessory : accessories) {
-				final ArticleDescription articleDescription = articleManager.getDescription(accessory);
-				if (articleDescription == null) {
-					errors.rejectValue("accessories", "maintain.article.accessories.err.unknown", new Object[]{accessory}, null);
+		final Integer articleId = form.getId();
+
+		final List<Integer> groups = new ArrayList<>();
+		for (Group group : relationshipManager.getGroups(articleId)) {
+			groups.add(group.getId());
+		}
+		final List<Integer> participatedGroups = Arrays.asList(form.getParticipatedGroups());
+
+		final List<Integer> removedGroups = new ArrayList<>(groups);
+		removedGroups.removeAll(participatedGroups);
+		for (Integer removedGroup : removedGroups) {
+			relationshipManager.removeGroupItem(removedGroup, articleId);
+		}
+
+		final List<Integer> addedGroups = new ArrayList<>(participatedGroups);
+		addedGroups.removeAll(groups);
+		for (Integer addedGroup : addedGroups) {
+			relationshipManager.addGroupItem(addedGroup, articleId);
+		}
+
+		final Integer[] relationshipGroups = form.getRelationshipGroups();
+		final RelationshipType[] relationshipTypes = form.getRelationshipTypes();
+
+		final List<Relationship> relationships = new ArrayList<>(relationshipManager.getRelationships(articleId));
+		for (int i = 0, relationshipGroupsLength = relationshipGroups.length; i < relationshipGroupsLength; i++) {
+			final Integer group = relationshipGroups[i];
+			final RelationshipType type = relationshipTypes[i];
+
+			Relationship rs = null;
+			for (Relationship relationship : relationships) {
+				if (relationship.getType() == type && relationship.getGroup().getId().equals(group)) {
+					rs = relationship;
 					break;
 				}
-				descriptions.add(articleDescription);
+			}
+
+			if (rs != null) {
+				relationships.remove(rs);
+			} else {
+				relationshipManager.addRelationship(articleId, group, type);
 			}
 		}
-*/
+
+		for (Relationship r : relationships) {
+			relationshipManager.removeRelationship(articleId, r.getGroup().getId(), r.getType());
+		}
 
 		try {
 			if (!errors.hasErrors()) {
 				final Article article;
-				if (form.getId() == null) {
+				if (articleId == null) {
 					article = articleManager.createArticle(form.getName(), form.getDescription(), category,
 							form.getPrice(), form.getPrimordialPrice(), form.getWeight(), restockDate,
 							form.getPreviewImage(), form.getEnabledImages(), options, properties,
 							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
 							form.getSupplierPrimordialPrice());
 				} else {
-					article = articleManager.updateArticle(form.getId(), form.getName(), form.getDescription(), category,
+					article = articleManager.updateArticle(articleId, form.getName(), form.getDescription(), category,
 							form.getPrice(), form.getPrimordialPrice(), form.getWeight(), restockDate,
 							form.getPreviewImage(), form.getEnabledImages(), options, properties,
 							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
@@ -318,5 +355,10 @@ public class ArticleMaintainController extends AbstractController {
 	@Autowired
 	public void setArticlesImporter(BanggoodArticlesImporter articlesImporter) {
 		this.articlesImporter = articlesImporter;
+	}
+
+	@Autowired
+	public void setRelationshipManager(RelationshipManager relationshipManager) {
+		this.relationshipManager = relationshipManager;
 	}
 }

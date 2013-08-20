@@ -12,6 +12,10 @@
     </div>
 
     <div>
+        <a href="/maintain/group">Создать Группу</a>
+    </div>
+
+    <div>
         <a href="/maintain/article/import">Загрузить Товары</a>
     </div>
 

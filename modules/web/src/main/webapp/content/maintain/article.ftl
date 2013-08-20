@@ -3,6 +3,9 @@
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
 
+<#-- @ftlvariable name="groups" type="billiongoods.server.warehouse.Group[]" -->
+<#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationship[]" -->
+
 <#-- @ftlvariable name="imageResourcesDomain" type="java.lang.String" -->
 
 <#include "/core.ftl">
@@ -214,29 +217,67 @@
         <hr>
     </td>
 </tr>
+
 <tr>
-    <td valign="top"><label for="viewImages">Комплектующие: </label></td>
+    <td valign="top"><label for="viewImages">Состоит в группе: </label></td>
     <td>
-        <@bg.ui.field path="form.accessories">
-            <table id="accessoriesTable">
-                <#if bg.ui.status.actualValue??>
-                    <#list bg.ui.status.actualValue as i>
-                        <tr>
-                            <td><input name="accessories" value="${i}"></td>
-                            <td>
-                                <button class="remove" type="button">Удалить</button>
-                            </td>
-                        </tr>
-                    </#list>
-                </#if>
-                <tr id="accessoriesControls">
-                    <td></td>
-                    <td>
-                        <button class="add" type="button">добавить</button>
-                    </td>
-                </tr>
-            </table>
-        </@bg.ui.field>
+        <table id="groupsTable">
+            <#if groups??>
+                <#list groups as g>
+                    <tr class="group">
+                        <td>
+                            <input type="hidden" name="participatedGroups" value="${g.id}">
+                            <a href="/maintain/group?id=${g.id}">#${g.id} ${g.name}</a>
+                        </td>
+                        <td>
+                            <button class="remove" type="button">Удалить</button>
+                        </td>
+                    </tr>
+                </#list>
+            </#if>
+            <tr id="groupsControls">
+                <td></td>
+                <td>
+                    <button class="add" type="button">Добавить в группу</button>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        &nbsp;
+    </td>
+</tr>
+<tr>
+    <td valign="top"><label for="viewImages">Связана с группами: </label></td>
+    <td>
+        <table id="relationshipsTable">
+            <#if relationships??>
+                <#list relationships as r>
+                    <tr class="relationship">
+                        <td>
+                            <input name="relationshipTypes" type="hidden" value="${r.type.name()}">
+                            <@message code="relationship.${r.type.name()?lower_case}.label"/>
+                        </td>
+                        <td>
+                            <input name="relationshipGroups" type="hidden" value="${r.group.id}">
+                        ${r.group.id} (${r.group.name})
+                        </td>
+                        <td>
+                            <button class="remove" type="button">Удалить</button>
+                        </td>
+                    </tr>
+                </#list>
+            </#if>
+            <tr id="relationshipsControls">
+                <td></td>
+                <td></td>
+                <td>
+                    <button class="add" type="button">Связать с группой</button>
+                </td>
+            </tr>
+        </table>
     </td>
 </tr>
 </#if>
@@ -321,14 +362,34 @@
         $(this).parent().parent().remove();
     };
 
-    var addAccessory = function () {
+    var addGroup = function () {
         var tr = $("<tr></tr>");
-        var values = $("<td></td>").html('<input name="accessories" value=""/>');
-        var remove = $("<td></td>").append($('<button type="button">Удалить</button>').click(removeAccessory));
-        tr.append(values).append(remove).insertBefore($("#accessoriesControls"));
+        var values = $("<td></td>").html('<input name="participatedGroups" value=""/>');
+        var remove = $("<td></td>").append($('<button class="remove" type="button">Удалить</button>').click(removeGroup));
+        tr.append(values).append(remove).insertBefore($("#groupsControls"));
     };
 
-    var removeAccessory = function () {
+    var removeGroup = function () {
+        $(this).parent().parent().remove();
+    };
+
+    var addRelationship = function () {
+        var tr = $("<tr></tr>");
+
+        var select = '<select name="relationshipTypes">';
+    <#list RelationshipType.values() as t>
+        select += '<option value="${t.name()}"> <@message code="relationship.${t.name()?lower_case}.label"/>';
+    </#list>
+        select += '</select>';
+
+        var attrs = $("<td></td>").html(select);
+        var values = $("<td></td>").html('<input name="relationshipGroups" value=""/>');
+        var remove = $("<td></td>").append($('<button type="button">Удалить</button>').click(removeRelationship));
+
+        tr.append(attrs).append(values).append(remove).insertBefore($("#relationshipsControls"));
+    };
+
+    var removeRelationship = function () {
         $(this).parent().parent().remove();
     };
 
@@ -350,8 +411,11 @@
     $("#imagesTable").find("button.add").click(addImage);
     $("#imagesTable").find("button.remove").click(removeImage);
 
-    $("#accessoriesTable").find("button.add").click(addAccessory);
-    $("#accessoriesTable").find("button.remove").click(removeAccessory);
+    $("#groupsTable").find("button.add").click(addGroup);
+    $("#groupsTable").find("button.remove").click(removeGroup);
+
+    $("#relationshipsTable").find("button.add").click(addRelationship);
+    $("#relationshipsTable").find("button.remove").click(removeRelationship);
 
     $(".attribute").each(function (i, v) {
         var id = $(this).text();

@@ -20,6 +20,11 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	}
 
 	@Override
+	public HibernateGroup getGroup(Integer id) {
+		return (HibernateGroup) sessionFactory.getCurrentSession().get(HibernateGroup.class, id);
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public Group createGroup(String name) {
 		final HibernateGroup group = new HibernateGroup(name);
@@ -28,11 +33,24 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	}
 
 	@Override
-	public Group deleteGroup(Integer id) {
+	@Transactional(propagation = Propagation.MANDATORY)
+	public Group removeGroup(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
-		final HibernateGroup group = (HibernateGroup) session.get(HibernateGroup.class, id);
+		final HibernateGroup group = getGroup(id);
 		if (group != null) {
 			session.delete(group);
+		}
+		return group;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public Group updateGroup(Integer id, String name) {
+		final Session session = sessionFactory.getCurrentSession();
+		final HibernateGroup group = getGroup(id);
+		if (group != null) {
+			group.setName(name);
+			session.update(group);
 		}
 		return group;
 	}
@@ -42,7 +60,7 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Group> getGroups(Integer articleId) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateGroup g join g.articles a where a.id=:article");
+		final Query query = session.createQuery("select g from billiongoods.server.warehouse.impl.HibernateGroup g join g.articles a where a.id=:article");
 		query.setParameter("article", articleId);
 		return query.list();
 	}
@@ -52,7 +70,7 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	public Group addGroupItem(Integer groupId, Integer article) {
 		final Session session = sessionFactory.getCurrentSession();
 		final ArticleDescription description = articleManager.getDescription(article);
-		final HibernateGroup group = (HibernateGroup) session.get(HibernateGroup.class, groupId);
+		final HibernateGroup group = getGroup(groupId);
 		if (group.addArticle(description)) {
 			session.update(group);
 		}
@@ -64,7 +82,7 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	public Group removeGroupItem(Integer groupId, Integer article) {
 		final Session session = sessionFactory.getCurrentSession();
 		final ArticleDescription description = articleManager.getDescription(article);
-		final HibernateGroup group = (HibernateGroup) session.get(HibernateGroup.class, groupId);
+		final HibernateGroup group = getGroup(groupId);
 		if (group.removeArticle(description)) {
 			session.update(group);
 		}
@@ -73,34 +91,40 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void changeRelationship(Integer articleId, RelationshipType type, Integer groupId) {
+	public void addRelationship(Integer articleId, Integer groupId, RelationshipType type) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateGroup group = (HibernateGroup) session.get(HibernateGroup.class, groupId);
-		HibernateRelationship relationship = (HibernateRelationship) session.get(HibernateRelationship.class, new HibernateRelationship.Pk(articleId, type));
-		if (groupId == null) {
-			if (relationship != null) {
-				session.delete(relationship);
-			}
-		} else {
-			if (relationship == null) {
-				relationship = new HibernateRelationship(articleId, type, group);
-				session.save(relationship);
-			} else {
-				relationship.setGroup(group);
-				session.update(relationship);
-			}
+		final HibernateGroup group = getGroup(groupId);
+		if (group == null) {
+			throw new IllegalArgumentException("Unknown group: " + groupId);
+		}
+		session.save(new HibernateRelationship(group, type, articleId));
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void removeRelationship(Integer articleId, Integer groupId, RelationshipType type) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateGroup group = getGroup(groupId);
+		if (group == null) {
+			throw new IllegalArgumentException("Unknown group: " + groupId);
+		}
+
+		final HibernateRelationship relationship = (HibernateRelationship) session.get(HibernateRelationship.class, new HibernateRelationship.Pk(articleId, type, group));
+		if (relationship != null) {
+			session.delete(relationship);
 		}
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Relationships getRelationships(ArticleDescription description) {
+	public List<Relationship> getRelationships(Integer articleId) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateRelationship where pk.articleId=:aid");
-		query.setParameter("aid", description.getId());
-		return new DefaultRelationships(query.list());
+		query.setParameter("aid", articleId);
+		return query.list();
 	}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
