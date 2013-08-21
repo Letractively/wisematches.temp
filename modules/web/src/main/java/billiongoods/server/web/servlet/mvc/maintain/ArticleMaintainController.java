@@ -64,9 +64,9 @@ public class ArticleMaintainController extends AbstractController {
 
 		try {
 			final Category category = categoryManager.getCategory(uploadItem.getCategory());
-			articlesImporter.importArticles(category, uploadItem.getFile().getInputStream());
+			articlesImporter.importArticles(category, uploadItem.getDescription().getInputStream(), uploadItem.getImages().getInputStream());
 			model.addAttribute("result", true);
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			model.addAttribute("error", ex.getMessage());
 			model.addAttribute("result", false);
 		}

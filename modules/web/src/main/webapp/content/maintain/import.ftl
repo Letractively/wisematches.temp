@@ -29,10 +29,18 @@
         </tr>
         <tr>
             <td>
-                <label for="file">Файл: </label>
+                <label for="file">Описание: </label>
             </td>
             <td>
-                <input type="file" name="file">
+                <input type="file" name="description">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="file">Изображения: </label>
+            </td>
+            <td>
+                <input type="file" name="images">
             </td>
         </tr>
         <tr>
