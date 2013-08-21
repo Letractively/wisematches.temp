@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {
 		"classpath:/config/properties-config.xml",
 		"classpath:/config/database-config.xml",
+		"classpath:/config/personality-config.xml",
 		"classpath:/config/billiongoods-config.xml"
 })
 public class HibernateArticleManagerTest {
@@ -57,6 +58,9 @@ public class HibernateArticleManagerTest {
 
 		final List<Option> options = article.getOptions();
 		System.out.println("Options: " + options);
+
+		articleManager.updateSold(article.getId(), 10);
+		articleManager.updateSold(article.getId(), 20);
 
 		System.out.println("==========");
 		System.out.println(article);
