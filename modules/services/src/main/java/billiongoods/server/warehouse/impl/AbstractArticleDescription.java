@@ -13,177 +13,179 @@ import java.util.Date;
  */
 @MappedSuperclass
 public class AbstractArticleDescription implements ArticleDescription {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@Column(name = "weight")
-	private double weight;
+    @Column(name = "weight")
+    private double weight;
 
-	@Column(name = "soldCount")
-	private int soldCount;
+    @Column(name = "soldCount")
+    private int soldCount;
 
-	@Column(name = "active")
-	private boolean active;
+    @Column(name = "active")
+    private boolean active;
 
-	@Column(name = "categoryId")
-	private Integer categoryId;
+    @Column(name = "categoryId")
+    private Integer categoryId;
 
-	@Transient
-	private Category category;
+    @Transient
+    private Category category;
 
-	@Column(name = "price")
-	private double price;
+    @Column(name = "price")
+    private double price;
 
-	@Column(name = "primordialPrice")
-	private Double primordialPrice;
+    @Column(name = "primordialPrice")
+    private Double primordialPrice;
 
-	@Column(name = "restockDate")
-	@Temporal(TemporalType.DATE)
-	private Date restockDate;
+    @Column(name = "restockDate")
+    @Temporal(TemporalType.DATE)
+    private Date restockDate;
 
-	@Column(name = "registrationDate")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date registrationDate;
+    @Column(name = "registrationDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date registrationDate;
 
-	@Column(name = "previewImageId")
-	private String previewImageId;
+    @Column(name = "previewImageId")
+    private String previewImageId;
 
-	public AbstractArticleDescription() {
-		registrationDate = new Date();
-	}
+    public AbstractArticleDescription() {
+        registrationDate = new Date();
+    }
 
-	@Override
-	public Integer getId() {
-		return id;
-	}
+    @Override
+    public Integer getId() {
+        return id;
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public int getSoldCount() {
-		return soldCount;
-	}
+    @Override
+    public int getSoldCount() {
+        return soldCount;
+    }
 
-	@Override
-	public double getWeight() {
-		return weight;
-	}
+    @Override
+    public double getWeight() {
+        return weight;
+    }
 
-	@Override
-	public boolean isActive() {
-		return active;
-	}
+    @Override
+    public boolean isActive() {
+        return active;
+    }
 
-	@Override
-	public Integer getCategoryId() {
-		return categoryId;
-	}
+    @Override
+    public Integer getCategoryId() {
+        return categoryId;
+    }
 
-	@Override
-	public Category getCategory() {
-		return category;
-	}
+    @Override
+    public Category getCategory() {
+        return category;
+    }
 
-	@Override
-	public double getPrice() {
-		return price;
-	}
+    @Override
+    public double getPrice() {
+        return price;
+    }
 
-	@Override
-	public Double getPrimordialPrice() {
-		return primordialPrice;
-	}
+    @Override
+    public Double getPrimordialPrice() {
+        return primordialPrice;
+    }
 
-	@Override
-	public Date getRestockDate() {
-		return restockDate;
-	}
+    @Override
+    public Date getRestockDate() {
+        return restockDate;
+    }
 
-	@Override
-	public Date getRegistrationDate() {
-		return registrationDate;
-	}
+    @Override
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
 
-	@Override
-	public String getPreviewImageId() {
-		return previewImageId;
-	}
+    @Override
+    public String getPreviewImageId() {
+        return previewImageId;
+    }
 
-	void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+        this.name = name;
+    }
 
-	void setActive(boolean active) {
-		this.active = active;
-		this.registrationDate = new Date();
-	}
+    void setActive(boolean active) {
+        this.active = active;
+        if (active) {
+            this.registrationDate = new Date();
+        }
+    }
 
-	void setCategory(Category category) {
-		this.category = category;
-		this.categoryId = category.getId();
-	}
+    void setCategory(Category category) {
+        this.category = category;
+        this.categoryId = category.getId();
+    }
 
-	void setWeight(double weight) {
-		this.weight = weight;
-	}
+    void setWeight(double weight) {
+        this.weight = weight;
+    }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public void setPrimordialPrice(Double primordialPrice) {
-		this.primordialPrice = primordialPrice;
-	}
+    public void setPrimordialPrice(Double primordialPrice) {
+        this.primordialPrice = primordialPrice;
+    }
 
-	void setRestockDate(Date restockDate) {
-		this.restockDate = restockDate;
-	}
+    void setRestockDate(Date restockDate) {
+        this.restockDate = restockDate;
+    }
 
-	void setPreviewImageId(String previewImageId) {
-		this.previewImageId = previewImageId;
-	}
+    void setPreviewImageId(String previewImageId) {
+        this.previewImageId = previewImageId;
+    }
 
-	void initialize(CategoryManager manager, AttributeManager attributeManager) {
-		this.category = manager.getCategory(categoryId);
-	}
+    void initialize(CategoryManager manager, AttributeManager attributeManager) {
+        this.category = manager.getCategory(categoryId);
+    }
 
-	void incrementSoldCount() {
-		this.soldCount++;
-	}
+    void incrementSoldCount() {
+        this.soldCount++;
+    }
 
-	@Override
-	public final boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof AbstractArticleDescription)) return false;
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractArticleDescription)) return false;
 
-		AbstractArticleDescription that = (AbstractArticleDescription) o;
-		return !(id != null ? !id.equals(that.id) : that.id != null);
-	}
+        AbstractArticleDescription that = (AbstractArticleDescription) o;
+        return !(id != null ? !id.equals(that.id) : that.id != null);
+    }
 
-	@Override
-	public final int hashCode() {
-		return id != null ? id.hashCode() : 0;
-	}
+    @Override
+    public final int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("AbstractArticleDescription{");
-		sb.append("id=").append(id);
-		sb.append(", name='").append(name).append('\'');
-		sb.append(", active=").append(active);
-		sb.append(", categoryId=").append(categoryId);
-		sb.append(", price=").append(price);
-		sb.append(", primordialPrice=").append(primordialPrice);
-		sb.append(", registrationDate=").append(registrationDate);
-		sb.append('}');
-		return sb.toString();
-	}
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AbstractArticleDescription{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", active=").append(active);
+        sb.append(", categoryId=").append(categoryId);
+        sb.append(", price=").append(price);
+        sb.append(", primordialPrice=").append(primordialPrice);
+        sb.append(", registrationDate=").append(registrationDate);
+        sb.append('}');
+        return sb.toString();
+    }
 }
