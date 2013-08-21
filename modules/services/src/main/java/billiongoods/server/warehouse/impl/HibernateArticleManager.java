@@ -144,21 +144,23 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Override
 	public void updateState(Integer id, boolean active) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.active=:active where a.id=:id");
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.active=:active, a.registrationDate=:registrationDate where a.id=:id");
 		query.setParameter("id", id);
 		query.setParameter("active", active);
+		query.setParameter("registrationDate", new Date());
 		query.executeUpdate();
 	}
 
 	@Override
 	public void updatePrice(Integer id, double price, Double primordialPrice, double supplierPrice, Double supplierPrimordialPrice) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.price=:price, a.primordialPrice=:primordialPrice, a.supplierInfo.price=:supplierPrice, a.supplierInfo.primordialPrice=:supplierPrimordialPrice where a.id=:id");
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.price=:price, a.primordialPrice=:primordialPrice, a.supplierInfo.price=:supplierPrice, a.supplierInfo.primordialPrice=:supplierPrimordialPrice, a.supplierInfo.validationDate=:validationDate where a.id=:id");
 		query.setParameter("id", id);
 		query.setParameter("price", price);
 		query.setParameter("primordialPrice", primordialPrice);
 		query.setParameter("supplierPrice", supplierPrice);
 		query.setParameter("supplierPrimordialPrice", supplierPrimordialPrice);
+		query.setParameter("validationDate", new Date());
 		query.executeUpdate();
 	}
 
