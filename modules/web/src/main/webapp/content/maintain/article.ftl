@@ -226,7 +226,7 @@
                     <tr class="group">
                         <td>
                             <input type="hidden" name="participatedGroups" value="${g.id}">
-                            <a href="/maintain/group?id=${g.id}">#${g.id} ${g.name}</a>
+                            <a href="/maintain/group?id=${g.id}" target="_blank">#${g.id} ${g.name}</a>
                         </td>
                         <td>
                             <button class="remove" type="button">Удалить</button>
@@ -261,7 +261,8 @@
                         </td>
                         <td>
                             <input name="relationshipGroups" type="hidden" value="${r.group.id}">
-                        ${r.group.id} (${r.group.name})
+                            <a href="/maintain/group?id=${r.group.id}"
+                               target="_blank">#${r.group.id} ${r.group.name}</a>
                         </td>
                         <td>
                             <button class="remove" type="button">Удалить</button>

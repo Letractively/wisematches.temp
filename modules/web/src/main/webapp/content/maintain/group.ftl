@@ -34,8 +34,8 @@
         <#if group.descriptions?size != 0>
             <#list group.descriptions as a>
                 <tr>
-                    <td>a.code</td>
-                    <td width="100%">a.name</td>
+                    <td><@bg.link.article a>${messageSource.getArticleCode(a)}</@bg.link.article></td>
+                    <td width="100%">${a.name}</td>
                     <td>
                         <button type="button">Удалить</button>
                     </td>
