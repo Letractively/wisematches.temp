@@ -1,22 +1,8 @@
 ALTER TABLE `billiongoods`.`store_article`
-CHANGE COLUMN `registrationDate` `registrationDate` DATETIME NOT NULL;
+CHANGE COLUMN `description` `description` LONGTEXT NOT NULL,
+CHANGE COLUMN `primordialPrice` `primordialPrice` DOUBLE NULL DEFAULT NULL;
 
-CREATE TABLE IF NOT EXISTS `billiongoods`.`service_exchange` (
-  `id`           INT(11)  NOT NULL AUTO_INCREMENT,
-  `timestamp`    DATETIME NULL DEFAULT NULL,
-  `exchangeRate` DOUBLE   NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-  ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8
-  COLLATE = utf8_general_ci;
-
-ALTER TABLE `billiongoods`.`store_article_relationship`
-CHANGE COLUMN `groupId` `groupId` INT(11) NOT NULL
-AFTER `articleId`,
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (`articleId`, `groupId`, `type`);
-
-CREATE TABLE IF NOT EXISTS `billiongoods`.`service_price_validation` (
+CREATE TABLE IF NOT EXISTS `billiongoods`.`service_price_renewal` (
   `id`                         INT(11)  NOT NULL AUTO_INCREMENT,
   `articleId`                  INT(11)  NULL DEFAULT NULL,
   `timestamp`                  DATETIME NULL DEFAULT NULL,
@@ -33,4 +19,4 @@ CREATE TABLE IF NOT EXISTS `billiongoods`.`service_price_validation` (
   DEFAULT CHARACTER SET = utf8
   COLLATE = utf8_general_ci;
 
-DROP TABLE IF EXISTS `billiongoods`.`store_exchange`;
+DROP TABLE IF EXISTS `billiongoods`.`service_price_validation`;
