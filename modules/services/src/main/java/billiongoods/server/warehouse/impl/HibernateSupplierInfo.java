@@ -1,12 +1,10 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.Supplier;
 import billiongoods.server.warehouse.SupplierInfo;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,11 +12,12 @@ import java.util.Date;
  */
 @Embeddable
 public class HibernateSupplierInfo implements SupplierInfo {
-	@Column(name = "buyPrice")
-	private double price;
-
-	@Column(name = "buyPrimordialPrice")
-	private Double primordialPrice;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount", column = @Column(name = "buyPrice")),
+			@AttributeOverride(name = "primordialAmount", column = @Column(name = "buyPrimordialPrice"))
+	})
+	private Price price;
 
 	@Column(name = "referenceId")
 	private String referenceId;
@@ -33,12 +32,11 @@ public class HibernateSupplierInfo implements SupplierInfo {
 	@Column(name = "validationDate")
 	private Date validationDate;
 
-	public HibernateSupplierInfo() {
+	HibernateSupplierInfo() {
 	}
 
-	public HibernateSupplierInfo(String referenceId, String referenceCode, Supplier wholesaler, double price, Double primordialPrice) {
+	public HibernateSupplierInfo(String referenceId, String referenceCode, Supplier wholesaler, Price price) {
 		this.price = price;
-		this.primordialPrice = primordialPrice;
 		this.referenceId = referenceId;
 		this.referenceCode = referenceCode;
 		this.wholesaler = wholesaler;
@@ -46,13 +44,8 @@ public class HibernateSupplierInfo implements SupplierInfo {
 	}
 
 	@Override
-	public double getPrice() {
+	public Price getPrice() {
 		return price;
-	}
-
-	@Override
-	public Double getPrimordialPrice() {
-		return primordialPrice;
 	}
 
 	@Override
@@ -75,12 +68,8 @@ public class HibernateSupplierInfo implements SupplierInfo {
 		return validationDate;
 	}
 
-	void setPrice(double price) {
+	void setPrice(Price price) {
 		this.price = price;
-	}
-
-	void setPrimordialPrice(Double primordialPrice) {
-		this.primordialPrice = primordialPrice;
 	}
 
 	void setReferenceId(String referenceId) {
@@ -103,7 +92,6 @@ public class HibernateSupplierInfo implements SupplierInfo {
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("HibernateSupplierInfo{");
 		sb.append("price=").append(price);
-		sb.append(", primordialPrice=").append(primordialPrice);
 		sb.append(", referenceId='").append(referenceId).append('\'');
 		sb.append(", referenceCode='").append(referenceCode).append('\'');
 		sb.append(", wholesaler=").append(wholesaler);

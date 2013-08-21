@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {
 		"classpath:/config/properties-config.xml",
 		"classpath:/config/database-config.xml",
+		"classpath:/config/personality-config.xml",
 		"classpath:/config/billiongoods-config.xml"
 })
 public class HibernateAttributeManagerTest {

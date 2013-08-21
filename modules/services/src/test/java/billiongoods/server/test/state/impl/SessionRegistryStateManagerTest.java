@@ -1,10 +1,12 @@
 package billiongoods.server.test.state.impl;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
+@Ignore
 public class SessionRegistryStateManagerTest {
 	public SessionRegistryStateManagerTest() {
 	}

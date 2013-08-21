@@ -1,5 +1,6 @@
 package billiongoods.server.web.servlet.mvc.maintain.form;
 
+import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.RelationshipType;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -241,6 +242,14 @@ public class ArticleForm {
 
 	public boolean isCreating() {
 		return id == null;
+	}
+
+	public Price createPrice() {
+		return new Price(price, primordialPrice);
+	}
+
+	public Price createSupplierPrice() {
+		return new Price(supplierPrice, supplierPrimordialPrice);
 	}
 
 	@Override

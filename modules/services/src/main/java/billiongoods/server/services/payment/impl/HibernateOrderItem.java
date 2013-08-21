@@ -15,124 +15,124 @@ import java.util.Collection;
 @Entity
 @Table(name = "store_order_item")
 public class HibernateOrderItem implements OrderItem {
-    @EmbeddedId
-    private Pk pk;
+	@EmbeddedId
+	private Pk pk;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "article")
-    private Integer article;
+	@Column(name = "article")
+	private Integer article;
 
-    @Column(name = "quantity")
-    private int quantity;
+	@Column(name = "quantity")
+	private int quantity;
 
-    @Column(name = "amount")
-    private double amount;
+	@Column(name = "amount")
+	private double amount;
 
-    @Column(name = "weight")
-    private double weight;
+	@Column(name = "weight")
+	private double weight;
 
-    @Column(name = "options")
-    private String options;
+	@Column(name = "options")
+	private String options;
 
-    @Deprecated
-    HibernateOrderItem() {
-    }
+	@Deprecated
+	HibernateOrderItem() {
+	}
 
-    public HibernateOrderItem(HibernateOrder order, BasketItem item, int number) {
-        this.pk = new Pk(order.getId(), number);
+	public HibernateOrderItem(HibernateOrder order, BasketItem item, int number) {
+		this.pk = new Pk(order.getId(), number);
 
-        final ArticleDescription article = item.getArticle();
+		final ArticleDescription article = item.getArticle();
 
-        this.name = article.getName();
-        this.article = article.getId();
-        this.quantity = item.getQuantity();
-        this.amount = article.getPrice();
-        this.weight = article.getWeight();
+		this.name = article.getName();
+		this.article = article.getId();
+		this.quantity = item.getQuantity();
+		this.amount = article.getPrice().getAmount();
+		this.weight = article.getWeight();
 
-        StringBuilder sb = new StringBuilder();
-        final Collection<Property> options1 = item.getOptions();
-        if (options1 != null) {
-            for (Property property : options1) {
-                sb.append(property.getAttribute().getName()).append(": ").append(property.getValue());
-                sb.append("; ");
-            }
-            if (sb.length() > 2) {
-                sb.setLength(sb.length() - 2);
-            }
-        }
-        this.options = sb.toString();
-    }
+		StringBuilder sb = new StringBuilder();
+		final Collection<Property> options1 = item.getOptions();
+		if (options1 != null) {
+			for (Property property : options1) {
+				sb.append(property.getAttribute().getName()).append(": ").append(property.getValue());
+				sb.append("; ");
+			}
+			if (sb.length() > 2) {
+				sb.setLength(sb.length() - 2);
+			}
+		}
+		this.options = sb.toString();
+	}
 
-    public Integer getNumber() {
-        return pk.number;
-    }
+	public Integer getNumber() {
+		return pk.number;
+	}
 
-    @Override
-    public Integer getArticle() {
-        return article;
-    }
+	@Override
+	public Integer getArticle() {
+		return article;
+	}
 
-    @Override
-    public String getName() {
-        return name;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public int getQuantity() {
-        return quantity;
-    }
+	@Override
+	public int getQuantity() {
+		return quantity;
+	}
 
-    @Override
-    public double getAmount() {
-        return amount;
-    }
+	@Override
+	public double getAmount() {
+		return amount;
+	}
 
-    @Override
-    public double getWeight() {
-        return weight;
-    }
+	@Override
+	public double getWeight() {
+		return weight;
+	}
 
-    @Override
-    public String getOptions() {
-        return options;
-    }
+	@Override
+	public String getOptions() {
+		return options;
+	}
 
-    @Embeddable
-    public static class Pk implements Serializable {
-        @Column(name = "orderId")
-        private Long orderId;
+	@Embeddable
+	public static class Pk implements Serializable {
+		@Column(name = "orderId")
+		private Long orderId;
 
-        @Column(name = "number")
-        private Integer number;
+		@Column(name = "number")
+		private Integer number;
 
-        public Pk() {
-        }
+		public Pk() {
+		}
 
-        public Pk(Long orderId, Integer number) {
-            this.number = number;
-            this.orderId = orderId;
-        }
+		public Pk(Long orderId, Integer number) {
+			this.number = number;
+			this.orderId = orderId;
+		}
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
 
-            Pk pk = (Pk) o;
+			Pk pk = (Pk) o;
 
-            if (number != null ? !number.equals(pk.number) : pk.number != null) return false;
-            if (orderId != null ? !orderId.equals(pk.orderId) : pk.orderId != null) return false;
+			if (number != null ? !number.equals(pk.number) : pk.number != null) return false;
+			if (orderId != null ? !orderId.equals(pk.orderId) : pk.orderId != null) return false;
 
-            return true;
-        }
+			return true;
+		}
 
-        @Override
-        public int hashCode() {
-            int result = orderId != null ? orderId.hashCode() : 0;
-            result = 31 * result + (number != null ? number.hashCode() : 0);
-            return result;
-        }
-    }
+		@Override
+		public int hashCode() {
+			int result = orderId != null ? orderId.hashCode() : 0;
+			result = 31 * result + (number != null ? number.hashCode() : 0);
+			return result;
+		}
+	}
 }

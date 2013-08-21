@@ -74,7 +74,7 @@ public class HibernateBasketItem implements BasketItem {
 
 	@Override
 	public double getAmount() {
-		return article.getPrice() * quantity;
+		return article.getPrice().getAmount() * quantity;
 	}
 
 	public void setQuantity(int quantity) {

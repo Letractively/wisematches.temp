@@ -60,7 +60,9 @@ public class HibernateArticleManagerTest {
 		System.out.println("Options: " + options);
 
 		articleManager.updateSold(article.getId(), 10);
-		articleManager.updateSold(article.getId(), 20);
+
+		articleManager.updatePrice(article.getId(), new Price(2.3d, null), new Price(3.d, null));
+		articleManager.updatePrice(article.getId(), new Price(12.3d, 54.d), new Price(43.d, 765.d));
 
 		System.out.println("==========");
 		System.out.println(article);

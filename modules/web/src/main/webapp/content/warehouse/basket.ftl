@@ -42,7 +42,7 @@
             </td>
             <td valign="middle" nowrap="nowrap" align="center">
                 <input type="hidden" name="itemNumbers" value="${i.number}"/>
-                <input type="hidden" name="itemAmounts" value="${i.article.price}"/>
+                <input type="hidden" name="itemAmounts" value="${i.article.price.amount}"/>
                 <input type="hidden" name="itemWeights" value="${i.article.weight}"/>
 
                 <div class="quantity">
@@ -58,7 +58,7 @@
                 <span class="itemWeight">${article.weight?string("0.00")} кг</span>
             </td>
             <td valign="middle" nowrap="nowrap" align="left">
-                <span class="itemAmount"><@bg.ui.price article.price * i.quantity "b"/></span>
+                <span class="itemAmount"><@bg.ui.price article.price.amount * i.quantity "b"/></span>
             </td>
         </tr>
     </#list>

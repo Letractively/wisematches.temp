@@ -24,6 +24,7 @@ import static org.junit.Assert.assertSame;
 @ContextConfiguration(locations = {
 		"classpath:/config/properties-config.xml",
 		"classpath:/config/database-config.xml",
+		"classpath:/config/personality-config.xml",
 		"classpath:/config/billiongoods-config.xml"
 })
 public class HibernateCategoryManagerTest {
