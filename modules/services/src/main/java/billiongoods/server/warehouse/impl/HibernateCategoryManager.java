@@ -10,7 +10,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -20,7 +20,6 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 	private AttributeManager attributeManager;
 
 	private final DefaultCatalog catalog = new DefaultCatalog();
-	private final Map<Integer, HibernateCategory> categoryMap = new HashMap<>();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.HibernateCategoryManager");
 
@@ -31,30 +30,9 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 	@SuppressWarnings("unchecked")
 	public void afterPropertiesSet() throws Exception {
 		final Session session = sessionFactory.openSession();
+
 		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateCategory");
-
-		final List list = query.list();
-		for (Object o : list) {
-			final HibernateCategory category = (HibernateCategory) o;
-			categoryMap.put(category.getId(), category);
-			session.evict(category);
-		}
-
-		for (HibernateCategory category : categoryMap.values()) {
-			category.preInit(categoryMap.get(category.getParentId()));
-		}
-
-		final List<Category> rootCategories = new ArrayList<>();
-		for (HibernateCategory category : categoryMap.values()) {
-			category.initialize(attributeManager);
-
-			if (category.getParent() == null) {
-				rootCategories.add(category);
-			}
-		}
-		catalog.setRootCategories(rootCategories);
-
-		log.info("Found {} categories", categoryMap.size());
+		catalog.initialize(query.list(), attributeManager);
 	}
 
 	@Override
@@ -64,7 +42,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 
 	@Override
 	public Category getCategory(Integer id) {
-		return categoryMap.get(id);
+		return catalog.getCategory(id);
 	}
 
 	@Override
@@ -76,13 +54,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 		final HibernateCategory i = new HibernateCategory(name, description, p, position, attributes);
 
 		session.save(i);
-		categoryMap.put(i.getId(), i);
-
-		if (parent == null) {
-			catalog.addRootCategory(i);
-		}
-
-		return i;
+		return catalog.addCategory(i, attributeManager);
 	}
 
 	@Override
@@ -95,25 +67,14 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 			throw new IllegalArgumentException("There is no category: " + id);
 		}
 
-		final Category parent1 = hc.getParent();
-		if (parent1 == null) {
-			catalog.removeRootCategory(hc);
-		}
-
 		hc.setName(name);
 		hc.setDescription(description);
-		hc.setParent((HibernateCategory) parent);
+		hc.setParentId(parent != null ? parent.getId() : null);
 		hc.setPosition(position);
 		hc.setAttributes(attributes);
 
 		session.update(hc);
-		categoryMap.put(hc.getId(), hc);
-
-		if (hc.getParent() == null) {
-			catalog.addRootCategory(hc);
-		}
-
-		return hc;
+		return catalog.updateCategory(hc, attributeManager);
 	}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {

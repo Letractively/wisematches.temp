@@ -61,7 +61,7 @@
                     <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
                     <div class="price"><@bg.ui.price a.price/></div>
                     <#if ops["showCategory"]?? && ops["showCategory"]>
-                        <div class="category">раздел <@bg.link.categoryLink a.category/></div>
+                        <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(a.categoryId)/></div>
                     </#if>
                 </div>
             </td>

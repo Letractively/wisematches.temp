@@ -1,10 +1,8 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
 import billiongoods.server.warehouse.Attribute;
-import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.AttributeForm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +20,6 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/maintain/attribute")
 public class AttributeMaintainController extends AbstractController {
-	private AttributeManager attributeManager;
-
 	public AttributeMaintainController() {
 	}
 
@@ -57,10 +53,5 @@ public class AttributeMaintainController extends AbstractController {
 			result.reject("internal.error", ex.getMessage());
 		}
 		return viewAttribute(model, form);
-	}
-
-	@Autowired
-	public void setAttributeManager(AttributeManager attributeManager) {
-		this.attributeManager = attributeManager;
 	}
 }

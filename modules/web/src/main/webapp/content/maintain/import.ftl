@@ -1,6 +1,5 @@
 <#-- @ftlvariable name="result" type="boolean" -->
 <#-- @ftlvariable name="error" type="java.lang.String" -->
-<#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Catalog" -->
 
 <#include "/core.ftl">
 

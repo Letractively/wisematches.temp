@@ -4,6 +4,9 @@ import billiongoods.core.Personality;
 import billiongoods.core.security.PersonalityContext;
 import billiongoods.server.MessageFormatter;
 import billiongoods.server.services.basket.BasketManager;
+import billiongoods.server.warehouse.AttributeManager;
+import billiongoods.server.warehouse.Catalog;
+import billiongoods.server.warehouse.CategoryManager;
 import billiongoods.server.web.servlet.sdo.ServiceResponseFactory;
 import billiongoods.server.web.servlet.view.StaticContentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public abstract class AbstractController {
-	private BasketManager basketManager;
+	protected BasketManager basketManager;
+	protected CategoryManager categoryManager;
+	protected AttributeManager attributeManager;
 
 	protected MessageFormatter messageSource;
 	protected ServiceResponseFactory responseFactory;
@@ -49,6 +54,11 @@ public abstract class AbstractController {
 	@ModelAttribute("principal")
 	public Personality getPrincipal() {
 		return PersonalityContext.getPrincipal();
+	}
+
+	@ModelAttribute("catalog")
+	public Catalog getCatalog() {
+		return categoryManager.getCatalog();
 	}
 
 	@ModelAttribute("section")
@@ -89,18 +99,28 @@ public abstract class AbstractController {
 	}
 
 	@Autowired
-	public void setBasketManager(BasketManager basketManager) {
+	public final void setBasketManager(BasketManager basketManager) {
 		this.basketManager = basketManager;
 	}
 
 	@Autowired
-	public void setMessageSource(MessageFormatter messageSource) {
+	public final void setMessageSource(MessageFormatter messageSource) {
 		this.messageSource = messageSource;
 		this.responseFactory = new ServiceResponseFactory(messageSource);
 	}
 
 	@Autowired
-	public void setStaticContentGenerator(StaticContentGenerator staticContentGenerator) {
+	public final void setStaticContentGenerator(StaticContentGenerator staticContentGenerator) {
 		this.staticContentGenerator = staticContentGenerator;
+	}
+
+	@Autowired
+	public final void setCategoryManager(CategoryManager categoryManager) {
+		this.categoryManager = categoryManager;
+	}
+
+	@Autowired
+	public final void setAttributeManager(AttributeManager attributeManager) {
+		this.attributeManager = attributeManager;
 	}
 }

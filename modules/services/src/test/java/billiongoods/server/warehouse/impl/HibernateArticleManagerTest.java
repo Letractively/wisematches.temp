@@ -27,6 +27,9 @@ public class HibernateArticleManagerTest {
 	@Autowired
 	private ArticleManager articleManager;
 
+	@Autowired
+	private CategoryManager categoryManager;
+
 	public HibernateArticleManagerTest() {
 	}
 
@@ -40,10 +43,14 @@ public class HibernateArticleManagerTest {
 
 		final ArticleDescription description = descriptions.get(0);
 
-		final List<ArticleDescription> ctxDescriptions1 = articleManager.searchEntities(new ArticleContext(new HibernateCategory("asdf", "test", null, 0, null)), null, Range.FIRST);
+		final DefaultCategory category = new DefaultCategory(new HibernateCategory("asdf", "test", null, 0, null), null);
+
+		final List<ArticleDescription> ctxDescriptions1 = articleManager.searchEntities(new ArticleContext(category), null, Range.FIRST);
 		assertEquals(0, ctxDescriptions1.size());
 
-		final List<ArticleDescription> ctxDescriptions2 = articleManager.searchEntities(new ArticleContext(description.getCategory()), null, Range.FIRST);
+		final Category category1 = categoryManager.getCategory(description.getCategoryId());
+
+		final List<ArticleDescription> ctxDescriptions2 = articleManager.searchEntities(new ArticleContext(category1), null, Range.FIRST);
 		assertEquals(1, ctxDescriptions2.size());
 
 		final Article article = articleManager.getArticle(description.getId());

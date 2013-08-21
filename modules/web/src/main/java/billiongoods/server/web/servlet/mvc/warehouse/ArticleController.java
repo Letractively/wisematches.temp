@@ -1,9 +1,6 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
-import billiongoods.server.warehouse.Article;
-import billiongoods.server.warehouse.ArticleManager;
-import billiongoods.server.warehouse.RelationshipManager;
-import billiongoods.server.warehouse.Relationships;
+import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +33,12 @@ public class ArticleController extends AbstractController {
 			throw new UnknownEntityException(articleId, "article");
 		}
 
-		setTitle(model, article.getName() + " - " + article.getCategory().getName());
+		final Category category = categoryManager.getCategory(article.getCategoryId());
+
+		setTitle(model, article.getName() + " - " + category.getName());
 
 		model.addAttribute("article", article);
-		model.addAttribute("category", article.getCategory());
+		model.addAttribute("category", category);
 		model.addAttribute("relationships", new Relationships(relationshipManager.getRelationships(article.getId())));
 
 		hideNavigation(model);
