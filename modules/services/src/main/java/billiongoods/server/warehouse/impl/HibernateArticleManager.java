@@ -135,7 +135,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Override
 	public void updateSold(Integer id, int quantity) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.soldCount=:quantity where a.id=:id");
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.soldCount=a.soldCount+:quantity where a.id=:id");
 		query.setParameter("id", id);
 		query.setParameter("quantity", quantity);
 		query.executeUpdate();
