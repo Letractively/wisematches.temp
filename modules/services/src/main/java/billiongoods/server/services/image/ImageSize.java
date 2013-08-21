@@ -20,7 +20,7 @@ public enum ImageSize {
     TINY(50, 50, .9f),
     SMALL(150, 150, .85f),
     MEDIUM(280, 280, .85f),
-    LARGE(600, 600, .85f);
+    LARGE(600, 600, .8f);
 
     private final int width;
     private final int height;
@@ -98,8 +98,10 @@ public enum ImageSize {
 
         final BufferedImage scaled = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         final Graphics2D bg = scaled.createGraphics();
+        bg.setBackground(Color.WHITE);
+        bg.clearRect(0, 0, width, height);
         bg.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        bg.drawImage(scaledInstance, 0, 0, width, height, null);
+        bg.drawImage(scaledInstance, (width - w) / 2, (height - h) / 2, w, h, null);
         bg.dispose();
 
         return scaled;

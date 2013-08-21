@@ -59,7 +59,7 @@ public class BanggoodArticlesImporter {
                 final List<String> codes = new ArrayList<>(urls.size());
                 for (String url : urls) {
                     final String code = String.valueOf(index++);
-                    log.info("Importing image {} from {}", code, url);
+                    log.info("Importing [{} of {}] image {} from {}", index - 1, urls.size(), code, url);
                     try (InputStream inputStream = new URL(url).openStream()) {
                         imageManager.addImage(article, code, inputStream);
                         codes.add(code);
@@ -75,6 +75,7 @@ public class BanggoodArticlesImporter {
             }
             log.info("Article imported: {}", article.getId());
         }
+        log.info("All articles imported");
     }
 
     private Map<String, Set<String>> parseImagesLinks(InputStream stream) throws IOException {
