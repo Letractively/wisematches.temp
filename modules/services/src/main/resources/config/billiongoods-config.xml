@@ -19,7 +19,7 @@
         <property name="imagesFolder" value="${server.images.path}"/>
     </bean>
 
-    <bean id="articleImagesManager" class="billiongoods.server.services.image.impl.FileImageManager">
+    <bean id="imageManager" class="billiongoods.server.services.image.impl.FileImageManager">
         <property name="imageResolver" ref="imageResolver"/>
     </bean>
 
@@ -69,6 +69,7 @@
     </bean>
 
     <bean id="articlesImporter" class="billiongoods.server.warehouse.impl.BanggoodArticlesImporter">
+        <property name="imageManager" ref="imageManager"/>
         <property name="articleManager" ref="articleManager"/>
         <property name="exchangeManager" ref="exchangeManager"/>
     </bean>
