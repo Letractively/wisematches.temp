@@ -61,7 +61,7 @@
                     <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
                     <div class="price"><@bg.ui.price a.price/></div>
                     <#if ops["showCategory"]?? && ops["showCategory"]>
-                        <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(a.categoryId)/></div>
+                        <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(a.categoryiD)/></div>
                     </#if>
                 </div>
             </td>
@@ -79,7 +79,8 @@
         <div class="table-pages">
             <div class="table-position">
                 <#if (itemsTableForm.totalCount > 0)>
-                    Показано ${itemsTableForm.page + 1} - ${itemsTableForm.page + articles?size}
+                    Показано ${(itemsTableForm.page-1)*itemsTableForm.count+1}
+                    - ${(itemsTableForm.page-1)*itemsTableForm.count + articles?size}
                     из ${itemsTableForm.totalCount} элементов
                 <#else>
                     В этой категории нет ни одного элемента <#if itemsTableForm.query?has_content>по ключевому
@@ -182,7 +183,9 @@
 
             <#if (page - 3> 0)>
                 <@tableNavigationPageLink itemsTableForm 1>1</@tableNavigationPageLink>
-                <li style="display: inline-block; vertical-align: top">...</li>
+                <#if page-3 != 1>
+                    <li style="display: inline-block; vertical-align: top">...</li>
+                </#if>
             </#if>
 
             <#list (page-2)..(page-1) as i>
@@ -201,7 +204,9 @@
             </#list>
 
             <#if (page+2<pagesCount)>
-                <li style="display: inline-block; vertical-align: top">...</li>
+                <#if page+3 != pagesCount>
+                    <li style="display: inline-block; vertical-align: top">...</li>
+                </#if>
 
                 <@tableNavigationPageLink itemsTableForm pagesCount>${pagesCount}</@tableNavigationPageLink>
             </#if>
