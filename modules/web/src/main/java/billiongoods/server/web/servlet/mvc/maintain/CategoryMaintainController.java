@@ -1,12 +1,9 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
 import billiongoods.server.warehouse.Attribute;
-import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.CategoryManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.CategoryForm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +22,6 @@ import java.util.*;
 @Controller
 @RequestMapping("/maintain/category")
 public class CategoryMaintainController extends AbstractController {
-	private CategoryManager categoryManager;
-	private AttributeManager attributeManager;
-
 	public CategoryMaintainController() {
 	}
 
@@ -103,18 +97,7 @@ public class CategoryMaintainController extends AbstractController {
 			parent = parent.getParent();
 		}
 
-		model.addAttribute("catalog", categoryManager.getCatalog());
 		model.addAttribute("attributes", attributes);
 		return "/content/maintain/category";
-	}
-
-	@Autowired
-	public void setCategoryManager(CategoryManager categoryManager) {
-		this.categoryManager = categoryManager;
-	}
-
-	@Autowired
-	public void setAttributeManager(AttributeManager attributeManager) {
-		this.attributeManager = attributeManager;
 	}
 }

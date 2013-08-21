@@ -5,6 +5,7 @@
 
 [#-- @ftlvariable name="messageSource" type="billiongoods.server.MessageFormatter" --]
 
+[#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Catalog" --]
 [#-- @ftlvariable name="section" type="java.lang.String" --]
 [#-- @ftlvariable name="department" type="billiongoods.server.web.servlet.mvc.Department" --]
 

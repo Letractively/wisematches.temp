@@ -1,6 +1,9 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.*;
+import billiongoods.server.warehouse.Article;
+import billiongoods.server.warehouse.AttributeManager;
+import billiongoods.server.warehouse.Option;
+import billiongoods.server.warehouse.Property;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -102,10 +105,7 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 		this.imageIds = imageIds;
 	}
 
-	@Override
-	void initialize(CategoryManager manager, AttributeManager attributeManager) {
-		super.initialize(manager, attributeManager);
-
+	void initialize(AttributeManager attributeManager) {
 		final Map<Integer, List<String>> values = new HashMap<>();
 		for (HibernateArticleProperty optionId : optionIds) {
 			List<String> strings = values.get(optionId.getAttributeId());

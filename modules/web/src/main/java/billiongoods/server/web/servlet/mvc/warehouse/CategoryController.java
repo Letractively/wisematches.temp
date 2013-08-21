@@ -2,7 +2,10 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.Range;
-import billiongoods.server.warehouse.*;
+import billiongoods.server.warehouse.ArticleContext;
+import billiongoods.server.warehouse.ArticleDescription;
+import billiongoods.server.warehouse.ArticleManager;
+import billiongoods.server.warehouse.Category;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.warehouse.form.ItemSortType;
@@ -24,7 +27,6 @@ import java.util.List;
 @RequestMapping("/warehouse")
 public class CategoryController extends AbstractController {
 	private ArticleManager articleManager;
-	private CategoryManager categoryManager;
 
 	public CategoryController() {
 	}
@@ -74,16 +76,10 @@ public class CategoryController extends AbstractController {
 
 		model.addAttribute("category", category);
 		model.addAttribute("articles", articles);
-		model.addAttribute("catalog", categoryManager.getCatalog());
 	}
 
 	@Autowired
 	public void setArticleManager(ArticleManager articleManager) {
 		this.articleManager = articleManager;
-	}
-
-	@Autowired
-	public void setCategoryManager(CategoryManager categoryManager) {
-		this.categoryManager = categoryManager;
 	}
 }

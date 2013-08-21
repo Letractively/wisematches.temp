@@ -2,7 +2,6 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Visitor;
 import billiongoods.server.services.basket.Basket;
-import billiongoods.server.services.basket.BasketManager;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.paypal.PayPalException;
@@ -37,7 +36,6 @@ import java.util.Locale;
 @RequestMapping("/warehouse/order")
 public class OrderController extends AbstractController {
 	private OrderManager orderManager;
-	private BasketManager basketManager;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderController");
 
@@ -153,10 +151,5 @@ public class OrderController extends AbstractController {
 	@Autowired
 	public void setOrderManager(OrderManager orderManager) {
 		this.orderManager = orderManager;
-	}
-
-	@Autowired
-	public void setBasketManager(BasketManager basketManager) {
-		this.basketManager = basketManager;
 	}
 }

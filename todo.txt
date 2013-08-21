@@ -1,3 +1,5 @@
+- Sold count is never updated
+- Price validator: more functions - email, store to DB, view and so on.
 - Show discount label for a product
 - Отслеживать цены в отдельном потоке иначе все забивается.
 - exclude the same article from modifications group
@@ -26,6 +28,9 @@
 - Forums
 
 ============= DONE ====================
+21.08
++ Remove Category from Article
+
 20.08
 + Price tracker
 + Sort main view items by date // type was date instead of datetime

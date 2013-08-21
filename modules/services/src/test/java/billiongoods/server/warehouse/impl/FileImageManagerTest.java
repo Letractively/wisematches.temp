@@ -42,7 +42,7 @@ public class FileImageManagerTest {
 
 		description = createMock(ArticleDescription.class);
 		expect(description.getId()).andReturn(123).anyTimes();
-		expect(description.getCategory()).andReturn(category).anyTimes();
+		expect(description.getCategoryId()).andReturn(13).anyTimes();
 		replay(description);
 
 		workingFolder = Files.createTempDirectory("billiongoods");

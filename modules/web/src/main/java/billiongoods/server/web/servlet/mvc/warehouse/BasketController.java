@@ -3,10 +3,12 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
-import billiongoods.server.services.basket.BasketManager;
 import billiongoods.server.services.payment.ShipmentManager;
 import billiongoods.server.services.payment.ShipmentType;
-import billiongoods.server.warehouse.*;
+import billiongoods.server.warehouse.ArticleDescription;
+import billiongoods.server.warehouse.ArticleManager;
+import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.Property;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.warehouse.form.BasketItemForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderCheckoutForm;
@@ -34,10 +36,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/warehouse/basket")
 public class BasketController extends AbstractController {
-	private BasketManager basketManager;
 	private ArticleManager articleManager;
 	private ShipmentManager shipmentManager;
-	private AttributeManager attributeManager;
 
 	private static final CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
 
@@ -211,11 +211,6 @@ public class BasketController extends AbstractController {
 	}
 
 	@Autowired
-	public void setBasketManager(BasketManager basketManager) {
-		this.basketManager = basketManager;
-	}
-
-	@Autowired
 	public void setArticleManager(ArticleManager articleManager) {
 		this.articleManager = articleManager;
 	}
@@ -223,10 +218,5 @@ public class BasketController extends AbstractController {
 	@Autowired
 	public void setShipmentManager(ShipmentManager shipmentManager) {
 		this.shipmentManager = shipmentManager;
-	}
-
-	@Autowired
-	public void setAttributeManager(AttributeManager attributeManager) {
-		this.attributeManager = attributeManager;
 	}
 }

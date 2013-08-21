@@ -39,8 +39,6 @@ public class ArticleMaintainController extends AbstractController {
 	private ImageManager imageManager;
 	private ImageResolver imageResolver;
 	private ArticleManager articleManager;
-	private CategoryManager categoryManager;
-	private AttributeManager attributeManager;
 	private RelationshipManager relationshipManager;
 	private BanggoodArticlesImporter articlesImporter;
 
@@ -51,7 +49,6 @@ public class ArticleMaintainController extends AbstractController {
 
 	@RequestMapping(value = "/import", method = RequestMethod.GET)
 	public String importArticlesView(Model model) {
-		model.addAttribute("catalog", categoryManager.getCatalog());
 		return "/content/maintain/import";
 	}
 
@@ -73,7 +70,6 @@ public class ArticleMaintainController extends AbstractController {
 			model.addAttribute("error", ex.getMessage());
 			model.addAttribute("result", false);
 		}
-		model.addAttribute("catalog", categoryManager.getCatalog());
 		return "/content/maintain/import";
 	}
 
@@ -86,7 +82,7 @@ public class ArticleMaintainController extends AbstractController {
 		}
 
 		if (article != null) {
-			final Category category = article.getCategory();
+			final Category category = categoryManager.getCategory(article.getCategoryId());
 
 			form.setName(article.getName());
 			form.setDescription(article.getDescription());
@@ -153,7 +149,6 @@ public class ArticleMaintainController extends AbstractController {
 		}
 
 		model.addAttribute("article", article);
-		model.addAttribute("catalog", categoryManager.getCatalog());
 		model.addAttribute("attributes", attributeManager.getAttributes());
 		return "/content/maintain/article";
 	}
@@ -280,7 +275,6 @@ public class ArticleMaintainController extends AbstractController {
 		if (form.getCategory() != null) {
 			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
 		}
-		model.addAttribute("catalog", categoryManager.getCatalog());
 		model.addAttribute("attributes", attributeManager.getAttributes());
 		return "/content/maintain/article";
 	}
@@ -345,16 +339,6 @@ public class ArticleMaintainController extends AbstractController {
 	@Autowired
 	public void setArticleManager(ArticleManager articleManager) {
 		this.articleManager = articleManager;
-	}
-
-	@Autowired
-	public void setCategoryManager(CategoryManager categoryManager) {
-		this.categoryManager = categoryManager;
-	}
-
-	@Autowired
-	public void setAttributeManager(AttributeManager attributeManager) {
-		this.attributeManager = attributeManager;
 	}
 
 	@Autowired

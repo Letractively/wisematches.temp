@@ -10,11 +10,9 @@ public interface ArticleDescription {
 
 	String getName();
 
-	boolean isActive();
-
 	Integer getCategoryId();
 
-	Category getCategory();
+	boolean isActive();
 
 	/**
 	 * Returns number of sold articles.

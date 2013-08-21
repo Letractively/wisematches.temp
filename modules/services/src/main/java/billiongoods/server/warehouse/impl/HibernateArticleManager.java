@@ -20,7 +20,6 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateArticleManager extends EntitySearchManager<ArticleDescription, ArticleContext> implements ArticleManager {
-	private CategoryManager catalogManager;
 	private AttributeManager attributeManager;
 
 	private static final int ONE_WEEK_MILLIS = 1000 * 60 * 60 * 24 * 7;
@@ -36,7 +35,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
 		if (article != null) {
-			article.initialize(catalogManager, attributeManager);
+			article.initialize(attributeManager);
 		}
 		return article;
 	}
@@ -51,7 +50,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 		final List list = query.list();
 		if (list.size() > 0) {
 			final HibernateArticle article = (HibernateArticle) list.get(0);
-			article.initialize(catalogManager, attributeManager);
+			article.initialize(attributeManager);
 			return article;
 		}
 		return null;
@@ -60,12 +59,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Override
 	public ArticleDescription getDescription(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
-
-		final HibernateArticleDescription article = (HibernateArticleDescription) session.get(HibernateArticleDescription.class, id);
-		if (article != null) {
-			article.initialize(catalogManager, attributeManager);
-		}
-		return article;
+		return (HibernateArticleDescription) session.get(HibernateArticleDescription.class, id);
 	}
 
 	@Override
@@ -169,13 +163,6 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	}
 
 	@Override
-	protected void initializeEntities(List<ArticleDescription> list) {
-		for (ArticleDescription description : list) {
-			((HibernateArticleDescription) description).initialize(catalogManager, attributeManager);
-		}
-	}
-
-	@Override
 	protected void applyProjections(Criteria criteria, ArticleContext context) {
 	}
 
@@ -225,11 +212,6 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 			}
 		}
 	}
-
-	public void setCatalogManager(CategoryManager catalogManager) {
-		this.catalogManager = catalogManager;
-	}
-
 
 	public void setAttributeManager(AttributeManager attributeManager) {
 		this.attributeManager = attributeManager;

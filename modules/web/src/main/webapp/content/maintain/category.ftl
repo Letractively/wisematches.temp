@@ -1,4 +1,3 @@
-<#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Catalog" -->
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
 

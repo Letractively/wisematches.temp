@@ -1,5 +1,3 @@
-<#-- @ftlvariable name="catalog" type="billiongoods.server.warehouse.Catalog" -->
-
 <#include "/core.ftl"/>
 
 <div class="navigation catalog">
