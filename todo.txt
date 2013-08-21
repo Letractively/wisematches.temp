@@ -5,7 +5,6 @@
 - exclude the same article from modifications group
 - add modifications/accessories links on the top of the article page
 - link for accessories groin in article edit mode
-- trim parameter value before store
 - no way to save article if there is only one parameter and it's empty
 - add 'related' tab for an article that will show items from the same group/groups.
 - extend import functionality. Additional parameters can be specified at import time:
@@ -28,6 +27,7 @@
 
 ============= DONE ====================
 21.08
++ trim parameter value before store
 + registrationDate and validationDate are not updated
 + Remove Category from Article
 

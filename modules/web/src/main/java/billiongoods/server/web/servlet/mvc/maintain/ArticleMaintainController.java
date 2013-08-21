@@ -193,7 +193,11 @@ public class ArticleMaintainController extends AbstractController {
 		if (propertyIds != null) {
 			for (int i = 0; i < propertyIds.length; i++) {
 				Integer propertyId = propertyIds[i];
-				String propertyValue = propertyValues[i];
+				String propertyValue = "";
+				try {
+					propertyValue = propertyValues[i].trim();
+				} catch (Exception ignore) {
+				}
 				properties.add(new Property(attributeManager.getAttribute(propertyId), propertyValue));
 			}
 		}
@@ -254,13 +258,13 @@ public class ArticleMaintainController extends AbstractController {
 			if (!errors.hasErrors()) {
 				final Article article;
 				if (articleId == null) {
-					article = articleManager.createArticle(form.getName(), form.getDescription(), category,
+					article = articleManager.createArticle(form.getName().trim(), form.getDescription().trim(), category,
 							form.getPrice(), form.getPrimordialPrice(), form.getWeight(), restockDate,
 							form.getPreviewImage(), form.getEnabledImages(), options, properties,
 							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
 							form.getSupplierPrimordialPrice());
 				} else {
-					article = articleManager.updateArticle(articleId, form.getName(), form.getDescription(), category,
+					article = articleManager.updateArticle(articleId, form.getName().trim(), form.getDescription().trim(), category,
 							form.getPrice(), form.getPrimordialPrice(), form.getWeight(), restockDate,
 							form.getPreviewImage(), form.getEnabledImages(), options, properties,
 							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
