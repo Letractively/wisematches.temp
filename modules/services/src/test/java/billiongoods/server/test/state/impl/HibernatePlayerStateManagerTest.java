@@ -1,6 +1,7 @@
 package billiongoods.server.test.state.impl;
 
 import org.hibernate.SessionFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 		"classpath:/config/properties-config.xml",
 		"classpath:/config/database-config.xml"
 })
+@Ignore
 public class HibernatePlayerStateManagerTest {
 	@Autowired
 	private SessionFactory sessionFactory;

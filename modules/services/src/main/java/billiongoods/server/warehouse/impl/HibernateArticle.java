@@ -43,6 +43,10 @@ public class HibernateArticle extends AbstractArticleDescription implements Arti
 	private List<Property> properties = new ArrayList<>();
 
 	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount", column = @Column(name = "price")),
+			@AttributeOverride(name = "primordialAmount", column = @Column(name = "primordialPrice"))
+	})
 	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
 
 	public HibernateArticle() {

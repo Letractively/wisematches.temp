@@ -29,21 +29,11 @@ public interface ArticleDescription {
 	double getWeight();
 
 	/**
-	 * Returns current price. If there is any discount for the article this value contains discounted price.
+	 * Returns price for the article.
 	 *
-	 * @return the current supplier's price.
+	 * @return the price for the article.
 	 */
-	double getPrice();
-
-	/**
-	 * Returns primordial price. This value can be used
-	 * to get discount and is {@code null} if there is no discount. Returned value
-	 * contains original, primordial price before discount.
-	 *
-	 * @return the primordial supplier's price or {@code null} if there is no any discount.
-	 */
-	Double getPrimordialPrice();
-
+	Price getPrice();
 
 	/**
 	 * Returns date when article will be available again or {@code null} if it's available right now.

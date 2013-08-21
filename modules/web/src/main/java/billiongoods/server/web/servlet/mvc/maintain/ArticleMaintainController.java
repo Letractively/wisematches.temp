@@ -87,13 +87,13 @@ public class ArticleMaintainController extends AbstractController {
 			form.setName(article.getName());
 			form.setDescription(article.getDescription());
 			form.setCategory(category.getId());
-			form.setPrice(article.getPrice());
-			form.setPrimordialPrice(article.getPrimordialPrice());
+			form.setPrice(article.getPrice().getAmount());
+			form.setPrimordialPrice(article.getPrice().getPrimordialAmount());
 			form.setWeight(article.getWeight());
 
 			final SupplierInfo supplierInfo = article.getSupplierInfo();
-			form.setSupplierPrice(supplierInfo.getPrice());
-			form.setSupplierPrimordialPrice(supplierInfo.getPrimordialPrice());
+			form.setSupplierPrice(supplierInfo.getPrice().getAmount());
+			form.setSupplierPrimordialPrice(supplierInfo.getPrice().getPrimordialAmount());
 			form.setSupplierReferenceId(supplierInfo.getReferenceId());
 			form.setSupplierReferenceCode(supplierInfo.getReferenceCode());
 
@@ -259,16 +259,14 @@ public class ArticleMaintainController extends AbstractController {
 				final Article article;
 				if (articleId == null) {
 					article = articleManager.createArticle(form.getName().trim(), form.getDescription().trim(), category,
-							form.getPrice(), form.getPrimordialPrice(), form.getWeight(), restockDate,
+							form.createPrice(), form.getWeight(), restockDate,
 							form.getPreviewImage(), form.getEnabledImages(), options, properties,
-							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
-							form.getSupplierPrimordialPrice());
+							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.createSupplierPrice());
 				} else {
 					article = articleManager.updateArticle(articleId, form.getName().trim(), form.getDescription().trim(), category,
-							form.getPrice(), form.getPrimordialPrice(), form.getWeight(), restockDate,
+							form.createPrice(), form.getWeight(), restockDate,
 							form.getPreviewImage(), form.getEnabledImages(), options, properties,
-							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.getSupplierPrice(),
-							form.getSupplierPrimordialPrice());
+							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.createSupplierPrice());
 				}
 				return "redirect:/maintain/article?id=" + article.getId();
 			}

@@ -69,7 +69,7 @@
                         <input type="hidden" name="article" value="${article.id}"/>
 
                         <div class="panel">
-                            <div class="price"><@bg.ui.price article.price/></div>
+                            <div class="price"><@bg.ui.price article.price.amount/></div>
 
                         <#if article.options?has_content>
                             <div class="ops">
@@ -137,7 +137,7 @@
                                                         width="75px" height="75px"/></@bg.link.article>
                                             </div>
                                             <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                                            <div class="price"><@bg.ui.price a.price/></div>
+                                            <div class="price"><@bg.ui.price a.price.amount/></div>
                                     </td>
                                 </@bg.ui.tableSplit>
                             </#list>

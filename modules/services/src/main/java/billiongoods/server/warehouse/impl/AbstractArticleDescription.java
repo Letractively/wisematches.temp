@@ -2,6 +2,7 @@ package billiongoods.server.warehouse.impl;
 
 import billiongoods.server.warehouse.ArticleDescription;
 import billiongoods.server.warehouse.Category;
+import billiongoods.server.warehouse.Price;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,11 +32,12 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Column(name = "categoryId")
 	private Integer categoryId;
 
-	@Column(name = "price")
-	private double price;
-
-	@Column(name = "primordialPrice")
-	private Double primordialPrice;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount", column = @Column(name = "price")),
+			@AttributeOverride(name = "primordialAmount", column = @Column(name = "primordialPrice"))
+	})
+	private Price price;
 
 	@Column(name = "restockDate")
 	@Temporal(TemporalType.DATE)
@@ -83,13 +85,8 @@ public class AbstractArticleDescription implements ArticleDescription {
 	}
 
 	@Override
-	public double getPrice() {
+	public Price getPrice() {
 		return price;
-	}
-
-	@Override
-	public Double getPrimordialPrice() {
-		return primordialPrice;
 	}
 
 	@Override
@@ -126,12 +123,8 @@ public class AbstractArticleDescription implements ArticleDescription {
 		this.weight = weight;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Price price) {
 		this.price = price;
-	}
-
-	public void setPrimordialPrice(Double primordialPrice) {
-		this.primordialPrice = primordialPrice;
 	}
 
 	void setRestockDate(Date restockDate) {
@@ -168,7 +161,6 @@ public class AbstractArticleDescription implements ArticleDescription {
 		sb.append(", active=").append(active);
 		sb.append(", categoryId=").append(categoryId);
 		sb.append(", price=").append(price);
-		sb.append(", primordialPrice=").append(primordialPrice);
 		sb.append(", registrationDate=").append(registrationDate);
 		sb.append('}');
 		return sb.toString();

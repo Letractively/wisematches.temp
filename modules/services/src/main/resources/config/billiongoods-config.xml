@@ -48,11 +48,24 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
-    <bean id="priceValidator" class="billiongoods.server.warehouse.impl.BanggoodPriceValidator">
+    <bean id="priceValidator" class="billiongoods.server.services.price.impl.HibernatePriceValidator">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="articleManager" ref="articleManager"/>
-        <property name="categoryManager" ref="catalogManager"/>
         <property name="exchangeManager" ref="exchangeManager"/>
+
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="taskExecutor">
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+                <property name="poolSize" value="1"/>
+                <property name="threadNamePrefix" value="PriceValidation"/>
+                <property name="waitForTasksToCompleteOnShutdown" value="true"/>
+            </bean>
+        </property>
+
+        <property name="priceLoader">
+            <bean class="billiongoods.server.services.price.impl.loader.BanggoodPriceLoader"/>
+        </property>
     </bean>
 
     <bean id="articlesImporter" class="billiongoods.server.warehouse.impl.BanggoodArticlesImporter">
@@ -170,6 +183,7 @@
 
         <property name="orderManager" ref="orderManager"/>
         <property name="accountManager" ref="accountManager"/>
+        <property name="priceValidator" ref="priceValidator"/>
     </bean>
 
     <bean class="billiongoods.server.services.notify.impl.center.NotificationOriginCenter">

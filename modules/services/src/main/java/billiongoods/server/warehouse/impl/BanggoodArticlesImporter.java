@@ -2,10 +2,7 @@ package billiongoods.server.warehouse.impl;
 
 import au.com.bytecode.opencsv.CSVReader;
 import billiongoods.server.services.price.ExchangeManager;
-import billiongoods.server.warehouse.Article;
-import billiongoods.server.warehouse.ArticleManager;
-import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.Supplier;
+import billiongoods.server.warehouse.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,16 +29,15 @@ public class BanggoodArticlesImporter {
 		while ((nextLine = reader.readNext()) != null) {
 			final String sku = nextLine[0];
 			final String name = nextLine[1];
-			final double price = Double.parseDouble(nextLine[3]);
+			final Price supplierPrice = new Price(Double.parseDouble(nextLine[3]), null);
 			final double weight = Double.parseDouble(nextLine[4]);
 			final String desc = nextLine[5];
 
 			String id = nextLine[6];
 			id = id.substring(id.lastIndexOf("-") + 1, id.lastIndexOf("."));
 
-			final double price1 = exchangeManager.getMarkupCalculator().calculateFinalPrice(price);
-
-			final Article article = articleManager.createArticle(name, desc, category, price1, null, weight, null, null, null, null, null, id, sku, Supplier.BANGGOOD, price, null);
+			final Price price = exchangeManager.getMarkupCalculator().calculateMarkupPrice(supplierPrice);
+			final Article article = articleManager.createArticle(name, desc, category, price, weight, null, null, null, null, null, id, sku, Supplier.BANGGOOD, supplierPrice);
 
 			log.info("Article imported: {}", article.getId());
 		}
