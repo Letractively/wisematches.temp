@@ -658,6 +658,7 @@ button.bg-ui-button.selected {
 }
 
 .article_layout .preview {
+    position: relative;
     margin-bottom: 5px;
     border: 2px solid #ebebeb;
 }
@@ -766,6 +767,17 @@ button.bg-ui-button.selected {
     font-weight: normal;
 }
 
+.price .primordial {
+    padding-left: 10px;
+    color: #808080;
+    text-decoration: line-through;
+}
+
+.price .primordial span {
+    color: #808080;
+    font-weight: normal;
+}
+
 .article_layout .quantity {
     padding-right: 30px;
 }
@@ -826,16 +838,35 @@ button.bg-ui-button.selected {
     border-bottom: 1px dashed #ebebeb;
 }
 
-.article-item.inactive .image {
-    background: red;
+.article-item.inactive {
+    background: #ffb5b0;
 }
 
-.article-item .image img {
+.article-item .image {
+    position: relative;
     border: 1px solid #ebebeb;
 }
 
-.article-item .image img:hover {
+.article-item .image:hover {
     border-color: #d67632;
+}
+
+.discount {
+    top: 2px;
+    right: 2px;
+    color: white;
+    position: absolute;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.article-item .discount {
+    width: 53px;
+    height: 26px;
+    text-indent: 15px;
+    line-height: 23px;
+    font-size: 14px !important;
+    background: url('../images/discounts.png') no-repeat no-repeat;
 }
 
 .article-item.list .image {
@@ -844,7 +875,22 @@ button.bg-ui-button.selected {
 }
 
 .article-item.grid {
+    width: 152px;
     text-align: center;
+}
+
+.article-item.grid .image img {
+    width: 150px;
+    height: 150px;
+}
+
+.article_layout .discount {
+    width: 83px;
+    height: 43px;
+    text-indent: 30px;
+    line-height: 33px;
+    font-size: 24px !important;
+    background: url('../images/discountn.png') no-repeat no-repeat;
 }
 
 .article_layout .article-item .name {
