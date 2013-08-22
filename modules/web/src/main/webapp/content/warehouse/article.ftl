@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="stock">
-                        <div class="ability">${article.restockDate!"В наличии, отправка в течение 2х рабочих дней"}</div>
+                        <div class="ability">${article.restockDate!"В наличии, обычно отправлается в течении 2-3 рабочих дней"}</div>
                         <div class="shipment">Бесплатная доставка</div>
                     </div>
 
