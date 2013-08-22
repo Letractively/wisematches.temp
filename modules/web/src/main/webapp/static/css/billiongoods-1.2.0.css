@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013, BillionGoods.
  */
-@import url(http://fonts.googleapis.com/css?family=Croissant+One);
+/*@import url(http://fonts.googleapis.com/css?family=Croissant+One);*/
 
 body {
     padding: 0;
@@ -1342,8 +1342,8 @@ button.bg-ui-button.selected {
     background: #d67632;
 }
 
-.article_layout .related {
-    width: 998px;
+.article_layout .related .cnt {
+    width: 968px;
 }
 
 .article_layout .related .sly-pages, .article_layout .accessories .sly-pages {

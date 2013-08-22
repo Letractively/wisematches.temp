@@ -494,7 +494,7 @@ bg.warehouse.Controller = function () {
         scrollBar: relatedScroll.find('.sly-scrollbar'),
         pagesBar: relatedScroll.find('.sly-pages'),
         activatePageOn: 'click',
-        speed: 700,
+        speed: 300,
         elasticBounds: 1,
         dragHandle: 1,
         dynamicHandle: 1,
@@ -507,28 +507,13 @@ bg.warehouse.Controller = function () {
         smart: 1,
         itemSelector: null,
         activatePageOn: 'click',
-        speed: 700,
+        speed: 300,
         pagesBar: accessoriesScroll.find('.sly-pages'),
         scrollBar: accessoriesScroll.find('.sly-scrollbar'),
         scrollBy: 100,
         dragHandle: 1,
         dynamicHandle: 1,
         clickBar: 1
-
-        /*
-         activateOn: null,
-         mouseDragging: 1,
-         touchDragging: 1,
-         releaseSwing: 1,
-         startAt: 0,
-         scrollBy: 1,
-         scrollBar: accessoriesScroll.find('.sly-scrollbar'),
-         pagesBar: accessoriesScroll.find('.sly-pages'),
-         elasticBounds: 1,
-         dragHandle: 1,
-         dynamicHandle: 1,
-         clickBar: 1
-         */
     });
 };
 

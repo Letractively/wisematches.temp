@@ -6,10 +6,12 @@
 
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.sly-1.0.2.min.js"/>"></script>
 
+<#assign accessories=relationships.getAssociations(RelationshipType.ACCESSORIES)!""/>
+
 <div class="article_layout">
     <table>
         <tr>
-            <td valign="top">
+            <td valign="top" width="176px">
                 <div class="view">
                     <div class="preview">
                         <img alt="${article.name}"
@@ -62,12 +64,14 @@
                                 </#if>
                             </#list>
                         </table>
-
-                        <div style="text-align: right; width: 100%">
-                            <a href="#description">Подробее</a>
-                        </div>
                     </div>
                 </#if>
+
+                    <div style="text-align: right; width: 100%">
+                        <a href="#description">Описание</a>
+                    <#if accessories?has_content>| <a href="#accessories">Запачные части</a></#if>
+                    <#if groups?has_content>| <a href="#related">Похожие продукты</a></#if>
+                    </div>
 
                     <form id="shoppingForm">
                         <input type="hidden" name="article" value="${article.id}"/>
@@ -121,75 +125,67 @@
                 </div>
             </td>
         </tr>
+
         <tr>
             <td colspan="2">
-            <#if article.description?has_content><@bg.ui.panel "Описание" "description">${article.description!""}</@bg.ui.panel></#if>
             </td>
         </tr>
-
-    <#assign accessories=relationships.getAssociations(RelationshipType.ACCESSORIES)!""/>
-    <#if accessories?has_content>
-        <tr>
-            <td colspan="2">
-                <@bg.ui.panel "Запачные части <ul class=\"sly-pages\"></ul>" "accessories">
-                    <div class="sly-scrollbar vertical">
-                        <div class="handle">
-                            <div class="mousearea"></div>
-                        </div>
-                    </div>
-
-                    <div class="sly-frame">
-                        <table>
-                            <#list accessories as a>
-                                <@bg.ui.tableSplit accessories?size 2 a_index>
-                                    <td valign="top">
-                                        <div class="article-item list">
-                                            <div class="image">
-                                                <@bg.link.article a><img
-                                                        alt="${a.name}"
-                                                        title="${a.name}"
-                                                        src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
-                                                        width="75px" height="75px"/></@bg.link.article>
-                                            </div>
-                                            <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                                            <div class="price"><@bg.ui.price a.price.amount/></div>
-                                    </td>
-                                </@bg.ui.tableSplit>
-                            </#list>
-                        </table>
-                    </div>
-                </@bg.ui.panel>
-            </td>
-        </tr>
-    </#if>
-
-
-    <#if groups??>
-        <tr>
-            <td colspan="2">
-                <@bg.ui.panel "Похожие продукты <ul class=\"sly-pages\"></ul>" "related">
-                    <div class="sly-frame">
-                        <ul>
-                            <#list  groups as g>
-                                <#list g.descriptions as a>
-                                    <li>
-                                        <@bg.ui.artiveItem a/>
-                                    </li>
-                                </#list>
-                            </#list>
-                        </ul>
-                    </div>
-
-                    <div class="sly-scrollbar horizontal">
-                        <div class="handle">
-                            <div class="mousearea"></div>
-                        </div>
-                    </div>
-                </@bg.ui.panel>
-            </td>
-        </tr>
-    </#if>
     </table>
+
+<#if article.description?has_content><@bg.ui.panel "Описание" "description">${article.description!""}</@bg.ui.panel></#if>
+
+<#if accessories?has_content>
+    <@bg.ui.panel "Запасные части <ul class=\"sly-pages\"></ul>" "accessories">
+        <div class="sly-scrollbar vertical">
+            <div class="handle">
+                <div class="mousearea"></div>
+            </div>
+        </div>
+
+        <div class="sly-frame">
+            <table>
+                <#list accessories as a>
+                    <@bg.ui.tableSplit accessories?size 2 a_index>
+                        <td valign="top">
+                            <div class="article-item list">
+                                <div class="image">
+                                    <@bg.link.article a><img
+                                            alt="${a.name}"
+                                            title="${a.name}"
+                                            src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
+                                            width="75px" height="75px"/></@bg.link.article>
+                                </div>
+                                <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
+                                <div class="price"><@bg.ui.price a.price.amount/></div>
+                        </td>
+                    </@bg.ui.tableSplit>
+                </#list>
+            </table>
+        </div>
+    </@bg.ui.panel>
+</#if>
+
+<#if groups??>
+    <@bg.ui.panel "Похожие продукты <ul class=\"sly-pages\"></ul>" "related">
+        <div class="sly-frame">
+            <ul>
+                <#list  groups as g>
+                    <#list g.descriptions as a>
+                        <li>
+                            <@bg.ui.artiveItem a/>
+                        </li>
+                    </#list>
+                </#list>
+            </ul>
+        </div>
+
+        <div class="sly-scrollbar horizontal">
+            <div class="handle">
+                <div class="mousearea"></div>
+            </div>
+        </div>
+    </@bg.ui.panel>
+</#if>
 </div>
 
 <script type="application/javascript">
