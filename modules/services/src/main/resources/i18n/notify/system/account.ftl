@@ -1,3 +1,3 @@
-<#-- @ftlvariable name="context" type="java.lang.String" -->
+<#-- @ftlvariable name="context" type="billiongoods.core.account.Account" -->
 
-${context}
+Новый пользователь зарегистрирован: ${context.username}
