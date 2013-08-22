@@ -11,6 +11,7 @@
                     <div class="preview">
                         <img alt="${article.name}"
                              src="<@bg.ui.articleImg article article.previewImageId!"" ImageSize.MEDIUM/>"/>
+                    <@bg.ui.discountDiv article/>
                     </div>
 
                     <div class="thumb">
@@ -69,7 +70,11 @@
                         <input type="hidden" name="article" value="${article.id}"/>
 
                         <div class="panel">
-                            <div class="price"><@bg.ui.price article.price.amount/></div>
+                            <div class="price">
+                            <@bg.ui.price article.price.amount/>
+                            <#if article.price.primordialAmount??><span
+                                    class="primordial"><@bg.ui.price article.price.primordialAmount/></span></#if>
+                            </div>
 
                         <#if article.options?has_content>
                             <div class="ops">

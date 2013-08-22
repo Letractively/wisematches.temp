@@ -45,18 +45,27 @@
     </#if>
 </#macro>
 
+<#macro discountDiv a>
+    <#if a.price.primordialAmount??>
+        <#assign percents=((a.price.primordialAmount-a.price.amount)*100)/a.price.primordialAmount/>
+        <#if (percents>0)>
+        <div class="discount">${percents?string("0")}%</div>
+        </#if>
+    </#if>
+</#macro>
+
 <#macro articlesViewGrid articles ops={}>
 <table>
     <#list articles as a>
         <@bg.ui.tableSplit articles?size 4 a_index>
-            <td valign="top" width="25%">
+            <td valign="top" align="center" width="25%">
                 <div class="article-item grid<#if !a.active> inactive</#if>">
                     <div class="image">
-                        <@bg.link.article a><img
-                                alt="${a.name}"
-                                title="${a.name}"
-                                src="<@articleImg a a.previewImageId!"" ImageSize.SMALL/>"
-                                width="150px" height="150px"/></@bg.link.article>
+                        <@bg.link.article a><img alt="${a.name}"
+                                                 title="${a.name}"
+                                                 src="<@articleImg a a.previewImageId!"" ImageSize.SMALL/>"/>
+                        </@bg.link.article>
+                        <@discountDiv a/>
                     </div>
                     <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
                     <div class="price"><@bg.ui.price a.price.amount/></div>
