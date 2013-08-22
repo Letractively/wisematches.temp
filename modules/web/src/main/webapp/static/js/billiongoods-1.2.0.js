@@ -478,6 +478,58 @@ bg.warehouse.Controller = function () {
         var src = $(this).addClass("selected").attr('src');
         previewImage.attr('src', src.replace('_T', '_M'));
     });
+
+    var relatedScroll = $('#related');
+    relatedScroll.find('.sly-frame').sly({
+        horizontal: 1,
+        itemNav: 'basic',
+        itemSelector: null,
+        smart: 1,
+        activateOn: null,
+        mouseDragging: 1,
+        touchDragging: 1,
+        releaseSwing: 1,
+        startAt: 0,
+        scrollBy: 1,
+        scrollBar: relatedScroll.find('.sly-scrollbar'),
+        pagesBar: relatedScroll.find('.sly-pages'),
+        activatePageOn: 'click',
+        speed: 700,
+        elasticBounds: 1,
+        dragHandle: 1,
+        dynamicHandle: 1,
+        clickBar: 1
+    });
+
+    var accessoriesScroll = $('#accessories');
+    accessoriesScroll.find('.sly-frame').sly({
+        horizontal: 0,
+        smart: 1,
+        itemSelector: null,
+        activatePageOn: 'click',
+        speed: 700,
+        pagesBar: accessoriesScroll.find('.sly-pages'),
+        scrollBar: accessoriesScroll.find('.sly-scrollbar'),
+        scrollBy: 100,
+        dragHandle: 1,
+        dynamicHandle: 1,
+        clickBar: 1
+
+        /*
+         activateOn: null,
+         mouseDragging: 1,
+         touchDragging: 1,
+         releaseSwing: 1,
+         startAt: 0,
+         scrollBy: 1,
+         scrollBar: accessoriesScroll.find('.sly-scrollbar'),
+         pagesBar: accessoriesScroll.find('.sly-pages'),
+         elasticBounds: 1,
+         dragHandle: 1,
+         dynamicHandle: 1,
+         clickBar: 1
+         */
+    });
 };
 
 $(document).ready(function () {

@@ -54,25 +54,29 @@
     </#if>
 </#macro>
 
+<#macro artiveItem article ops={}>
+<div class="article-item grid<#if !article.active> inactive</#if>">
+    <div class="image">
+        <@bg.link.article article><img alt="${article.name}"
+                                       title="${article.name}"
+                                       src="<@articleImg article article.previewImageId!"" ImageSize.SMALL/>"/>
+        </@bg.link.article>
+        <@discountDiv article/>
+    </div>
+    <div class="name"><@bg.link.article article>${article.name}</@bg.link.article></div>
+    <div class="price"><@bg.ui.price article.price.amount/></div>
+    <#if ops["showCategory"]?? && ops["showCategory"]>
+        <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(article.categoryId)/></div>
+    </#if>
+</div>
+</#macro>
+
 <#macro articlesViewGrid articles ops={}>
 <table>
     <#list articles as a>
         <@bg.ui.tableSplit articles?size 4 a_index>
             <td valign="top" align="center" width="25%">
-                <div class="article-item grid<#if !a.active> inactive</#if>">
-                    <div class="image">
-                        <@bg.link.article a><img alt="${a.name}"
-                                                 title="${a.name}"
-                                                 src="<@articleImg a a.previewImageId!"" ImageSize.SMALL/>"/>
-                        </@bg.link.article>
-                        <@discountDiv a/>
-                    </div>
-                    <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                    <div class="price"><@bg.ui.price a.price.amount/></div>
-                    <#if ops["showCategory"]?? && ops["showCategory"]>
-                        <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(a.categoryId)/></div>
-                    </#if>
-                </div>
+                <@artiveItem a ops/>
             </td>
         </@bg.ui.tableSplit>
     </#list>

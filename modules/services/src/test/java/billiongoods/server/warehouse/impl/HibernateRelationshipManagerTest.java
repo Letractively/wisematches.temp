@@ -50,17 +50,17 @@ public class HibernateRelationshipManagerTest {
 		assertEquals(1, relationshipManager.getGroups(a1.getId()).size());
 		assertEquals(1, relationshipManager.getGroups(a2.getId()).size());
 
-		relationshipManager.addRelationship(a1.getId(), group.getId(), RelationshipType.MODE);
+		relationshipManager.addRelationship(a1.getId(), group.getId(), RelationshipType.BOUGHT);
 
-		relationshipManager.addRelationship(a2.getId(), group.getId(), RelationshipType.MODE);
+		relationshipManager.addRelationship(a2.getId(), group.getId(), RelationshipType.BOUGHT);
 		relationshipManager.addRelationship(a2.getId(), group.getId(), RelationshipType.ACCESSORIES);
 
 		final Relationships r1 = new Relationships(relationshipManager.getRelationships(a1.getId()));
 		assertNull(r1.getAssociations(RelationshipType.ACCESSORIES));
-		assertEquals(2, r1.getAssociations(RelationshipType.MODE).size());
+		assertEquals(2, r1.getAssociations(RelationshipType.BOUGHT).size());
 
 		final Relationships r2 = new Relationships(relationshipManager.getRelationships(a2.getId()));
-		assertEquals(2, r2.getAssociations(RelationshipType.MODE).size());
+		assertEquals(2, r2.getAssociations(RelationshipType.BOUGHT).size());
 		assertEquals(2, r2.getAssociations(RelationshipType.ACCESSORIES).size());
 
 		relationshipManager.removeGroup(group.getId());

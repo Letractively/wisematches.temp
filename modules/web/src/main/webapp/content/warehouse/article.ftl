@@ -1,7 +1,10 @@
 <#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Article" -->
+<#-- @ftlvariable name="groups" type="billiongoods.server.warehouse.Group[]" -->
 <#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationships" -->
 
 <#include "/core.ftl">
+
+<script type="text/javascript" src="<@bg.ui.static "js/jquery.sly-1.0.2.min.js"/>"></script>
 
 <div class="article_layout">
     <table>
@@ -120,18 +123,25 @@
         </tr>
         <tr>
             <td colspan="2">
+            <#if article.description?has_content><@bg.ui.panel "Описание" "description">${article.description!""}</@bg.ui.panel></#if>
+            </td>
+        </tr>
 
-            <#if article.description?has_content>
-                <@bg.ui.panel "Описание" "description">${article.description!""}</@bg.ui.panel>
-            </#if>
+    <#assign accessories=relationships.getAssociations(RelationshipType.ACCESSORIES)!""/>
+    <#if accessories?has_content>
+        <tr>
+            <td colspan="2">
+                <@bg.ui.panel "Запачные части <ul class=\"sly-pages\"></ul>" "accessories">
+                    <div class="sly-scrollbar vertical">
+                        <div class="handle">
+                            <div class="mousearea"></div>
+                        </div>
+                    </div>
 
-            <#list [RelationshipType.ACCESSORIES, RelationshipType.MODE] as t>
-                <#assign articles=relationships.getAssociations(t)!""/>
-                <#if articles?has_content>
-                    <@bg.ui.panel messageSource.getMessage("relationship.${t.name()?lower_case}.label", locale) t.name()?lower_case>
+                    <div class="sly-frame">
                         <table>
-                            <#list articles as a>
-                                <@bg.ui.tableSplit articles?size 2 a_index>
+                            <#list accessories as a>
+                                <@bg.ui.tableSplit accessories?size 2 a_index>
                                     <td valign="top">
                                         <div class="article-item list">
                                             <div class="image">
@@ -147,11 +157,38 @@
                                 </@bg.ui.tableSplit>
                             </#list>
                         </table>
-                    </@bg.ui.panel>
-                </#if>
-            </#list>
+                    </div>
+                </@bg.ui.panel>
             </td>
         </tr>
+    </#if>
+
+
+    <#if groups??>
+        <tr>
+            <td colspan="2">
+                <@bg.ui.panel "Похожие продукты <ul class=\"sly-pages\"></ul>" "related">
+                    <div class="sly-frame">
+                        <ul>
+                            <#list  groups as g>
+                                <#list g.descriptions as a>
+                                    <li>
+                                        <@bg.ui.artiveItem a/>
+                                    </li>
+                                </#list>
+                            </#list>
+                        </ul>
+                    </div>
+
+                    <div class="sly-scrollbar horizontal">
+                        <div class="handle">
+                            <div class="mousearea"></div>
+                        </div>
+                    </div>
+                </@bg.ui.panel>
+            </td>
+        </tr>
+    </#if>
     </table>
 </div>
 

@@ -39,6 +39,7 @@ public class ArticleController extends AbstractController {
 
 		model.addAttribute("article", article);
 		model.addAttribute("category", category);
+		model.addAttribute("groups", relationshipManager.getGroups(article.getId()));
 		model.addAttribute("relationships", new Relationships(relationshipManager.getRelationships(article.getId())));
 
 		hideNavigation(model);
