@@ -1,14 +1,17 @@
 <#include "/core.ftl">
 
-<table>
+<table style="height: 40px">
     <tr>
         <td align="left">
             <div class="header-logo">
-                <a href="/" style="text-decoration: none !important;">
-                    <span class="first-letter">B</span><span>illion</span><span
-                        class="first-letter">G</span><span>oods</span><span
-                        class="domain"><sup>.ru</sup></span>
-                </a>
+                <img alt="logo" src="<@bg.ui.static "images/logo.png"/>"/>
+            <#--
+                            <a href="/" style="text-decoration: none !important;">
+                                <span class="first-letter">B</span><span>illion</span><span
+                                    class="first-letter">G</span><span>oods</span><span
+                                    class="domain"><sup>.ru</sup></span>
+                            </a>
+            -->
             </div>
         </td>
 
