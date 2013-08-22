@@ -657,6 +657,10 @@ button.bg-ui-button.selected {
     font-size: 14px;
 }
 
+.article_layout .view {
+    width: 276px;
+}
+
 .article_layout .preview {
     position: relative;
     margin-bottom: 5px;
@@ -867,11 +871,6 @@ button.bg-ui-button.selected {
     line-height: 23px;
     font-size: 14px !important;
     background: url('../images/discounts.png') no-repeat no-repeat;
-}
-
-.article-item.list .image {
-    float: left;
-    margin-right: 10px;
 }
 
 .article-item.grid {
@@ -1247,4 +1246,134 @@ button.bg-ui-button.selected {
 
 .assistance .question textarea {
     width: 100%;
+}
+
+.sly-frame {
+    overflow: hidden;
+}
+
+.sly-frame ul {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    list-style: none;
+}
+
+.sly-frame ul li {
+    float: left;
+    height: 100%;
+    margin: 0 1px 0 0;
+    padding: 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.sly-scrollbar.horizontal {
+    margin: 0 0 1em 0;
+    height: 2px;
+    background: #ccc;
+    line-height: 0;
+}
+
+.sly-scrollbar.horizontal .handle {
+    width: 100px;
+    height: 100%;
+    background: #292a33;
+    cursor: pointer;
+}
+
+.sly-scrollbar.horizontal .handle .mousearea {
+    position: absolute;
+    top: -9px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
+
+.sly-scrollbar.vertical {
+    position: absolute;
+    right: 10px;
+    width: 2px;
+    height: 600px;
+    background: #ccc;
+    line-height: 0;
+}
+
+.sly-scrollbar.vertical .handle {
+    width: 100%;
+    height: 100px;
+    background: #292a33;
+    cursor: pointer;
+}
+
+.sly-scrollbar.vertical .handle .mousearea {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 22px;
+    height: 100%;
+}
+
+.sly-pages {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+    text-align: center;
+}
+
+.sly-pages li {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 0 4px;
+    text-indent: -999px;
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2);
+}
+
+.sly-pages li:hover {
+    background: #c3692c;
+}
+
+.sly-pages li.active {
+    background: #d67632;
+}
+
+.article_layout .related {
+    width: 998px;
+}
+
+.article_layout .related .sly-pages, .article_layout .accessories .sly-pages {
+    float: right;
+    margin: 3px 0 0;
+}
+
+.article_layout .related .sly-frame li {
+    width: 170px;
+}
+
+.article_layout .related .article-item {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article_layout .related .sly-scrollbar {
+    margin-top: 6px;
+}
+
+.article_layout .accessories {
+    position: relative;
+}
+
+.article_layout .accessories .sly-frame, .article_layout .accessories .sly-scrollbar {
+    height: 225px;
+}
+
+.accessories .article-item .image {
+    float: left;
+    width: 75px;
+    margin-right: 10px;
 }
