@@ -49,7 +49,7 @@
     <#if a.price.primordialAmount??>
         <#assign percents=((a.price.primordialAmount-a.price.amount)*100)/a.price.primordialAmount/>
         <#if (percents>0)>
-        <div class="discount">${percents?string("0")}%</div>
+        <div class="discount">-${percents?string("0")}%</div>
         </#if>
     </#if>
 </#macro>
