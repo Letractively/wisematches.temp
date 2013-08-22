@@ -165,7 +165,7 @@
     </@bg.ui.panel>
 </#if>
 
-<#if groups??>
+<#if groups?has_content>
     <@bg.ui.panel "Похожие продукты <ul class=\"sly-pages\"></ul>" "related">
         <div class="sly-frame">
             <ul>
