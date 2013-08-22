@@ -1,3 +1,3 @@
-<#-- @ftlvariable name="context" type="java.lang.String" -->
+<#-- @ftlvariable name="context" type="billiongoods.server.services.payment.Order" -->
 
-${context}
+Новый заказ сформирован: #${context.id} на сумму ${context.amount}

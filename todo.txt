@@ -1,12 +1,7 @@
-- Error reading included file system/price.ftl
 - Show discount label for a product (http://all-free-download.com/free-vector/vector-misc/discount_sales_vector_152514.html)
 - Exclude the same article from modifications group
 - Add modifications/accessories links on the top of the article page
 - Add 'related' tab for an article that will show items from the same group/groups.
-- Extend import functionality. Additional parameters can be specified at import time:
-    - attributes
-    - groups
-    - Import images as part of import articles process
 - Our recomendations view on the left of main page: L959 & V911 & v912
 
 ============= PLAN ====================
@@ -21,7 +16,12 @@
 - New article label for new articles
 
 ============= DONE ====================
+22.08
++ Error reading included file system/price.ftl
+
+
 21.08
++ Import images as part of import articles process
 + Scale is not correct for not square images
 + Price validator: special thread, more functions - email, store to DB, view and so on.
 + Incorrect items count in pages view
