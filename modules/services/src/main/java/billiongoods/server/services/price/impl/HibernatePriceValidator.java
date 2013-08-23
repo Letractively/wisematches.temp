@@ -118,7 +118,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 						final Price oldSupplierPrice = supplierInfo.getPrice();
 
 						try {
-							final Price newSupplierPrice = priceLoader.loadPrice(articleId, supplierInfo);
+							final Price newSupplierPrice = priceLoader.loadPrice(supplierInfo);
 							final Price newPrice = markupCalculator.calculateMarkupPrice(newSupplierPrice);
 
 							final HibernatePriceRenewal renewal = new HibernatePriceRenewal(articleId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
