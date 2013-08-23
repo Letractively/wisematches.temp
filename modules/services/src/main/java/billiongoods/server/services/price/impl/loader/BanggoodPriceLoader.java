@@ -24,11 +24,15 @@ public class BanggoodPriceLoader implements PriceLoader {
 	}
 
 	@Override
-	public Price loadPrice(Integer articleId, SupplierInfo supplierInfo) throws PriceLoadingException {
+	public Price loadPrice(SupplierInfo supplierInfo) throws PriceLoadingException {
 		try {
 			final URL url = new URL("http://www.banggood.com/-p-" + supplierInfo.getReferenceId() + ".html");
 
 			final URLConnection urlConnection = url.openConnection();
+			urlConnection.setUseCaches(false);
+			urlConnection.setDefaultUseCaches(false);
+			urlConnection.setIfModifiedSince(0);
+
 			try (final InputStream inputStream = urlConnection.getInputStream()) {
 				return parsePrice(inputStream);
 			}
