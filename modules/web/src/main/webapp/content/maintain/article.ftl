@@ -67,7 +67,10 @@
 </tr>
 <tr>
     <td><label for="supplierReferenceId">Идентификатор поставщика: </label></td>
-    <td><@bg.ui.input path="form.supplierReferenceId"/></td>
+    <td><@bg.ui.input path="form.supplierReferenceId">(<a id="supplierReferenceLink"
+                                                          href="http://www.banggood.com/-p-${bg.ui.statusValue}.html"
+                                                          target="_blank">открыть в новом окне</a>)</@bg.ui.input>
+    </td>
 </tr>
 
 <tr>
@@ -421,6 +424,10 @@
         var id = $(this).text();
         var attr = attributes[id];
         $(this).html(attr.name + ", " + attr.unit);
+    });
+
+    $("#supplierReferenceId").change(function () {
+        $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/-p-' + $(this).val() + '.html');
     });
 
     <#if article??>
