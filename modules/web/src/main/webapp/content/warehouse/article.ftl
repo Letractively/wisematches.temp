@@ -1,12 +1,10 @@
 <#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Article" -->
-<#-- @ftlvariable name="groups" type="billiongoods.server.warehouse.Group[]" -->
-<#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationships" -->
+<#-- @ftlvariable name="related" type="billiongoods.server.warehouse.ArticleDescription[]" -->
+<#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ArticleDescription[]" -->
 
 <#include "/core.ftl">
 
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.sly-1.0.2.min.js"/>"></script>
-
-<#assign accessories=relationships.getAssociations(RelationshipType.ACCESSORIES)!""/>
 
 <div class="article_layout">
     <table>
@@ -70,7 +68,7 @@
                     <div style="text-align: right; width: 100%">
                         <a href="#description">Описание</a>
                     <#if accessories?has_content>| <a href="#accessories">Запачные части</a></#if>
-                    <#if groups?has_content>| <a href="#related">Похожие продукты</a></#if>
+                    <#if related?has_content>| <a href="#related">Похожие продукты</a></#if>
                     </div>
 
                     <form id="shoppingForm">
@@ -165,16 +163,14 @@
     </@bg.ui.panel>
 </#if>
 
-<#if groups?has_content>
+<#if related?has_content>
     <@bg.ui.panel "Похожие продукты <ul class=\"sly-pages\"></ul>" "related">
         <div class="sly-frame">
             <ul>
-                <#list  groups as g>
-                    <#list g.descriptions as a>
-                        <li>
-                            <@bg.ui.artiveItem a/>
-                        </li>
-                    </#list>
+                <#list related as a>
+                    <li>
+                        <@bg.ui.artiveItem a/>
+                    </li>
                 </#list>
             </ul>
         </div>

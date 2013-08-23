@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -39,8 +42,25 @@ public class ArticleController extends AbstractController {
 
 		model.addAttribute("article", article);
 		model.addAttribute("category", category);
-		model.addAttribute("groups", relationshipManager.getGroups(article.getId()));
-		model.addAttribute("relationships", new Relationships(relationshipManager.getRelationships(article.getId())));
+
+		final List<ArticleDescription> related = new ArrayList<>();
+		final List<Group> groups = relationshipManager.getGroups(article.getId());
+		for (Group group : groups) {
+			related.addAll(group.getDescriptions());
+		}
+
+		final List<ArticleDescription> accessories = new ArrayList<>();
+		final List<Relationship> relationships = relationshipManager.getRelationships(article.getId());
+		for (Relationship relationship : relationships) {
+			if (relationship.getType() == RelationshipType.ACCESSORIES) {
+				accessories.addAll(relationship.getDescriptions());
+			}
+		}
+		related.remove(article);
+		accessories.remove(article);
+
+		model.addAttribute("related", related);
+		model.addAttribute("accessories", accessories);
 
 		hideNavigation(model);
 
