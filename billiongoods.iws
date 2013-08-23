@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/article.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/article.ftl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
     </list>
@@ -30,7 +29,6 @@
     <sortChildren value="false" />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -67,6 +65,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint url="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/3.2.0.M2/spring-security-core-3.2.0.M2-sources.jar!/org/springframework/security/authentication/AnonymousAuthenticationProvider.java" line="62" class="org.springframework.security.authentication.AnonymousAuthenticationProvider" package="org.springframework.security.authentication">
         <option name="ENABLED" value="true" />
@@ -100,62 +99,7 @@
       <file leaf-file-name="todo.txt" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/todo.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="31" selection-start="237" selection-end="237" vertical-scroll-proportion="0.13967136" vertical-offset="0" max-vertical-offset="1683">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="article.ftl" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/article.ftl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="428" column="5" selection-start="14411" selection-end="14411" vertical-scroll-proportion="-6.923077" vertical-offset="7096" max-vertical-offset="8160">
-              <folding>
-                <element signature="n#style#0;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#tr#0;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#textarea#0;n#td#1;n#tr#3;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#textarea#0;n#td#0;n#tr#26;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="billiongoods-1.3.0.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.3.0.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="12529">
-              <folding>
-                <marker date="1377239834721" expanded="false" signature="3484:3524" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BanggoodPriceLoader.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/loader/BanggoodPriceLoader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="64" selection-start="942" selection-end="969" vertical-scroll-proportion="0.0" vertical-offset="101" max-vertical-offset="1173">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="article.ftl" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/article.ftl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="3315">
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ArticleController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/ArticleController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="31" selection-start="2056" selection-end="2056" vertical-scroll-proportion="0.0" vertical-offset="833" max-vertical-offset="1275">
+            <state line="6" column="60" selection-start="299" selection-end="299" vertical-scroll-proportion="0.123337366" vertical-offset="0" max-vertical-offset="1734">
               <folding />
             </state>
           </provider>
@@ -264,6 +208,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1156,19 +1101,18 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
-    <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_treeWidth1" value="150" />
-    <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_treeWidth1" value="150" />
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_treeWidth2" value="151" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/billiongoods.iml" />
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_treeWidth0" value="151" />
@@ -1185,23 +1129,23 @@
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_treeOrder3" value="3" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatWidth3" value="825" />
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatWidth2" value="151" />
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatWidth1" value="150" />
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatWidth0" value="151" />
     <property name="options.lastSelected" value="preferences.sourceCode" />
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatOrder0" value="0" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatOrder2" value="2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="FileHistory.org.zmlx.hg4idea.provider.HgHistoryProvider_flatOrder2" value="2" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -1474,12 +1418,6 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
-      <method />
-    </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
       <deployment />
       <server-settings />
@@ -1489,6 +1427,12 @@
       <predefined_log_file id="Tomcat Host Manager" enabled="false" />
       <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="All Tests" type="JUnit" factoryName="JUnit">
@@ -1649,7 +1593,8 @@
       <workItem from="1377153626956" duration="1746000" />
       <workItem from="1377155399638" duration="22588000" />
       <workItem from="1377239817567" duration="8000" />
-      <workItem from="1377239903113" duration="5480000" />
+      <workItem from="1377239903113" duration="5500000" />
+      <workItem from="1377251035958" duration="1993000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -2015,11 +1960,15 @@
       <created>1377245298873</created>
       <updated>1377245298873</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="+">
+      <created>1377245816867</created>
+      <updated>1377245816867</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116721000" />
+    <option name="totallyTimeSpent" value="118734000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -2052,7 +2001,6 @@
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28929386" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38382688" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270809" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -2060,7 +2008,6 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29680365" sideWeight="0.109400325" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32580644" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22323462" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22771475" sideWeight="0.19460727" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2073,6 +2020,8 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3128039" sideWeight="0.6480638" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38382688" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22323462" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -2082,8 +2031,8 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40318906" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270809" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29680365" sideWeight="0.109400325" order="2" side_tool="true" content_ui="tabs" />
@@ -2105,8 +2054,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22323462" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22771475" sideWeight="0.19460727" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2617504" sideWeight="0.7080891" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
@@ -2154,60 +2103,44 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/PriceLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="20" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
-          <folding />
-        </state>
+        <state line="9" column="20" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/HibernatePriceValidator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="47" selection-start="3110" selection-end="3110" vertical-scroll-proportion="0.0" vertical-offset="942" max-vertical-offset="3332">
-          <folding />
-        </state>
+        <state line="95" column="47" selection-start="3110" selection-end="3110" vertical-scroll-proportion="0.0" vertical-offset="942" max-vertical-offset="3332" />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/lang/reflect/InvocationTargetException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="0" selection-start="1697" selection-end="1697" vertical-scroll-proportion="0.0" vertical-offset="631" max-vertical-offset="1598">
-          <folding />
-        </state>
+        <state line="71" column="0" selection-start="1697" selection-end="1697" vertical-scroll-proportion="0.0" vertical-offset="631" max-vertical-offset="1598" />
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="417" selection-end="417" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-          <folding />
-        </state>
+        <state line="13" column="0" selection-start="417" selection-end="417" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408" />
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11-sources.jar!/org/junit/runners/ParentRunner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="273" column="0" selection-start="10338" selection-end="10338" vertical-scroll-proportion="0.0" vertical-offset="3708" max-vertical-offset="5967">
-          <folding />
-        </state>
+        <state line="273" column="0" selection-start="10338" selection-end="10338" vertical-scroll-proportion="0.0" vertical-offset="3708" max-vertical-offset="5967" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/BanggoodPriceLoaderTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="625" selection-end="625" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-          <folding />
-        </state>
+        <state line="21" column="0" selection-start="625" selection-end="625" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/article.ftl">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3315">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#td#1;n#tr#0;n#table#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractArticleDescription.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="63" selection-start="2426" selection-end="2426" vertical-scroll-proportion="0.14201878" vertical-offset="2021" max-vertical-offset="2873">
-          <folding />
-        </state>
+        <state line="131" column="63" selection-start="2426" selection-end="2426" vertical-scroll-proportion="0.14201878" vertical-offset="2021" max-vertical-offset="2873" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ArticleDescription.java">
@@ -2226,50 +2159,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/ArticleController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="31" selection-start="2056" selection-end="2056" vertical-scroll-proportion="0.0" vertical-offset="682" max-vertical-offset="1275">
+        <state line="57" column="31" selection-start="2056" selection-end="2056" vertical-scroll-proportion="0.44131455" vertical-offset="423" max-vertical-offset="1275">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/loader/BanggoodPriceLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="64" selection-start="942" selection-end="969" vertical-scroll-proportion="0.0" vertical-offset="101" max-vertical-offset="1173">
-          <folding />
-        </state>
+        <state line="28" column="64" selection-start="942" selection-end="969" vertical-scroll-proportion="0.20070423" vertical-offset="101" max-vertical-offset="1173" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="275" column="52" selection-start="9775" selection-end="9787" vertical-scroll-proportion="0.48875254" vertical-offset="4436" max-vertical-offset="5202">
-          <folding />
-        </state>
+        <state line="275" column="52" selection-start="9775" selection-end="9787" vertical-scroll-proportion="0.48875254" vertical-offset="4436" max-vertical-offset="5202" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-1.3.0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="12529">
-          <folding>
-            <marker date="1377239834721" expanded="false" signature="3484:3524" placeholder="..." />
-          </folding>
-        </state>
+        <state line="18" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.08104887" vertical-offset="204" max-vertical-offset="12529" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/article.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="428" column="5" selection-start="14411" selection-end="14411" vertical-scroll-proportion="-6.923077" vertical-offset="7096" max-vertical-offset="8160">
-          <folding>
-            <element signature="n#style#0;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#tr#0;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#td#1;n#tr#3;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#td#0;n#tr#26;n#table#0;n#form#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="428" column="5" selection-start="14411" selection-end="14411" vertical-scroll-proportion="-0.070217915" vertical-offset="7334" max-vertical-offset="8160">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/todo.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="31" selection-start="237" selection-end="237" vertical-scroll-proportion="0.13967136" vertical-offset="0" max-vertical-offset="1683">
+        <state line="6" column="60" selection-start="299" selection-end="299" vertical-scroll-proportion="0.123337366" vertical-offset="0" max-vertical-offset="1734">
           <folding />
         </state>
       </provider>
