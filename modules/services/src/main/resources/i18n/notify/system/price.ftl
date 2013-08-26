@@ -1,10 +1,30 @@
 <#-- @ftlvariable name="context.date" type="java.util.Date" -->
-<#-- @ftlvariable name="context.checked" type="java.lang.Integer" -->
-<#-- @ftlvariable name="context.renewals" type="billiongoods.server.services.price.PriceRenewal[]" -->
+<#-- @ftlvariable name="context.summary" type="billiongoods.server.services.price.ValidationSummary" -->
 
-<div>Проверено {context.checked} элементов.</div>
+<table>
+    <tr>
+        <td>Запущено:</td>
+        <td>${context.summary.startDate?string}</td>
+    </tr>
+    <tr>
+        <td>Завершено:</td>
+        <td>${context.summary.finishDate?string}</td>
+    </tr>
+    <tr>
+        <td>Проверено:</td>
+        <td>${context.summary.validatedArticles}</td>
+    </tr>
+    <tr>
+        <td>Обновлено:</td>
+        <td>${context.summary.priceRenewals?size}</td>
+    </tr>
+    <tr>
+        <td>Ошибок проверки:</td>
+        <td>${context.summary.priceBreakdowns?size}</td>
+    </tr>
+</table>
 
-<#if context.renewals?has_content>
+<#if context.summary.priceRenewals?has_content>
 <div>
     Обновленные товары:
     <table>
@@ -18,7 +38,7 @@
             <th>Изменение</th>
         </tr>
 
-        <#list context.renewals as r>
+        <#list context.summary.priceRenewals as r>
             <tr>
                 <td>
                     <a href="http://www.billiongoods.ru/warehouse/article/${r.articleId}">${messageSource.getArticleCode(r.articleId)}</a>
@@ -61,6 +81,22 @@
         </#list>
     </table>
 </div>
-<#else>
-<div>Обновлений нет.</div>
+</#if>
+
+<#if context.summary.priceBreakdowns?has_content>
+<div>
+    Ошибки проверки:
+    <table>
+        <#list context.summary.priceBreakdowns as b>
+            <tr>
+                <td nowrap="nowrap">
+                    <a href="http://www.billiongoods.ru/warehouse/article/${b.articleId}">${messageSource.getArticleCode(b.articleId)}</a>
+                </td>
+                <td width="100%">
+                ${b.exception.message!""}
+                </td>
+            </tr>
+        </#list>
+    </table>
+</div>
 </#if>

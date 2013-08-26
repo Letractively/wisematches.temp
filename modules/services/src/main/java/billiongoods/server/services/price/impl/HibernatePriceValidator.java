@@ -2,7 +2,10 @@ package billiongoods.server.services.price.impl;
 
 import billiongoods.core.search.Range;
 import billiongoods.core.task.CleaningDayListener;
-import billiongoods.server.services.price.*;
+import billiongoods.server.services.price.ExchangeManager;
+import billiongoods.server.services.price.MarkupCalculator;
+import billiongoods.server.services.price.PriceValidator;
+import billiongoods.server.services.price.PriceValidatorListener;
 import billiongoods.server.warehouse.ArticleManager;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.SupplierInfo;
@@ -17,7 +20,6 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +40,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 	private PlatformTransactionManager transactionManager;
 
 	private Future validationProgress;
+
+	private final ReusableValidationSummary validationSummary = new ReusableValidationSummary();
 
 	private static final int BULK_ARTICLES_SIZE = 100;
 
@@ -65,6 +69,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 	private void doValidation() {
 		try {
 			final Date startedDate = new Date();
+
+			validationSummary.initialize(startedDate);
 			final MarkupCalculator markupCalculator = exchangeManager.getMarkupCalculator();
 
 			int count;
@@ -85,8 +91,6 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 			}
 
 			int index = 0;
-			int processedCount = 0;
-			final List<PriceRenewal> renewals = new ArrayList<>();
 			while (true) {
 				synchronized (this) {
 					if (validationProgress == null) {
@@ -107,7 +111,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 						break;
 					}
 					for (Object o : list) {
-						processedCount++;
+						validationSummary.incrementValidated();
 
 						final Object[] a = (Object[]) o;
 
@@ -124,7 +128,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 							final HibernatePriceRenewal renewal = new HibernatePriceRenewal(articleId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
 							if (!newPrice.equals(oldPrice)) {
 								log.info("Price for article has been updated: {}", renewal);
-								renewals.add(renewal);
+								validationSummary.addRenewal(renewal);
 
 								articleManager.updatePrice(articleId, newPrice, newSupplierPrice);
 								session.save(renewal);
@@ -134,7 +138,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 								listener.priceValidated(articleId, renewal);
 							}
 						} catch (PriceLoadingException ex) {
-							log.error("Price can't be loaded for article " + articleId, ex);
+							log.info("Price for article can't be updated: ", ex.getMessage());
+							validationSummary.addBreakdown(new Date(), articleId, ex);
 						}
 					}
 					session.flush();
@@ -148,8 +153,10 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 			}
 
 			final Date finishedDate = new Date();
+
+			validationSummary.finalize(finishedDate);
 			for (PriceValidatorListener listener : listeners) {
-				listener.priceValidationFinished(finishedDate, processedCount, renewals);
+				listener.priceValidationFinished(finishedDate, validationSummary);
 			}
 		} catch (Exception ex) {
 			log.error("Price validation can't be done", ex);
