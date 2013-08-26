@@ -2,21 +2,15 @@ package billiongoods.server.services.price;
 
 import billiongoods.server.warehouse.Price;
 
-import java.util.Date;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface PriceRenewal {
-	public Date getTimestamp();
+public interface PriceRenewal extends PriceValidation {
+	Price getOldPrice();
 
-	public Integer getArticleId();
+	Price getOldSupplierPrice();
 
-	public Price getOldPrice();
+	Price getNewPrice();
 
-	public Price getOldSupplierPrice();
-
-	public Price getNewPrice();
-
-	public Price getNewSupplierPrice();
+	Price getNewSupplierPrice();
 }

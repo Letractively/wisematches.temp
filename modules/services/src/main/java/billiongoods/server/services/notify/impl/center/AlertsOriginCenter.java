@@ -14,12 +14,12 @@ import billiongoods.server.services.payment.OrderState;
 import billiongoods.server.services.price.PriceRenewal;
 import billiongoods.server.services.price.PriceValidator;
 import billiongoods.server.services.price.PriceValidatorListener;
+import billiongoods.server.services.price.ValidationSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -133,11 +133,10 @@ public class AlertsOriginCenter {
 		}
 
 		@Override
-		public void priceValidationFinished(Date date, int checkedArticled, List<PriceRenewal> renewals) {
+		public void priceValidationFinished(Date date, ValidationSummary summary) {
 			final Map<String, Object> ctx = new HashMap<>();
 			ctx.put("date", date);
-			ctx.put("checked", checkedArticled);
-			ctx.put("renewals", renewals);
+			ctx.put("summary", summary);
 
 			raiseAlarm("system.price", ctx);
 		}

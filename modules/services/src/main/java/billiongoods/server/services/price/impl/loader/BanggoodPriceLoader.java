@@ -31,7 +31,6 @@ public class BanggoodPriceLoader implements PriceLoader {
 			final URLConnection urlConnection = url.openConnection();
 			urlConnection.setUseCaches(false);
 			urlConnection.setDefaultUseCaches(false);
-			urlConnection.setIfModifiedSince(0);
 
 			try (final InputStream inputStream = urlConnection.getInputStream()) {
 				return parsePrice(inputStream);
