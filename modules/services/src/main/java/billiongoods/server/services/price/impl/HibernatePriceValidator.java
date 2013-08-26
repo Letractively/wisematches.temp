@@ -138,8 +138,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 								listener.priceValidated(articleId, renewal);
 							}
 						} catch (PriceLoadingException ex) {
-							log.info("Price for article can't be updated: ", ex.getMessage());
-							validationSummary.addBreakdown(new Date(), articleId, ex);
+                            log.info("Price for article {} can't be updated: {}", articleId, ex.getMessage());
+                            validationSummary.addBreakdown(new Date(), articleId, ex);
 						}
 					}
 					session.flush();
