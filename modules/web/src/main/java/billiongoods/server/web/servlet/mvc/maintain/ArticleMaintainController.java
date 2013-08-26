@@ -86,7 +86,7 @@ public class ArticleMaintainController extends AbstractController {
             final SupplierInfo supplierInfo = article.getSupplierInfo();
             form.setSupplierPrice(supplierInfo.getPrice().getAmount());
             form.setSupplierPrimordialPrice(supplierInfo.getPrice().getPrimordialAmount());
-            form.setSupplierReferenceId(supplierInfo.getReferenceId());
+            form.setSupplierReferenceId(supplierInfo.getReferenceUri());
             form.setSupplierReferenceCode(supplierInfo.getReferenceCode());
 
             form.setPreviewImage(article.getPreviewImageId());

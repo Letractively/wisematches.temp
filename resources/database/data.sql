@@ -358,7 +358,7 @@ CREATE TABLE `store_article` (
   `soldCount`          INT(11) DEFAULT '0',
   `buyPrice`           FLOAT        NOT NULL,
   `buyPrimordialPrice` FLOAT DEFAULT NULL,
-  `referenceId`        VARCHAR(50) DEFAULT NULL,
+  `referenceUri`       VARCHAR(50) DEFAULT NULL,
   `referenceCode`      VARCHAR(50) DEFAULT NULL,
   `wholesaler`         TINYINT(4) DEFAULT NULL,
   `validationDate`     DATETIME DEFAULT NULL,

@@ -38,11 +38,8 @@ public class BanggoodArticlesImporter {
             final Price supplierPrice = new Price(Double.parseDouble(nextLine[3]), null);
             final double weight = Double.parseDouble(nextLine[4]);
             final String desc = nextLine[5];
-
-            String id = nextLine[6];
-            id = id.substring(id.lastIndexOf("-") + 1, id.lastIndexOf("."));
-
-            log.info("Importing article for SKU: " + sku);
+            final String uri = nextLine[6].substring(24);
+            log.info("Importing article {} from {}", sku, uri);
 
             final Article article1 = articleManager.getArticle(sku);
             if (article1 != null) {
@@ -51,7 +48,7 @@ public class BanggoodArticlesImporter {
             }
 
             final Price price = exchangeManager.getMarkupCalculator().calculateMarkupPrice(supplierPrice);
-            final Article article = articleManager.createArticle(name, desc, category, price, weight, null, null, null, null, null, id, sku, Supplier.BANGGOOD, supplierPrice);
+            final Article article = articleManager.createArticle(name, desc, category, price, weight, null, null, null, null, null, uri, sku, Supplier.BANGGOOD, supplierPrice);
 
             final Set<String> urls = images.get(sku);
             if (urls != null) {
@@ -70,7 +67,7 @@ public class BanggoodArticlesImporter {
 
                 if (!codes.isEmpty()) {
                     articleManager.updateArticle(article.getId(), name, desc, category, price, weight, null,
-                            codes.iterator().next(), codes, null, null, id, sku, Supplier.BANGGOOD, supplierPrice);
+                            codes.iterator().next(), codes, null, null, uri, sku, Supplier.BANGGOOD, supplierPrice);
                 }
             }
             log.info("Article imported: {}", article.getId());

@@ -1,43 +1,51 @@
 package billiongoods.server.warehouse;
 
+import java.net.URL;
 import java.util.Date;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface SupplierInfo {
-	/**
-	 * Returns supplier price
-	 *
-	 * @return the supplier price
-	 */
-	Price getPrice();
+    /**
+     * Returns supplier price
+     *
+     * @return the supplier price
+     */
+    Price getPrice();
 
-	/**
-	 * Returns link to wholesaler WEB page for this article.
-	 *
-	 * @return the link to wholesaler WEB page for this article.
-	 */
-	String getReferenceId();
+    /**
+     * Returns absolute HTTP URL for original article.
+     *
+     * @return the absolute HTTP URL for original article.
+     */
+    URL getReferenceUrl();
 
-	/**
-	 * The reference code. It can differ from reference id.
-	 *
-	 * @return The reference code.
-	 */
-	String getReferenceCode();
+    /**
+     * Returns link to wholesaler WEB page for this article.
+     *
+     * @return the link to wholesaler WEB page for this article.
+     */
+    String getReferenceUri();
 
-	/**
-	 * Returns name of wholesaler.
-	 *
-	 * @return the name of wholesaler.
-	 */
-	Supplier getWholesaler();
+    /**
+     * The reference code. It can differ from reference id.
+     *
+     * @return The reference code.
+     */
+    String getReferenceCode();
 
-	/**
-	 * Returns date when the article was checked last time. Never null.
-	 *
-	 * @return the date when the article was checked last time.
-	 */
-	Date getValidationDate();
+    /**
+     * Returns name of wholesaler.
+     *
+     * @return the name of wholesaler.
+     */
+    Supplier getWholesaler();
+
+    /**
+     * Returns date when the article was checked last time. Never null.
+     *
+     * @return the date when the article was checked last time.
+     */
+    Date getValidationDate();
 }
