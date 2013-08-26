@@ -39,7 +39,7 @@
                     <div class="articular">
                         Артикул: <span class="sku">${messageSource.getArticleCode(article)}</span>
                     <@bg.security.authorized "moderator">
-                        (<a href="http://banggood.com/-p-${article.supplierInfo.referenceId}.html"
+                        (<a href="${article.supplierInfo.referenceUrl.toExternalForm()}"
                             target="_blank">${article.supplierInfo.referenceCode}</a>)
                     </@bg.security.authorized>
                     <#--Продано: <span class="sold">${article.soldCount}</span>-->

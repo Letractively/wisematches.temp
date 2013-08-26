@@ -66,10 +66,11 @@
     <td><@bg.ui.input path="form.supplierReferenceCode"/></td>
 </tr>
 <tr>
-    <td><label for="supplierReferenceId">Идентификатор поставщика: </label></td>
-    <td><@bg.ui.input path="form.supplierReferenceId">(<a id="supplierReferenceLink"
-                                                          href="http://www.banggood.com/-p-${bg.ui.statusValue}.html"
-                                                          target="_blank">открыть в новом окне</a>)</@bg.ui.input>
+    <td valign="top"><label for="supplierReferenceId">Страница описания: </label></td>
+    <td><@bg.ui.input path="form.supplierReferenceId" size=90>(<a id="supplierReferenceLink"
+                                                                  href="${article.supplierInfo.referenceUrl.toExternalForm()}"
+                                                                  target="_blank">открыть в новом
+        окне</a>)</@bg.ui.input>
     </td>
 </tr>
 
@@ -427,7 +428,7 @@
     });
 
     $("#supplierReferenceId").change(function () {
-        $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/-p-' + $(this).val() + '.html');
+        $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/' + $(this).val());
     });
 
     <#if article??>
