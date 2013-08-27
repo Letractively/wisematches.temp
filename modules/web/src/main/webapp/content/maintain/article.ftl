@@ -37,7 +37,7 @@
 <tr>
     <td valign="top"><label for="category">Категория: </label></td>
     <td>
-    <@bg.ui.selectCategory "form.category" catalog true/>
+    <@bg.ui.selectCategory "form.category" catalog false/>
     </td>
 </tr>
 <tr>
@@ -67,10 +67,12 @@
 </tr>
 <tr>
     <td valign="top"><label for="supplierReferenceId">Страница описания: </label></td>
-    <td><@bg.ui.input path="form.supplierReferenceId" size=90>(<a id="supplierReferenceLink"
-                                                                  href="${article.supplierInfo.referenceUrl.toExternalForm()}"
-                                                                  target="_blank">открыть в новом
-        окне</a>)</@bg.ui.input>
+    <td><@bg.ui.input path="form.supplierReferenceId" size=90>
+        <#if article??>
+            (<a id="supplierReferenceLink"
+                href="${article.supplierInfo.referenceUrl.toExternalForm()}"
+                target="_blank">открыть в новом окне</a>)</#if>
+    </@bg.ui.input>
     </td>
 </tr>
 
