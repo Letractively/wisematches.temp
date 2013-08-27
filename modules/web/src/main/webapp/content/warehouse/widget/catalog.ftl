@@ -25,7 +25,7 @@
                             <li class="ct-list-cnt">
                                 <span class="image"></span><@bg.link.categoryLink ch/></li>
                         </#list>
-                        <#if (category.children?size>5)>
+                        <#if (category.children?size>8)>
                             <li class="ct-list-cnt"><@bg.link.categoryLink category "highlight" "все элементы"/></li></#if>
                     </ul>
                     <#if (category_index-2)%3==0 || !category_has_next></div></#if>

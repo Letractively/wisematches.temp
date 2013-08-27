@@ -7,6 +7,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  */
 public class ImportArticlesForm {
 	private Integer category;
+
+	private Integer[] propertyIds;
+	private String[] propertyValues;
+
+	private Integer[] participatedGroups;
+
 	private CommonsMultipartFile images;
 	private CommonsMultipartFile description;
 
@@ -35,5 +41,29 @@ public class ImportArticlesForm {
 
 	public void setDescription(CommonsMultipartFile description) {
 		this.description = description;
+	}
+
+	public Integer[] getPropertyIds() {
+		return propertyIds;
+	}
+
+	public void setPropertyIds(Integer[] propertyIds) {
+		this.propertyIds = propertyIds;
+	}
+
+	public String[] getPropertyValues() {
+		return propertyValues;
+	}
+
+	public void setPropertyValues(String[] propertyValues) {
+		this.propertyValues = propertyValues;
+	}
+
+	public Integer[] getParticipatedGroups() {
+		return participatedGroups;
+	}
+
+	public void setParticipatedGroups(Integer[] participatedGroups) {
+		this.participatedGroups = participatedGroups;
 	}
 }

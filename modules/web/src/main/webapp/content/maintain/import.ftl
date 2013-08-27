@@ -1,5 +1,6 @@
 <#-- @ftlvariable name="result" type="boolean" -->
 <#-- @ftlvariable name="error" type="java.lang.String" -->
+<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
 
 <#include "/core.ftl">
 
@@ -20,11 +21,15 @@
                 <label for="category">Категория: </label>
             </td>
             <td>
-                <select name="category">
-                <#list catalog.rootCategories as c>
-                    <@bg.ui.categoryOption c 0 ""/>
-                </#list>
-                </select>
+            <@bg.ui.selectCategory path="form.category" catalog=catalog root=false/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="file">Изображения: </label>
+            </td>
+            <td>
+                <input type="file" name="images">
             </td>
         </tr>
         <tr>
@@ -37,10 +42,37 @@
         </tr>
         <tr>
             <td>
-                <label for="file">Изображения: </label>
+                <label for="group">Состоит в группе:</label>
             </td>
             <td>
-                <input type="file" name="images">
+            <@bg.ui.input "form.participatedGroups"/>
+            </td>
+        </tr>
+    <#if attributes??>
+        <tr>
+            <td>
+                <label>Аттритубы:</label>
+            </td>
+            <td>
+                <table>
+                    <#list attributes as a>
+                        <tr>
+                            <td>
+                                <label>${a.name}</label>
+                                <input type="hidden" name="propertyIds" value="${a.id}">
+                            </td>
+                            <td>
+                                <input name="propertyValues" value="">
+                            </td>
+                        </tr>
+                    </#list>
+                </table>
+            </td>
+        </tr>
+    </#if>
+        <tr>
+            <td colspan="2">
+                <hr>
             </td>
         </tr>
         <tr>
@@ -51,3 +83,9 @@
         </tr>
     </table>
 </form>
+
+<script type="application/javascript">
+    $("select[name=category]").change(function () {
+        bg.util.url.redirect("/maintain/article/import?c=" + $(this).val());
+    });
+</script>
