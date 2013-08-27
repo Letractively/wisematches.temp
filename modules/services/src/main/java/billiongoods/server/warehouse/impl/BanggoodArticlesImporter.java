@@ -17,92 +17,104 @@ import java.util.*;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class BanggoodArticlesImporter {
-    private ImageManager imageManager;
-    private ArticleManager articleManager;
-    private ExchangeManager exchangeManager;
+	private ImageManager imageManager;
+	private ArticleManager articleManager;
+	private ExchangeManager exchangeManager;
+	private RelationshipManager relationshipManager;
 
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.BanggoodArticlesImporter");
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.BanggoodArticlesImporter");
+	public BanggoodArticlesImporter() {
+	}
 
-    public BanggoodArticlesImporter() {
-    }
+	public void importArticles(Category category, List<Property> properties, List<Integer> groups, InputStream descStream, InputStream imagesStream) throws IOException {
+		final Map<String, Set<String>> images = parseImagesLinks(imagesStream);
 
-    public void importArticles(Category category, InputStream descStream, InputStream imagesStream) throws IOException {
-        final Map<String, Set<String>> images = parseImagesLinks(imagesStream);
+		final CSVReader reader = new CSVReader(new InputStreamReader(descStream));
+		String[] nextLine = reader.readNext(); // ignore header
+		while ((nextLine = reader.readNext()) != null) {
+			final String sku = nextLine[0];
+			final String name = nextLine[1];
+			final Price supplierPrice = new Price(Double.parseDouble(nextLine[3]), null);
+			final double weight = Double.parseDouble(nextLine[4]);
+			final String desc = nextLine[5];
+			final String uri = nextLine[6].substring(24);
+			log.info("Importing article {} from {}", sku, uri);
 
-        final CSVReader reader = new CSVReader(new InputStreamReader(descStream));
-        String[] nextLine;
-        while ((nextLine = reader.readNext()) != null) {
-            final String sku = nextLine[0];
-            final String name = nextLine[1];
-            final Price supplierPrice = new Price(Double.parseDouble(nextLine[3]), null);
-            final double weight = Double.parseDouble(nextLine[4]);
-            final String desc = nextLine[5];
-            final String uri = nextLine[6].substring(24);
-            log.info("Importing article {} from {}", sku, uri);
+			final Article article1 = articleManager.getArticle(sku);
+			if (article1 != null) {
+				log.info("Article with the same SKU already exist. Moving on.");
+				continue;
+			}
 
-            final Article article1 = articleManager.getArticle(sku);
-            if (article1 != null) {
-                log.info("Article with the same SKU already exist. Moving on.");
-                continue;
-            }
+			final Price price = exchangeManager.getMarkupCalculator().calculateMarkupPrice(supplierPrice);
+			final Article article = articleManager.createArticle(name, desc, category, price, weight, null, null, null, null, properties, uri, sku, Supplier.BANGGOOD, supplierPrice);
+			log.info("Article imported: {}", article.getId());
 
-            final Price price = exchangeManager.getMarkupCalculator().calculateMarkupPrice(supplierPrice);
-            final Article article = articleManager.createArticle(name, desc, category, price, weight, null, null, null, null, null, uri, sku, Supplier.BANGGOOD, supplierPrice);
+			final Set<String> urls = images.get(sku);
+			if (urls != null) {
+				int index = 1;
+				final List<String> codes = new ArrayList<>(urls.size());
+				for (String url : urls) {
+					final String code = String.valueOf(index++);
+					log.info("Importing [{} of {}] image {} from {}", index - 1, urls.size(), code, url);
+					try (InputStream inputStream = new URL(url).openStream()) {
+						imageManager.addImage(article, code, inputStream);
+						codes.add(code);
+						log.info("Article associated with image: {}", code);
+					} catch (Exception ex) {
+						log.error("SKU image can't be imported", ex);
+					}
+				}
 
-            final Set<String> urls = images.get(sku);
-            if (urls != null) {
-                int index = 1;
-                final List<String> codes = new ArrayList<>(urls.size());
-                for (String url : urls) {
-                    final String code = String.valueOf(index++);
-                    log.info("Importing [{} of {}] image {} from {}", index - 1, urls.size(), code, url);
-                    try (InputStream inputStream = new URL(url).openStream()) {
-                        imageManager.addImage(article, code, inputStream);
-                        codes.add(code);
-                    } catch (Exception ex) {
-                        log.error("SKU image can't be imported", ex);
-                    }
-                }
+				if (!codes.isEmpty()) {
+					articleManager.updateArticle(article.getId(), name, desc, category, price, weight, null,
+							codes.iterator().next(), codes, null, properties, uri, sku, Supplier.BANGGOOD, supplierPrice);
+				}
+			}
 
-                if (!codes.isEmpty()) {
-                    articleManager.updateArticle(article.getId(), name, desc, category, price, weight, null,
-                            codes.iterator().next(), codes, null, null, uri, sku, Supplier.BANGGOOD, supplierPrice);
-                }
-            }
-            log.info("Article imported: {}", article.getId());
-        }
-        log.info("All articles imported");
-    }
+			if (groups != null) {
+				for (Integer group : groups) {
+					relationshipManager.addGroupItem(group, article.getId());
+					log.info("Article associated with group: {}", group);
+				}
+			}
+		}
+		log.info("All articles imported");
+	}
 
-    private Map<String, Set<String>> parseImagesLinks(InputStream stream) throws IOException {
-        final Map<String, Set<String>> res = new HashMap<>();
+	private Map<String, Set<String>> parseImagesLinks(InputStream stream) throws IOException {
+		final Map<String, Set<String>> res = new HashMap<>();
 
-        String[] nextLine;
-        final CSVReader reader = new CSVReader(new InputStreamReader(stream));
-        while ((nextLine = reader.readNext()) != null) {
-            final String sku = nextLine[0];
-            final String link = nextLine[1];
+		final CSVReader reader = new CSVReader(new InputStreamReader(stream));
+		String[] nextLine = reader.readNext(); // ignore header
+		while ((nextLine = reader.readNext()) != null) {
+			final String sku = nextLine[0];
+			final String link = nextLine[1];
 
-            Set<String> strings = res.get(sku);
-            if (strings == null) {
-                strings = new HashSet<>();
-                res.put(sku, strings);
-            }
-            strings.add(link);
-        }
-        return res;
-    }
+			Set<String> strings = res.get(sku);
+			if (strings == null) {
+				strings = new HashSet<>();
+				res.put(sku, strings);
+			}
+			strings.add(link);
+		}
+		return res;
+	}
 
-    public void setImageManager(ImageManager imageManager) {
-        this.imageManager = imageManager;
-    }
+	public void setImageManager(ImageManager imageManager) {
+		this.imageManager = imageManager;
+	}
 
-    public void setArticleManager(ArticleManager articleManager) {
-        this.articleManager = articleManager;
-    }
+	public void setArticleManager(ArticleManager articleManager) {
+		this.articleManager = articleManager;
+	}
 
-    public void setExchangeManager(ExchangeManager exchangeManager) {
-        this.exchangeManager = exchangeManager;
-    }
+	public void setExchangeManager(ExchangeManager exchangeManager) {
+		this.exchangeManager = exchangeManager;
+	}
+
+	public void setRelationshipManager(RelationshipManager relationshipManager) {
+		this.relationshipManager = relationshipManager;
+	}
 }

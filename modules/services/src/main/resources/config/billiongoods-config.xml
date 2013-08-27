@@ -72,6 +72,7 @@
         <property name="imageManager" ref="imageManager"/>
         <property name="articleManager" ref="articleManager"/>
         <property name="exchangeManager" ref="exchangeManager"/>
+        <property name="relationshipManager" ref="relationshipManager"/>
     </bean>
 
     <bean id="payPalTransactionManager" class="billiongoods.server.services.paypal.impl.HibernateTransactionManager">
