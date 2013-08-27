@@ -19,8 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -134,11 +132,7 @@ public class AlertsOriginCenter {
 
 		@Override
 		public void priceValidationFinished(Date date, ValidationSummary summary) {
-			final Map<String, Object> ctx = new HashMap<>();
-			ctx.put("date", date);
-			ctx.put("summary", summary);
-
-			raiseAlarm("system.price", ctx);
+			raiseAlarm("system.price", summary);
 		}
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/maintain/service")
@@ -22,13 +23,20 @@ public class ServiceController {
 	@RequestMapping("validatePrices")
 	public String validatePrices(Model model) {
 		model.addAttribute("active", priceValidator.isInProgress());
+		model.addAttribute("summary", priceValidator.getValidationSummary());
 		return "/content/maintain/priceValidation";
 	}
 
 	@RequestMapping(value = "validatePrices", method = RequestMethod.POST)
-	public String validatePricesAction(Model model) {
-		if (!priceValidator.isInProgress()) {
-			priceValidator.startPriceValidation();
+	public String validatePricesAction(@RequestParam("action") String action, Model model) {
+		if ("start".equalsIgnoreCase(action)) {
+			if (!priceValidator.isInProgress()) {
+				priceValidator.startPriceValidation();
+			}
+		} else if ("stop".equalsIgnoreCase(action)) {
+			if (priceValidator.isInProgress()) {
+				priceValidator.stopPriceValidation();
+			}
 		}
 		return "redirect:/maintain/service/validatePrices";
 	}

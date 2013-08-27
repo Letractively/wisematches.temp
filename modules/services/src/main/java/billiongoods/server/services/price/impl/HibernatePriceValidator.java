@@ -2,10 +2,7 @@ package billiongoods.server.services.price.impl;
 
 import billiongoods.core.search.Range;
 import billiongoods.core.task.CleaningDayListener;
-import billiongoods.server.services.price.ExchangeManager;
-import billiongoods.server.services.price.MarkupCalculator;
-import billiongoods.server.services.price.PriceValidator;
-import billiongoods.server.services.price.PriceValidatorListener;
+import billiongoods.server.services.price.*;
 import billiongoods.server.warehouse.ArticleManager;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.SupplierInfo;
@@ -43,7 +40,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 
 	private final ReusableValidationSummary validationSummary = new ReusableValidationSummary();
 
-	private static final int BULK_ARTICLES_SIZE = 100;
+	private static final int BULK_ARTICLES_SIZE = 10;
 
 	private final Collection<PriceValidatorListener> listeners = new CopyOnWriteArrayList<>();
 
@@ -93,7 +90,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 			int index = 0;
 			while (true) {
 				synchronized (this) {
-					if (validationProgress == null) {
+					if (validationProgress == null || validationProgress.isCancelled() || validationProgress.isDone()) {
 						log.info("Validation progress was interrupted");
 						break;
 					}
@@ -130,16 +127,16 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 								log.info("Price for article has been updated: {}", renewal);
 								validationSummary.addRenewal(renewal);
 
-								articleManager.updatePrice(articleId, newPrice, newSupplierPrice);
 								session.save(renewal);
+								articleManager.updatePrice(articleId, newPrice, newSupplierPrice);
 							}
 
 							for (PriceValidatorListener listener : listeners) {
 								listener.priceValidated(articleId, renewal);
 							}
 						} catch (PriceLoadingException ex) {
-                            log.info("Price for article {} can't be updated: {}", articleId, ex.getMessage());
-                            validationSummary.addBreakdown(new Date(), articleId, ex);
+							log.info("Price for article {} can't be updated: {}", articleId, ex.getMessage());
+							validationSummary.addBreakdown(new Date(), articleId, ex);
 						}
 					}
 					session.flush();
@@ -168,18 +165,23 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 	}
 
 	@Override
-	public void startPriceValidation() {
-		synchronized (this) {
-			if (isInProgress()) {
-				return;
+	public synchronized void startPriceValidation() {
+		if (isInProgress()) {
+			return;
+		}
+		validationProgress = taskExecutor.submit(new Runnable() {
+			@Override
+			public void run() {
+				doValidation();
 			}
+		});
+	}
 
-			validationProgress = taskExecutor.submit(new Runnable() {
-				@Override
-				public void run() {
-					doValidation();
-				}
-			});
+	@Override
+	public synchronized void stopPriceValidation() {
+		if (validationProgress != null) {
+			validationProgress.cancel(true);
+			validationProgress = null;
 		}
 	}
 
@@ -189,14 +191,15 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 	}
 
 	@Override
-	public synchronized void stopPriceValidation() {
-		validationProgress = null;
+	public synchronized ValidationSummary getValidationSummary() {
+		return validationSummary;
 	}
 
 	@Override
 	public void cleanup(Date today) {
 		startPriceValidation();
 	}
+
 
 	public void setTaskExecutor(AsyncTaskExecutor taskExecutor) {
 		this.taskExecutor = taskExecutor;
