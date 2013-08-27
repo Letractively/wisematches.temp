@@ -4,19 +4,19 @@ import billiongoods.server.services.price.PriceBreakdown;
 import billiongoods.server.services.price.PriceRenewal;
 import billiongoods.server.services.price.ValidationSummary;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ReusableValidationSummary implements ValidationSummary {
-	private Date startDate;
-	private Date finishDate;
-	private int validatedArticles = 0;
-	private final List<PriceRenewal> renewals = new ArrayList<>();
-	private final List<PriceBreakdown> breakdowns = new ArrayList<>();
+	private volatile Date startDate;
+	private volatile Date finishDate;
+	private volatile int validatedArticles = 0;
+	private final Collection<PriceRenewal> renewals = new ConcurrentLinkedQueue<>();
+	private final Collection<PriceBreakdown> breakdowns = new ConcurrentLinkedQueue<>();
 
 	public ReusableValidationSummary() {
 	}
@@ -37,12 +37,12 @@ public class ReusableValidationSummary implements ValidationSummary {
 	}
 
 	@Override
-	public List<PriceRenewal> getPriceRenewals() {
+	public Collection<PriceRenewal> getPriceRenewals() {
 		return renewals;
 	}
 
 	@Override
-	public List<PriceBreakdown> getPriceBreakdowns() {
+	public Collection<PriceBreakdown> getPriceBreakdowns() {
 		return breakdowns;
 	}
 
@@ -68,6 +68,7 @@ public class ReusableValidationSummary implements ValidationSummary {
 		renewals.clear();
 		breakdowns.clear();
 	}
+
 
 	private static final class ThePriceBreakdown implements PriceBreakdown {
 		private final Date timestamp;
@@ -104,5 +105,17 @@ public class ReusableValidationSummary implements ValidationSummary {
 			sb.append('}');
 			return sb.toString();
 		}
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("ReusableValidationSummary{");
+		sb.append("startDate=").append(startDate);
+		sb.append(", finishDate=").append(finishDate);
+		sb.append(", validatedArticles=").append(validatedArticles);
+		sb.append(", renewals=").append(renewals);
+		sb.append(", breakdowns=").append(breakdowns);
+		sb.append('}');
+		return sb.toString();
 	}
 }

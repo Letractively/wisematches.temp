@@ -61,5 +61,27 @@ public class HibernateRelationship implements Relationship {
 			this.type = type;
 			this.group = group;
 		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof Pk)) return false;
+
+			Pk pk = (Pk) o;
+
+			if (articleId != null ? !articleId.equals(pk.articleId) : pk.articleId != null) return false;
+			if (group != null ? !group.equals(pk.group) : pk.group != null) return false;
+			if (type != pk.type) return false;
+
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			int result = articleId != null ? articleId.hashCode() : 0;
+			result = 31 * result + (type != null ? type.hashCode() : 0);
+			result = 31 * result + (group != null ? group.hashCode() : 0);
+			return result;
+		}
 	}
 }

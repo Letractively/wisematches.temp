@@ -1,30 +1,29 @@
-<#-- @ftlvariable name="context.date" type="java.util.Date" -->
-<#-- @ftlvariable name="context.summary" type="billiongoods.server.services.price.ValidationSummary" -->
+<#-- @ftlvariable name="context" type="billiongoods.server.services.price.ValidationSummary" -->
 
 <table>
     <tr>
         <td>Запущено:</td>
-        <td>${context.summary.startDate?string}</td>
+        <td><#if context.startDate??>${context.startDate?datetime?string}<#else>Проверка не проводилась</#if></td>
     </tr>
     <tr>
         <td>Завершено:</td>
-        <td>${context.summary.finishDate?string}</td>
+        <td><#if context.finishDate??>${context.finishDate?datetime?string}<#else>В процессе</#if></td>
     </tr>
     <tr>
         <td>Проверено:</td>
-        <td>${context.summary.validatedArticles}</td>
+        <td>${context.validatedArticles}</td>
     </tr>
     <tr>
         <td>Обновлено:</td>
-        <td>${context.summary.priceRenewals?size}</td>
+        <td>${context.priceRenewals?size}</td>
     </tr>
     <tr>
         <td>Ошибок проверки:</td>
-        <td>${context.summary.priceBreakdowns?size}</td>
+        <td>${context.priceBreakdowns?size}</td>
     </tr>
 </table>
 
-<#if context.summary.priceRenewals?has_content>
+<#if context.priceRenewals?has_content>
 <div>
     Обновленные товары:
     <table>
@@ -38,7 +37,7 @@
             <th>Изменение</th>
         </tr>
 
-        <#list context.summary.priceRenewals as r>
+        <#list context.priceRenewals as r>
             <tr>
                 <td>
                     <a href="http://www.billiongoods.ru/warehouse/article/${r.articleId}">${messageSource.getArticleCode(r.articleId)}</a>
@@ -83,11 +82,11 @@
 </div>
 </#if>
 
-<#if context.summary.priceBreakdowns?has_content>
+<#if context.priceBreakdowns?has_content>
 <div>
     Ошибки проверки:
     <table>
-        <#list context.summary.priceBreakdowns as b>
+        <#list context.priceBreakdowns as b>
             <tr>
                 <td nowrap="nowrap">
                     <a href="http://www.billiongoods.ru/warehouse/article/${b.articleId}">${messageSource.getArticleCode(b.articleId)}</a>

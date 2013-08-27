@@ -14,4 +14,6 @@ public interface PriceValidator {
 	void stopPriceValidation();
 
 	boolean isInProgress();
+
+	ValidationSummary getValidationSummary();
 }

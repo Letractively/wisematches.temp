@@ -1,7 +1,7 @@
 package billiongoods.server.services.price;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -13,7 +13,7 @@ public interface ValidationSummary {
 
 	int getValidatedArticles();
 
-	List<PriceRenewal> getPriceRenewals();
+	Collection<PriceRenewal> getPriceRenewals();
 
-	List<PriceBreakdown> getPriceBreakdowns();
+	Collection<PriceBreakdown> getPriceBreakdowns();
 }
