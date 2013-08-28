@@ -542,6 +542,7 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/target" />
   </component>
+  <component name="RegexUtilComponent" text="&lt;div id=&quot;hb&quot; class=&quot;hb&quot; onmouseout=&quot;mclosetimes()&quot; onmouseover=&quot;mopens('sty01')&quot;&gt;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;b id=&quot;price_pre&quot;&gt;US$&lt;/b&gt;&lt;i&gt;&lt;/i&gt;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&lt;/div&gt;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&lt;div class=&quot;jq&quot; id=&quot;price_sub&quot; itemprop=&quot;price&quot;&gt;42.99&lt;/div&gt;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&lt;div class=&quot;sc&quot; id=&quot;regular_div&quot;&gt;(49.33)&lt;/div&gt;&#10;&#9;&#9;&#9;&#9;&#9;&lt;/div&gt;&#10;" flags="8" regex="&lt;div.*?id=&quot;(price_sub|regular_div)&quot;.*?&gt;\(?(.+?)\)?&lt;/div&gt;" mode="2" />
   <component name="ResourceManagerContainer">
     <option name="myResourceBundles">
       <value>

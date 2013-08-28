@@ -4,15 +4,17 @@ import billiongoods.server.services.price.impl.PriceLoader;
 import billiongoods.server.services.price.impl.PriceLoadingException;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.SupplierInfo;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,78 +22,73 @@ import java.util.regex.Pattern;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class BanggoodPriceLoader implements PriceLoader {
-    private static final Pattern PRICE_PATTERN = Pattern.compile("<div (?:[^\\s]+).*?id=\"(price_sub|regular_div)\".*?>\\(?(.+?)\\)?</div>");
+	private static final Pattern REDIRECT_CHAIN = Pattern.compile("arr=\\[([^\\]]*)\\]");
+	private static final Pattern REDIRECT_TOKENS = Pattern.compile("strbuf\\[(\\d+)\\]='([^']+)'");
+	private static final Pattern PRICE_PATTERN = Pattern.compile("<div.*?id=\"(price_sub|regular_div)\".*?>\\(?(.+?)\\)?</div>");
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.price.BanggoodPriceLoader");
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.price.BanggoodPriceLoader");
 
-    public BanggoodPriceLoader() {
-    }
+	public BanggoodPriceLoader() {
+	}
 
-    @Override
-    public Price loadPrice(SupplierInfo supplierInfo) throws PriceLoadingException {
-        final URL url = supplierInfo.getReferenceUrl();
-        try {
-            final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setUseCaches(false);
-            urlConnection.setDefaultUseCaches(false);
-            urlConnection.setInstanceFollowRedirects(true);
+	@Override
+	public Price loadPrice(SupplierInfo supplierInfo) throws PriceLoadingException {
+		return loadPrice(supplierInfo.getReferenceUrl(), 0);
+	}
 
-            urlConnection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-            urlConnection.setRequestProperty("Accept-Charset", "windows-1251,utf-8;q=0.7,*;q=0.3");
-            urlConnection.setRequestProperty("Accept-Language", "ru,en;q=0.8");
-            urlConnection.setRequestProperty("Cache-Control", "max-age=0");
-            urlConnection.setRequestProperty("Connection", "keep-alive");
-            urlConnection.setRequestProperty("Host", "www.banggood.com");
-            urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 YaBrowser/1.7.1364.21027 Safari/537.22");
-            urlConnection.setReadTimeout(5000);
-            urlConnection.setConnectTimeout(5000);
+	private Price loadPrice(URL url, int iteration) throws PriceLoadingException {
+		if (iteration >= 5) {
+			throw new PriceLoadingException("Price can't be loaded after iteration " + iteration + " from URL " + url);
+		}
 
-            try (final InputStream inputStream = urlConnection.getInputStream()) {
-                final Price price = parsePrice(inputStream);
-                if (price == null) {
-                    throw new PriceLoadingException("Price wasn't loaded from server response: " + url.toExternalForm());
-                }
-                return price;
-            }
-        } catch (IOException ex) {
-            throw new PriceLoadingException("Price can't be loaded: " + url.toExternalForm(), ex);
-        }
-    }
+		try {
+			final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+			urlConnection.setUseCaches(false);
+			urlConnection.setReadTimeout(5000);
+			urlConnection.setConnectTimeout(5000);
+			urlConnection.setDefaultUseCaches(false);
+			urlConnection.setInstanceFollowRedirects(true);
 
-    private Price parsePrice(InputStream in) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			final String s = IOUtils.toString(urlConnection.getInputStream());
+			if (s.startsWith("<html><head><meta http-equiv=")) {
+				return loadPrice(parseJavaScriptRedirect(s), iteration + 1);
+			} else {
+				return parsePrice(s);
+			}
+		} catch (SocketTimeoutException ex) {
+			return loadPrice(url, iteration + 1);
+		} catch (Exception ex) {
+			throw new PriceLoadingException("Price can't be loaded: " + url.toExternalForm(), ex);
+		}
+	}
 
-        final StringBuilder sb = new StringBuilder();
+	private Price parsePrice(String data) throws IOException {
+		final Double[] d = new Double[2];
 
-        double price = Double.NaN;
-        int linesAfterPrice = -1;
-        String s = reader.readLine();
-        while (s != null) {
-            sb.append(s.trim());
+		int index = 0;
+		final Matcher matcher = PRICE_PATTERN.matcher(data);
+		while (matcher.find()) {
+			d[index++] = Double.valueOf(matcher.group(2));
+		}
+		if (d[0] == null) {
+			return null;
+		}
+		return new Price(d[0], d[1]);
+	}
 
-            final Matcher matcher = PRICE_PATTERN.matcher(s.trim());
-            if (matcher.matches()) {
-                final String type = matcher.group(1);
-                final String p = matcher.group(2);
+	protected URL parseJavaScriptRedirect(String response) throws MalformedURLException {
+		final Map<String, String> tokens = new HashMap<>();
+		final Matcher matcher = REDIRECT_TOKENS.matcher(response);
+		while (matcher.find()) {
+			tokens.put(matcher.group(1), matcher.group(2));
+		}
 
-                if ("price_sub".equals(type)) {
-                    linesAfterPrice = 0;
-                    price = Double.parseDouble(p);
-                }
-                if ("regular_div".equals(type)) {
-                    return new Price(price, Double.parseDouble(p));
-                }
-            }
-
-            if (linesAfterPrice > 10) {
-                return new Price(price, null);
-            } else if (linesAfterPrice >= 0) {
-                linesAfterPrice++;
-            }
-
-            s = reader.readLine();
-        }
-        log.info("Server response: {}", sb);
-        return null;
-    }
+		final Matcher matcher1 = REDIRECT_CHAIN.matcher(response);
+		matcher1.find();
+		StringBuilder b = new StringBuilder();
+		for (String s : matcher1.group(1).split(",")) {
+			b.append(tokens.get(s));
+		}
+		return new URL("http://www.banggood.com" + b.toString());
+	}
 }
