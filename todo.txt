@@ -1,6 +1,5 @@
 ============= CURRENT ====================
 - Enable/Disable categories
-- Articles importing takes all SQL connections
 - Ability to remove article
 - MySQL structure is note very good:
     There are lots of rows being sorted.	While there is nothing wrong with a high amount of row sorting, you might want to make sure that the queries which require a lot of sorting use indexed columns in the ORDER BY clause, as this will result in much faster sorting
@@ -42,6 +41,7 @@
 
 ============= DONE ====================
 29.08
++ Articles importing takes all SQL connections: executed in separate thread and uses transaction manager
 + Disable /warehouse/order/confirm in robots.txt
 + Add Yandex tracking to the site
 + Define new targets. Split /order/state (check state) and /order/confirm

@@ -1,10 +1,11 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
+import billiongoods.server.services.arivals.ArticleImporter;
+import billiongoods.server.services.arivals.ImportingSummary;
 import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.image.ImageSize;
 import billiongoods.server.warehouse.*;
-import billiongoods.server.warehouse.impl.BanggoodArticlesImporter;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.ArticleForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.ImportArticlesForm;
@@ -38,8 +39,8 @@ public class ArticleMaintainController extends AbstractController {
 	private ImageManager imageManager;
 	private ImageResolver imageResolver;
 	private ArticleManager articleManager;
+	private ArticleImporter articleImporter;
 	private RelationshipManager relationshipManager;
-	private BanggoodArticlesImporter articlesImporter;
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
@@ -49,12 +50,18 @@ public class ArticleMaintainController extends AbstractController {
 	@RequestMapping(value = "/import", method = RequestMethod.GET)
 	public String importArticlesView(@RequestParam(value = "c", required = false) Integer categoryId,
 									 @ModelAttribute("form") ImportArticlesForm form, Model model) {
-		if (categoryId != null) {
-			final Category category = categoryManager.getCategory(categoryId);
-			form.setCategory(categoryId);
 
-			model.addAttribute("category", category);
-			model.addAttribute("attributes", createAttributesMap(category).keySet());
+		final ImportingSummary summary = articleImporter.getImportingSummary();
+		if (summary != null) {
+			model.addAttribute("summary", summary);
+		} else {
+			if (categoryId != null) {
+				final Category category = categoryManager.getCategory(categoryId);
+				form.setCategory(categoryId);
+
+				model.addAttribute("category", category);
+				model.addAttribute("attributes", createAttributesMap(category).keySet());
+			}
 		}
 		return "/content/maintain/import";
 	}
@@ -92,7 +99,8 @@ public class ArticleMaintainController extends AbstractController {
 			}
 
 			final Category category = categoryManager.getCategory(form.getCategory());
-			articlesImporter.importArticles(category, properties, groups, form.getDescription().getInputStream(), form.getImages().getInputStream());
+			articleImporter.importArticles(category, properties, groups, form.getDescription().getInputStream(),
+					form.getImages().getInputStream(), form.isValidatePrice());
 			model.addAttribute("result", true);
 			model.addAttribute("category", category);
 			model.addAttribute("attributes", createAttributesMap(category).keySet());
@@ -379,8 +387,8 @@ public class ArticleMaintainController extends AbstractController {
 	}
 
 	@Autowired
-	public void setArticlesImporter(BanggoodArticlesImporter articlesImporter) {
-		this.articlesImporter = articlesImporter;
+	public void setArticleImporter(ArticleImporter articleImporter) {
+		this.articleImporter = articleImporter;
 	}
 
 	@Autowired

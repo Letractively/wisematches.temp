@@ -16,6 +16,8 @@ public class ImportArticlesForm {
 	private CommonsMultipartFile images;
 	private CommonsMultipartFile description;
 
+	private boolean validatePrice;
+
 	public ImportArticlesForm() {
 	}
 
@@ -65,5 +67,13 @@ public class ImportArticlesForm {
 
 	public void setParticipatedGroups(Integer[] participatedGroups) {
 		this.participatedGroups = participatedGroups;
+	}
+
+	public boolean isValidatePrice() {
+		return validatePrice;
+	}
+
+	public void setValidatePrice(boolean validatePrice) {
+		this.validatePrice = validatePrice;
 	}
 }
