@@ -4,15 +4,26 @@ import billiongoods.server.services.price.impl.PriceLoader;
 import billiongoods.server.services.price.impl.PriceLoadingException;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.SupplierInfo;
-import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.HttpClientParams;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -22,6 +33,12 @@ import java.util.regex.Pattern;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class BanggoodPriceLoader implements PriceLoader {
+	private final DefaultHttpClient client;
+	private final BasicHttpContext localContext = new BasicHttpContext();
+
+	private static final int DEFAULT_TIMEOUT = 3000;
+	private static final HttpHost HOST = new HttpHost("www.banggood.com");
+
 	private static final Pattern REDIRECT_CHAIN = Pattern.compile("arr=\\[([^\\]]*)\\]");
 	private static final Pattern REDIRECT_TOKENS = Pattern.compile("strbuf\\[(\\d+)\\]='([^']+)'");
 	private static final Pattern PRICE_PATTERN = Pattern.compile("<div.*?id=\"(price_sub|regular_div)\".*?>\\(?(.+?)\\)?</div>");
@@ -29,36 +46,51 @@ public class BanggoodPriceLoader implements PriceLoader {
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.price.BanggoodPriceLoader");
 
 	public BanggoodPriceLoader() {
+		final HttpParams params = new BasicHttpParams();
+		params.setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, false);
+		params.setParameter(CoreProtocolPNames.USER_AGENT, "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36");
+
+		String proxyHost = System.getProperty("http.proxyHost");
+		String proxyPort = System.getProperty("http.proxyPort");
+		if (proxyHost != null && proxyPort != null) {
+			final HttpHost proxy = new HttpHost(proxyHost, Integer.parseInt(proxyPort));
+			params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+		}
+
+		HttpClientParams.setRedirecting(params, true);
+		HttpConnectionParams.setSoTimeout(params, DEFAULT_TIMEOUT);
+		HttpConnectionParams.setConnectionTimeout(params, DEFAULT_TIMEOUT);
+
+		client = new DefaultHttpClient(params);
+		localContext.setAttribute(ClientContext.COOKIE_STORE, new BasicCookieStore());
 	}
 
 	@Override
 	public Price loadPrice(SupplierInfo supplierInfo) throws PriceLoadingException {
-		return loadPrice(supplierInfo.getReferenceUrl(), 0);
+		return loadPrice(supplierInfo.getReferenceUri(), 0);
 	}
 
-	private Price loadPrice(URL url, int iteration) throws PriceLoadingException {
+	private Price loadPrice(String uri, int iteration) throws PriceLoadingException {
 		if (iteration >= 5) {
-			throw new PriceLoadingException("Price can't be loaded after iteration " + iteration + " from URL " + url);
+			throw new PriceLoadingException("Price can't be loaded after iteration " + iteration + " from " + uri);
 		}
 
 		try {
-			final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-			urlConnection.setUseCaches(false);
-			urlConnection.setReadTimeout(5000);
-			urlConnection.setConnectTimeout(5000);
-			urlConnection.setDefaultUseCaches(false);
-			urlConnection.setInstanceFollowRedirects(true);
+			final HttpGet request = new HttpGet("/" + uri);
+			request.setHeader("Accept", "text/plain");
+			request.setHeader("Accept-Language", "en");
 
-			final String s = IOUtils.toString(urlConnection.getInputStream());
+			final HttpResponse execute = client.execute(HOST, request, localContext);
+			final String s = EntityUtils.toString(execute.getEntity());
 			if (s.startsWith("<html><head><meta http-equiv=")) {
 				return loadPrice(parseJavaScriptRedirect(s), iteration + 1);
 			} else {
 				return parsePrice(s);
 			}
 		} catch (SocketTimeoutException ex) {
-			return loadPrice(url, iteration + 1);
+			return loadPrice(uri, iteration + 1);
 		} catch (Exception ex) {
-			throw new PriceLoadingException("Price can't be loaded: " + url.toExternalForm(), ex);
+			throw new PriceLoadingException("Price can't be loaded: " + uri, ex);
 		}
 	}
 
@@ -76,7 +108,7 @@ public class BanggoodPriceLoader implements PriceLoader {
 		return new Price(d[0], d[1]);
 	}
 
-	protected URL parseJavaScriptRedirect(String response) throws MalformedURLException {
+	protected String parseJavaScriptRedirect(String response) {
 		final Map<String, String> tokens = new HashMap<>();
 		final Matcher matcher = REDIRECT_TOKENS.matcher(response);
 		while (matcher.find()) {
@@ -89,6 +121,6 @@ public class BanggoodPriceLoader implements PriceLoader {
 		for (String s : matcher1.group(1).split(",")) {
 			b.append(tokens.get(s));
 		}
-		return new URL("http://www.banggood.com" + b.toString());
+		return b.toString();
 	}
 }
