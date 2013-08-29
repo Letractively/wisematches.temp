@@ -7,5 +7,7 @@ import billiongoods.server.warehouse.SupplierInfo;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface PriceLoader {
-	Price loadPrice(SupplierInfo supplierInfo) throws PriceLoadingException;
+    void initialize();
+
+    Price loadPrice(SupplierInfo supplierInfo) throws PriceLoadingException;
 }
