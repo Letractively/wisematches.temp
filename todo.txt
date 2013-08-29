@@ -41,6 +41,7 @@
 
 ============= DONE ====================
 29.08
++ Move PriceLoaded to Apache HC library instead. It should increase stability, I believe.
 + Articles importing takes all SQL connections: executed in separate thread and uses transaction manager
 + Disable /warehouse/order/confirm in robots.txt
 + Add Yandex tracking to the site
