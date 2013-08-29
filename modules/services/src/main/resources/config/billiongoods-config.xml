@@ -68,12 +68,21 @@
         <property name="priceLoader" ref="banggoodPriceLoader"/>
     </bean>
 
-    <bean id="articlesImporter" class="billiongoods.server.warehouse.impl.BanggoodArticlesImporter">
+    <bean id="articlesImporter" class="billiongoods.server.services.arivals.impl.BanggoodArticleImporter">
         <property name="imageManager" ref="imageManager"/>
         <property name="articleManager" ref="articleManager"/>
         <property name="priceLoader" ref="banggoodPriceLoader"/>
         <property name="exchangeManager" ref="exchangeManager"/>
         <property name="relationshipManager" ref="relationshipManager"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="taskExecutor">
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+                <property name="poolSize" value="1"/>
+                <property name="threadNamePrefix" value="ArticlesImporter"/>
+                <property name="waitForTasksToCompleteOnShutdown" value="true"/>
+            </bean>
+        </property>
     </bean>
 
     <bean id="payPalTransactionManager" class="billiongoods.server.services.paypal.impl.HibernateTransactionManager">

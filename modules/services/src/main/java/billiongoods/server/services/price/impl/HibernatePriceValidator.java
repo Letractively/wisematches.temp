@@ -27,201 +27,204 @@ import java.util.concurrent.Future;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernatePriceValidator implements PriceValidator, CleaningDayListener {
-    private PriceLoader priceLoader;
+	private PriceLoader priceLoader;
 
-    private SessionFactory sessionFactory;
-    private ArticleManager articleManager;
-    private ExchangeManager exchangeManager;
+	private SessionFactory sessionFactory;
+	private ArticleManager articleManager;
+	private ExchangeManager exchangeManager;
 
-    private AsyncTaskExecutor taskExecutor;
-    private PlatformTransactionManager transactionManager;
+	private AsyncTaskExecutor taskExecutor;
+	private PlatformTransactionManager transactionManager;
 
-    private Future validationProgress;
+	private Future validationProgress;
 
-    private final ReusableValidationSummary validationSummary = new ReusableValidationSummary();
+	private final ReusableValidationSummary validationSummary = new ReusableValidationSummary();
 
-    private static final int BULK_ARTICLES_SIZE = 10;
+	private static final int BULK_ARTICLES_SIZE = 10;
 
-    private final Collection<PriceValidatorListener> listeners = new CopyOnWriteArrayList<>();
+	private final Collection<PriceValidatorListener> listeners = new CopyOnWriteArrayList<>();
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.PriceValidator");
+	private static final DefaultTransactionAttribute NEW_TRANSACTION_DEFINITION = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 
-    public HibernatePriceValidator() {
-    }
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.PriceValidator");
 
-    @Override
-    public void addPriceValidatorListener(PriceValidatorListener l) {
-        if (l != null) {
-            listeners.add(l);
-        }
-    }
 
-    @Override
-    public void removePriceValidatorListener(PriceValidatorListener l) {
-        if (l != null) {
-            listeners.remove(l);
-        }
-    }
+	public HibernatePriceValidator() {
+	}
 
-    private void doValidation() {
-        try {
-            final Date startedDate = new Date();
+	@Override
+	public void addPriceValidatorListener(PriceValidatorListener l) {
+		if (l != null) {
+			listeners.add(l);
+		}
+	}
 
-            validationSummary.initialize(startedDate);
-            final MarkupCalculator markupCalculator = exchangeManager.getMarkupCalculator();
+	@Override
+	public void removePriceValidatorListener(PriceValidatorListener l) {
+		if (l != null) {
+			listeners.remove(l);
+		}
+	}
 
-            int count;
-            TransactionStatus transaction = transactionManager.getTransaction(new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
-            try {
-                Session session = sessionFactory.getCurrentSession();
-                final Query countQuery = session.createQuery("select count(*) from billiongoods.server.warehouse.impl.HibernateArticle a where a.active=true");
+	private void doValidation() {
+		try {
+			final Date startedDate = new Date();
 
-                count = ((Number) countQuery.uniqueResult()).intValue();
-                transactionManager.commit(transaction);
-            } catch (Exception ex) {
-                transactionManager.rollback(transaction);
-                throw ex;
-            }
+			validationSummary.initialize(startedDate);
+			final MarkupCalculator markupCalculator = exchangeManager.getMarkupCalculator();
 
-            for (PriceValidatorListener listener : listeners) {
-                listener.priceValidationStarted(startedDate, count);
-            }
+			int count;
+			TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
+			try {
+				Session session = sessionFactory.getCurrentSession();
+				final Query countQuery = session.createQuery("select count(*) from billiongoods.server.warehouse.impl.HibernateArticle a where a.active=true");
 
-            int index = 0;
-            while (true) {
-                synchronized (this) {
-                    if (validationProgress == null || validationProgress.isCancelled() || validationProgress.isDone()) {
-                        log.info("Validation progress was interrupted");
-                        break;
-                    }
-                }
-                final Range range = Range.limit(index, BULK_ARTICLES_SIZE);
+				count = ((Number) countQuery.uniqueResult()).intValue();
+				transactionManager.commit(transaction);
+			} catch (Exception ex) {
+				transactionManager.rollback(transaction);
+				throw ex;
+			}
 
-                transaction = transactionManager.getTransaction(new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
-                try {
-                    Session session = sessionFactory.getCurrentSession();
+			for (PriceValidatorListener listener : listeners) {
+				listener.priceValidationStarted(startedDate, count);
+			}
 
-                    final Query query = session.createQuery("select a.id, a.price, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateArticle a where a.active=true order by a.id");
-                    final List list = range.apply(query).list();
-                    if (list.isEmpty()) {
-                        transactionManager.commit(transaction);
-                        break;
-                    }
-                    for (Object o : list) {
-                        validationSummary.incrementValidated();
+			int index = 0;
+			while (true) {
+				synchronized (this) {
+					if (validationProgress == null || validationProgress.isCancelled() || validationProgress.isDone()) {
+						log.info("Validation progress was interrupted");
+						break;
+					}
+				}
+				final Range range = Range.limit(index, BULK_ARTICLES_SIZE);
 
-                        final Object[] a = (Object[]) o;
+				transaction = transactionManager.getTransaction(new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
+				try {
+					Session session = sessionFactory.getCurrentSession();
 
-                        final Integer articleId = (Integer) a[0];
-                        final SupplierInfo supplierInfo = (SupplierInfo) a[2];
+					final Query query = session.createQuery("select a.id, a.price, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateArticle a where a.active=true order by a.id");
+					final List list = range.apply(query).list();
+					if (list.isEmpty()) {
+						transactionManager.commit(transaction);
+						break;
+					}
+					for (Object o : list) {
+						validationSummary.incrementValidated();
 
-                        final Price oldPrice = (Price) a[1];
-                        final Price oldSupplierPrice = supplierInfo.getPrice();
+						final Object[] a = (Object[]) o;
 
-                        try {
-                            final Price newSupplierPrice = priceLoader.loadPrice(supplierInfo);
-                            final Price newPrice = markupCalculator.calculateMarkupPrice(newSupplierPrice);
+						final Integer articleId = (Integer) a[0];
+						final SupplierInfo supplierInfo = (SupplierInfo) a[2];
 
-                            final HibernatePriceRenewal renewal = new HibernatePriceRenewal(articleId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
-                            if (!newPrice.equals(oldPrice)) {
-                                log.info("Price for article has been updated: {}", renewal);
-                                validationSummary.addRenewal(renewal);
+						final Price oldPrice = (Price) a[1];
+						final Price oldSupplierPrice = supplierInfo.getPrice();
 
-                                session.save(renewal);
-                                articleManager.updatePrice(articleId, newPrice, newSupplierPrice);
-                            }
+						try {
+							final Price newSupplierPrice = priceLoader.loadPrice(supplierInfo);
+							final Price newPrice = markupCalculator.calculateMarkupPrice(newSupplierPrice);
 
-                            for (PriceValidatorListener listener : listeners) {
-                                listener.priceValidated(articleId, renewal);
-                            }
-                        } catch (PriceLoadingException ex) {
-                            log.info("Price for article {} can't be updated: {}", articleId, ex.getMessage());
-                            validationSummary.addBreakdown(new Date(), articleId, ex);
-                        }
-                    }
-                    session.flush();
-                    transactionManager.commit(transaction);
-                } catch (Exception ex) {
-                    log.error("Bulk checks can't be processed for range: " + range, ex);
-                    transactionManager.rollback(transaction);
-                    break;
-                }
-                index += BULK_ARTICLES_SIZE;
-            }
+							final HibernatePriceRenewal renewal = new HibernatePriceRenewal(articleId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
+							if (!newPrice.equals(oldPrice)) {
+								log.info("Price for article has been updated: {}", renewal);
+								validationSummary.addRenewal(renewal);
 
-            final Date finishedDate = new Date();
+								session.save(renewal);
+								articleManager.updatePrice(articleId, newPrice, newSupplierPrice);
+							}
 
-            validationSummary.finalize(finishedDate);
-            for (PriceValidatorListener listener : listeners) {
-                listener.priceValidationFinished(finishedDate, validationSummary);
-            }
-        } catch (Exception ex) {
-            log.error("Price validation can't be done", ex);
-        }
+							for (PriceValidatorListener listener : listeners) {
+								listener.priceValidated(articleId, renewal);
+							}
+						} catch (PriceLoadingException ex) {
+							log.info("Price for article {} can't be updated: {}", articleId, ex.getMessage());
+							validationSummary.addBreakdown(new Date(), articleId, ex);
+						}
+					}
+					session.flush();
+					transactionManager.commit(transaction);
+				} catch (Exception ex) {
+					log.error("Bulk checks can't be processed for range: " + range, ex);
+					transactionManager.rollback(transaction);
+					break;
+				}
+				index += BULK_ARTICLES_SIZE;
+			}
 
-        synchronized (this) {
-            validationProgress = null;
-        }
-    }
+			final Date finishedDate = new Date();
 
-    @Override
-    public synchronized void startPriceValidation() {
-        if (isInProgress()) {
-            return;
-        }
-        validationProgress = taskExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                doValidation();
-            }
-        });
-    }
+			validationSummary.finalize(finishedDate);
+			for (PriceValidatorListener listener : listeners) {
+				listener.priceValidationFinished(finishedDate, validationSummary);
+			}
+		} catch (Exception ex) {
+			log.error("Price validation can't be done", ex);
+		}
 
-    @Override
-    public synchronized void stopPriceValidation() {
-        if (validationProgress != null) {
-            validationProgress.cancel(true);
-            validationProgress = null;
-        }
-    }
+		synchronized (this) {
+			validationProgress = null;
+		}
+	}
 
-    @Override
-    public synchronized boolean isInProgress() {
-        return validationProgress != null;
-    }
+	@Override
+	public synchronized void startPriceValidation() {
+		if (isInProgress()) {
+			return;
+		}
+		validationProgress = taskExecutor.submit(new Runnable() {
+			@Override
+			public void run() {
+				doValidation();
+			}
+		});
+	}
 
-    @Override
-    public synchronized ValidationSummary getValidationSummary() {
-        return validationSummary;
-    }
+	@Override
+	public synchronized void stopPriceValidation() {
+		if (validationProgress != null) {
+			validationProgress.cancel(true);
+			validationProgress = null;
+		}
+	}
 
-    @Override
-    public void cleanup(Date today) {
+	@Override
+	public synchronized boolean isInProgress() {
+		return validationProgress != null;
+	}
+
+	@Override
+	public synchronized ValidationSummary getValidationSummary() {
+		return validationSummary;
+	}
+
+	@Override
+	public void cleanup(Date today) {
 //		startPriceValidation();
-    }
+	}
 
 
-    public void setTaskExecutor(AsyncTaskExecutor taskExecutor) {
-        this.taskExecutor = taskExecutor;
-    }
+	public void setTaskExecutor(AsyncTaskExecutor taskExecutor) {
+		this.taskExecutor = taskExecutor;
+	}
 
-    public void setPriceLoader(PriceLoader priceLoader) {
-        this.priceLoader = priceLoader;
-    }
+	public void setPriceLoader(PriceLoader priceLoader) {
+		this.priceLoader = priceLoader;
+	}
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
-    public void setArticleManager(ArticleManager articleManager) {
-        this.articleManager = articleManager;
-    }
+	public void setArticleManager(ArticleManager articleManager) {
+		this.articleManager = articleManager;
+	}
 
-    public void setExchangeManager(ExchangeManager exchangeManager) {
-        this.exchangeManager = exchangeManager;
-    }
+	public void setExchangeManager(ExchangeManager exchangeManager) {
+		this.exchangeManager = exchangeManager;
+	}
 
-    public void setTransactionManager(PlatformTransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
-    }
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
 }

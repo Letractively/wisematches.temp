@@ -1,5 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.services.arivals.impl.BanggoodArticleImporter;
 import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.services.price.MarkupCalculator;
 import billiongoods.server.warehouse.*;
@@ -12,8 +13,8 @@ import static org.easymock.EasyMock.*;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class BanggoodArticlesImporterTest {
-	public BanggoodArticlesImporterTest() {
+public class BanggoodArticleImporterTest {
+	public BanggoodArticleImporterTest() {
 	}
 
 	@Test
@@ -33,7 +34,7 @@ public class BanggoodArticlesImporterTest {
 		expect(articleManager.createArticle("WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2", "<br /><span style=\"font-size:12px;\"><span style=\"font-family: arial-helvetica-sans-serif;\"><strong>WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2</strong><br /><br /><strong>Description:</strong><br /><br />Brand: WLtoys<br />Item Name: Main Blade<br />NO.: V911-1-2<br />Usage:For WLtoys V911-1 RC Helicopter<br /><br /><strong>Package Included:</strong><br />1 x Main Blade</span></span>", category, new Price(1.84d, null), 0.05d, null, null, null, null, null, "82283", "SKU088161", Supplier.BANGGOOD, new Price(1.28d, null))).andReturn(article);
 		replay(articleManager);
 
-		final BanggoodArticlesImporter importer = new BanggoodArticlesImporter();
+		final BanggoodArticleImporter importer = new BanggoodArticleImporter();
 		importer.setExchangeManager(exchangeManager);
 		importer.setArticleManager(articleManager);
 
