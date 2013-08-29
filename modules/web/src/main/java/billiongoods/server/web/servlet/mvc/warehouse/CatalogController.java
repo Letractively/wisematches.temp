@@ -26,7 +26,7 @@ public class CatalogController extends AbstractController {
 
 	@RequestMapping(value = {"", "/"})
 	public String showRootCategory(Model model) {
-		hideWarehouse(model);
+		hideWhereabouts(model);
 
 //		model.addAttribute("topSelling", articleManager.searchEntities(null, Orders.of(Order.desc("soldCount")), Range.limit(8));
 

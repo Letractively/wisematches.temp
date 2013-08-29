@@ -39,9 +39,13 @@ public class BasketController extends AbstractController {
 	private ArticleManager articleManager;
 	private ShipmentManager shipmentManager;
 
+	public static final String BASKET_PARAM = "BASKET";
+	public static final String ORDER_CHECKOUT_FORM_PARAM = "ORDER_CHECKOUT_FORM";
+
 	private static final CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
 
 	public BasketController() {
+		super(true, false);
 	}
 
 	@RequestMapping(value = {""}, method = RequestMethod.GET)
@@ -99,8 +103,8 @@ public class BasketController extends AbstractController {
 		}
 
 		if (!errors.hasErrors()) {
-			request.setAttribute("form", form, RequestAttributes.SCOPE_REQUEST);
-			request.setAttribute("basket", basket, RequestAttributes.SCOPE_REQUEST);
+			request.setAttribute(ORDER_CHECKOUT_FORM_PARAM, form, RequestAttributes.SCOPE_REQUEST);
+			request.setAttribute(BASKET_PARAM, basket, RequestAttributes.SCOPE_REQUEST);
 			return "forward:/warehouse/order/checkout";
 		}
 		return prepareBasketView(basket, model);
@@ -200,14 +204,13 @@ public class BasketController extends AbstractController {
 	}
 
 	private String prepareBasketView(Basket basket, Model model) {
-		hideNavigation(model);
 		model.addAttribute("basket", basket);
 
 		if (basket != null) {
 			model.addAttribute("shipmentRates", shipmentManager.getShipmentRates(basket));
 		}
 
-		return "/content/warehouse/basket";
+		return "/content/warehouse/basket/view";
 	}
 
 	@Autowired

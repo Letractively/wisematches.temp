@@ -2,9 +2,8 @@
 <#-- @ftlvariable name="titleExtension" type="java.lang.Object" -->
 
 <#-- @ftlvariable name="templateName" type="java.lang.String" -->
-<#-- @ftlvariable name="analyticsCode" type="java.lang.String" -->
 
-<#-- @ftlvariable name="hideWarehouse" type="java.lang.Boolean" -->
+<#-- @ftlvariable name="hideWhereabouts" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="hideNavigation" type="java.lang.Boolean" -->
 <#include "/core.ftl">
 
@@ -30,22 +29,7 @@
     <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/billiongoods-${libsVersion}.css"/>"/>
     <script type="text/javascript" src="<@bg.ui.static "js/billiongoods-${libsVersion}.js"/>"></script>
 
-<@bg.security.unauthorized "moderator">
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '${analyticsCode!""}']);
-        _gaq.push(['_trackPageview']);
-
-        (function () {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-</@bg.security.unauthorized>
+<#include "metrics.ftl"/>
 </head>
 <body>
 
@@ -78,7 +62,7 @@
                     </#if>
                         <td valign="top">
                             <div class="content">
-                            <#if !hideWarehouse?? || !hideWarehouse>
+                            <#if !hideWhereabouts?? || !hideWhereabouts>
                                 <div class="whereabouts"><#include "${department.style}/whereabouts.ftl"/></div>
                             </#if>
                             <#include "${templateName}"/>
