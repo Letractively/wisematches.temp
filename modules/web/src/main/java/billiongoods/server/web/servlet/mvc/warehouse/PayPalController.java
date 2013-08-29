@@ -22,6 +22,8 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
 
+import static billiongoods.server.web.servlet.mvc.warehouse.OrderController.ORDER_ID_PARAM;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -40,8 +42,10 @@ public class PayPalController extends AbstractController {
 	@RequestMapping("/checkout")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String checkoutOrder(WebRequest request) {
-		final Order order = (Order) request.getAttribute("order", RequestAttributes.SCOPE_REQUEST);
+		final Long orderId = (Long) request.getAttribute(ORDER_ID_PARAM, RequestAttributes.SCOPE_REQUEST);
 		try {
+			final Order order = orderManager.getOrder(orderId);
+
 			final String orderUrl = serverDescriptor.getWebHostName() + "/warehouse/order/view";
 			final String returnUrl = serverDescriptor.getWebHostName() + "/warehouse/paypal/accepted";
 			final String cancelUrl = serverDescriptor.getWebHostName() + "/warehouse/paypal/rejected";
@@ -52,7 +56,7 @@ public class PayPalController extends AbstractController {
 			orderManager.bill(order.getId(), transaction.getToken());
 			return "redirect:" + expressCheckout.getExpressCheckoutEndPoint(transaction.getToken());
 		} catch (PayPalException ex) {
-			orderManager.failed(order.getId(), ex.getMessage());
+			orderManager.failed(orderId, ex.getMessage());
 			log.error("PayPal processing error: " + ex.getMessage(), ex);
 			return "forward:/warehouse/basket/rollback";
 		}
@@ -71,12 +75,9 @@ public class PayPalController extends AbstractController {
 	}
 
 	private String processOrderState(String token, boolean accepted, WebRequest request) {
-		request.setAttribute("OrderToken", token, RequestAttributes.SCOPE_REQUEST);
-
 		try {
 			final PayPalTransaction transaction = expressCheckout.finalizeExpressCheckout(token, accepted);
-			request.setAttribute("OrderId", transaction.getOrderId(), RequestAttributes.SCOPE_REQUEST);
-
+			request.setAttribute(ORDER_ID_PARAM, transaction.getOrderId(), RequestAttributes.SCOPE_REQUEST);
 			if (transaction.getResolution() == TransactionResolution.APPROVED) {
 				if (transaction.getTransactionId() == null) {
 					throw new PayPalSystemException(token, "There is no transactionID: payment is not approved by PayPal");

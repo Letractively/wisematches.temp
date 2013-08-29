@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="order" type="billiongoods.server.services.payment.Order" -->
-<#-- @ftlvariable name="orderIsNew" type="boolean" -->
+<#-- @ftlvariable name="confirmation" type="boolean" -->
 <#-- @ftlvariable name="articleManager" type="billiongoods.server.warehouse.ArticleManager" -->
 
 <#include "/core.ftl"/>
@@ -10,7 +10,7 @@
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.simplemodal.js"/>"></script>
 
 <div class="order ${stateName}">
-<#if orderIsNew?? && orderIsNew>
+<#if confirmation?? && confirmation>
     <div class="info">
         <#if state.accepted>
             Ваш заказ принят в обработку. Вы можете посмотреть параметры вашего заказа ниже. Пожалуйста, если вы не
@@ -23,6 +23,8 @@
             будущем без каких-либо уведомлений с нашей стороны но мы сохраним все данные о транзакции с PayPal.
         </#if>
     </div>
+
+    <#include "metrics.ftl"/>
 </#if>
 
     <div class="tit">

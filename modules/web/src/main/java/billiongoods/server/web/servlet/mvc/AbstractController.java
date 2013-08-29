@@ -27,7 +27,27 @@ public abstract class AbstractController {
 	protected ServiceResponseFactory responseFactory;
 	protected StaticContentGenerator staticContentGenerator;
 
+	private final boolean hideNavigation;
+	private final boolean hideWhereabouts;
+
 	protected AbstractController() {
+		this(false, false);
+	}
+
+	protected AbstractController(boolean hideNavigation, boolean hideWhereabouts) {
+		this.hideNavigation = hideNavigation;
+		this.hideWhereabouts = hideWhereabouts;
+	}
+
+	@ModelAttribute
+	public void initializeDefaultState(Model model) {
+		if (hideNavigation) {
+			hideNavigation(model);
+		}
+
+		if (hideWhereabouts) {
+			hideWhereabouts(model);
+		}
 	}
 
 	@ModelAttribute("title")
@@ -86,8 +106,8 @@ public abstract class AbstractController {
 		return basketManager.getBasketSize(getPrincipal());
 	}
 
-	protected void hideWarehouse(Model model) {
-		model.addAttribute("hideWarehouse", Boolean.TRUE);
+	protected void hideWhereabouts(Model model) {
+		model.addAttribute("hideWhereabouts", Boolean.TRUE);
 	}
 
 	protected void hideNavigation(Model model) {
@@ -99,28 +119,28 @@ public abstract class AbstractController {
 	}
 
 	@Autowired
-	public final void setBasketManager(BasketManager basketManager) {
+	public void setBasketManager(BasketManager basketManager) {
 		this.basketManager = basketManager;
 	}
 
 	@Autowired
-	public final void setMessageSource(MessageFormatter messageSource) {
+	public void setMessageSource(MessageFormatter messageSource) {
 		this.messageSource = messageSource;
 		this.responseFactory = new ServiceResponseFactory(messageSource);
 	}
 
 	@Autowired
-	public final void setStaticContentGenerator(StaticContentGenerator staticContentGenerator) {
+	public void setStaticContentGenerator(StaticContentGenerator staticContentGenerator) {
 		this.staticContentGenerator = staticContentGenerator;
 	}
 
 	@Autowired
-	public final void setCategoryManager(CategoryManager categoryManager) {
+	public void setCategoryManager(CategoryManager categoryManager) {
 		this.categoryManager = categoryManager;
 	}
 
 	@Autowired
-	public final void setAttributeManager(AttributeManager attributeManager) {
+	public void setAttributeManager(AttributeManager attributeManager) {
 		this.attributeManager = attributeManager;
 	}
 }

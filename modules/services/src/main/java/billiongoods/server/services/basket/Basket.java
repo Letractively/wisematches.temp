@@ -7,15 +7,17 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface Basket extends Iterable<BasketItem> {
-    double getAmount();
+	Long getId();
 
-    double getWeight();
+	double getAmount();
 
-    Date getCreationTime();
+	double getWeight();
 
-    Date getUpdatingTime();
+	Date getCreationTime();
 
-    BasketItem getBasketItem(int number);
+	Date getUpdatingTime();
 
-    List<BasketItem> getBasketItems();
+	BasketItem getBasketItem(int number);
+
+	List<BasketItem> getBasketItems();
 }

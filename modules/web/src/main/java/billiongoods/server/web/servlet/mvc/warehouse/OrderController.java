@@ -7,6 +7,7 @@ import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.ExpiredParametersException;
+import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderCheckoutForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderErrorForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderViewForm;
@@ -35,121 +36,129 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/warehouse/order")
 public class OrderController extends AbstractController {
-    private OrderManager orderManager;
+	private OrderManager orderManager;
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderController");
+	public static final String ORDER_ID_PARAM = "ORDER_ID";
 
-    public OrderController() {
-    }
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderController");
 
-    @RequestMapping("/checkout")
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public String checkoutOrder(WebRequest request) {
-        final Basket basket = (Basket) request.getAttribute("basket", RequestAttributes.SCOPE_REQUEST);
-        final OrderCheckoutForm form = (OrderCheckoutForm) request.getAttribute("form", RequestAttributes.SCOPE_REQUEST);
+	public OrderController() {
+		super(true, false);
+	}
 
-        final Order order = orderManager.create(getPrincipal(), basket, form, form.getShipment(), form.isNotifications());
-        request.setAttribute("order", order, RequestAttributes.SCOPE_REQUEST);
-        return "forward:/warehouse/paypal/checkout";
-    }
+	@RequestMapping("/checkout")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public String checkoutOrder(WebRequest request) {
+		final Basket basket = (Basket) request.getAttribute(BasketController.BASKET_PARAM, RequestAttributes.SCOPE_REQUEST);
+		final OrderCheckoutForm form = (OrderCheckoutForm) request.getAttribute(BasketController.ORDER_CHECKOUT_FORM_PARAM, RequestAttributes.SCOPE_REQUEST);
 
-    @RequestMapping("/accepted")
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public String orderAccepted(WebRequest request) {
-        final Long orderId = (Long) request.getAttribute("OrderId", RequestAttributes.SCOPE_REQUEST);
+		final Order order = orderManager.create(getPrincipal(), basket, form, form.getShipment(), form.isNotifications());
+		request.setAttribute(ORDER_ID_PARAM, order.getId(), RequestAttributes.SCOPE_REQUEST);
+		return "forward:/warehouse/paypal/checkout";
+	}
 
-        final Order order = orderManager.getOrder(orderId);
-        try {
-            basketManager.closeBasket(new Visitor(order.getBuyer()));
-        } catch (Exception ex) {
-            log.error("Basket can't be closed", ex);
-        }
+	@RequestMapping("/accepted")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public String orderAccepted(WebRequest request) {
+		final Long orderId = (Long) request.getAttribute(ORDER_ID_PARAM, RequestAttributes.SCOPE_REQUEST);
 
-        request.setAttribute("order", order, RequestAttributes.SCOPE_SESSION);
-        return "redirect:/warehouse/order/status";
-    }
+		final Order order = orderManager.getOrder(orderId);
+		try {
+			basketManager.closeBasket(new Visitor(order.getBuyer()));
+		} catch (Exception ex) {
+			log.error("Basket can't be closed", ex);
+		}
 
-    @RequestMapping("/rejected")
-    public String orderRejected() {
-        return "redirect:/warehouse/basket";
-    }
+		request.setAttribute(ORDER_ID_PARAM, order.getId(), RequestAttributes.SCOPE_SESSION);
+		return "redirect:/warehouse/order/confirm";
+	}
 
-    @RequestMapping("/failed")
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public String internal(@ModelAttribute("form") OrderErrorForm form) throws PayPalException, ExpiredParametersException {
-        if (form.getException() == null) {
-            throw new ExpiredParametersException();
-        }
-        throw form.getException();
-    }
+	@RequestMapping("/rejected")
+	public String orderRejected() {
+		return "redirect:/warehouse/basket";
+	}
 
-    @RequestMapping("/status")
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public String viewOrderStatus(@ModelAttribute("form") OrderViewForm form, Errors errors, Model model, WebRequest request) {
-        final Order order = (Order) request.getAttribute("order", RequestAttributes.SCOPE_SESSION);
-        if (order != null) {
-            request.removeAttribute("order", RequestAttributes.SCOPE_SESSION);
-            return viewOrder(model, orderManager.getOrder(order.getId()), true);
-        }
+	@RequestMapping("/failed")
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public String internal(@ModelAttribute("form") OrderErrorForm form) throws PayPalException, ExpiredParametersException {
+		final PayPalException exception = form.getException();
+		if (exception != null) {
+			throw exception;
+		}
+		throw new ExpiredParametersException();
+	}
 
-        hideNavigation(model);
+	@RequestMapping("/confirm")
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public String confirmOrderStatus(Model model, WebRequest request) {
+		final Long orderId = (Long) request.getAttribute(ORDER_ID_PARAM, RequestAttributes.SCOPE_SESSION);
+		if (orderId != null) {
+			request.removeAttribute(ORDER_ID_PARAM, RequestAttributes.SCOPE_SESSION);
+			return viewOrder(orderId, orderManager.getOrder(orderId), true, model);
+		}
+		return "redirect:/warehouse/order/status";
+	}
 
-        if (form.isEmpty()) {
-            return "/content/warehouse/order/track";
-        }
-        return processOrderStatus(form, errors, model);
-    }
+	@RequestMapping("/status")
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public String viewOrderStatus(@ModelAttribute("form") OrderViewForm form, Errors errors, Model model) {
+		if (form.isEmpty()) {
+			return "/content/warehouse/order/track";
+		}
+		return processOrderStatus(form, errors, model);
+	}
 
-    @Transactional(propagation = Propagation.SUPPORTS)
-    @RequestMapping(value = "/status", method = RequestMethod.POST)
-    public String processOrderStatus(@ModelAttribute("form") OrderViewForm form, Errors errors, Model model) {
-        hideNavigation(model);
+	@Transactional(propagation = Propagation.SUPPORTS)
+	@RequestMapping(value = "/status", method = RequestMethod.POST)
+	public String processOrderStatus(@ModelAttribute("form") OrderViewForm form, Errors errors, Model model) {
+		if (form.getOrder() == null) {
+			errors.rejectValue("order", "order.error.id.empty");
+		}
+		if (form.getEmail() == null || form.getEmail().isEmpty()) {
+			errors.rejectValue("email", "order.error.email.empty");
+		}
 
-        if (form.getOrder() == null) {
-            errors.rejectValue("order", "order.error.id.empty");
-        }
-        if (form.getEmail() == null || form.getEmail().isEmpty()) {
-            errors.rejectValue("email", "order.error.email.empty");
-        }
+		if (!errors.hasErrors()) {
+			final Order order = orderManager.getOrder(form.getOrder());
+			if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail())) {
+				errors.reject("order.error.invalid");
+			} else {
+				return viewOrder(form.getOrder(), order, false, model);
+			}
+		}
+		return "/content/warehouse/order/track";
+	}
 
-        if (!errors.hasErrors()) {
-            final Order order = orderManager.getOrder(form.getOrder());
-            if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail())) {
-                errors.reject("order.error.invalid");
-            } else {
-                return viewOrder(model, order, false);
-            }
-        }
-        return "/content/warehouse/order/track";
-    }
+	@RequestMapping("/tracking.ajax")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse changeTrackingState(@RequestBody TrackingForm form, Locale locale) {
+		if (form.getOrder() == null) {
+			return responseFactory.failure("order.error.id.empty", locale);
+		}
+		if (form.getEmail() == null || form.getEmail().isEmpty()) {
+			return responseFactory.failure("order.error.email.empty", locale);
+		}
 
-    @RequestMapping("/tracking.ajax")
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public ServiceResponse changeTrackingState(@RequestBody TrackingForm form, Locale locale) {
-        if (form.getOrder() == null) {
-            return responseFactory.failure("order.error.id.empty", locale);
-        }
-        if (form.getEmail() == null || form.getEmail().isEmpty()) {
-            return responseFactory.failure("order.error.email.empty", locale);
-        }
+		final Order order = orderManager.getOrder(form.getOrder());
+		if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail())) {
+			return responseFactory.failure("order.error.invalid", locale);
+		} else {
+			orderManager.setOrderTracking(order, form.isEnable());
+			return responseFactory.success();
+		}
+	}
 
-        final Order order = orderManager.getOrder(form.getOrder());
-        if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail())) {
-            return responseFactory.failure("order.error.invalid", locale);
-        } else {
-            orderManager.setOrderTracking(order, form.isEnable());
-            return responseFactory.success();
-        }
-    }
+	private String viewOrder(Long orderId, Order order, boolean confirmation, Model model) {
+		if (order == null) {
+			throw new UnknownEntityException(orderId, "order");
+		}
+		model.addAttribute("order", order);
+		model.addAttribute("confirmation", confirmation);
+		return "/content/warehouse/order/view";
+	}
 
-    private String viewOrder(Model model, Order order, boolean isNew) {
-        model.addAttribute("order", order);
-        model.addAttribute("orderIsNew", isNew);
-        return "/content/warehouse/order/view";
-    }
-
-    @Autowired
-    public void setOrderManager(OrderManager orderManager) {
-        this.orderManager = orderManager;
-    }
+	@Autowired
+	public void setOrderManager(OrderManager orderManager) {
+		this.orderManager = orderManager;
+	}
 }

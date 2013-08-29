@@ -48,7 +48,8 @@ public class HibernateBasket implements Basket {
 		this.creationTime = this.updatingTime = new Date();
 	}
 
-	Long getId() {
+	@Override
+	public Long getId() {
 		return principal;
 	}
 
