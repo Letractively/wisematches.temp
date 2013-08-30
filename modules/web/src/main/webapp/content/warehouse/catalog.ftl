@@ -14,13 +14,20 @@
                     ${i.name}
                     </div>
                 </#list>
+
+                <div class="more" style="float: right">
+                    <#list g.showcaseItems as i>
+                        <a id="sl_${g_index}_${i_index}" href="${i.moreInfoUri}"
+                           <#if i_index !=0>style="display: none;" </#if>>Показать все</a>
+                    </#list>
+                </div>
             </div>
 
             <div class="cnt table-content">
                 <#list g.showcaseItems as i>
                     <div id="sc_${g_index}_${i_index}" class="item"
                          <#if i_index !=0>style="display: none;" </#if>>
-                        <@bg.ui.articlesViewGrid showcaseCache.get(i) {"showCategory":true}/>
+                        <@bg.ui.articlesViewGrid showcaseCache.get(i)/>
                     </div>
                 </#list>
             </div>
@@ -37,7 +44,10 @@
             var attr = $(this).addClass('active').attr('id').substr(3);
 
             $(v).find(".cnt .item").hide();
-            $(v).find(".cnt #sc_" + attr).show();
+            $(v).find("#sc_" + attr).show();
+
+            $(v).find(".more a").hide();
+            $(v).find("#sl_" + attr).show();
         });
     });
 </script>

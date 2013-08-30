@@ -22,7 +22,7 @@
                                 <span class="image"></span><@bg.link.categoryLink category/></li>
 
                             <#list category.children as ch>
-                                <#if ch_index==5><#break/></#if>
+                                <#if ch_index==8><#break/></#if>
                                 <li class="ct-list-cnt">
                                     <span class="image"></span><@bg.link.categoryLink ch/></li>
                             </#list>
