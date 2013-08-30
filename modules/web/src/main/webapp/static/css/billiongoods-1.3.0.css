@@ -480,6 +480,10 @@ button.bg-ui-button.selected {
     border-right-color: #fff9f3;
 }
 
+.catalog .ct-toc.empty.hover {
+    border-right-color: #FF5A00;
+}
+
 .catalog .ct-list {
     z-index: 1;
     top: -1px;
@@ -602,12 +606,20 @@ button.bg-ui-button.selected {
 }
 
 .info-panel .tit {
-    padding: 5px 10px;
     line-height: normal;
-    text-shadow: 1px 1px 2px white;
-    font-weight: bold;
     background: #f0f0f0;
     border-bottom: 2px solid #d67632;
+}
+
+.info-panel .tit .item {
+    padding: 5px 10px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.info-panel .tit .item.active {
+    background: #d67632;
+    color: #ffffff;
 }
 
 .info-panel .cnt {
@@ -972,16 +984,12 @@ button.bg-ui-button.selected {
     padding-left: 15px;
 }
 
-.catalog-view .tit div {
+.showcase .tit div {
     display: inline-block;
 }
 
-.catalog-view .tit .name {
-    font-weight: bold;
-}
-
-.catalog-view .tit .more {
-    float: right;
+.showcase .info-panel .tit.grouped .item {
+    cursor: pointer;
 }
 
 .basket .cnt th {

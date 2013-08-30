@@ -24,6 +24,12 @@
     <div>&nbsp;</div>
 
     <div>
-    <a href="/maintain/order">Текущие заказы</a>
+        <a href="/maintain/showcase">Витрина</a>
+    </div>
+
+    <div>&nbsp;</div>
+
+    <div>
+        <a href="/maintain/order">Текущие заказы</a>
     </div>
 </div>
