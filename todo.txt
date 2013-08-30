@@ -1,13 +1,12 @@
 ============= CURRENT ====================
-- Main page design
-- Ability to remove article
+- Main page redesign
 - Enable/Disable categories
+- Show hi resolution images by click in view
 
 ============= PLAN ====================
 - Export order
 - Search by article
 - New article label for new articles
-- Show hi resolution images by click in view
 - Gadgets categories by prise: $0.99, $1.99, $2.99, $4.99, $9.99, $15.99, $20.99+
 
 - Accounts and personal info
@@ -16,7 +15,6 @@
 - Images cleaner
 - SiteMap generation based on data
 - Filter by items
-- Global search
 
 - Your recent history
 - Our recomendations view on the left of main page: L959 & V911 & v912
@@ -29,7 +27,9 @@
 
 ============= DONE ====================
 30.08
++ HTML editor removes unknown tags
 + Price for article 3364 can't be updated: Price can't be loaded: For input string: "US$29.00"
++ Remove article. Not save and usually not used. Must be done in DB.
 
 29.08
 + Move PriceLoaded to Apache HC library instead. It should increase stability, I believe.

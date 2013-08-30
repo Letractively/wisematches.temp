@@ -4,6 +4,7 @@
  */
 CKEDITOR.editorConfig = function (config) {
     config.language = 'ru';
+    config.allowedContent = true;
 
     config.toolbar = [
         {name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
