@@ -1,20 +1,7 @@
 ============= CURRENT ====================
-- Price for article 3364 can't be updated: Price can't be loaded: Wholesale-Replacement-WLtoys-V911-2_4GHz-4CH-RC-Helicopter-BNF-New-Plug-Version-p-39473.html For input string: "US$29.00"
-- Enable/Disable categories
+- Main page design
 - Ability to remove article
-- MySQL structure is note very good:
-    There are lots of rows being sorted.	While there is nothing wrong with a high amount of row sorting, you might want to make sure that the queries which require a lot of sorting use indexed columns in the ORDER BY clause, as this will result in much faster sorting
-    There are too many joins without indexes.	This means that joins are doing full table scans. Adding indexes for the columns being used in the join conditions will greatly speed up table joins
-
-    long_query_time is set to 10 seconds or more, thus only slow queries that take above 10 seconds are logged.	It is suggested to set long_query_time to a lower value, depending on your environment. Usually a value of 1-5 seconds is suggested.
-    The query cache is not enabled.	The query cache is known to greatly improve performance if configured correctly. Enable it by setting query_cache_size to a 2 digit MiB value and setting query_cache_type to 'ON'. Note: If you are using memcached, ignore this recommendation.
-    The rate of reading the first index entry is high.	This usually indicates frequent full index scans. Full index scans are faster than table scans but require lots of CPU cycles in big tables, if those tables that have or had high volumes of UPDATEs and DELETEs, running 'OPTIMIZE TABLE' might reduce the amount of and/or speed up full index scans. Other than that full index scans can only be reduced by rewriting queries.
-    The rate of reading data from a fixed position is high.	This indicates that many queries need to sort results and/or do a full table scan, including join queries that do not use indexes. Add indexes where applicable.
-    The rate of reading the next table row is high.	This indicates that many queries are doing full table scans. Add indexes where applicable.
-    MyISAM key buffer (index cache) % used is low.	You may need to decrease the size of key_buffer_size, re-examine your tables to see if indexes have been removed, or examine queries and expectations about what indexes are being used.
-    The % of indexes that use the MyISAM key buffer is low.	You may need to increase key_buffer_size.
-    The rate of opening tables is high.	Opening tables requires disk I/O which is costly. Increasing table_open_cache might avoid this.
-    You do not have InnoDB enabled.	InnoDB is usually the better choice for table engines.
+- Enable/Disable categories
 
 ============= PLAN ====================
 - Export order
@@ -27,20 +14,23 @@
 - Hot products view
 - Forums
 - Images cleaner
-- sitemap generation based on data
-- filter by items
-- global search
+- SiteMap generation based on data
+- Filter by items
+- Global search
 
 - Your recent history
 - Our recomendations view on the left of main page: L959 & V911 & v912
 - Ability to show quantity and sold out message
 - Ability to track state of a SKU
 - Ability to add system comments to an article (with a reminder about the comment?)
-- add items meta desc
-- own adds on main page
+- Add items meta desc
+- Own ads on main page
 - Global search ability
 
 ============= DONE ====================
+30.08
++ Price for article 3364 can't be updated: Price can't be loaded: For input string: "US$29.00"
+
 29.08
 + Move PriceLoaded to Apache HC library instead. It should increase stability, I believe.
 + Articles importing takes all SQL connections: executed in separate thread and uses transaction manager
