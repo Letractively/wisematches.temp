@@ -11,215 +11,252 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateArticleManager extends EntitySearchManager<ArticleDescription, ArticleContext> implements ArticleManager {
-    private AttributeManager attributeManager;
+	private AttributeManager attributeManager;
 
-    private static final int ONE_WEEK_MILLIS = 1000 * 60 * 60 * 24 * 7;
+	private final Collection<ArticleListener> listeners = new CopyOnWriteArrayList<>();
 
-    public HibernateArticleManager() {
-        super(HibernateArticleDescription.class);
-    }
+	private static final int ONE_WEEK_MILLIS = 1000 * 60 * 60 * 24 * 7;
 
-    @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public Article getArticle(Integer id) {
-        final Session session = sessionFactory.getCurrentSession();
+	public HibernateArticleManager() {
+		super(HibernateArticleDescription.class);
+	}
 
-        final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
-        if (article != null) {
-            article.initialize(attributeManager);
-        }
-        return article;
-    }
+	@Override
+	public void addArticleListener(ArticleListener l) {
+		if (l != null) {
+			listeners.add(l);
+		}
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public Article getArticle(String sku) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	public void removeArticleListener(ArticleListener l) {
+		if (l != null) {
+			listeners.remove(l);
+		}
+	}
 
-        final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateArticle a where a.supplierInfo.referenceCode=:code");
-        query.setParameter("code", sku);
-        final List list = query.list();
-        if (list.size() > 0) {
-            final HibernateArticle article = (HibernateArticle) list.get(0);
-            article.initialize(attributeManager);
-            return article;
-        }
-        return null;
-    }
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public Article getArticle(Integer id) {
+		final Session session = sessionFactory.getCurrentSession();
 
-    @Override
-    public ArticleDescription getDescription(Integer id) {
-        final Session session = sessionFactory.getCurrentSession();
-        return (HibernateArticleDescription) session.get(HibernateArticleDescription.class, id);
-    }
+		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
+		if (article != null) {
+			article.initialize(attributeManager);
+		}
+		return article;
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public Article createArticle(String name, String description, Category category,
-                                 Price price, double weight, Date restockDate,
-                                 String previewImage, List<String> imageIds,
-                                 List<Option> options, List<Property> properties,
-                                 String referenceUri, String referenceCode, Supplier wholesaler,
-                                 Price supplierPrice) {
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public Article getArticle(String sku) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateArticle article = new HibernateArticle();
-        updateArticle(article, name, description, category, price, weight,
-                restockDate, previewImage, imageIds, options, properties,
-                referenceUri, referenceCode, wholesaler, supplierPrice);
+		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateArticle a where a.supplierInfo.referenceCode=:code");
+		query.setParameter("code", sku);
+		final List list = query.list();
+		if (list.size() > 0) {
+			final HibernateArticle article = (HibernateArticle) list.get(0);
+			article.initialize(attributeManager);
+			return article;
+		}
+		return null;
+	}
+
+	@Override
+	public ArticleDescription getDescription(Integer id) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (HibernateArticleDescription) session.get(HibernateArticleDescription.class, id);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public Article createArticle(String name, String description, Category category,
+								 Price price, double weight, Date restockDate,
+								 String previewImage, List<String> imageIds,
+								 List<Option> options, List<Property> properties,
+								 String referenceUri, String referenceCode, Supplier wholesaler,
+								 Price supplierPrice) {
+
+		final HibernateArticle article = new HibernateArticle();
+		updateArticle(article, name, description, category, price, weight,
+				restockDate, previewImage, imageIds, options, properties,
+				referenceUri, referenceCode, wholesaler, supplierPrice);
 
 
-        final Session session = sessionFactory.getCurrentSession();
-        session.save(article);
-        return article;
-    }
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(article);
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public Article updateArticle(Integer id, String name, String description, Category category,
-                                 Price price, double weight, Date restockDate,
-                                 String previewImage, List<String> imageIds,
-                                 List<Option> options, List<Property> properties,
-                                 String referenceUri, String referenceCode, Supplier wholesaler,
-                                 Price supplierPrice) {
-        final Session session = sessionFactory.getCurrentSession();
+		for (ArticleListener listener : listeners) {
+			listener.articleCreated(article);
+		}
+		return article;
+	}
 
-        final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
-        if (article == null) {
-            return null;
-        }
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public Article updateArticle(Integer id, String name, String description, Category category,
+								 Price price, double weight, Date restockDate,
+								 String previewImage, List<String> imageIds,
+								 List<Option> options, List<Property> properties,
+								 String referenceUri, String referenceCode, Supplier wholesaler,
+								 Price supplierPrice) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        updateArticle(article, name, description, category, price, weight,
-                restockDate, previewImage, imageIds, options, properties,
-                referenceUri, referenceCode, wholesaler, supplierPrice);
+		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
+		if (article == null) {
+			return null;
+		}
 
-        session.update(article);
-        return article;
-    }
+		updateArticle(article, name, description, category, price, weight,
+				restockDate, previewImage, imageIds, options, properties,
+				referenceUri, referenceCode, wholesaler, supplierPrice);
+		session.update(article);
 
-    private void updateArticle(HibernateArticle article,
-                               String name, String description, Category category,
-                               Price price, double weight, Date restockDate,
-                               String previewImage, List<String> imageIds,
-                               List<Option> options, List<Property> properties,
-                               String referenceUri, String referenceCode, Supplier wholesaler,
-                               Price supplierPrice) {
-        article.setName(name);
-        article.setDescription(description);
-        article.setCategory(category);
-        article.setPrice(price);
-        article.setWeight(weight);
-        article.setRestockDate(restockDate);
-        article.setPreviewImageId(previewImage);
-        article.setImageIds(imageIds);
-        article.setOptions(options);
-        article.setProperties(properties);
+		for (ArticleListener listener : listeners) {
+			listener.articleUpdated(article);
+		}
+		return article;
+	}
 
-        final HibernateSupplierInfo supplierInfo = article.getSupplierInfo();
-        supplierInfo.setReferenceUri(referenceUri);
-        supplierInfo.setReferenceCode(referenceCode);
-        supplierInfo.setWholesaler(wholesaler);
-        supplierInfo.setPrice(supplierPrice);
-    }
+	@Override
+	public Article removeArticle(Integer id) {
+		final Session session = sessionFactory.getCurrentSession();
 
-    @Override
-    public void updateSold(Integer id, int quantity) {
-        final Session session = sessionFactory.getCurrentSession();
-        final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.soldCount=a.soldCount+:quantity where a.id=:id");
-        query.setParameter("id", id);
-        query.setParameter("quantity", quantity);
-        query.executeUpdate();
-    }
+		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
+		if (article == null) {
+			return null;
+		}
+		session.delete(article);
 
-    @Override
-    public void updateState(Integer id, boolean active) {
-        final Session session = sessionFactory.getCurrentSession();
-        final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.active=:active, a.registrationDate=:registrationDate where a.id=:id");
-        query.setParameter("id", id);
-        query.setParameter("active", active);
-        query.setParameter("registrationDate", new Date());
-        query.executeUpdate();
-    }
+		for (ArticleListener listener : listeners) {
+			listener.articleRemoved(article);
+		}
+		return article;
+	}
 
-    @Override
-    public void updatePrice(Integer id, Price price, Price supplierPrice) {
-        final Session session = sessionFactory.getCurrentSession();
-        final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a " +
-                "set " +
-                "a.price.amount=:priceAmount, a.price.primordialAmount=:pricePrimordialAmount, " +
-                "a.supplierInfo.price.amount=:supplierAmount, a.supplierInfo.price.primordialAmount=:supplierPrimordialAmount, " +
-                "a.supplierInfo.validationDate=:validationDate " +
-                "where a.id=:id");
+	private void updateArticle(HibernateArticle article,
+							   String name, String description, Category category,
+							   Price price, double weight, Date restockDate,
+							   String previewImage, List<String> imageIds,
+							   List<Option> options, List<Property> properties,
+							   String referenceUri, String referenceCode, Supplier wholesaler,
+							   Price supplierPrice) {
+		article.setName(name);
+		article.setDescription(description);
+		article.setCategory(category);
+		article.setPrice(price);
+		article.setWeight(weight);
+		article.setRestockDate(restockDate);
+		article.setPreviewImageId(previewImage);
+		article.setImageIds(imageIds);
+		article.setOptions(options);
+		article.setProperties(properties);
 
-        query.setParameter("id", id);
-        query.setParameter("priceAmount", price.getAmount());
-        query.setParameter("pricePrimordialAmount", price.getPrimordialAmount());
-        query.setParameter("supplierAmount", supplierPrice.getAmount());
-        query.setParameter("supplierPrimordialAmount", supplierPrice.getPrimordialAmount());
-        query.setParameter("validationDate", new Date());
-        query.executeUpdate();
-    }
+		final HibernateSupplierInfo supplierInfo = article.getSupplierInfo();
+		supplierInfo.setReferenceUri(referenceUri);
+		supplierInfo.setReferenceCode(referenceCode);
+		supplierInfo.setWholesaler(wholesaler);
+		supplierInfo.setPrice(supplierPrice);
+	}
 
-    @Override
-    protected void applyProjections(Criteria criteria, ArticleContext context) {
-    }
+	@Override
+	public void updateSold(Integer id, int quantity) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.soldCount=a.soldCount+:quantity where a.id=:id");
+		query.setParameter("id", id);
+		query.setParameter("quantity", quantity);
+		query.executeUpdate();
+	}
 
-    @Override
-    protected void applyOrders(Criteria criteria, Orders orders) {
-        super.applyOrders(criteria, orders);
-        criteria.addOrder(Order.asc("id"));// always sort by id at the end
-    }
+	@Override
+	public void updateState(Integer id, boolean active) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.active=:active, a.registrationDate=:registrationDate where a.id=:id");
+		query.setParameter("id", id);
+		query.setParameter("active", active);
+		query.setParameter("registrationDate", new Date());
+		query.executeUpdate();
+	}
 
-    @Override
-    protected void applyRestrictions(Criteria criteria, ArticleContext context) {
-        if (context != null) {
-            final Category category = context.getCategory();
-            if (category != null) {
-                if (context.isSubCategories() && !category.isFinal()) {
-                    final List<Integer> ids = new ArrayList<>();
+	@Override
+	public void updatePrice(Integer id, Price price, Price supplierPrice) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a " +
+				"set " +
+				"a.price.amount=:priceAmount, a.price.primordialAmount=:pricePrimordialAmount, " +
+				"a.supplierInfo.price.amount=:supplierAmount, a.supplierInfo.price.primordialAmount=:supplierPrimordialAmount, " +
+				"a.supplierInfo.validationDate=:validationDate " +
+				"where a.id=:id");
 
-                    final LinkedList<Category> categories = new LinkedList<>();
-                    categories.add(category);
+		query.setParameter("id", id);
+		query.setParameter("priceAmount", price.getAmount());
+		query.setParameter("pricePrimordialAmount", price.getPrimordialAmount());
+		query.setParameter("supplierAmount", supplierPrice.getAmount());
+		query.setParameter("supplierPrimordialAmount", supplierPrice.getPrimordialAmount());
+		query.setParameter("validationDate", new Date());
+		query.executeUpdate();
+	}
 
-                    while (categories.size() != 0) {
-                        final Category c = categories.removeFirst();
+	@Override
+	protected void applyProjections(Criteria criteria, ArticleContext context) {
+	}
 
-                        ids.add(c.getId());
-                        categories.addAll(c.getChildren());
-                    }
-                    criteria.add(Restrictions.in("categoryId", ids));
-                } else {
-                    criteria.add(Restrictions.eq("categoryId", category.getId()));
-                }
-            }
+	@Override
+	protected void applyOrders(Criteria criteria, Orders orders) {
+		super.applyOrders(criteria, orders);
+		criteria.addOrder(Order.asc("id"));// always sort by id at the end
+	}
 
-            if (!context.isInactive()) {
-                criteria.add(Restrictions.eq("active", Boolean.TRUE));
-            }
+	@Override
+	protected void applyRestrictions(Criteria criteria, ArticleContext context) {
+		if (context != null) {
+			final Category category = context.getCategory();
+			if (category != null) {
+				if (context.isSubCategories() && !category.isFinal()) {
+					final List<Integer> ids = new ArrayList<>();
 
-            if (context.isArrival()) {
-                criteria.add(Restrictions.ge("registrationDate", new java.sql.Date(System.currentTimeMillis() - ONE_WEEK_MILLIS)));
-            }
+					final LinkedList<Category> categories = new LinkedList<>();
+					categories.add(category);
 
-            if (context.getName() != null && !context.getName().trim().isEmpty()) {
-                criteria.add(
-                        Restrictions.or(
-                                Restrictions.like("name", "%" + context.getName() + "%")
-                        )
-                );
-            }
-        }
-    }
+					while (categories.size() != 0) {
+						final Category c = categories.removeFirst();
 
-    public void setAttributeManager(AttributeManager attributeManager) {
-        this.attributeManager = attributeManager;
-    }
+						ids.add(c.getId());
+						categories.addAll(c.getChildren());
+					}
+					criteria.add(Restrictions.in("categoryId", ids));
+				} else {
+					criteria.add(Restrictions.eq("categoryId", category.getId()));
+				}
+			}
+
+			if (!context.isInactive()) {
+				criteria.add(Restrictions.eq("active", Boolean.TRUE));
+			}
+
+			if (context.isArrival()) {
+				criteria.add(Restrictions.ge("registrationDate", new java.sql.Date(System.currentTimeMillis() - ONE_WEEK_MILLIS)));
+			}
+
+			if (context.getName() != null && !context.getName().trim().isEmpty()) {
+				criteria.add(
+						Restrictions.or(
+								Restrictions.like("name", "%" + context.getName() + "%")
+						)
+				);
+			}
+		}
+	}
+
+	public void setAttributeManager(AttributeManager attributeManager) {
+		this.attributeManager = attributeManager;
+	}
 }
