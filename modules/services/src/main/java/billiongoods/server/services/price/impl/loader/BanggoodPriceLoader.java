@@ -131,8 +131,8 @@ public class BanggoodPriceLoader implements PriceLoader {
         final Matcher matcher = PRICE_PATTERN.matcher(data);
         while (matcher.find()) {
             log.info("Price parsed from {}", matcher.group(0));
-            d[index++] = Double.valueOf(matcher.group(2));
-        }
+			d[index++] = Double.valueOf(matcher.group(2).replace("US$", ""));
+		}
         if (d[0] == null) {
             throw new PriceLoadingException("Price can't be parsed from " + data);
         }
