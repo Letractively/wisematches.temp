@@ -23,16 +23,19 @@
         <#assign level=level + 10/>
     </#list>
 
-    <#assign items=category.children/>
-    <#if !items.empty>
+    <#if category.children?has_content>
         <@item category genealogy.generation==0 true true/>
         <#assign level=level + 10/>
-    <#else>
-        <#assign items=category.parent.children/>
-    </#if>
 
-    <#list items as c>
-        <@item c false category==c false/>
-    </#list>
+        <#list category.children as c>
+            <@item c false category==c false/>
+        </#list>
+    <#elseif category.parent??>
+        <#list category.parent.children as c>
+            <@item c false category==c false/>
+        </#list>
+    <#else>
+        <@item category false true false/>
+    </#if>
     </div>
 </div>

@@ -1,6 +1,7 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
 import billiongoods.server.services.price.ExchangeManager;
+import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/maintain/exchange")
-public class PriceConverterController {
+public class PriceConverterController extends AbstractController {
 	private ExchangeManager exchangeManager;
 
 	public PriceConverterController() {

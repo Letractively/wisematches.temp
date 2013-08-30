@@ -27,9 +27,15 @@
 <div <#if id?has_content>id="${id}"</#if> class="info-panel<#if class?has_content> ${class}"</#if>>
     <#if name?has_content><a name="${name}"></a></#if>
 
-    <div class="tit">${caption}</div>
+    <div class="tit">
+        <div class="item">${caption}</div>
+    </div>
 
-    <div class="cnt"><#nested/></div>
+    <div class="cnt">
+        <div class="item">
+            <#nested/>
+        </div>
+    </div>
 </div>
 </#macro>
 

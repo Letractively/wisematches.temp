@@ -2,6 +2,7 @@ package billiongoods.server.web.servlet.mvc.maintain;
 
 import billiongoods.server.warehouse.Group;
 import billiongoods.server.warehouse.RelationshipManager;
+import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.GroupForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/maintain/group")
-public class GroupMaintainController {
+public class GroupMaintainController extends AbstractController {
 	private RelationshipManager relationshipManager;
 
 	public GroupMaintainController() {
