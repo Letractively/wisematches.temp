@@ -984,11 +984,15 @@ button.bg-ui-button.selected {
     padding-left: 15px;
 }
 
+.showcase .more {
+    padding: 5px;
+}
+
 .showcase .tit div {
     display: inline-block;
 }
 
-.showcase .info-panel .tit.grouped .item {
+.showcase .tit.grouped .item {
     cursor: pointer;
 }
 
