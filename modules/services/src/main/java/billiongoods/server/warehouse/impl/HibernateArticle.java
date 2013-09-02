@@ -1,9 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Article;
-import billiongoods.server.warehouse.AttributeManager;
-import billiongoods.server.warehouse.Option;
-import billiongoods.server.warehouse.Property;
+import billiongoods.server.warehouse.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,115 +14,120 @@ import java.util.Map;
 @Entity
 @Table(name = "store_article")
 public class HibernateArticle extends AbstractArticleDescription implements Article {
-	@Column(name = "description")
-	private String description;
+    @Column(name = "description")
+    private String description;
 
-	@Column(name = "imageId")
-	@OrderColumn(name = "position")
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "store_article_image", joinColumns = @JoinColumn(name = "articleId"))
-	private List<String> imageIds = new ArrayList<>();
+    @Column(name = "imageId")
+    @OrderColumn(name = "position")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "store_article_image", joinColumns = @JoinColumn(name = "articleId"))
+    private List<String> imageIds = new ArrayList<>();
 
-	@OrderColumn(name = "position")
-	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
-	@CollectionTable(name = "store_article_option", joinColumns = @JoinColumn(name = "articleId"))
-	private List<HibernateArticleProperty> optionIds = new ArrayList<>();
+    @OrderColumn(name = "position")
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
+    @CollectionTable(name = "store_article_option", joinColumns = @JoinColumn(name = "articleId"))
+    private List<HibernateArticleProperty> optionIds = new ArrayList<>();
 
-	@OrderColumn(name = "position")
-	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
-	@CollectionTable(name = "store_article_property", joinColumns = @JoinColumn(name = "articleId"))
-	private List<HibernateArticleProperty> propertyIds = new ArrayList<>();
+    @OrderColumn(name = "position")
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateArticleProperty.class)
+    @CollectionTable(name = "store_article_property", joinColumns = @JoinColumn(name = "articleId"))
+    private List<HibernateArticleProperty> propertyIds = new ArrayList<>();
 
-	@Transient
-	private List<Option> options = new ArrayList<>();
+    @Transient
+    private List<Option> options = new ArrayList<>();
 
-	@Transient
-	private List<Property> properties = new ArrayList<>();
+    @Transient
+    private List<Property> properties = new ArrayList<>();
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "amount", column = @Column(name = "price")),
-			@AttributeOverride(name = "primordialAmount", column = @Column(name = "primordialPrice"))
-	})
-	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "price")),
+            @AttributeOverride(name = "primordialAmount", column = @Column(name = "primordialPrice"))
+    })
+    private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
 
-	public HibernateArticle() {
-	}
+    public HibernateArticle() {
+    }
 
-	@Override
-	public String getDescription() {
-		return description;
-	}
+    @Override
+    public String getDescription() {
+        return description;
+    }
 
-	@Override
-	public List<Option> getOptions() {
-		return options;
-	}
+    @Override
+    public List<Option> getOptions() {
+        return options;
+    }
 
-	@Override
-	public List<String> getImageIds() {
-		return imageIds;
-	}
+    @Override
+    public List<String> getImageIds() {
+        return imageIds;
+    }
 
-	@Override
-	public List<Property> getProperties() {
-		return properties;
-	}
+    @Override
+    public List<Property> getProperties() {
+        return properties;
+    }
 
-	@Override
-	public HibernateSupplierInfo getSupplierInfo() {
-		return supplierInfo;
-	}
+    @Override
+    public HibernateSupplierInfo getSupplierInfo() {
+        return supplierInfo;
+    }
 
-	void setDescription(String description) {
-		this.description = description;
-	}
+    void setDescription(String description) {
+        this.description = description;
+    }
 
-	void setOptions(List<Option> options) {
-		this.optionIds.clear();
+    void setOptions(List<Option> options) {
+        this.optionIds.clear();
 
-		this.options = options;
-		if (options != null) {
-			for (Option option : options) {
-				for (String value : option.getValues()) {
-					this.optionIds.add(new HibernateArticleProperty(option.getAttribute(), value));
-				}
-			}
-		}
-	}
+        this.options = options;
+        if (options != null) {
+            for (Option option : options) {
+                for (String value : option.getValues()) {
+                    this.optionIds.add(new HibernateArticleProperty(option.getAttribute(), value));
+                }
+            }
+        }
+    }
 
-	void setProperties(List<Property> properties) {
-		this.propertyIds.clear();
+    void setProperties(List<Property> properties) {
+        this.propertyIds.clear();
 
-		this.properties = properties;
-		if (properties != null) {
-			for (Property property : properties) {
-				this.propertyIds.add(new HibernateArticleProperty(property.getAttribute(), property.getValue()));
-			}
-		}
-	}
+        this.properties = properties;
+        if (properties != null) {
+            for (Property property : properties) {
+                this.propertyIds.add(new HibernateArticleProperty(property.getAttribute(), property.getValue()));
+            }
+        }
+    }
 
-	void setImageIds(List<String> imageIds) {
-		this.imageIds = imageIds;
-	}
+    void setImageIds(List<String> imageIds) {
+        this.imageIds = imageIds;
+    }
 
-	void initialize(AttributeManager attributeManager) {
-		final Map<Integer, List<String>> values = new HashMap<>();
-		for (HibernateArticleProperty optionId : optionIds) {
-			List<String> strings = values.get(optionId.getAttributeId());
-			if (strings == null) {
-				strings = new ArrayList<>(4);
-				values.put(optionId.getAttributeId(), strings);
-			}
-			strings.add(optionId.getValue());
-		}
+    void initialize(AttributeManager attributeManager) {
+        final Map<Integer, List<String>> values = new HashMap<>();
+        for (HibernateArticleProperty optionId : optionIds) {
+            List<String> strings = values.get(optionId.getAttributeId());
+            if (strings == null) {
+                strings = new ArrayList<>(4);
+                values.put(optionId.getAttributeId(), strings);
+            }
+            strings.add(optionId.getValue());
+        }
 
-		for (Map.Entry<Integer, List<String>> entry : values.entrySet()) {
-			options.add(new Option(attributeManager.getAttribute(entry.getKey()), entry.getValue()));
-		}
+        for (Map.Entry<Integer, List<String>> entry : values.entrySet()) {
+            options.add(new Option(attributeManager.getAttribute(entry.getKey()), entry.getValue()));
+        }
 
-		for (HibernateArticleProperty propertyId : propertyIds) {
-			properties.add(new Property(attributeManager.getAttribute(propertyId.getAttributeId()), propertyId.getValue()));
-		}
-	}
+        for (HibernateArticleProperty propertyId : propertyIds) {
+            if (propertyId != null) {
+                final Attribute attribute = attributeManager.getAttribute(propertyId.getAttributeId());
+                if (attribute != null) {
+                    properties.add(new Property(attribute, propertyId.getValue()));
+                }
+            }
+        }
+    }
 }
