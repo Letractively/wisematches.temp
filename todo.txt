@@ -1,6 +1,7 @@
 ============= CURRENT ====================
-- Enable/Disable categories
 - Show hi resolution images by click in view
+- Redesign catalog for small number of articles
+- Catalog manager works very bad
 
 ============= PLAN ====================
 - Export order
@@ -25,6 +26,13 @@
 - Global search ability
 
 ============= DONE ====================
+02.09
++ 07:42:29.550 [http-bio-8080-exec-18] ERROR billiongoods.web.Servlet - Page can't                                                                                         be opened: /warehouse/article/4232?null
+java.lang.NullPointerException: null
+        at billiongoods.server.warehouse.impl.HibernateArticle.initialize(HibernateArticle.java:128) ~[services-1.3.0-SNAPSHOT.jar:na]                                                                                        ateArticle.java:128) ~[services-1.3.0-SNAPSHOT.jar:na]
+        at billiongoods.server.warehouse.impl.HibernateArticleManager.getArticle(HibernateArticleManager.java:52) ~[services-1.3.0-SNAPSHOT.jar:na]                                                                                        (HibernateArticleManager.java:52) ~[services-1.3.0-SNAPSHOT.jar:na]
+
+
 30.08
 + Main page redesign
 + HTML editor removes unknown tags
