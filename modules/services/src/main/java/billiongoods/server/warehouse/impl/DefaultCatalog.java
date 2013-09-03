@@ -59,6 +59,8 @@ public class DefaultCatalog implements Catalog {
 	private void updateCategoryParent(DefaultCategory dc, Integer parentId) {
 		if (dc.getParent() == null) {
 			rootCategories.remove(dc);
+		} else {
+			dc.getParent().removeChild(dc);
 		}
 
 		final DefaultCategory parent = categoryMap.get(parentId);

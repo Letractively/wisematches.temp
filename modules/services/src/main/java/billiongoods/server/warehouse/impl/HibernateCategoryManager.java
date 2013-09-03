@@ -50,9 +50,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 	public Category createCategory(String name, String description, Set<Attribute> attributes, Category parent, int position) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateCategory p = (HibernateCategory) parent;
-		final HibernateCategory i = new HibernateCategory(name, description, p, position, attributes);
-
+		final HibernateCategory i = new HibernateCategory(name, description, parent != null ? parent.getId() : null, position, attributes);
 		session.save(i);
 		return catalog.addCategory(i, attributeManager);
 	}

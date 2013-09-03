@@ -58,6 +58,16 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	@Override
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Group> searchGroups(String name) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateGroup g where g.name like:name");
+		query.setParameter("name", "%" + name + "%");
+		return query.list();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Group> getGroups(Integer articleId) {
 		final Session session = sessionFactory.getCurrentSession();
 		final Query query = session.createQuery("select g from billiongoods.server.warehouse.impl.HibernateGroup g join g.articles a where a.id=:article");
