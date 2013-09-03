@@ -41,14 +41,11 @@ public class HibernateCategory {
 	protected HibernateCategory() {
 	}
 
-	protected HibernateCategory(String name, String description, HibernateCategory parent, int position, Set<Attribute> attributes) {
+	protected HibernateCategory(String name, String description, Integer parentId, int position, Set<Attribute> attributes) {
 		this.name = name;
 		this.description = description;
 		this.position = position;
-
-		if (parent != null) {
-			this.parentId = parent.id;
-		}
+		this.parentId = parentId;
 		setAttributes(attributes);
 	}
 

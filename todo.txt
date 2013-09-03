@@ -1,7 +1,6 @@
 ============= CURRENT ====================
 - Show hi resolution images by click in view
-- Redesign catalog for small number of articles
-- Catalog manager works very bad
+- Hide add to basket if it's not possible to buy
 
 ============= PLAN ====================
 - Export order
@@ -26,6 +25,12 @@
 - Global search ability
 
 ============= DONE ====================
+03.09
++ Price updating doesn't work if URL start with /
++ Redesign catalog for small number of articles
++ Catalog manager works very bad
++ Ability to search groups by name
+
 02.09
 + 07:42:29.550 [http-bio-8080-exec-18] ERROR billiongoods.web.Servlet - Page can't                                                                                         be opened: /warehouse/article/4232?null
 java.lang.NullPointerException: null

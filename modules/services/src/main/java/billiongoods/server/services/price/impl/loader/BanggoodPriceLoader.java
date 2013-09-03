@@ -104,7 +104,7 @@ public class BanggoodPriceLoader implements PriceLoader {
 		}
 
 		try {
-			final HttpGet request = new HttpGet("/" + uri);
+			final HttpGet request = new HttpGet(uri.startsWith("/") ? uri : "/" + uri);
 			request.setHeader("Accept", "text/plain");
 			request.setHeader("Accept-Language", "en");
 

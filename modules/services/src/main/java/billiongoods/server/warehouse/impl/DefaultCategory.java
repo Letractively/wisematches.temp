@@ -57,7 +57,7 @@ public class DefaultCategory implements Category {
 	}
 
 	@Override
-	public Category getParent() {
+	public DefaultCategory getParent() {
 		return parent;
 	}
 

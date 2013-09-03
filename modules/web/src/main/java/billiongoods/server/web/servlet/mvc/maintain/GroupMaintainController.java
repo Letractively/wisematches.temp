@@ -43,7 +43,9 @@ public class GroupMaintainController extends AbstractController {
 		}
 
 		if (!errors.hasErrors()) {
-			if ("remove".equalsIgnoreCase(form.getAction())) {
+			if ("search".equalsIgnoreCase(form.getAction())) {
+				model.addAttribute("groups", relationshipManager.searchGroups(form.getName()));
+			} else if ("remove".equalsIgnoreCase(form.getAction())) {
 				relationshipManager.removeGroup(form.getId());
 			} else {
 				Group group;

@@ -15,6 +15,9 @@ public interface RelationshipManager {
 	Group updateGroup(Integer id, String name);
 
 
+	List<Group> searchGroups(String name);
+
+
 	List<Group> getGroups(Integer articleId);
 
 	Group addGroupItem(Integer groupId, Integer article);

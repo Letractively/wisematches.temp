@@ -484,6 +484,40 @@ button.bg-ui-button.selected {
     border-right-color: #FF5A00;
 }
 
+.catalog .ct-plain .item {
+    padding-left: 10px;
+}
+
+.catalog .ct-plain .ct-name {
+    line-height: 2;
+}
+
+.catalog .ct-plain .root {
+    border-bottom: 1px dashed #ddd;
+}
+
+.catalog .ct-plain .image {
+    width: 5px;
+    height: 7px;
+    display: inline-block;
+}
+
+.catalog .ct-plain .image {
+    background: url("../images/sprites.png") 0 0 no-repeat;
+}
+
+.catalog .ct-plain .image.empty {
+    background: none !important;
+}
+
+.catalog .ct-plain .root .image {
+    background: url("../images/sprites.png") 0 -12px no-repeat;
+}
+
+.catalog .ct-plain .item.selected > .ct-name a {
+    color: #fa6302;
+}
+
 .catalog .ct-list {
     z-index: 1;
     top: -1px;
