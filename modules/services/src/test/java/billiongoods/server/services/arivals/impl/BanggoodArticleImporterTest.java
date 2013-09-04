@@ -1,6 +1,5 @@
-package billiongoods.server.warehouse.impl;
+package billiongoods.server.services.arivals.impl;
 
-import billiongoods.server.services.arivals.impl.BanggoodArticleImporter;
 import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.services.price.MarkupCalculator;
 import billiongoods.server.warehouse.*;
@@ -9,12 +8,20 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class BanggoodArticleImporterTest {
 	public BanggoodArticleImporterTest() {
+	}
+
+	@Test
+	public void testSpanCleaner() {
+		final BanggoodArticleImporter importer = new BanggoodArticleImporter();
+		String s = importer.cleanSpan("<br /><span style=\"font-size:12px;\"><span style=\"font-family: arial-helvetica-sans-serif;\"><strong>WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2</strong><br /><br /><strong>Description:</strong><br /><br />Brand: WLtoys<br />Item Name: Main Blade<br />NO.: V911-1-2<br />Usage:For WLtoys V911-1 RC Helicopter<br /><br /><strong>Package Included:</strong><br />1 x Main Blade</span></span>");
+		assertEquals("<br /><strong>WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2</strong><br /><br /><strong>Description:</strong><br /><br />Brand: WLtoys<br />Item Name: Main Blade<br />NO.: V911-1-2<br />Usage:For WLtoys V911-1 RC Helicopter<br /><br /><strong>Package Included:</strong><br />1 x Main Blade", s);
 	}
 
 	@Test
