@@ -78,17 +78,9 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Article createArticle(String name, String description, Category category,
-								 Price price, double weight, Date restockDate,
-								 String previewImage, List<String> imageIds,
-								 List<Option> options, List<Property> properties,
-								 String referenceUri, String referenceCode, Supplier wholesaler,
-								 Price supplierPrice) {
-
+	public Article createArticle(ArticleEditor editor) {
 		final HibernateArticle article = new HibernateArticle();
-		updateArticle(article, name, description, category, price, weight,
-				restockDate, previewImage, imageIds, options, properties,
-				referenceUri, referenceCode, wholesaler, supplierPrice);
+		updateArticle(article, editor);
 
 
 		final Session session = sessionFactory.getCurrentSession();
@@ -102,22 +94,14 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Article updateArticle(Integer id, String name, String description, Category category,
-								 Price price, double weight, Date restockDate,
-								 String previewImage, List<String> imageIds,
-								 List<Option> options, List<Property> properties,
-								 String referenceUri, String referenceCode, Supplier wholesaler,
-								 Price supplierPrice) {
+	public Article updateArticle(Integer id, ArticleEditor editor) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
 		if (article == null) {
 			return null;
 		}
-
-		updateArticle(article, name, description, category, price, weight,
-				restockDate, previewImage, imageIds, options, properties,
-				referenceUri, referenceCode, wholesaler, supplierPrice);
+		updateArticle(article, editor);
 		session.update(article);
 
 		for (ArticleListener listener : listeners) {
@@ -142,47 +126,33 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 		return article;
 	}
 
-	private void updateArticle(HibernateArticle article,
-							   String name, String description, Category category,
-							   Price price, double weight, Date restockDate,
-							   String previewImage, List<String> imageIds,
-							   List<Option> options, List<Property> properties,
-							   String referenceUri, String referenceCode, Supplier wholesaler,
-							   Price supplierPrice) {
-		article.setName(name);
-		article.setDescription(description);
-		article.setCategory(category);
-		article.setPrice(price);
-		article.setWeight(weight);
-		article.setRestockDate(restockDate);
-		article.setPreviewImageId(previewImage);
-		article.setImageIds(imageIds);
-		article.setOptions(options);
-		article.setProperties(properties);
+	private void updateArticle(HibernateArticle article, ArticleEditor editor) {
+		article.setName(editor.getName());
+		article.setDescription(editor.getDescription());
+		article.setCategory(editor.getCategoryId());
+		article.setPrice(editor.getPrice());
+		article.setWeight(editor.getWeight());
+		article.setRestockInfo(editor.getStoreAvailable(), editor.getRestockDate());
+		article.setPreviewImageId(editor.getPreviewImage());
+		article.setImageIds(editor.getImageIds());
+		article.setOptions(editor.getOptions());
+		article.setProperties(editor.getProperties());
+		article.setState(editor.getArticleState());
+		article.setCommentary(editor.getCommentary());
 
 		final HibernateSupplierInfo supplierInfo = article.getSupplierInfo();
-		supplierInfo.setReferenceUri(referenceUri);
-		supplierInfo.setReferenceCode(referenceCode);
-		supplierInfo.setWholesaler(wholesaler);
-		supplierInfo.setPrice(supplierPrice);
+		supplierInfo.setReferenceUri(editor.getReferenceUri());
+		supplierInfo.setReferenceCode(editor.getReferenceCode());
+		supplierInfo.setWholesaler(editor.getWholesaler());
+		supplierInfo.setPrice(editor.getSupplierPrice());
 	}
 
 	@Override
 	public void updateSold(Integer id, int quantity) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.soldCount=a.soldCount+:quantity where a.id=:id");
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.stockInfo.sold=a.stockInfo.sold+:quantity where a.id=:id");
 		query.setParameter("id", id);
 		query.setParameter("quantity", quantity);
-		query.executeUpdate();
-	}
-
-	@Override
-	public void updateState(Integer id, boolean active) {
-		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.active=:active, a.registrationDate=:registrationDate where a.id=:id");
-		query.setParameter("id", id);
-		query.setParameter("active", active);
-		query.setParameter("registrationDate", new Date());
 		query.executeUpdate();
 	}
 
@@ -238,8 +208,8 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 				}
 			}
 
-			if (!context.isInactive()) {
-				criteria.add(Restrictions.eq("active", Boolean.TRUE));
+			if (context.getArticleStates() != null) {
+				criteria.add(Restrictions.in("state", context.getArticleStates()));
 			}
 
 			if (context.isArrival()) {

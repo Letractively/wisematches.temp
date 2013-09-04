@@ -10,23 +10,6 @@ public interface ArticleDescription {
 
 	String getName();
 
-	Integer getCategoryId();
-
-	boolean isActive();
-
-	/**
-	 * Returns number of sold articles.
-	 *
-	 * @return number of sold articles.
-	 */
-	int getSoldCount();
-
-	/**
-	 * Returns item weight in kg
-	 *
-	 * @return the item weight in kg
-	 */
-	double getWeight();
 
 	/**
 	 * Returns price for the article.
@@ -36,11 +19,32 @@ public interface ArticleDescription {
 	Price getPrice();
 
 	/**
-	 * Returns date when article will be available again or {@code null} if it's available right now.
+	 * Returns item weight in kg
 	 *
-	 * @return date when article will be available again or {@code null} if it's available right now.
+	 * @return the item weight in kg
 	 */
-	Date getRestockDate();
+	double getWeight();
+
+
+	/**
+	 * Returns category id for this article.
+	 *
+	 * @return the category id for this article.
+	 */
+	Integer getCategoryId();
+
+
+	/**
+	 * Returns moderator's commentary for this article. This value never must be shown for customers.
+	 *
+	 * @return the moderator's commentary for this article. This value never must be shown for customers.
+	 */
+	String getCommentary();
+
+	/**
+	 * Returns preview image id.
+	 */
+	String getPreviewImageId();
 
 	/**
 	 * Returns date when article was registered in the warehouse. Never null.
@@ -51,7 +55,16 @@ public interface ArticleDescription {
 
 
 	/**
-	 * Returns preview image id.
+	 * Returns current article state.
+	 *
+	 * @return the current article state.
 	 */
-	String getPreviewImageId();
+	ArticleState getState();
+
+	/**
+	 * Returns information about article's stock state
+	 *
+	 * @return the information about article's stock state
+	 */
+	StockInfo getStockInfo();
 }

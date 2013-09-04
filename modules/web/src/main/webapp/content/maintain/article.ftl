@@ -13,16 +13,18 @@
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.ui.widget-1.10.3.js"/>"></script>
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.fileupload-8.6.1.js"/>"></script>
 
-<div style="padding: 10px; border: 1px solid gray;">
+<div class="article-maintain" style="padding: 10px; border: 1px solid gray;">
 <form action="/maintain/article" method="post">
 
 <table style="width: 100%">
 <#if article??>
-<tr id="inactiveWarning" <#if article.active>style="display: none"</#if>>
-    <td colspan="2" align="center" style="background: #990000; font-weight: bold; color: #ffffff">
-        Внимание! Товар выключен!
-    </td>
-</tr>
+    <#if !article.state.active>
+    <tr id="inactiveWarning">
+        <td colspan="2" align="center" class="${article.state.name()?lower_case}">
+            Внимание! Товар не в активном состоянии: ${article.state.name()}
+        </td>
+    </tr>
+    </#if>
 <tr>
     <td valign="top"><label for="category">Артикул: </label></td>
     <td>
@@ -45,6 +47,14 @@
     <td>
     <@bg.ui.field path="form.name">
         <textarea rows="3" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+    </@bg.ui.field>
+    </td>
+</tr>
+<tr>
+    <td valign="top"><label for="commentary">Коментарий: </label></td>
+    <td>
+    <@bg.ui.field path="form.commentary">
+        <textarea rows="2" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
     </@bg.ui.field>
     </td>
 </tr>
@@ -74,6 +84,19 @@
                 target="_blank">открыть в новом окне</a>)</#if>
     </@bg.ui.input>
     </td>
+</tr>
+<tr>
+    <td colspan="2">
+        <hr>
+    </td>
+</tr>
+<tr>
+    <td><label for="restockDate">Дата поставки: </label></td>
+    <td><@bg.ui.input path="form.restockDate"/></td>
+</tr>
+<tr>
+    <td><label for="storeAvailable">Количество на складе: </label></td>
+    <td><@bg.ui.input path="form.storeAvailable"/></td>
 </tr>
 
 <tr>
@@ -177,8 +200,62 @@
     </td>
 </tr>
 <tr>
-    <td><label for="restockDate">Дата поставки: </label></td>
-    <td><@bg.ui.input path="form.restockDate"/></td>
+    <td valign="top"><label for="viewImages">Состоит в группе: </label></td>
+    <td>
+        <table id="groupsTable">
+            <#if groups??>
+                <#list groups as g>
+                    <tr class="group">
+                        <td>
+                            <input type="hidden" name="participatedGroups" value="${g.id}">
+                            <a href="/maintain/group?id=${g.id}" target="_blank">#${g.id} ${g.name}</a>
+                        </td>
+                        <td>
+                            <button class="remove" type="button">Удалить</button>
+                        </td>
+                    </tr>
+                </#list>
+            </#if>
+            <tr id="groupsControls">
+                <td></td>
+                <td>
+                    <button class="add" type="button">Добавить в группу</button>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+<tr>
+    <td valign="top"><label for="viewImages">Связана с группами: </label></td>
+    <td>
+        <table id="relationshipsTable">
+            <#if relationships??>
+                <#list relationships as r>
+                    <tr class="relationship">
+                        <td>
+                            <input name="relationshipTypes" type="hidden" value="${r.type.name()}">
+                            <@message code="relationship.${r.type.name()?lower_case}.label"/>
+                        </td>
+                        <td>
+                            <input name="relationshipGroups" type="hidden" value="${r.group.id}">
+                            <a href="/maintain/group?id=${r.group.id}"
+                               target="_blank">#${r.group.id} ${r.group.name}</a>
+                        </td>
+                        <td>
+                            <button class="remove" type="button">Удалить</button>
+                        </td>
+                    </tr>
+                </#list>
+            </#if>
+            <tr id="relationshipsControls">
+                <td></td>
+                <td></td>
+                <td>
+                    <button class="add" type="button">Связать с группой</button>
+                </td>
+            </tr>
+        </table>
+    </td>
 </tr>
 <tr>
     <td colspan="2">
@@ -217,75 +294,6 @@
         </div>
     </td>
 </tr>
-<tr>
-    <td colspan="2">
-        <hr>
-    </td>
-</tr>
-
-<tr>
-    <td valign="top"><label for="viewImages">Состоит в группе: </label></td>
-    <td>
-        <table id="groupsTable">
-            <#if groups??>
-                <#list groups as g>
-                    <tr class="group">
-                        <td>
-                            <input type="hidden" name="participatedGroups" value="${g.id}">
-                            <a href="/maintain/group?id=${g.id}" target="_blank">#${g.id} ${g.name}</a>
-                        </td>
-                        <td>
-                            <button class="remove" type="button">Удалить</button>
-                        </td>
-                    </tr>
-                </#list>
-            </#if>
-            <tr id="groupsControls">
-                <td></td>
-                <td>
-                    <button class="add" type="button">Добавить в группу</button>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
-<tr>
-    <td colspan="2">
-        &nbsp;
-    </td>
-</tr>
-<tr>
-    <td valign="top"><label for="viewImages">Связана с группами: </label></td>
-    <td>
-        <table id="relationshipsTable">
-            <#if relationships??>
-                <#list relationships as r>
-                    <tr class="relationship">
-                        <td>
-                            <input name="relationshipTypes" type="hidden" value="${r.type.name()}">
-                            <@message code="relationship.${r.type.name()?lower_case}.label"/>
-                        </td>
-                        <td>
-                            <input name="relationshipGroups" type="hidden" value="${r.group.id}">
-                            <a href="/maintain/group?id=${r.group.id}"
-                               target="_blank">#${r.group.id} ${r.group.name}</a>
-                        </td>
-                        <td>
-                            <button class="remove" type="button">Удалить</button>
-                        </td>
-                    </tr>
-                </#list>
-            </#if>
-            <tr id="relationshipsControls">
-                <td></td>
-                <td></td>
-                <td>
-                    <button class="add" type="button">Связать с группой</button>
-                </td>
-            </tr>
-        </table>
-    </td>
-</tr>
 </#if>
 
 <tr>
@@ -308,17 +316,19 @@
 </tr>
 
 <tr>
-    <td></td>
-    <td>
+    <td colspan="2">
+        <label for="articleState">Состояние: </label>
+    <@bg.ui.bind "form.articleState"/>
+        <select id="articleState" name="${bg.ui.status.expression}">
+        <#list ArticleState.values() as s>
+            <option value="${s.name()}" <#if bg.ui.actualValue=s>selected="selected"</#if>>${s.name()}</option>
+        </#list>
+        </select>
+
     <#if articleId?has_content>
         <button id="add" type="submit">Изменить</button>
     <#else>
         <button id="add" type="submit">Создать</button>
-    </#if>
-
-    <#if article??>
-        <button id="active" type="button" value="${(!article.active)?string}"><#if article.active>Отключить<#else>
-            Включить</#if></button>
     </#if>
     </td>
 </tr>

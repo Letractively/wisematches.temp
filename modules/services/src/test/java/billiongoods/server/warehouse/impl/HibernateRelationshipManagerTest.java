@@ -41,8 +41,18 @@ public class HibernateRelationshipManagerTest {
 
 		final Group group = relationshipManager.createGroup("Mock group");
 
-		final Article a1 = articleManager.createArticle("Mock art1", "desc", category, new Price(12.d), 1.2, null, null, null, null, null, null, null, null, new Price(124.d));
-		final Article a2 = articleManager.createArticle("Mock art2", "desc", category, new Price(12.d), 1.2, null, null, null, null, null, null, null, null, new Price(124.d));
+		final ArticleEditor editor = new ArticleEditor();
+		editor.setDescription("desc");
+		editor.setCategoryId(category.getId());
+		editor.setPrice(new Price(12.d));
+		editor.setWeight(1.2);
+		editor.setSupplierPrice(new Price(124.d));
+
+		editor.setName("Mock art1");
+		final Article a1 = articleManager.createArticle(editor);
+
+		editor.setName("Mock art2");
+		final Article a2 = articleManager.createArticle(editor);
 
 		relationshipManager.addGroupItem(group.getId(), a1.getId());
 		relationshipManager.addGroupItem(group.getId(), a2.getId());

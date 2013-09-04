@@ -2,10 +2,7 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.Range;
-import billiongoods.server.warehouse.ArticleContext;
-import billiongoods.server.warehouse.ArticleDescription;
-import billiongoods.server.warehouse.ArticleManager;
-import billiongoods.server.warehouse.Category;
+import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.warehouse.form.ItemSortType;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -67,7 +65,9 @@ public class CategoryController extends AbstractController {
 		}
 
 		final boolean inactive = tableForm.isInactive() || hasRole("moderator");
-		final ArticleContext context = new ArticleContext(category, true, tableForm.getQuery(), arrivals, inactive);
+		final EnumSet<ArticleState> articleStates = inactive ? ArticleContext.NOT_REMOVED : ArticleContext.VISIBLE;
+
+		final ArticleContext context = new ArticleContext(category, true, tableForm.getQuery(), arrivals, articleStates);
 		tableForm.validateForm(articleManager.getTotalCount(context));
 
 		final Range range = tableForm.createRange();

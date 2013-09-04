@@ -1,3 +1,5 @@
+- Remove external formatting during merge (remove all <span> elements). Ability to clean exist formatting.
+
 ============= CURRENT ====================
 - Show hi resolution images by click in view
 - Hide add to basket if it's not possible to buy
@@ -17,14 +19,17 @@
 
 - Your recent history
 - Our recomendations view on the left of main page: L959 & V911 & v912
-- Ability to show quantity and sold out message
 - Ability to track state of a SKU
-- Ability to add system comments to an article (with a reminder about the comment?)
 - Add items meta desc
 - Own ads on main page
 - Global search ability
 
 ============= DONE ====================
+04.09
++ Ability to show article without description. Add more statuses.
++ Ability to show quantity and sold out message
++ Ability to add system comments to an article
+
 03.09
 + Price updating doesn't work if URL start with /
 + Redesign catalog for small number of articles
@@ -34,8 +39,8 @@
 02.09
 + 07:42:29.550 [http-bio-8080-exec-18] ERROR billiongoods.web.Servlet - Page can't                                                                                         be opened: /warehouse/article/4232?null
 java.lang.NullPointerException: null
-        at billiongoods.server.warehouse.impl.HibernateArticle.initialize(HibernateArticle.java:128) ~[services-1.3.0-SNAPSHOT.jar:na]                                                                                        ateArticle.java:128) ~[services-1.3.0-SNAPSHOT.jar:na]
-        at billiongoods.server.warehouse.impl.HibernateArticleManager.getArticle(HibernateArticleManager.java:52) ~[services-1.3.0-SNAPSHOT.jar:na]                                                                                        (HibernateArticleManager.java:52) ~[services-1.3.0-SNAPSHOT.jar:na]
+        at billiongoods.server.warehouse.impl.HibernateArticle.initialize(HibernateArticle.java:128) ~[services-1.5.0-SNAPSHOT.jar:na]                                                                                        ateArticle.java:128) ~[services-1.5.0-SNAPSHOT.jar:na]
+        at billiongoods.server.warehouse.impl.HibernateArticleManager.getArticle(HibernateArticleManager.java:52) ~[services-1.5.0-SNAPSHOT.jar:na]                                                                                        (HibernateArticleManager.java:52) ~[services-1.5.0-SNAPSHOT.jar:na]
 
 
 30.08

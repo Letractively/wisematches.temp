@@ -2,9 +2,6 @@ package billiongoods.server.warehouse;
 
 import billiongoods.core.search.SearchManager;
 
-import java.util.Date;
-import java.util.List;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -20,19 +17,14 @@ public interface ArticleManager extends SearchManager<ArticleDescription, Articl
 	ArticleDescription getDescription(Integer id);
 
 
-	Article createArticle(String name, String description, Category category, Price price, double weight, Date restockDate,
-						  String previewImage, List<String> imageIds, List<Option> options, List<Property> properties,
-						  String referenceUri, String referenceCode, Supplier wholesaler, Price supplierPrice);
+	Article createArticle(ArticleEditor editor);
 
-	Article updateArticle(Integer id, String name, String description, Category category, Price price, double weight, Date restockDate,
-						  String previewImage, List<String> imageIds, List<Option> options, List<Property> properties,
-						  String referenceUri, String referenceCode, Supplier wholesaler, Price supplierPrice);
+	Article updateArticle(Integer id, ArticleEditor editor);
 
 	Article removeArticle(Integer id);
 
-	void updateSold(Integer id, int quantity);
 
-	void updateState(Integer id, boolean active);
+	void updateSold(Integer id, int quantity);
 
 	void updatePrice(Integer id, Price price, Price supplierPrice);
 }

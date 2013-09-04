@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,8 +67,7 @@ public class ArticleMaintainController extends AbstractController {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "/import", method = RequestMethod.POST)
-	public String importArticlesAction(Model model, @ModelAttribute("form") ImportArticlesForm form,
-									   BindingResult result) {
+	public String importArticlesAction(Model model, @ModelAttribute("form") ImportArticlesForm form) {
 		try {
 			List<Property> properties = null;
 			final Integer[] propertyIds = form.getPropertyIds();
@@ -128,6 +126,13 @@ public class ArticleMaintainController extends AbstractController {
 			form.setPrice(article.getPrice().getAmount());
 			form.setPrimordialPrice(article.getPrice().getPrimordialAmount());
 			form.setWeight(article.getWeight());
+			form.setCommentary(article.getCommentary());
+			form.setArticleState(article.getState());
+			form.setStoreAvailable(article.getStockInfo().getRest());
+
+			if (article.getStockInfo().getRestockDate() != null) {
+				form.setRestockDate(SIMPLE_DATE_FORMAT.format(article.getStockInfo().getRestockDate()));
+			}
 
 			final SupplierInfo supplierInfo = article.getSupplierInfo();
 			form.setSupplierPrice(supplierInfo.getPrice().getAmount());
@@ -287,17 +292,30 @@ public class ArticleMaintainController extends AbstractController {
 
 		try {
 			if (!errors.hasErrors()) {
+				final ArticleEditor editor = new ArticleEditor();
+				editor.setName(form.getName().trim());
+				editor.setDescription(form.getDescription().trim());
+				editor.setCategoryId(category.getId());
+				editor.setPrice(form.createPrice());
+				editor.setWeight(form.getWeight());
+				editor.setRestockDate(restockDate);
+				editor.setStoreAvailable(form.getStoreAvailable());
+				editor.setPreviewImage(form.getPreviewImage());
+				editor.setImageIds(form.getEnabledImages());
+				editor.setOptions(options);
+				editor.setProperties(properties);
+				editor.setReferenceUri(form.getSupplierReferenceId());
+				editor.setReferenceCode(form.getSupplierReferenceCode());
+				editor.setWholesaler(Supplier.BANGGOOD);
+				editor.setSupplierPrice(form.createSupplierPrice());
+				editor.setArticleState(form.getArticleState());
+				editor.setCommentary(form.getCommentary());
+
 				final Article article;
 				if (articleId == null) {
-					article = articleManager.createArticle(form.getName().trim(), form.getDescription().trim(), category,
-							form.createPrice(), form.getWeight(), restockDate,
-							form.getPreviewImage(), form.getEnabledImages(), options, properties,
-							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.createSupplierPrice());
+					article = articleManager.createArticle(editor);
 				} else {
-					article = articleManager.updateArticle(articleId, form.getName().trim(), form.getDescription().trim(), category,
-							form.createPrice(), form.getWeight(), restockDate,
-							form.getPreviewImage(), form.getEnabledImages(), options, properties,
-							form.getSupplierReferenceId(), form.getSupplierReferenceCode(), Supplier.BANGGOOD, form.createSupplierPrice());
+					article = articleManager.updateArticle(articleId, editor);
 				}
 				return "redirect:/maintain/article?id=" + article.getId();
 			}
@@ -339,6 +357,7 @@ public class ArticleMaintainController extends AbstractController {
 
 		return responseFactory.success(res);
 	}
+/*
 
 	@RequestMapping(value = "/activate.ajax", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -346,6 +365,7 @@ public class ArticleMaintainController extends AbstractController {
 		articleManager.updateState(id, active);
 		return responseFactory.success();
 	}
+*/
 
 	private Map<Attribute, String> createAttributesMap(Category category) {
 		final Map<Attribute, String> values = new HashMap<>();
