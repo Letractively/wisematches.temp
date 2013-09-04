@@ -30,8 +30,19 @@ public class BanggoodArticleImporterTest {
 		expect(article.getId()).andReturn(13);
 		replay(article);
 
+		final ArticleEditor editor = new ArticleEditor();
+		editor.setName("WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2");
+		editor.setDescription("<br /><span style=\"font-size:12px;\"><span style=\"font-family: arial-helvetica-sans-serif;\"><strong>WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2</strong><br /><br /><strong>Description:</strong><br /><br />Brand: WLtoys<br />Item Name: Main Blade<br />NO.: V911-1-2<br />Usage:For WLtoys V911-1 RC Helicopter<br /><br /><strong>Package Included:</strong><br />1 x Main Blade</span></span>");
+		editor.setCategoryId(13);
+		editor.setPrice(new Price(1.84d, null));
+		editor.setWeight(0.05d);
+		editor.setReferenceUri("82283");
+		editor.setReferenceCode("SKU088161");
+		editor.setWholesaler(Supplier.BANGGOOD);
+		editor.setSupplierPrice(new Price(1.28d, null));
+
 		final ArticleManager articleManager = createMock(ArticleManager.class);
-		expect(articleManager.createArticle("WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2", "<br /><span style=\"font-size:12px;\"><span style=\"font-family: arial-helvetica-sans-serif;\"><strong>WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2</strong><br /><br /><strong>Description:</strong><br /><br />Brand: WLtoys<br />Item Name: Main Blade<br />NO.: V911-1-2<br />Usage:For WLtoys V911-1 RC Helicopter<br /><br /><strong>Package Included:</strong><br />1 x Main Blade</span></span>", category, new Price(1.84d, null), 0.05d, null, null, null, null, null, "82283", "SKU088161", Supplier.BANGGOOD, new Price(1.28d, null))).andReturn(article);
+		expect(articleManager.createArticle(editor)).andReturn(article);
 		replay(articleManager);
 
 		final BanggoodArticleImporter importer = new BanggoodArticleImporter();

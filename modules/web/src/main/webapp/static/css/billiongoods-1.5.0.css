@@ -698,106 +698,110 @@ button.bg-ui-button.selected {
     display: inline-block;
 }
 
-.article_layout, .article_layout span, .article_layout div, .article_layout label {
+.article, .article span, .article div, .article label {
     font-size: 14px;
 }
 
-.article_layout .view {
+.article .view {
     width: 276px;
 }
 
-.article_layout .preview {
+.article .preview {
     position: relative;
     margin-bottom: 5px;
     border: 2px solid #ebebeb;
 }
 
-.article_layout .thumb div {
+.article .thumb div {
     display: inline;
 }
 
-.article_layout .thumb img {
+.article .thumb img {
     cursor: pointer;
     border: 1px solid #ebebeb;
 }
 
-.article_layout .thumb img:hover {
+.article .thumb img:hover {
     border-color: #d67632 !important;
 }
 
-.article_layout .thumb img.selected {
+.article .thumb img.selected {
     border-color: #FF5A00;
 }
 
-.article_layout .preview img {
+.article .preview img {
     width: 272px;
     height: 272px;
 }
 
-.article_layout .info {
+.article .info {
     padding-left: 5px;
 }
 
-.article_layout .info > div {
+.article .info > div {
     padding-bottom: 15px;
 }
 
-.article_layout .name {
+.article .name {
     color: #303030;
     font-size: 15px;
     font-weight: bold;
 }
 
-.article_layout .sku {
+.article.disabled .name {
+    background: #ffb5b0;
+}
+
+.article .sku {
     padding-right: 70px;
 }
 
-.article_layout .stock {
+.article .stock {
     padding-top: 10px;
     border-top: 1px dashed #ebebeb;
 }
 
-.article_layout .props {
+.article .props {
     padding-top: 10px;
 }
 
-.article_layout .props td {
+.article .props td {
     border-bottom: 1px dashed #ebebeb;
 }
 
-.article_layout .props td:first-child {
+.article .props td:first-child {
     white-space: nowrap;
 }
 
-.article_layout .props td:last-child {
+.article .props td:last-child {
     width: 100%;
     padding-left: 20px;
 }
 
-.article_layout .shipment {
+.article .shipment {
     float: right;
     color: green;
 }
 
-.article_layout .panel {
+.article .panel {
     padding: 0 !important;
     background: #f3f3f3;
     border: 1px solid #cccccc;
 }
 
-.article_layout .panel > div {
+.article .panel > div {
     padding: 6px;
 }
 
-.article_layout .ops, .article_layout .action {
+.article .ops, .article .action {
     border-top: 1px dashed #cccccc;
 }
 
-.article_layout .stock div, .article_layout .ops div, .article_layout .action div {
+.article .stock div, .article .ops div, .article .action div {
     display: inline;
 }
 
-.article_layout .option {
+.article .option {
     padding-left: 5px;
 }
 
@@ -827,7 +831,7 @@ button.bg-ui-button.selected {
     font-weight: normal;
 }
 
-.article_layout .quantity {
+.article .quantity {
     padding-right: 30px;
 }
 
@@ -859,12 +863,12 @@ button.bg-ui-button.selected {
     background-color: #f3f3f3;
 }
 
-.article_layout .ops input[type=radio] {
+.article .ops input[type=radio] {
     display: none;
     margin: 10px;
 }
 
-.article_layout .ops input[type=radio] + label {
+.article .ops input[type=radio] + label {
     cursor: pointer;
     display: inline-block;
     margin: -2px;
@@ -873,21 +877,21 @@ button.bg-ui-button.selected {
     background-color: #e7e7e7;
 }
 
-.article_layout .ops input[type=radio]:checked + label {
+.article .ops input[type=radio]:checked + label {
     border-color: #d67632;
 }
 
-.article_layout .description, .article_layout .accessories {
+.article .description, .article .accessories {
     margin-top: 5px;
 }
 
-.article_layout .accessories td {
+.article .accessories td {
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px dashed #ebebeb;
 }
 
-.article-item.inactive {
+.article-item.disabled {
     background: #ffb5b0;
 }
 
@@ -910,7 +914,7 @@ button.bg-ui-button.selected {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.article_layout .discount {
+.article .discount {
     width: 75px;
     height: 75px;
     line-height: 75px;
@@ -937,11 +941,11 @@ button.bg-ui-button.selected {
     height: 150px;
 }
 
-.article_layout .article-item .name {
+.article .article-item .name {
     font-weight: normal;
 }
 
-.article_layout .article-item .price span {
+.article .article-item .price span {
     font-size: 13px;
 }
 
@@ -1387,33 +1391,33 @@ button.bg-ui-button.selected {
     background: #d67632;
 }
 
-.article_layout .related .cnt {
+.article .related .cnt {
     width: 968px;
 }
 
-.article_layout .related .sly-pages, .article_layout .accessories .sly-pages {
+.article .related .sly-pages, .article .accessories .sly-pages {
     float: right;
     margin: 3px 0 0;
 }
 
-.article_layout .related .sly-frame li {
+.article .related .sly-frame li {
     width: 170px;
 }
 
-.article_layout .related .article-item {
+.article .related .article-item {
     margin-left: auto;
     margin-right: auto;
 }
 
-.article_layout .related .sly-scrollbar {
+.article .related .sly-scrollbar {
     margin-top: 6px;
 }
 
-.article_layout .accessories {
+.article .accessories {
     position: relative;
 }
 
-.article_layout .accessories .sly-frame, .article_layout .accessories .sly-scrollbar {
+.article .accessories .sly-frame, .article .accessories .sly-scrollbar {
     height: 225px;
 }
 
@@ -1421,4 +1425,17 @@ button.bg-ui-button.selected {
     float: left;
     width: 75px;
     margin-right: 10px;
+}
+
+.article-maintain #inactiveWarning .disabled {
+    background-color: #870000;
+}
+
+.article-maintain #inactiveWarning .promoted {
+    background-color: #999024;
+}
+
+.article-maintain #inactiveWarning .discontinued, .article-maintain #inactiveWarning .removed {
+    border: 2px solid #000000;
+    background-color: #ff3800;
 }

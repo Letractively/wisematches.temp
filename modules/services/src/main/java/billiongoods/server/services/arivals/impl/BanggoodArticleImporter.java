@@ -26,245 +26,255 @@ import java.util.*;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class BanggoodArticleImporter implements ArticleImporter {
-    private PriceLoader priceLoader;
-    private ImageManager imageManager;
-    private ArticleManager articleManager;
-    private ExchangeManager exchangeManager;
-    private RelationshipManager relationshipManager;
+	private PriceLoader priceLoader;
+	private ImageManager imageManager;
+	private ArticleManager articleManager;
+	private ExchangeManager exchangeManager;
+	private RelationshipManager relationshipManager;
 
-    private AsyncTaskExecutor taskExecutor;
-    private PlatformTransactionManager transactionManager;
+	private AsyncTaskExecutor taskExecutor;
+	private PlatformTransactionManager transactionManager;
 
-    private DefaultImportingSummary importingSummary = null;
+	private DefaultImportingSummary importingSummary = null;
 
-    private static final DefaultTransactionAttribute NEW_TRANSACTION_DEFINITION = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+	private static final DefaultTransactionAttribute NEW_TRANSACTION_DEFINITION = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.BanggoodArticleImporter");
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.BanggoodArticleImporter");
 
-    public BanggoodArticleImporter() {
-    }
+	public BanggoodArticleImporter() {
+	}
 
-    @Override
-    public synchronized ImportingSummary getImportingSummary() {
-        return importingSummary;
-    }
+	@Override
+	public synchronized ImportingSummary getImportingSummary() {
+		return importingSummary;
+	}
 
-    public synchronized ImportingSummary importArticles(Category category,
-                                                        List<Property> properties, List<Integer> groups,
-                                                        InputStream descStream, InputStream imagesStream,
-                                                        final boolean validatePrice) throws IOException {
-        if (importingSummary == null) {
-            final List<SuppliedArticle> articles = parseArticles(descStream);
-            final Map<String, Set<String>> images = parseImages(imagesStream);
+	public synchronized ImportingSummary importArticles(Category category,
+														List<Property> properties, List<Integer> groups,
+														InputStream descStream, InputStream imagesStream,
+														final boolean validatePrice) throws IOException {
+		if (importingSummary == null) {
+			final List<SuppliedArticle> articles = parseArticles(descStream);
+			final Map<String, Set<String>> images = parseImages(imagesStream);
 
-            importingSummary = new DefaultImportingSummary(category, properties, groups, articles.size());
-            taskExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    importArticles(articles, images, validatePrice);
-                }
-            });
-        }
-        return importingSummary;
-    }
+			importingSummary = new DefaultImportingSummary(category, properties, groups, articles.size());
+			taskExecutor.execute(new Runnable() {
+				@Override
+				public void run() {
+					importArticles(articles, images, validatePrice);
+				}
+			});
+		}
+		return importingSummary;
+	}
 
-    private void importArticles(List<SuppliedArticle> articles, Map<String, Set<String>> images, boolean validatePrice) {
-        try {
-            log.info("Start articles importing: {}", articles.size());
+	private void importArticles(List<SuppliedArticle> articles, Map<String, Set<String>> images, boolean validatePrice) {
+		try {
+			log.info("Start articles importing: {}", articles.size());
 
-            priceLoader.initialize();
+			priceLoader.initialize();
 
-            int index = 0;
-            int totalCount = articles.size();
-            for (SuppliedArticle article : articles) {
-                log.info("Importing supplied [{}] of [{}]: {} from {}", index++, totalCount, article.sku, article.uri);
-                importArticle(article, images.get(article.sku), validatePrice);
-            }
-            log.info("All articles imported");
-        } finally {
-            synchronized (this) {
-                importingSummary = null;
-            }
-        }
-    }
+			int index = 0;
+			int totalCount = articles.size();
+			for (SuppliedArticle article : articles) {
+				log.info("Importing supplied [{}] of [{}]: {} from {}", index++, totalCount, article.sku, article.uri);
+				importArticle(article, images.get(article.sku), validatePrice);
+			}
+			log.info("All articles imported");
+		} finally {
+			synchronized (this) {
+				importingSummary = null;
+			}
+		}
+	}
 
-    private void importArticle(SuppliedArticle supplied, Set<String> images, boolean validatePrice) {
-        final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
-        try {
-            final Article article1 = articleManager.getArticle(supplied.sku);
-            if (article1 == null) {
-                Price supplierPrice = supplied.price;
-                if (validatePrice) {
-                    try {
-                        supplierPrice = priceLoader.loadPrice(supplied);
-                        log.info("Price has been loaded: {}", supplierPrice);
-                    } catch (PriceLoadingException ex) {
-                        log.info("Price can't be loaded", ex);
-                    }
-                }
-                final Price price = exchangeManager.getMarkupCalculator().calculateMarkupPrice(supplierPrice);
+	private void importArticle(SuppliedArticle supplied, Set<String> images, boolean validatePrice) {
+		final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
+		try {
+			final Article article1 = articleManager.getArticle(supplied.sku);
+			if (article1 == null) {
+				Price supplierPrice = supplied.price;
+				if (validatePrice) {
+					try {
+						supplierPrice = priceLoader.loadPrice(supplied);
+						log.info("Price has been loaded: {}", supplierPrice);
+					} catch (PriceLoadingException ex) {
+						log.info("Price can't be loaded", ex);
+					}
+				}
+				final Price price = exchangeManager.getMarkupCalculator().calculateMarkupPrice(supplierPrice);
 
-                final Category category = importingSummary.getImportingCategory();
-                final List<Property> properties = importingSummary.getProperties();
+				final Category category = importingSummary.getImportingCategory();
+				final List<Property> properties = importingSummary.getProperties();
 
-                final Article article = articleManager.createArticle(supplied.name, supplied.desc, category, price,
-                        supplied.weight, null, null, null, null, properties, supplied.uri, supplied.sku, Supplier.BANGGOOD, supplierPrice);
-                log.info("Article imported: {}", article.getId());
+				final ArticleEditor editor = new ArticleEditor();
+				editor.setName(supplied.name);
+				editor.setDescription(supplied.desc);
+				editor.setCategoryId(category.getId());
+				editor.setPrice(price);
+				editor.setWeight(supplied.weight);
+				editor.setProperties(properties);
+				editor.setReferenceUri(supplied.uri);
+				editor.setReferenceCode(supplied.sku);
+				editor.setWholesaler(Supplier.BANGGOOD);
+				editor.setSupplierPrice(supplierPrice);
+				editor.setArticleState(ArticleState.DISABLED);
 
-                if (images != null) {
-                    int index = 1;
-                    final List<String> codes = new ArrayList<>(images.size());
-                    for (String url : images) {
-                        final String code = String.valueOf(index++);
-                        log.info("Importing [{} of {}] image {} from {}", index - 1, images.size(), code, url);
-                        try (InputStream inputStream = new URL(url).openStream()) {
-                            imageManager.addImage(article, code, inputStream);
-                            codes.add(code);
-                            log.info("Article associated with image: {}", code);
-                        } catch (Exception ex) {
-                            log.error("SKU image can't be imported", ex);
-                        }
-                    }
+				final Article article = articleManager.createArticle(editor);
+				log.info("Article imported: {}", article.getId());
 
-                    if (!codes.isEmpty()) {
-                        articleManager.updateArticle(article.getId(),
-                                supplied.name, supplied.desc, category, price,
-                                supplied.weight, null, codes.iterator().next(), codes, null,
-                                properties, supplied.uri, supplied.sku, Supplier.BANGGOOD, supplierPrice);
-                    }
-                    log.info("Article associated with images: {}", codes);
-                }
+				if (images != null) {
+					int index = 1;
+					final List<String> codes = new ArrayList<>(images.size());
+					for (String url : images) {
+						final String code = String.valueOf(index++);
+						log.info("Importing [{} of {}] image {} from {}", index - 1, images.size(), code, url);
+						try (InputStream inputStream = new URL(url).openStream()) {
+							imageManager.addImage(article, code, inputStream);
+							codes.add(code);
+							log.info("Article associated with image: {}", code);
+						} catch (Exception ex) {
+							log.error("SKU image can't be imported", ex);
+						}
+					}
 
-                final List<Integer> groups = importingSummary.getGroups();
-                if (groups != null) {
-                    for (Integer group : groups) {
-                        relationshipManager.addGroupItem(group, article.getId());
-                    }
-                    log.info("Article associated with groups: {}", groups);
-                }
-                importingSummary.incrementImported();
-            } else {
-                importingSummary.incrementSkipped();
-            }
-            transactionManager.commit(transaction);
-        } catch (Exception ex) {
-            importingSummary.incrementBroken();
-            transactionManager.rollback(transaction);
-        }
-    }
+					if (!codes.isEmpty()) {
+						editor.setImageIds(codes);
+						editor.setPreviewImage(codes.iterator().next());
+					}
+					log.info("Article associated with images: {}", codes);
+				}
 
-    private List<SuppliedArticle> parseArticles(InputStream stream) throws IOException {
-        final List<SuppliedArticle> res = new ArrayList<>();
+				final List<Integer> groups = importingSummary.getGroups();
+				if (groups != null) {
+					for (Integer group : groups) {
+						relationshipManager.addGroupItem(group, article.getId());
+					}
+					log.info("Article associated with groups: {}", groups);
+				}
+				importingSummary.incrementImported();
+			} else {
+				importingSummary.incrementSkipped();
+			}
+			transactionManager.commit(transaction);
+		} catch (Exception ex) {
+			importingSummary.incrementBroken();
+			transactionManager.rollback(transaction);
+		}
+	}
 
-        final CSVReader reader = new CSVReader(new InputStreamReader(stream));
-        String[] nextLine = reader.readNext(); // ignore header
-        while ((nextLine = reader.readNext()) != null) {
-            final String sku = nextLine[0];
-            final String name = nextLine[1];
-            final double price = Double.parseDouble(nextLine[3]);
-            final double weight = Double.parseDouble(nextLine[4]);
-            final String desc = nextLine[5];
-            final URL url = new URL(nextLine[6]);
-            final String uri = url.getFile();
-            res.add(new SuppliedArticle(sku, url, uri, name, desc, price, weight));
-        }
-        return res;
-    }
+	private List<SuppliedArticle> parseArticles(InputStream stream) throws IOException {
+		final List<SuppliedArticle> res = new ArrayList<>();
 
-    private Map<String, Set<String>> parseImages(InputStream stream) throws IOException {
-        final Map<String, Set<String>> res = new HashMap<>();
+		final CSVReader reader = new CSVReader(new InputStreamReader(stream));
+		String[] nextLine = reader.readNext(); // ignore header
+		while ((nextLine = reader.readNext()) != null) {
+			final String sku = nextLine[0];
+			final String name = nextLine[1];
+			final double price = Double.parseDouble(nextLine[3]);
+			final double weight = Double.parseDouble(nextLine[4]);
+			final String desc = nextLine[5];
+			final URL url = new URL(nextLine[6]);
+			final String uri = url.getFile();
+			res.add(new SuppliedArticle(sku, url, uri, name, desc, price, weight));
+		}
+		return res;
+	}
 
-        final CSVReader reader = new CSVReader(new InputStreamReader(stream));
-        String[] nextLine = reader.readNext(); // ignore header
-        while ((nextLine = reader.readNext()) != null) {
-            final String sku = nextLine[0];
-            final String link = nextLine[1];
+	private Map<String, Set<String>> parseImages(InputStream stream) throws IOException {
+		final Map<String, Set<String>> res = new HashMap<>();
 
-            Set<String> strings = res.get(sku);
-            if (strings == null) {
-                strings = new HashSet<>();
-                res.put(sku, strings);
-            }
-            strings.add(link);
-        }
-        return res;
-    }
+		final CSVReader reader = new CSVReader(new InputStreamReader(stream));
+		String[] nextLine = reader.readNext(); // ignore header
+		while ((nextLine = reader.readNext()) != null) {
+			final String sku = nextLine[0];
+			final String link = nextLine[1];
 
-    public void setPriceLoader(PriceLoader priceLoader) {
-        this.priceLoader = priceLoader;
-    }
+			Set<String> strings = res.get(sku);
+			if (strings == null) {
+				strings = new HashSet<>();
+				res.put(sku, strings);
+			}
+			strings.add(link);
+		}
+		return res;
+	}
 
-    public void setImageManager(ImageManager imageManager) {
-        this.imageManager = imageManager;
-    }
+	public void setPriceLoader(PriceLoader priceLoader) {
+		this.priceLoader = priceLoader;
+	}
 
-    public void setArticleManager(ArticleManager articleManager) {
-        this.articleManager = articleManager;
-    }
+	public void setImageManager(ImageManager imageManager) {
+		this.imageManager = imageManager;
+	}
 
-    public void setExchangeManager(ExchangeManager exchangeManager) {
-        this.exchangeManager = exchangeManager;
-    }
+	public void setArticleManager(ArticleManager articleManager) {
+		this.articleManager = articleManager;
+	}
 
-    public void setRelationshipManager(RelationshipManager relationshipManager) {
-        this.relationshipManager = relationshipManager;
-    }
+	public void setExchangeManager(ExchangeManager exchangeManager) {
+		this.exchangeManager = exchangeManager;
+	}
 
-    public void setTaskExecutor(AsyncTaskExecutor taskExecutor) {
-        this.taskExecutor = taskExecutor;
-    }
+	public void setRelationshipManager(RelationshipManager relationshipManager) {
+		this.relationshipManager = relationshipManager;
+	}
 
-    public void setTransactionManager(PlatformTransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
-    }
+	public void setTaskExecutor(AsyncTaskExecutor taskExecutor) {
+		this.taskExecutor = taskExecutor;
+	}
 
-    private static class SuppliedArticle implements SupplierInfo {
-        private final String sku;
-        private final URL url;
-        private final String uri;
-        private final String name;
-        private final String desc;
-        private final Price price;
-        private final double weight;
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
 
-        private SuppliedArticle(String sku, URL url, String uri, String name, String desc, double price, double weight) {
-            this.sku = sku;
-            this.url = url;
-            this.uri = uri;
-            this.name = name;
-            this.desc = desc;
-            this.price = new Price(price);
-            this.weight = weight;
-        }
+	private static class SuppliedArticle implements SupplierInfo {
+		private final String sku;
+		private final URL url;
+		private final String uri;
+		private final String name;
+		private final String desc;
+		private final Price price;
+		private final double weight;
 
-        @Override
-        public Price getPrice() {
-            return price;
-        }
+		private SuppliedArticle(String sku, URL url, String uri, String name, String desc, double price, double weight) {
+			this.sku = sku;
+			this.url = url;
+			this.uri = uri;
+			this.name = name;
+			this.desc = desc;
+			this.price = new Price(price);
+			this.weight = weight;
+		}
 
-        @Override
-        public URL getReferenceUrl() {
-            return url;
-        }
+		@Override
+		public Price getPrice() {
+			return price;
+		}
 
-        @Override
-        public String getReferenceUri() {
-            return uri;
-        }
+		@Override
+		public URL getReferenceUrl() {
+			return url;
+		}
 
-        @Override
-        public String getReferenceCode() {
-            return sku;
-        }
+		@Override
+		public String getReferenceUri() {
+			return uri;
+		}
 
-        @Override
-        public Supplier getWholesaler() {
-            return Supplier.BANGGOOD;
-        }
+		@Override
+		public String getReferenceCode() {
+			return sku;
+		}
 
-        @Override
-        public Date getValidationDate() {
-            return null;
-        }
-    }
+		@Override
+		public Supplier getWholesaler() {
+			return Supplier.BANGGOOD;
+		}
+
+		@Override
+		public Date getValidationDate() {
+			return null;
+		}
+	}
 }

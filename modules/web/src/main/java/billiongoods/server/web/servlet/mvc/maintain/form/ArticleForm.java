@@ -1,5 +1,6 @@
 package billiongoods.server.web.servlet.mvc.maintain.form;
 
+import billiongoods.server.warehouse.ArticleState;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.RelationshipType;
 import org.hibernate.validator.constraints.Length;
@@ -60,6 +61,11 @@ public class ArticleForm {
 
 	private String supplierReferenceCode;
 
+	private Integer storeAvailable;
+
+	private String commentary;
+
+	private ArticleState articleState;
 
 	public ArticleForm() {
 	}
@@ -250,6 +256,30 @@ public class ArticleForm {
 
 	public Price createSupplierPrice() {
 		return new Price(supplierPrice, supplierPrimordialPrice);
+	}
+
+	public Integer getStoreAvailable() {
+		return storeAvailable;
+	}
+
+	public void setStoreAvailable(Integer storeAvailable) {
+		this.storeAvailable = storeAvailable;
+	}
+
+	public String getCommentary() {
+		return commentary;
+	}
+
+	public void setCommentary(String commentary) {
+		this.commentary = commentary;
+	}
+
+	public ArticleState getArticleState() {
+		return articleState;
+	}
+
+	public void setArticleState(ArticleState articleState) {
+		this.articleState = articleState;
 	}
 
 	@Override

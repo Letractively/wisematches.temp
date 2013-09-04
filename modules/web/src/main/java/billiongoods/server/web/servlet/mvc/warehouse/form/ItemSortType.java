@@ -6,7 +6,7 @@ import billiongoods.core.search.Order;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public enum ItemSortType {
-	BESTSELLING("bs", "soldCount", false),
+	BESTSELLING("bs", "stockInfo.sold", false),
 	PRICE_DOWN("plth", "price", true),
 	PRICE_UP("phtl", "price", false),
 	ARRIVAL_DATE("d", "registrationDate", false);

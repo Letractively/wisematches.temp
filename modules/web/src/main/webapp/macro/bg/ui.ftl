@@ -61,7 +61,7 @@
 </#macro>
 
 <#macro artiveItem article ops={}>
-<div class="article-item grid<#if !article.active> inactive</#if>">
+<div class="article-item grid ${article.state.name()?lower_case}">
     <div class="image">
         <@bg.link.article article><img alt="${article.name}"
                                        title="${article.name}"

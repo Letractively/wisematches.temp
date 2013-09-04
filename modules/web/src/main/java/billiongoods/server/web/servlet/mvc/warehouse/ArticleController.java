@@ -32,7 +32,12 @@ public class ArticleController extends AbstractController {
 		} else {
 			article = articleManager.getArticle(Integer.decode(articleId));
 		}
+
 		if (article == null) {
+			throw new UnknownEntityException(articleId, "article");
+		}
+
+		if (!ArticleContext.VISIBLE.contains(article.getState()) && !hasRole("moderator")) {
 			throw new UnknownEntityException(articleId, "article");
 		}
 

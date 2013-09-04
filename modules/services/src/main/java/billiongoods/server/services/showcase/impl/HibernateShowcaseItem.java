@@ -62,7 +62,7 @@ public class HibernateShowcaseItem implements ShowcaseItem, Comparable<Hibernate
 	}
 
 	void initialize(CategoryManager manager) {
-		context = new ArticleContext(manager.getCategory(category), subCategories, null, arrival, false);
+		context = new ArticleContext(manager.getCategory(category), subCategories, null, arrival, ArticleContext.ACTIVE_ONLY);
 	}
 
 	@Override

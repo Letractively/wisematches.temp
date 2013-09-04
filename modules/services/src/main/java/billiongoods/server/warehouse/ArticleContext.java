@@ -1,26 +1,34 @@
 package billiongoods.server.warehouse;
 
+import java.util.EnumSet;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ArticleContext {
 	private final String name;
 	private final boolean arrival;
-	private final boolean inactive;
 	private final Category category;
 	private final boolean subCategories;
+	private final EnumSet<ArticleState> articleStates;
+
+	public static final EnumSet<ArticleState> ACTIVE_ONLY = EnumSet.of(ArticleState.ACTIVE);
+	public static final EnumSet<ArticleState> PROMOTED_ONLY = EnumSet.of(ArticleState.PROMOTED);
+	public static final EnumSet<ArticleState> NOT_REMOVED = EnumSet.of(ArticleState.DISABLED, ArticleState.ACTIVE, ArticleState.PROMOTED);
+
+	public static final EnumSet<ArticleState> VISIBLE = EnumSet.of(ArticleState.ACTIVE, ArticleState.PROMOTED);
 
 	public ArticleContext(Category category) {
 		this(category, false, null, false);
 	}
 
 	public ArticleContext(Category category, boolean subCategories, String name, boolean arrival) {
-		this(category, subCategories, name, arrival, false);
+		this(category, subCategories, name, arrival, VISIBLE);
 	}
 
-	public ArticleContext(Category category, boolean subCategories, String name, boolean arrival, boolean inactive) {
+	public ArticleContext(Category category, boolean subCategories, String name, boolean arrival, EnumSet<ArticleState> articleStates) {
 		this.name = name;
-		this.inactive = inactive;
+		this.articleStates = articleStates;
 		this.arrival = arrival;
 		this.category = category;
 		this.subCategories = subCategories;
@@ -28,10 +36,6 @@ public class ArticleContext {
 
 	public String getName() {
 		return name;
-	}
-
-	public boolean isInactive() {
-		return inactive;
 	}
 
 	public boolean isArrival() {
@@ -44,5 +48,9 @@ public class ArticleContext {
 
 	public boolean isSubCategories() {
 		return subCategories;
+	}
+
+	public EnumSet<ArticleState> getArticleStates() {
+		return articleStates;
 	}
 }
