@@ -163,7 +163,17 @@ public class BanggoodArticleImporter implements ArticleImporter {
 		}
 	}
 
-	private List<SuppliedArticle> parseArticles(InputStream stream) throws IOException {
+	protected String cleanSpan(String s) {
+		String res = s;
+		int iteration = 0;
+		while (res.contains("</span>") && iteration < 10) {
+			res = res.replaceAll("<span[^>]*?>(.*?)</span>", "$1");
+			iteration++;
+		}
+		return res;
+	}
+
+	protected List<SuppliedArticle> parseArticles(InputStream stream) throws IOException {
 		final List<SuppliedArticle> res = new ArrayList<>();
 
 		final CSVReader reader = new CSVReader(new InputStreamReader(stream));
@@ -173,7 +183,7 @@ public class BanggoodArticleImporter implements ArticleImporter {
 			final String name = nextLine[1];
 			final double price = Double.parseDouble(nextLine[3]);
 			final double weight = Double.parseDouble(nextLine[4]);
-			final String desc = nextLine[5];
+			final String desc = cleanSpan(nextLine[5]);
 			final URL url = new URL(nextLine[6]);
 			final String uri = url.getFile();
 			res.add(new SuppliedArticle(sku, url, uri, name, desc, price, weight));
@@ -181,7 +191,7 @@ public class BanggoodArticleImporter implements ArticleImporter {
 		return res;
 	}
 
-	private Map<String, Set<String>> parseImages(InputStream stream) throws IOException {
+	protected Map<String, Set<String>> parseImages(InputStream stream) throws IOException {
 		final Map<String, Set<String>> res = new HashMap<>();
 
 		final CSVReader reader = new CSVReader(new InputStreamReader(stream));
