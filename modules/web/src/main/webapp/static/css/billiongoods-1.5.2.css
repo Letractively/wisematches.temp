@@ -709,6 +709,9 @@ button.bg-ui-button.selected {
 .article .preview {
     position: relative;
     margin-bottom: 5px;
+    cursor: pointer;
+    cursor: -moz-zoom-in;
+    cursor: -webkit-zoom-in;
     border: 2px solid #ebebeb;
 }
 
@@ -721,12 +724,12 @@ button.bg-ui-button.selected {
     border: 1px solid #ebebeb;
 }
 
-.article .thumb img:hover {
+.article .thumb img:hover, .pp_gallery ul a:hover {
     border-color: #d67632 !important;
 }
 
-.article .thumb img.selected {
-    border-color: #FF5A00;
+.article .thumb img.selected, .pp_gallery li.selected a {
+    border-color: #FF5A00 !important;
 }
 
 .article .preview img {

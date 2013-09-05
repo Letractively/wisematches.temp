@@ -3,7 +3,7 @@
 
 <#include "/core.ftl"/>
 
-<#if analyticsYandexCode??>
+<#if analyticsYandexCode?has_content>
 <script type="application/javascript">
     window.onload = function () {
         var orderParams = {

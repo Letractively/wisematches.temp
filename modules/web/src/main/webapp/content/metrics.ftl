@@ -4,7 +4,7 @@
 <#include "/core.ftl">
 
 <@bg.security.unauthorized "moderator">
-    <#if analyticsGoogleCode??>
+    <#if analyticsGoogleCode?has_content>
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '${analyticsGoogleCode}']);
@@ -21,7 +21,7 @@
     </script>
     </#if>
 
-    <#if analyticsYandexCode??>
+    <#if analyticsYandexCode?has_content>
     <script type="text/javascript">
         (function (d, w, c) {
             (w[c] = w[c] || []).push(function () {
