@@ -9,13 +9,16 @@
 <link rel="stylesheet" href="<@bg.ui.static "css/jquery.prettyPhoto-3.1.5.css"/>" type="text/css" charset="utf-8"/>
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.prettyPhoto-3.1.5.js"/>"></script>
 
-<div class="article ${article.state.name()?lower_case}">
+<div class="article ${article.state.name()?lower_case}" itemscope itemtype="http://schema.org/Product">
+<meta itemprop="url" content="/warehouse/article/${article.id}"/>
+<meta itemprop="productID" content="${article.id}"/>
+<meta itemprop="identifier" content="sku:${article.id}"/>
 <table>
     <tr>
         <td valign="top" width="176px">
             <div class="view">
                 <div class="preview">
-                    <img alt="${article.name}"
+                    <img itemprop="image" alt="${article.name}"
                          src="<@bg.ui.articleImg article article.previewImageId!"" ImageSize.MEDIUM/>"/>
                 <@bg.ui.discountDiv article/>
                 </div>
@@ -32,7 +35,7 @@
         </td>
         <td valign="top" width="100%">
             <div class="info">
-                <div class="name">
+                <div class="name" itemprop="name">
                 ${article.name}
                 <@bg.security.authorized "moderator">
                     <div style="float: right">
@@ -42,7 +45,7 @@
                 </div>
 
                 <div class="articular">
-                    Артикул: <span class="sku">${messageSource.getArticleCode(article)}</span>
+                    Артикул: <span class="sku" itemprop="sku">${messageSource.getArticleCode(article)}</span>
                 <@bg.security.authorized "moderator">
                     (<a href="${article.supplierInfo.referenceUrl.toExternalForm()}"
                         target="_blank">${article.supplierInfo.referenceCode}</a>)
@@ -87,8 +90,21 @@
                 <#if related?has_content>| <a href="#related">Похожие продукты</a></#if>
                 </div>
 
-                <form id="shoppingForm">
+                <form id="shoppingForm" itemscope itemtype="http://schema.org/Offer">
                     <input type="hidden" name="article" value="${article.id}"/>
+
+                <#--
+                                <#if article.stockInfo.restockDate??>
+                                    <link itemprop="availability" href="http://schema.org/OutOfStock"/>
+                                    <meta itemprop="" content=""/>
+                                <#else>
+                                    <#if article.stockInfo.rest??>
+                                        Торопитесь, осталось всего ${article.stockInfo.rest} штук!
+                                    <#else>
+                                        В наличии, обычно отправлается в течении 2-3 рабочих дней
+                                    </#if>
+                                </#if>
+                -->
 
                     <div class="panel">
                         <div class="price">
@@ -154,7 +170,7 @@
 </table>
 
 <#if article.description?has_content>
-    <@bg.ui.panel "Описание" "description">
+    <@bg.ui.panel caption="Описание" id="description">
         <#if article.state.promoted>
         <p>
             Мы еще не подготовили описание этого товара. Пожалуйста, если он вас заинтересовал и вы бы желали
@@ -168,7 +184,9 @@
             товара: ${messageSource.getArticleCode(article)}!
         </p>
         <#else>
+        <p itemprop="description">
         ${article.description!""}
+        </p>
         </#if>
     </@bg.ui.panel>
 </#if>

@@ -13,7 +13,8 @@
 <#macro static p>${staticResourcesDomain}/${p}</#macro>
 
 
-<#macro usd v><span class="usd">US$<span class="usd v">${v?string("0.00")}</span></span></#macro>
+<#macro usd v><span class="usd">US$<span class="usd v" itemprop="price">${v?string("0.00")}</span><meta
+        itemprop="priceCurrency" content="USD"/></span></#macro>
 
 <#macro rub v c="g"><span class="rub v">${v?string("0.00")}</span><img
         src="<@static "images/${c}ruble.gif"/>"
