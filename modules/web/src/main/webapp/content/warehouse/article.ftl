@@ -6,6 +6,9 @@
 
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.sly-1.0.2.min.js"/>"></script>
 
+<link rel="stylesheet" href="<@bg.ui.static "css/jquery.prettyPhoto-3.1.5.css"/>" type="text/css" charset="utf-8"/>
+<script type="text/javascript" src="<@bg.ui.static "js/jquery.prettyPhoto-3.1.5.js"/>"></script>
+
 <div class="article ${article.state.name()?lower_case}">
 <table>
     <tr>
@@ -20,6 +23,8 @@
                 <div class="thumb">
                 <#list article.imageIds as i>
                     <div><img <#if i==article.previewImageId!"">class="selected"</#if>
+                              page="${i_index}"
+                              view="<@bg.ui.articleImg article i ImageSize.LARGE/>"
                               src="<@bg.ui.articleImg article i ImageSize.TINY/>" width="50px" height="50px"/></div>
                 </#list>
                 </div>
@@ -221,5 +226,5 @@
 </div>
 
 <script type="application/javascript">
-    new bg.warehouse.Controller();
+    new bg.warehouse.ArticleController();
 </script>

@@ -424,7 +424,7 @@ bg.warehouse.Order = function () {
     };
 };
 
-bg.warehouse.Controller = function () {
+bg.warehouse.ArticleController = function () {
     var addToBasket = function (callback) {
         bg.ui.lock(null, 'Добавление в корзину. Пожалуйста, подождите...');
         var serializeObject = $("#shoppingForm").serializeObject();
@@ -472,11 +472,36 @@ bg.warehouse.Controller = function () {
         return false;
     });
 
-    var previewImage = $(".preview img");
-    $(".thumb img").click(function () {
+    function selectThumb(img) {
         $(".thumb img").removeClass("selected");
-        var src = $(this).addClass("selected").attr('src');
+        var src = img.addClass("selected").attr('src');
         previewImage.attr('src', src.replace('_T', '_M'));
+    }
+
+    var images = [];
+    var previewImage = $(".preview img");
+
+    $(".thumb img")
+            .each(function (i, v) {
+                var img = $(v);
+                images[img.attr('page')] = img.attr('view');
+            })
+            .click(function () {
+                selectThumb($(this));
+            });
+
+    $.fn.prettyPhoto({
+        animation_speed: 'fast',
+        social_tools: false,
+        deeplinking: false,
+        show_title: false,
+        overlay_gallery: true,
+        default_width: 640,
+        default_height: 640});
+
+    $(".article .preview").click(function () {
+        $.prettyPhoto.open(images);
+        $.prettyPhoto.changePage(parseInt($(".thumb img.selected").attr("page")));
     });
 
     var relatedScroll = $('#related');
