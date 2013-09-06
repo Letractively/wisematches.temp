@@ -17,26 +17,26 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernateArticleManager extends EntitySearchManager<ArticleDescription, ArticleContext> implements ArticleManager {
+public class HibernateProductManager extends EntitySearchManager<ProductDescription, ProductContext> implements ProductManager {
 	private AttributeManager attributeManager;
 
-	private final Collection<ArticleListener> listeners = new CopyOnWriteArrayList<>();
+	private final Collection<ProductListener> listeners = new CopyOnWriteArrayList<>();
 
 	private static final int ONE_WEEK_MILLIS = 1000 * 60 * 60 * 24 * 7;
 
-	public HibernateArticleManager() {
-		super(HibernateArticleDescription.class);
+	public HibernateProductManager() {
+		super(HibernateProductDescription.class);
 	}
 
 	@Override
-	public void addArticleListener(ArticleListener l) {
+	public void addProductListener(ProductListener l) {
 		if (l != null) {
 			listeners.add(l);
 		}
 	}
 
 	@Override
-	public void removeArticleListener(ArticleListener l) {
+	public void removeProductListener(ProductListener l) {
 		if (l != null) {
 			listeners.remove(l);
 		}
@@ -44,103 +44,103 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Article getArticle(Integer id) {
+	public Product getProduct(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
-		if (article != null) {
-			article.initialize(attributeManager);
+		final HibernateProduct product = (HibernateProduct) session.get(HibernateProduct.class, id);
+		if (product != null) {
+			product.initialize(attributeManager);
 		}
-		return article;
+		return product;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public Article getArticle(String sku) {
+	public Product getProduct(String sku) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateArticle a where a.supplierInfo.referenceCode=:code");
+		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateProduct a where a.supplierInfo.referenceCode=:code");
 		query.setParameter("code", sku);
 		final List list = query.list();
 		if (list.size() > 0) {
-			final HibernateArticle article = (HibernateArticle) list.get(0);
-			article.initialize(attributeManager);
-			return article;
+			final HibernateProduct product = (HibernateProduct) list.get(0);
+			product.initialize(attributeManager);
+			return product;
 		}
 		return null;
 	}
 
 	@Override
-	public ArticleDescription getDescription(Integer id) {
+	public ProductDescription getDescription(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
-		return (HibernateArticleDescription) session.get(HibernateArticleDescription.class, id);
+		return (HibernateProductDescription) session.get(HibernateProductDescription.class, id);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Article createArticle(ArticleEditor editor) {
-		final HibernateArticle article = new HibernateArticle();
-		updateArticle(article, editor);
+	public Product createProduct(ProductEditor editor) {
+		final HibernateProduct product = new HibernateProduct();
+		updateProduct(product, editor);
 
 
 		final Session session = sessionFactory.getCurrentSession();
-		session.save(article);
+		session.save(product);
 
-		for (ArticleListener listener : listeners) {
-			listener.articleCreated(article);
+		for (ProductListener listener : listeners) {
+			listener.productCreated(product);
 		}
-		return article;
+		return product;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Article updateArticle(Integer id, ArticleEditor editor) {
+	public Product updateProduct(Integer id, ProductEditor editor) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
-		if (article == null) {
+		final HibernateProduct product = (HibernateProduct) session.get(HibernateProduct.class, id);
+		if (product == null) {
 			return null;
 		}
-		updateArticle(article, editor);
-		session.update(article);
+		updateProduct(product, editor);
+		session.update(product);
 
-		for (ArticleListener listener : listeners) {
-			listener.articleUpdated(article);
+		for (ProductListener listener : listeners) {
+			listener.productUpdated(product);
 		}
-		return article;
+		return product;
 	}
 
 	@Override
-	public Article removeArticle(Integer id) {
+	public Product removeProduct(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateArticle article = (HibernateArticle) session.get(HibernateArticle.class, id);
-		if (article == null) {
+		final HibernateProduct product = (HibernateProduct) session.get(HibernateProduct.class, id);
+		if (product == null) {
 			return null;
 		}
-		session.delete(article);
+		session.delete(product);
 
-		for (ArticleListener listener : listeners) {
-			listener.articleRemoved(article);
+		for (ProductListener listener : listeners) {
+			listener.productRemoved(product);
 		}
-		return article;
+		return product;
 	}
 
-	private void updateArticle(HibernateArticle article, ArticleEditor editor) {
-		article.setName(editor.getName());
-		article.setDescription(editor.getDescription());
-		article.setCategory(editor.getCategoryId());
-		article.setPrice(editor.getPrice());
-		article.setWeight(editor.getWeight());
-		article.setRestockInfo(editor.getStoreAvailable(), editor.getRestockDate());
-		article.setPreviewImageId(editor.getPreviewImage());
-		article.setImageIds(editor.getImageIds());
-		article.setOptions(editor.getOptions());
-		article.setProperties(editor.getProperties());
-		article.setState(editor.getArticleState());
-		article.setCommentary(editor.getCommentary());
+	private void updateProduct(HibernateProduct product, ProductEditor editor) {
+		product.setName(editor.getName());
+		product.setDescription(editor.getDescription());
+		product.setCategory(editor.getCategoryId());
+		product.setPrice(editor.getPrice());
+		product.setWeight(editor.getWeight());
+		product.setRestockInfo(editor.getStoreAvailable(), editor.getRestockDate());
+		product.setPreviewImageId(editor.getPreviewImage());
+		product.setImageIds(editor.getImageIds());
+		product.setOptions(editor.getOptions());
+		product.setProperties(editor.getProperties());
+		product.setState(editor.getProductState());
+		product.setCommentary(editor.getCommentary());
 
-		final HibernateSupplierInfo supplierInfo = article.getSupplierInfo();
+		final HibernateSupplierInfo supplierInfo = product.getSupplierInfo();
 		supplierInfo.setReferenceUri(editor.getReferenceUri());
 		supplierInfo.setReferenceCode(editor.getReferenceCode());
 		supplierInfo.setWholesaler(editor.getWholesaler());
@@ -150,7 +150,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Override
 	public void updateSold(Integer id, int quantity) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a set a.stockInfo.sold=a.stockInfo.sold+:quantity where a.id=:id");
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct a set a.stockInfo.sold=a.stockInfo.sold+:quantity where a.id=:id");
 		query.setParameter("id", id);
 		query.setParameter("quantity", quantity);
 		query.executeUpdate();
@@ -159,7 +159,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	@Override
 	public void updatePrice(Integer id, Price price, Price supplierPrice) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateArticle a " +
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct a " +
 				"set " +
 				"a.price.amount=:priceAmount, a.price.primordialAmount=:pricePrimordialAmount, " +
 				"a.supplierInfo.price.amount=:supplierAmount, a.supplierInfo.price.primordialAmount=:supplierPrimordialAmount, " +
@@ -176,7 +176,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	}
 
 	@Override
-	protected void applyProjections(Criteria criteria, ArticleContext context) {
+	protected void applyProjections(Criteria criteria, ProductContext context) {
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 	}
 
 	@Override
-	protected void applyRestrictions(Criteria criteria, ArticleContext context) {
+	protected void applyRestrictions(Criteria criteria, ProductContext context) {
 		if (context != null) {
 			final Category category = context.getCategory();
 			if (category != null) {
@@ -208,8 +208,8 @@ public class HibernateArticleManager extends EntitySearchManager<ArticleDescript
 				}
 			}
 
-			if (context.getArticleStates() != null) {
-				criteria.add(Restrictions.in("state", context.getArticleStates()));
+			if (context.getProductStates() != null) {
+				criteria.add(Restrictions.in("state", context.getProductStates()));
 			}
 
 			if (context.isArrival()) {

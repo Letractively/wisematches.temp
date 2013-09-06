@@ -5,8 +5,8 @@ import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.payment.*;
 import billiongoods.server.services.price.ExchangeManager;
-import billiongoods.server.warehouse.ArticleDescription;
 import billiongoods.server.warehouse.Price;
+import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.Property;
 import billiongoods.server.warehouse.impl.HibernateAttribute;
 import org.hibernate.SessionFactory;
@@ -52,7 +52,7 @@ public class HibernateOrderManagerTest {
 		orderManager.setExchangeManager(exchangeManager);
 		orderManager.setShipmentManager(new DefaultShipmentManager());
 
-		final ArticleDescription desc = createMock(ArticleDescription.class);
+		final ProductDescription desc = createMock(ProductDescription.class);
 		expect(desc.getName()).andReturn("Item1").andReturn("Item2");
 		expect(desc.getId()).andReturn(1).andReturn(7);
 		expect(desc.getPrice()).andReturn(new Price(123.34d)).andReturn(new Price(342.21d));
@@ -65,14 +65,14 @@ public class HibernateOrderManagerTest {
 		expect(item1.getNumber()).andReturn(0);
 		expect(item1.getQuantity()).andReturn(12);
 		expect(item1.getOptions()).andReturn(Collections.singletonList(property));
-		expect(item1.getArticle()).andReturn(desc);
+		expect(item1.getProduct()).andReturn(desc);
 		replay(item1);
 
 		final BasketItem item2 = createMock(BasketItem.class);
 		expect(item2.getNumber()).andReturn(7);
 		expect(item2.getQuantity()).andReturn(3);
 		expect(item2.getOptions()).andReturn(null);
-		expect(item2.getArticle()).andReturn(desc);
+		expect(item2.getProduct()).andReturn(desc);
 		replay(item2);
 
 		final Basket basket = createMock(Basket.class);
@@ -109,14 +109,14 @@ public class HibernateOrderManagerTest {
 		assertEquals("MockStreet, d.344/2 k.1, kv. 9881", address1.getStreetAddress());
 
 		final OrderItem oi0 = orderItems.get(0);
-		assertEquals(1, oi0.getArticle().intValue());
+		assertEquals(1, oi0.getProduct().intValue());
 		assertEquals(12, oi0.getQuantity());
 		assertEquals("Item1", oi0.getName());
 		assertEquals(0.34d, oi0.getWeight(), 0.0000d);
 		assertEquals(123.34d, oi0.getAmount(), 0.0000d);
 
 		final OrderItem oi1 = orderItems.get(1);
-		assertEquals(7, oi1.getArticle().intValue());
+		assertEquals(7, oi1.getProduct().intValue());
 		assertEquals(3, oi1.getQuantity());
 		assertEquals("Item2", oi1.getName());
 		assertEquals(2.21d, oi1.getWeight(), 0.0000d);

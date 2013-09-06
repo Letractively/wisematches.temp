@@ -1,14 +1,14 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
-import billiongoods.server.services.arivals.ArticleImporter;
 import billiongoods.server.services.arivals.ImportingSummary;
+import billiongoods.server.services.arivals.ProductImporter;
 import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.image.ImageSize;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import billiongoods.server.web.servlet.mvc.maintain.form.ArticleForm;
-import billiongoods.server.web.servlet.mvc.maintain.form.ImportArticlesForm;
+import billiongoods.server.web.servlet.mvc.maintain.form.ImportProductsForm;
+import billiongoods.server.web.servlet.mvc.maintain.form.ProductForm;
 import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,24 +33,24 @@ import java.util.*;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Controller
-@RequestMapping("/maintain/article")
-public class ArticleMaintainController extends AbstractController {
+@RequestMapping("/maintain/product")
+public class ProductMaintainController extends AbstractController {
 	private ImageManager imageManager;
 	private ImageResolver imageResolver;
-	private ArticleManager articleManager;
-	private ArticleImporter articleImporter;
+	private ProductManager productManager;
+	private ProductImporter productImporter;
 	private RelationshipManager relationshipManager;
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
-	public ArticleMaintainController() {
+	public ProductMaintainController() {
 	}
 
 	@RequestMapping(value = "/import", method = RequestMethod.GET)
-	public String importArticlesView(@RequestParam(value = "c", required = false) Integer categoryId,
-									 @ModelAttribute("form") ImportArticlesForm form, Model model) {
+	public String importProductsView(@RequestParam(value = "c", required = false) Integer categoryId,
+									 @ModelAttribute("form") ImportProductsForm form, Model model) {
 
-		final ImportingSummary summary = articleImporter.getImportingSummary();
+		final ImportingSummary summary = productImporter.getImportingSummary();
 		if (summary != null) {
 			model.addAttribute("summary", summary);
 		} else {
@@ -67,7 +67,7 @@ public class ArticleMaintainController extends AbstractController {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "/import", method = RequestMethod.POST)
-	public String importArticlesAction(Model model, @ModelAttribute("form") ImportArticlesForm form) {
+	public String importProductsAction(Model model, @ModelAttribute("form") ImportProductsForm form) {
 		try {
 			List<Property> properties = null;
 			final Integer[] propertyIds = form.getPropertyIds();
@@ -97,7 +97,7 @@ public class ArticleMaintainController extends AbstractController {
 			}
 
 			final Category category = categoryManager.getCategory(form.getCategory());
-			articleImporter.importArticles(category, properties, groups, form.getDescription().getInputStream(),
+			productImporter.importProducts(category, properties, groups, form.getDescription().getInputStream(),
 					form.getImages().getInputStream(), form.isValidatePrice());
 			model.addAttribute("result", true);
 			model.addAttribute("category", category);
@@ -111,41 +111,41 @@ public class ArticleMaintainController extends AbstractController {
 
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String viewArticle(Model model, @ModelAttribute("form") ArticleForm form) throws IOException {
-		Article article = null;
+	public String viewProduct(Model model, @ModelAttribute("form") ProductForm form) throws IOException {
+		Product product = null;
 		if (form.getId() != null) {
-			article = articleManager.getArticle(form.getId());
+			product = productManager.getProduct(form.getId());
 		}
 
-		if (article != null) {
-			final Category category = categoryManager.getCategory(article.getCategoryId());
+		if (product != null) {
+			final Category category = categoryManager.getCategory(product.getCategoryId());
 
-			form.setName(article.getName());
-			form.setDescription(article.getDescription());
+			form.setName(product.getName());
+			form.setDescription(product.getDescription());
 			form.setCategory(category.getId());
-			form.setPrice(article.getPrice().getAmount());
-			form.setPrimordialPrice(article.getPrice().getPrimordialAmount());
-			form.setWeight(article.getWeight());
-			form.setCommentary(article.getCommentary());
-			form.setArticleState(article.getState());
-			form.setStoreAvailable(article.getStockInfo().getRest());
+			form.setPrice(product.getPrice().getAmount());
+			form.setPrimordialPrice(product.getPrice().getPrimordialAmount());
+			form.setWeight(product.getWeight());
+			form.setCommentary(product.getCommentary());
+			form.setProductState(product.getState());
+			form.setStoreAvailable(product.getStockInfo().getRest());
 
-			if (article.getStockInfo().getRestockDate() != null) {
-				form.setRestockDate(SIMPLE_DATE_FORMAT.format(article.getStockInfo().getRestockDate()));
+			if (product.getStockInfo().getRestockDate() != null) {
+				form.setRestockDate(SIMPLE_DATE_FORMAT.format(product.getStockInfo().getRestockDate()));
 			}
 
-			final SupplierInfo supplierInfo = article.getSupplierInfo();
+			final SupplierInfo supplierInfo = product.getSupplierInfo();
 			form.setSupplierPrice(supplierInfo.getPrice().getAmount());
 			form.setSupplierPrimordialPrice(supplierInfo.getPrice().getPrimordialAmount());
 			form.setSupplierReferenceId(supplierInfo.getReferenceUri());
 			form.setSupplierReferenceCode(supplierInfo.getReferenceCode());
 
-			form.setPreviewImage(article.getPreviewImageId());
-			form.setViewImages(imageManager.getImageCodes(article));
-			form.setEnabledImages(article.getImageIds());
+			form.setPreviewImage(product.getPreviewImageId());
+			form.setViewImages(imageManager.getImageCodes(product));
+			form.setEnabledImages(product.getImageIds());
 
 			int index = 0;
-			final List<Option> options = article.getOptions();
+			final List<Option> options = product.getOptions();
 			final Integer[] optIds = new Integer[options.size()];
 			final String[] optValues = new String[options.size()];
 
@@ -160,7 +160,7 @@ public class ArticleMaintainController extends AbstractController {
 
 			final Map<Attribute, String> values = createAttributesMap(category);
 
-			for (Property property : article.getProperties()) {
+			for (Property property : product.getProperties()) {
 				values.put(property.getAttribute(), property.getValue());
 			}
 
@@ -179,22 +179,22 @@ public class ArticleMaintainController extends AbstractController {
 		if (form.getCategory() != null) {
 			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
 		}
-		if (article != null) {
-			model.addAttribute("groups", relationshipManager.getGroups(article.getId()));
-			model.addAttribute("relationships", relationshipManager.getRelationships(article.getId()));
+		if (product != null) {
+			model.addAttribute("groups", relationshipManager.getGroups(product.getId()));
+			model.addAttribute("relationships", relationshipManager.getRelationships(product.getId()));
 		}
 
-		model.addAttribute("article", article);
+		model.addAttribute("product", product);
 		model.addAttribute("attributes", attributeManager.getAttributes());
-		return "/content/maintain/article";
+		return "/content/maintain/product";
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String updateArticle(Model model, @Valid @ModelAttribute("form") ArticleForm form, Errors errors) {
+	public String updateProduct(Model model, @Valid @ModelAttribute("form") ProductForm form, Errors errors) {
 		final Category category = categoryManager.getCategory(form.getCategory());
 		if (category == null) {
-			errors.rejectValue("category", "maintain.article.category.err.unknown");
+			errors.rejectValue("category", "maintain.product.category.err.unknown");
 		}
 
 		Date restockDate = null;
@@ -202,7 +202,7 @@ public class ArticleMaintainController extends AbstractController {
 			try {
 				restockDate = SIMPLE_DATE_FORMAT.parse(form.getRestockDate().trim());
 			} catch (ParseException ex) {
-				errors.rejectValue("restockDate", "maintain.article.date.err.format");
+				errors.rejectValue("restockDate", "maintain.product.date.err.format");
 			}
 		}
 
@@ -238,10 +238,10 @@ public class ArticleMaintainController extends AbstractController {
 			}
 		}
 
-		final Integer articleId = form.getId();
-		if (articleId != null) {
+		final Integer productId = form.getId();
+		if (productId != null) {
 			final List<Integer> groups = new ArrayList<>();
-			for (Group group : relationshipManager.getGroups(articleId)) {
+			for (Group group : relationshipManager.getGroups(productId)) {
 				groups.add(group.getId());
 			}
 			final List<Integer> participatedGroups = new ArrayList<>();
@@ -252,18 +252,18 @@ public class ArticleMaintainController extends AbstractController {
 			final List<Integer> removedGroups = new ArrayList<>(groups);
 			removedGroups.removeAll(participatedGroups);
 			for (Integer removedGroup : removedGroups) {
-				relationshipManager.removeGroupItem(removedGroup, articleId);
+				relationshipManager.removeGroupItem(removedGroup, productId);
 			}
 
 			final List<Integer> addedGroups = new ArrayList<>(participatedGroups);
 			addedGroups.removeAll(groups);
 			for (Integer addedGroup : addedGroups) {
-				relationshipManager.addGroupItem(addedGroup, articleId);
+				relationshipManager.addGroupItem(addedGroup, productId);
 			}
 
 			final Integer[] relationshipGroups = form.getRelationshipGroups();
 			final RelationshipType[] relationshipTypes = form.getRelationshipTypes();
-			final List<Relationship> relationships = new ArrayList<>(relationshipManager.getRelationships(articleId));
+			final List<Relationship> relationships = new ArrayList<>(relationshipManager.getRelationships(productId));
 			if (relationshipGroups != null) {
 				for (int i = 0, relationshipGroupsLength = relationshipGroups.length; i < relationshipGroupsLength; i++) {
 					final Integer group = relationshipGroups[i];
@@ -280,19 +280,19 @@ public class ArticleMaintainController extends AbstractController {
 					if (rs != null) {
 						relationships.remove(rs);
 					} else {
-						relationshipManager.addRelationship(articleId, group, type);
+						relationshipManager.addRelationship(productId, group, type);
 					}
 				}
 			}
 
 			for (Relationship r : relationships) {
-				relationshipManager.removeRelationship(articleId, r.getGroup().getId(), r.getType());
+				relationshipManager.removeRelationship(productId, r.getGroup().getId(), r.getType());
 			}
 		}
 
 		try {
 			if (!errors.hasErrors()) {
-				final ArticleEditor editor = new ArticleEditor();
+				final ProductEditor editor = new ProductEditor();
 				editor.setName(form.getName().trim());
 				editor.setDescription(form.getDescription().trim());
 				editor.setCategoryId(category.getId());
@@ -308,16 +308,16 @@ public class ArticleMaintainController extends AbstractController {
 				editor.setReferenceCode(form.getSupplierReferenceCode());
 				editor.setWholesaler(Supplier.BANGGOOD);
 				editor.setSupplierPrice(form.createSupplierPrice());
-				editor.setArticleState(form.getArticleState());
+				editor.setProductState(form.getProductState());
 				editor.setCommentary(form.getCommentary());
 
-				final Article article;
-				if (articleId == null) {
-					article = articleManager.createArticle(editor);
+				final Product product;
+				if (productId == null) {
+					product = productManager.createProduct(editor);
 				} else {
-					article = articleManager.updateArticle(articleId, editor);
+					product = productManager.updateProduct(productId, editor);
 				}
-				return "redirect:/maintain/article?id=" + article.getId();
+				return "redirect:/maintain/product?id=" + product.getId();
 			}
 		} catch (Exception ex) {
 			errors.reject("internal.error", ex.getMessage());
@@ -327,29 +327,29 @@ public class ArticleMaintainController extends AbstractController {
 			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
 		}
 		model.addAttribute("attributes", attributeManager.getAttributes());
-		return "/content/maintain/article";
+		return "/content/maintain/product";
 	}
 
 	@RequestMapping(value = "/addimg", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse upload(@RequestParam("id") Integer id, MultipartHttpServletRequest request) throws IOException {
-		final Article article = articleManager.getArticle(id);
-		if (article == null) {
-			throw new IllegalArgumentException("Article is not specified");
+		final Product product = productManager.getProduct(id);
+		if (product == null) {
+			throw new IllegalArgumentException("Product is not specified");
 		}
 
 		final MultipartFile file = request.getFile("files[]");
 
 		String originalFilename = file.getOriginalFilename();
 		originalFilename = originalFilename.substring(0, originalFilename.indexOf("."));
-		imageManager.addImage(article, originalFilename, file.getInputStream());
+		imageManager.addImage(product, originalFilename, file.getInputStream());
 
 		final Map<String, String> uri = new HashMap<>();
-		uri.put("original", imageResolver.resolveURI(article, originalFilename, null));
-		uri.put("small", imageResolver.resolveURI(article, originalFilename, ImageSize.SMALL));
-		uri.put("tiny", imageResolver.resolveURI(article, originalFilename, ImageSize.TINY));
-		uri.put("medium", imageResolver.resolveURI(article, originalFilename, ImageSize.MEDIUM));
-		uri.put("large", imageResolver.resolveURI(article, originalFilename, ImageSize.LARGE));
+		uri.put("original", imageResolver.resolveURI(product, originalFilename, null));
+		uri.put("small", imageResolver.resolveURI(product, originalFilename, ImageSize.SMALL));
+		uri.put("tiny", imageResolver.resolveURI(product, originalFilename, ImageSize.TINY));
+		uri.put("medium", imageResolver.resolveURI(product, originalFilename, ImageSize.MEDIUM));
+		uri.put("large", imageResolver.resolveURI(product, originalFilename, ImageSize.LARGE));
 
 		final Map<String, Object> res = new HashMap<>();
 		res.put("code", originalFilename);
@@ -362,7 +362,7 @@ public class ArticleMaintainController extends AbstractController {
 	@RequestMapping(value = "/activate.ajax", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse changeState(@RequestParam("id") Integer id, @RequestParam("a") boolean active) {
-		articleManager.updateState(id, active);
+		productManager.updateState(id, active);
 		return responseFactory.success();
 	}
 */
@@ -402,13 +402,13 @@ public class ArticleMaintainController extends AbstractController {
 	}
 
 	@Autowired
-	public void setArticleManager(ArticleManager articleManager) {
-		this.articleManager = articleManager;
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
 	}
 
 	@Autowired
-	public void setArticleImporter(ArticleImporter articleImporter) {
-		this.articleImporter = articleImporter;
+	public void setProductImporter(ProductImporter productImporter) {
+		this.productImporter = productImporter;
 	}
 
 	@Autowired

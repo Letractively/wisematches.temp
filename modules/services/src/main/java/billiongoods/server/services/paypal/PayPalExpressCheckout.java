@@ -137,7 +137,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 		for (OrderItem orderItem : orderItems) {
 			final PaymentDetailsItemType item = new PaymentDetailsItemType();
 			item.setName(orderItem.getName());
-			item.setNumber(MessageFormatter.getArticleCode(orderItem.getArticle()));
+			item.setNumber(MessageFormatter.getProductCode(orderItem.getProduct()));
 			item.setItemWeight(new MeasureType("кг", orderItem.getWeight()));
 			item.setQuantity(orderItem.getQuantity());
 			item.setAmount(new BasicAmountType(CURRENCY_CODE, Price.string(orderItem.getAmount())));

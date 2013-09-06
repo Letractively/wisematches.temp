@@ -1,30 +1,30 @@
 package billiongoods.server.warehouse.impl;
 
 import billiongoods.server.services.payment.*;
-import billiongoods.server.warehouse.ArticleManager;
+import billiongoods.server.warehouse.ProductManager;
 
 import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class ArticleTrackerCenter {
+public class ProductTrackerCenter {
 	private OrderManager orderManager;
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 
 	private final OrderListener orderListener = new TheOrderListener();
 
-	public ArticleTrackerCenter() {
+	public ProductTrackerCenter() {
 	}
 
 	private void updateSoldQuantity(List<OrderItem> items) {
 		for (OrderItem item : items) {
-			updateSoldQuantity(item.getArticle(), item.getQuantity());
+			updateSoldQuantity(item.getProduct(), item.getQuantity());
 		}
 	}
 
 	private void updateSoldQuantity(Integer id, int quantity) {
-		articleManager.updateSold(id, quantity);
+		productManager.updateSold(id, quantity);
 	}
 
 	public void setOrderManager(OrderManager orderManager) {
@@ -39,8 +39,8 @@ public class ArticleTrackerCenter {
 		}
 	}
 
-	public void setArticleManager(ArticleManager articleManager) {
-		this.articleManager = articleManager;
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
 	}
 
 	private class TheOrderListener implements OrderListener {

@@ -424,7 +424,7 @@ bg.warehouse.Order = function () {
     };
 };
 
-bg.warehouse.ArticleController = function () {
+bg.warehouse.ProductController = function () {
     var addToBasket = function (callback) {
         bg.ui.lock(null, 'Добавление в корзину. Пожалуйста, подождите...');
         var serializeObject = $("#shoppingForm").serializeObject();
@@ -499,7 +499,7 @@ bg.warehouse.ArticleController = function () {
         default_width: 640,
         default_height: 640});
 
-    $(".article .preview").click(function () {
+    $(".product .preview").click(function () {
         $.prettyPhoto.open(images);
         $.prettyPhoto.changePage(parseInt($(".thumb img.selected").attr("page")));
     });

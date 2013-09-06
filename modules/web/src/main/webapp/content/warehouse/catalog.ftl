@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="showcase" type="billiongoods.server.services.showcase.Showcase" -->
-<#-- @ftlvariable name="showcaseCache" type="java.util.Map<ShowcaseItem, ArticleDescription[]>" -->
+<#-- @ftlvariable name="showcaseCache" type="java.util.Map<billiongoods.server.services.showcase.ShowcaseItem, billiongoods.server.warehouse.ProductDescription[]>" -->
 
 <#include "/core.ftl">
 
@@ -27,7 +27,7 @@
                 <#list g.showcaseItems as i>
                     <div id="sc_${g_index}_${i_index}" class="item"
                          <#if i_index !=0>style="display: none;" </#if>>
-                        <@bg.ui.articlesViewGrid showcaseCache.get(i)/>
+                        <@bg.ui.productsViewGrid showcaseCache.get(i)/>
                     </div>
                 </#list>
             </div>

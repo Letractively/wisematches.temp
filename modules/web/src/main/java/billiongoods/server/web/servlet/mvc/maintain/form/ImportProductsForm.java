@@ -5,7 +5,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class ImportArticlesForm {
+public class ImportProductsForm {
 	private Integer category;
 
 	private Integer[] propertyIds;
@@ -18,7 +18,7 @@ public class ImportArticlesForm {
 
 	private boolean validatePrice;
 
-	public ImportArticlesForm() {
+	public ImportProductsForm() {
 	}
 
 	public Integer getCategory() {

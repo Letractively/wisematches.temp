@@ -10,5 +10,5 @@ public interface Group {
 
 	String getName();
 
-	List<ArticleDescription> getDescriptions();
+	List<ProductDescription> getDescriptions();
 }

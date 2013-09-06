@@ -3,8 +3,8 @@ package billiongoods.server.warehouse.impl;
 import billiongoods.server.services.image.ImageSize;
 import billiongoods.server.services.image.impl.FileImageManager;
 import billiongoods.server.services.image.impl.FileImageResolver;
-import billiongoods.server.warehouse.ArticleDescription;
 import billiongoods.server.warehouse.Category;
+import billiongoods.server.warehouse.ProductDescription;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class FileImageManagerTest {
 	private FileImageResolver imageResolver;
 	private FileImageManager manager;
 
-	private ArticleDescription description;
+	private ProductDescription description;
 
 	public FileImageManagerTest() {
 	}
@@ -40,7 +40,7 @@ public class FileImageManagerTest {
 		expect(category.getId()).andReturn(13).anyTimes();
 		replay(category);
 
-		description = createMock(ArticleDescription.class);
+		description = createMock(ProductDescription.class);
 		expect(description.getId()).andReturn(123).anyTimes();
 		expect(description.getCategoryId()).andReturn(13).anyTimes();
 		replay(description);

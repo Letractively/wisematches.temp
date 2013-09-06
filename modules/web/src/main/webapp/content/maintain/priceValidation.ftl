@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <td>Проверено:</td>
-            <td>${summary.validatedArticles}</td>
+            <td>${summary.validatedProducts}</td>
         </tr>
         <tr>
             <td>Обновлено:</td>
@@ -53,7 +53,7 @@
             <#list summary.priceRenewals as r>
                 <tr>
                     <td>
-                        <a href="http://www.billiongoods.ru/warehouse/article/${r.articleId}">${messageSource.getArticleCode(r.articleId)}</a>
+                        <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
                     </td>
                     <td>
                     ${r.oldPrice.amount?string("0.00")}
@@ -102,7 +102,7 @@
             <#list summary.priceBreakdowns as b>
                 <tr>
                     <td nowrap="nowrap">
-                        <a href="http://www.billiongoods.ru/warehouse/article/${b.articleId}">${messageSource.getArticleCode(b.articleId)}</a>
+                        <a href="http://www.billiongoods.ru/warehouse/product/${b.productId}">${messageSource.getProductCode(b.productId)}</a>
                     </td>
                     <td width="100%">
                     ${b.exception.message!""}

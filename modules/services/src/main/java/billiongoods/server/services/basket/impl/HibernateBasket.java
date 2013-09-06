@@ -3,9 +3,9 @@ package billiongoods.server.services.basket.impl;
 import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
-import billiongoods.server.warehouse.ArticleManager;
 import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Price;
+import billiongoods.server.warehouse.ProductManager;
 
 import javax.persistence.*;
 import java.util.*;
@@ -66,7 +66,7 @@ public class HibernateBasket implements Basket {
 	public double getWeight() {
 		double res = .0d;
 		for (BasketItem basketItem : basketItems) {
-			res += basketItem.getArticle().getWeight();
+			res += basketItem.getProduct().getWeight();
 		}
 		return Price.round(res);
 	}
@@ -147,10 +147,22 @@ public class HibernateBasket implements Basket {
 		return p;
 	}
 
-	void initialize(ArticleManager articleManager, AttributeManager attributeManager) {
+	void initialize(ProductManager productManager, AttributeManager attributeManager) {
 		for (BasketItem basketItem : basketItems) {
-			((HibernateBasketItem) basketItem).initialize(articleManager, attributeManager);
+			((HibernateBasketItem) basketItem).initialize(productManager, attributeManager);
 		}
+	}
+
+	boolean validate() {
+		boolean res = false;
+		for (Iterator<BasketItem> iterator = basketItems.iterator(); iterator.hasNext(); ) {
+			BasketItem basketItem = iterator.next();
+			if (basketItem.getProduct() == null) {
+				res = true;
+				iterator.remove();
+			}
+		}
+		return res;
 	}
 
 	@Override

@@ -13,10 +13,10 @@
 <#macro static p>${staticResourcesDomain}/${p}</#macro>
 
 
-<#macro usd v><span class="usd"><span class="currency" itemprop="priceCurrency">USD</span><span class="usd v"
+<#macro usd v><span class="usd"><span class="currency" itemprop="priceCurrency">USD</span><span class="amount"
                                                                                                 itemprop="price">${v?string("0.00")}</span></span></#macro>
 
-<#macro rub v c="g"><span class="rub v">${v?string("0.00")}</span><img
+<#macro rub v c="g"><span class="amount">${v?string("0.00")}</span><img
         src="<@static "images/${c}ruble.gif"/>"
         class="ruble-img"/><span
         class="dot">руб.</span></#macro>
@@ -40,17 +40,17 @@
 </div>
 </#macro>
 
-<#macro articleImageUrl article code size>${imageResourcesDomain}/${imageResolver.resolveURI(article, code, size)?replace("\\", "/")}</#macro>
+<#macro productImageUrl product code size>${imageResourcesDomain}/${imageResolver.resolveURI(product, code, size)?replace("\\", "/")}</#macro>
 
-<#macro articleImage article code size props={}><img
-        src="<@bg.ui.articleImageUrl article code size/>"
-        alt="${article.name}" width="${size.width}px" height="${size.height}px"
+<#macro productImage product code size props={}><img
+        src="<@bg.ui.productImageUrl product code size/>"
+        alt="${product.name}" width="${size.width}px" height="${size.height}px"
     <#list props?keys as k>${k}="${props[k]}"</#list>>
 </#macro>
 
-<#macro articlesView items type ops={}>
+<#macro productsView items type ops={}>
     <#if type =='grid'>
-        <@articlesViewGrid items ops/>
+        <@productsViewGrid items ops/>
     </#if>
 </#macro>
 
@@ -63,46 +63,45 @@
     </#if>
 </#macro>
 
-<#macro articleItem article layout ops={}>
-<div class="article-item ${layout} ${article.state.name()?lower_case}"
+<#macro productItem product layout ops={}>
+<div class="product-item ${layout} ${product.state.name()?lower_case}"
      itemscope itemtype="http://schema.org/Product">
     <div class="image small">
-        <@bg.link.article article>
-            <@bg.ui.articleImage article article.previewImageId!"" ImageSize.SMALL {"title":"${article.name}", "itemprop": "image"}/>
-        </@bg.link.article>
-        <@discountDiv article/>
+        <@bg.link.product product>
+            <@bg.ui.productImage product product.previewImageId!"" ImageSize.SMALL {"title":"${product.name}", "itemprop": "image"}/>
+        </@bg.link.product>
+        <@discountDiv product/>
     </div>
-    <div class="name" itemprop="name"><@bg.link.article article>${article.name}</@bg.link.article></div>
+    <div class="name" itemprop="name"><@bg.link.product product>${product.name}</@bg.link.product></div>
     <div class="price" itemprop="offers" itemscope
-         itemtype="http://schema.org/Offer"><@bg.ui.price article.price.amount/></div>
+         itemtype="http://schema.org/Offer"><@bg.ui.price product.price.amount/></div>
     <#if ops["showCategory"]?? && ops["showCategory"]>
-        <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(article.categoryId)/></div>
+        <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(product.categoryId)/></div>
     </#if>
     <#nested>
 </div>
 </#macro>
 
-<#macro articlesViewGrid articles ops={}>
+<#macro productsViewGrid products ops={}>
 <table>
-    <#list articles as a>
-        <@bg.ui.tableSplit articles?size 4 a_index>
+    <#list products as a>
+        <@bg.ui.tableSplit products?size 4 a_index>
             <td valign="top" align="center" width="25%">
-                <@articleItem a 'grid' ops/>
+                <@productItem a 'grid' ops/>
             </td>
         </@bg.ui.tableSplit>
     </#list>
 </table>
 </#macro>
-<#--<#macro articleImg article code type>${imageResourcesDomain}/${imageResolver.resolveURI(article, code, type)?replace("\\", "/")}</#macro>-->
 
-<#macro articlesTable articles itemsTableForm>
-<div class="articles">
+<#macro productsTable products itemsTableForm>
+<div class="products">
     <div class="table-view">
         <div class="table-pages">
             <div class="table-position">
                 <#if (itemsTableForm.totalCount > 0)>
                     Показано ${(itemsTableForm.page-1)*itemsTableForm.count+1}
-                    - ${(itemsTableForm.page-1)*itemsTableForm.count + articles?size}
+                    - ${(itemsTableForm.page-1)*itemsTableForm.count + products?size}
                     из ${itemsTableForm.totalCount} элементов
                 <#else>
                     В этой категории нет ни одного элемента <#if itemsTableForm.query?has_content>по ключевому
@@ -142,7 +141,7 @@
                     <select id="tableSorting" name="sort">
                         <#list ItemSortType.values() as s>
                             <option value="${s.getName()}"
-                                    <#if s.getName()==itemsTableForm.sort>selected="selected"</#if>><@message code="article.sort.type.${s.getName()}"/></option>
+                                    <#if s.getName()==itemsTableForm.sort>selected="selected"</#if>><@message code="product.sort.type.${s.getName()}"/></option>
                         </#list>
                     </select>
                 </div>
@@ -150,8 +149,8 @@
         </div>
 
         <div class="table-content">
-            <#if articles?has_content>
-                <@articlesView articles 'grid'/>
+            <#if products?has_content>
+                <@productsView products 'grid'/>
             <#else>
                 <div style="text-align: center">
                     <#if itemsTableForm.query?has_content>

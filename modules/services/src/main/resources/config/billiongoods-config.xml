@@ -32,19 +32,19 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
-    <bean id="articleManager" class="billiongoods.server.warehouse.impl.HibernateArticleManager">
+    <bean id="productManager" class="billiongoods.server.warehouse.impl.HibernateProductManager">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
     <bean id="relationshipManager" class="billiongoods.server.warehouse.impl.HibernateRelationshipManager">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="articleManager" ref="articleManager"/>
+        <property name="productManager" ref="productManager"/>
     </bean>
 
     <bean id="basketManager" class="billiongoods.server.services.basket.impl.HibernateBasketManager">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="articleManager" ref="articleManager"/>
+        <property name="productManager" ref="productManager"/>
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
@@ -52,7 +52,7 @@
 
     <bean id="priceValidator" class="billiongoods.server.services.price.impl.HibernatePriceValidator">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="articleManager" ref="articleManager"/>
+        <property name="productManager" ref="productManager"/>
         <property name="exchangeManager" ref="exchangeManager"/>
 
         <property name="transactionManager" ref="transactionManager"/>
@@ -68,9 +68,9 @@
         <property name="priceLoader" ref="banggoodPriceLoader"/>
     </bean>
 
-    <bean id="articlesImporter" class="billiongoods.server.services.arivals.impl.BanggoodArticleImporter">
+    <bean id="productsImporter" class="billiongoods.server.services.arivals.impl.BanggoodProductImporter">
         <property name="imageManager" ref="imageManager"/>
-        <property name="articleManager" ref="articleManager"/>
+        <property name="productManager" ref="productManager"/>
         <property name="priceLoader" ref="banggoodPriceLoader"/>
         <property name="exchangeManager" ref="exchangeManager"/>
         <property name="relationshipManager" ref="relationshipManager"/>
@@ -79,7 +79,7 @@
         <property name="taskExecutor">
             <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
                 <property name="poolSize" value="1"/>
-                <property name="threadNamePrefix" value="ArticlesImporter"/>
+                <property name="threadNamePrefix" value="ProductsImporter"/>
                 <property name="waitForTasksToCompleteOnShutdown" value="true"/>
             </bean>
         </property>
@@ -115,9 +115,9 @@
         <property name="shipmentManager" ref="shipmentManager"/>
     </bean>
 
-    <bean class="billiongoods.server.warehouse.impl.ArticleTrackerCenter">
+    <bean class="billiongoods.server.warehouse.impl.ProductTrackerCenter">
         <property name="orderManager" ref="orderManager"/>
-        <property name="articleManager" ref="articleManager"/>
+        <property name="productManager" ref="productManager"/>
     </bean>
 
     <bean id="notificationMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

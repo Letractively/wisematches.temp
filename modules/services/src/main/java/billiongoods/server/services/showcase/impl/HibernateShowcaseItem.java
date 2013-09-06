@@ -1,8 +1,8 @@
 package billiongoods.server.services.showcase.impl;
 
 import billiongoods.server.services.showcase.ShowcaseItem;
-import billiongoods.server.warehouse.ArticleContext;
 import billiongoods.server.warehouse.CategoryManager;
+import billiongoods.server.warehouse.ProductContext;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -32,7 +32,7 @@ public class HibernateShowcaseItem implements ShowcaseItem, Comparable<Hibernate
 	private boolean subCategories;
 
 	@Transient
-	private ArticleContext context = null;
+	private ProductContext context = null;
 
 	@Deprecated
 	HibernateShowcaseItem() {
@@ -57,12 +57,12 @@ public class HibernateShowcaseItem implements ShowcaseItem, Comparable<Hibernate
 	}
 
 	@Override
-	public ArticleContext getArticleContext() {
+	public ProductContext getProductContext() {
 		return context;
 	}
 
 	void initialize(CategoryManager manager) {
-		context = new ArticleContext(manager.getCategory(category), subCategories, null, arrival, ArticleContext.ACTIVE_ONLY);
+		context = new ProductContext(manager.getCategory(category), subCategories, null, arrival, ProductContext.ACTIVE_ONLY);
 	}
 
 	@Override

@@ -5,9 +5,9 @@ import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.payment.ShipmentManager;
 import billiongoods.server.services.payment.ShipmentType;
-import billiongoods.server.warehouse.ArticleDescription;
-import billiongoods.server.warehouse.ArticleManager;
 import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.Property;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.warehouse.form.BasketItemForm;
@@ -36,7 +36,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/warehouse/basket")
 public class BasketController extends AbstractController {
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 	private ShipmentManager shipmentManager;
 
 	public static final String BASKET_PARAM = "BASKET";
@@ -142,9 +142,9 @@ public class BasketController extends AbstractController {
 				return responseFactory.failure("illegal.quantity", new Object[]{quantity}, locale);
 			}
 
-			final ArticleDescription article = articleManager.getDescription(form.getArticle());
-			if (article == null) {
-				return responseFactory.failure("unknown.article", new Object[]{form.getArticle()}, locale);
+			final ProductDescription product = productManager.getDescription(form.getProduct());
+			if (product == null) {
+				return responseFactory.failure("unknown.product", new Object[]{form.getProduct()}, locale);
 			}
 
 			final Personality principal = getPrincipal();
@@ -153,14 +153,14 @@ public class BasketController extends AbstractController {
 			if (basket != null) {
 				final List<BasketItem> basketItems = basket.getBasketItems();
 				for (BasketItem basketItem : basketItems) {
-					if (basketItem.getArticle().getId().equals(article.getId()) && basketItem.getOptions().equals(options)) {
+					if (basketItem.getProduct().getId().equals(product.getId()) && basketItem.getOptions().equals(options)) {
 						basketManager.updateBasketItem(principal, basketItem.getNumber(), basketItem.getQuantity() + quantity);
 						return responseFactory.success();
 					}
 				}
 			}
 
-			basketManager.addBasketItem(principal, article, options, quantity);
+			basketManager.addBasketItem(principal, product, options, quantity);
 			return responseFactory.success();
 		} catch (Exception ex) {
 			return responseFactory.failure("internal.error", locale);
@@ -214,8 +214,8 @@ public class BasketController extends AbstractController {
 	}
 
 	@Autowired
-	public void setArticleManager(ArticleManager articleManager) {
-		this.articleManager = articleManager;
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
 	}
 
 	@Autowired

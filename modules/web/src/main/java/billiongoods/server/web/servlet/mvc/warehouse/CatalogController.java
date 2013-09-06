@@ -4,10 +4,10 @@ import billiongoods.core.search.Order;
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.Range;
 import billiongoods.server.services.showcase.*;
-import billiongoods.server.warehouse.Article;
-import billiongoods.server.warehouse.ArticleDescription;
-import billiongoods.server.warehouse.ArticleListener;
-import billiongoods.server.warehouse.ArticleManager;
+import billiongoods.server.warehouse.Product;
+import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductListener;
+import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/warehouse/catalog")
 public class CatalogController extends AbstractController implements InitializingBean {
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 	private ShowcaseManager showcaseManager;
 
 	private Showcase showcase;
-	private final Map<ShowcaseItem, List<ArticleDescription>> showcaseCache = new HashMap<>();
+	private final Map<ShowcaseItem, List<ProductDescription>> showcaseCache = new HashMap<>();
 
 	private final TheCatalogRefreshListener catalogRefreshListener = new TheCatalogRefreshListener();
 
@@ -61,11 +61,11 @@ public class CatalogController extends AbstractController implements Initializin
 	private void initializeShowcaseCache() {
 		invalidateShowcaseCache();
 
-		if (articleManager != null && showcaseManager != null) {
+		if (productManager != null && showcaseManager != null) {
 			showcase = showcaseManager.getShowcase();
 			for (ShowcaseGroup showcaseGroup : showcase.getShowcaseGroups()) {
 				for (ShowcaseItem item : showcaseGroup.getShowcaseItems()) {
-					showcaseCache.put(item, articleManager.searchEntities(item.getArticleContext(), ORDERS, RANGE));
+					showcaseCache.put(item, productManager.searchEntities(item.getProductContext(), ORDERS, RANGE));
 				}
 			}
 		}
@@ -77,15 +77,15 @@ public class CatalogController extends AbstractController implements Initializin
 	}
 
 	@Autowired
-	public void setArticleManager(ArticleManager articleManager) {
-		if (this.articleManager != null) {
-			this.articleManager.removeArticleListener(catalogRefreshListener);
+	public void setProductManager(ProductManager productManager) {
+		if (this.productManager != null) {
+			this.productManager.removeProductListener(catalogRefreshListener);
 		}
 
-		this.articleManager = articleManager;
+		this.productManager = productManager;
 
-		if (this.articleManager != null) {
-			this.articleManager.addArticleListener(catalogRefreshListener);
+		if (this.productManager != null) {
+			this.productManager.addProductListener(catalogRefreshListener);
 		}
 	}
 
@@ -102,22 +102,22 @@ public class CatalogController extends AbstractController implements Initializin
 		}
 	}
 
-	private final class TheCatalogRefreshListener implements ArticleListener, ShowcaseListener {
+	private final class TheCatalogRefreshListener implements ProductListener, ShowcaseListener {
 		private TheCatalogRefreshListener() {
 		}
 
 		@Override
-		public void articleCreated(Article article) {
+		public void productCreated(Product product) {
 			invalidateShowcaseCache();
 		}
 
 		@Override
-		public void articleUpdated(Article article) {
+		public void productUpdated(Product product) {
 			invalidateShowcaseCache();
 		}
 
 		@Override
-		public void articleRemoved(Article article) {
+		public void productRemoved(Product product) {
 			invalidateShowcaseCache();
 		}
 

@@ -1,7 +1,7 @@
 package billiongoods.server.services.basket;
 
 import billiongoods.core.Personality;
-import billiongoods.server.warehouse.ArticleDescription;
+import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.Property;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface BasketManager {
 	int getBasketSize(Personality principal);
 
 
-	BasketItem addBasketItem(Personality principal, ArticleDescription article, List<Property> options, int quantity);
+	BasketItem addBasketItem(Personality principal, ProductDescription description, List<Property> options, int quantity);
 
 	BasketItem removeBasketItem(Personality principal, int number);
 

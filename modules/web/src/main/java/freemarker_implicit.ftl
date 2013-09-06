@@ -14,7 +14,7 @@
 
 [#-- @ftlvariable name="ImageSize" type="billiongoods.server.services.image.ImageSize.static" --]
 [#-- @ftlvariable name="OrderState" type="billiongoods.server.services.payment.OrderState.static" --]
-[#-- @ftlvariable name="ArticleState" type="billiongoods.server.warehouse.ArticleState.static" --]
+[#-- @ftlvariable name="ProductState" type="billiongoods.server.warehouse.ProductState.static" --]
 [#-- @ftlvariable name="ShipmentType" type="billiongoods.server.services.payment.ShipmentType.static" --]
 [#-- @ftlvariable name="ItemSortType" type="billiongoods.server.web.servlet.mvc.warehouse.form.ItemSortType.static" --]
 [#-- @ftlvariable name="RelationshipType" type="billiongoods.server.warehouse.RelationshipType.static" --]

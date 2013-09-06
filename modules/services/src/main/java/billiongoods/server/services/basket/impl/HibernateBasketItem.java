@@ -1,9 +1,9 @@
 package billiongoods.server.services.basket.impl;
 
 import billiongoods.server.services.basket.BasketItem;
-import billiongoods.server.warehouse.ArticleDescription;
-import billiongoods.server.warehouse.ArticleManager;
 import billiongoods.server.warehouse.AttributeManager;
+import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.Property;
 
 import javax.persistence.*;
@@ -24,8 +24,8 @@ public class HibernateBasketItem implements BasketItem {
 	@Column(name = "quantity")
 	private int quantity;
 
-	@Column(name = "article")
-	private Integer articleId;
+	@Column(name = "product")
+	private Integer productId;
 
 	@OrderColumn(name = "position")
 	@ElementCollection(targetClass = HibernateBasketOption.class, fetch = FetchType.LAZY)
@@ -36,7 +36,7 @@ public class HibernateBasketItem implements BasketItem {
 	private List<HibernateBasketOption> optionIds = new ArrayList<>();
 
 	@Transient
-	private ArticleDescription article;
+	private ProductDescription product;
 
 	@Transient
 	private Collection<Property> options = new ArrayList<>();
@@ -44,9 +44,9 @@ public class HibernateBasketItem implements BasketItem {
 	public HibernateBasketItem() {
 	}
 
-	public HibernateBasketItem(ArticleDescription article, List<Property> options, int quantity) {
-		this.article = article;
-		this.articleId = article.getId();
+	public HibernateBasketItem(ProductDescription product, List<Property> options, int quantity) {
+		this.product = product;
+		this.productId = product.getId();
 
 		this.quantity = quantity;
 
@@ -74,7 +74,7 @@ public class HibernateBasketItem implements BasketItem {
 
 	@Override
 	public double getAmount() {
-		return article.getPrice().getAmount() * quantity;
+		return product.getPrice().getAmount() * quantity;
 	}
 
 	public void setQuantity(int quantity) {
@@ -82,8 +82,8 @@ public class HibernateBasketItem implements BasketItem {
 	}
 
 	@Override
-	public ArticleDescription getArticle() {
-		return article;
+	public ProductDescription getProduct() {
+		return product;
 	}
 
 	@Override
@@ -95,9 +95,9 @@ public class HibernateBasketItem implements BasketItem {
 		this.pk = new Pk(basket.getId(), number);
 	}
 
-	void initialize(ArticleManager articleManager, AttributeManager attributeManager) {
-		if (this.article == null || !this.article.getId().equals(articleId)) {
-			this.article = articleManager.getDescription(articleId);
+	void initialize(ProductManager productManager, AttributeManager attributeManager) {
+		if (this.product == null || !this.product.getId().equals(productId)) {
+			this.product = productManager.getDescription(productId);
 		}
 
 		if (options.isEmpty()) {
@@ -150,7 +150,7 @@ public class HibernateBasketItem implements BasketItem {
 		final StringBuilder sb = new StringBuilder("HibernateBasketItem{");
 		sb.append("pk=").append(pk);
 		sb.append(", quantity=").append(quantity);
-		sb.append(", articleId=").append(articleId);
+		sb.append(", productId=").append(productId);
 		sb.append(", optionIds=").append(optionIds);
 		sb.append('}');
 		return sb.toString();

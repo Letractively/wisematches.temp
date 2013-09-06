@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNull;
 })
 public class HibernateRelationshipManagerTest {
 	@Autowired
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 
 	@Autowired
 	private RelationshipManager relationshipManager;
@@ -41,7 +41,7 @@ public class HibernateRelationshipManagerTest {
 
 		final Group group = relationshipManager.createGroup("Mock group");
 
-		final ArticleEditor editor = new ArticleEditor();
+		final ProductEditor editor = new ProductEditor();
 		editor.setDescription("desc");
 		editor.setCategoryId(category.getId());
 		editor.setPrice(new Price(12.d));
@@ -49,10 +49,10 @@ public class HibernateRelationshipManagerTest {
 		editor.setSupplierPrice(new Price(124.d));
 
 		editor.setName("Mock art1");
-		final Article a1 = articleManager.createArticle(editor);
+		final Product a1 = productManager.createProduct(editor);
 
 		editor.setName("Mock art2");
-		final Article a2 = articleManager.createArticle(editor);
+		final Product a2 = productManager.createProduct(editor);
 
 		relationshipManager.addGroupItem(group.getId(), a1.getId());
 		relationshipManager.addGroupItem(group.getId(), a2.getId());

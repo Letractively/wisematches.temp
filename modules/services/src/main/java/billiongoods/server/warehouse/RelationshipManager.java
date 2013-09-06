@@ -18,16 +18,16 @@ public interface RelationshipManager {
 	List<Group> searchGroups(String name);
 
 
-	List<Group> getGroups(Integer articleId);
+	List<Group> getGroups(Integer productId);
 
-	Group addGroupItem(Integer groupId, Integer article);
+	Group addGroupItem(Integer groupId, Integer productId);
 
-	Group removeGroupItem(Integer groupId, Integer article);
+	Group removeGroupItem(Integer groupId, Integer productId);
 
 
-	List<Relationship> getRelationships(Integer articleId);
+	List<Relationship> getRelationships(Integer productId);
 
-	void addRelationship(Integer articleId, Integer groupId, RelationshipType type);
+	void addRelationship(Integer productId, Integer groupId, RelationshipType type);
 
-	void removeRelationship(Integer articleId, Integer groupId, RelationshipType type);
+	void removeRelationship(Integer productId, Integer groupId, RelationshipType type);
 }

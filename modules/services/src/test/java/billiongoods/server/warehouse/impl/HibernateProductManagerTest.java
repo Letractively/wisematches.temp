@@ -24,49 +24,49 @@ import static org.junit.Assert.*;
 		"classpath:/config/personality-config.xml",
 		"classpath:/config/billiongoods-config.xml"
 })
-public class HibernateArticleManagerTest {
+public class HibernateProductManagerTest {
 	@Autowired
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 
 	@Autowired
 	private CategoryManager categoryManager;
 
-	public HibernateArticleManagerTest() {
+	public HibernateProductManagerTest() {
 	}
 
 	@Test
 	public void test() {
-		final int totalCount = articleManager.getTotalCount(null);
+		final int totalCount = productManager.getTotalCount(null);
 		assertTrue(totalCount > 0);
 
-		final List<ArticleDescription> descriptions = articleManager.searchEntities(null, null, Range.FIRST);
+		final List<ProductDescription> descriptions = productManager.searchEntities(null, null, Range.FIRST);
 		assertEquals(1, descriptions.size());
 
-		final ArticleDescription description = descriptions.get(0);
+		final ProductDescription description = descriptions.get(0);
 
 		final DefaultCategory category = new DefaultCategory(new HibernateCategory("asdf", "test", null, 0, null), null);
 
-		final List<ArticleDescription> ctxDescriptions1 = articleManager.searchEntities(new ArticleContext(category), null, Range.FIRST);
+		final List<ProductDescription> ctxDescriptions1 = productManager.searchEntities(new ProductContext(category), null, Range.FIRST);
 		assertEquals(0, ctxDescriptions1.size());
 
 		final Category category1 = categoryManager.getCategory(description.getCategoryId());
 
-		final List<ArticleDescription> ctxDescriptions2 = articleManager.searchEntities(new ArticleContext(category1), null, Range.FIRST);
+		final List<ProductDescription> ctxDescriptions2 = productManager.searchEntities(new ProductContext(category1), null, Range.FIRST);
 		assertEquals(1, ctxDescriptions2.size());
 
-		final Article article = articleManager.getArticle(description.getId());
+		final Product product = productManager.getProduct(description.getId());
 
-		final List<Option> options = article.getOptions();
+		final List<Option> options = product.getOptions();
 		System.out.println("Options: " + options);
 
-		articleManager.updateSold(article.getId(), 10);
+		productManager.updateSold(product.getId(), 10);
 
-		articleManager.updatePrice(article.getId(), new Price(2.3d, null), new Price(3.d, null));
-		articleManager.updatePrice(article.getId(), new Price(12.3d, 54.d), new Price(43.d, 765.d));
+		productManager.updatePrice(product.getId(), new Price(2.3d, null), new Price(3.d, null));
+		productManager.updatePrice(product.getId(), new Price(12.3d, 54.d), new Price(43.d, 765.d));
 
 		System.out.println("==========");
-		System.out.println(article);
-		assertNotNull(article);
-		assertNotNull(article.getSupplierInfo());
+		System.out.println(product);
+		assertNotNull(product);
+		assertNotNull(product.getSupplierInfo());
 	}
 }

@@ -9,22 +9,22 @@ import java.util.Map;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class Relationships {
-	private Map<RelationshipType, List<ArticleDescription>> articlesMap = new HashMap<>();
+	private Map<RelationshipType, List<ProductDescription>> productsMap = new HashMap<>();
 
 	public Relationships(List<Relationship> relationships) {
 		for (Relationship relationship : relationships) {
 			final RelationshipType type = relationship.getType();
 
-			List<ArticleDescription> descriptions = articlesMap.get(type);
+			List<ProductDescription> descriptions = productsMap.get(type);
 			if (descriptions == null) {
 				descriptions = new ArrayList<>();
-				articlesMap.put(type, descriptions);
+				productsMap.put(type, descriptions);
 			}
 			descriptions.addAll(relationship.getDescriptions());
 		}
 	}
 
-	public List<ArticleDescription> getAssociations(RelationshipType type) {
-		return articlesMap.get(type);
+	public List<ProductDescription> getAssociations(RelationshipType type) {
+		return productsMap.get(type);
 	}
 }

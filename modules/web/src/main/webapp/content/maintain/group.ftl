@@ -62,7 +62,7 @@
         <#if group.descriptions?size != 0>
             <#list group.descriptions as a>
                 <tr>
-                    <td><@bg.link.article a>${messageSource.getArticleCode(a)}</@bg.link.article></td>
+                    <td><@bg.link.product a>${messageSource.getProductCode(a)}</@bg.link.product></td>
                     <td width="100%">${a.name}</td>
                     <td>
                         <button type="button">Удалить</button>

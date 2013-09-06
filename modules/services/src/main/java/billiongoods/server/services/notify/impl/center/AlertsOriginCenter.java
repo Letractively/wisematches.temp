@@ -123,11 +123,11 @@ public class AlertsOriginCenter {
 		}
 
 		@Override
-		public void priceValidationStarted(Date date, int articlesCount) {
+		public void priceValidationStarted(Date date, int totalCount) {
 		}
 
 		@Override
-		public void priceValidated(Integer articleId, PriceRenewal renewal) {
+		public void priceValidated(Integer productId, PriceRenewal renewal) {
 		}
 
 		@Override

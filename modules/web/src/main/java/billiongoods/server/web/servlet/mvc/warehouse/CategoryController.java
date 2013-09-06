@@ -24,7 +24,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/warehouse")
 public class CategoryController extends AbstractController {
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 
 	public CategoryController() {
 	}
@@ -37,7 +37,7 @@ public class CategoryController extends AbstractController {
 		}
 		setTitle(model, category.getName());
 
-		prepareArticles(categoryId, model, tableForm, false);
+		prepareProducts(categoryId, model, tableForm, false);
 		return "/content/warehouse/category";
 	}
 
@@ -45,7 +45,7 @@ public class CategoryController extends AbstractController {
 	public String showNewArrivals(@RequestParam(value = "c", required = false) Integer categoryId,
 								  Model model, @ModelAttribute("itemsTableForm") ItemsTableForm tableForm) {
 		tableForm.setItemSortType(ItemSortType.ARRIVAL_DATE);
-		prepareArticles(categoryId, model, tableForm, true);
+		prepareProducts(categoryId, model, tableForm, true);
 		return "/content/warehouse/category";
 	}
 
@@ -53,33 +53,33 @@ public class CategoryController extends AbstractController {
 	public String showTopSellers(@RequestParam(value = "c", required = false) Integer categoryId,
 								 Model model, @ModelAttribute("itemsTableForm") ItemsTableForm tableForm) {
 		tableForm.setItemSortType(ItemSortType.BESTSELLING);
-		prepareArticles(categoryId, model, tableForm, false);
+		prepareProducts(categoryId, model, tableForm, false);
 		tableForm.disableSorting();
 		return "/content/warehouse/category";
 	}
 
-	private void prepareArticles(Integer categoryId, Model model, ItemsTableForm tableForm, boolean arrivals) {
+	private void prepareProducts(Integer categoryId, Model model, ItemsTableForm tableForm, boolean arrivals) {
 		Category category = null;
 		if (categoryId != null) {
 			category = categoryManager.getCategory(categoryId);
 		}
 
 		final boolean inactive = tableForm.isInactive() || hasRole("moderator");
-		final EnumSet<ArticleState> articleStates = inactive ? ArticleContext.NOT_REMOVED : ArticleContext.VISIBLE;
+		final EnumSet<ProductState> productStates = inactive ? ProductContext.NOT_REMOVED : ProductContext.VISIBLE;
 
-		final ArticleContext context = new ArticleContext(category, true, tableForm.getQuery(), arrivals, articleStates);
-		tableForm.validateForm(articleManager.getTotalCount(context));
+		final ProductContext context = new ProductContext(category, true, tableForm.getQuery(), arrivals, productStates);
+		tableForm.validateForm(productManager.getTotalCount(context));
 
 		final Range range = tableForm.createRange();
 		final Orders orders = Orders.of(tableForm.getItemSortType().getOrder());
-		final List<ArticleDescription> articles = articleManager.searchEntities(context, orders, range);
+		final List<ProductDescription> products = productManager.searchEntities(context, orders, range);
 
 		model.addAttribute("category", category);
-		model.addAttribute("articles", articles);
+		model.addAttribute("products", products);
 	}
 
 	@Autowired
-	public void setArticleManager(ArticleManager articleManager) {
-		this.articleManager = articleManager;
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
 	}
 }

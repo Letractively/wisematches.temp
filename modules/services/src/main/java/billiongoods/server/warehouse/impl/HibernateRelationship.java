@@ -1,6 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.ArticleDescription;
+import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.Relationship;
 import billiongoods.server.warehouse.RelationshipType;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Entity
-@Table(name = "store_article_relationship")
+@Table(name = "store_product_relationship")
 public class HibernateRelationship implements Relationship {
 	@EmbeddedId
 	private Pk pk;
@@ -21,8 +21,8 @@ public class HibernateRelationship implements Relationship {
 	public HibernateRelationship() {
 	}
 
-	public HibernateRelationship(HibernateGroup group, RelationshipType type, Integer articleId) {
-		this.pk = new Pk(articleId, type, group);
+	public HibernateRelationship(HibernateGroup group, RelationshipType type, Integer productId) {
+		this.pk = new Pk(productId, type, group);
 	}
 
 	@Override
@@ -36,13 +36,13 @@ public class HibernateRelationship implements Relationship {
 	}
 
 	@Override
-	public List<ArticleDescription> getDescriptions() {
+	public List<ProductDescription> getDescriptions() {
 		return pk.group.getDescriptions();
 	}
 
 	public static class Pk implements Serializable {
-		@Column(name = "articleId")
-		private Integer articleId;
+		@Column(name = "productId")
+		private Integer productId;
 
 		@Column(name = "type")
 		@Enumerated(EnumType.ORDINAL)
@@ -56,8 +56,8 @@ public class HibernateRelationship implements Relationship {
 		public Pk() {
 		}
 
-		public Pk(Integer articleId, RelationshipType type, HibernateGroup group) {
-			this.articleId = articleId;
+		public Pk(Integer productId, RelationshipType type, HibernateGroup group) {
+			this.productId = productId;
 			this.type = type;
 			this.group = group;
 		}
@@ -69,7 +69,7 @@ public class HibernateRelationship implements Relationship {
 
 			Pk pk = (Pk) o;
 
-			if (articleId != null ? !articleId.equals(pk.articleId) : pk.articleId != null) return false;
+			if (productId != null ? !productId.equals(pk.productId) : pk.productId != null) return false;
 			if (group != null ? !group.equals(pk.group) : pk.group != null) return false;
 			if (type != pk.type) return false;
 
@@ -78,7 +78,7 @@ public class HibernateRelationship implements Relationship {
 
 		@Override
 		public int hashCode() {
-			int result = articleId != null ? articleId.hashCode() : 0;
+			int result = productId != null ? productId.hashCode() : 0;
 			result = 31 * result + (type != null ? type.hashCode() : 0);
 			result = 31 * result + (group != null ? group.hashCode() : 0);
 			return result;
