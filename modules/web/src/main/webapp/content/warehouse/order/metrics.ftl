@@ -14,7 +14,7 @@
             goods: [
                 <#list order.orderItems as i>
                     {
-                        id: "${i.article}",
+                        id: "${i.product}",
                         name: "${i.name}",
                         price: ${i.amount?string("0.00")},
                         quantity: ${i.quantity}

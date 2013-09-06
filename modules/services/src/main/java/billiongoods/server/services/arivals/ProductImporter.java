@@ -10,10 +10,10 @@ import java.util.List;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface ArticleImporter {
+public interface ProductImporter {
 	ImportingSummary getImportingSummary();
 
-	ImportingSummary importArticles(Category category, List<Property> properties, List<Integer> groups,
+	ImportingSummary importProducts(Category category, List<Property> properties, List<Integer> groups,
 									InputStream descStream, InputStream imagesStream,
 									boolean validatePrice) throws IOException;
 }

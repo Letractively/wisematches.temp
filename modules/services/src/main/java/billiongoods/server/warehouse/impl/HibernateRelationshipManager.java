@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class HibernateRelationshipManager implements RelationshipManager {
 	private SessionFactory sessionFactory;
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 
 	public HibernateRelationshipManager() {
 	}
@@ -68,20 +68,20 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	@Override
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public List<Group> getGroups(Integer articleId) {
+	public List<Group> getGroups(Integer productId) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("select g from billiongoods.server.warehouse.impl.HibernateGroup g join g.articles a where a.id=:article");
-		query.setParameter("article", articleId);
+		final Query query = session.createQuery("select g from billiongoods.server.warehouse.impl.HibernateGroup g join g.products a where a.id=:product");
+		query.setParameter("product", productId);
 		return query.list();
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Group addGroupItem(Integer groupId, Integer article) {
+	public Group addGroupItem(Integer groupId, Integer productId) {
 		final Session session = sessionFactory.getCurrentSession();
-		final ArticleDescription description = articleManager.getDescription(article);
+		final ProductDescription description = productManager.getDescription(productId);
 		final HibernateGroup group = getGroup(groupId);
-		if (group.addArticle(description)) {
+		if (group.addProduct(description)) {
 			session.update(group);
 		}
 		return group;
@@ -89,11 +89,11 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Group removeGroupItem(Integer groupId, Integer article) {
+	public Group removeGroupItem(Integer groupId, Integer productId) {
 		final Session session = sessionFactory.getCurrentSession();
-		final ArticleDescription description = articleManager.getDescription(article);
+		final ProductDescription description = productManager.getDescription(productId);
 		final HibernateGroup group = getGroup(groupId);
-		if (group.removeArticle(description)) {
+		if (group.removeProduct(description)) {
 			session.update(group);
 		}
 		return group;
@@ -101,19 +101,19 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void addRelationship(Integer articleId, Integer groupId, RelationshipType type) {
+	public void addRelationship(Integer productId, Integer groupId, RelationshipType type) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateGroup group = getGroup(groupId);
 		if (group == null) {
 			throw new IllegalArgumentException("Unknown group: " + groupId);
 		}
-		session.save(new HibernateRelationship(group, type, articleId));
+		session.save(new HibernateRelationship(group, type, productId));
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void removeRelationship(Integer articleId, Integer groupId, RelationshipType type) {
+	public void removeRelationship(Integer productId, Integer groupId, RelationshipType type) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateGroup group = getGroup(groupId);
@@ -121,7 +121,7 @@ public class HibernateRelationshipManager implements RelationshipManager {
 			throw new IllegalArgumentException("Unknown group: " + groupId);
 		}
 
-		final HibernateRelationship relationship = (HibernateRelationship) session.get(HibernateRelationship.class, new HibernateRelationship.Pk(articleId, type, group));
+		final HibernateRelationship relationship = (HibernateRelationship) session.get(HibernateRelationship.class, new HibernateRelationship.Pk(productId, type, group));
 		if (relationship != null) {
 			session.delete(relationship);
 		}
@@ -129,11 +129,11 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Relationship> getRelationships(Integer articleId) {
+	public List<Relationship> getRelationships(Integer productId) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateRelationship where pk.articleId=:aid");
-		query.setParameter("aid", articleId);
+		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateRelationship where pk.productId=:productId");
+		query.setParameter("productId", productId);
 		return query.list();
 	}
 
@@ -141,7 +141,7 @@ public class HibernateRelationshipManager implements RelationshipManager {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public void setArticleManager(ArticleManager articleManager) {
-		this.articleManager = articleManager;
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
 	}
 }

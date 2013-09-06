@@ -1,7 +1,7 @@
 package billiongoods.server.web.servlet.mvc.maintain.form;
 
-import billiongoods.server.warehouse.ArticleState;
 import billiongoods.server.warehouse.Price;
+import billiongoods.server.warehouse.ProductState;
 import billiongoods.server.warehouse.RelationshipType;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -13,16 +13,16 @@ import java.util.List;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class ArticleForm {
+public class ProductForm {
 	private Integer id;
 
 	private Integer category;
 
-	@NotEmpty(message = "maintain.article.name.err.blank")
-	@Length(max = 100, message = "maintain.article.name.err.max")
+	@NotEmpty(message = "maintain.product.name.err.blank")
+	@Length(max = 100, message = "maintain.product.name.err.max")
 	private String name;
 
-	@NotEmpty(message = "maintain.article.desc.err.blank")
+	@NotEmpty(message = "maintain.product.desc.err.blank")
 	private String description;
 
 	private String previewImage;
@@ -65,9 +65,9 @@ public class ArticleForm {
 
 	private String commentary;
 
-	private ArticleState articleState;
+	private ProductState productState;
 
-	public ArticleForm() {
+	public ProductForm() {
 	}
 
 	public Integer getId() {
@@ -274,17 +274,17 @@ public class ArticleForm {
 		this.commentary = commentary;
 	}
 
-	public ArticleState getArticleState() {
-		return articleState;
+	public ProductState getProductState() {
+		return productState;
 	}
 
-	public void setArticleState(ArticleState articleState) {
-		this.articleState = articleState;
+	public void setProductState(ProductState productState) {
+		this.productState = productState;
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("ArticleForm{");
+		final StringBuilder sb = new StringBuilder("ProductForm{");
 		sb.append("id=").append(id);
 		sb.append(", category=").append(category);
 		sb.append(", name='").append(name).append('\'');

@@ -1,14 +1,12 @@
 ============= CURRENT ====================
-- Migrate Artifact to Product
-
 - Own ads on main page
 - Filter by items
 - Global search ability
 
 ============= PLAN ====================
-- Search by article
+- Search by product
 - Export order
-- New article label for new articles
+- New product label for new products
 - Gadgets categories by prise: $0.99, $1.99, $2.99, $4.99, $9.99, $15.99, $20.99+
 
 - Accounts and personal info
@@ -24,39 +22,40 @@
 ============= DONE ====================
 06.09
 + Add items meta desc
++ Migrate Artifact to Product
 
 05.09
 + Show hi resolution images by click in view
 
 04.09
 + Hide add to basket if it's not possible to buy
-+ Ability to show article without description. Add more statuses.
++ Ability to show product without description. Add more statuses.
 + Ability to show quantity and sold out message
-+ Ability to add system comments to an article
++ Ability to add system comments to an product
 + Remove external formatting during merge (remove all <span> elements). Ability to clean exist formatting.
 
 03.09
 + Price updating doesn't work if URL start with /
-+ Redesign catalog for small number of articles
++ Redesign catalog for small number of products
 + Catalog manager works very bad
 + Ability to search groups by name
 
 02.09
-+ 07:42:29.550 [http-bio-8080-exec-18] ERROR billiongoods.web.Servlet - Page can't                                                                                         be opened: /warehouse/article/4232?null
++ 07:42:29.550 [http-bio-8080-exec-18] ERROR billiongoods.web.Servlet - Page can't                                                                                         be opened: /warehouse/product/4232?null
 java.lang.NullPointerException: null
-        at billiongoods.server.warehouse.impl.HibernateArticle.initialize(HibernateArticle.java:128) ~[services-1.5.0-SNAPSHOT.jar:na]                                                                                        ateArticle.java:128) ~[services-1.5.0-SNAPSHOT.jar:na]
-        at billiongoods.server.warehouse.impl.HibernateArticleManager.getArticle(HibernateArticleManager.java:52) ~[services-1.5.0-SNAPSHOT.jar:na]                                                                                        (HibernateArticleManager.java:52) ~[services-1.5.0-SNAPSHOT.jar:na]
+        at billiongoods.server.warehouse.impl.HibernateProduct.initialize(Hibernateproduct.java:128) ~[services-2.0.0.jar:na]                                                                                        ateproduct.java:128) ~[services-2.0.0.jar:na]
+        at billiongoods.server.warehouse.impl.HibernateProductManager.getproduct(HibernateproductManager.java:52) ~[services-2.0.0.jar:na]                                                                                        (HibernateproductManager.java:52) ~[services-2.0.0.jar:na]
 
 
 30.08
 + Main page redesign
 + HTML editor removes unknown tags
-+ Price for article 3364 can't be updated: Price can't be loaded: For input string: "US$29.00"
-+ Remove article. Not save and usually not used. Must be done in DB.
++ Price for product 3364 can't be updated: Price can't be loaded: For input string: "US$29.00"
++ Remove product. Not save and usually not used. Must be done in DB.
 
 29.08
 + Move PriceLoaded to Apache HC library instead. It should increase stability, I believe.
-+ Articles importing takes all SQL connections: executed in separate thread and uses transaction manager
++ products importing takes all SQL connections: executed in separate thread and uses transaction manager
 + Disable /warehouse/order/confirm in robots.txt
 + Add Yandex tracking to the site
 + Define new targets. Split /order/state (check state) and /order/confirm
@@ -74,50 +73,50 @@ java.lang.NullPointerException: null
 + Price can't be loaded (cache version is returned)
 
 23.08
-+ Exclude the same article from modifications group
++ Exclude the same product from modifications group
 + Link to SKU in edit mode
 
 22.08
 + Dispatch in 2-3 days
 + Show discount label for a product
-+ Add 'related' tab for an article that will show items from the same group/groups.
++ Add 'related' tab for an product that will show items from the same group/groups.
 + Logo to image (font loading takes to many time. No way to use in other pages).
 + Error reading included file system/price.ftl
 + Line scroll for related products:
-+ Add modifications/accessories links on the top of the article page
++ Add modifications/accessories links on the top of the product page
 
 21.08
-+ Import images as part of import articles process
++ Import images as part of import products process
 + Scale is not correct for not square images
 + Price validator: special thread, more functions - email, store to DB, view and so on.
 + Incorrect items count in pages view
 + If view has 4 pages - controls looks incorrect: 1 2 3 ... 4. Must be: 1 2 3 4
-+ link for accessories groin in article edit mode
-+ no way to save article if there is only one parameter and it's empty
++ link for accessories groin in product edit mode
++ no way to save product if there is only one parameter and it's empty
 + Sold count is never updated: update by query
 + trim parameter value before store
 + registrationDate and validationDate are not updated
-+ Remove Category from Article
++ Remove Category from product
 
 20.08
 + Price tracker
 + Sort main view items by date // type was date instead of datetime
 + Category update makes catalog broken
 + Attribute name can't be updated
-+ Extended relationships between articles
-+ Assign accessory to an article (don't have to open all articles) // assign to a group now
++ Extended relationships between products
++ Assign accessory to an product (don't have to open all products) // assign to a group now
 
 19.08
-+ In edit mode show article ID
++ In edit mode show product ID
 + In edit mode show category ID
 + Basket is loaded every time for each request: cache abstraction added to basket
 + In view mode search must be done by enter as well
 + In view show inactive items somehow (red background)
 + add new role: moderator - no trackers for this user.
-+ For moderator all articles must be shown by default.
-+ Remove SKU from article description
-+ In view mode articles sorted incorrect. The same article can be shown more when once.
-+ article creating works bad
++ For moderator all products must be shown by default.
++ Remove SKU from product description
++ In view mode products sorted incorrect. The same product can be shown more when once.
++ product creating works bad
 
 First steps
 + Accessories view is not correct
@@ -125,19 +124,19 @@ First steps
 + Arrivals must be selected by enable date
 + Update quantity in basket instead of new position
 + Show number basket's items in header
-+ Article sold could is not updating
++ product sold could is not updating
 + Notifications about order: no template
 + Callback form must be added
 + Hibernate PriceConverter->ExchangeManager
 + Set PriceConverter value in admin
 + Add user note to an order
-+ Parse article weight in importer
++ Parse product weight in importer
 + Orders admin page
-+ Show only enabled articles
-+ Show link to BangGood in article for admins
-+ Ability to show inactive articles
-+ Enable/disable article
-+ Change article weight
++ Show only enabled products
++ Show link to BangGood in product for admins
++ Ability to show inactive products
++ Enable/disable product
++ Change product weight
 + Clear basket after success payment
 + Add currency rate to order (can be used in history)
 + Check transaction ID before accept order (add transactionID to order)

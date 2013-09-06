@@ -24,13 +24,13 @@
     </tr>
 <#if basket?has_content>
     <#list basket.basketItems as i>
-        <#assign article=i.article/>
+        <#assign product=i.product/>
         <tr class="item">
             <td valign="top" style="margin-right: 10px">
-                <@bg.ui.articleImage article article.previewImageId!"" ImageSize.TINY/>
+                <@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/>
             </td>
             <td valign="top" width="100%" align="left">
-                <@bg.link.article article>${article.name}</@bg.link.article>
+                <@bg.link.product product>${product.name}</@bg.link.product>
             </td>
             <td valign="middle" nowrap="nowrap">
                 <ul>
@@ -41,8 +41,8 @@
             </td>
             <td valign="middle" nowrap="nowrap" align="center">
                 <input type="hidden" name="itemNumbers" value="${i.number}"/>
-                <input type="hidden" name="itemAmounts" value="${i.article.price.amount}"/>
-                <input type="hidden" name="itemWeights" value="${i.article.weight}"/>
+                <input type="hidden" name="itemAmounts" value="${i.product.price.amount}"/>
+                <input type="hidden" name="itemWeights" value="${i.product.weight}"/>
 
                 <div class="quantity">
                     <button class="q_down bg-ui-button" disabled="disabled" type="button"> -</button>
@@ -54,10 +54,10 @@
                 </div>
             </td>
             <td valign="middle" align="center" nowrap="nowrap">
-                <span class="itemWeight">${article.weight?string("0.00")} кг</span>
+                <span class="itemWeight">${product.weight?string("0.00")} кг</span>
             </td>
             <td valign="middle" nowrap="nowrap" align="left">
-                <span class="itemAmount"><@bg.ui.price article.price.amount * i.quantity "b"/></span>
+                <span class="itemAmount"><@bg.ui.price product.price.amount * i.quantity "g"/></span>
             </td>
         </tr>
     </#list>
@@ -75,7 +75,7 @@
 <div class="unregistered" <#if shipmentRates.isFreeShipment(ShipmentType.REGISTERED)>style="display: none"</#if>>
     Вы можете получить бесплатный номер для отслеживания (зарегистрированное отправление) добавив еще товара на
     сумму
-    <span class="price"><@bg.ui.price 25.0-shipmentRates.amount "b"/></span>
+    <span class="price"><@bg.ui.price 25.0-shipmentRates.amount "g"/></span>
 </div>
 
 <div class="order">

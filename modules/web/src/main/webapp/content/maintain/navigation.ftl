@@ -14,11 +14,11 @@
     <div>&nbsp;</div>
 
     <div>
-        <a href="/maintain/article">Создать Товар</a>
+        <a href="/maintain/product">Создать Товар</a>
     </div>
 
     <div>
-        <a href="/maintain/article/import">Загрузить Товары</a>
+        <a href="/maintain/product/import">Загрузить Товары</a>
     </div>
 
     <div>&nbsp;</div>

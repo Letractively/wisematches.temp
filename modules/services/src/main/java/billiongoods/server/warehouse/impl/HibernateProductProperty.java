@@ -9,17 +9,17 @@ import javax.persistence.Embeddable;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Embeddable
-public class HibernateArticleProperty {
+public class HibernateProductProperty {
 	@Column(name = "attributeId")
 	private Integer attributeId;
 
 	@Column(name = "value")
 	private String value;
 
-	public HibernateArticleProperty() {
+	public HibernateProductProperty() {
 	}
 
-	public HibernateArticleProperty(Attribute attribute, String value) {
+	public HibernateProductProperty(Attribute attribute, String value) {
 		this.attributeId = attribute.getId();
 		this.value = value;
 	}

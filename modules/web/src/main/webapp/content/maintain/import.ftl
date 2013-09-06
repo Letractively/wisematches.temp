@@ -61,7 +61,7 @@
 </table>
 
 <#else>
-<form action="/maintain/article/import" method="post" enctype="multipart/form-data">
+<form action="/maintain/product/import" method="post" enctype="multipart/form-data">
     <table style="width: 100%">
         <tr>
             <td valign="top">
@@ -134,6 +134,6 @@
 
 <script type="application/javascript">
     $("select[name=category]").change(function () {
-        bg.util.url.redirect("/maintain/article/import?c=" + $(this).val());
+        bg.util.url.redirect("/maintain/product/import?c=" + $(this).val());
     });
 </script>

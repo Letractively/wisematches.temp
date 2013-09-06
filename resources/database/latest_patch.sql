@@ -1,15 +1,34 @@
-ALTER TABLE `billiongoods`.`store_article`
-ADD COLUMN `stockAvailable` INT(11) NULL DEFAULT NULL
-AFTER `stockSold`,
-ADD COLUMN `comment` VARCHAR(100) NULL DEFAULT NULL
-AFTER `previewImageId`,
-CHANGE COLUMN `restockDate` `restockDate` DATE NULL DEFAULT NULL
-AFTER `stockAvailable`,
-CHANGE COLUMN `soldCount` `stockSold` INT(11) NULL DEFAULT 0,
-CHANGE COLUMN `active` `state` SMALLINT(6) NULL DEFAULT NULL,
-DROP INDEX `REG_DATE`,
-ADD INDEX `REG_DATE` (`registrationDate` DESC);
+SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
+SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'TRADITIONAL,ALLOW_INVALID_DATES';
 
-UPDATE store_article
-SET state=2
-WHERE state = 1;
+ALTER TABLE `billiongoods`.`store_article` RENAME TO `billiongoods`.`store_product`;
+
+ALTER TABLE `billiongoods`.`store_article_image`
+CHANGE COLUMN `articleId` `productId` INT(11) NOT NULL, RENAME TO `billiongoods`.`store_product_image`;
+
+ALTER TABLE `billiongoods`.`store_article_option`
+CHANGE COLUMN `articleId` `productId` INT(11) NOT NULL, RENAME TO `billiongoods`.`store_product_option`;
+
+ALTER TABLE `billiongoods`.`store_article_property`
+CHANGE COLUMN `articleId` `productId` INT(11) NOT NULL, RENAME TO `billiongoods`.`store_product_property`;
+
+ALTER TABLE `billiongoods`.`store_basket_item`
+CHANGE COLUMN `article` `product` INT(11) NULL DEFAULT NULL;
+
+ALTER TABLE `billiongoods`.`store_order_item`
+CHANGE COLUMN `article` `product` INT(11) NULL DEFAULT NULL;
+
+ALTER TABLE `billiongoods`.`store_group_item`
+CHANGE COLUMN `articleId` `productId` INT(11) NOT NULL;
+
+ALTER TABLE `billiongoods`.`store_article_relationship`
+CHANGE COLUMN `articleId` `productId` INT(11) NOT NULL, RENAME TO `billiongoods`.`store_product_relationship`;
+
+ALTER TABLE `billiongoods`.`service_price_renewal`
+CHANGE COLUMN `articleId` `productId` INT(11) NULL DEFAULT NULL;
+
+
+SET SQL_MODE = @OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;

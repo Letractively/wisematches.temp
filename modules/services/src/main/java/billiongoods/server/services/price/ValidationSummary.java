@@ -11,7 +11,7 @@ public interface ValidationSummary {
 
 	Date getFinishDate();
 
-	int getValidatedArticles();
+	int getValidatedProducts();
 
 	Collection<PriceRenewal> getPriceRenewals();
 

@@ -13,13 +13,13 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class BanggoodArticleImporterTest {
-	public BanggoodArticleImporterTest() {
+public class BanggoodProductImporterTest {
+	public BanggoodProductImporterTest() {
 	}
 
 	@Test
 	public void testSpanCleaner() {
-		final BanggoodArticleImporter importer = new BanggoodArticleImporter();
+		final BanggoodProductImporter importer = new BanggoodProductImporter();
 		String s = importer.cleanSpan("<br /><span style=\"font-size:12px;\"><span style=\"font-family: arial-helvetica-sans-serif;\"><strong>WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2</strong><br /><br /><strong>Description:</strong><br /><br />Brand: WLtoys<br />Item Name: Main Blade<br />NO.: V911-1-2<br />Usage:For WLtoys V911-1 RC Helicopter<br /><br /><strong>Package Included:</strong><br />1 x Main Blade</span></span>");
 		assertEquals("<br /><strong>WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2</strong><br /><br /><strong>Description:</strong><br /><br />Brand: WLtoys<br />Item Name: Main Blade<br />NO.: V911-1-2<br />Usage:For WLtoys V911-1 RC Helicopter<br /><br /><strong>Package Included:</strong><br />1 x Main Blade", s);
 	}
@@ -33,11 +33,11 @@ public class BanggoodArticleImporterTest {
 		final Category category = createMock(Category.class);
 		replay(category);
 
-		final Article article = createMock(Article.class);
-		expect(article.getId()).andReturn(13);
-		replay(article);
+		final Product product = createMock(Product.class);
+		expect(product.getId()).andReturn(13);
+		replay(product);
 
-		final ArticleEditor editor = new ArticleEditor();
+		final ProductEditor editor = new ProductEditor();
 		editor.setName("WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2");
 		editor.setDescription("<br /><span style=\"font-size:12px;\"><span style=\"font-family: arial-helvetica-sans-serif;\"><strong>WLtoys V911-1 RC Helicopter Spare Parts Green Main Blade V911-1-2</strong><br /><br /><strong>Description:</strong><br /><br />Brand: WLtoys<br />Item Name: Main Blade<br />NO.: V911-1-2<br />Usage:For WLtoys V911-1 RC Helicopter<br /><br /><strong>Package Included:</strong><br />1 x Main Blade</span></span>");
 		editor.setCategoryId(13);
@@ -48,16 +48,16 @@ public class BanggoodArticleImporterTest {
 		editor.setWholesaler(Supplier.BANGGOOD);
 		editor.setSupplierPrice(new Price(1.28d, null));
 
-		final ArticleManager articleManager = createMock(ArticleManager.class);
-		expect(articleManager.createArticle(editor)).andReturn(article);
-		replay(articleManager);
+		final ProductManager productManager = createMock(ProductManager.class);
+		expect(productManager.createProduct(editor)).andReturn(product);
+		replay(productManager);
 
-		final BanggoodArticleImporter importer = new BanggoodArticleImporter();
+		final BanggoodProductImporter importer = new BanggoodProductImporter();
 		importer.setExchangeManager(exchangeManager);
-		importer.setArticleManager(articleManager);
+		importer.setProductManager(productManager);
 
-//		importer.importArticles(category, getClass().getResourceAsStream("/banggood_packer.csv"));
+//		importer.importProducts(category, getClass().getResourceAsStream("/banggood_packer.csv"));
 
-		verify(articleManager);
+		verify(productManager);
 	}
 }

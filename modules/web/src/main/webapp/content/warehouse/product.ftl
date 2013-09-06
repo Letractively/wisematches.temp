@@ -1,6 +1,6 @@
-<#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Article" -->
-<#-- @ftlvariable name="related" type="billiongoods.server.warehouse.ArticleDescription[]" -->
-<#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ArticleDescription[]" -->
+<#-- @ftlvariable name="product" type="billiongoods.server.warehouse.Product" -->
+<#-- @ftlvariable name="related" type="billiongoods.server.warehouse.ProductDescription[]" -->
+<#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ProductDescription[]" -->
 
 <#include "/core.ftl">
 
@@ -9,12 +9,12 @@
 <link rel="stylesheet" href="<@bg.ui.static "css/jquery.prettyPhoto-3.1.5.css"/>" type="text/css" charset="utf-8"/>
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.prettyPhoto-3.1.5.js"/>"></script>
 
-<#assign sku=messageSource.getArticleCode(article)/>
+<#assign sku=messageSource.getProductCode(product)/>
 
-<div class="article ${article.state.name()?lower_case}" itemscope itemtype="http://schema.org/Product">
-<meta itemprop="url" content="http://www.billiongoods.ru/warehouse/article/${article.id}"/>
-<meta itemprop="productID" content="${article.id}"/>
-<meta itemprop="releaseDate" content="${article.registrationDate?date?string("yyyy-MM-dd")}"/>
+<div class="product ${product.state.name()?lower_case}" itemscope itemtype="http://schema.org/Product">
+<meta itemprop="url" content="http://www.billiongoods.ru/warehouse/product/${product.id}"/>
+<meta itemprop="productID" content="${product.id}"/>
+<meta itemprop="releaseDate" content="${product.registrationDate?date?string("yyyy-MM-dd")}"/>
 <link itemprop="itemCondition" href="http://schema.org/NewCondition"/>
 
 <table>
@@ -22,16 +22,16 @@
         <td valign="top" width="176px">
             <div class="view">
                 <div class="preview">
-                <@bg.ui.articleImage article article.previewImageId!"" ImageSize.MEDIUM {"itemprop":"image"}/>
-                <@bg.ui.discountDiv article/>
+                <@bg.ui.productImage product product.previewImageId!"" ImageSize.MEDIUM {"itemprop":"image"}/>
+                <@bg.ui.discountDiv product/>
                 </div>
 
                 <div class="thumb">
-                <#list article.imageIds as i>
-                    <#if (i==article.previewImageId)><#assign class="selected"/><#else><#assign class=""/></#if>
-                    <#assign viewURL><@bg.ui.articleImageUrl article i ImageSize.LARGE/></#assign>
+                <#list product.imageIds as i>
+                    <#if (i==product.previewImageId)><#assign class="selected"/><#else><#assign class=""/></#if>
+                    <#assign viewURL><@bg.ui.productImageUrl product i ImageSize.LARGE/></#assign>
                     <div>
-                        <@bg.ui.articleImage article i ImageSize.TINY {"class":"${class}", "page":"${i_index}", "view":"${viewURL}"}/>
+                        <@bg.ui.productImage product i ImageSize.TINY {"class":"${class}", "page":"${i_index}", "view":"${viewURL}"}/>
                     </div>
                 </#list>
                 </div>
@@ -40,10 +40,10 @@
         <td valign="top" width="100%">
             <div class="info">
                 <div class="name" itemprop="name">
-                ${article.name}
+                ${product.name}
                 <@bg.security.authorized "moderator">
                     <div style="float: right">
-                        <a href="/maintain/article?id=${article.id}">Изменить</a>
+                        <a href="/maintain/product?id=${product.id}">Изменить</a>
                     </div>
                 </@bg.security.authorized>
                 </div>
@@ -51,20 +51,20 @@
                 <div class="articular">
                     Артикул: <span class="sku" itemprop="sku">${sku}</span>
                 <@bg.security.authorized "moderator">
-                    (<a href="${article.supplierInfo.referenceUrl.toExternalForm()}"
-                        target="_blank">${article.supplierInfo.referenceCode}</a>)
+                    (<a href="${product.supplierInfo.referenceUrl.toExternalForm()}"
+                        target="_blank">${product.supplierInfo.referenceCode}</a>)
                 </@bg.security.authorized>
-                <#--Продано: <span class="sold">${article.stockInfo.sold}</span>-->
+                <#--Продано: <span class="sold">${product.stockInfo.sold}</span>-->
                 </div>
 
                 <div class="stock">
                     <div class="ability">
-                    <#if article.stockInfo.restockDate??>
+                    <#if product.stockInfo.restockDate??>
                         Нет на складе. Поступление
-                        ожидается ${messageSource.formatDate(article.stockInfo.restockDate, locale)}
+                        ожидается ${messageSource.formatDate(product.stockInfo.restockDate, locale)}
                     <#else>
-                        <#if article.stockInfo.rest??>
-                            Торопитесь, осталось всего ${article.stockInfo.rest} штук!
+                        <#if product.stockInfo.rest??>
+                            Торопитесь, осталось всего ${product.stockInfo.rest} штук!
                         <#else>
                             В наличии, обычно отправлается в течении 2-3 рабочих дней
                         </#if>
@@ -73,10 +73,10 @@
                     <div class="shipment">Бесплатная доставка</div>
                 </div>
 
-            <#if article.properties?has_content>
+            <#if product.properties?has_content>
                 <div class="props">
                     <table>
-                        <#list article.properties as p>
+                        <#list product.properties as p>
                             <#if p.value?has_content>
                                 <tr>
                                     <td>${p.attribute.name}</td>
@@ -96,18 +96,18 @@
 
                 <form id="shoppingForm" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                     <meta itemprop="deliveryLeadTime" content="30 days"/>
-                    <input type="hidden" name="article" value="${article.id}"/>
+                    <input type="hidden" name="product" value="${product.id}"/>
 
                     <div class="panel">
                         <div class="price">
-                        <@bg.ui.price article.price.amount/>
-                        <#if article.price.primordialAmount??><span
-                                class="primordial"><@bg.ui.price article.price.primordialAmount/></span></#if>
+                        <@bg.ui.price product.price.amount/>
+                        <#if product.price.primordialAmount??><span
+                                class="primordial"><@bg.ui.price product.price.primordialAmount/></span></#if>
                         </div>
 
-                    <#if article.options?has_content>
+                    <#if product.options?has_content>
                         <div class="ops">
-                            <#list article.options as o>
+                            <#list product.options as o>
                                 <div><strong>${o.attribute.name}:</strong></div>
                                 <div class="options">
                                     <input type="hidden" name="optionIds" value="${o.attribute.id}"/>
@@ -126,7 +126,7 @@
                     </#if>
 
                         <div class="action">
-                        <#if article.stockInfo.available>
+                        <#if product.stockInfo.available>
                             <link itemprop="availability" href="http://schema.org/InStock"/>
 
                             <div class="quantity">
@@ -146,9 +146,9 @@
                             </div>
                         <#else>
                             <link itemprop="availability" href="http://schema.org/OutOfStock"/>
-                            <#if article.stockInfo.restockDate??>
+                            <#if product.stockInfo.restockDate??>
                                 <meta itemprop="availabilityStarts"
-                                      content="${article.stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
+                                      content="${product.stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
                             </#if>
 
                             Товара нет в наличии в данный момент. Вы можете <a href="/assistance/contacts#section3">отправить
@@ -169,9 +169,9 @@
     </tr>
 </table>
 
-<#if article.description?has_content>
+<#if product.description?has_content>
     <@bg.ui.panel caption="Описание" id="description">
-        <#if article.state.promoted>
+        <#if product.state.promoted>
         <p>
             Мы еще не подготовили описание этого товара. Пожалуйста, если он вас заинтересовал и вы бы желали
             увидеть его описание в ближайшее время, <a href="/assistance/contacts#section3">свяжитесь с нами</a> и
@@ -185,7 +185,7 @@
         </p>
         <#else>
         <p itemprop="description">
-        ${article.description!""}
+        ${product.description!""}
         </p>
         </#if>
     </@bg.ui.panel>
@@ -204,7 +204,7 @@
             <#list accessories as a>
                 <@bg.ui.tableSplit accessories?size 2 a_index>
                     <td valign="top">
-                        <@bg.ui.articleItem a 'list'/>
+                        <@bg.ui.productItem a 'list'/>
                     </td>
                 </@bg.ui.tableSplit>
             </#list>
@@ -219,7 +219,7 @@
         <ul>
             <#list related as a>
                 <li>
-                    <@bg.ui.articleItem a 'grid'/>
+                    <@bg.ui.productItem a 'grid'/>
                 </li>
             </#list>
         </ul>
@@ -235,5 +235,5 @@
 </div>
 
 <script type="application/javascript">
-    new bg.warehouse.ArticleController();
+    new bg.warehouse.ProductController();
 </script>

@@ -3,9 +3,9 @@ package billiongoods.server.services.price.impl;
 import billiongoods.core.search.Range;
 import billiongoods.core.task.CleaningDayListener;
 import billiongoods.server.services.price.*;
-import billiongoods.server.warehouse.ArticleContext;
-import billiongoods.server.warehouse.ArticleManager;
 import billiongoods.server.warehouse.Price;
+import billiongoods.server.warehouse.ProductContext;
+import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.SupplierInfo;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,7 +31,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 	private PriceLoader priceLoader;
 
 	private SessionFactory sessionFactory;
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 	private ExchangeManager exchangeManager;
 
 	private AsyncTaskExecutor taskExecutor;
@@ -41,7 +41,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 
 	private final ReusableValidationSummary validationSummary = new ReusableValidationSummary();
 
-	private static final int BULK_ARTICLES_SIZE = 10;
+	private static final int BULK_PRODUCTS_SIZE = 10;
 
 	private final Collection<PriceValidatorListener> listeners = new CopyOnWriteArrayList<>();
 
@@ -78,8 +78,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 			TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
 			try {
 				Session session = sessionFactory.getCurrentSession();
-				final Query countQuery = session.createQuery("select count(*) from billiongoods.server.warehouse.impl.HibernateArticle a where a.state in (:states)");
-				countQuery.setParameterList("states", ArticleContext.VISIBLE);
+				final Query countQuery = session.createQuery("select count(*) from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states)");
+				countQuery.setParameterList("states", ProductContext.VISIBLE);
 
 				count = ((Number) countQuery.uniqueResult()).intValue();
 				transactionManager.commit(transaction);
@@ -102,14 +102,14 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 						break;
 					}
 				}
-				final Range range = Range.limit(index, BULK_ARTICLES_SIZE);
+				final Range range = Range.limit(index, BULK_PRODUCTS_SIZE);
 
 				transaction = transactionManager.getTransaction(new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
 				try {
 					Session session = sessionFactory.getCurrentSession();
 
-					final Query query = session.createQuery("select a.id, a.price, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateArticle a where a.state in (:states) order by a.id");
-					query.setParameterList("states", ArticleContext.VISIBLE);
+					final Query query = session.createQuery("select a.id, a.price, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) order by a.id");
+					query.setParameterList("states", ProductContext.VISIBLE);
 					final List list = range.apply(query).list();
 					if (list.isEmpty()) {
 						transactionManager.commit(transaction);
@@ -120,7 +120,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 
 						final Object[] a = (Object[]) o;
 
-						final Integer articleId = (Integer) a[0];
+						final Integer productId = (Integer) a[0];
 						final SupplierInfo supplierInfo = (SupplierInfo) a[2];
 
 						final Price oldPrice = (Price) a[1];
@@ -130,21 +130,21 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 							final Price newSupplierPrice = priceLoader.loadPrice(supplierInfo);
 							final Price newPrice = markupCalculator.calculateMarkupPrice(newSupplierPrice);
 
-							final HibernatePriceRenewal renewal = new HibernatePriceRenewal(articleId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
+							final HibernatePriceRenewal renewal = new HibernatePriceRenewal(productId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
 							if (!newPrice.equals(oldPrice)) {
-								log.info("Price for article {} from {} has been updated {}", articleId, supplierInfo.getReferenceUri(), renewal);
+								log.info("Price for product {} from {} has been updated {}", productId, supplierInfo.getReferenceUri(), renewal);
 								validationSummary.addRenewal(renewal);
 
 								session.save(renewal);
-								articleManager.updatePrice(articleId, newPrice, newSupplierPrice);
+								productManager.updatePrice(productId, newPrice, newSupplierPrice);
 							}
 
 							for (PriceValidatorListener listener : listeners) {
-								listener.priceValidated(articleId, renewal);
+								listener.priceValidated(productId, renewal);
 							}
 						} catch (PriceLoadingException ex) {
-							log.info("Price for article {} can't be updated: {}", articleId, ex.getMessage());
-							validationSummary.addBreakdown(new Date(), articleId, ex);
+							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
+							validationSummary.addBreakdown(new Date(), productId, ex);
 						}
 					}
 					session.flush();
@@ -154,7 +154,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 					transactionManager.rollback(transaction);
 					break;
 				}
-				index += BULK_ARTICLES_SIZE;
+				index += BULK_PRODUCTS_SIZE;
 			}
 
 			final Date finishedDate = new Date();
@@ -221,8 +221,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 		this.sessionFactory = sessionFactory;
 	}
 
-	public void setArticleManager(ArticleManager articleManager) {
-		this.articleManager = articleManager;
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
 	}
 
 	public void setExchangeManager(ExchangeManager exchangeManager) {

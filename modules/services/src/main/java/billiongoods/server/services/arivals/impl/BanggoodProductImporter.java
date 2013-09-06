@@ -1,8 +1,8 @@
 package billiongoods.server.services.arivals.impl;
 
 import au.com.bytecode.opencsv.CSVReader;
-import billiongoods.server.services.arivals.ArticleImporter;
 import billiongoods.server.services.arivals.ImportingSummary;
+import billiongoods.server.services.arivals.ProductImporter;
 import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.services.price.impl.PriceLoader;
@@ -25,10 +25,10 @@ import java.util.*;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class BanggoodArticleImporter implements ArticleImporter {
+public class BanggoodProductImporter implements ProductImporter {
 	private PriceLoader priceLoader;
 	private ImageManager imageManager;
-	private ArticleManager articleManager;
+	private ProductManager productManager;
 	private ExchangeManager exchangeManager;
 	private RelationshipManager relationshipManager;
 
@@ -39,9 +39,9 @@ public class BanggoodArticleImporter implements ArticleImporter {
 
 	private static final DefaultTransactionAttribute NEW_TRANSACTION_DEFINITION = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.BanggoodArticleImporter");
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.BanggoodProductImporter");
 
-	public BanggoodArticleImporter() {
+	public BanggoodProductImporter() {
 	}
 
 	@Override
@@ -49,38 +49,38 @@ public class BanggoodArticleImporter implements ArticleImporter {
 		return importingSummary;
 	}
 
-	public synchronized ImportingSummary importArticles(Category category,
+	public synchronized ImportingSummary importProducts(Category category,
 														List<Property> properties, List<Integer> groups,
 														InputStream descStream, InputStream imagesStream,
 														final boolean validatePrice) throws IOException {
 		if (importingSummary == null) {
-			final List<SuppliedArticle> articles = parseArticles(descStream);
+			final List<SuppliedProduct> products = parseProducts(descStream);
 			final Map<String, Set<String>> images = parseImages(imagesStream);
 
-			importingSummary = new DefaultImportingSummary(category, properties, groups, articles.size());
+			importingSummary = new DefaultImportingSummary(category, properties, groups, products.size());
 			taskExecutor.execute(new Runnable() {
 				@Override
 				public void run() {
-					importArticles(articles, images, validatePrice);
+					importProducts(products, images, validatePrice);
 				}
 			});
 		}
 		return importingSummary;
 	}
 
-	private void importArticles(List<SuppliedArticle> articles, Map<String, Set<String>> images, boolean validatePrice) {
+	private void importProducts(List<SuppliedProduct> products, Map<String, Set<String>> images, boolean validatePrice) {
 		try {
-			log.info("Start articles importing: {}", articles.size());
+			log.info("Start products importing: {}", products.size());
 
 			priceLoader.initialize();
 
 			int index = 0;
-			int totalCount = articles.size();
-			for (SuppliedArticle article : articles) {
-				log.info("Importing supplied [{}] of [{}]: {} from {}", index++, totalCount, article.sku, article.uri);
-				importArticle(article, images.get(article.sku), validatePrice);
+			int totalCount = products.size();
+			for (SuppliedProduct product : products) {
+				log.info("Importing supplied [{}] of [{}]: {} from {}", index++, totalCount, product.sku, product.uri);
+				importProduct(product, images.get(product.sku), validatePrice);
 			}
-			log.info("All articles imported");
+			log.info("All products imported");
 		} finally {
 			synchronized (this) {
 				importingSummary = null;
@@ -88,11 +88,10 @@ public class BanggoodArticleImporter implements ArticleImporter {
 		}
 	}
 
-	private void importArticle(SuppliedArticle supplied, Set<String> images, boolean validatePrice) {
+	private void importProduct(SuppliedProduct supplied, Set<String> images, boolean validatePrice) {
 		final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
 		try {
-			final Article article1 = articleManager.getArticle(supplied.sku);
-			if (article1 == null) {
+			if (productManager.getProduct(supplied.sku) == null) {
 				Price supplierPrice = supplied.price;
 				if (validatePrice) {
 					try {
@@ -107,7 +106,7 @@ public class BanggoodArticleImporter implements ArticleImporter {
 				final Category category = importingSummary.getImportingCategory();
 				final List<Property> properties = importingSummary.getProperties();
 
-				final ArticleEditor editor = new ArticleEditor();
+				final ProductEditor editor = new ProductEditor();
 				editor.setName(supplied.name);
 				editor.setDescription(supplied.desc);
 				editor.setCategoryId(category.getId());
@@ -118,10 +117,10 @@ public class BanggoodArticleImporter implements ArticleImporter {
 				editor.setReferenceCode(supplied.sku);
 				editor.setWholesaler(Supplier.BANGGOOD);
 				editor.setSupplierPrice(supplierPrice);
-				editor.setArticleState(ArticleState.DISABLED);
+				editor.setProductState(ProductState.DISABLED);
 
-				final Article article = articleManager.createArticle(editor);
-				log.info("Article imported: {}", article.getId());
+				final Product product = productManager.createProduct(editor);
+				log.info("Product imported: {}", product.getId());
 
 				if (images != null) {
 					int index = 1;
@@ -130,9 +129,9 @@ public class BanggoodArticleImporter implements ArticleImporter {
 						final String code = String.valueOf(index++);
 						log.info("Importing [{} of {}] image {} from {}", index - 1, images.size(), code, url);
 						try (InputStream inputStream = new URL(url).openStream()) {
-							imageManager.addImage(article, code, inputStream);
+							imageManager.addImage(product, code, inputStream);
 							codes.add(code);
-							log.info("Article associated with image: {}", code);
+							log.info("Product associated with image: {}", code);
 						} catch (Exception ex) {
 							log.error("SKU image can't be imported", ex);
 						}
@@ -142,15 +141,15 @@ public class BanggoodArticleImporter implements ArticleImporter {
 						editor.setImageIds(codes);
 						editor.setPreviewImage(codes.iterator().next());
 					}
-					log.info("Article associated with images: {}", codes);
+					log.info("Product associated with images: {}", codes);
 				}
 
 				final List<Integer> groups = importingSummary.getGroups();
 				if (groups != null) {
 					for (Integer group : groups) {
-						relationshipManager.addGroupItem(group, article.getId());
+						relationshipManager.addGroupItem(group, product.getId());
 					}
-					log.info("Article associated with groups: {}", groups);
+					log.info("Product associated with groups: {}", groups);
 				}
 				importingSummary.incrementImported();
 			} else {
@@ -173,8 +172,8 @@ public class BanggoodArticleImporter implements ArticleImporter {
 		return res;
 	}
 
-	protected List<SuppliedArticle> parseArticles(InputStream stream) throws IOException {
-		final List<SuppliedArticle> res = new ArrayList<>();
+	protected List<SuppliedProduct> parseProducts(InputStream stream) throws IOException {
+		final List<SuppliedProduct> res = new ArrayList<>();
 
 		final CSVReader reader = new CSVReader(new InputStreamReader(stream));
 		String[] nextLine = reader.readNext(); // ignore header
@@ -186,7 +185,7 @@ public class BanggoodArticleImporter implements ArticleImporter {
 			final String desc = cleanSpan(nextLine[5]);
 			final URL url = new URL(nextLine[6]);
 			final String uri = url.getFile();
-			res.add(new SuppliedArticle(sku, url, uri, name, desc, price, weight));
+			res.add(new SuppliedProduct(sku, url, uri, name, desc, price, weight));
 		}
 		return res;
 	}
@@ -218,8 +217,8 @@ public class BanggoodArticleImporter implements ArticleImporter {
 		this.imageManager = imageManager;
 	}
 
-	public void setArticleManager(ArticleManager articleManager) {
-		this.articleManager = articleManager;
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
 	}
 
 	public void setExchangeManager(ExchangeManager exchangeManager) {
@@ -238,7 +237,7 @@ public class BanggoodArticleImporter implements ArticleImporter {
 		this.transactionManager = transactionManager;
 	}
 
-	private static class SuppliedArticle implements SupplierInfo {
+	private static class SuppliedProduct implements SupplierInfo {
 		private final String sku;
 		private final URL url;
 		private final String uri;
@@ -247,7 +246,7 @@ public class BanggoodArticleImporter implements ArticleImporter {
 		private final Price price;
 		private final double weight;
 
-		private SuppliedArticle(String sku, URL url, String uri, String name, String desc, double price, double weight) {
+		private SuppliedProduct(String sku, URL url, String uri, String name, String desc, double price, double weight) {
 			this.sku = sku;
 			this.url = url;
 			this.uri = uri;

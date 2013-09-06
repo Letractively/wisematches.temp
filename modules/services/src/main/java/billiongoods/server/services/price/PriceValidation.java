@@ -8,5 +8,5 @@ import java.util.Date;
 public interface PriceValidation {
 	Date getTimestamp();
 
-	Integer getArticleId();
+	Integer getProductId();
 }

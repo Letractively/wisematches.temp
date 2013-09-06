@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="article" type="billiongoods.server.warehouse.Article" -->
+<#-- @ftlvariable name="product" type="billiongoods.server.warehouse.Product" -->
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
 
@@ -13,15 +13,15 @@
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.ui.widget-1.10.3.js"/>"></script>
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.fileupload-8.6.1.js"/>"></script>
 
-<div class="article-maintain" style="padding: 10px; border: 1px solid gray;">
-<form action="/maintain/article" method="post">
+<div class="product-maintain" style="padding: 10px; border: 1px solid gray;">
+<form action="/maintain/product" method="post">
 
 <table style="width: 100%">
-<#if article??>
-    <#if !article.state.active>
+<#if product??>
+    <#if !product.state.active>
     <tr id="inactiveWarning">
-        <td colspan="2" align="center" class="${article.state.name()?lower_case}">
-            Внимание! Товар не в активном состоянии: ${article.state.name()}
+        <td colspan="2" align="center" class="${product.state.name()?lower_case}">
+            Внимание! Товар не в активном состоянии: ${product.state.name()}
         </td>
     </tr>
     </#if>
@@ -29,9 +29,9 @@
     <td valign="top"><label for="category">Артикул: </label></td>
     <td>
         <@bg.ui.input path="form.id" fieldType="hidden">
-            <#assign articleId=bg.ui.statusValue!""/>
-            <#if bg.ui.statusValue?has_content><a href="/warehouse/article/${bg.ui.statusValue}"
-                                                  target="_blank">${messageSource.getArticleCode(article)}</a></#if>
+            <#assign productId=bg.ui.statusValue!""/>
+            <#if bg.ui.statusValue?has_content><a href="/warehouse/product/${bg.ui.statusValue}"
+                                                  target="_blank">${messageSource.getProductCode(product)}</a></#if>
         </@bg.ui.input>
     </td>
 </tr>
@@ -78,9 +78,9 @@
 <tr>
     <td valign="top"><label for="supplierReferenceId">Страница описания: </label></td>
     <td><@bg.ui.input path="form.supplierReferenceId" size=90>
-        <#if article??>
+        <#if product??>
             (<a id="supplierReferenceLink"
-                href="${article.supplierInfo.referenceUrl.toExternalForm()}"
+                href="${product.supplierInfo.referenceUrl.toExternalForm()}"
                 target="_blank">открыть в новом окне</a>)</#if>
     </@bg.ui.input>
     </td>
@@ -118,7 +118,7 @@
     <td><@bg.ui.input path="form.weight"/></td>
 </tr>
 
-<#if articleId?has_content>
+<#if productId?has_content>
 <tr>
     <td colspan="2">
         <hr>
@@ -278,7 +278,7 @@
             <#if viewImages?is_collection>
                 <#list viewImages as i>
                     <div class="image">
-                        <@bg.ui.articleImage article i ImageSize.SMALL/>
+                        <@bg.ui.productImage product i ImageSize.SMALL/>
                         <input name="enabledImages" type="checkbox" value="${i}"
                                <#if enabledImages?contains(i)>checked="checked"</#if>/>
                         <input name="previewImage" type="radio" value="${i}"
@@ -290,7 +290,7 @@
 
         <div>
             <label for="fileupload">Добавить изображение</label>
-            <input id="fileupload" type="file" name="files[]" data-url="/maintain/article/addimg" multiple>
+            <input id="fileupload" type="file" name="files[]" data-url="/maintain/product/addimg" multiple>
         </div>
     </td>
 </tr>
@@ -317,15 +317,15 @@
 
 <tr>
     <td colspan="2">
-        <label for="articleState">Состояние: </label>
-    <@bg.ui.bind "form.articleState"/>
-        <select id="articleState" name="${bg.ui.status.expression}">
-        <#list ArticleState.values() as s>
+        <label for="productState">Состояние: </label>
+    <@bg.ui.bind "form.productState"/>
+        <select id="productState" name="${bg.ui.status.expression}">
+        <#list ProductState.values() as s>
             <option value="${s.name()}" <#if bg.ui.actualValue=s>selected="selected"</#if>>${s.name()}</option>
         </#list>
         </select>
 
-    <#if articleId?has_content>
+    <#if productId?has_content>
         <button id="add" type="submit">Изменить</button>
     <#else>
         <button id="add" type="submit">Создать</button>
@@ -443,11 +443,11 @@
         $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/' + $(this).val());
     });
 
-    <#if article??>
+    <#if product??>
     $("#active").click(function () {
         var val = $(this).val() === 'true';
         bg.ui.lock(null, 'Влючение товара. Пожалуйста, подождите...');
-        $.post("/maintain/article/activate.ajax?id=${article.id}&a=" + val)
+        $.post("/maintain/product/activate.ajax?id=${product.id}&a=" + val)
                 .done(function (response) {
                     if (response.success) {
                         bg.ui.unlock(null, val ? "Товар успешно включен" : "Товар успешно выключен", false);

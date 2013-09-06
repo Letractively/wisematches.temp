@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ReusableValidationSummary implements ValidationSummary {
 	private volatile Date startDate;
 	private volatile Date finishDate;
-	private volatile int validatedArticles = 0;
+	private volatile int validatedProducts = 0;
 	private final Collection<PriceRenewal> renewals = new ConcurrentLinkedQueue<>();
 	private final Collection<PriceBreakdown> breakdowns = new ConcurrentLinkedQueue<>();
 
@@ -32,8 +32,8 @@ public class ReusableValidationSummary implements ValidationSummary {
 	}
 
 	@Override
-	public int getValidatedArticles() {
-		return validatedArticles;
+	public int getValidatedProducts() {
+		return validatedProducts;
 	}
 
 	@Override
@@ -47,15 +47,15 @@ public class ReusableValidationSummary implements ValidationSummary {
 	}
 
 	void incrementValidated() {
-		validatedArticles++;
+		validatedProducts++;
 	}
 
 	void addRenewal(PriceRenewal renewal) {
 		renewals.add(renewal);
 	}
 
-	void addBreakdown(Date date, Integer articleId, Exception exception) {
-		breakdowns.add(new ThePriceBreakdown(date, articleId, exception));
+	void addBreakdown(Date date, Integer productId, Exception exception) {
+		breakdowns.add(new ThePriceBreakdown(date, productId, exception));
 	}
 
 	void finalize(Date finish) {
@@ -64,7 +64,7 @@ public class ReusableValidationSummary implements ValidationSummary {
 
 	void initialize(Date date) {
 		this.startDate = date;
-		validatedArticles = 0;
+		validatedProducts = 0;
 		renewals.clear();
 		breakdowns.clear();
 	}
@@ -72,12 +72,12 @@ public class ReusableValidationSummary implements ValidationSummary {
 
 	private static final class ThePriceBreakdown implements PriceBreakdown {
 		private final Date timestamp;
-		private final Integer articleId;
+		private final Integer productId;
 		private final Exception exception;
 
-		private ThePriceBreakdown(Date timestamp, Integer articleId, Exception exception) {
+		private ThePriceBreakdown(Date timestamp, Integer productId, Exception exception) {
 			this.timestamp = timestamp;
-			this.articleId = articleId;
+			this.productId = productId;
 			this.exception = exception;
 		}
 
@@ -92,15 +92,15 @@ public class ReusableValidationSummary implements ValidationSummary {
 		}
 
 		@Override
-		public Integer getArticleId() {
-			return articleId;
+		public Integer getProductId() {
+			return productId;
 		}
 
 		@Override
 		public String toString() {
 			final StringBuilder sb = new StringBuilder("ThePriceBreakdown{");
 			sb.append("timestamp=").append(timestamp);
-			sb.append(", articleId=").append(articleId);
+			sb.append(", productId=").append(productId);
 			sb.append(", exception=").append(exception);
 			sb.append('}');
 			return sb.toString();
@@ -112,7 +112,7 @@ public class ReusableValidationSummary implements ValidationSummary {
 		final StringBuilder sb = new StringBuilder("ReusableValidationSummary{");
 		sb.append("startDate=").append(startDate);
 		sb.append(", finishDate=").append(finishDate);
-		sb.append(", validatedArticles=").append(validatedArticles);
+		sb.append(", validatedProducts=").append(validatedProducts);
 		sb.append(", renewals=").append(renewals);
 		sb.append(", breakdowns=").append(breakdowns);
 		sb.append('}');

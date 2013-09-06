@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class ArticleEditor {
+public class ProductEditor {
 	String name;
 	String description;
 	Integer categoryId;
@@ -23,9 +23,9 @@ public class ArticleEditor {
 	Supplier wholesaler;
 	Price supplierPrice;
 	String commentary;
-	ArticleState articleState;
+	ProductState productState;
 
-	public ArticleEditor() {
+	public ProductEditor() {
 	}
 
 	public String getName() {
@@ -156,11 +156,11 @@ public class ArticleEditor {
 		this.commentary = commentary;
 	}
 
-	public ArticleState getArticleState() {
-		return articleState;
+	public ProductState getProductState() {
+		return productState;
 	}
 
-	public void setArticleState(ArticleState articleState) {
-		this.articleState = articleState;
+	public void setProductState(ProductState productState) {
+		this.productState = productState;
 	}
 }

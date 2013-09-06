@@ -2,7 +2,7 @@ package billiongoods.server.services.basket.impl;
 
 import billiongoods.core.Visitor;
 import billiongoods.server.services.basket.BasketItem;
-import billiongoods.server.warehouse.ArticleDescription;
+import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.Property;
 import billiongoods.server.warehouse.impl.HibernateAttribute;
 import org.hibernate.SessionFactory;
@@ -46,21 +46,21 @@ public class HibernateBasketManagerTest {
 		final HibernateBasket basket = manager.getBasket(person);
 		assertNull(basket);
 
-		final ArticleDescription article = createMock(ArticleDescription.class);
-		expect(article.getId()).andReturn(120).anyTimes();
-		replay(article);
+		final ProductDescription product = createMock(ProductDescription.class);
+		expect(product.getId()).andReturn(120).anyTimes();
+		replay(product);
 
 		final List<Property> props = new ArrayList<>();
 		props.add(new Property(new HibernateAttribute("mock1", "mock"), "v1"));
 		props.add(new Property(new HibernateAttribute("mock2", "mock"), "v2"));
 
-		final BasketItem item1 = manager.addBasketItem(person, article, props, 10);
+		final BasketItem item1 = manager.addBasketItem(person, product, props, 10);
 		assertEquals(0, item1.getNumber());
 
-		final BasketItem item2 = manager.addBasketItem(person, article, props, 20);
+		final BasketItem item2 = manager.addBasketItem(person, product, props, 20);
 		assertEquals(1, item2.getNumber());
 
-		final BasketItem item3 = manager.addBasketItem(person, article, null, 30);
+		final BasketItem item3 = manager.addBasketItem(person, product, null, 30);
 		assertEquals(2, item3.getNumber());
 
 		final HibernateBasket basket1 = manager.getBasket(person);
@@ -70,7 +70,7 @@ public class HibernateBasketManagerTest {
 		manager.removeBasketItem(person, item2.getNumber());
 		assertEquals(2, basket1.getBasketItems().size());
 
-		final BasketItem item4 = manager.addBasketItem(person, article, null, 40);
+		final BasketItem item4 = manager.addBasketItem(person, product, null, 40);
 		assertEquals(1, item4.getNumber());
 
 		final BasketItem basketItem = manager.updateBasketItem(person, 1, 20);

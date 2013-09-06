@@ -1,6 +1,5 @@
 <#-- @ftlvariable name="order" type="billiongoods.server.services.payment.Order" -->
 <#-- @ftlvariable name="confirmation" type="boolean" -->
-<#-- @ftlvariable name="articleManager" type="billiongoods.server.warehouse.ArticleManager" -->
 
 <#include "/core.ftl"/>
 
@@ -163,7 +162,7 @@
             <#assign totalWeight=totalWeight+i.weight/>
             <tr class="item">
                 <td valign="top" width="100%" align="left">
-                    <a href="/warehouse/article/${i.article}">${i.name}</a>
+                    <a href="/warehouse/product/${i.product}">${i.name}</a>
                 </td>
                 <td valign="middle" nowrap="nowrap">
                 ${i.options}

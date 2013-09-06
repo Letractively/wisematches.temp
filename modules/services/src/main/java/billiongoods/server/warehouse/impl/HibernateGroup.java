@@ -1,7 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.ArticleDescription;
 import billiongoods.server.warehouse.Group;
+import billiongoods.server.warehouse.ProductDescription;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ public class HibernateGroup implements Group {
 	@Column(name = "name")
 	private String name;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = HibernateArticleDescription.class)
-	@JoinTable(name = "store_group_item", joinColumns = @JoinColumn(name = "groupId"), inverseJoinColumns = @JoinColumn(name = "articleId"))
-	private List<ArticleDescription> articles = new ArrayList<>();
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = HibernateProductDescription.class)
+	@JoinTable(name = "store_group_item", joinColumns = @JoinColumn(name = "groupId"), inverseJoinColumns = @JoinColumn(name = "productId"))
+	private List<ProductDescription> products = new ArrayList<>();
 
 	public HibernateGroup() {
 	}
@@ -43,16 +43,16 @@ public class HibernateGroup implements Group {
 	}
 
 	@Override
-	public List<ArticleDescription> getDescriptions() {
-		return articles;
+	public List<ProductDescription> getDescriptions() {
+		return products;
 	}
 
-	boolean addArticle(ArticleDescription article) {
-		return this.articles.add(article);
+	boolean addProduct(ProductDescription product) {
+		return this.products.add(product);
 	}
 
-	boolean removeArticle(ArticleDescription article) {
-		return this.articles.remove(article);
+	boolean removeProduct(ProductDescription product) {
+		return this.products.remove(product);
 	}
 
 	void setName(String name) {
@@ -64,7 +64,7 @@ public class HibernateGroup implements Group {
 		final StringBuilder sb = new StringBuilder("HibernateGroup{");
 		sb.append("id=").append(id);
 		sb.append(", name='").append(name).append('\'');
-		sb.append(", articles=").append(articles);
+		sb.append(", products=").append(products);
 		sb.append('}');
 		return sb.toString();
 	}

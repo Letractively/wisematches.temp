@@ -2,7 +2,7 @@ package billiongoods.server.services.payment.impl;
 
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.payment.OrderItem;
-import billiongoods.server.warehouse.ArticleDescription;
+import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.Property;
 
 import javax.persistence.*;
@@ -21,8 +21,8 @@ public class HibernateOrderItem implements OrderItem {
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "article")
-	private Integer article;
+	@Column(name = "product")
+	private Integer product;
 
 	@Column(name = "quantity")
 	private int quantity;
@@ -43,13 +43,13 @@ public class HibernateOrderItem implements OrderItem {
 	public HibernateOrderItem(HibernateOrder order, BasketItem item, int number) {
 		this.pk = new Pk(order.getId(), number);
 
-		final ArticleDescription article = item.getArticle();
+		final ProductDescription product1 = item.getProduct();
 
-		this.name = article.getName();
-		this.article = article.getId();
+		this.name = product1.getName();
+		this.product = product1.getId();
 		this.quantity = item.getQuantity();
-		this.amount = article.getPrice().getAmount();
-		this.weight = article.getWeight();
+		this.amount = product1.getPrice().getAmount();
+		this.weight = product1.getWeight();
 
 		StringBuilder sb = new StringBuilder();
 		final Collection<Property> options1 = item.getOptions();
@@ -70,8 +70,8 @@ public class HibernateOrderItem implements OrderItem {
 	}
 
 	@Override
-	public Integer getArticle() {
-		return article;
+	public Integer getProduct() {
+		return product;
 	}
 
 	@Override

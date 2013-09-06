@@ -1,8 +1,8 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.ArticleDescription;
-import billiongoods.server.warehouse.ArticleState;
 import billiongoods.server.warehouse.Price;
+import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductState;
 import billiongoods.server.warehouse.StockInfo;
 
 import javax.persistence.*;
@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @MappedSuperclass
-public class AbstractArticleDescription implements ArticleDescription {
+public class AbstractProductDescription implements ProductDescription {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +32,7 @@ public class AbstractArticleDescription implements ArticleDescription {
 
 	@Column(name = "state")
 	@Enumerated(EnumType.ORDINAL)
-	private ArticleState state = ArticleState.DISABLED;
+	private ProductState state = ProductState.DISABLED;
 
 	@Embedded
 	@AttributeOverrides({
@@ -51,7 +51,7 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Column(name = "previewImageId")
 	private String previewImageId;
 
-	public AbstractArticleDescription() {
+	public AbstractProductDescription() {
 		registrationDate = new Date();
 	}
 
@@ -71,7 +71,7 @@ public class AbstractArticleDescription implements ArticleDescription {
 	}
 
 	@Override
-	public ArticleState getState() {
+	public ProductState getState() {
 		return state;
 	}
 
@@ -109,9 +109,9 @@ public class AbstractArticleDescription implements ArticleDescription {
 		this.name = name;
 	}
 
-	void setState(ArticleState state) {
+	void setState(ProductState state) {
 		this.state = state;
-		if (state == ArticleState.ACTIVE || state == ArticleState.PROMOTED) {
+		if (state == ProductState.ACTIVE || state == ProductState.PROMOTED) {
 			this.registrationDate = new Date();
 		}
 	}
@@ -143,9 +143,9 @@ public class AbstractArticleDescription implements ArticleDescription {
 	@Override
 	public final boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof AbstractArticleDescription)) return false;
+		if (!(o instanceof AbstractProductDescription)) return false;
 
-		AbstractArticleDescription that = (AbstractArticleDescription) o;
+		AbstractProductDescription that = (AbstractProductDescription) o;
 		return !(id != null ? !id.equals(that.id) : that.id != null);
 	}
 
@@ -156,7 +156,7 @@ public class AbstractArticleDescription implements ArticleDescription {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("AbstractArticleDescription{");
+		final StringBuilder sb = new StringBuilder("AbstractProductDescription{");
 		sb.append("id=").append(id);
 		sb.append(", name='").append(name).append('\'');
 		sb.append(", weight=").append(weight);

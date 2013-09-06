@@ -3,31 +3,31 @@ package billiongoods.server.warehouse;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public enum ArticleState {
+public enum ProductState {
 	/**
-	 * Just created/imported article
+	 * Just created/imported product
 	 */
 	DISABLED,
 
 	/**
-	 * Article has name, filled properties and prices but description is not valid.
+	 * Product has name, filled properties and prices but description is not valid.
 	 */
 	PROMOTED,
 
 	/**
-	 * Article is fully ready
+	 * Product is fully ready
 	 */
 	ACTIVE,
 
 	/**
-	 * Indicates that articled is discontinued. Depends on settings we can show or hide such articles.
+	 * Indicates that product is discontinued. Depends on settings we can show or hide such products.
 	 * <p/>
 	 * Usually it's pre-removed state.
 	 */
 	DISCONTINUED,
 
 	/**
-	 * Article has been removed
+	 * Product has been removed
 	 */
 	REMOVED;
 
