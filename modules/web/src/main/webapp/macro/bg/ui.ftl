@@ -13,8 +13,8 @@
 <#macro static p>${staticResourcesDomain}/${p}</#macro>
 
 
-<#macro usd v><span class="usd">US$<span class="usd v" itemprop="price">${v?string("0.00")}</span><meta
-        itemprop="priceCurrency" content="USD"/></span></#macro>
+<#macro usd v><span class="usd"><span class="currency" itemprop="priceCurrency">USD</span><span class="usd v"
+                                                                                                itemprop="price">${v?string("0.00")}</span></span></#macro>
 
 <#macro rub v c="g"><span class="rub v">${v?string("0.00")}</span><img
         src="<@static "images/${c}ruble.gif"/>"
@@ -40,11 +40,13 @@
 </div>
 </#macro>
 
-<#macro categoriesTree >
+<#macro articleImageUrl article code size>${imageResourcesDomain}/${imageResolver.resolveURI(article, code, size)?replace("\\", "/")}</#macro>
 
+<#macro articleImage article code size props={}><img
+        src="<@bg.ui.articleImageUrl article code size/>"
+        alt="${article.name}" width="${size.width}px" height="${size.height}px"
+    <#list props?keys as k>${k}="${props[k]}"</#list>>
 </#macro>
-
-
 
 <#macro articlesView items type ops={}>
     <#if type =='grid'>
@@ -61,20 +63,22 @@
     </#if>
 </#macro>
 
-<#macro artiveItem article ops={}>
-<div class="article-item grid ${article.state.name()?lower_case}">
-    <div class="image">
-        <@bg.link.article article><img alt="${article.name}"
-                                       title="${article.name}"
-                                       src="<@articleImg article article.previewImageId!"" ImageSize.SMALL/>"/>
+<#macro articleItem article layout ops={}>
+<div class="article-item ${layout} ${article.state.name()?lower_case}"
+     itemscope itemtype="http://schema.org/Product">
+    <div class="image small">
+        <@bg.link.article article>
+            <@bg.ui.articleImage article article.previewImageId!"" ImageSize.SMALL {"title":"${article.name}", "itemprop": "image"}/>
         </@bg.link.article>
         <@discountDiv article/>
     </div>
-    <div class="name"><@bg.link.article article>${article.name}</@bg.link.article></div>
-    <div class="price"><@bg.ui.price article.price.amount/></div>
+    <div class="name" itemprop="name"><@bg.link.article article>${article.name}</@bg.link.article></div>
+    <div class="price" itemprop="offers" itemscope
+         itemtype="http://schema.org/Offer"><@bg.ui.price article.price.amount/></div>
     <#if ops["showCategory"]?? && ops["showCategory"]>
         <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(article.categoryId)/></div>
     </#if>
+    <#nested>
 </div>
 </#macro>
 
@@ -83,15 +87,13 @@
     <#list articles as a>
         <@bg.ui.tableSplit articles?size 4 a_index>
             <td valign="top" align="center" width="25%">
-                <@artiveItem a ops/>
+                <@articleItem a 'grid' ops/>
             </td>
         </@bg.ui.tableSplit>
     </#list>
 </table>
 </#macro>
-
-
-<#macro articleImg article code type>${imageResourcesDomain}/${imageResolver.resolveURI(article, code, type)?replace("\\", "/")}</#macro>
+<#--<#macro articleImg article code type>${imageResourcesDomain}/${imageResolver.resolveURI(article, code, type)?replace("\\", "/")}</#macro>-->
 
 <#macro articlesTable articles itemsTableForm>
 <div class="articles">

@@ -27,8 +27,7 @@
         <#assign article=i.article/>
         <tr class="item">
             <td valign="top" style="margin-right: 10px">
-                <img src="<@bg.ui.articleImg article article.previewImageId!"" ImageSize.TINY/>" width="50px"
-                     height="50px"/>
+                <@bg.ui.articleImage article article.previewImageId!"" ImageSize.TINY/>
             </td>
             <td valign="top" width="100%" align="left">
                 <@bg.link.article article>${article.name}</@bg.link.article>
