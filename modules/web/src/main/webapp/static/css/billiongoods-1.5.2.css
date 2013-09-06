@@ -944,6 +944,11 @@ button.bg-ui-button.selected {
     height: 150px;
 }
 
+.article-item.small .image img {
+    width: 150px;
+    height: 150px;
+}
+
 .article .article-item .name {
     font-weight: normal;
 }
@@ -1428,6 +1433,11 @@ button.bg-ui-button.selected {
     float: left;
     width: 75px;
     margin-right: 10px;
+}
+
+.accessories .article-item .image img {
+    width: 75px !important;
+    height: 75px !important;
 }
 
 .article-maintain #inactiveWarning .disabled {

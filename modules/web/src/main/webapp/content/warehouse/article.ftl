@@ -9,26 +9,30 @@
 <link rel="stylesheet" href="<@bg.ui.static "css/jquery.prettyPhoto-3.1.5.css"/>" type="text/css" charset="utf-8"/>
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.prettyPhoto-3.1.5.js"/>"></script>
 
+<#assign sku=messageSource.getArticleCode(article)/>
+
 <div class="article ${article.state.name()?lower_case}" itemscope itemtype="http://schema.org/Product">
-<meta itemprop="url" content="/warehouse/article/${article.id}"/>
+<meta itemprop="url" content="http://www.billiongoods.ru/warehouse/article/${article.id}"/>
 <meta itemprop="productID" content="${article.id}"/>
-<meta itemprop="identifier" content="sku:${article.id}"/>
+<meta itemprop="releaseDate" content="${article.registrationDate?date?string("yyyy-MM-dd")}"/>
+<link itemprop="itemCondition" href="http://schema.org/NewCondition"/>
+
 <table>
     <tr>
         <td valign="top" width="176px">
             <div class="view">
                 <div class="preview">
-                    <img itemprop="image" alt="${article.name}"
-                         src="<@bg.ui.articleImg article article.previewImageId!"" ImageSize.MEDIUM/>"/>
+                <@bg.ui.articleImage article article.previewImageId!"" ImageSize.MEDIUM {"itemprop":"image"}/>
                 <@bg.ui.discountDiv article/>
                 </div>
 
                 <div class="thumb">
                 <#list article.imageIds as i>
-                    <div><img <#if i==article.previewImageId!"">class="selected"</#if>
-                              page="${i_index}"
-                              view="<@bg.ui.articleImg article i ImageSize.LARGE/>"
-                              src="<@bg.ui.articleImg article i ImageSize.TINY/>" width="50px" height="50px"/></div>
+                    <#if (i==article.previewImageId)><#assign class="selected"/><#else><#assign class=""/></#if>
+                    <#assign viewURL><@bg.ui.articleImageUrl article i ImageSize.LARGE/></#assign>
+                    <div>
+                        <@bg.ui.articleImage article i ImageSize.TINY {"class":"${class}", "page":"${i_index}", "view":"${viewURL}"}/>
+                    </div>
                 </#list>
                 </div>
             </div>
@@ -45,7 +49,7 @@
                 </div>
 
                 <div class="articular">
-                    Артикул: <span class="sku" itemprop="sku">${messageSource.getArticleCode(article)}</span>
+                    Артикул: <span class="sku" itemprop="sku">${sku}</span>
                 <@bg.security.authorized "moderator">
                     (<a href="${article.supplierInfo.referenceUrl.toExternalForm()}"
                         target="_blank">${article.supplierInfo.referenceCode}</a>)
@@ -90,21 +94,9 @@
                 <#if related?has_content>| <a href="#related">Похожие продукты</a></#if>
                 </div>
 
-                <form id="shoppingForm" itemscope itemtype="http://schema.org/Offer">
+                <form id="shoppingForm" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <meta itemprop="deliveryLeadTime" content="30 days"/>
                     <input type="hidden" name="article" value="${article.id}"/>
-
-                <#--
-                                <#if article.stockInfo.restockDate??>
-                                    <link itemprop="availability" href="http://schema.org/OutOfStock"/>
-                                    <meta itemprop="" content=""/>
-                                <#else>
-                                    <#if article.stockInfo.rest??>
-                                        Торопитесь, осталось всего ${article.stockInfo.rest} штук!
-                                    <#else>
-                                        В наличии, обычно отправлается в течении 2-3 рабочих дней
-                                    </#if>
-                                </#if>
-                -->
 
                     <div class="panel">
                         <div class="price">
@@ -135,6 +127,8 @@
 
                         <div class="action">
                         <#if article.stockInfo.available>
+                            <link itemprop="availability" href="http://schema.org/InStock"/>
+
                             <div class="quantity">
                                 <span>Количество: </span>
                                 <button class="q_down bg-ui-button" disabled="disabled" type="button"> -</button>
@@ -151,10 +145,16 @@
                                 </button>
                             </div>
                         <#else>
+                            <link itemprop="availability" href="http://schema.org/OutOfStock"/>
+                            <#if article.stockInfo.restockDate??>
+                                <meta itemprop="availabilityStarts"
+                                      content="${article.stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
+                            </#if>
+
                             Товара нет в наличии в данный момент. Вы можете <a href="/assistance/contacts#section3">отправить
                             нам заявку</a> и мы пришлем вам письмо, когда товар снова будет в наличии.
                             <br>
-                            Не забудьте указать артикул товара: ${messageSource.getArticleCode(article)}!
+                            Не забудьте указать артикул товара: ${sku}!
                         </#if>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
 
         <p>
             Пожалуйста, не забудьте указать артикул интересующего вас
-            товара: ${messageSource.getArticleCode(article)}!
+            товара: ${sku}!
         </p>
         <#else>
         <p itemprop="description">
@@ -204,16 +204,7 @@
             <#list accessories as a>
                 <@bg.ui.tableSplit accessories?size 2 a_index>
                     <td valign="top">
-                        <div class="article-item list">
-                            <div class="image">
-                                <@bg.link.article a><img
-                                        alt="${a.name}"
-                                        title="${a.name}"
-                                        src="<@bg.ui.articleImg a a.previewImageId!"" ImageSize.SMALL/>"
-                                        width="75px" height="75px"/></@bg.link.article>
-                            </div>
-                            <div class="name"><@bg.link.article a>${a.name}</@bg.link.article></div>
-                            <div class="price"><@bg.ui.price a.price.amount/></div>
+                        <@bg.ui.articleItem a 'list'/>
                     </td>
                 </@bg.ui.tableSplit>
             </#list>
@@ -228,7 +219,7 @@
         <ul>
             <#list related as a>
                 <li>
-                    <@bg.ui.artiveItem a/>
+                    <@bg.ui.articleItem a 'grid'/>
                 </li>
             </#list>
         </ul>
