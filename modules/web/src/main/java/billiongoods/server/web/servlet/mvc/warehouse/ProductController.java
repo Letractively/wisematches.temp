@@ -25,8 +25,8 @@ public class ProductController extends AbstractController {
 	}
 
 	@RequestMapping("/{productId}")
-	public String showSubCategory(@PathVariable("productId") String productId, Model model) {
-		final Product product;
+    public String showProduct(@PathVariable("productId") String productId, Model model) {
+        final Product product;
 		if (productId.startsWith("SKU")) {
 			product = productManager.getProduct(productId);
 		} else {
