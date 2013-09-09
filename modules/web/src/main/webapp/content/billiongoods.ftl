@@ -7,9 +7,9 @@
 <#-- @ftlvariable name="hideNavigation" type="java.lang.Boolean" -->
 <#include "/core.ftl">
 
-<#assign libsVersion="2.0.0"/>
+<#assign libsVersion="2.0.1"/>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
     <title><@message code=title!"title.default"/><#if titleExtension?has_content>${titleExtension}</#if></title>
 
