@@ -60,8 +60,9 @@
                         <#assign state=l.orderState/>
                         <#assign stateName=state.name()?lower_case/>
                         <tr class="order-log">
-                            <td valign="to2.0.0p" nowrap="nowrap">${messageSource.formatDate(l.timeStamp, locale)}
-                                <br>${messageSource.formatTime(l.timeStamp, locale)}</td>
+                            <td valign="top" nowrap="nowrap">${messageSource.formatDate(l.timeStamp, locale)}
+                                <br>${messageSource.formatTime(l.timeStamp, locale)}
+                            </td>
                             <td valign="top">
                                 <div>
                                     <@message code="order.status.${stateName}.label"/>

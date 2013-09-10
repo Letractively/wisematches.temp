@@ -33,7 +33,7 @@
 </p>
 <#elseif context.orderState.processing>
 <p>
-    Ваш заказ #${context.id} отправлен в службу доставки. Упаклвка и отправка товара займен 2-3 рабочих дня.
+    Ваш заказ #${context.id} отправлен в службу доставки. Упаковка и отправка товара займет 2-3 рабочих дня.
 </p>
 <#elseif context.orderState.shipping>
 <p>
