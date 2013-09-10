@@ -61,7 +61,7 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public PayPalTransaction beginTransaction(Order order) {
-		HibernateTransaction transaction = new HibernateTransaction(order.getId(), order.getAmount(), order.getShipment());
+		HibernateTransaction transaction = new HibernateTransaction(order.getId(), order.getAmount(), order.getShipment().getAmount());
 		sessionFactory.getCurrentSession().save(transaction);
 		return transaction;
 	}

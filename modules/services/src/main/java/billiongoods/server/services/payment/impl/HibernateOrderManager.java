@@ -24,245 +24,245 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateOrderManager extends EntitySearchManager<Order, OrderContext> implements OrderManager {
-    private ExchangeManager exchangeManager;
-    private ShipmentManager shipmentManager;
+	private ExchangeManager exchangeManager;
+	private ShipmentManager shipmentManager;
 
-    private final Collection<OrderListener> listeners = new CopyOnWriteArrayList<>();
+	private final Collection<OrderListener> listeners = new CopyOnWriteArrayList<>();
 
-    private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderManager");
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderManager");
 
-    public HibernateOrderManager() {
-        super(HibernateOrder.class);
-    }
+	public HibernateOrderManager() {
+		super(HibernateOrder.class);
+	}
 
-    @Override
-    public void addOrderListener(OrderListener l) {
-        if (l != null) {
-            listeners.add(l);
-        }
-    }
+	@Override
+	public void addOrderListener(OrderListener l) {
+		if (l != null) {
+			listeners.add(l);
+		}
+	}
 
-    @Override
-    public void removeOrderListener(OrderListener l) {
-        if (l != null) {
-            listeners.remove(l);
-        }
-    }
+	@Override
+	public void removeOrderListener(OrderListener l) {
+		if (l != null) {
+			listeners.remove(l);
+		}
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public Order create(Personality person, Basket basket, Address address, ShipmentType shipmentType, boolean track) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public Order create(Personality person, Basket basket, Address address, ShipmentType shipmentType, boolean track) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final double shipmentCost = shipmentManager.getShipmentCost(basket, shipmentType);
-        final Shipment shipment = new Shipment(shipmentCost, address, shipmentType);
+		final double shipmentCost = shipmentManager.getShipmentCost(basket, shipmentType);
+		final Shipment shipment = new Shipment(shipmentCost, address, shipmentType);
 
-        final double exchangeRate = exchangeManager.getExchangeRate();
-        final HibernateOrder order = new HibernateOrder(person.getId(), basket, shipment, exchangeRate, track);
-        session.save(order);
+		final double exchangeRate = exchangeManager.getExchangeRate();
+		final HibernateOrder order = new HibernateOrder(person.getId(), basket, shipment, exchangeRate, track);
+		session.save(order);
 
-        int index = 0;
-        final List<OrderItem> items = new ArrayList<>();
-        for (BasketItem basketItem : basket.getBasketItems()) {
-            items.add(new HibernateOrderItem(order, basketItem, index++));
-        }
-        order.setOrderItems(items);
-        session.update(order);
+		int index = 0;
+		final List<OrderItem> items = new ArrayList<>();
+		for (BasketItem basketItem : basket.getBasketItems()) {
+			items.add(new HibernateOrderItem(order, basketItem, index++));
+		}
+		order.setOrderItems(items);
+		session.update(order);
 
-        notifyOrderState(order, null);
+		notifyOrderState(order, null);
 
-        log.info("New order has been placed: {}", order.getId());
+		log.info("New order has been placed: {}", order.getId());
 
-        return order;
-    }
+		return order;
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void bill(Long orderId, String token) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void bill(Long orderId, String token) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateOrder order = getOrder(orderId);
-        final OrderState state = order.getOrderState();
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
 
-        order.bill(token);
-        session.update(order);
+		order.bill(token);
+		session.update(order);
 
-        notifyOrderState(order, state);
+		notifyOrderState(order, state);
 
-        log.info("New state was changed to billing: {}", orderId);
-    }
+		log.info("New state was changed to billing: {}", orderId);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void accept(Long orderId, String payer, String paymentId, String note) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void accept(Long orderId, String payer, String paymentId, String note) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateOrder order = getOrder(orderId);
-        final OrderState state = order.getOrderState();
-        order.accept(payer, paymentId, note);
-        session.update(order);
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.accept(payer, paymentId, note);
+		session.update(order);
 
-        notifyOrderState(order, state);
+		notifyOrderState(order, state);
 
-        log.info("New state was changed to accepted: {}", orderId);
-    }
+		log.info("New state was changed to accepted: {}", orderId);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void reject(Long orderId, String payer, String paymentId, String note) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void reject(Long orderId, String payer, String paymentId, String note) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateOrder order = getOrder(orderId);
-        final OrderState state = order.getOrderState();
-        order.reject(payer, paymentId, note);
-        session.update(order);
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.reject(payer, paymentId, note);
+		session.update(order);
 
-        notifyOrderState(order, state);
+		notifyOrderState(order, state);
 
-        log.info("New state was changed to rejected: {}", orderId);
-    }
+		log.info("New state was changed to rejected: {}", orderId);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void processing(Long orderId, String number) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void processing(Long orderId, String number, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateOrder order = getOrder(orderId);
-        final OrderState state = order.getOrderState();
-        order.processing(number);
-        session.update(order);
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.processing(number, commentary);
+		session.update(order);
 
-        notifyOrderState(order, state);
+		notifyOrderState(order, state);
 
-        log.info("New state was changed to processing: {}", orderId);
-    }
+		log.info("New state was changed to processing: {}", orderId);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void shipping(Long orderId, String number) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void shipping(Long orderId, String number, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateOrder order = getOrder(orderId);
-        final OrderState state = order.getOrderState();
-        order.shipping(number);
-        session.update(order);
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.shipping(number, commentary);
+		session.update(order);
 
-        notifyOrderState(order, state);
+		notifyOrderState(order, state);
 
-        log.info("New state was changed to shipping: {}", orderId);
-    }
+		log.info("New state was changed to shipping: {}", orderId);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void shipped(Long orderId, String number) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void shipped(Long orderId, String number, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateOrder order = getOrder(orderId);
-        final OrderState state = order.getOrderState();
-        order.shipped(number);
-        session.update(order);
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.shipped(number, commentary);
+		session.update(order);
 
-        notifyOrderState(order, state);
+		notifyOrderState(order, state);
 
-        log.info("New state was changed to shipped: {}", orderId);
-    }
+		log.info("New state was changed to shipped: {}", orderId);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void failed(Long orderId, String reason) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void failed(Long orderId, String reason) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final HibernateOrder order = getOrder(orderId);
-        final OrderState state = order.getOrderState();
-        order.failed(reason);
-        session.update(order);
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.failed(reason);
+		session.update(order);
 
-        notifyOrderState(order, state);
+		notifyOrderState(order, state);
 
-        log.info("New state was changed to failed: {}", orderId);
-    }
+		log.info("New state was changed to failed: {}", orderId);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void failed(String token, String reason) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void failed(String token, String reason) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        try {
-            final HibernateOrder order = getByToken(token);
-            if (order != null) {
-                final OrderState state = order.getOrderState();
-                order.failed(reason);
-                session.update(order);
+		try {
+			final HibernateOrder order = getByToken(token);
+			if (order != null) {
+				final OrderState state = order.getOrderState();
+				order.failed(reason);
+				session.update(order);
 
-                notifyOrderState(order, state);
+				notifyOrderState(order, state);
 
-                log.info("New state was changed to failed: {}", order.getId());
-            } else {
-                log.warn("Where is no order for token: {}", token);
-            }
-        } catch (Exception ex) {
-            log.warn("Where is no order for token: {}", token);
-        }
-    }
+				log.info("New state was changed to failed: {}", order.getId());
+			} else {
+				log.warn("Where is no order for token: {}", token);
+			}
+		} catch (Exception ex) {
+			log.warn("Where is no order for token: {}", token);
+		}
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.MANDATORY)
-    public void setOrderTracking(Order order, boolean enable) {
-        final HibernateOrder ho = (HibernateOrder) order;
-        ho.setTracking(enable);
-        sessionFactory.getCurrentSession().update(ho);
-    }
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void setOrderTracking(Order order, boolean enable) {
+		final HibernateOrder ho = (HibernateOrder) order;
+		ho.setTracking(enable);
+		sessionFactory.getCurrentSession().update(ho);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public HibernateOrder getOrder(Long id) {
-        return (HibernateOrder) sessionFactory.getCurrentSession().get(HibernateOrder.class, id);
-    }
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public HibernateOrder getOrder(Long id) {
+		return (HibernateOrder) sessionFactory.getCurrentSession().get(HibernateOrder.class, id);
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public HibernateOrder getByToken(String token) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public HibernateOrder getByToken(String token) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.token=:token");
-        query.setParameter("token", token);
-        return (HibernateOrder) query.uniqueResult();
-    }
+		final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.token=:token");
+		query.setParameter("token", token);
+		return (HibernateOrder) query.uniqueResult();
+	}
 
-    @Override
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public Order getByReference(String reference) {
-        final Session session = sessionFactory.getCurrentSession();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public Order getByReference(String reference) {
+		final Session session = sessionFactory.getCurrentSession();
 
-        final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.referenceTracking=:ref");
-        query.setParameter("ref", reference);
-        return (HibernateOrder) query.uniqueResult();
-    }
+		final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.referenceTracking=:ref");
+		query.setParameter("ref", reference);
+		return (HibernateOrder) query.uniqueResult();
+	}
 
-    @Override
-    protected void applyRestrictions(Criteria criteria, OrderContext context) {
-    }
+	@Override
+	protected void applyRestrictions(Criteria criteria, OrderContext context) {
+	}
 
-    @Override
-    protected void applyProjections(Criteria criteria, OrderContext context) {
-        if (context != null) {
-            if (context.getOrderState() != null) {
-                criteria.add(Restrictions.eq("orderState", context.getOrderState()));
-            }
-        }
-    }
+	@Override
+	protected void applyProjections(Criteria criteria, OrderContext context) {
+		if (context != null) {
+			if (context.getOrderState() != null) {
+				criteria.add(Restrictions.eq("orderState", context.getOrderState()));
+			}
+		}
+	}
 
-    private void notifyOrderState(Order order, OrderState oldState) {
-        for (OrderListener listener : listeners) {
-            listener.orderStateChange(order, oldState, order.getOrderState());
-        }
-    }
+	private void notifyOrderState(Order order, OrderState oldState) {
+		for (OrderListener listener : listeners) {
+			listener.orderStateChange(order, oldState, order.getOrderState());
+		}
+	}
 
-    public void setExchangeManager(ExchangeManager exchangeManager) {
-        this.exchangeManager = exchangeManager;
-    }
+	public void setExchangeManager(ExchangeManager exchangeManager) {
+		this.exchangeManager = exchangeManager;
+	}
 
-    public void setShipmentManager(ShipmentManager shipmentManager) {
-        this.shipmentManager = shipmentManager;
-    }
+	public void setShipmentManager(ShipmentManager shipmentManager) {
+		this.shipmentManager = shipmentManager;
+	}
 }

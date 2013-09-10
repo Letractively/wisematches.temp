@@ -28,11 +28,12 @@ public interface OrderManager extends SearchManager<Order, OrderContext> {
 
 	void reject(Long orderId, String person, String paymentId, String note);
 
-	void processing(Long orderId, String number);
 
-	void shipping(Long orderId, String number);
+	void processing(Long orderId, String number, String commentary);
 
-	void shipped(Long orderId, String number);
+	void shipping(Long orderId, String number, String commentary);
+
+	void shipped(Long orderId, String number, String commentary);
 
 
 	void failed(Long orderId, String reason);

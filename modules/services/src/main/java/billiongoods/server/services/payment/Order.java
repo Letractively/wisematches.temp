@@ -7,51 +7,48 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface Order {
-    Long getId();
+	Long getId();
 
-    Long getBuyer();
+	Long getBuyer();
 
 
-    String getToken();
+	String getToken();
 
-    double getAmount();
+	double getAmount();
+
+	Shipment getShipment();
+
 
 	double getExchangeRate();
 
-	@Deprecated
-	double getShipment();
 
-	@Deprecated
-	Address getAddress();
+	Date getTimestamp();
 
-	@Deprecated
-	ShipmentType getShipmentType();
+	Date getCreationTime();
 
-    Date getTimestamp();
+	OrderState getOrderState();
 
-    Date getCreationTime();
-
-    OrderState getOrderState();
-
-    List<OrderItem> getOrderItems();
+	List<OrderItem> getOrderItems();
 
 
-    String getPayer();
+	String getPayer();
 
-    String getPayerNote();
+	String getPayerNote();
 
-    String getPaymentId();
+	String getPaymentId();
 
-    boolean isTracking();
+	boolean isTracking();
 
 
-    String getReferenceTracking();
+	String getCommentary();
 
-    String getChinaMailTracking();
 
-    String getInternationalTracking();
+	List<OrderLog> getOrderLogs();
 
-    String getFailureComment();
 
-    List<OrderLog> getOrderLogs();
+	String getReferenceTracking();
+
+	String getChinaMailTracking();
+
+	String getInternationalTracking();
 }

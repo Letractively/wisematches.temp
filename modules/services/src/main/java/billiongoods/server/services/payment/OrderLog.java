@@ -6,11 +6,13 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface OrderLog {
-    String getCode();
+	String getCode();
 
-    Date getTimeStamp();
+	Date getTimeStamp();
 
-    String getParameter();
+	String getParameter();
 
-    OrderState getOrderState();
+	String getCommentary();
+
+	OrderState getOrderState();
 }

@@ -4,6 +4,7 @@ import billiongoods.server.MessageFormatter;
 import billiongoods.server.services.payment.Address;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderItem;
+import billiongoods.server.services.payment.Shipment;
 import billiongoods.server.warehouse.Price;
 import com.paypal.core.Constants;
 import org.slf4j.Logger;
@@ -121,7 +122,9 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 	private SetExpressCheckoutResponseType setExpressCheckout(Long tnxId, Order order, String orderURL,
 															  String returnURL, String cancelURL) throws PayPalException {
-		final Address address = order.getAddress();
+		final Shipment shipment = order.getShipment();
+
+		final Address address = shipment.getAddress();
 
 		final AddressType addressType = new AddressType();
 		addressType.setName(address.getName());
@@ -152,8 +155,8 @@ public class PayPalExpressCheckout implements InitializingBean {
 		paymentDetails.setPaymentDetailsItem(paymentDetailsItem);
 
 		paymentDetails.setItemTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount())));
-		paymentDetails.setShippingTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getShipment())));
-		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() + order.getShipment())));
+		paymentDetails.setShippingTotal(new BasicAmountType(CURRENCY_CODE, Price.string(shipment.getAmount())));
+		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() + shipment.getAmount())));
 
 		final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
 		request.setLocaleCode("RU");

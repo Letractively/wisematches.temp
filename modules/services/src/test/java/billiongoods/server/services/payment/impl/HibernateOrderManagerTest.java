@@ -22,8 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -90,18 +89,19 @@ public class HibernateOrderManagerTest {
 
 		Order order = orderManager.create(new Visitor(123L), basket, address, ShipmentType.REGISTERED, true);
 
+		final Shipment shipment = order.getShipment();
 		assertNotNull(order.getId());
 		assertEquals(23.9d, order.getAmount(), 0.0000001d);
-		assertEquals(1.7d, order.getShipment(), 0.0000001d);
+		assertEquals(1.7d, shipment.getAmount(), 0.0000001d);
 		assertEquals(33.3d, order.getExchangeRate(), 0.0000001d);
-		assertEquals(ShipmentType.REGISTERED, order.getShipmentType());
+		assertEquals(ShipmentType.REGISTERED, shipment.getType());
 		assertEquals(123, order.getBuyer().longValue());
 		assertEquals(OrderState.NEW, order.getOrderState());
 
 		final List<OrderItem> orderItems = order.getOrderItems();
 		assertEquals(2, orderItems.size());
 
-		final Address address1 = order.getAddress();
+		final Address address1 = shipment.getAddress();
 		assertEquals("MockName", address1.getName());
 		assertEquals("123456", address1.getPostalCode());
 		assertEquals("MockCity", address1.getCity());
@@ -138,23 +138,26 @@ public class HibernateOrderManagerTest {
 		assertEquals(OrderState.REJECTED, order.getOrderState());
 
 		order = orderManager.getOrder(order.getId());
-		orderManager.processing(order.getId(), "124343");
+		orderManager.processing(order.getId(), "124343", "Comment1");
 		assertEquals("124343", order.getReferenceTracking());
+		assertEquals("Comment1", order.getCommentary());
 		assertEquals(OrderState.PROCESSING, order.getOrderState());
 
 		order = orderManager.getOrder(order.getId());
-		orderManager.shipping(order.getId(), "6564564");
+		orderManager.shipping(order.getId(), "6564564", "Comment2");
 		assertEquals("6564564", order.getChinaMailTracking());
+		assertEquals("Comment2", order.getCommentary());
 		assertEquals(OrderState.SHIPPING, order.getOrderState());
 
 		order = orderManager.getOrder(order.getId());
-		orderManager.shipped(order.getId(), "EW32143523TR");
+		orderManager.shipped(order.getId(), "EW32143523TR", "Comment3");
+		assertEquals("Comment3", order.getCommentary());
 		assertEquals("EW32143523TR", order.getInternationalTracking());
 		assertEquals(OrderState.SHIPPED, order.getOrderState());
 
 		order = orderManager.getOrder(order.getId());
 		orderManager.failed(order.getId(), "They, close");
-		assertEquals("They, close", order.getFailureComment());
+		assertNull(order.getCommentary());
 		assertEquals(OrderState.FAILED, order.getOrderState());
 
 		assertEquals(7, order.getOrderLogs().size());
