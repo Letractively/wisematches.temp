@@ -19,7 +19,7 @@ public class ImageSizeTest {
 	}
 
 	@Test
-	public void asd() throws IOException {
+	public void testJPG() throws IOException {
 		List<Path> files = new ArrayList<>();
 
 		for (ImageSize imageSize : ImageSize.values()) {
@@ -28,6 +28,25 @@ public class ImageSizeTest {
 
 			try (OutputStream out = Files.newOutputStream(tempFile);
 				 InputStream resourceAsStream = getClass().getResourceAsStream("/resizeTest.jpg")) {
+				imageSize.scaleImage(resourceAsStream, out);
+			}
+		}
+
+		for (Path file : files) {
+			Files.deleteIfExists(file);
+		}
+	}
+
+	@Test
+	public void testPNG() throws IOException {
+		List<Path> files = new ArrayList<>();
+
+		for (ImageSize imageSize : ImageSize.values()) {
+			final Path tempFile = Files.createTempFile("bg_resize_test_" + imageSize.getCode(), ".jpg");
+			files.add(tempFile);
+
+			try (OutputStream out = Files.newOutputStream(tempFile);
+				 InputStream resourceAsStream = getClass().getResourceAsStream("/resizeTest.png")) {
 				imageSize.scaleImage(resourceAsStream, out);
 			}
 		}

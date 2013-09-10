@@ -70,20 +70,24 @@
                                 </td valign="top">
                                 <td valign="top" width="20%">
                                     <#if state.billing>
-                                        Номер счета:
+                                        Номер счета:<br>${l.parameter!""}
                                     <#elseif state.accepted || state.rejected>
-                                        Номер платежа:
+                                        Номер платежа:<br>${l.parameter!""}
                                     <#elseif state.processing>
-                                        Номер комплектации:
+                                        Номер комплектации:<br>${l.parameter!""}
                                     <#elseif state.shipping>
-                                        Код почты Китая:
+                                        Код почты Китая:<br><a
+                                            href="http://www.flytexpress.com/ShowTraceInfo.aspx?orderid=${l.parameter!""}">${l.parameter!""}</a>
                                     <#elseif state.shipped>
-                                        Международный код:
+                                        Международный код:<br>
+                                        <#if l.parameter?has_content>
+                                            <a href="http://gdeposylka.ru/${l.parameter}?tos=accept&apikey=418832.b3a52a082d&country=RU">${l.parameter}</a>
+                                        <#else>
+                                            не предоставляется
+                                        </#if>
                                     <#elseif  state.failed>
-                                        Ошибка отказа:
+                                        Заказ отменен:<br>${l.parameter!""}
                                     </#if>
-                                    <br>
-                                ${l.parameter!""}
                                 </td>
                             </tr>
                         </#list>

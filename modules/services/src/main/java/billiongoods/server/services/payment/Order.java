@@ -16,13 +16,16 @@ public interface Order {
 
     double getAmount();
 
-    double getShipment();
+	double getExchangeRate();
 
-    double getExchangeRate();
+	@Deprecated
+	double getShipment();
 
-    Address getAddress();
+	@Deprecated
+	Address getAddress();
 
-    ShipmentType getShipmentType();
+	@Deprecated
+	ShipmentType getShipmentType();
 
     Date getTimestamp();
 
