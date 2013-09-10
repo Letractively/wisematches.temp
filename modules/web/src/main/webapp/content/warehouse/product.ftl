@@ -77,7 +77,7 @@
                     <table>
                         <tr>
                             <td>Вес</td>
-                            <td>${product.weight?string("0.00")} грамм</td>
+                            <td>${product.weight?string("0.00")} кг</td>
                         </tr>
                     <#if product.properties?has_content>
                         <#list product.properties as p>
