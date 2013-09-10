@@ -8,8 +8,6 @@ import billiongoods.server.services.payment.OrderState;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.maintain.form.OrderStateForm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,8 +28,6 @@ import java.util.List;
 @RequestMapping("/maintain/order")
 public class OrderMaintainController extends AbstractController {
 	private OrderManager orderManager;
-
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.MaintainController");
 
 	public OrderMaintainController() {
 	}
@@ -72,6 +68,7 @@ public class OrderMaintainController extends AbstractController {
 	public String promoteOrder(@ModelAttribute("form") OrderStateForm form, Errors errors, Model model) {
 		final Long id = form.getId();
 		final String value = form.getValue();
+		final String comment = form.getCommentary();
 		final OrderState state = form.getState();
 
 		if (id == null) {
@@ -87,13 +84,13 @@ public class OrderMaintainController extends AbstractController {
 		if (state != null && !errors.hasErrors()) {
 			switch (state) {
 				case PROCESSING:
-					orderManager.processing(id, value);
+					orderManager.processing(id, value, comment);
 					break;
 				case SHIPPING:
-					orderManager.shipping(id, value);
+					orderManager.shipping(id, value, comment);
 					break;
 				case SHIPPED:
-					orderManager.shipped(id, value);
+					orderManager.shipped(id, value, comment);
 					break;
 				default:
 					errors.rejectValue("value", "order.state.state.incorrect");

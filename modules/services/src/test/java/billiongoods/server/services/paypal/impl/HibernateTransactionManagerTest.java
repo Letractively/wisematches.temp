@@ -1,6 +1,8 @@
 package billiongoods.server.services.paypal.impl;
 
 import billiongoods.server.services.payment.Order;
+import billiongoods.server.services.payment.Shipment;
+import billiongoods.server.services.payment.ShipmentType;
 import billiongoods.server.services.paypal.*;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
@@ -45,7 +47,7 @@ public class HibernateTransactionManagerTest {
 		final Order order = createMock(Order.class);
 		expect(order.getId()).andReturn(12L);
 		expect(order.getAmount()).andReturn(123.45d);
-		expect(order.getShipment()).andReturn(1.70d);
+		expect(order.getShipment()).andReturn(new Shipment(1.70d, null, ShipmentType.FREE));
 		replay(order);
 
 		final PayPalTransaction tnx = manager.beginTransaction(order);

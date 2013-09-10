@@ -9,6 +9,7 @@ public class OrderStateForm {
 	private Long id;
 	private OrderState state;
 	private String value;
+	private String commentary;
 
 	public OrderStateForm() {
 	}
@@ -35,5 +36,13 @@ public class OrderStateForm {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getCommentary() {
+		return commentary;
+	}
+
+	public void setCommentary(String commentary) {
+		this.commentary = commentary;
 	}
 }
