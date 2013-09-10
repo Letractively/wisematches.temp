@@ -73,9 +73,13 @@
                     <div class="shipment">Бесплатная доставка</div>
                 </div>
 
-            <#if product.properties?has_content>
                 <div class="props">
                     <table>
+                        <tr>
+                            <td>Вес</td>
+                            <td>${product.weight?string("0.00")} грамм</td>
+                        </tr>
+                    <#if product.properties?has_content>
                         <#list product.properties as p>
                             <#if p.value?has_content>
                                 <tr>
@@ -84,9 +88,9 @@
                                 </tr>
                             </#if>
                         </#list>
+                    </#if>
                     </table>
                 </div>
-            </#if>
 
                 <div style="text-align: right; width: 100%">
                     <a href="#description">Описание</a>
