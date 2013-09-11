@@ -401,11 +401,11 @@ button.bg-ui-button.selected {
     margin-right: 10px;
 }
 
-.navigation.category {
+.navigation .category {
     border: 1px solid #ebebeb;
 }
 
-.navigation.category .container {
+.navigation .category .container {
     padding: 5px 3px;
 }
 
@@ -440,7 +440,7 @@ button.bg-ui-button.selected {
     background: none;
 }
 
-.navigation.catalog {
+.navigation .catalog {
     border: 1px solid #d67632;
 }
 
@@ -569,12 +569,12 @@ button.bg-ui-button.selected {
     background: url("../images/sprites.png") 0 0 no-repeat;
 }
 
-.navigation.assistance {
+.navigation .assistance {
     padding: 0;
     border: 1px solid #ebebeb;
 }
 
-.navigation.assistance .list ul {
+.navigation .assistance .list ul {
     margin: 0;
     padding: 0;
 }
@@ -689,7 +689,7 @@ button.bg-ui-button.selected {
     float: right;
 }
 
-.navigation.maintain {
+.navigation .maintain {
     border: 1px solid #ebebeb;
 }
 
@@ -1461,4 +1461,29 @@ button.bg-ui-button.selected {
     margin-left: 10px;
     padding-left: 2px;
     border-left: 1px dotted #9aa7b5;
+}
+
+.navigation .filtering {
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid #d67632;
+}
+
+.filtering .property {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.filtering .property .name {
+    font-weight: bold;
+}
+
+.filtering .property ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.filtering .property input {
+    vertical-align: middle;
 }

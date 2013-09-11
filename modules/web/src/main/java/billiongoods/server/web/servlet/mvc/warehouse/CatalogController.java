@@ -65,7 +65,7 @@ public class CatalogController extends AbstractController implements Initializin
 			showcase = showcaseManager.getShowcase();
 			for (ShowcaseGroup showcaseGroup : showcase.getShowcaseGroups()) {
 				for (ShowcaseItem item : showcaseGroup.getShowcaseItems()) {
-					showcaseCache.put(item, productManager.searchEntities(item.getProductContext(), ORDERS, RANGE));
+					showcaseCache.put(item, productManager.searchEntities(item.getProductContext(), null, RANGE, ORDERS));
 				}
 			}
 		}

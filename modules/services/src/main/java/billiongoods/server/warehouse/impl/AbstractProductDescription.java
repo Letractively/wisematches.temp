@@ -6,7 +6,9 @@ import billiongoods.server.warehouse.ProductState;
 import billiongoods.server.warehouse.StockInfo;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -50,6 +52,11 @@ public class AbstractProductDescription implements ProductDescription {
 
 	@Column(name = "previewImageId")
 	private String previewImageId;
+
+	@OrderColumn(name = "position")
+	@ElementCollection(fetch = FetchType.LAZY, targetClass = HibernateProductProperty.class)
+	@CollectionTable(name = "store_product_property", joinColumns = @JoinColumn(name = "productId"))
+	protected List<HibernateProductProperty> propertyIds = new ArrayList<>();
 
 	public AbstractProductDescription() {
 		registrationDate = new Date();

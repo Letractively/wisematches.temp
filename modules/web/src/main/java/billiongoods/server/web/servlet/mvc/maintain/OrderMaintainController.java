@@ -36,7 +36,7 @@ public class OrderMaintainController extends AbstractController {
 	public String viewOrders(@RequestParam(value = "state", defaultValue = "ACCEPTED") String state, Model model) {
 		final OrderState orderState = OrderState.valueOf(state);
 
-		final List<Order> orders = orderManager.searchEntities(new OrderContext(orderState), Orders.of(billiongoods.core.search.Order.desc("timestamp")), null);
+		final List<Order> orders = orderManager.searchEntities(new OrderContext(orderState), null, null, Orders.of(billiongoods.core.search.Order.desc("timestamp")));
 		model.addAttribute("orders", orders);
 		model.addAttribute("orderState", orderState);
 

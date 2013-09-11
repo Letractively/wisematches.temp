@@ -5,7 +5,7 @@ import billiongoods.core.search.SearchManager;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface ProductManager extends SearchManager<ProductDescription, ProductContext> {
+public interface ProductManager extends SearchManager<ProductDescription, ProductContext, ProductFilter> {
 	void addProductListener(ProductListener l);
 
 	void removeProductListener(ProductListener l);
@@ -15,6 +15,9 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 	Product getProduct(String sku);
 
 	ProductDescription getDescription(Integer id);
+
+
+	FilteringAbility getFilteringAbility(ProductContext context);
 
 
 	Product createProduct(ProductEditor editor);
