@@ -4,7 +4,7 @@
     <tr>
         <td align="left">
             <div class="header-logo">
-                <img alt="logo" src="<@bg.ui.static "images/logo.png"/>"/>
+                <a href="/"><img alt="logo" src="<@bg.ui.static "images/logo.png"/>"/></a>
             <#--
                             <a href="/" style="text-decoration: none !important;">
                                 <span class="first-letter">B</span><span>illion</span><span

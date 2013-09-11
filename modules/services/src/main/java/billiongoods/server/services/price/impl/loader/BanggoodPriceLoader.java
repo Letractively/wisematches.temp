@@ -70,8 +70,6 @@ public class BanggoodPriceLoader implements PriceLoader {
 
 		client = new DefaultHttpClient(params);
 		localContext.setAttribute(ClientContext.COOKIE_STORE, new BasicCookieStore());
-
-		initialize();
 	}
 
 	@Override

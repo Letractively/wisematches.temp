@@ -7,7 +7,7 @@ import billiongoods.server.services.basket.Basket;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface OrderManager extends SearchManager<Order, OrderContext> {
+public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	void addOrderListener(OrderListener l);
 
 	void removeOrderListener(OrderListener l);

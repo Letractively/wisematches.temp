@@ -6,8 +6,7 @@ import billiongoods.server.warehouse.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernateProductManager extends EntitySearchManager<ProductDescription, ProductContext> implements ProductManager {
+public class HibernateProductManager extends EntitySearchManager<ProductDescription, ProductContext, ProductFilter> implements ProductManager {
 	private AttributeManager attributeManager;
 
 	private final Collection<ProductListener> listeners = new CopyOnWriteArrayList<>();
@@ -74,6 +73,41 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	public ProductDescription getDescription(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
 		return (HibernateProductDescription) session.get(HibernateProductDescription.class, id);
+	}
+
+
+	@Override
+	public FilteringAbility getFilteringAbility(ProductContext context) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final Criteria criteria = session.createCriteria(HibernateProductDescription.class, "product");
+		applyRestrictions(criteria, context, null);
+		applyProjections(criteria, context, null);
+
+		final ProjectionList projection = Projections.projectionList();
+		projection.add(Projections.groupProperty("props.attributeId"));
+		projection.add(Projections.groupProperty("props.value"));
+		projection.add(Projections.rowCount());
+
+		criteria.createAlias("product.propertyIds", "props").setProjection(projection);
+
+		Map<Attribute, List<FilteringSummary>> attributeListMap = new HashMap<>();
+
+		final List list = criteria.list();
+		for (Object o : list) {
+			Object[] oo = (Object[]) o;
+
+			final Attribute attribute = attributeManager.getAttribute((Integer) oo[0]);
+
+			List<FilteringSummary> filteringSummaries = attributeListMap.get(attribute);
+			if (filteringSummaries == null) {
+				filteringSummaries = new ArrayList<>();
+				attributeListMap.put(attribute, filteringSummaries);
+			}
+
+			filteringSummaries.add(new FilteringSummary((String) oo[1], ((Number) oo[2]).intValue()));
+		}
+		return new DefaultFilteringAbility(attributeListMap);
 	}
 
 	@Override
@@ -176,7 +210,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	}
 
 	@Override
-	protected void applyProjections(Criteria criteria, ProductContext context) {
+	protected void applyProjections(Criteria criteria, ProductContext context, ProductFilter filter) {
 	}
 
 	@Override
@@ -186,7 +220,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	}
 
 	@Override
-	protected void applyRestrictions(Criteria criteria, ProductContext context) {
+	protected void applyRestrictions(Criteria criteria, ProductContext context, ProductFilter filter) {
 		if (context != null) {
 			final Category category = context.getCategory();
 			if (category != null) {
@@ -223,6 +257,20 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 						)
 				);
 			}
+		}
+
+		if (filter != null) {
+			final Criteria props = criteria.createAlias("propertyIds", "props");
+
+			int index = 0;
+			final Set<Attribute> attributes = filter.getAttributes();
+			final Criterion[] criterion = new Criterion[attributes.size()];
+			for (Attribute attribute : attributes) {
+				criterion[index++] = Restrictions.and(
+						Restrictions.eq("props.attributeId", attribute.getId()),
+						Restrictions.in("props.value", filter.getValues(attribute)));
+			}
+			props.add(Restrictions.or(criterion));
 		}
 	}
 

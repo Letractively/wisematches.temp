@@ -668,6 +668,8 @@ $(document).ready(function () {
         url = bg.util.url.extend(url, 'count', $("#tableFormCount").val(), true);
         url = bg.util.url.extend(url, 'sort', $("#tableSorting").val(), true);
         url = bg.util.url.extend(url, 'query', $("#tableQuery").val(), true);
+
+        url = bg.util.url.extend(url, 'filter', encodeURIComponent($(".navigation .filtering input").serialize()), true);
         bg.util.url.redirect(url);
     };
 
@@ -678,6 +680,7 @@ $(document).ready(function () {
             applyTableFilters();
         }
     });
+    $("#categoryFilterAction").click(applyTableFilters);
 
     $(".quantity").each(function (i, el) {
         el = $(el);

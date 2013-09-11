@@ -11,7 +11,7 @@
 </div>
 </#macro>
 
-<div class="navigation category">
+<div class="category">
     <div class="container">
         <div class="item selected root">
             Выбранный раздел

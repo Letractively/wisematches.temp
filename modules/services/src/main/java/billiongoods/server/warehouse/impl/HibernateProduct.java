@@ -28,11 +28,6 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 	@CollectionTable(name = "store_product_option", joinColumns = @JoinColumn(name = "productId"))
 	private List<HibernateProductProperty> optionIds = new ArrayList<>();
 
-	@OrderColumn(name = "position")
-	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateProductProperty.class)
-	@CollectionTable(name = "store_product_property", joinColumns = @JoinColumn(name = "productId"))
-	private List<HibernateProductProperty> propertyIds = new ArrayList<>();
-
 	@Transient
 	private List<Option> options = new ArrayList<>();
 

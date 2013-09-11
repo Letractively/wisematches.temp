@@ -1,6 +1,6 @@
 <#include "/core.ftl"/>
 
-<div class="navigation catalog">
+<div class="catalog">
     <div class="ct-tit">
         Каталог товаров
     </div>

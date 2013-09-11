@@ -23,7 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernateOrderManager extends EntitySearchManager<Order, OrderContext> implements OrderManager {
+public class HibernateOrderManager extends EntitySearchManager<Order, OrderContext, Void> implements OrderManager {
 	private ExchangeManager exchangeManager;
 	private ShipmentManager shipmentManager;
 
@@ -240,11 +240,11 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 	}
 
 	@Override
-	protected void applyRestrictions(Criteria criteria, OrderContext context) {
+	protected void applyRestrictions(Criteria criteria, OrderContext context, Void filter) {
 	}
 
 	@Override
-	protected void applyProjections(Criteria criteria, OrderContext context) {
+	protected void applyProjections(Criteria criteria, OrderContext context, Void filter) {
 		if (context != null) {
 			if (context.getOrderState() != null) {
 				criteria.add(Restrictions.eq("orderState", context.getOrderState()));

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public abstract class EntitySearchManager<E, C> implements SearchManager<E, C> {
+public abstract class EntitySearchManager<E, C, F> implements SearchManager<E, C, F> {
 	private final Class<?> entityType;
 
 	protected SessionFactory sessionFactory;
@@ -27,19 +27,19 @@ public abstract class EntitySearchManager<E, C> implements SearchManager<E, C> {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Criteria criteria = session.createCriteria(entityType);
-		applyRestrictions(criteria, context);
+		applyRestrictions(criteria, context, null);
 		criteria.setProjection(Projections.rowCount());
 		return ((Number) criteria.uniqueResult()).intValue();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <Ctx extends C> List<E> searchEntities(Ctx context, Orders orders, Range range) {
+	public <Ftl extends F, Ctx extends C> List<E> searchEntities(Ctx context, Ftl filter, Range range, Orders orders) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Criteria criteria = session.createCriteria(entityType);
-		applyRestrictions(criteria, context);
-		applyProjections(criteria, context);
+		applyRestrictions(criteria, context, filter);
+		applyProjections(criteria, context, filter);
 		applyOrders(criteria, orders);
 		applyRange(range, criteria);
 
@@ -48,9 +48,9 @@ public abstract class EntitySearchManager<E, C> implements SearchManager<E, C> {
 		return list;
 	}
 
-	protected abstract void applyRestrictions(Criteria criteria, C context);
+	protected abstract void applyRestrictions(Criteria criteria, C context, F filter);
 
-	protected abstract void applyProjections(Criteria criteria, C context);
+	protected abstract void applyProjections(Criteria criteria, C context, F filter);
 
 	protected void initializeEntities(List<E> list) {
 	}
