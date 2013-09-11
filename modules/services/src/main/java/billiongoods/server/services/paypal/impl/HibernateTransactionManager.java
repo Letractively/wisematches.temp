@@ -102,10 +102,9 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		final GetExpressCheckoutDetailsResponseDetailsType details = response.getGetExpressCheckoutDetailsResponseDetails();
 
 		if (details != null) {
-			final PayerInfoType payerInfo = details.getPayerInfo();
-			transaction.setPayerNote(details.getNote());
 			transaction.setCheckoutStatus(details.getCheckoutStatus());
 
+			final PayerInfoType payerInfo = details.getPayerInfo();
 			if (payerInfo != null) {
 				transaction.setPayer(payerInfo.getPayer());
 				transaction.setPayerId(payerInfo.getPayerID());
@@ -121,6 +120,12 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 				if (payerInfo.getPayerCountry() != null) {
 					transaction.setPayerCountry(payerInfo.getPayerCountry().getValue());
 				}
+			}
+
+			final List<PaymentDetailsType> paymentDetails = details.getPaymentDetails();
+			if (paymentDetails != null && paymentDetails.size() == 1) {
+				final PaymentDetailsType paymentDetailsType = paymentDetails.get(0);
+				transaction.setPayerNote(paymentDetailsType.getNoteText());
 			}
 		}
 		transaction.setPhase(TransactionPhase.VERIFICATION);

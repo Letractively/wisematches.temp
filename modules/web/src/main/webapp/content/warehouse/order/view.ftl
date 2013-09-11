@@ -4,6 +4,7 @@
 <#include "/core.ftl"/>
 
 <#assign state=order.orderState/>
+<#assign shipment=order.shipment/>
 <#assign stateName=state.name()?lower_case/>
 
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.simplemodal.js"/>"></script>
@@ -138,9 +139,8 @@
 </#if>
 
     <tr>
-    <#assign shipment=order.shipment/>
         <td valign="top" nowrap="nowrap">
-            <label for="">Адрес доставки:</label>
+            <label for="">Способ доставки:</label>
         </td>
         <td>
             <div class="shipment" style="padding-bottom: 10px">
@@ -154,7 +154,14 @@
                 </#if>
             </#if>
             </div>
+        </td>
+    </tr>
 
+    <tr>
+        <td valign="top" nowrap="nowrap">
+            <label for="">Адрес доставки:</label>
+        </td>
+        <td>
         <#assign address=shipment.address/>
         ${address.name}
             <br>
