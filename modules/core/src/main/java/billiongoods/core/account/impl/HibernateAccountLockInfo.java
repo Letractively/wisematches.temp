@@ -16,8 +16,8 @@ class HibernateAccountLockInfo implements AccountLockInfo {
 	private Account account;
 
 	@Id
-	@Column(name = "playerId")
-	private long playerId;
+	@Column(name = "account")
+	private long accountId;
 
 	@Column(name = "publicReason")
 	private String publicReason;
@@ -39,7 +39,7 @@ class HibernateAccountLockInfo implements AccountLockInfo {
 
 	HibernateAccountLockInfo(Account account, String publicReason, String privateReason, Date unlockDate) {
 		this.account = account;
-		this.playerId = account.getId();
+		this.accountId = account.getId();
 		this.publicReason = publicReason;
 		this.privateReason = privateReason;
 		this.lockDate = new Date();
@@ -74,7 +74,7 @@ class HibernateAccountLockInfo implements AccountLockInfo {
 
 	void setAccount(Account account) {
 		this.account = account;
-		this.playerId = account.getId();
+		this.accountId = account.getId();
 	}
 
 	void setPublicReason(String publicReason) {
@@ -97,7 +97,7 @@ class HibernateAccountLockInfo implements AccountLockInfo {
 	public String toString() {
 		return "LockAccountInfo{" +
 				"account=" + account +
-				", playerId=" + playerId +
+				", playerId=" + accountId +
 				", publicReason='" + publicReason + '\'' +
 				", privateReason='" + privateReason + '\'' +
 				", lockDate=" + lockDate +
