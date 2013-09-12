@@ -33,7 +33,7 @@ public class HibernateAccount extends Account {
 
 	@Column(name = "role")
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "pid"))
+	@CollectionTable(name = "account_role", joinColumns = @JoinColumn(name = "account"))
 	private Set<String> roles = new HashSet<>();
 
 	/**
