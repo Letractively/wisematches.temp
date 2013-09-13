@@ -1,6 +1,5 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
-import billiongoods.core.Visitor;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderManager;
@@ -64,7 +63,7 @@ public class OrderController extends AbstractController {
 
 		final Order order = orderManager.getOrder(orderId);
 		try {
-			basketManager.closeBasket(new Visitor(order.getBuyer()));
+			basketManager.closeBasket(getPrincipal());
 		} catch (Exception ex) {
 			log.error("Basket can't be closed", ex);
 		}

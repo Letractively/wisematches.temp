@@ -103,7 +103,11 @@ public abstract class AbstractController {
 
 	@ModelAttribute("basketQuantity")
 	public int getBasketQuantity() {
-		return basketManager.getBasketSize(getPrincipal());
+		final Personality principal = getPrincipal();
+		if (principal != null) {
+			return basketManager.getBasketSize(getPrincipal());
+		}
+		return 0;
 	}
 
 	protected void hideWhereabouts(Model model) {

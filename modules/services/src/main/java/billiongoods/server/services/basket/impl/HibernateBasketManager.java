@@ -32,7 +32,7 @@ public class HibernateBasketManager implements BasketManager {
 	}
 
 	@Override
-	@Cacheable("basket")
+	@Cacheable(value = "basket", key = "#principal")
 	public HibernateBasket getBasket(Personality principal) {
 		if (principal == null) {
 			return null;
@@ -41,7 +41,7 @@ public class HibernateBasketManager implements BasketManager {
 	}
 
 	@Override
-	@Cacheable("basketSize")
+	@Cacheable(value = "basketSize", key = "#principal")
 	public int getBasketSize(Personality principal) {
 		if (principal == null) {
 			return 0;
@@ -80,6 +80,7 @@ public class HibernateBasketManager implements BasketManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
+	@CacheEvict(value = {"basket", "basketSize"}, key = "#principal")
 	public Basket closeBasket(Personality principal) {
 		if (principal != null) {
 			final Session session = sessionFactory.getCurrentSession();
