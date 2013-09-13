@@ -12,5 +12,7 @@ Good for big catalog. Can't be used for small
 -->
 <#include "widget/catalogPlain.ftl"/>
 
-<#include "widget/filtering.ftl"/>
+<@bg.security.authorized "admin">
+    <#include "widget/filtering.ftl"/>
+</@bg.security.authorized>
 </div>

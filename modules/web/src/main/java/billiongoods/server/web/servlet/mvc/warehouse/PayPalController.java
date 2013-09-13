@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 import static billiongoods.server.web.servlet.mvc.warehouse.OrderController.ORDER_ID_PARAM;
@@ -41,14 +42,14 @@ public class PayPalController extends AbstractController {
 
 	@RequestMapping("/checkout")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String checkoutOrder(WebRequest request) {
+	public String checkoutOrder(WebRequest request, HttpSession session) {
 		final Long orderId = (Long) request.getAttribute(ORDER_ID_PARAM, RequestAttributes.SCOPE_REQUEST);
 		try {
 			final Order order = orderManager.getOrder(orderId);
 
 			final String orderUrl = serverDescriptor.getWebHostName() + "/warehouse/order/view";
-			final String returnUrl = serverDescriptor.getWebHostName() + "/warehouse/paypal/accepted";
-			final String cancelUrl = serverDescriptor.getWebHostName() + "/warehouse/paypal/rejected";
+			final String returnUrl = serverDescriptor.getWebHostName() + "/warehouse/paypal/accepted?JSESSIONID=" + session.getId();
+			final String cancelUrl = serverDescriptor.getWebHostName() + "/warehouse/paypal/rejected?JSESSIONID=" + session.getId();
 
 			final PayPalTransaction transaction = expressCheckout.initiateExpressCheckout(order, orderUrl, returnUrl, cancelUrl);
 			log.info("PayPal token has been generated: " + transaction.getToken());
