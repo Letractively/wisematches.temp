@@ -1,6 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.StoreAttribute;
 
 import javax.persistence.*;
 
@@ -9,7 +9,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "store_attribute")
-public class HibernateAttribute implements Attribute {
+@Deprecated
+public class HibernateStoreStoreAttribute implements StoreAttribute {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,10 +23,10 @@ public class HibernateAttribute implements Attribute {
 	private String unit;
 
 	@Deprecated
-	HibernateAttribute() {
+	HibernateStoreStoreAttribute() {
 	}
 
-	public HibernateAttribute(String name, String unit) {
+	public HibernateStoreStoreAttribute(String name, String unit) {
 		this.name = name;
 		this.unit = unit;
 	}
@@ -58,7 +59,7 @@ public class HibernateAttribute implements Attribute {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		HibernateAttribute that = (HibernateAttribute) o;
+		HibernateStoreStoreAttribute that = (HibernateStoreStoreAttribute) o;
 		return !(id != null ? !id.equals(that.id) : that.id != null);
 	}
 
@@ -69,7 +70,7 @@ public class HibernateAttribute implements Attribute {
 
 	@Override
 	public String toString() {
-		return "HibernateAttribute{" +
+		return "HibernateStoreStoreAttribute{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", unit='" + unit + '\'' +

@@ -5,10 +5,10 @@ import billiongoods.core.Visitor;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.basket.BasketManager;
-import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.Property;
+import billiongoods.server.warehouse.StoreAttributeManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,7 +26,7 @@ public class HibernateBasketManager implements BasketManager {
 	private SessionFactory sessionFactory;
 
 	private ProductManager productManager;
-	private AttributeManager attributeManager;
+	private StoreAttributeManager attributeManager;
 
 	public HibernateBasketManager() {
 	}
@@ -149,7 +149,7 @@ public class HibernateBasketManager implements BasketManager {
 		this.productManager = productManager;
 	}
 
-	public void setAttributeManager(AttributeManager attributeManager) {
+	public void setAttributeManager(StoreAttributeManager attributeManager) {
 		this.attributeManager = attributeManager;
 	}
 }

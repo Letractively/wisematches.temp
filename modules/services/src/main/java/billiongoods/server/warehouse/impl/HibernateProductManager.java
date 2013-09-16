@@ -17,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateProductManager extends EntitySearchManager<ProductDescription, ProductContext, ProductFilter> implements ProductManager {
-	private AttributeManager attributeManager;
+	private StoreAttributeManager attributeManager;
 
 	private final Collection<ProductListener> listeners = new CopyOnWriteArrayList<>();
 
@@ -91,13 +91,13 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 
 		criteria.createAlias("product.propertyIds", "props").setProjection(projection);
 
-		Map<Attribute, List<FilteringSummary>> attributeListMap = new HashMap<>();
+		Map<StoreAttribute, List<FilteringSummary>> attributeListMap = new HashMap<>();
 
 		final List list = criteria.list();
 		for (Object o : list) {
 			Object[] oo = (Object[]) o;
 
-			final Attribute attribute = attributeManager.getAttribute((Integer) oo[0]);
+			final StoreAttribute attribute = attributeManager.getAttribute((Integer) oo[0]);
 
 			List<FilteringSummary> filteringSummaries = attributeListMap.get(attribute);
 			if (filteringSummaries == null) {
@@ -263,9 +263,9 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 			final Criteria props = criteria.createAlias("propertyIds", "props");
 
 			int index = 0;
-			final Set<Attribute> attributes = filter.getAttributes();
+			final Set<StoreAttribute> attributes = filter.getAttributes();
 			final Criterion[] criterion = new Criterion[attributes.size()];
-			for (Attribute attribute : attributes) {
+			for (StoreAttribute attribute : attributes) {
 				criterion[index++] = Restrictions.and(
 						Restrictions.eq("props.attributeId", attribute.getId()),
 						Restrictions.in("props.value", filter.getValues(attribute)));
@@ -274,7 +274,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		}
 	}
 
-	public void setAttributeManager(AttributeManager attributeManager) {
+	public void setAttributeManager(StoreAttributeManager attributeManager) {
 		this.attributeManager = attributeManager;
 	}
 }

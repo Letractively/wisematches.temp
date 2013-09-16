@@ -8,7 +8,7 @@ import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.Property;
-import billiongoods.server.warehouse.impl.HibernateAttribute;
+import billiongoods.server.warehouse.impl.HibernateStoreStoreAttribute;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +58,7 @@ public class HibernateOrderManagerTest {
 		expect(desc.getWeight()).andReturn(0.34d).andReturn(2.21d);
 		replay(desc);
 
-		final Property property = new Property(new HibernateAttribute("a1", "mock"), "AV");
+		final Property property = new Property(new HibernateStoreStoreAttribute("a1", "mock"), "AV");
 
 		final BasketItem item1 = createMock(BasketItem.class);
 		expect(item1.getNumber()).andReturn(0);

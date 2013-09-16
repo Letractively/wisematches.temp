@@ -1,7 +1,7 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
-import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.Category;
+import billiongoods.server.warehouse.StoreAttribute;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.CategoryForm;
 import org.springframework.stereotype.Controller;
@@ -44,8 +44,8 @@ public class CategoryMaintainController extends AbstractController {
 			}
 
 			final List<Integer> attrIds = new ArrayList<>();
-			final Set<Attribute> attrs = category.getAttributes();
-			for (Attribute attribute : attrs) {
+			final Set<StoreAttribute> attrs = category.getAttributes();
+			for (StoreAttribute attribute : attrs) {
 				attrIds.add(attribute.getId());
 			}
 			form.setAttributes(attrIds);
@@ -59,7 +59,7 @@ public class CategoryMaintainController extends AbstractController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String updateCategory(Model model, @Valid @ModelAttribute("form") CategoryForm form, Errors errors) {
 		try {
-			final Set<Attribute> attrs = new HashSet<>();
+			final Set<StoreAttribute> attrs = new HashSet<>();
 			final List<Integer> attributes = form.getAttributes();
 			if (attributes != null) {
 				for (Integer attribute : attributes) {
@@ -87,11 +87,11 @@ public class CategoryMaintainController extends AbstractController {
 	}
 
 	private String prepareViewResult(Model model, CategoryForm form) {
-		final Collection<Attribute> attributes = new ArrayList<>(attributeManager.getAttributes());
+		final Collection<StoreAttribute> attributes = new ArrayList<>(attributeManager.getAttributes());
 
 		Category parent = categoryManager.getCategory(form.getParent());
 		while (parent != null) {
-			for (Attribute attribute : parent.getAttributes()) {
+			for (StoreAttribute attribute : parent.getAttributes()) {
 				attributes.remove(attribute);
 			}
 			parent = parent.getParent();

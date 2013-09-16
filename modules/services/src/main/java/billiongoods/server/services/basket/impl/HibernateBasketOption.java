@@ -1,6 +1,6 @@
 package billiongoods.server.services.basket.impl;
 
-import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.StoreAttribute;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -19,7 +19,7 @@ public class HibernateBasketOption {
 	public HibernateBasketOption() {
 	}
 
-	public HibernateBasketOption(Attribute attribute, String value) {
+	public HibernateBasketOption(StoreAttribute attribute, String value) {
 		this.attributeId = attribute.getId();
 		this.value = value;
 	}

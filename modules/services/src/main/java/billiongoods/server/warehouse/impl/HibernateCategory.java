@@ -1,6 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.StoreAttribute;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -41,7 +41,7 @@ public class HibernateCategory {
 	protected HibernateCategory() {
 	}
 
-	protected HibernateCategory(String name, String description, Integer parentId, int position, Set<Attribute> attributes) {
+	protected HibernateCategory(String name, String description, Integer parentId, int position, Set<StoreAttribute> attributes) {
 		this.name = name;
 		this.description = description;
 		this.position = position;
@@ -97,11 +97,11 @@ public class HibernateCategory {
 		this.parentId = parentId;
 	}
 
-	void setAttributes(Set<Attribute> attributes) {
+	void setAttributes(Set<StoreAttribute> attributes) {
 		this.attributeIds.clear();
 
 		if (attributes != null) {
-			for (Attribute attribute : attributes) {
+			for (StoreAttribute attribute : attributes) {
 				this.attributeIds.add(attribute.getId());
 			}
 		}
