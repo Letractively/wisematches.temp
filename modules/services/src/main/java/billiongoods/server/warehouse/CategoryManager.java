@@ -32,7 +32,7 @@ public interface CategoryManager {
 	 * @throws NullPointerException     if name or parent is null
 	 * @throws IllegalArgumentException if parent catalog already has item with the same name
 	 */
-	Category createCategory(String name, String description, Set<Attribute> attributes, Category parent, int position);
+	Category createCategory(String name, String description, Set<StoreAttribute> attributes, Category parent, int position);
 
 	/**
 	 * Updates settings of exist category
@@ -45,5 +45,5 @@ public interface CategoryManager {
 	 * @param position
 	 * @return updated category
 	 */
-	Category updateCategory(Integer id, String name, String description, Set<Attribute> attributes, Category parent, int position);
+	Category updateCategory(Integer id, String name, String description, Set<StoreAttribute> attributes, Category parent, int position);
 }

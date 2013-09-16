@@ -14,8 +14,6 @@ public interface Category {
 	String getDescription();
 
 
-	int getLevel();
-
 	int getPosition();
 
 
@@ -31,5 +29,5 @@ public interface Category {
 
 	List<Category> getChildren();
 
-	Set<Attribute> getAttributes();
+	Set<StoreAttribute> getAttributes();
 }

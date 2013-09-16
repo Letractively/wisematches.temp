@@ -1,6 +1,6 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
-import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.StoreAttribute;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.AttributeForm;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class AttributeMaintainController extends AbstractController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String viewAttribute(Model model, @ModelAttribute("form") AttributeForm form) {
-		Attribute attribute = null;
+		StoreAttribute attribute = null;
 		if (form.getId() != null) {
 			attribute = attributeManager.getAttribute(form.getId());
 		}
@@ -44,7 +44,7 @@ public class AttributeMaintainController extends AbstractController {
 	public String updateAttribute(@Valid @ModelAttribute("form") AttributeForm form, Model model, BindingResult result) {
 		try {
 			if (form.getId() == null) {
-				final Attribute attribute = attributeManager.createAttribute(form.getName(), form.getUnit());
+				final StoreAttribute attribute = attributeManager.createAttribute(form.getName(), form.getUnit());
 				form.setId(attribute.getId());
 			} else {
 				attributeManager.updateAttribute(form.getId(), form.getName(), form.getUnit());

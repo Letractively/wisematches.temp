@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
-<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
+<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.StoreAttribute[]" -->
 
 <#include "/core.ftl">
 

@@ -1,8 +1,8 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.Category;
+import billiongoods.server.warehouse.StoreAttributeManager;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ public class HibernateCategoryManagerTest {
 	private SessionFactory sessionFactory;
 
 	@Autowired
-	private AttributeManager attributeManager;
+	private StoreAttributeManager attributeManager;
 
 	public HibernateCategoryManagerTest() {
 	}

@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="product" type="billiongoods.server.warehouse.Product" -->
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
-<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
+<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.StoreAttribute[]" -->
 
 <#-- @ftlvariable name="groups" type="billiongoods.server.warehouse.Group[]" -->
 <#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationship[]" -->

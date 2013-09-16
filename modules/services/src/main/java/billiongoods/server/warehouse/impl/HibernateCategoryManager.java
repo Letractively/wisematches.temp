@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class HibernateCategoryManager implements CategoryManager, InitializingBean {
 	private SessionFactory sessionFactory;
-	private AttributeManager attributeManager;
+	private StoreAttributeManager attributeManager;
 
 	private final DefaultCatalog catalog = new DefaultCatalog();
 
@@ -47,7 +47,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Category createCategory(String name, String description, Set<Attribute> attributes, Category parent, int position) {
+	public Category createCategory(String name, String description, Set<StoreAttribute> attributes, Category parent, int position) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateCategory i = new HibernateCategory(name, description, parent != null ? parent.getId() : null, position, attributes);
@@ -57,7 +57,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Category updateCategory(Integer id, String name, String description, Set<Attribute> attributes, Category parent, int position) {
+	public Category updateCategory(Integer id, String name, String description, Set<StoreAttribute> attributes, Category parent, int position) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateCategory hc = (HibernateCategory) session.get(HibernateCategory.class, id);
@@ -79,7 +79,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 		this.sessionFactory = sessionFactory;
 	}
 
-	public void setAttributeManager(AttributeManager attributeManager) {
+	public void setAttributeManager(StoreAttributeManager attributeManager) {
 		this.attributeManager = attributeManager;
 	}
 }

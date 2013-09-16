@@ -1,6 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.StoreAttribute;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -19,7 +19,7 @@ public class HibernateProductProperty {
 	public HibernateProductProperty() {
 	}
 
-	public HibernateProductProperty(Attribute attribute, String value) {
+	public HibernateProductProperty(StoreAttribute attribute, String value) {
 		this.attributeId = attribute.getId();
 		this.value = value;
 	}

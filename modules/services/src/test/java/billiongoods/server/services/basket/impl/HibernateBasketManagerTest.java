@@ -4,7 +4,7 @@ import billiongoods.core.Visitor;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.Property;
-import billiongoods.server.warehouse.impl.HibernateAttribute;
+import billiongoods.server.warehouse.impl.HibernateStoreStoreAttribute;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,8 +51,8 @@ public class HibernateBasketManagerTest {
 		replay(product);
 
 		final List<Property> props = new ArrayList<>();
-		props.add(new Property(new HibernateAttribute("mock1", "mock"), "v1"));
-		props.add(new Property(new HibernateAttribute("mock2", "mock"), "v2"));
+		props.add(new Property(new HibernateStoreStoreAttribute("mock1", "mock"), "v1"));
+		props.add(new Property(new HibernateStoreStoreAttribute("mock2", "mock"), "v2"));
 
 		final BasketItem item1 = manager.addBasketItem(person, product, props, 10);
 		assertEquals(0, item1.getNumber());
