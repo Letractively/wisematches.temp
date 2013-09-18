@@ -29,5 +29,5 @@ public interface Category {
 
 	List<Category> getChildren();
 
-	Set<StoreAttribute> getAttributes();
+	Set<Attribute> getAttributes();
 }

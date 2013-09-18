@@ -102,14 +102,14 @@ public class CategoryController extends AbstractController {
 			return null;
 		}
 		try {
-			final Map<StoreAttribute, List<String>> res = new HashMap<>();
+			final Map<Attribute, List<String>> res = new HashMap<>();
 
 			final String decode = URLDecoder.decode(filter, "UTF-8");
 			final String[] split = decode.split("&");
 			for (String s : split) {
 				final String[] split1 = s.split("=");
 
-				final StoreAttribute attr = attributeManager.getAttribute(Integer.parseInt(split1[0]));
+				final Attribute attr = attributeManager.getAttribute(Integer.parseInt(split1[0]));
 				if (attr != null) {
 					List<String> strings = res.get(attr);
 					if (strings == null) {

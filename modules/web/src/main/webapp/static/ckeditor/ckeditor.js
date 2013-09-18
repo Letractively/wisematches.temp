@@ -13705,7 +13705,7 @@
         }, insertText: function () {
         }, setReadOnly: function (a) {
             this[(a ? "set" :
-                    "remove") + "StoreAttribute"]("readOnly", "readonly")
+                    "remove") + "Attribute"]("readOnly", "readonly")
         }, detach: function () {
             c.baseProto.detach.call(this);
             this.clearCustomData();

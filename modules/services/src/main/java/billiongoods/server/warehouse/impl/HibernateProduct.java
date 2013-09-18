@@ -101,7 +101,7 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 		this.imageIds = imageIds;
 	}
 
-	void initialize(StoreAttributeManager attributeManager) {
+	void initialize(AttributeManager attributeManager) {
 		final Map<Integer, List<String>> values = new HashMap<>();
 		for (HibernateProductProperty optionId : optionIds) {
 			List<String> strings = values.get(optionId.getAttributeId());
@@ -118,7 +118,7 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 
 		for (HibernateProductProperty propertyId : propertyIds) {
 			if (propertyId != null) {
-				final StoreAttribute attribute = attributeManager.getAttribute(propertyId.getAttributeId());
+				final Attribute attribute = attributeManager.getAttribute(propertyId.getAttributeId());
 				if (attribute != null) {
 					properties.add(new Property(attribute, propertyId.getValue()));
 				}

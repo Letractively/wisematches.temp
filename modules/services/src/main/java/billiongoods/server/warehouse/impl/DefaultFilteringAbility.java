@@ -1,8 +1,8 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.FilteringAbility;
 import billiongoods.server.warehouse.FilteringSummary;
-import billiongoods.server.warehouse.StoreAttribute;
 
 import java.util.List;
 import java.util.Map;
@@ -12,19 +12,19 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class DefaultFilteringAbility implements FilteringAbility {
-	private Map<StoreAttribute, List<FilteringSummary>> attributeListMap;
+	private Map<Attribute, List<FilteringSummary>> attributeListMap;
 
-	public DefaultFilteringAbility(Map<StoreAttribute, List<FilteringSummary>> attributeListMap) {
+	public DefaultFilteringAbility(Map<Attribute, List<FilteringSummary>> attributeListMap) {
 		this.attributeListMap = attributeListMap;
 	}
 
 	@Override
-	public Set<StoreAttribute> getAttributes() {
+	public Set<Attribute> getAttributes() {
 		return attributeListMap.keySet();
 	}
 
 	@Override
-	public List<FilteringSummary> getFilteringItems(StoreAttribute attribute) {
+	public List<FilteringSummary> getFilteringItems(Attribute attribute) {
 		return attributeListMap.get(attribute);
 	}
 

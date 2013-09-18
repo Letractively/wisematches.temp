@@ -1,8 +1,8 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.StoreAttributeManager;
 
 import java.util.*;
 
@@ -26,7 +26,7 @@ public class DefaultCatalog implements Catalog {
 		return rootCategories;
 	}
 
-	void initialize(List<HibernateCategory> list, StoreAttributeManager attributeManager) {
+	void initialize(List<HibernateCategory> list, AttributeManager attributeManager) {
 		categoryMap.clear();
 		rootCategories.clear();
 
@@ -40,7 +40,7 @@ public class DefaultCatalog implements Catalog {
 		Collections.sort(rootCategories, DefaultCategory.COMPARATOR);
 	}
 
-	DefaultCategory addCategory(HibernateCategory category, StoreAttributeManager attributeManager) {
+	DefaultCategory addCategory(HibernateCategory category, AttributeManager attributeManager) {
 		DefaultCategory dc = new DefaultCategory(category, attributeManager);
 		categoryMap.put(dc.getId(), dc);
 
@@ -48,7 +48,7 @@ public class DefaultCatalog implements Catalog {
 		return dc;
 	}
 
-	DefaultCategory updateCategory(HibernateCategory category, StoreAttributeManager attributeManager) {
+	DefaultCategory updateCategory(HibernateCategory category, AttributeManager attributeManager) {
 		final DefaultCategory defaultCategory = categoryMap.get(category.getId());
 
 		defaultCategory.updateCategoryInfo(category, attributeManager);

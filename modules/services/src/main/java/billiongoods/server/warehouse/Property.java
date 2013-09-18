@@ -4,15 +4,15 @@ package billiongoods.server.warehouse;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public final class Property {
-	private final StoreAttribute attribute;
+	private final Attribute attribute;
 	private final String value;
 
-	public Property(StoreAttribute attribute, String value) {
+	public Property(Attribute attribute, String value) {
 		this.attribute = attribute;
 		this.value = value;
 	}
 
-	public StoreAttribute getAttribute() {
+	public Attribute getAttribute() {
 		return attribute;
 	}
 

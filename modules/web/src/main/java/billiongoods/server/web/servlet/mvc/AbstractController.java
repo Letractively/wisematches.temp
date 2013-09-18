@@ -4,9 +4,9 @@ import billiongoods.core.Personality;
 import billiongoods.core.security.PersonalityContext;
 import billiongoods.server.MessageFormatter;
 import billiongoods.server.services.basket.BasketManager;
+import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.CategoryManager;
-import billiongoods.server.warehouse.StoreAttributeManager;
 import billiongoods.server.web.servlet.sdo.ServiceResponseFactory;
 import billiongoods.server.web.servlet.view.StaticContentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class AbstractController {
 	protected BasketManager basketManager;
 	protected CategoryManager categoryManager;
-	protected StoreAttributeManager attributeManager;
+	protected AttributeManager attributeManager;
 
 	protected MessageFormatter messageSource;
 	protected ServiceResponseFactory responseFactory;
@@ -144,7 +144,7 @@ public abstract class AbstractController {
 	}
 
 	@Autowired
-	public void setAttributeManager(StoreAttributeManager attributeManager) {
+	public void setAttributeManager(AttributeManager attributeManager) {
 		this.attributeManager = attributeManager;
 	}
 }

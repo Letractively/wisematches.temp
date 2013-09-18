@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="result" type="boolean" -->
 <#-- @ftlvariable name="summary" type="billiongoods.server.services.arivals.ImportingSummary" -->
 <#-- @ftlvariable name="error" type="java.lang.String" -->
-<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.StoreAttribute[]" -->
+<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
 
 <#include "/core.ftl">
 

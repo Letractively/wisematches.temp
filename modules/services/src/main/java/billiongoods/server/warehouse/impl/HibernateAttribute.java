@@ -1,6 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.StoreAttribute;
+import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.AttributeType;
 
 import javax.persistence.*;
 
@@ -9,8 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "store_attribute")
-@Deprecated
-public class HibernateStoreStoreAttribute implements StoreAttribute {
+public class HibernateAttribute implements Attribute {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,13 +22,21 @@ public class HibernateStoreStoreAttribute implements StoreAttribute {
 	@Column(name = "unit")
 	private String unit;
 
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "type")
+	private AttributeType attributeType;
+
 	@Deprecated
-	HibernateStoreStoreAttribute() {
+	HibernateAttribute() {
 	}
 
-	public HibernateStoreStoreAttribute(String name, String unit) {
+	public HibernateAttribute(String name, String unit, String description, AttributeType attributeType) {
 		this.name = name;
 		this.unit = unit;
+		this.description = description;
+		this.attributeType = attributeType;
 	}
 
 	@Override
@@ -46,6 +54,16 @@ public class HibernateStoreStoreAttribute implements StoreAttribute {
 		return unit;
 	}
 
+	@Override
+	public String getDescription() {
+		return description;
+	}
+
+	@Override
+	public AttributeType getAttributeType() {
+		return attributeType;
+	}
+
 	void setName(String name) {
 		this.name = name;
 	}
@@ -54,12 +72,20 @@ public class HibernateStoreStoreAttribute implements StoreAttribute {
 		this.unit = unit;
 	}
 
+	void setDescription(String description) {
+		this.description = description;
+	}
+
+	void setAttributeType(AttributeType attributeType) {
+		this.attributeType = attributeType;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		HibernateStoreStoreAttribute that = (HibernateStoreStoreAttribute) o;
+		HibernateAttribute that = (HibernateAttribute) o;
 		return !(id != null ? !id.equals(that.id) : that.id != null);
 	}
 
@@ -70,7 +96,7 @@ public class HibernateStoreStoreAttribute implements StoreAttribute {
 
 	@Override
 	public String toString() {
-		return "HibernateStoreStoreAttribute{" +
+		return "HibernateAttribute{" +
 				"id=" + id +
 				", name='" + name + '\'' +
 				", unit='" + unit + '\'' +

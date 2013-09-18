@@ -7,7 +7,7 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface FilteringAbility {
-	Set<StoreAttribute> getAttributes();
+	Set<Attribute> getAttributes();
 
-	List<FilteringSummary> getFilteringItems(StoreAttribute attribute);
+	List<FilteringSummary> getFilteringItems(Attribute attribute);
 }
