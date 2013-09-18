@@ -1,7 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.StoreAttribute;
-import billiongoods.server.warehouse.StoreAttributeManager;
+import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.AttributeManager;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,23 +14,22 @@ import java.util.*;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-@Deprecated
-public class HibernateStoreAttributeManager implements StoreAttributeManager, InitializingBean {
+public class HibernateAttributeManager implements AttributeManager, InitializingBean {
 	private SessionFactory sessionFactory;
-	private final Map<Integer, StoreAttribute> attributeMap = new HashMap<>();
+	private final Map<Integer, Attribute> attributeMap = new HashMap<>();
 
-	public HibernateStoreAttributeManager() {
+	public HibernateAttributeManager() {
 	}
 
 	public void invalidate() {
 		attributeMap.clear();
 
 		final Session session = sessionFactory.openSession();
-		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateStoreStoreAttribute");
+		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateAttribute");
 
 		final List list = query.list();
 		for (Object o : list) {
-			final HibernateStoreStoreAttribute a = (HibernateStoreStoreAttribute) o;
+			final HibernateAttribute a = (HibernateAttribute) o;
 			attributeMap.put(a.getId(), a);
 			session.evict(a);
 		}
@@ -42,19 +41,19 @@ public class HibernateStoreAttributeManager implements StoreAttributeManager, In
 	}
 
 	@Override
-	public StoreAttribute getAttribute(Integer id) {
+	public Attribute getAttribute(Integer id) {
 		return attributeMap.get(id);
 	}
 
 	@Override
-	public Collection<StoreAttribute> getAttributes() {
+	public Collection<Attribute> getAttributes() {
 		return attributeMap.values();
 	}
 
 	@Override
-	public Collection<StoreAttribute> getAttributes(String name) {
-		final List<StoreAttribute> res = new ArrayList<>();
-		for (StoreAttribute attribute : attributeMap.values()) {
+	public Collection<Attribute> getAttributes(String name) {
+		final List<Attribute> res = new ArrayList<>();
+		for (Attribute attribute : attributeMap.values()) {
 			if (attribute.getName().equalsIgnoreCase(name)) {
 				res.add(attribute);
 
@@ -65,25 +64,28 @@ public class HibernateStoreAttributeManager implements StoreAttributeManager, In
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public StoreAttribute createAttribute(String name, String unit) {
+	public Attribute createAttribute(Attribute.Editor editor) {
 		final Session session = sessionFactory.getCurrentSession();
-		final HibernateStoreStoreAttribute a = new HibernateStoreStoreAttribute(name, unit);
+		final HibernateAttribute a = new HibernateAttribute(editor.getName(), editor.getUnit(), editor.getDescription(), editor.getAttributeType());
 		session.save(a);
 		attributeMap.put(a.getId(), a);
 		return a;
 	}
 
 	@Override
-	public StoreAttribute updateAttribute(Integer id, String name, String unit) {
+	public Attribute updateAttribute(Attribute.Editor editor) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateStoreStoreAttribute ha = (HibernateStoreStoreAttribute) session.get(HibernateStoreStoreAttribute.class, id);
+		final HibernateAttribute ha = (HibernateAttribute) session.get(HibernateAttribute.class, editor.getId());
 		if (ha == null) {
-			throw new IllegalArgumentException("Unknown attribute: " + id);
+			throw new IllegalArgumentException("Unknown attribute: " + editor.getId());
 		}
 
-		ha.setName(name);
-		ha.setUnit(unit);
+		ha.setName(editor.getName());
+		ha.setUnit(editor.getUnit());
+		ha.setDescription(editor.getDescription());
+		ha.setAttributeType(editor.getAttributeType());
+
 		session.update(ha);
 		attributeMap.put(ha.getId(), ha);
 		return ha;

@@ -1,10 +1,10 @@
 package billiongoods.server.services.basket.impl;
 
 import billiongoods.server.services.basket.BasketItem;
+import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.Property;
-import billiongoods.server.warehouse.StoreAttributeManager;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -95,7 +95,7 @@ public class HibernateBasketItem implements BasketItem {
 		this.pk = new Pk(basket.getId(), number);
 	}
 
-	void initialize(ProductManager productManager, StoreAttributeManager attributeManager) {
+	void initialize(ProductManager productManager, AttributeManager attributeManager) {
 		if (this.product == null || !this.product.getId().equals(productId)) {
 			this.product = productManager.getDescription(productId);
 		}

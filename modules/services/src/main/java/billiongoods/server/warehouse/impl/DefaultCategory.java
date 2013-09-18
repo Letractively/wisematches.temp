@@ -1,9 +1,9 @@
 package billiongoods.server.warehouse.impl;
 
+import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Genealogy;
-import billiongoods.server.warehouse.StoreAttribute;
-import billiongoods.server.warehouse.StoreAttributeManager;
 
 import java.util.*;
 
@@ -16,13 +16,13 @@ public class DefaultCategory implements Category {
 	private int position;
 	private boolean active;
 	private String description;
-	private Set<StoreAttribute> attributes = new HashSet<>();
+	private Set<Attribute> attributes = new HashSet<>();
 
 	protected Genealogy genealogy;
 	protected DefaultCategory parent;
 	protected final List<Category> children = new ArrayList<>();
 
-	protected DefaultCategory(HibernateCategory category, StoreAttributeManager manager) {
+	protected DefaultCategory(HibernateCategory category, AttributeManager manager) {
 		updateCategoryInfo(category, manager);
 	}
 
@@ -70,7 +70,7 @@ public class DefaultCategory implements Category {
 	}
 
 	@Override
-	public Set<StoreAttribute> getAttributes() {
+	public Set<Attribute> getAttributes() {
 		return attributes;
 	}
 
@@ -79,7 +79,7 @@ public class DefaultCategory implements Category {
 		return position;
 	}
 
-	void updateCategoryInfo(HibernateCategory category, StoreAttributeManager manager) {
+	void updateCategoryInfo(HibernateCategory category, AttributeManager manager) {
 		this.id = category.getId();
 		this.name = category.getName();
 		this.description = category.getDescription();

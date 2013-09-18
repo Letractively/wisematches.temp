@@ -5,10 +5,10 @@ import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.payment.ShipmentManager;
 import billiongoods.server.services.payment.ShipmentType;
+import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.Property;
-import billiongoods.server.warehouse.StoreAttribute;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.warehouse.form.BasketItemForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderCheckoutForm;
@@ -128,7 +128,7 @@ public class BasketController extends AbstractController {
 				for (int i = 0; i < optionIds.length; i++) {
 					final Integer optionId = optionIds[i];
 					if (optionId != null) {
-						final StoreAttribute attribute = attributeManager.getAttribute(optionId);
+						final Attribute attribute = attributeManager.getAttribute(optionId);
 						if (attribute == null) {
 							return responseFactory.failure("unknown.attribute", new Object[]{optionIds[i]}, locale);
 						}

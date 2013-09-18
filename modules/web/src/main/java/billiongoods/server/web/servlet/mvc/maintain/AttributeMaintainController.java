@@ -1,8 +1,8 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
-import billiongoods.server.warehouse.StoreAttribute;
+import billiongoods.server.warehouse.Attribute;
+import billiongoods.server.warehouse.AttributeType;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import billiongoods.server.web.servlet.mvc.maintain.form.AttributeForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,15 +24,16 @@ public class AttributeMaintainController extends AbstractController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String viewAttribute(Model model, @ModelAttribute("form") AttributeForm form) {
-		StoreAttribute attribute = null;
+	public String viewAttribute(Model model, @ModelAttribute("form") Attribute.Editor form) {
+		Attribute attribute = null;
 		if (form.getId() != null) {
 			attribute = attributeManager.getAttribute(form.getId());
 		}
 
 		if (attribute != null) {
-			form.setName(attribute.getName());
-			form.setUnit(attribute.getUnit());
+			form.init(attribute);
+		} else {
+			form.setAttributeType(AttributeType.UNKNOWN);
 		}
 		model.addAttribute("attribute", attribute);
 		model.addAttribute("attributes", attributeManager.getAttributes());
@@ -41,17 +42,19 @@ public class AttributeMaintainController extends AbstractController {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String updateAttribute(@Valid @ModelAttribute("form") AttributeForm form, Model model, BindingResult result) {
+	public String updateAttribute(@Valid @ModelAttribute("form") Attribute.Editor form, Model model, BindingResult result) {
 		try {
+			Attribute attribute;
 			if (form.getId() == null) {
-				final StoreAttribute attribute = attributeManager.createAttribute(form.getName(), form.getUnit());
-				form.setId(attribute.getId());
+				attribute = attributeManager.createAttribute(form);
 			} else {
-				attributeManager.updateAttribute(form.getId(), form.getName(), form.getUnit());
+				attribute = attributeManager.updateAttribute(form);
 			}
+			form.init(attribute);
+			return viewAttribute(model, form);
 		} catch (Exception ex) {
 			result.reject("internal.error", ex.getMessage());
+			return viewAttribute(model, new Attribute.Editor());
 		}
-		return viewAttribute(model, form);
 	}
 }

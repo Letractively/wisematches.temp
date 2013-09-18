@@ -8,21 +8,21 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ProductFilter {
-	private final Map<StoreAttribute, List<String>> filter;
+	private final Map<Attribute, List<String>> filter;
 
-	public ProductFilter(Map<StoreAttribute, List<String>> filter) {
+	public ProductFilter(Map<Attribute, List<String>> filter) {
 		this.filter = filter;
 	}
 
-	public Set<StoreAttribute> getAttributes() {
+	public Set<Attribute> getAttributes() {
 		return filter.keySet();
 	}
 
-	public List<String> getValues(StoreAttribute attribute) {
+	public List<String> getValues(Attribute attribute) {
 		return filter.get(attribute);
 	}
 
-	public boolean isAllowed(StoreAttribute attr, String value) {
+	public boolean isAllowed(Attribute attr, String value) {
 		final List<String> strings = filter.get(attr);
 		return strings != null && strings.contains(value);
 	}

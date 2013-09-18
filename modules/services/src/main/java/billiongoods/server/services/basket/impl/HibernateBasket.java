@@ -3,9 +3,9 @@ package billiongoods.server.services.basket.impl;
 import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
+import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.ProductManager;
-import billiongoods.server.warehouse.StoreAttributeManager;
 
 import javax.persistence.*;
 import java.util.*;
@@ -147,7 +147,7 @@ public class HibernateBasket implements Basket {
 		return p;
 	}
 
-	void initialize(ProductManager productManager, StoreAttributeManager attributeManager) {
+	void initialize(ProductManager productManager, AttributeManager attributeManager) {
 		for (BasketItem basketItem : basketItems) {
 			((HibernateBasketItem) basketItem).initialize(productManager, attributeManager);
 		}

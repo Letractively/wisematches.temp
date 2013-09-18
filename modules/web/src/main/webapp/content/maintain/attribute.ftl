@@ -1,5 +1,5 @@
-<#-- @ftlvariable name="attribute" type="billiongoods.server.warehouse.StoreAttribute" -->
-<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.StoreAttribute[]" -->
+<#-- @ftlvariable name="attribute" type="billiongoods.server.warehouse.Attribute" -->
+<#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
 
 <#include "/core.ftl">
 
@@ -17,6 +17,29 @@
             <tr>
                 <td><label for="u">Единицы измерения: </label></td>
                 <td>
+                <@bg.ui.input path="form.unit"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="u">Описание: </label></td>
+                <td>
+                <@bg.ui.field path="form.description">
+                    <textarea rows="3" style="width: 100%"
+                              name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+                </@bg.ui.field>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="u">Тип: </label></td>
+                <td>
+                <@bg.ui.bind "form.attributeType"/>
+                    <select id="attributeType" name="${bg.ui.status.expression}" style="width: 100%">
+                    <#list AttributeType.values() as t>
+                        <option value="${t.name()}"
+                                <#if bg.ui.actualValue=t>selected="selected"</#if>>${t.name()}</option>
+                    </#list>
+                    </select>
+
                 <@bg.ui.input path="form.unit"/>
                 </td>
             </tr>

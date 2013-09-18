@@ -6,15 +6,15 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public final class Option {
-	private final StoreAttribute attribute;
+	private final Attribute attribute;
 	private final List<String> values;
 
-	public Option(StoreAttribute attribute, List<String> values) {
+	public Option(Attribute attribute, List<String> values) {
 		this.attribute = attribute;
 		this.values = values;
 	}
 
-	public StoreAttribute getAttribute() {
+	public Attribute getAttribute() {
 		return attribute;
 	}
 

@@ -79,7 +79,7 @@ public class ProductMaintainController extends AbstractController {
 					try {
 						final Integer p = propertyIds[i];
 						final String v = propertyValues[i];
-						final StoreAttribute attribute = attributeManager.getAttribute(p);
+						final Attribute attribute = attributeManager.getAttribute(p);
 						properties.add(new Property(attribute, v));
 					} catch (Exception ignore) {
 					}
@@ -158,7 +158,7 @@ public class ProductMaintainController extends AbstractController {
 			form.setOptionIds(optIds);
 			form.setOptionValues(optValues);
 
-			final Map<StoreAttribute, String> values = createAttributesMap(category);
+			final Map<Attribute, String> values = createAttributesMap(category);
 
 			for (Property property : product.getProperties()) {
 				values.put(property.getAttribute(), property.getValue());
@@ -167,7 +167,7 @@ public class ProductMaintainController extends AbstractController {
 			index = 0;
 			final Integer[] propIds = new Integer[values.size()];
 			final String[] propValues = new String[values.size()];
-			for (Map.Entry<StoreAttribute, String> entry : values.entrySet()) {
+			for (Map.Entry<Attribute, String> entry : values.entrySet()) {
 				propIds[index] = entry.getKey().getId();
 				propValues[index] = entry.getValue();
 				index++;
@@ -367,11 +367,11 @@ public class ProductMaintainController extends AbstractController {
 	}
 */
 
-	private Map<StoreAttribute, String> createAttributesMap(Category category) {
-		final Map<StoreAttribute, String> values = new HashMap<>();
+	private Map<Attribute, String> createAttributesMap(Category category) {
+		final Map<Attribute, String> values = new HashMap<>();
 		Category ct = category;
 		while (ct != null) {
-			for (StoreAttribute attribute : ct.getAttributes()) {
+			for (Attribute attribute : ct.getAttributes()) {
 				values.put(attribute, null);
 			}
 			ct = ct.getParent();

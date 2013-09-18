@@ -23,7 +23,7 @@
         <property name="imageResolver" ref="imageResolver"/>
     </bean>
 
-    <bean id="attributeManager" class="billiongoods.server.warehouse.impl.HibernateStoreAttributeManager">
+    <bean id="attributeManager" class="billiongoods.server.warehouse.impl.HibernateAttributeManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
