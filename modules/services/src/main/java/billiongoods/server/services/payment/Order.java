@@ -19,9 +19,6 @@ public interface Order {
 	Shipment getShipment();
 
 
-	double getExchangeRate();
-
-
 	Date getTimestamp();
 
 	Date getCreationTime();

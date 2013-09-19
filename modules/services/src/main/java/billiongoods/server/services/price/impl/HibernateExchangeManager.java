@@ -1,7 +1,6 @@
 package billiongoods.server.services.price.impl;
 
 import billiongoods.server.services.price.ExchangeManager;
-import billiongoods.server.services.price.MarkupCalculator;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +17,6 @@ public class HibernateExchangeManager implements ExchangeManager, InitializingBe
 	private double exchangeRate;
 
 	private SessionFactory sessionFactory;
-	private MarkupCalculator markupCalculator = new MarkupCalculator();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.price.ExchangeManager");
 
@@ -34,34 +32,22 @@ public class HibernateExchangeManager implements ExchangeManager, InitializingBe
 
 		final HibernateExchangeRate rate = (HibernateExchangeRate) query.uniqueResult();
 		if (rate == null) {
-			exchangeRate = 33.33f;
+			exchangeRate = 35f;
 			log.info("Exchange rate set to predefined: {}", exchangeRate);
 		} else {
 			exchangeRate = rate.getExchangeRate();
 			log.info("Exchange rate load from DB: {}", exchangeRate);
 		}
+
+		// TODO: hardcoded
+		exchangeRate = 35f;
 		session.flush();
 		session.close();
 	}
 
 	@Override
-	public double convertPrice(double price) {
-		return convertPrice(price, exchangeRate);
-	}
-
-	@Override
-	public double convertPrice(double price, double exchange) {
-		return Math.round(price * exchange);
-	}
-
-	@Override
 	public double getExchangeRate() {
 		return exchangeRate;
-	}
-
-	@Override
-	public MarkupCalculator getMarkupCalculator() {
-		return markupCalculator;
 	}
 
 	@Override

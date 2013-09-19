@@ -57,7 +57,7 @@
                 <span class="itemWeight">${product.weight?string("0.00")} кг</span>
             </td>
             <td valign="middle" nowrap="nowrap" align="left">
-                <span class="itemAmount"><@bg.ui.price product.price.amount * i.quantity "g"/></span>
+                <span class="itemAmount"><@bg.ui.price product.price.amount * i.quantity "b"/></span>
             </td>
         </tr>
     </#list>
@@ -75,7 +75,7 @@
 <div class="unregistered" <#if shipmentRates.isFreeShipment(ShipmentType.REGISTERED)>style="display: none"</#if>>
     Вы можете получить бесплатный номер для отслеживания (зарегистрированное отправление) добавив еще товара на
     сумму
-    <span class="price"><@bg.ui.price 25.0-shipmentRates.amount "g"/></span>
+    <@bg.ui.price 1000.0-shipmentRates.amount "b"/>
 </div>
 
 <div class="order">
@@ -185,8 +185,7 @@
                                        <#if !freeRegisteredShipment>style="display: none"</#if>><span
                                         class="price"><span class="usd">Бесплатная доставка</span></span></span><span
                                         id="paidRegisteredShipment"
-                                        <#if freeRegisteredShipment>style="display: none"</#if>><span
-                                        class="price"><@bg.ui.price shipmentRates.getShipmentCost(ShipmentType.REGISTERED)/></span></span>
+                                        <#if freeRegisteredShipment>style="display: none"</#if>><@bg.ui.price shipmentRates.getShipmentCost(ShipmentType.REGISTERED)/></span>
                                 за 30-40 рабочих
                                 дней)</label>
                         </td>
@@ -222,22 +221,18 @@
                 <table class="payment">
                     <tr class="payment-order">
                         <td valign="top" align="right">
-                                    <span>
-                                        Стоимость заказа:
-                                    </span>
+                            <span>Стоимость заказа:</span>
                         </td>
                         <td>
-                            <span class="price"><@bg.ui.price shipmentRates.amount "b"/></span>
+                            <@bg.ui.price shipmentRates.amount "b"/>
                         </td>
                     </tr>
                     <tr class="payment-shipment">
                         <td valign="top" align="right">
-                                    <span>
-                                        Стоимость доставки:
-                                    </span>
+                            <span>Стоимость доставки:</span>
                         </td>
                         <td>
-                            <span class="price"><@bg.ui.price shipmentCost "b"/></span>
+                            <@bg.ui.price shipmentCost "b"/>
                         </td>
                     </tr>
                     <tr class="payment-total">
@@ -245,7 +240,7 @@
                             <span>Общая стоимость:</span>
                         </td>
                         <td>
-                            <span class="price"><@bg.ui.price shipmentRates.amount+shipmentCost "r"/></span>
+                            <@bg.ui.price shipmentRates.amount+shipmentCost "r"/>
                         </td>
                     </tr>
                     <tr>
@@ -280,5 +275,5 @@
 </div>
 
 <script type="application/javascript">
-    new bg.warehouse.Basket(${exchangeManager.exchangeRate});
+    new bg.warehouse.Basket();
 </script>

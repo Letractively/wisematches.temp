@@ -5,7 +5,6 @@ import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.payment.*;
-import billiongoods.server.services.price.ExchangeManager;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -24,7 +23,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateOrderManager extends EntitySearchManager<Order, OrderContext, Void> implements OrderManager {
-	private ExchangeManager exchangeManager;
 	private ShipmentManager shipmentManager;
 
 	private final Collection<OrderListener> listeners = new CopyOnWriteArrayList<>();
@@ -57,8 +55,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final double shipmentCost = shipmentManager.getShipmentCost(basket, shipmentType);
 		final Shipment shipment = new Shipment(shipmentCost, address, shipmentType);
 
-		final double exchangeRate = exchangeManager.getExchangeRate();
-		final HibernateOrder order = new HibernateOrder(person.getId(), basket, shipment, exchangeRate, track);
+		final HibernateOrder order = new HibernateOrder(person.getId(), basket, shipment, track);
 		session.save(order);
 
 		int index = 0;
@@ -256,10 +253,6 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		for (OrderListener listener : listeners) {
 			listener.orderStateChange(order, oldState, order.getOrderState());
 		}
-	}
-
-	public void setExchangeManager(ExchangeManager exchangeManager) {
-		this.exchangeManager = exchangeManager;
 	}
 
 	public void setShipmentManager(ShipmentManager shipmentManager) {

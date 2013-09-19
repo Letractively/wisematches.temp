@@ -9,20 +9,12 @@
 
 <#import "/spring.ftl" as spring />
 
-
 <#macro static p>${staticResourcesDomain}/${p}</#macro>
 
-
-<#macro usd v><span class="usd"><span class="currency" itemprop="priceCurrency">USD</span><span class="amount"
-                                                                                                itemprop="price">${v?string("0.00")}</span></span></#macro>
-
-<#macro rub v c="g"><span class="amount">${v?string("0.00")}</span><img
+<#macro price v c=""><span class="price"><span class="amount"
+                                               itemprop="price">${v?string("0.00")}</span><img
         src="<@static "images/${c}ruble.gif"/>"
-        class="ruble-img"/><span
-        class="dot">руб.</span></#macro>
-
-<#macro price v c="g" r=exchangeManager.exchangeRate><@usd v/> <span class="rub">(~<@rub v*r c/>)</span></#macro>
-
+        class="ruble-img"/><span class="dot" itemprop="priceCurrency">RUB</span></span></#macro>
 
 <#macro panel caption id="" class=id name=id>
 <div <#if id?has_content>id="${id}"</#if> class="info-panel<#if class?has_content> ${class}"</#if>>
@@ -73,7 +65,7 @@
         <@discountDiv product/>
     </div>
     <div class="name" itemprop="name"><@bg.link.product product>${product.name}</@bg.link.product></div>
-    <div class="price" itemprop="offers" itemscope
+    <div itemprop="offers" itemscope
          itemtype="http://schema.org/Offer"><@bg.ui.price product.price.amount/></div>
     <#if ops["showCategory"]?? && ops["showCategory"]>
         <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(product.categoryId)/></div>

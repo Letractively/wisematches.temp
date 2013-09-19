@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="exchangeManager" type="billiongoods.server.services.price.ExchangeManager" -->
+
 <div class="exchange">
     <form action="/maintain/exchange/update" method="post">
         Курс обмена:

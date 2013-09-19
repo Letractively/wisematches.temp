@@ -321,12 +321,11 @@ bg.assistance.SupportForm = function () {
 
 bg.warehouse = {};
 
-bg.warehouse.Basket = function (cource) {
+bg.warehouse.Basket = function () {
     var basket = $(".basket");
 
     var updatePrice = function (el, price) {
-        el.find('.usd .amount').text(price.toFixed(2));
-        el.find('.rub .amount').text((price * cource).toFixed(2));
+        el.find('.amount').text(price.toFixed(2));
     };
 
     var showChangedWarning = function () {
@@ -349,10 +348,10 @@ bg.warehouse.Basket = function (cource) {
         var shipmentType = shipmentItem.val();
 
         var shipmentAmount = 0;
-        if (totalAmount < 25) {
+        if (totalAmount < 1000) {
             basket.find('.unregistered').slideDown('fast');
             if (shipmentType == 'REGISTERED') {
-                shipmentAmount = 1.70;
+                shipmentAmount = 70.;
             }
             basket.find('#shipmentFree').removeAttr('disabled');
             basket.find('#freeRegisteredShipment').hide();
@@ -365,7 +364,7 @@ bg.warehouse.Basket = function (cource) {
             basket.find('#paidRegisteredShipment').hide();
         }
 
-        updatePrice(basket.find('.unregistered .price'), 25 - totalAmount);
+        updatePrice(basket.find('.unregistered .price'), 1000 - totalAmount);
 
         updatePrice(basket.find('.payment-order .price'), totalAmount);
         updatePrice(basket.find('.payment-shipment .price'), shipmentAmount);

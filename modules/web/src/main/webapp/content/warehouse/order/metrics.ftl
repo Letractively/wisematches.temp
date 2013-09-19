@@ -9,8 +9,8 @@
         var orderParams = {
             order_id: "${order.id}",
             order_price: ${order.amount?string("0.00")},
-            currency: "USD",
-            exchange_rate: ${order.exchangeRate?string("0.00")},
+            currency: "RUR",
+            exchange_rate: 1,
             goods: [
                 <#list order.orderItems as i>
                     {

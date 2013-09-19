@@ -47,7 +47,7 @@ public class HibernateTransactionManagerTest {
 		final Order order = createMock(Order.class);
 		expect(order.getId()).andReturn(12L);
 		expect(order.getAmount()).andReturn(123.45d);
-		expect(order.getShipment()).andReturn(new Shipment(1.70d, null, ShipmentType.FREE));
+		expect(order.getShipment()).andReturn(new Shipment(70d, null, ShipmentType.FREE));
 		replay(order);
 
 		final PayPalTransaction tnx = manager.beginTransaction(order);
@@ -139,7 +139,7 @@ public class HibernateTransactionManagerTest {
 		assertEquals(12L, transaction.getOrderId().longValue());
 		assertEquals("12345678900987654321", transaction.getToken());
 		assertEquals(123.45d, transaction.getAmount(), 0.000000001d);
-		assertEquals(1.70d, transaction.getShipment(), 0.000000001d);
+		assertEquals(70d, transaction.getShipment(), 0.000000001d);
 		assertNotNull(transaction.getCreationTime());
 		assertEquals(TransactionPhase.CONFIRMATION, transaction.getPhase());
 		assertEquals(TransactionResolution.FAILURE, transaction.getResolution());
