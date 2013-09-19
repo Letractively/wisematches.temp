@@ -13,3 +13,9 @@ SET price = (buyPrice + buyPrice * 0.20) * 35 + 10;
 UPDATE store_product
 SET primordialPrice = (buyPrimordialPrice + buyPrimordialPrice * 0.20) * 35 + 10
 WHERE buyPrimordialPrice IS NOT null;
+
+ALTER TABLE `billiongoods`.`store_order`
+DROP COLUMN `exchangeRate`;
+
+ALTER TABLE `billiongoods`.`store_attribute`
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT;

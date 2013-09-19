@@ -28,11 +28,6 @@ public class HibernateOrder implements Order {
 	@Column(name = "amount", updatable = false)
 	private double amount;
 
-	@Deprecated
-	@Column(name = "exchangeRate", updatable = false)
-	private double exchangeRate;
-
-
 	@Column(name = "shipment", updatable = false)
 	private double shipmentAmount;
 

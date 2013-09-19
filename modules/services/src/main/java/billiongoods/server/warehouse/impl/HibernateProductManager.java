@@ -116,7 +116,6 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		final HibernateProduct product = new HibernateProduct();
 		updateProduct(product, editor);
 
-
 		final Session session = sessionFactory.getCurrentSession();
 		session.save(product);
 
