@@ -103,10 +103,12 @@
                     <input type="hidden" name="product" value="${product.id}"/>
 
                     <div class="panel">
-                        <div class="price">
+                        <div class="cost">
+                            <span><strong>Стоимость:</strong></span>
+
                         <@bg.ui.price product.price.amount/>
                         <#if product.price.primordialAmount??><span
-                                class="primordial"><@bg.ui.price product.price.primordialAmount/></span></#if>
+                                class="primordial">(<@bg.ui.price product.price.primordialAmount "g"/>)</span></#if>
                         </div>
 
                     <#if product.options?has_content>

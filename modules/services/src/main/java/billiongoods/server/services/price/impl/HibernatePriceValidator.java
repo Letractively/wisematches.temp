@@ -32,6 +32,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 
 	private SessionFactory sessionFactory;
 	private ProductManager productManager;
+
+	private PriceConverter priceConverter;
 	private ExchangeManager exchangeManager;
 
 	private AsyncTaskExecutor taskExecutor;
@@ -70,9 +72,9 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 	private void doValidation() {
 		try {
 			final Date startedDate = new Date();
+			final double exchangeRate = exchangeManager.getExchangeRate();
 
 			validationSummary.initialize(startedDate);
-			final MarkupCalculator markupCalculator = exchangeManager.getMarkupCalculator();
 
 			int count;
 			TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
@@ -126,25 +128,26 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 						final Price oldPrice = (Price) a[1];
 						final Price oldSupplierPrice = supplierInfo.getPrice();
 
+						Price newSupplierPrice = oldSupplierPrice;
 						try {
-							final Price newSupplierPrice = priceLoader.loadPrice(supplierInfo);
-							final Price newPrice = markupCalculator.calculateMarkupPrice(newSupplierPrice);
-
-							final HibernatePriceRenewal renewal = new HibernatePriceRenewal(productId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
-							if (!newPrice.equals(oldPrice)) {
-								log.info("Price for product {} from {} has been updated {}", productId, supplierInfo.getReferenceUri(), renewal);
-								validationSummary.addRenewal(renewal);
-
-								session.save(renewal);
-								productManager.updatePrice(productId, newPrice, newSupplierPrice);
-							}
-
-							for (PriceValidatorListener listener : listeners) {
-								listener.priceValidated(productId, renewal);
-							}
+							newSupplierPrice = priceLoader.loadPrice(supplierInfo);
 						} catch (PriceLoadingException ex) {
 							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
 							validationSummary.addBreakdown(new Date(), productId, ex);
+						}
+
+						final Price newPrice = priceConverter.convert(newSupplierPrice, exchangeRate, MarkupType.REGULAR);
+						final HibernatePriceRenewal renewal = new HibernatePriceRenewal(productId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
+						if (!newPrice.equals(oldPrice)) {
+							log.info("Price for product {} from {} has been updated {}", productId, supplierInfo.getReferenceUri(), renewal);
+							validationSummary.addRenewal(renewal);
+
+							session.save(renewal);
+							productManager.updatePrice(productId, newPrice, newSupplierPrice);
+						}
+
+						for (PriceValidatorListener listener : listeners) {
+							listener.priceValidated(productId, renewal);
 						}
 					}
 					session.flush();
@@ -223,6 +226,10 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 
 	public void setProductManager(ProductManager productManager) {
 		this.productManager = productManager;
+	}
+
+	public void setPriceConverter(PriceConverter priceConverter) {
+		this.priceConverter = priceConverter;
 	}
 
 	public void setExchangeManager(ExchangeManager exchangeManager) {

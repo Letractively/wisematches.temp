@@ -33,7 +33,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 	private PayPalAPIInterfaceServiceService service;
 	private final Map<String, String> sdkConfig = new HashMap<>();
 
-	private static final CurrencyCodeType CURRENCY_CODE = CurrencyCodeType.USD;
+	private static final CurrencyCodeType CURRENCY_CODE = CurrencyCodeType.RUB;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.paypal.ExpressCheckout");
 

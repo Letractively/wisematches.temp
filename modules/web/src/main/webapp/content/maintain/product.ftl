@@ -410,7 +410,8 @@
     };
 
     var recalculatePrice = function (val) {
-        return ${exchangeManager.markupCalculator.getJavaScriptFunction("parseFloat(val)")};
+        var v = parseFloat(val);
+        return (v + v * 0.2) * 35 + 10;
     };
 
     $("#supplierPrice").change(function () {

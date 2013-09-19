@@ -1,7 +1,8 @@
 package billiongoods.server.services.arivals.impl;
 
 import billiongoods.server.services.price.ExchangeManager;
-import billiongoods.server.services.price.MarkupCalculator;
+import billiongoods.server.services.price.PriceConverter;
+import billiongoods.server.services.price.impl.DefaultPriceConverter;
 import billiongoods.server.warehouse.*;
 import org.junit.Test;
 
@@ -26,8 +27,10 @@ public class BanggoodProductImporterTest {
 
 	@Test
 	public void test() throws IOException {
+		final PriceConverter priceConverter = new DefaultPriceConverter();
+
 		final ExchangeManager exchangeManager = createMock(ExchangeManager.class);
-		expect(exchangeManager.getMarkupCalculator()).andReturn(new MarkupCalculator(0.3d, 0.2d));
+		expect(exchangeManager.getExchangeRate()).andReturn(34.2d);
 		replay(exchangeManager);
 
 		final Category category = createMock(Category.class);
@@ -55,6 +58,7 @@ public class BanggoodProductImporterTest {
 		final BanggoodProductImporter importer = new BanggoodProductImporter();
 		importer.setExchangeManager(exchangeManager);
 		importer.setProductManager(productManager);
+		importer.setPriceConverter(priceConverter);
 
 //		importer.importProducts(category, getClass().getResourceAsStream("/banggood_packer.csv"));
 

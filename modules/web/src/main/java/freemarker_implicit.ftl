@@ -10,7 +10,6 @@
 [#-- @ftlvariable name="department" type="billiongoods.server.web.servlet.mvc.Department" --]
 
 [#-- @ftlvariable name="imageResolver" type="billiongoods.server.services.image.ImageResolver" --]
-[#-- @ftlvariable name="exchangeManager" type="billiongoods.server.services.price.ExchangeManager" --]
 
 [#-- @ftlvariable name="ImageSize" type="billiongoods.server.services.image.ImageSize.static" --]
 [#-- @ftlvariable name="OrderState" type="billiongoods.server.services.payment.OrderState.static" --]

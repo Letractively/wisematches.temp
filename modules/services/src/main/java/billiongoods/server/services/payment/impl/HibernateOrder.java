@@ -28,6 +28,7 @@ public class HibernateOrder implements Order {
 	@Column(name = "amount", updatable = false)
 	private double amount;
 
+	@Deprecated
 	@Column(name = "exchangeRate", updatable = false)
 	private double exchangeRate;
 
@@ -93,12 +94,11 @@ public class HibernateOrder implements Order {
 	HibernateOrder() {
 	}
 
-	public HibernateOrder(Long buyer, Basket basket, Shipment shipment, double exchangeRate, boolean tracking) {
+	public HibernateOrder(Long buyer, Basket basket, Shipment shipment, boolean tracking) {
 		this.buyer = buyer;
 		this.amount = basket.getAmount();
 		this.shipmentAmount = shipment.getAmount();
 		this.shipmentType = shipment.getType();
-		this.exchangeRate = exchangeRate;
 		this.shipmentAddress = new HibernateAddress(shipment.getAddress());
 		this.tracking = tracking;
 		this.orderState = OrderState.NEW;
@@ -131,11 +131,6 @@ public class HibernateOrder implements Order {
 			shipment = new Shipment(shipmentAmount, shipmentAddress, shipmentType);
 		}
 		return shipment;
-	}
-
-	@Override
-	public double getExchangeRate() {
-		return exchangeRate;
 	}
 
 	@Override

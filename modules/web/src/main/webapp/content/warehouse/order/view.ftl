@@ -216,7 +216,7 @@
                 <span class="itemWeight">${i.weight?string("0.00")} кг</span>
             </td>
             <td valign="middle" nowrap="nowrap" align="left">
-                <span class="itemAmount"><@bg.ui.price i.amount * i.quantity "b" order.exchangeRate/></span>
+                <span class="itemAmount"><@bg.ui.price i.amount * i.quantity "b"/></span>
             </td>
         </tr>
     </#list>
@@ -229,19 +229,19 @@
             ${totalWeight?string("0.00")} кг
             </th>
             <th nowrap="nowrap" align="left">
-                <div class="price"><@bg.ui.price order.amount "g" order.exchangeRate/></div>
+            <@bg.ui.price order.amount/>
             </th>
         </tr>
         <tr>
             <th colspan="4" nowrap="nowrap" align="left">Стоимость доставки</th>
             <th nowrap="nowrap" align="left">
-                <div class="price"><@bg.ui.price shipment.amount "g" order.exchangeRate/></div>
+            <@bg.ui.price shipment.amount/>
             </th>
         </tr>
         <tr>
             <th colspan="4" nowrap="nowrap" align="left">Итоговая сумма заказа</th>
             <th nowrap="nowrap" align="left">
-                <div class="price"><@bg.ui.price order.amount + shipment.amount "g" order.exchangeRate/></div>
+            <@bg.ui.price order.amount + shipment.amount/>
             </th>
         </tr>
     </table>

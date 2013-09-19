@@ -11,6 +11,9 @@
         <constructor-arg name="alertsMailBox" value="${server.alerts.box}"/>
     </bean>
 
+    <bean id="priceConverter" class="billiongoods.server.services.price.impl.DefaultPriceConverter">
+    </bean>
+
     <bean id="exchangeManager" class="billiongoods.server.services.price.impl.HibernateExchangeManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -53,6 +56,8 @@
     <bean id="priceValidator" class="billiongoods.server.services.price.impl.HibernatePriceValidator">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="productManager" ref="productManager"/>
+
+        <property name="priceConverter" ref="priceConverter"/>
         <property name="exchangeManager" ref="exchangeManager"/>
 
         <property name="transactionManager" ref="transactionManager"/>
@@ -72,6 +77,7 @@
         <property name="imageManager" ref="imageManager"/>
         <property name="productManager" ref="productManager"/>
         <property name="priceLoader" ref="banggoodPriceLoader"/>
+        <property name="priceConverter" ref="priceConverter"/>
         <property name="exchangeManager" ref="exchangeManager"/>
         <property name="relationshipManager" ref="relationshipManager"/>
         <property name="transactionManager" ref="transactionManager"/>
@@ -110,7 +116,6 @@
     </bean>
 
     <bean id="orderManager" class="billiongoods.server.services.payment.impl.HibernateOrderManager">
-        <property name="exchangeManager" ref="exchangeManager"/>
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="shipmentManager" ref="shipmentManager"/>
     </bean>

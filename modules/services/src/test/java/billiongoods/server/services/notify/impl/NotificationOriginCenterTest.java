@@ -93,7 +93,7 @@ public class NotificationOriginCenterTest {
 		final HibernateBasket basket = new HibernateBasket();
 		final HibernateAddress address = new HibernateAddress();
 
-		final Order order = new HibernateOrder(123L, basket, new Shipment(12d, address, ShipmentType.REGISTERED), 12d, true);
+		final Order order = new HibernateOrder(123L, basket, new Shipment(12d, address, ShipmentType.REGISTERED), true);
 
 		final OrderListener listener = listenerCapture.getValue();
 		listener.orderStateChange(order, null, OrderState.NEW);

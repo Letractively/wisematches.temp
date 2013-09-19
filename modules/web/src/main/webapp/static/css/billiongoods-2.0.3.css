@@ -63,7 +63,7 @@ a.highlight:link, a.highlight:visited {
 }
 
 img.ruble-img {
-    height: 1.4ex;
+    height: 1.5ex;
     padding-left: 3px;
 }
 
@@ -816,24 +816,21 @@ button.bg-ui-button.selected {
     white-space: nowrap;
 }
 
-.price .usd, .price .usd span {
+.price span {
     color: #fa6302;
     font-size: 14px;
     font-weight: bold;
 }
 
-.price .rub, .price .rub span {
-    color: gray;
-    font-weight: normal;
+.primordial {
+    padding-left: 10px;
 }
 
-.price .primordial {
-    padding-left: 10px;
-    color: #808080;
+.primordial .price {
     text-decoration: line-through;
 }
 
-.price .primordial span {
+.primordial, .primordial .price span {
     color: #808080;
     font-weight: normal;
 }
@@ -1061,6 +1058,11 @@ button.bg-ui-button.selected {
     padding: 0;
 }
 
+.basket .item .price span {
+    color: #000000;
+    font-weight: normal;
+}
+
 .account-action > div {
     display: inline-block;
 }
@@ -1081,7 +1083,7 @@ button.bg-ui-button.selected {
     border: 1px solid #FF5A00;
 }
 
-.basket .unregistered .price .usd span {
+.basket .unregistered .price span {
     color: #000000;
 }
 

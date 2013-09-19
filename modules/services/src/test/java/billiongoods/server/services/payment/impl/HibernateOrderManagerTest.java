@@ -49,7 +49,6 @@ public class HibernateOrderManagerTest {
 
 		final HibernateOrderManager orderManager = new HibernateOrderManager();
 		orderManager.setSessionFactory(sessionFactory);
-		orderManager.setExchangeManager(exchangeManager);
 		orderManager.setShipmentManager(new DefaultShipmentManager());
 
 		final ProductDescription desc = createMock(ProductDescription.class);
@@ -93,8 +92,7 @@ public class HibernateOrderManagerTest {
 		final Shipment shipment = order.getShipment();
 		assertNotNull(order.getId());
 		assertEquals(23.9d, order.getAmount(), 0.0000001d);
-		assertEquals(1.7d, shipment.getAmount(), 0.0000001d);
-		assertEquals(33.3d, order.getExchangeRate(), 0.0000001d);
+		assertEquals(70d, shipment.getAmount(), 0.0000001d);
 		assertEquals(ShipmentType.REGISTERED, shipment.getType());
 		assertEquals(123, order.getBuyer().longValue());
 		assertEquals(OrderState.NEW, order.getOrderState());
