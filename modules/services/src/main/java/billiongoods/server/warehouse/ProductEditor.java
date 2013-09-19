@@ -23,7 +23,7 @@ public class ProductEditor {
 	Supplier wholesaler;
 	Price supplierPrice;
 	String commentary;
-	ProductState productState;
+	ProductState productState = ProductState.DISABLED;
 
 	public ProductEditor() {
 	}

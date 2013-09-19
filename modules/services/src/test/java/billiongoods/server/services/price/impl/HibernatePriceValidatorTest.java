@@ -7,6 +7,7 @@ import billiongoods.server.services.price.impl.loader.BanggoodPriceLoader;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.Supplier;
 import billiongoods.server.warehouse.impl.HibernateSupplierInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.FileReader;
@@ -14,6 +15,7 @@ import java.io.FileReader;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
+@Ignore
 public class HibernatePriceValidatorTest {
 	public HibernatePriceValidatorTest() {
 	}

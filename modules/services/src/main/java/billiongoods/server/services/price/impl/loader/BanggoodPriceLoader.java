@@ -27,12 +27,13 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,6 +52,8 @@ public class BanggoodPriceLoader implements PriceLoader {
 	private static final Pattern PRICE_PATTERN = Pattern.compile("<div.*?id=\"(price_sub|regular_div)\".*?>\\(?(.+?)\\)?</div>");
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.price.BanggoodPriceLoader");
+
+	private final ScriptEngine javascript = new ScriptEngineManager().getEngineByName("javascript");
 
 	public BanggoodPriceLoader() {
 		final HttpParams params = new BasicHttpParams();
@@ -138,18 +141,12 @@ public class BanggoodPriceLoader implements PriceLoader {
 	}
 
 	protected String parseJavaScriptRedirect(String response) {
-		final Map<String, String> tokens = new HashMap<>();
-		final Matcher matcher = REDIRECT_TOKENS.matcher(response);
-		while (matcher.find()) {
-			tokens.put(matcher.group(1), matcher.group(2));
+		try {
+			response = response.substring(response.indexOf("JavaScript") + 12, response.lastIndexOf("</script>"));
+			javascript.eval(response.replace("window.location.href=", " var res="));
+			return (String) javascript.get("res");
+		} catch (ScriptException ex) {
+			return null;
 		}
-
-		final Matcher matcher1 = REDIRECT_CHAIN.matcher(response);
-		matcher1.find();
-		StringBuilder b = new StringBuilder();
-		for (String s : matcher1.group(1).split(",")) {
-			b.append(tokens.get(s));
-		}
-		return b.toString();
 	}
 }

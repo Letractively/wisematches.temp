@@ -4,6 +4,7 @@ import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.services.price.impl.DefaultPriceConverter;
 import billiongoods.server.warehouse.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
+@Ignore
 public class BanggoodProductImporterTest {
 	public BanggoodProductImporterTest() {
 	}
