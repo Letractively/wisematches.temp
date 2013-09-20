@@ -5,8 +5,8 @@ import billiongoods.core.search.Range;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
-import billiongoods.server.web.servlet.mvc.warehouse.form.ItemSortType;
-import billiongoods.server.web.servlet.mvc.warehouse.form.ItemsTableForm;
+import billiongoods.server.web.servlet.mvc.warehouse.form.PageableForm;
+import billiongoods.server.web.servlet.mvc.warehouse.form.SortingType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +35,7 @@ public class CategoryController extends AbstractController {
 
 	@RequestMapping("/category/{categoryId}")
 	public String showCategory(@PathVariable("categoryId") Integer categoryId,
-							   @RequestParam(value = "filter", required = false) String filter,
-							   @ModelAttribute("itemsTableForm") ItemsTableForm tableForm, Model model) {
+							   @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
 		final Category category = categoryManager.getCategory(categoryId);
 		if (category == null) {
 			throw new UnknownEntityException(categoryId, "category");
@@ -50,44 +49,57 @@ public class CategoryController extends AbstractController {
 		sb.append(category.getName());
 		setTitle(model, sb.toString());
 
-		prepareProducts(categoryId, model, tableForm, filter, false);
+		pageableForm.setCategory(null);
+
+		prepareProducts(categoryId, pageableForm, model, false);
 		return "/content/warehouse/category";
 	}
 
 	@RequestMapping("/arrivals")
-	public String showNewArrivals(@RequestParam(value = "c", required = false) Integer categoryId,
-								  Model model, @ModelAttribute("itemsTableForm") ItemsTableForm tableForm) {
-		tableForm.setItemSortType(ItemSortType.ARRIVAL_DATE);
-		prepareProducts(categoryId, model, tableForm, null, true);
+	public String showNewArrivals(@RequestParam(value = "category", required = false) Integer categoryId,
+								  @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
+		setTitle(model, "Новые поступления - Бесплатная доставка");
+		pageableForm.setSort(SortingType.ARRIVAL_DATE.getCode());
+		prepareProducts(categoryId, pageableForm, model, true);
 		return "/content/warehouse/category";
 	}
 
 	@RequestMapping("/topselling")
-	public String showTopSellers(@RequestParam(value = "c", required = false) Integer categoryId,
-								 Model model, @ModelAttribute("itemsTableForm") ItemsTableForm tableForm) {
-		tableForm.setItemSortType(ItemSortType.BESTSELLING);
-		prepareProducts(categoryId, model, tableForm, null, false);
-		tableForm.disableSorting();
+	public String showTopSellers(@RequestParam(value = "category", required = false) Integer categoryId,
+								 @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
+		setTitle(model, "Лучшие продажи - Бесплатная доставка");
+		pageableForm.setSort(SortingType.BESTSELLING.getCode());
+		prepareProducts(categoryId, pageableForm, model, false);
+		pageableForm.disableSorting();
 		return "/content/warehouse/category";
 	}
 
-	private void prepareProducts(Integer categoryId, Model model, ItemsTableForm tableForm, String filterForm, boolean arrivals) {
+	@RequestMapping("/search")
+	public String searchProducts(@RequestParam(value = "category", required = false) Integer categoryId,
+								 @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
+		setTitle(model, "Результат поска по запросу");
+		prepareProducts(categoryId, pageableForm, model, false);
+		return "/content/warehouse/category";
+	}
+
+	private void prepareProducts(Integer categoryId, PageableForm pageableForm, Model model, boolean arrivals) {
 		Category category = null;
-		if (categoryId != null) {
+		if (categoryId != null && categoryId != 0) {
 			category = categoryManager.getCategory(categoryId);
+		} else {
+			model.addAttribute("showCategory", Boolean.TRUE);
 		}
 
-		final ProductFilter filter = prepareFilter(filterForm);
-		final boolean inactive = tableForm.isInactive() || hasRole("moderator");
-		final EnumSet<ProductState> productStates = inactive ? ProductContext.NOT_REMOVED : ProductContext.VISIBLE;
+		final ProductFilter filter = prepareFilter(pageableForm.getFilter());
+		final EnumSet<ProductState> productStates = hasRole("moderator") ? ProductContext.NOT_REMOVED : ProductContext.VISIBLE;
 
-		final ProductContext context = new ProductContext(category, true, tableForm.getQuery(), arrivals, productStates);
-		tableForm.validateForm(productManager.getTotalCount(context));
+		final ProductContext context = new ProductContext(category, true, pageableForm.getQuery(), arrivals, productStates);
+		pageableForm.initialize(productManager.getTotalCount(context, filter));
 
 		final FilteringAbility filtering = productManager.getFilteringAbility(context);
 
-		final Range range = tableForm.createRange();
-		final Orders orders = Orders.of(tableForm.getItemSortType().getOrder());
+		final Range range = pageableForm.getRange();
+		final Orders orders = pageableForm.getOrders();
 		final List<ProductDescription> products = productManager.searchEntities(context, filter, range, orders);
 
 		model.addAttribute("category", category);
@@ -98,7 +110,7 @@ public class CategoryController extends AbstractController {
 	}
 
 	private ProductFilter prepareFilter(String filter) {
-		if (filter == null) {
+		if (filter == null || filter.isEmpty()) {
 			return null;
 		}
 		try {
@@ -108,22 +120,23 @@ public class CategoryController extends AbstractController {
 			final String[] split = decode.split("&");
 			for (String s : split) {
 				final String[] split1 = s.split("=");
-
-				final Attribute attr = attributeManager.getAttribute(Integer.parseInt(split1[0]));
-				if (attr != null) {
-					List<String> strings = res.get(attr);
-					if (strings == null) {
-						strings = new ArrayList<>();
-						res.put(attr, strings);
-					}
-
-					if (split1.length > 1) {
-						final String value = split1[1];
-						if (value != null) {
-							strings.add(value);
+				if (split1[0] != null && !split1[0].isEmpty()) {
+					final Attribute attr = attributeManager.getAttribute(Integer.parseInt(split1[0]));
+					if (attr != null) {
+						List<String> strings = res.get(attr);
+						if (strings == null) {
+							strings = new ArrayList<>();
+							res.put(attr, strings);
 						}
-					} else {
-						strings.add("");
+
+						if (split1.length > 1) {
+							final String value = split1[1];
+							if (value != null) {
+								strings.add(value);
+							}
+						} else {
+							strings.add("");
+						}
 					}
 				}
 			}

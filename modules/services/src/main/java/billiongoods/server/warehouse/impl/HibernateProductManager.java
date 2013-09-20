@@ -6,7 +6,11 @@ import billiongoods.server.warehouse.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.StringType;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -249,27 +253,20 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 				criteria.add(Restrictions.ge("registrationDate", new java.sql.Date(System.currentTimeMillis() - ONE_WEEK_MILLIS)));
 			}
 
-			if (context.getName() != null && !context.getName().trim().isEmpty()) {
-				criteria.add(
-						Restrictions.or(
-								Restrictions.like("name", "%" + context.getName() + "%")
-						)
-				);
+			if (context.getSearch() != null && !context.getSearch().trim().isEmpty()) {
+				criteria.add(Restrictions.sqlRestriction("MATCH(name, description) AGAINST(?)", context.getSearch(), StringType.INSTANCE));
 			}
 		}
 
 		if (filter != null) {
 			final Criteria props = criteria.createAlias("propertyIds", "props");
 
-			int index = 0;
 			final Set<Attribute> attributes = filter.getAttributes();
-			final Criterion[] criterion = new Criterion[attributes.size()];
 			for (Attribute attribute : attributes) {
-				criterion[index++] = Restrictions.and(
+				props.add(Restrictions.and(
 						Restrictions.eq("props.attributeId", attribute.getId()),
-						Restrictions.in("props.value", filter.getValues(attribute)));
+						Restrictions.in("props.value", filter.getValues(attribute))));
 			}
-			props.add(Restrictions.or(criterion));
 		}
 	}
 

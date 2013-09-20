@@ -24,17 +24,22 @@ public abstract class EntitySearchManager<E, C, F> implements SearchManager<E, C
 
 	@Override
 	public <Ctx extends C> int getTotalCount(Ctx context) {
+		return getTotalCount(context, null);
+	}
+
+	@Override
+	public <Ctx extends C, Ftl extends F> int getTotalCount(Ctx context, Ftl filter) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Criteria criteria = session.createCriteria(entityType);
-		applyRestrictions(criteria, context, null);
+		applyRestrictions(criteria, context, filter);
 		criteria.setProjection(Projections.rowCount());
 		return ((Number) criteria.uniqueResult()).intValue();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <Ftl extends F, Ctx extends C> List<E> searchEntities(Ctx context, Ftl filter, Range range, Orders orders) {
+	public <Ctx extends C, Ftl extends F> List<E> searchEntities(Ctx context, Ftl filter, Range range, Orders orders) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Criteria criteria = session.createCriteria(entityType);

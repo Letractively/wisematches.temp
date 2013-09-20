@@ -222,11 +222,11 @@
     </#list>
         <tr>
             <th colspan="2" nowrap="nowrap" align="left">Всего за товары</th>
-            <th nowrap="nowrap">
-            ${totalCount}
+            <th nowrap="nowrap" class="price">
+                <span>${totalCount}</span>
             </th>
-            <th nowrap="nowrap">
-            ${totalWeight?string("0.00")} кг
+            <th nowrap="nowrap" class="price">
+                <span>${totalWeight?string("0.00")} кг</span>
             </th>
             <th nowrap="nowrap" align="left">
             <@bg.ui.price order.amount/>

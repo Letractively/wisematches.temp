@@ -1,6 +1,8 @@
+<#-- @ftlvariable name="showCategory" type="java.lang.Boolean" -->
 <#-- @ftlvariable name="products" type="billiongoods.server.warehouse.ProductDescription[]" -->
-<#-- @ftlvariable name="itemsTableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.ItemsTableForm" -->
+<#-- @ftlvariable name="pageableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.PageableForm" -->
 
 <#include "/core.ftl">
 
-<@bg.ui.productsTable products itemsTableForm/>
+<#assign ops={"showCategory": showCategory!false}/>
+<@bg.ui.productsTable products pageableForm ops/>

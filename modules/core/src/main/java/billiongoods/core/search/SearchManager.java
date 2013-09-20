@@ -25,6 +25,14 @@ public interface SearchManager<E, C, F> {
 	<Ctx extends C> int getTotalCount(Ctx context);
 
 	/**
+	 * Returns total items count for specified personality and
+	 *
+	 * @param context the context for search.
+	 * @return number of items available for search.
+	 */
+	<Ctx extends C, Ftl extends F> int getTotalCount(Ctx context, Ftl filter);
+
+	/**
 	 * Searches and returns list of all entities for specified person in specified context and according
 	 * to specified criteria.
 	 * <p/>
@@ -36,5 +44,5 @@ public interface SearchManager<E, C, F> {
 	 * @param range   the range of returned entities.
 	 * @param orders  orders of result   @return list of entities or empty list if no entities are found.
 	 */
-	<Ftl extends F, Ctx extends C> List<E> searchEntities(Ctx context, Ftl filter, Range range, Orders orders);
+	<Ctx extends C, Ftl extends F> List<E> searchEntities(Ctx context, Ftl filter, Range range, Orders orders);
 }

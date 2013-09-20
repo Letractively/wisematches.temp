@@ -5,25 +5,36 @@ import billiongoods.core.search.Order;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public enum ItemSortType {
+public enum SortingType {
 	BESTSELLING("bs", "stockInfo.sold", false),
 	PRICE_DOWN("plth", "price", true),
 	PRICE_UP("phtl", "price", false),
 	ARRIVAL_DATE("d", "registrationDate", false);
 
-	private final String name;
+	private final String code;
 	private final Order order;
 
-	ItemSortType(String name, String property, boolean ask) {
-		this.name = name;
+	private static final SortingType[] values = SortingType.values();
+
+	SortingType(String code, String property, boolean ask) {
+		this.code = code;
 		this.order = ask ? Order.asc(property) : Order.desc(property);
 	}
 
-	public String getName() {
-		return name;
+	public String getCode() {
+		return code;
 	}
 
 	public Order getOrder() {
 		return order;
+	}
+
+	public static SortingType byCode(String code) {
+		for (SortingType sortingType : values) {
+			if (sortingType.code.equalsIgnoreCase(code)) {
+				return sortingType;
+			}
+		}
+		return null;
 	}
 }
