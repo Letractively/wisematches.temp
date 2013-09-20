@@ -1,6 +1,7 @@
 ============= CURRENT ====================
 - Filter by items
 - Redefine financial policy
+- Redesign search form: http://health.mail.ru/
 
 ============= PLAN ====================
 - Accounts and personal info
@@ -65,8 +66,8 @@
 02.09
 + 07:42:29.550 [http-bio-8080-exec-18] ERROR billiongoods.web.Servlet - Page can't                                                                                         be opened: /warehouse/product/4232?null
 java.lang.NullPointerException: null
-        at billiongoods.server.warehouse.impl.HibernateProduct.initialize(Hibernateproduct.java:128) ~[services-2.0.0.jar:na]                                                                                        ateproduct.java:128) ~[services-2.0.0.jar:na]
-        at billiongoods.server.warehouse.impl.HibernateProductManager.getproduct(HibernateproductManager.java:52) ~[services-2.0.0.jar:na]                                                                                        (HibernateproductManager.java:52) ~[services-2.0.0.jar:na]
+        at billiongoods.server.warehouse.impl.HibernateProduct.initialize(Hibernateproduct.java:128) ~[services-2.2.0.jar:na]                                                                                        ateproduct.java:128) ~[services-2.2.0.jar:na]
+        at billiongoods.server.warehouse.impl.HibernateProductManager.getproduct(HibernateproductManager.java:52) ~[services-2.2.0.jar:na]                                                                                        (HibernateproductManager.java:52) ~[services-2.2.0.jar:na]
 
 
 30.08
