@@ -6,7 +6,7 @@ import java.util.EnumSet;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ProductContext {
-	private final String name;
+	private final String search;
 	private final boolean arrival;
 	private final Category category;
 	private final boolean subCategories;
@@ -22,20 +22,20 @@ public class ProductContext {
 		this(category, false, null, false);
 	}
 
-	public ProductContext(Category category, boolean subCategories, String name, boolean arrival) {
-		this(category, subCategories, name, arrival, VISIBLE);
+	public ProductContext(Category category, boolean subCategories, String search, boolean arrival) {
+		this(category, subCategories, search, arrival, VISIBLE);
 	}
 
-	public ProductContext(Category category, boolean subCategories, String name, boolean arrival, EnumSet<ProductState> productStates) {
-		this.name = name;
+	public ProductContext(Category category, boolean subCategories, String search, boolean arrival, EnumSet<ProductState> productStates) {
+		this.search = search;
 		this.productStates = productStates;
 		this.arrival = arrival;
 		this.category = category;
 		this.subCategories = subCategories;
 	}
 
-	public String getName() {
-		return name;
+	public String getSearch() {
+		return search;
 	}
 
 	public boolean isArrival() {

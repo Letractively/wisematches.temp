@@ -1,8 +1,8 @@
 <#-- @ftlvariable name="imageResourcesDomain" type="java.lang.String" -->
 <#-- @ftlvariable name="staticResourcesDomain" type="java.lang.String" -->
-<#-- @ftlvariable name="itemsTableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.ItemsTableForm" -->
 
 <#setting locale="en">
+<#setting url_escaping_charset="UTF-8">
 
 <#include "/core.ftl"/>
 <#include "/macro/message.ftl"/>
@@ -86,54 +86,45 @@
 </table>
 </#macro>
 
-<#macro productsTable products itemsTableForm>
+<#macro productsTable products pageableForm ops={}>
 <div class="products">
     <div class="table-view">
         <div class="table-pages">
             <div class="table-position">
-                <#if (itemsTableForm.totalCount > 0)>
-                    Показано ${(itemsTableForm.page-1)*itemsTableForm.count+1}
-                    - ${(itemsTableForm.page-1)*itemsTableForm.count + products?size}
-                    из ${itemsTableForm.totalCount} элементов
-                <#else>
-                    В этой категории нет ни одного элемента <#if itemsTableForm.query?has_content>по ключевому
-                    слову <strong>${itemsTableForm.query}</strong></#if>
+                <#if (pageableForm.totalCount > 0)>
+                    Показано ${(pageableForm.page-1)*pageableForm.count+1}
+                    - ${(pageableForm.page-1)*pageableForm.count + products?size}
+                    из ${pageableForm.totalCount} элементов
                 </#if>
             </div>
 
             <div class="table-controls">
-                <@bg.ui.tableNavigation itemsTableForm/>
+                <@bg.ui.tableNavigation pageableForm/>
             </div>
         </div>
 
         <div class="table-filter">
-            <input id="tableFormPage" type="hidden" value="${itemsTableForm.page}"/>
-            <input id="tableFormCount" type="hidden" value="${itemsTableForm.count}"/>
-            <input id="tableFormSort" type="hidden" value="${itemsTableForm.sort}"/>
-
-            <div class="query">
-                <input id="tableQuery" name="query" value="${itemsTableForm.query!""}"/>
-                <button id="tableQueryButton" type="button">Искать</button>
-            </div>
+        <#--<input id="tableFormPage" type="hidden" value="${pageableForm.page}"/>-->
+        <#--<input id="tableFormCount" type="hidden" value="${pageableForm.count}"/>-->
 
             <div class="ipp">
                 <strong>На странице: </strong>
                 <ul>
                     <#list [12,24,36] as i>
-                        <li class="bg-ui-button<#if itemsTableForm.count==i> selected</#if>">
-                            <a href="?<@tableNavigationParams itemsTableForm.page i itemsTableForm.sort itemsTableForm.query!""/>">${i}</a>
+                        <li class="bg-ui-button<#if pageableForm.count==i> selected</#if>">
+                            <a href="?<@tableNavigationParams pageableForm "count" i/>">${i}</a>
                         </li>
                     </#list>
                 </ul>
             </div>
 
-            <#if itemsTableForm.sort?has_content>
+            <#if pageableForm.sort?has_content>
                 <div class="sort">
                     <strong>Сортировать по: </strong>
                     <select id="tableSorting" name="sort">
-                        <#list ItemSortType.values() as s>
-                            <option value="${s.getName()}"
-                                    <#if s.getName()==itemsTableForm.sort>selected="selected"</#if>><@message code="product.sort.type.${s.getName()}"/></option>
+                        <#list SortingType.values() as s>
+                            <option value="?<@tableNavigationParams pageableForm "sort" s.getCode()/>"
+                                    <#if s.getCode()==pageableForm.sort>selected="selected"</#if>><@message code="product.sort.type.${s.getCode()}"/></option>
                         </#list>
                     </select>
                 </div>
@@ -142,11 +133,11 @@
 
         <div class="table-content">
             <#if products?has_content>
-                <@productsView products 'grid'/>
+                <@productsView products 'grid' ops/>
             <#else>
                 <div style="text-align: center">
-                    <#if itemsTableForm.query?has_content>
-                        В этой категории нет ни одного товара с ключевым словом <strong>${itemsTableForm.query}</strong>.
+                    <#if pageableForm.query?has_content>
+                        В этой категории нет ни одного товара с ключевым словом <strong>${pageableForm.query}</strong>.
                         Попробуйте изменить либо убрать ключевое слово из поиска.
                     <#else>
                         В этой категории еще нет ни одного товара но мы работает над их добавлением. Попробуйте зайте
@@ -163,7 +154,7 @@
             </div>
 
             <div class="table-controls">
-                <@tableNavigation itemsTableForm/>
+                <@tableNavigation pageableForm/>
             </div>
         </div>
     </div>
@@ -184,18 +175,18 @@
     </#if>
 </#macro>
 
-<#macro tableNavigation itemsTableForm>
-    <#assign page=itemsTableForm.page/>
-    <#if (itemsTableForm.count > 0)>
-        <#assign pagesCount=(itemsTableForm.totalCount/itemsTableForm.count)?ceiling/>
+<#macro tableNavigation pageableForm>
+    <#assign page=pageableForm.page/>
+    <#if (pageableForm.count > 0)>
+        <#assign pagesCount=(pageableForm.totalCount/pageableForm.count)?ceiling/>
         <#if (pagesCount > 1)>
         <ul>
             <#if (page > 1)>
-                <@tableNavigationPageLink itemsTableForm page-1>Предыдущая</@tableNavigationPageLink>
+                <@tableNavigationPageLink pageableForm page-1>Предыдущая</@tableNavigationPageLink>
             </#if>
 
             <#if (page - 3> 0)>
-                <@tableNavigationPageLink itemsTableForm 1>1</@tableNavigationPageLink>
+                <@tableNavigationPageLink pageableForm 1>1</@tableNavigationPageLink>
                 <#if page-3 != 1>
                     <li style="display: inline-block; vertical-align: top">...</li>
                 </#if>
@@ -203,16 +194,16 @@
 
             <#list (page-2)..(page-1) as i>
                 <#if (i>0)>
-                    <@tableNavigationPageLink itemsTableForm i>${i}</@tableNavigationPageLink>
+                    <@tableNavigationPageLink pageableForm i>${i}</@tableNavigationPageLink>
                 </#if>
             </#list>
 
 
-            <@tableNavigationPageLink itemsTableForm page>${page}</@tableNavigationPageLink>
+            <@tableNavigationPageLink pageableForm page>${page}</@tableNavigationPageLink>
 
             <#list (page+1)..(page+2) as i>
                 <#if (i<=pagesCount)>
-                    <@tableNavigationPageLink itemsTableForm i>${i}</@tableNavigationPageLink>
+                    <@tableNavigationPageLink pageableForm i>${i}</@tableNavigationPageLink>
                 </#if>
             </#list>
 
@@ -221,24 +212,24 @@
                     <li style="display: inline-block; vertical-align: top">...</li>
                 </#if>
 
-                <@tableNavigationPageLink itemsTableForm pagesCount>${pagesCount}</@tableNavigationPageLink>
+                <@tableNavigationPageLink pageableForm pagesCount>${pagesCount}</@tableNavigationPageLink>
             </#if>
 
             <#if (page < pagesCount)>
-                <@tableNavigationPageLink itemsTableForm page+1>Следующая</@tableNavigationPageLink>
+                <@tableNavigationPageLink pageableForm page+1>Следующая</@tableNavigationPageLink>
             </#if>
         </ul>
         </#if>
     </#if>
 </#macro>
 
-<#macro tableNavigationParams page count sort query>page=${page}&count=${count}&sort=${sort}<#if query?has_content>&query=${query}</#if></#macro>
-
-<#macro tableNavigationPageLink itemsTableForm page>
-<li class="bg-ui-button<#if page==itemsTableForm.page> selected</#if>">
-    <a href="?<@tableNavigationParams page itemsTableForm.count itemsTableForm.sort itemsTableForm.query!""/>"><#nested/></a>
+<#macro tableNavigationPageLink pageableForm page>
+<li class="bg-ui-button<#if page==pageableForm.page> selected</#if>">
+    <a href="?<@tableNavigationParams pageableForm "page" page/>"><#nested/></a>
 </li>
 </#macro>
+
+<#macro tableNavigationParams pageableForm name value>page=<#if name="page">${value}<#else>${pageableForm.page}</#if>&count=<#if name="count">${value}<#else>${pageableForm.count}</#if>&sort=<#if name="sort">${value}<#else>${pageableForm.sort}</#if><#if name="query">&query=${value?url}<#elseif pageableForm.query?has_content>&query=${pageableForm.query?url}</#if><#if name="filter">&filter=${value}<#elseif pageableForm.filter?has_content>&filter=${pageableForm.filter?url}</#if><#if pageableForm.category?has_content>&category=${pageableForm.category}</#if></#macro>
 
 <#macro whereabouts>
 <div class="title">

@@ -20,6 +20,10 @@ public class Genealogy implements Iterable<Category> {
 		}
 	}
 
+	public Category getRoot() {
+		return parents.size() == 0 ? category : parents.getFirst();
+	}
+
 	public int getGeneration() {
 		return parents.size();
 	}

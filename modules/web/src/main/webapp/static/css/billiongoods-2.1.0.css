@@ -341,6 +341,10 @@ button.bg-ui-button.selected {
     padding: 0;
 }
 
+.toolbar-content li {
+    display: inline-block;
+}
+
 .toolbar-layout .bg-ui-button {
     color: #fff;
     height: 28px;
@@ -1488,4 +1492,33 @@ button.bg-ui-button.selected {
 
 .filtering .property input {
     vertical-align: middle;
+}
+
+.bg-ui-search {
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+
+.bg-ui-search input {
+    width: 200px;
+    height: 28px;
+    border-radius: 5px;
+    border: 1px solid #985813;
+    background-color: #f78c40;
+}
+
+.bg-ui-search select {
+    width: 120px;
+    height: 28px;
+    border-radius: 5px;
+    border: 1px solid #985813;
+    background-color: #f78c40;
+}
+
+.bg-ui-search button {
+    height: 28px;
+    border-radius: 5px;
+    padding: 0 8px !important;
+    color: #000000 !important;
 }

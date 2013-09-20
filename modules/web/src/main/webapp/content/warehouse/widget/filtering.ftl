@@ -1,11 +1,12 @@
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="filter" type="billiongoods.server.warehouse.ProductFilter" -->
 <#-- @ftlvariable name="filtering" type="billiongoods.server.warehouse.FilteringAbility" -->
+<#-- @ftlvariable name="pageableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.PageableForm" -->
 
 <#include "/core.ftl"/>
 
-<#if filtering??>
-<div class="filtering">
+<#if filtering?? && pageableForm??>
+<div id="productsFilterForm" class="filtering">
     <#list filtering.attributes as a>
         <div class="property">
             <div class="name">
@@ -39,7 +40,10 @@
     </#list>
 
     <div style="text-align: right">
-        <button id="categoryFilterAction" type="button" class="bg-ui-button">Применить</button>
+        <button id="categoryFilterAction" type="button" class="bg-ui-button"
+                onclick="new bg.warehouse.Filter().applyFilter('<@bg.ui.tableNavigationParams pageableForm "filter" ""/>')">
+            Применить
+        </button>
     </div>
 </div>
 </#if>
