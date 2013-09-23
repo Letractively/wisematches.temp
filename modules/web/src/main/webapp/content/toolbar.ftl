@@ -5,27 +5,43 @@
 
 <div style="float: right">
     <ul>
-        <li class="bg-ui-search">
-            <form action="/warehouse/search">
-                <input name="query"
-                       value="<#if pageableForm?? && pageableForm.query?has_content>${pageableForm.query}</#if>">
-            <#--
-                            <select name="category">
-                                <option value="0">Все Категории</option>
-                            <#if pageableForm?? && pageableForm.category?has_content>
-                                <#assign rootCategory=catalog.getCategory(pageableForm.category).genealogy.root/>
-                                <#list catalog.rootCategories as c>
-                                    <option value="${c.id}"
-                                            <#if c=rootCategory>selected="selected"</#if>>${c.name}</option>
-                                </#list>
-                            <#else>
-                                <#list catalog.rootCategories as c>
-                                    <option value="${c.id}">${c.name}</option>
-                                </#list>
-                            </#if>
-                            </select>
-            -->
-                <button class="bg-ui-button" type="submit">Искать</button>
+        <li class="tb-item-search">
+            <form class="global-search" name="site-search" action="/warehouse/search" method="get"
+                  role="search"
+                  accept-charset="utf-8">
+                <span id="searchCatalog" class="search-sprite">
+                    <span id="searchCatName" class="search-cat-name">Все отделы</span>
+                    <span class="search-cat-arrow"></span>
+
+                    <select id="searchCatalog" class="search-catalog" name="category" title="Искать в">
+                        <option value="0" selected="selected">Все отделы</option>
+
+                    <#if pageableForm?? && pageableForm.category?has_content>
+                        <#assign rootCategory=catalog.getCategory(pageableForm.category)!""/>
+                        <#if rootCategory?has_content>
+                            <#assign rootCategory=rootCategory.genealogy.root/>
+                        </#if>
+                        <#list catalog.rootCategories as c>
+                            <option value="${c.id}" <#if c=rootCategory>selected="selected"</#if>>${c.name}</option>
+                        </#list>
+                    <#else>
+                        <#list catalog.rootCategories as c>
+                            <option value="${c.id}">${c.name}</option>
+                        </#list>
+                    </#if>
+                    </select>
+                </span>
+
+                <div class="search-input">
+                    <input type="text" id="searchInputField" title="Искать"
+                           value="<#if pageableForm?? && pageableForm.query?has_content>${pageableForm.query}</#if>"
+                           name="query"
+                           autocomplete="off">
+                </div>
+
+                <div id="searchAction" class="search-button">
+                    <button class="bg-ui-button" type="submit">Искать</button>
+                </div>
             </form>
         </li>
 

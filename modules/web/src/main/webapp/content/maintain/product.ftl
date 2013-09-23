@@ -46,7 +46,7 @@
     <td valign="top"><label for="name">Имя: </label></td>
     <td>
     <@bg.ui.field path="form.name">
-        <textarea rows="3" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+        <textarea rows="4" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
     </@bg.ui.field>
     </td>
 </tr>
@@ -318,18 +318,28 @@
 <tr>
     <td colspan="2">
         <label for="productState">Состояние: </label>
-    <@bg.ui.bind "form.productState"/>
-        <select id="productState" name="${bg.ui.status.expression}">
-        <#list ProductState.values() as s>
-            <option value="${s.name()}" <#if bg.ui.actualValue=s>selected="selected"</#if>>${s.name()}</option>
-        </#list>
-        </select>
 
-    <#if productId?has_content>
-        <button id="add" type="submit">Изменить</button>
-    <#else>
-        <button id="add" type="submit">Создать</button>
-    </#if>
+    <@bg.ui.bind "form.productState"/>
+    <#list ProductState.values() as s>
+        <button class="bg-ui-button<#if bg.ui.actualValue=s> selected</#if>" type="submit"
+                name="${bg.ui.status.expression}" value="${s.name()}">${s.name()}</button>
+    </#list>
+
+    <#--
+            <select id="productState" name="${bg.ui.status.expression}">
+            <#list ProductState.values() as s>
+                <option value="${s.name()}" <#if bg.ui.actualValue=s>selected="selected"</#if>>${s.name()}</option>
+            </#list>
+            </select>
+    -->
+
+    <#--
+        <#if productId?has_content>
+            <button id="add" type="submit">Изменить</button>
+        <#else>
+            <button id="add" type="submit">Создать</button>
+        </#if>
+    -->
     </td>
 </tr>
 </table>
@@ -445,28 +455,6 @@
     });
 
     <#if product??>
-    $("#active").click(function () {
-        var val = $(this).val() === 'true';
-        bg.ui.lock(null, 'Влючение товара. Пожалуйста, подождите...');
-        $.post("/maintain/product/activate.ajax?id=${product.id}&a=" + val)
-                .done(function (response) {
-                    if (response.success) {
-                        bg.ui.unlock(null, val ? "Товар успешно включен" : "Товар успешно выключен", false);
-                    } else {
-                        bg.ui.unlock(null, response.message, true);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "Товар не может быть включен по техническим причинам", true);
-                });
-        if (val) {
-            $("#inactiveWarning").hide();
-        } else {
-            $("#inactiveWarning").show();
-        }
-        $(this).text(val ? "Отключить" : "Включить").val(!val);
-    });
-
     $(function () {
         $('#fileupload').fileupload({
             dataType: 'json',
