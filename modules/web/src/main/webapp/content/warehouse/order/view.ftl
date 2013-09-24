@@ -7,8 +7,6 @@
 <#assign shipment=order.shipment/>
 <#assign stateName=state.name()?lower_case/>
 
-<script type="text/javascript" src="<@bg.ui.static "js/jquery.simplemodal.js"/>"></script>
-
 <div class="order ${stateName}">
 <#if confirmation?? && confirmation>
 <div class="info">
@@ -250,7 +248,7 @@
 
 <script type="application/javascript">
     $("#showOrderLogs").click(function () {
-        $("#orderLogs").modal({overlayClose: true});
+        $("#orderLogs").modal({overlayClose: true, minHeight: 360, minWidth: 800});
     });
 
     <#if order.payer?has_content>

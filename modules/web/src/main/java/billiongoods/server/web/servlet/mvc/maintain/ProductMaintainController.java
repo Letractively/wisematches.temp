@@ -79,8 +79,10 @@ public class ProductMaintainController extends AbstractController {
 					try {
 						final Integer p = propertyIds[i];
 						final String v = propertyValues[i];
-						final Attribute attribute = attributeManager.getAttribute(p);
-						properties.add(new Property(attribute, v));
+						if (!v.isEmpty()) {
+							final Attribute attribute = attributeManager.getAttribute(p);
+							properties.add(new Property(attribute, v));
+						}
 					} catch (Exception ignore) {
 					}
 				}
@@ -234,7 +236,9 @@ public class ProductMaintainController extends AbstractController {
 					propertyValue = propertyValues[i].trim();
 				} catch (Exception ignore) {
 				}
-				properties.add(new Property(attributeManager.getAttribute(propertyId), propertyValue));
+				if (!propertyValue.isEmpty()) {
+					properties.add(new Property(attributeManager.getAttribute(propertyId), propertyValue));
+				}
 			}
 		}
 

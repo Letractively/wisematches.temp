@@ -39,7 +39,9 @@
 <tr>
     <td valign="top"><label for="category">Категория: </label></td>
     <td>
-    <@bg.ui.selectCategory "form.category" catalog false/>
+    <@bg.ui.selectCategory "form.category" catalog false>
+        <#if product??>(<a href="/maintain/category?id=${category.id}">изменить</a>)</#if>
+    </@bg.ui.selectCategory>
     </td>
 </tr>
 <tr>
@@ -128,27 +130,31 @@
     <td valign="top"><label for="properties">Параметры: </label></td>
     <td>
         <table>
-            <@bg.ui.bind path="form.propertyIds"/>
-            <#assign propertyIds=bg.ui.status.actualValue!""/>
-
-            <@bg.ui.bind path="form.propertyValues"/>
-            <#assign propertyValues=bg.ui.status.actualValue!""/>
-
-            <#if propertyIds?is_collection && (propertyIds?size >0)>
-                <#list 0..(propertyIds?size)-1 as i>
-                    <#assign id=propertyIds[i]/>
-                    <#assign value=propertyValues[i]!""/>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="propertyIds" value="${id}">
-                            <label for="property${id}" class="attribute">${id}</label>
-                        </td>
-                        <td>
-                            <input id="property${id}" name="propertyValues" value="${value}">
-                        </td>
-                    </tr>
-                </#list>
-            </#if>
+            <#list category.parameters as p>
+                <#assign attr=p.attribute/>
+                <#assign value=product.getProperty(attr)!""/>
+                <tr>
+                    <td>
+                        <input type="hidden" name="propertyIds" value="${attr.id}">
+                        <label for="property${attr.id}" class="attribute">
+                            <a href="/maintain/attribute?id=${attr.id}">${attr.name}<#if attr.unit?has_content>,
+                            ${attr.unit}</#if></a>
+                        </label>
+                    </td>
+                    <td>
+                        <#if attr.attributeType == AttributeType.ENUM>
+                            <select name="propertyValues" style="width: 100%">
+                                <option value="">-- нет значения --</option>
+                                <#list p.values as v>
+                                    <option value="${v}"<#if v==value> selected="selected"</#if>>${v}</option>
+                                </#list>
+                            </select>
+                        <#else>
+                            <input id="property${attr.id}" name="propertyValues" value="${value}">
+                        </#if>
+                    </td>
+                </tr>
+            </#list>
         </table>
     </td>
 </tr>
@@ -443,12 +449,6 @@
 
     $("#relationshipsTable").find("button.add").click(addRelationship);
     $("#relationshipsTable").find("button.remove").click(removeRelationship);
-
-    $(".attribute").each(function (i, v) {
-        var id = $(this).text();
-        var attr = attributes[id];
-        $(this).html(attr.name + ", " + attr.unit);
-    });
 
     $("#supplierReferenceId").change(function () {
         $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/' + $(this).val());

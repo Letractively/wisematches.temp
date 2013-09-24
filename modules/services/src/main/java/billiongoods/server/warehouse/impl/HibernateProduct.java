@@ -65,6 +65,16 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 	}
 
 	@Override
+	public String getProperty(Attribute attribute) {
+		for (Property property : properties) {
+			if (property.getAttribute().equals(attribute)) {
+				return property.getValue();
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public HibernateSupplierInfo getSupplierInfo() {
 		return supplierInfo;
 	}

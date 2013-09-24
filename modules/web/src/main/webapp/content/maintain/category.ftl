@@ -3,6 +3,10 @@
 
 <#include "/core.ftl">
 
+<#macro attr a>
+${a.name}<#if a.unit?has_content>, <strong>${a.unit}</strong></#if> <span class="sample">(${a.attributeType}
+    )</span></#macro>
+
 <div style="padding: 10px; border: 1px solid gray;">
     <form action="/maintain/category" method="post">
 
@@ -68,15 +72,120 @@
                     </table>
                 </td>
                 <td valign="top" style="padding-left: 10px">
-                <#list attributes as a>
-                    <div>
-                        <input id="attribute${a.id}" type="checkbox" name="attributes" value="${a.id}"
-                               <#if category?? && category.attributes.contains(a)>checked="checked"</#if>>
-                        <label for="attribute${a.id}">${a.name}, ${a.unit}</label>
+                <#if category??>
+                    <div id="categoryParameters">
+                        <#list category.parameters as p>
+                            <#assign a=p.attribute/>
+                            <div>
+                                <div class="parameter-name">
+                                    <input name="parameter" value="${a.id}" type="hidden"/>
+                                    <label><@attr a/></label>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button">Добавить</button>
+                                </div>
+
+                                <div class="parameter-values">
+                                    <ul>
+                                        <#if p.values??>
+                                            <#list p.values as v>
+                                                <li>${v}</li>
+                                            </#list>
+                                        </#if>
+                                    </ul>
+                                </div>
+                            </div>
+                        </#list>
                     </div>
-                </#list>
+                    <button id="addAttribute" type="button">Добавить атрибут</button>
+                </#if>
                 </td>
             </tr>
         </table>
     </form>
 </div>
+
+<#if category??>
+<div id="attributesList" style="display: none">
+    <ul>
+        <#list attributes as a>
+            <li>
+                <input id="attribute_${a.id}" type="checkbox" value="${a.id}">
+                <label for="attribute_${a.id}"><@attr a/></label>
+            </li>
+        </#list>
+    </ul>
+</div>
+
+<div id="attributeValue" style="display: none; white-space: nowrap">
+    <form>
+        <input name="categoryId" value="${category.id}" type="hidden">
+        <input name="attributeId" type="hidden">
+        <label>
+            <input name="value">
+        </label>
+        <button type="button">Добавить</button>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var attributeValueDialog = $("#attributeValue");
+
+    $("#categoryParameters").find("button").click(function () {
+        var el = $(this).parent().parent();
+        attributeValueDialog.find("input[name=attributeId]").val(el.find('input').val());
+        attributeValueDialog.modal();
+    });
+
+    attributeValueDialog.find("button").click(function () {
+        var serializeObject = attributeValueDialog.find('form').serializeObject();
+        $.post("/maintain/category/parameterAddValue.ajax", JSON.stringify(serializeObject))
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, "Атрибут добавлен", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                    bg.util.url.reload();
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                });
+    });
+
+    $("#attributesList").find("input").change(function () {
+        var v = $(this);
+        if (v.prop('checked')) {
+            attributeValueDialog.find('input[name=attributeId]').val(v.val());
+            var serializeObject = attributeValueDialog.find('form').serializeObject();
+            $.post("/maintain/category/parameterAdd.ajax", JSON.stringify(serializeObject))
+                    .done(function (response) {
+                        if (response.success) {
+                            bg.ui.unlock(null, "Атрибут добавлен", false);
+                        } else {
+                            bg.ui.unlock(null, response.message, true);
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                                "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                    });
+        } else {
+
+        }
+        $.modal.close();
+        bg.util.url.reload();
+    });
+
+    $("#addAttribute").click(function () {
+        var al = $("#attributesList");
+
+        al.find("input").prop("checked", false);
+        $("#categoryParameters").find("input").each(function (i, v) {
+            var id = $(v).val();
+            $("#attribute_" + id).prop("checked", true);
+        });
+        al.modal();
+    });
+</script>
+</#if>
