@@ -16,6 +16,7 @@ public class HibernateProductProperty {
 	@Column(name = "value")
 	private String value;
 
+	@Deprecated
 	public HibernateProductProperty() {
 	}
 

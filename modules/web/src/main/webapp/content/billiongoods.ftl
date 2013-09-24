@@ -25,6 +25,7 @@
     <script type="text/javascript" src="<@bg.ui.static "js/jquery.blockUI-2.5.4.js"/>"></script>
     <script type="text/javascript" src="<@bg.ui.static "js/jquery.timers-1.2.0.js"/>"></script>
     <script type="text/javascript" src="<@bg.ui.static "js/json2-2.1.8.min.js"/>"></script>
+    <script type="text/javascript" src="<@bg.ui.static "js/jquery.simplemodal.js"/>"></script>
 
     <link rel="stylesheet" type="text/css" href="<@bg.ui.static "css/billiongoods-${libsVersion}.css"/>"/>
     <script type="text/javascript" src="<@bg.ui.static "js/billiongoods-${libsVersion}.js"/>"></script>

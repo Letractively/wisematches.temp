@@ -1,9 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Attribute;
-import billiongoods.server.warehouse.AttributeManager;
-import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.Genealogy;
+import billiongoods.server.warehouse.*;
 
 import java.util.*;
 
@@ -16,7 +13,9 @@ public class DefaultCategory implements Category {
 	private int position;
 	private boolean active;
 	private String description;
+
 	private Set<Attribute> attributes = new HashSet<>();
+	private Collection<Parameter> parameters = new ArrayList<>();
 
 	protected Genealogy genealogy;
 	protected DefaultCategory parent;
@@ -75,6 +74,11 @@ public class DefaultCategory implements Category {
 	}
 
 	@Override
+	public Collection<Parameter> getParameters() {
+		return parameters;
+	}
+
+	@Override
 	public int getPosition() {
 		return position;
 	}
@@ -86,9 +90,16 @@ public class DefaultCategory implements Category {
 		this.position = category.getPosition();
 		this.active = category.isActive();
 
+		attributes.clear();
 		final Set<Integer> attributeIds = category.getAttributeIds();
 		for (Integer attributeId : attributeIds) {
 			attributes.add(manager.getAttribute(attributeId));
+		}
+
+
+		parameters.clear();
+		for (HibernateCategoryParameter p : category.getParameters()) {
+			parameters.add(new Parameter(manager.getAttribute(p.getAttributeId()), new HashSet<>(p.getValues())));
 		}
 	}
 

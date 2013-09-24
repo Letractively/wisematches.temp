@@ -288,5 +288,6 @@
             <@categoryOption c 0 status.value!""/>
         </#list>
     </select>
+        <#nested/>
     </@bg.ui.field>
 </#macro>

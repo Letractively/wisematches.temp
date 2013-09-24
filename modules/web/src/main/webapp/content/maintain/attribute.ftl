@@ -9,19 +9,19 @@
 
         <table style="width: 200px">
             <tr>
-                <td><label for="n">Имя: </label></td>
+                <td valign="top"><label for="n">Имя: </label></td>
                 <td>
                 <@bg.ui.input path="form.name"/>
                 </td>
             </tr>
             <tr>
-                <td><label for="u">Единицы измерения: </label></td>
+                <td valign="top"><label for="u">Единицы измерения: </label></td>
                 <td>
                 <@bg.ui.input path="form.unit"/>
                 </td>
             </tr>
             <tr>
-                <td><label for="u">Описание: </label></td>
+                <td valign="top"><label for="u">Описание: </label></td>
                 <td>
                 <@bg.ui.field path="form.description">
                     <textarea rows="3" style="width: 100%"
@@ -30,7 +30,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label for="u">Тип: </label></td>
+                <td valign="top"><label for="u">Тип: </label></td>
                 <td>
                 <@bg.ui.bind "form.attributeType"/>
                     <select id="attributeType" name="${bg.ui.status.expression}" style="width: 100%">
@@ -39,8 +39,6 @@
                                 <#if bg.ui.actualValue=t>selected="selected"</#if>>${t.name()}</option>
                     </#list>
                     </select>
-
-                <@bg.ui.input path="form.unit"/>
                 </td>
             </tr>
 

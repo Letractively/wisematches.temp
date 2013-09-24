@@ -3,13 +3,16 @@ package billiongoods.server.web.servlet.mvc.maintain;
 import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.web.servlet.mvc.AbstractController;
+import billiongoods.server.web.servlet.mvc.maintain.form.AttributeForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.CategoryForm;
+import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -52,7 +55,7 @@ public class CategoryMaintainController extends AbstractController {
 			model.addAttribute("category", category);
 		}
 
-		return prepareViewResult(model, form);
+		return prepareViewResult(model);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -74,30 +77,56 @@ public class CategoryMaintainController extends AbstractController {
 
 			final Category category;
 			if (form.getId() == null) {
-				category = categoryManager.createCategory(form.getName(), form.getDescription(), attrs, parent, form.getPosition());
+				category = categoryManager.createCategory(new Category.Editor(form.getName(), form.getDescription(), parent, form.getPosition()));
 			} else {
-				category = categoryManager.updateCategory(form.getId(), form.getName(), form.getDescription(), attrs, parent, form.getPosition());
+				category = categoryManager.updateCategory(new Category.Editor(form.getId(), form.getName(), form.getDescription(), parent, form.getPosition()));
 			}
 			return "redirect:/maintain/category?id=" + category.getId();
 		} catch (Exception ex) {
 			errors.reject("internal.error", ex.getMessage());
 		}
 
-		return prepareViewResult(model, form);
+		return prepareViewResult(model);
 	}
 
-	private String prepareViewResult(Model model, CategoryForm form) {
-		final Collection<Attribute> attributes = new ArrayList<>(attributeManager.getAttributes());
-
-		Category parent = categoryManager.getCategory(form.getParent());
-		while (parent != null) {
-			for (Attribute attribute : parent.getAttributes()) {
-				attributes.remove(attribute);
-			}
-			parent = parent.getParent();
+	@RequestMapping("parameterAdd.ajax")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse addParameter(@RequestBody AttributeForm form, Locale locale) {
+		final Category category = categoryManager.getCategory(form.getCategoryId());
+		if (category == null) {
+			return responseFactory.failure("category.unknown", locale);
 		}
 
-		model.addAttribute("attributes", attributes);
+		final Attribute attribute = attributeManager.getAttribute(form.getAttributeId());
+		if (attribute == null) {
+			return responseFactory.failure("attribute.unknown", locale);
+		}
+		categoryManager.addParameter(category, attribute);
+		return responseFactory.success();
+	}
+
+	@RequestMapping("parameterAddValue.ajax")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse addParameterValue(@RequestBody AttributeForm form, Locale locale) {
+		final Category category = categoryManager.getCategory(form.getCategoryId());
+		if (category == null) {
+			return responseFactory.failure("category.unknown", locale);
+		}
+
+		final Attribute attribute = attributeManager.getAttribute(form.getAttributeId());
+		if (attribute == null) {
+			return responseFactory.failure("attribute.unknown", locale);
+		}
+
+		if (form.getValue() == null) {
+			return responseFactory.failure("empty.value", locale);
+		}
+		categoryManager.addParameterValue(category, attribute, form.getValue());
+		return responseFactory.success();
+	}
+
+	private String prepareViewResult(Model model) {
+		model.addAttribute("attributes", attributeManager.getAttributes());
 		return "/content/maintain/category";
 	}
 }
