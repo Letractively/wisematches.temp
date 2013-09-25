@@ -33,7 +33,7 @@
                 </button>
             <#elseif order.orderState==OrderState.SHIPPING>
                 <button type="submit" name="state" value="${OrderState.SHIPPED.name()}">Перевести в статус
-                    "Доставлено"
+                    "Отправлено"
                 </button>
             </#if>
         </div>
