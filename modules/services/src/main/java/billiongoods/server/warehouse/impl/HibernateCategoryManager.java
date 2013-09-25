@@ -4,11 +4,14 @@ import billiongoods.server.warehouse.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -18,8 +21,6 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 	private AttributeManager attributeManager;
 
 	private final DefaultCatalog catalog = new DefaultCatalog();
-
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.HibernateCategoryManager");
 
 	public HibernateCategoryManager() {
 	}
@@ -51,6 +52,14 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 		final HibernateCategory i = new HibernateCategory(editor.getName(), editor.getDescription(),
 				editor.getParent() != null ? editor.getParent().getId() : null, editor.getPosition());
 		session.save(i);
+
+		if (editor.getAttributes() != null) {
+			for (Integer attribute : editor.getAttributes()) {
+				i.addParameter(attribute);
+			}
+		}
+
+		session.update(i);
 		return catalog.addCategory(i, attributeManager);
 	}
 
@@ -69,38 +78,26 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 		hc.setParentId(editor.getParent() != null ? editor.getParent().getId() : null);
 		hc.setPosition(editor.getPosition());
 
+		final Set<Integer> attributes = new HashSet<>();
+		if (editor.getAttributes() != null) {
+			attributes.addAll(editor.getAttributes());
+		}
+		List<HibernateCategoryParameter> parameters = hc.getParameters();
+		for (Iterator<HibernateCategoryParameter> iterator = parameters.iterator(); iterator.hasNext(); ) {
+			final HibernateCategoryParameter parameter = iterator.next();
+			if (!attributes.contains(parameter.getAttributeId())) {
+				iterator.remove();
+			} else {
+				attributes.remove(parameter.getAttributeId());
+			}
+		}
+
+		for (Integer attribute : attributes) {
+			hc.addParameter(attribute);
+		}
+
 		session.update(hc);
 		return catalog.updateCategory(hc, attributeManager);
-	}
-
-	@Override
-	public void addParameter(Category category, Attribute attribute) {
-		final Session session = sessionFactory.getCurrentSession();
-
-		final HibernateCategory hc = (HibernateCategory) session.get(HibernateCategory.class, category.getId());
-		if (hc == null) {
-			throw new IllegalArgumentException("There is no category: " + category.getId());
-		}
-
-		if (hc.addParameter(attribute)) {
-			session.update(hc);
-			catalog.updateCategory(hc, attributeManager);
-		}
-	}
-
-	@Override
-	public void removeParameter(Category category, Attribute attribute) {
-		final Session session = sessionFactory.getCurrentSession();
-
-		final HibernateCategory hc = (HibernateCategory) session.get(HibernateCategory.class, category.getId());
-		if (hc == null) {
-			throw new IllegalArgumentException("There is no category: " + category.getId());
-		}
-
-		if (hc.removeParameter(attribute)) {
-			session.update(hc);
-			catalog.updateCategory(hc, attributeManager);
-		}
 	}
 
 	@Override

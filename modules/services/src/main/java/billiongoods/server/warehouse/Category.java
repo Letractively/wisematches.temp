@@ -30,9 +30,6 @@ public interface Category {
 
 	List<Category> getChildren();
 
-	@Deprecated
-	Set<Attribute> getAttributes();
-
 	Collection<Parameter> getParameters();
 
 	class Editor {
@@ -41,17 +38,19 @@ public interface Category {
 		private String description;
 		private Category parent;
 		private int position;
+		private Set<Integer> attributes;
 
-		public Editor(String name, String description, Category parent, int position) {
-			this(null, name, description, parent, position);
+		public Editor(String name, String description, Category parent, int position, Set<Integer> attributes) {
+			this(null, name, description, parent, position, attributes);
 		}
 
-		public Editor(Integer id, String name, String description, Category parent, int position) {
+		public Editor(Integer id, String name, String description, Category parent, int position, Set<Integer> attributes) {
 			this.id = id;
 			this.name = name;
 			this.description = description;
 			this.parent = parent;
 			this.position = position;
+			this.attributes = attributes;
 		}
 
 		public Integer getId() {
@@ -92,6 +91,14 @@ public interface Category {
 
 		public void setPosition(int position) {
 			this.position = position;
+		}
+
+		public Set<Integer> getAttributes() {
+			return attributes;
+		}
+
+		public void setAttributes(Set<Integer> attributes) {
+			this.attributes = attributes;
 		}
 	}
 }

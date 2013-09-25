@@ -46,11 +46,6 @@ public interface CategoryManager {
 	Category updateCategory(Category.Editor editor);
 
 
-	void addParameter(Category category, Attribute attribute);
-
-	void removeParameter(Category category, Attribute attribute);
-
-
 	void addParameterValue(Category category, Attribute attribute, String value);
 
 	void removeParameterValue(Category category, Attribute attribute, String value);

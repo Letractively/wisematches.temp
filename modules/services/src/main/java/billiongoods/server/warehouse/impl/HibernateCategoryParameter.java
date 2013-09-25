@@ -15,10 +15,10 @@ public class HibernateCategoryParameter {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "categoryId")
+	@Column(name = "categoryId", nullable = false)
 	private Integer categoryId;
 
-	@Column(name = "attributeId")
+	@Column(name = "attributeId", nullable = false)
 	private Integer attributeId;
 
 	@ElementCollection
@@ -49,5 +49,19 @@ public class HibernateCategoryParameter {
 
 	public boolean removeValue(String value) {
 		return values.remove(value);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof HibernateCategoryParameter)) return false;
+
+		HibernateCategoryParameter that = (HibernateCategoryParameter) o;
+		return !(id != null ? !id.equals(that.id) : that.id != null);
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
 	}
 }

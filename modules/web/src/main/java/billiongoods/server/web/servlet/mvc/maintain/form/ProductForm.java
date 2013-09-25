@@ -1,8 +1,6 @@
 package billiongoods.server.web.servlet.mvc.maintain.form;
 
-import billiongoods.server.warehouse.Price;
-import billiongoods.server.warehouse.ProductState;
-import billiongoods.server.warehouse.RelationshipType;
+import billiongoods.server.warehouse.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -13,10 +11,10 @@ import java.util.List;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class ProductForm {
+public class ProductForm implements ProductImager {
 	private Integer id;
 
-	private Integer category;
+	private Integer categoryId;
 
 	@NotEmpty(message = "maintain.product.name.err.blank")
 	@Length(max = 100, message = "maintain.product.name.err.max")
@@ -40,6 +38,10 @@ public class ProductForm {
 	private String restockDate;
 
 	private Integer[] participatedGroups;
+
+	private String[] participatedNames;
+
+	private String[] relationshipNames;
 
 	private Integer[] relationshipGroups;
 
@@ -70,6 +72,7 @@ public class ProductForm {
 	public ProductForm() {
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}
@@ -78,12 +81,13 @@ public class ProductForm {
 		this.id = id;
 	}
 
-	public Integer getCategory() {
-		return category;
+	@Override
+	public Integer getCategoryId() {
+		return categoryId;
 	}
 
-	public void setCategory(Integer category) {
-		this.category = category;
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getName() {
@@ -156,6 +160,22 @@ public class ProductForm {
 
 	public void setParticipatedGroups(Integer[] participatedGroups) {
 		this.participatedGroups = participatedGroups;
+	}
+
+	public String[] getParticipatedNames() {
+		return participatedNames;
+	}
+
+	public void setParticipatedNames(String[] participatedNames) {
+		this.participatedNames = participatedNames;
+	}
+
+	public String[] getRelationshipNames() {
+		return relationshipNames;
+	}
+
+	public void setRelationshipNames(String[] relationshipNames) {
+		this.relationshipNames = relationshipNames;
 	}
 
 	public Integer[] getRelationshipGroups() {
@@ -282,11 +302,23 @@ public class ProductForm {
 		this.productState = productState;
 	}
 
+	public String getProperty(Attribute attribute) {
+		if (propertyIds != null) {
+			for (int i = 0, propertyIdsLength = propertyIds.length; i < propertyIdsLength; i++) {
+				Integer propertyId = propertyIds[i];
+				if (propertyId != null && propertyId.equals(attribute.getId())) {
+					return propertyValues[i];
+				}
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("ProductForm{");
 		sb.append("id=").append(id);
-		sb.append(", category=").append(category);
+		sb.append(", categoryId=").append(categoryId);
 		sb.append(", name='").append(name).append('\'');
 		sb.append(", description='").append(description).append('\'');
 		sb.append(", previewImage='").append(previewImage).append('\'');

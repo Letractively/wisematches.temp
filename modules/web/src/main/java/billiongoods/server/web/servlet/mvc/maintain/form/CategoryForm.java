@@ -3,7 +3,7 @@ package billiongoods.server.web.servlet.mvc.maintain.form;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -15,11 +15,11 @@ public class CategoryForm {
 
 	private int position;
 
-    private List<Integer> attributes;
+	private Set<Integer> attributes;
 
-    @NotEmpty(message = "maintain.category.name.err.blank")
-    @Length(max = 50, message = "maintain.category.name.err.max")
-    private String name;
+	@NotEmpty(message = "maintain.category.name.err.blank")
+	@Length(max = 50, message = "maintain.category.name.err.max")
+	private String name;
 
 	private String description;
 
@@ -58,12 +58,12 @@ public class CategoryForm {
 		this.parent = parent;
 	}
 
-    public List<Integer> getAttributes() {
-        return attributes;
+	public Set<Integer> getAttributes() {
+		return attributes;
 	}
 
-    public void setAttributes(List<Integer> attributes) {
-        this.attributes = attributes;
+	public void setAttributes(Set<Integer> attributes) {
+		this.attributes = attributes;
 	}
 
 	public int getPosition() {

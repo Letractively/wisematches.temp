@@ -2,7 +2,7 @@ package billiongoods.server.services.image.impl;
 
 import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.image.ImageSize;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductImager;
 import org.springframework.core.io.Resource;
 
 import java.io.File;
@@ -20,18 +20,18 @@ public class FileImageResolver implements ImageResolver {
 	}
 
 	@Override
-	public String resolveURI(ProductDescription product, String code, ImageSize size) {
-		return product.getCategoryId() + File.separator + product.getId() + File.separator + product.getId() + "_" + code + (size != null ? "_" + size.getCode() : "") + ".jpg";
+	public String resolveURI(ProductImager imager, String code, ImageSize size) {
+		return imager.getCategoryId() + File.separator + imager.getId() + File.separator + imager.getId() + "_" + code + (size != null ? "_" + size.getCode() : "") + ".jpg";
 	}
 
 	@Override
-	public Path resolvePath(ProductDescription product) {
-		return imagesFolder.resolve(product.getCategoryId() + File.separator + product.getId());
+	public Path resolvePath(ProductImager imager) {
+		return imagesFolder.resolve(imager.getCategoryId() + File.separator + imager.getId());
 	}
 
 	@Override
-	public Path resolveFile(ProductDescription product, String code, ImageSize size) {
-		return imagesFolder.resolve(resolveURI(product, code, size));
+	public Path resolveFile(ProductImager imager, String code, ImageSize size) {
+		return imagesFolder.resolve(resolveURI(imager, code, size));
 	}
 
 	public void setImagesFolder(Resource imagesFolder) throws IOException {

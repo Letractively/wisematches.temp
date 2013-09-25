@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -44,17 +45,16 @@ public class HibernateCategoryManagerTest {
 		manager.setAttributeManager(attributeManager);
 		manager.afterPropertiesSet();
 
+		final Attribute next = attributeManager.getAttributes().iterator().next();
+
 		final Catalog catalog = manager.getCatalog();
 		assertNotNull(catalog);
 
-		final Category category = manager.createCategory(new Category.Editor("mockC", "mockD", null, 0));
+		final Category category = manager.createCategory(new Category.Editor("mockC", "mockD", null, 0, Collections.singleton(next.getId())));
 		assertNotNull(category);
-		assertEquals(0, category.getParameters().size());
+		assertEquals(1, category.getParameters().size());
 
 		assertSame(category, manager.getCategory(category.getId()));
-
-		final Attribute next = attributeManager.getAttributes().iterator().next();
-		manager.addParameter(category, next);
 
 		manager.addParameterValue(category, next, "V1");
 		assertEquals(1, category.getParameters().size());
@@ -67,9 +67,6 @@ public class HibernateCategoryManagerTest {
 		manager.removeParameterValue(category, next, "V1");
 		assertEquals(1, category.getParameters().size());
 		assertEquals(1, category.getParameters().iterator().next().getValues().size());
-
-		manager.removeParameter(category, next);
-		assertEquals(0, category.getParameters().size());
 
 		dumpCategory(catalog.getRootCategories(), "");
 	}
