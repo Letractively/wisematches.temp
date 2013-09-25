@@ -6,7 +6,7 @@
         <td>
             <div class="assistance item">
                 <div class="image"><img src="<@bg.ui.static "images/assistance/shipping.png"/>"/></div>
-                <div class="name"><a href="/warehouse/shipping#section1">Доставка</a></div>
+                <div class="name"><a href="/assistance/shipping#section1">Доставка</a></div>
                 <div class="desc">Бесплатная доставка по всей России</div>
             </div>
         </td>

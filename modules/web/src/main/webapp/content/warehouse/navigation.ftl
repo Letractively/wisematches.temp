@@ -12,7 +12,5 @@ Good for big catalog. Can't be used for small
 -->
 <#include "widget/catalogPlain.ftl"/>
 
-<@bg.security.authorized "admin">
-    <#include "widget/filtering.ftl"/>
-</@bg.security.authorized>
+<#include "widget/filtering.ftl"/>
 </div>

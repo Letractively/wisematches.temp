@@ -5,45 +5,59 @@
 
 <#include "/core.ftl"/>
 
-<#if filtering?? && pageableForm??>
-<div id="productsFilterForm" class="filtering">
-    <#list filtering.attributes as a>
+<#assign itemsCount=0/>
+
+<#macro categoryPrameter a v n>
+    <#assign count=filtering.getValue(a, v)/>
+<li class="item <#if count=0>disabled</#if>">
+    <input id="parameter_${a.id}_${v}" type="checkbox" name="${a.id}" value="${v}"
+           <#if count=0>disabled="disabled"
+           <#elseif filter?? && filter.isAllowed(a, v)>checked="checked"
+           </#if> />
+    <label for="parameter_${a.id}_${v}">${n} (${count})</label>
+</li>
+</#macro>
+
+<#macro categoryPramaters category>
+    <#list category.parameters as p>
+        <#assign a=p.attribute/>
+        <#if (a.attributeType=AttributeType.ENUM) && (p.values?size>0)>
+            <#assign itemsCount=itemsCount+1/>
         <div class="property">
             <div class="name">
             ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
             </div>
 
             <ul class="items">
-                <#assign emptyCount=0/>
-                <#list filtering.getFilteringItems(a) as i>
-                    <#if i.name?has_content>
-                        <li class="item">
-                            <input id="filter_${a.id}_${i_index}" type="checkbox" name="${a.id}" value="${i.name}"
-                                   <#if filter?? && filter.isAllowed(a, i.name)>checked="checked"</#if> />
-                            <label for="filter_${a.id}_${i_index}">
-                            ${i.name}
-                            </label>
-                        </li>
-                    <#else>
-                        <#assign emptyCount=i.count/>
-                    </#if>
+                <#list p.values as v>
+                    <@categoryPrameter a v v/>
                 </#list>
-                <#if (emptyCount>0)>
-                    <li class="item">
-                        <input id="filter_${a.id}" type="checkbox" name="${a.id}" value=""
-                               <#if filter?? && filter.isAllowed(a, "")>checked="checked"</#if>/>
-                        <label for="filter_${a.id}" class="sample">все остальные</label>
-                    </li>
-                </#if>
+                    <@categoryPrameter a "" "все остальные"/>
             </ul>
         </div>
+        </#if>
+    </#list>
+</#macro>
+
+<#if filtering?? && pageableForm??>
+<div id="productsFilterForm" class="filtering">
+    <#list category.genealogy.parents as c>
+        <@categoryPramaters c/>
     </#list>
 
-    <div style="text-align: right">
-        <button id="categoryFilterAction" type="button" class="bg-ui-button"
-                onclick="new bg.warehouse.Filter().applyFilter('<@bg.ui.tableNavigationParams pageableForm "filter" ""/>')">
-            Применить
-        </button>
-    </div>
+    <@categoryPramaters category/>
 </div>
+
+    <#if (itemsCount>0)>
+    <script type="text/javascript">
+        new bg.warehouse.Filter('<@bg.ui.tableNavigationParams pageableForm "filter" ""/>');
+    </script>
+    <#else>
+    <style type="text/css">
+        #productsFilterForm {
+            display: none;
+        }
+    </style>
+    </#if>
 </#if>
+

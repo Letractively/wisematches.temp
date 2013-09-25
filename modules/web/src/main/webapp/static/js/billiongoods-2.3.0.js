@@ -306,7 +306,7 @@ bg.assistance.SupportForm = function () {
                     .done(function (response) {
                         if (response.success) {
                             form.find("input[type=text], textarea").val("");
-                            bg.ui.unlock(null, "Сообщение успешно отправлено", false);
+                            bg.ui.unlock(null, "Сообщение успешно отправлено. Вашему вопросу присвоен номер: " + response.data, false);
                         } else {
                             bg.ui.unlock(null, response.message, true);
                         }
@@ -321,11 +321,12 @@ bg.assistance.SupportForm = function () {
 
 bg.warehouse = {};
 
-bg.warehouse.Filter = function () {
-    this.applyFilter = function (params) {
-        var filterParams = encodeURIComponent($("#productsFilterForm").find("input").serialize());
+bg.warehouse.Filter = function (params) {
+    var inputs = $('#productsFilterForm').find('input');
+    inputs.change(function () {
+        var filterParams = encodeURIComponent(inputs.serialize());
         bg.util.url.redirect(bg.util.url.extend("?" + params, 'filter', filterParams, true));
-    };
+    });
 };
 
 bg.warehouse.Basket = function () {
