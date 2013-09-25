@@ -40,3 +40,5 @@ INSERT INTO store_category_parameter (categoryId, attributeId) SELECT
                                                                  categoryId,
                                                                  attributeId
                                                                FROM store_category_attribute;
+
+ALTER TABLE store_category_parameter MODIFY `categoryId` INT(11) NULL DEFAULT NULL;

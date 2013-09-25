@@ -5,7 +5,8 @@ import java.util.Date;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface ProductDescription {
+public interface ProductDescription extends ProductImager {
+	@Override
 	Integer getId();
 
 	String getName();
@@ -31,6 +32,7 @@ public interface ProductDescription {
 	 *
 	 * @return the category id for this product.
 	 */
+	@Override
 	Integer getCategoryId();
 
 

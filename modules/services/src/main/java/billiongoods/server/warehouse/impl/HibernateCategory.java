@@ -3,7 +3,9 @@ package billiongoods.server.warehouse.impl;
 import billiongoods.server.warehouse.Attribute;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -32,13 +34,8 @@ public class HibernateCategory {
 	private boolean active;
 
 	@JoinColumn(name = "categoryId")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<HibernateCategoryParameter> parameters = new ArrayList<>();
-
-	@Column(name = "attributeId")
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "store_category_attribute", joinColumns = @JoinColumn(name = "categoryId"))
-	private Set<Integer> attributeIds = new HashSet<>();
 
 	@Deprecated
 	protected HibernateCategory() {
@@ -49,15 +46,6 @@ public class HibernateCategory {
 		this.description = description;
 		this.position = position;
 		this.parentId = parentId;
-	}
-
-	@Deprecated
-	protected HibernateCategory(String name, String description, Integer parentId, int position, Set<Attribute> attributes) {
-		this.name = name;
-		this.description = description;
-		this.position = position;
-		this.parentId = parentId;
-		setAttributes(attributes);
 	}
 
 	public Integer getId() {
@@ -84,11 +72,6 @@ public class HibernateCategory {
 		return parentId;
 	}
 
-	@Deprecated
-	public Set<Integer> getAttributeIds() {
-		return attributeIds;
-	}
-
 	void setName(String name) {
 		this.name = name;
 	}
@@ -109,36 +92,25 @@ public class HibernateCategory {
 		this.parentId = parentId;
 	}
 
-	@Deprecated
-	void setAttributes(Set<Attribute> attributes) {
-		this.attributeIds.clear();
-
-		if (attributes != null) {
-			for (Attribute attribute : attributes) {
-				this.attributeIds.add(attribute.getId());
-			}
-		}
-	}
-
 	List<HibernateCategoryParameter> getParameters() {
 		return parameters;
 	}
 
-	boolean addParameter(Attribute attribute) {
+	boolean addParameter(Integer attribute) {
 		for (HibernateCategoryParameter parameter : parameters) {
-			if (parameter.getAttributeId().equals(attribute.getId())) {
+			if (parameter.getAttributeId().equals(attribute)) {
 				return false;
 			}
 		}
 
-		parameters.add(new HibernateCategoryParameter(id, attribute.getId()));
+		parameters.add(new HibernateCategoryParameter(id, attribute));
 		return true;
 	}
 
-	boolean removeParameter(Attribute attribute) {
+	boolean removeParameter(Integer attribute) {
 		for (Iterator<HibernateCategoryParameter> iterator = parameters.iterator(); iterator.hasNext(); ) {
 			HibernateCategoryParameter parameter = iterator.next();
-			if (parameter.getAttributeId().equals(attribute.getId())) {
+			if (parameter.getAttributeId().equals(attribute)) {
 				iterator.remove();
 				return true;
 			}
@@ -187,7 +159,6 @@ public class HibernateCategory {
 		sb.append(", description='").append(description).append('\'');
 		sb.append(", position=").append(position);
 		sb.append(", active=").append(active);
-		sb.append(", attributeIds=").append(attributeIds);
 		sb.append('}');
 		return sb.toString();
 	}

@@ -1,9 +1,5 @@
-<#-- @ftlvariable name="product" type="billiongoods.server.warehouse.Product" -->
-<#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
+<#-- @ftlvariable name="form" type="billiongoods.server.web.servlet.mvc.maintain.form.ProductForm" -->
 <#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
-
-<#-- @ftlvariable name="groups" type="billiongoods.server.warehouse.Group[]" -->
-<#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationship[]" -->
 
 <#-- @ftlvariable name="imageResourcesDomain" type="java.lang.String" -->
 
@@ -14,33 +10,33 @@
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.fileupload-8.6.1.js"/>"></script>
 
 <div class="product-maintain" style="padding: 10px; border: 1px solid gray;">
-<form action="/maintain/product" method="post">
 
+<form action="/maintain/product" method="post">
 <table style="width: 100%">
-<#if product??>
-    <#if !product.state.active>
+<#if form.id?has_content>
+    <#if !form.productState.active>
     <tr id="inactiveWarning">
-        <td colspan="2" align="center" class="${product.state.name()?lower_case}">
-            Внимание! Товар не в активном состоянии: ${product.state.name()}
+        <td colspan="2" align="center" class="${form.productState.name()?lower_case}">
+            Внимание! Товар не в активном состоянии: ${form.productState.name()}
         </td>
     </tr>
     </#if>
 <tr>
-    <td valign="top"><label for="category">Артикул: </label></td>
+    <td valign="top"><label for="id">Артикул: </label></td>
     <td>
         <@bg.ui.input path="form.id" fieldType="hidden">
-            <#assign productId=bg.ui.statusValue!""/>
-            <#if bg.ui.statusValue?has_content><a href="/warehouse/product/${bg.ui.statusValue}"
-                                                  target="_blank">${messageSource.getProductCode(product)}</a></#if>
+            <a href="/warehouse/product/${bg.ui.statusValue}"
+               target="_blank">${messageSource.getProductCode(bg.ui.actualValue)}</a>
         </@bg.ui.input>
     </td>
 </tr>
 </#if>
 <tr>
-    <td valign="top"><label for="category">Категория: </label></td>
+    <td valign="top"><label for="categoryId">Категория: </label></td>
     <td>
-    <@bg.ui.selectCategory "form.category" catalog false>
-        <#if product??>(<a href="/maintain/category?id=${category.id}">изменить</a>)</#if>
+    <@bg.ui.selectCategory "form.categoryId" catalog false>
+        <#if bg.ui.statusValue?has_content>(<a href="/maintain/category?id=${bg.ui.statusValue}"
+                                               target="_blank">открыть в новом</a>)</#if>
     </@bg.ui.selectCategory>
     </td>
 </tr>
@@ -48,7 +44,8 @@
     <td valign="top"><label for="name">Имя: </label></td>
     <td>
     <@bg.ui.field path="form.name">
-        <textarea rows="4" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+        <textarea id="name" rows="4" style="width: 100%"
+                  name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
     </@bg.ui.field>
     </td>
 </tr>
@@ -56,7 +53,8 @@
     <td valign="top"><label for="commentary">Коментарий: </label></td>
     <td>
     <@bg.ui.field path="form.commentary">
-        <textarea rows="2" style="width: 100%" name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+        <textarea id="commentary" rows="2" style="width: 100%"
+                  name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
     </@bg.ui.field>
     </td>
 </tr>
@@ -80,9 +78,9 @@
 <tr>
     <td valign="top"><label for="supplierReferenceId">Страница описания: </label></td>
     <td><@bg.ui.input path="form.supplierReferenceId" size=90>
-        <#if product??>
+        <#if bg.ui.statusValue?has_content>
             (<a id="supplierReferenceLink"
-                href="${product.supplierInfo.referenceUrl.toExternalForm()}"
+                href="http://www.banggood.com/${bg.ui.statusValue}"
                 target="_blank">открыть в новом окне</a>)</#if>
     </@bg.ui.input>
     </td>
@@ -120,7 +118,8 @@
     <td><@bg.ui.input path="form.weight"/></td>
 </tr>
 
-<#if productId?has_content>
+<#if form.categoryId??>
+    <#assign category=catalog.getCategory(form.categoryId)/>
 <tr>
     <td colspan="2">
         <hr>
@@ -129,33 +128,42 @@
 <tr>
     <td valign="top"><label for="properties">Параметры: </label></td>
     <td>
-        <table>
-            <#list category.parameters as p>
-                <#assign attr=p.attribute/>
-                <#assign value=product.getProperty(attr)!""/>
-                <tr>
-                    <td>
-                        <input type="hidden" name="propertyIds" value="${attr.id}">
-                        <label for="property${attr.id}" class="attribute">
-                            <a href="/maintain/attribute?id=${attr.id}">${attr.name}<#if attr.unit?has_content>,
-                            ${attr.unit}</#if></a>
-                        </label>
-                    </td>
-                    <td>
+        <div id="productParameters">
+            <table>
+                <#list category.parameters as p>
+                    <#assign attr=p.attribute/>
+                    <#assign value=form.getProperty(attr)!""/>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="propertyIds" value="${attr.id}">
+                            <label for="property${attr.id}" class="attribute">
+                                <a href="/maintain/attribute?id=${attr.id}">${attr.name}<#if attr.unit?has_content>,
+                                ${attr.unit}</#if></a>
+                            </label>
+                        </td>
                         <#if attr.attributeType == AttributeType.ENUM>
-                            <select name="propertyValues" style="width: 100%">
-                                <option value="">-- нет значения --</option>
-                                <#list p.values as v>
-                                    <option value="${v}"<#if v==value> selected="selected"</#if>>${v}</option>
-                                </#list>
-                            </select>
+                            <td>
+                                <select id="property${attr.id}" name="propertyValues" style="width: 100%">
+                                    <option value="">-- нет значения --</option>
+                                    <#list p.values as v>
+                                        <option value="${v}"<#if v==value> selected="selected"</#if>>${v}</option>
+                                    </#list>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button">Добавить</button>
+                            </td>
                         <#else>
-                            <input id="property${attr.id}" name="propertyValues" value="${value}">
+                            <td>
+                                <input id="property${attr.id}" name="propertyValues" value="${value}"
+                                       style="width: 100%">
+                            </td>
+                            <td></td>
                         </#if>
-                    </td>
-                </tr>
-            </#list>
-        </table>
+                    </tr>
+                </#list>
+            </table>
+        </div>
     </td>
 </tr>
 <tr>
@@ -209,12 +217,19 @@
     <td valign="top"><label for="viewImages">Состоит в группе: </label></td>
     <td>
         <table id="groupsTable">
-            <#if groups??>
-                <#list groups as g>
+            <@bg.ui.bind path="form.participatedNames"/>
+            <#assign participatedNames=bg.ui.status.actualValue!""/>
+
+            <@bg.ui.bind path="form.participatedGroups"/>
+            <#assign participatedGroups=bg.ui.status.actualValue!""/>
+
+            <#if participatedGroups?has_content>
+                <#list participatedGroups as g>
+                    <#assign name=participatedNames[g_index]!""/>
                     <tr class="group">
                         <td>
-                            <input type="hidden" name="participatedGroups" value="${g.id}">
-                            <a href="/maintain/group?id=${g.id}" target="_blank">#${g.id} ${g.name}</a>
+                            <input type="hidden" name="participatedGroups" value="${g}">
+                            <a href="/maintain/group?id=${g}" target="_blank">#${g} ${name}</a>
                         </td>
                         <td>
                             <button class="remove" type="button">Удалить</button>
@@ -235,17 +250,28 @@
     <td valign="top"><label for="viewImages">Связана с группами: </label></td>
     <td>
         <table id="relationshipsTable">
-            <#if relationships??>
-                <#list relationships as r>
+            <@bg.ui.bind path="form.relationshipNames"/>
+            <#assign relationshipNames=bg.ui.status.actualValue!""/>
+
+            <@bg.ui.bind path="form.relationshipGroups"/>
+            <#assign relationshipGroups=bg.ui.status.actualValue!""/>
+
+            <@bg.ui.bind path="form.relationshipTypes"/>
+            <#assign relationshipTypes=bg.ui.status.actualValue!""/>
+
+            <#if relationshipGroups?has_content>
+                <#list relationshipGroups as r>
+                    <#assign name=relationshipNames[r_index]!""/>
+                    <#assign type=relationshipTypes[r_index]!""/>
+
                     <tr class="relationship">
                         <td>
-                            <input name="relationshipTypes" type="hidden" value="${r.type.name()}">
-                            <@message code="relationship.${r.type.name()?lower_case}.label"/>
+                            <input name="relationshipTypes" type="hidden" value="${type.name()}">
+                            <@message code="relationship.${type.name()?lower_case}.label"/>
                         </td>
                         <td>
-                            <input name="relationshipGroups" type="hidden" value="${r.group.id}">
-                            <a href="/maintain/group?id=${r.group.id}"
-                               target="_blank">#${r.group.id} ${r.group.name}</a>
+                            <input name="relationshipGroups" type="hidden" value="${r}">
+                            <a href="/maintain/group?id=${r}" target="_blank">#${r} ${name}</a>
                         </td>
                         <td>
                             <button class="remove" type="button">Удалить</button>
@@ -284,11 +310,15 @@
             <#if viewImages?is_collection>
                 <#list viewImages as i>
                     <div class="image">
-                        <@bg.ui.productImage product i ImageSize.SMALL/>
-                        <input name="enabledImages" type="checkbox" value="${i}"
-                               <#if enabledImages?contains(i)>checked="checked"</#if>/>
-                        <input name="previewImage" type="radio" value="${i}"
-                               <#if i==previewImage>checked="checked"</#if>/>
+                        <@bg.ui.productImage form i ImageSize.SMALL/>
+                        <label>
+                            <input name="enabledImages" type="checkbox" value="${i}"
+                                   <#if enabledImages?contains(i)>checked="checked"</#if>/>
+                        </label>
+                        <label>
+                            <input name="previewImage" type="radio" value="${i}"
+                                   <#if i==previewImage>checked="checked"</#if>/>
+                        </label>
                     </div>
                 </#list>
             </#if>
@@ -311,8 +341,10 @@
 <tr>
     <td colspan="2">
     <@bg.ui.field path="form.description">
-        <textarea style="width: 100%; min-height: 400px"
-                  name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+        <label>
+            <textarea style="width: 100%; min-height: 400px"
+                      name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+        </label>
     </@bg.ui.field>
     </td>
 </tr>
@@ -330,26 +362,21 @@
         <button class="bg-ui-button<#if bg.ui.actualValue=s> selected</#if>" type="submit"
                 name="${bg.ui.status.expression}" value="${s.name()}">${s.name()}</button>
     </#list>
-
-    <#--
-            <select id="productState" name="${bg.ui.status.expression}">
-            <#list ProductState.values() as s>
-                <option value="${s.name()}" <#if bg.ui.actualValue=s>selected="selected"</#if>>${s.name()}</option>
-            </#list>
-            </select>
-    -->
-
-    <#--
-        <#if productId?has_content>
-            <button id="add" type="submit">Изменить</button>
-        <#else>
-            <button id="add" type="submit">Создать</button>
-        </#if>
-    -->
     </td>
 </tr>
 </table>
 </form>
+</div>
+
+<div id="attributeValue" style="display: none; white-space: nowrap">
+    <form>
+        <input name="categoryId" value="${category.id}" type="hidden">
+        <input name="attributeId" type="hidden">
+        <label>
+            <input name="value">
+        </label>
+        <button type="button">Добавить</button>
+    </form>
 </div>
 
 <script>
@@ -438,23 +465,26 @@
         $("#primordialPrice").val(recalculatePrice($(this).val()));
     });
 
-    $("#optionsTable").find("button.add").click(addOption);
-    $("#optionsTable").find("button.remove").click(removeOption);
+    var optionsTable = $("#optionsTable");
+    optionsTable.find("button.add").click(addOption);
+    optionsTable.find("button.remove").click(removeOption);
 
-    $("#imagesTable").find("button.add").click(addImage);
-    $("#imagesTable").find("button.remove").click(removeImage);
+    var imagesTable = $("#imagesTable");
+    imagesTable.find("button.add").click(addImage);
+    imagesTable.find("button.remove").click(removeImage);
 
-    $("#groupsTable").find("button.add").click(addGroup);
-    $("#groupsTable").find("button.remove").click(removeGroup);
+    var groupsTable = $("#groupsTable");
+    groupsTable.find("button.add").click(addGroup);
+    groupsTable.find("button.remove").click(removeGroup);
 
-    $("#relationshipsTable").find("button.add").click(addRelationship);
-    $("#relationshipsTable").find("button.remove").click(removeRelationship);
+    var relationshipsTable = $("#relationshipsTable");
+    relationshipsTable.find("button.add").click(addRelationship);
+    relationshipsTable.find("button.remove").click(removeRelationship);
 
     $("#supplierReferenceId").change(function () {
         $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/' + $(this).val());
     });
 
-    <#if product??>
     $(function () {
         $('#fileupload').fileupload({
             dataType: 'json',
@@ -473,5 +503,30 @@
             }
         });
     });
-    </#if>
+
+    var attributeValueDialog = $("#attributeValue");
+
+    $("#productParameters").find("button").click(function () {
+        var el = $(this).parent().parent();
+        attributeValueDialog.find("input[name=attributeId]").val(el.find('input').val());
+        attributeValueDialog.modal();
+    });
+
+    attributeValueDialog.find("button").click(function () {
+        var serializeObject = attributeValueDialog.find('form').serializeObject();
+        $.post("/maintain/category/parameterAddValue.ajax", JSON.stringify(serializeObject))
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, "Атрибут добавлен", false);
+                        $("#productParameters").find("select").append("<option value='" + serializeObject['attributeId'] + "'>" + serializeObject['value'] + "</option>");
+                        $.modal.close();
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                });
+    });
 </script>

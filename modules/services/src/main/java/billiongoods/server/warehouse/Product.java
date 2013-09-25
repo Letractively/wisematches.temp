@@ -40,12 +40,4 @@ public interface Product extends ProductDescription {
 	 * @return the characters for this product.
 	 */
 	List<Property> getProperties();
-
-	/**
-	 * Return property for specified attribute
-	 *
-	 * @param attribute the attribute
-	 * @return associated property or {@code null}
-	 */
-	String getProperty(Attribute attribute);
 }

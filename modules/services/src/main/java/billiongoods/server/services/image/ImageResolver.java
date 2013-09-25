@@ -1,6 +1,6 @@
 package billiongoods.server.services.image;
 
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductImager;
 
 import java.nio.file.Path;
 
@@ -8,9 +8,9 @@ import java.nio.file.Path;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ImageResolver {
-	Path resolvePath(ProductDescription product);
+	Path resolvePath(ProductImager imager);
 
-	Path resolveFile(ProductDescription product, String code, ImageSize size);
+	Path resolveFile(ProductImager imager, String code, ImageSize size);
 
-	String resolveURI(ProductDescription product, String code, ImageSize size);
+	String resolveURI(ProductImager imager, String code, ImageSize size);
 }

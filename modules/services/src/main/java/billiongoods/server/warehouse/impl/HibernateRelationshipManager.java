@@ -81,6 +81,9 @@ public class HibernateRelationshipManager implements RelationshipManager {
 		final Session session = sessionFactory.getCurrentSession();
 		final ProductDescription description = productManager.getDescription(productId);
 		final HibernateGroup group = getGroup(groupId);
+		if (group == null) {
+			return null;
+		}
 		if (group.addProduct(description)) {
 			session.update(group);
 		}
@@ -93,6 +96,9 @@ public class HibernateRelationshipManager implements RelationshipManager {
 		final Session session = sessionFactory.getCurrentSession();
 		final ProductDescription description = productManager.getDescription(productId);
 		final HibernateGroup group = getGroup(groupId);
+		if (group == null) {
+			return null;
+		}
 		if (group.removeProduct(description)) {
 			session.update(group);
 		}

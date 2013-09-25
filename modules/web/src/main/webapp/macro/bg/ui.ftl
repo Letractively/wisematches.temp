@@ -32,11 +32,11 @@
 </div>
 </#macro>
 
-<#macro productImageUrl product code size>${imageResourcesDomain}/${imageResolver.resolveURI(product, code, size)?replace("\\", "/")}</#macro>
+<#macro productImageUrl imager code size>${imageResourcesDomain}/${imageResolver.resolveURI(imager, code, size)?replace("\\", "/")}</#macro>
 
-<#macro productImage product code size props={}><img
-        src="<@bg.ui.productImageUrl product code size/>"
-        alt="${product.name}" width="${size.width}px" height="${size.height}px"
+<#macro productImage imager code size props={}><img
+        src="<@bg.ui.productImageUrl imager code size/>"
+        alt="${imager.name}" width="${size.width}px" height="${size.height}px"
     <#list props?keys as k>${k}="${props[k]}"</#list>>
 </#macro>
 
@@ -261,14 +261,13 @@
 </#macro>
 
 <#macro input path attributes="" fieldType="text" size=30 value="">
-    <@field path=path>
-
-    <input type="${fieldType}" id="${status.expression}" name="${status.expression}" size="${size}"
+    <@bg.ui.field path>
+    <input type="${fieldType}" id="${bg.ui.status.expression}" name="${status.expression}" size="${size}"
         <#if fieldType=='checkbox'><#if status.value?has_content && status.value=='true'>checked="checked"</#if>
            value="true"<#else>
            value="<#if fieldType!="password"><#if status.value?has_content>${status.value}<#else><@message code=value/></#if></#if>"</#if> ${attributes}/>
         <#nested>
-    </@field>
+    </@bg.ui.field>
 </#macro>
 
 <#macro categoryOption category level selected>

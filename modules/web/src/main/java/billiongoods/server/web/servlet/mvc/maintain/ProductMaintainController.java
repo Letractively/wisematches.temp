@@ -124,7 +124,7 @@ public class ProductMaintainController extends AbstractController {
 
 			form.setName(product.getName());
 			form.setDescription(product.getDescription());
-			form.setCategory(category.getId());
+			form.setCategoryId(category.getId());
 			form.setPrice(product.getPrice().getAmount());
 			form.setPrimordialPrice(product.getPrice().getPrimordialAmount());
 			form.setWeight(product.getWeight());
@@ -176,17 +176,33 @@ public class ProductMaintainController extends AbstractController {
 			}
 			form.setPropertyIds(propIds);
 			form.setPropertyValues(propValues);
+
+			index = 0;
+			final List<Group> groups = relationshipManager.getGroups(product.getId());
+			final String[] participatedNames = new String[groups.size()];
+			final Integer[] participatedGroups = new Integer[groups.size()];
+			for (Group group : groups) {
+				participatedNames[index] = group.getName();
+				participatedGroups[index++] = group.getId();
+			}
+			form.setParticipatedNames(participatedNames);
+			form.setParticipatedGroups(participatedGroups);
+
+			index = 0;
+			final List<Relationship> relationships = relationshipManager.getRelationships(product.getId());
+			final String[] relationshipNames = new String[relationships.size()];
+			final Integer[] relationshipGroups = new Integer[relationships.size()];
+			final RelationshipType[] relationshipTypes = new RelationshipType[relationships.size()];
+			for (Relationship relationship : relationships) {
+				relationshipNames[index] = relationship.getGroup().getName();
+				relationshipGroups[index] = relationship.getGroup().getId();
+				relationshipTypes[index++] = relationship.getType();
+			}
+			form.setRelationshipNames(relationshipNames);
+			form.setRelationshipTypes(relationshipTypes);
+			form.setRelationshipGroups(relationshipGroups);
 		}
 
-		if (form.getCategory() != null) {
-			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
-		}
-		if (product != null) {
-			model.addAttribute("groups", relationshipManager.getGroups(product.getId()));
-			model.addAttribute("relationships", relationshipManager.getRelationships(product.getId()));
-		}
-
-		model.addAttribute("product", product);
 		model.addAttribute("attributes", attributeManager.getAttributes());
 		return "/content/maintain/product";
 	}
@@ -194,7 +210,7 @@ public class ProductMaintainController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String updateProduct(Model model, @Valid @ModelAttribute("form") ProductForm form, Errors errors) {
-		final Category category = categoryManager.getCategory(form.getCategory());
+		final Category category = categoryManager.getCategory(form.getCategoryId());
 		if (category == null) {
 			errors.rejectValue("category", "maintain.product.category.err.unknown");
 		}
@@ -327,9 +343,6 @@ public class ProductMaintainController extends AbstractController {
 			errors.reject("internal.error", ex.getMessage());
 		}
 
-		if (form.getCategory() != null) {
-			model.addAttribute("category", categoryManager.getCategory(form.getCategory()));
-		}
 		model.addAttribute("attributes", attributeManager.getAttributes());
 		return "/content/maintain/product";
 	}
@@ -375,8 +388,8 @@ public class ProductMaintainController extends AbstractController {
 		final Map<Attribute, String> values = new HashMap<>();
 		Category ct = category;
 		while (ct != null) {
-			for (Attribute attribute : ct.getAttributes()) {
-				values.put(attribute, null);
+			for (Parameter parameter : ct.getParameters()) {
+				values.put(parameter.getAttribute(), null);
 			}
 			ct = ct.getParent();
 		}

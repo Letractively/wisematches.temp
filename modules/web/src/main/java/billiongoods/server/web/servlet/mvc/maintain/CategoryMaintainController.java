@@ -2,6 +2,7 @@ package billiongoods.server.web.servlet.mvc.maintain;
 
 import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.Category;
+import billiongoods.server.warehouse.Parameter;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.AttributeForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.CategoryForm;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -46,15 +50,13 @@ public class CategoryMaintainController extends AbstractController {
 				form.setParent(null);
 			}
 
-			final List<Integer> attrIds = new ArrayList<>();
-			final Set<Attribute> attrs = category.getAttributes();
-			for (Attribute attribute : attrs) {
-				attrIds.add(attribute.getId());
+			final Set<Integer> attrIds = new HashSet<>();
+			final Collection<Parameter> parameters = category.getParameters();
+			for (Parameter p : parameters) {
+				attrIds.add(p.getAttribute().getId());
 			}
 			form.setAttributes(attrIds);
-			model.addAttribute("category", category);
 		}
-
 		return prepareViewResult(model);
 	}
 
@@ -62,14 +64,6 @@ public class CategoryMaintainController extends AbstractController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String updateCategory(Model model, @Valid @ModelAttribute("form") CategoryForm form, Errors errors) {
 		try {
-			final Set<Attribute> attrs = new HashSet<>();
-			final List<Integer> attributes = form.getAttributes();
-			if (attributes != null) {
-				for (Integer attribute : attributes) {
-					attrs.add(attributeManager.getAttribute(attribute));
-				}
-			}
-
 			Category parent = null;
 			if (form.getParent() != null) {
 				parent = categoryManager.getCategory(form.getParent());
@@ -77,9 +71,9 @@ public class CategoryMaintainController extends AbstractController {
 
 			final Category category;
 			if (form.getId() == null) {
-				category = categoryManager.createCategory(new Category.Editor(form.getName(), form.getDescription(), parent, form.getPosition()));
+				category = categoryManager.createCategory(new Category.Editor(form.getName(), form.getDescription(), parent, form.getPosition(), form.getAttributes()));
 			} else {
-				category = categoryManager.updateCategory(new Category.Editor(form.getId(), form.getName(), form.getDescription(), parent, form.getPosition()));
+				category = categoryManager.updateCategory(new Category.Editor(form.getId(), form.getName(), form.getDescription(), parent, form.getPosition(), form.getAttributes()));
 			}
 			return "redirect:/maintain/category?id=" + category.getId();
 		} catch (Exception ex) {
@@ -87,22 +81,6 @@ public class CategoryMaintainController extends AbstractController {
 		}
 
 		return prepareViewResult(model);
-	}
-
-	@RequestMapping("parameterAdd.ajax")
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ServiceResponse addParameter(@RequestBody AttributeForm form, Locale locale) {
-		final Category category = categoryManager.getCategory(form.getCategoryId());
-		if (category == null) {
-			return responseFactory.failure("category.unknown", locale);
-		}
-
-		final Attribute attribute = attributeManager.getAttribute(form.getAttributeId());
-		if (attribute == null) {
-			return responseFactory.failure("attribute.unknown", locale);
-		}
-		categoryManager.addParameter(category, attribute);
-		return responseFactory.success();
 	}
 
 	@RequestMapping("parameterAddValue.ajax")
