@@ -9,5 +9,9 @@ import java.util.Set;
 public interface FilteringAbility {
 	Set<Attribute> getAttributes();
 
+	int getValue(Attribute attribute, String code);
+
+	boolean hasValue(Attribute attribute, String code);
+
 	List<FilteringSummary> getFilteringItems(Attribute attribute);
 }

@@ -1503,6 +1503,11 @@ button.bg-ui-button.selected {
     vertical-align: middle;
 }
 
+.filtering .property .item.disabled label {
+    color: #808080;
+    text-decoration: line-through;
+}
+
 .global-search {
     width: 410px;
     height: 30px;
