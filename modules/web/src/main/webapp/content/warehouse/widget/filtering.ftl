@@ -39,7 +39,7 @@
     </#list>
 </#macro>
 
-<#if filtering?? && pageableForm??>
+<#if category?? && filtering?? && pageableForm??>
 <div id="productsFilterForm" class="filtering">
     <#list category.genealogy.parents as c>
         <@categoryPramaters c/>
