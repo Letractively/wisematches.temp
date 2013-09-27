@@ -3,14 +3,18 @@
 <div class="navigation">
 <#--
 Good for big catalog. Can't be used for small
-
 <#if category??>
     <#include "widget/category.ftl"/>
 <#elseif catalog??>
     <#include "widget/catalog.ftl"/>
 </#if>
+
 -->
-<#include "widget/catalogPlain.ftl"/>
+<#if category??>
+    <#include "widget/category.ftl"/>
+<#elseif catalog??>
+    <#include "widget/catalogPlain.ftl"/>
+</#if>
 
 <#include "widget/filtering.ftl"/>
 </div>
