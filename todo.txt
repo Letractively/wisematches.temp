@@ -1,10 +1,10 @@
 ============= CURRENT ====================
-- Auto convert colors.
 - Attribute modification works bad: changes are not applied.
 - Reload catalog ability
 - Redefine financial policy
 - Integer filters
 - Orders for filter values/items
+- Click on image to make it primary in maintain
 
 ============= PLAN ====================
 - Accounts and personal info
@@ -34,6 +34,7 @@
 + Change main catalog to simple and add main catalog in toolbar. Don't change main catalog.
 + DefaultHttpClient is deprecated
 + Load main info from site by request as plain text (or formatted by internal rules).
++ Auto convert colors.
 
 25.09
 + Filter by items: only for enums at this moment
