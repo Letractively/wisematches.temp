@@ -14,8 +14,11 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 
 	Product getProduct(String sku);
 
+
 	ProductDescription getDescription(Integer id);
 
+
+	SupplierInfo getSupplierInfo(Integer id);
 
 	FilteringAbility getFilteringAbility(ProductContext context);
 

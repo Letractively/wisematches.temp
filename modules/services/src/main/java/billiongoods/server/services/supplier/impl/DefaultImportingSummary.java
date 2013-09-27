@@ -1,6 +1,6 @@
-package billiongoods.server.services.arivals.impl;
+package billiongoods.server.services.supplier.impl;
 
-import billiongoods.server.services.arivals.ImportingSummary;
+import billiongoods.server.services.supplier.ImportingSummary;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Property;
 
@@ -82,19 +82,19 @@ public class DefaultImportingSummary implements ImportingSummary {
 		return properties;
 	}
 
-	void incrementSkipped() {
+	public void incrementSkipped() {
 		skippedCount++;
 	}
 
-	void incrementBroken() {
+	public void incrementBroken() {
 		brokenCount++;
 	}
 
-	void incrementImported() {
+	public void incrementImported() {
 		importedCount++;
 	}
 
-	void finalizeSummary() {
+	public void finalizeSummary() {
 		finishedDate = new Date();
 	}
 }

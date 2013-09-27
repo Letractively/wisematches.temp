@@ -51,7 +51,7 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
-    <bean id="banggoodPriceLoader" class="billiongoods.server.services.price.impl.loader.BanggoodPriceLoader"/>
+    <bean id="banggoodPriceLoader" class="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader"/>
 
     <bean id="priceValidator" class="billiongoods.server.services.price.impl.HibernatePriceValidator">
         <property name="sessionFactory" ref="sessionFactory"/>
@@ -73,7 +73,7 @@
         <property name="priceLoader" ref="banggoodPriceLoader"/>
     </bean>
 
-    <bean id="productsImporter" class="billiongoods.server.services.arivals.impl.BanggoodProductImporter">
+    <bean id="productsImporter" class="billiongoods.server.services.supplier.impl.banggod.BanggoodProductImporter">
         <property name="imageManager" ref="imageManager"/>
         <property name="productManager" ref="productManager"/>
         <property name="priceLoader" ref="banggoodPriceLoader"/>

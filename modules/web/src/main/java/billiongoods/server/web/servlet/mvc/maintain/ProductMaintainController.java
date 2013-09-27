@@ -1,10 +1,12 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
-import billiongoods.server.services.arivals.ImportingSummary;
-import billiongoods.server.services.arivals.ProductImporter;
 import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.image.ImageSize;
+import billiongoods.server.services.supplier.DataLoadingException;
+import billiongoods.server.services.supplier.ImportingSummary;
+import billiongoods.server.services.supplier.ProductImporter;
+import billiongoods.server.services.supplier.SupplierDataLoader;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.ImportProductsForm;
@@ -39,6 +41,7 @@ public class ProductMaintainController extends AbstractController {
 	private ImageResolver imageResolver;
 	private ProductManager productManager;
 	private ProductImporter productImporter;
+	private SupplierDataLoader supplierDataLoader;
 	private RelationshipManager relationshipManager;
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
@@ -374,15 +377,19 @@ public class ProductMaintainController extends AbstractController {
 
 		return responseFactory.success(res);
 	}
-/*
 
-	@RequestMapping(value = "/activate.ajax", method = RequestMethod.POST)
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ServiceResponse changeState(@RequestParam("id") Integer id, @RequestParam("a") boolean active) {
-		productManager.updateState(id, active);
-		return responseFactory.success();
+	@RequestMapping(value = "/loadSupplierInfo.ajax")
+	public ServiceResponse changeState(@RequestParam("id") Integer pid, Locale locale) {
+		final SupplierInfo supplier = productManager.getSupplierInfo(pid);
+		if (supplier == null) {
+			responseFactory.failure("error.unknown.supplier", locale);
+		}
+		try {
+			return responseFactory.success(supplierDataLoader.loadDescription(supplier));
+		} catch (DataLoadingException ex) {
+			return responseFactory.failure("error.bad.supplier", locale);
+		}
 	}
-*/
 
 	private Map<Attribute, String> createAttributesMap(Category category) {
 		final Map<Attribute, String> values = new HashMap<>();
@@ -426,6 +433,11 @@ public class ProductMaintainController extends AbstractController {
 	@Autowired
 	public void setProductImporter(ProductImporter productImporter) {
 		this.productImporter = productImporter;
+	}
+
+	@Autowired
+	public void setSupplierDataLoader(SupplierDataLoader supplierDataLoader) {
+		this.supplierDataLoader = supplierDataLoader;
 	}
 
 	@Autowired

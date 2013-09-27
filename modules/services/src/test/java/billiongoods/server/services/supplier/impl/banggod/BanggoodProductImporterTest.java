@@ -1,4 +1,4 @@
-package billiongoods.server.services.arivals.impl;
+package billiongoods.server.services.supplier.impl.banggod;
 
 import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.services.price.PriceConverter;

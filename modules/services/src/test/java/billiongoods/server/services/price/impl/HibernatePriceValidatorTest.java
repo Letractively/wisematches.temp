@@ -3,7 +3,7 @@ package billiongoods.server.services.price.impl;
 import au.com.bytecode.opencsv.CSVReader;
 import billiongoods.server.services.price.MarkupType;
 import billiongoods.server.services.price.PriceConverter;
-import billiongoods.server.services.price.impl.loader.BanggoodPriceLoader;
+import billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.Supplier;
 import billiongoods.server.warehouse.impl.HibernateSupplierInfo;
@@ -23,7 +23,7 @@ public class HibernatePriceValidatorTest {
 	@Test
 	public void asd() throws Exception {
 		PriceConverter priceConverter = new DefaultPriceConverter();
-		BanggoodPriceLoader priceLoader = new BanggoodPriceLoader();
+		BanggoodDataLoader priceLoader = new BanggoodDataLoader();
 
 		final CSVReader reader = new CSVReader(new FileReader("C:\\Temp\\banggood\\store_product.csv"));
 		String[] nextLine;
@@ -38,7 +38,7 @@ public class HibernatePriceValidatorTest {
 			String uri = nextLine[3];
 
 			final Price currentPrice = new Price(price, primordialPrice);
-			final Price loadedPrice = priceLoader.loadPrice(new HibernateSupplierInfo(uri, null, Supplier.BANGGOOD, null));
+			final Price loadedPrice = priceLoader.loadDescription(new HibernateSupplierInfo(uri, null, Supplier.BANGGOOD, null)).getPrice();
 
 			if (!currentPrice.equals(loadedPrice)) {
 				final Price price1 = priceConverter.convert(loadedPrice, 34.2d, MarkupType.REGULAR);

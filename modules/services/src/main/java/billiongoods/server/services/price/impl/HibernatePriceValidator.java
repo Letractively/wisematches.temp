@@ -3,6 +3,8 @@ package billiongoods.server.services.price.impl;
 import billiongoods.core.search.Range;
 import billiongoods.core.task.CleaningDayListener;
 import billiongoods.server.services.price.*;
+import billiongoods.server.services.supplier.DataLoadingException;
+import billiongoods.server.services.supplier.SupplierDataLoader;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.ProductContext;
 import billiongoods.server.warehouse.ProductManager;
@@ -28,7 +30,7 @@ import java.util.concurrent.Future;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernatePriceValidator implements PriceValidator, CleaningDayListener {
-	private PriceLoader priceLoader;
+	private SupplierDataLoader priceLoader;
 
 	private SessionFactory sessionFactory;
 	private ProductManager productManager;
@@ -130,8 +132,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 
 						Price newSupplierPrice = oldSupplierPrice;
 						try {
-							newSupplierPrice = priceLoader.loadPrice(supplierInfo);
-						} catch (PriceLoadingException ex) {
+							newSupplierPrice = priceLoader.loadDescription(supplierInfo).getPrice();
+						} catch (DataLoadingException ex) {
 							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
 							validationSummary.addBreakdown(new Date(), productId, ex);
 						}
@@ -216,7 +218,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 		this.taskExecutor = taskExecutor;
 	}
 
-	public void setPriceLoader(PriceLoader priceLoader) {
+	public void setPriceLoader(SupplierDataLoader priceLoader) {
 		this.priceLoader = priceLoader;
 	}
 
