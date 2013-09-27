@@ -62,7 +62,9 @@ public class CentralController extends AbstractController {
 		final Model model = new ExtendedModelMap();
 		final ModelAndView res = new ModelAndView("/content/assistance/errors");
 
-		model.addAttribute("title", getTitle(request));
+		model.addAttribute("title", messageSource.getMessage("error." + errorCode + ".label", request.getLocale()));
+
+		model.addAttribute("catalog", getCatalog());
 		model.addAttribute("principal", getPrincipal());
 		model.addAttribute("department", getDepartment(request));
 

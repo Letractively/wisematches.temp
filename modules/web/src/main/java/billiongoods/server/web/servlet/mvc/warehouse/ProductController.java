@@ -24,13 +24,15 @@ public class ProductController extends AbstractController {
 	public ProductController() {
 	}
 
-	@RequestMapping("/{productId}")
-    public String showProduct(@PathVariable("productId") String productId, Model model) {
-        final Product product;
-		if (productId.startsWith("SKU")) {
-			product = productManager.getProduct(productId);
-		} else {
+	@RequestMapping("/{pid:\\d+}{name:.*}")
+	public String showProduct(@PathVariable("pid") String productId,
+							  @PathVariable("name") String name,
+							  Model model) {
+		final Product product;
+		try {
 			product = productManager.getProduct(Integer.decode(productId));
+		} catch (NumberFormatException ex) {
+			throw new UnknownEntityException(productId, "product");
 		}
 
 		if (product == null) {
@@ -40,6 +42,16 @@ public class ProductController extends AbstractController {
 		if (!ProductContext.VISIBLE.contains(product.getState()) && !hasRole("moderator")) {
 			throw new UnknownEntityException(productId, "product");
 		}
+/*
+
+		String postfix = getProductPostfix(product);
+		if (name.length() == 0) {//!postfix.equals(name)) {
+			try {
+				return "redirect:/warehouse/product/" + product.getId() + URLEncoder.encode(postfix, "UTF-8");
+			} catch (UnsupportedEncodingException ignore) {
+			}
+		}
+*/
 
 		final Category category = categoryManager.getCategory(product.getCategoryId());
 
@@ -70,6 +82,10 @@ public class ProductController extends AbstractController {
 		hideNavigation(model);
 
 		return "/content/warehouse/product";
+	}
+
+	private String getProductPostfix(Product product) {
+		return "-" + product.getName().trim().replaceAll(" ", "-").toLowerCase();
 	}
 
 	@Autowired
