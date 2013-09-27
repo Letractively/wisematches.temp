@@ -97,8 +97,8 @@
     </td>
 </tr>
 <tr>
-<td colspan="2">
-        <hr>
+    <td colspan="2">
+    <hr>
     </td>
 </tr>
 <tr>
@@ -414,6 +414,9 @@ var colors = {
     'silver': 'Серебряный',
     'gold': 'Золотой',
     'brown': 'Коричневый',
+    'sky blue': 'Небесно-голубой',
+    'olive green': 'Оливково-зеленый',
+    'light orange': 'Небесно-голубой',
     'dark brown': 'Темно-коричневый',
     'light brown': 'Светло-коричневый',
     'golden': 'Золотой',
@@ -444,8 +447,14 @@ var loadSupplierDescription = function () {
 
                         var vals = '';
                         $.each(value, function (i, v) {
-                            var cv = colors[v.toLowerCase()];
-                            vals += cv == undefined ? v : cv;
+                            var items = v.split('+');
+                            $.each(items, function (i, v) {
+                                var cv = colors[v.toLowerCase()];
+                                vals += cv == undefined ? v : cv;
+                                if (i != items.length - 1) {
+                                    vals += '+';
+                                }
+                            });
                             if (i != value.length - 1) {
                                 vals += ';';
                             }
