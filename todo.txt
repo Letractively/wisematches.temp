@@ -1,10 +1,11 @@
 ============= CURRENT ====================
+- Change main catalog to simple and add main catalog in toolbar. Don't change main catalog.
+- Error 200 is not defined
+- Attribute modification works bad: changes are not applied.
+- Reload catalog ability
+- Redefine financial policy
 - Integer filters
 - Orders for filter values/items
-- Exclude items which are not in the filter
-- Change main catalog to simple and add main catalog in toolbar. Don't change main catalog.
-- Redefine financial policy
-- error 200 is not defined
 
 ============= PLAN ====================
 - Accounts and personal info
@@ -24,7 +25,14 @@
 - Our recomendations view on the left of main page: L959 & V911 & v912
 - Ability to track state of a SKU
 
+- Add full product name for URL. Redirect if it's wrong: not very good idea because there is no way to show russian
+    chars in URL. It's always encoded value and it's up-to browser what to show. In worse can it looks very unfriendly.
+
 ============= DONE ====================
+27.09
++ Closed product can't be shown: Expression catalog is undefined on line 28, column 32 in content/toolbar.ftl.
++ Exclude items which are not in the filter
+
 25.09
 + Filter by items: only for enums at this moment
 + Support mails is not simple for tracking. Format must be changed.
