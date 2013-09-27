@@ -7,7 +7,7 @@
 <#-- @ftlvariable name="hideNavigation" type="java.lang.Boolean" -->
 <#include "/core.ftl">
 
-<#assign libsVersion="2.3.0"/>
+<#assign libsVersion="2.4.0"/>
 
 <html>
 <head>

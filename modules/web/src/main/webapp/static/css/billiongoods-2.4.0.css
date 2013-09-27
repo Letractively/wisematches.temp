@@ -302,7 +302,7 @@ span.dot {
     text-decoration: none;
 }
 
-.bg-ui-button:hover {
+.bg-ui-button:hover, .bg-ui-button.selected {
     background-color: #c3692c;
 }
 
@@ -453,8 +453,8 @@ button.bg-ui-button.selected {
     background: none;
 }
 
-.navigation .catalog {
-    border: 1px solid #d67632;
+.catalog {
+    border: 1px solid #f09d61;
 }
 
 .catalog .container {
@@ -471,6 +471,7 @@ button.bg-ui-button.selected {
 }
 
 .catalog .ct-item {
+    width: 100%;
     position: relative;
     background: #ffffff;
 }
@@ -538,7 +539,7 @@ button.bg-ui-button.selected {
 .catalog .ct-list {
     z-index: 1;
     top: -1px;
-    left: 210px;
+    left: 208px;
     width: 500px;
     padding: 10px;
     overflow: hidden;
@@ -580,6 +581,30 @@ button.bg-ui-button.selected {
     padding-right: 5px;
     display: inline-block;
     background: url("../images/sprites.png") 0 0 no-repeat;
+}
+
+#globalCatalog {
+    width: 210px;
+    left: -1px;
+    top: 40px;
+    position: absolute;
+    background: #f0f0f0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#globalCatalog .catalog .ct-item {
+    background: #f0f0f0;
+}
+
+#globalCatalog .ct-item a {
+    color: #000000;
+    text-shadow: none;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+#globalCatalog .ct-item a:hover {
+    color: #900;
 }
 
 .navigation .assistance {

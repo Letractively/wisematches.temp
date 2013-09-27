@@ -1,10 +1,6 @@
 <#include "/core.ftl"/>
 
 <div class="catalog">
-    <div class="ct-tit">
-        Каталог товаров
-    </div>
-
     <ul class="container">
     <#list catalog.rootCategories as p>
         <li class="ct-item">
@@ -37,15 +33,3 @@
     </#list>
     </ul>
 </div>
-
-<script type="application/javascript">
-    $(".navigation").find(".ct-item").hover(function () {
-        var $2 = $(this);
-        $2.find(".ct-toc").addClass("hover");
-        $2.find(".ct-list").show();
-    }, function () {
-        var $2 = $(this);
-        $2.find(".ct-toc").removeClass("hover");
-        $2.find(".ct-list").hide();
-    });
-</script>
