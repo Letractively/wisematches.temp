@@ -1,14 +1,15 @@
-package billiongoods.server.services.arivals.impl;
+package billiongoods.server.services.supplier.impl.banggod;
 
 import au.com.bytecode.opencsv.CSVReader;
-import billiongoods.server.services.arivals.ImportingSummary;
-import billiongoods.server.services.arivals.ProductImporter;
 import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.services.price.MarkupType;
 import billiongoods.server.services.price.PriceConverter;
-import billiongoods.server.services.price.impl.PriceLoader;
-import billiongoods.server.services.price.impl.PriceLoadingException;
+import billiongoods.server.services.supplier.DataLoadingException;
+import billiongoods.server.services.supplier.ImportingSummary;
+import billiongoods.server.services.supplier.ProductImporter;
+import billiongoods.server.services.supplier.SupplierDataLoader;
+import billiongoods.server.services.supplier.impl.DefaultImportingSummary;
 import billiongoods.server.warehouse.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ import java.util.*;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class BanggoodProductImporter implements ProductImporter {
-	private PriceLoader priceLoader;
+	private SupplierDataLoader priceLoader;
 	private ImageManager imageManager;
 	private ProductManager productManager;
 	private PriceConverter priceConverter;
@@ -98,9 +99,9 @@ public class BanggoodProductImporter implements ProductImporter {
 				Price supplierPrice = supplied.price;
 				if (validatePrice) {
 					try {
-						supplierPrice = priceLoader.loadPrice(supplied);
+						supplierPrice = priceLoader.loadDescription(supplied).getPrice();
 						log.info("Price has been loaded: {}", supplierPrice);
-					} catch (PriceLoadingException ex) {
+					} catch (DataLoadingException ex) {
 						log.info("Price can't be loaded", ex);
 					}
 				}
@@ -213,7 +214,7 @@ public class BanggoodProductImporter implements ProductImporter {
 		return res;
 	}
 
-	public void setPriceLoader(PriceLoader priceLoader) {
+	public void setPriceLoader(SupplierDataLoader priceLoader) {
 		this.priceLoader = priceLoader;
 	}
 

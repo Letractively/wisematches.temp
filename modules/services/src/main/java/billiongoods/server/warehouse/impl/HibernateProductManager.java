@@ -79,6 +79,14 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		return (HibernateProductDescription) session.get(HibernateProductDescription.class, id);
 	}
 
+	@Override
+	public SupplierInfo getSupplierInfo(Integer id) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("select p.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct p where p.id=:id");
+		query.setCacheable(true);
+		query.setParameter("id", id);
+		return (SupplierInfo) query.uniqueResult();
+	}
 
 	@Override
 	public FilteringAbility getFilteringAbility(ProductContext context) {

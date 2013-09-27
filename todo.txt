@@ -1,4 +1,5 @@
 ============= CURRENT ====================
+- Auto convert colors.
 - Attribute modification works bad: changes are not applied.
 - Reload catalog ability
 - Redefine financial policy
@@ -31,6 +32,8 @@
 + Closed product can't be shown: Expression catalog is undefined on line 28, column 32 in content/toolbar.ftl.
 + Exclude items which are not in the filter
 + Change main catalog to simple and add main catalog in toolbar. Don't change main catalog.
++ DefaultHttpClient is deprecated
++ Load main info from site by request as plain text (or formatted by internal rules).
 
 25.09
 + Filter by items: only for enums at this moment

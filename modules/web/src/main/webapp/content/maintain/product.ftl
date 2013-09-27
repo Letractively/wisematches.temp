@@ -77,7 +77,8 @@
 </tr>
 <tr>
     <td valign="top"><label for="supplierReferenceId">Страница описания: </label></td>
-    <td><@bg.ui.input path="form.supplierReferenceId" size=90>
+    <td>
+    <@bg.ui.input path="form.supplierReferenceId" size=90>
         <#if bg.ui.statusValue?has_content>
             (<a id="supplierReferenceLink"
                 href="http://www.banggood.com/${bg.ui.statusValue}"
@@ -86,7 +87,17 @@
     </td>
 </tr>
 <tr>
-    <td colspan="2">
+    <td valign="top">
+        <label for="supplierReferenceId">Информация поставщика: </label>
+    </td>
+    <td>
+        <div id="supplierInfo">
+            <a href="#" onclick="loadSupplierDescription();">загрузить информацию</a>
+        </div>
+    </td>
+</tr>
+<tr>
+<td colspan="2">
         <hr>
     </td>
 </tr>
@@ -380,153 +391,219 @@
 </div>
 
 <script>
-    window.onload = function () {
-        CKEDITOR.replace('description');
-    };
+window.onload = function () {
+    CKEDITOR.replace('description');
+};
 
-    var attributes = {
-    <#list attributes as a>
-        '${a.id}': {name: "${a.name}", unit: "${a.unit}"}<#if a_has_next>,</#if>
-    </#list>
-    };
+var colors = {
+    'black': 'Черный',
+    'blue': 'Синий',
+    'green': 'Зеленый',
+    'gray': 'Серый',
+    'orange': 'Оранжевый',
+    'light green': 'Светло-зеленый',
+    'dark green': 'Темно-зеленый',
+    'pink': 'Розовый',
+    'purple': 'Пурпурный',
+    'light pink': 'Светло-розовый',
+    'red': 'Красный',
+    'rose red': 'Бордовый',
+    'white': 'Белый',
+    'yellow': 'Желтый',
+    'peach': 'Персиковый',
+    'silver': 'Серебряный',
+    'gold': 'Золотой',
+    'brown': 'Коричневый',
+    'dark brown': 'Темно-коричневый',
+    'light brown': 'Светло-коричневый',
+    'golden': 'Золотой',
+    'beige': 'Бежевый'
+};
 
-    var addOption = function () {
-        var tr = $("<tr></tr>");
+var attributes = {
+<#list attributes as a>
+    '${a.id}': {name: "${a.name}", unit: "${a.unit}"}<#if a_has_next>,</#if>
+</#list>
+};
 
-        var select = '<select name="optionIds">';
-        $.each(attributes, function (key, value) {
-            select += '<option value="' + key + '">' + value.name + ', ' + value.unit;
-        });
-        select += '</select>';
+var loadSupplierDescription = function () {
+    bg.ui.lock(null, "Загрузка информации...");
+    $.post("/maintain/product/loadSupplierInfo.ajax?id=${form.id}")
+            .done(function (response) {
+                if (response.success) {
+                    var data = response.data;
 
-        var attrs = $("<td></td>").html(select);
-        var values = $("<td></td>").html('<input name="optionValues" value=""/>');
-        var remove = $("<td></td>").append($('<button type="button">Удалить</button>').click(removeOption));
+                    var info = "";
 
-        tr.append(attrs).append(values).append(remove).insertBefore($("#optionControls"));
-    };
+                    info += "<table>";
+                    info += "  <tr><td><label>Цена:</label></td><td>" + data.price.amount + " (" + data.price.primordialAmount + ")</td></tr>";
 
-    var removeOption = function () {
-        $(this).parent().parent().remove();
-    };
+                    $.each(data.parameters, function (key, value) {
+                        info += "  <tr>";
+                        info += "    <td><label>" + key + "</label></td>";
 
-    var addImage = function () {
-        var tr = $("<tr></tr>");
-        var values = $("<td></td>").html('<input name="viewImages" value=""/>');
-        var remove = $("<td></td>").append($('<button type="button">Удалить</button>').click(removeImage));
-        tr.append(values).append(remove).insertBefore($("#imagesControls"));
-    };
+                        var vals = '';
+                        $.each(value, function (i, v) {
+                            var cv = colors[v.toLowerCase()];
+                            vals += cv == undefined ? v : cv;
+                            if (i != value.length - 1) {
+                                vals += ';';
+                            }
+                        });
+                        info += "    <td>" + vals + "</td>";
+                        info += "  </tr>";
+                    });
+                    info += "</table>";
+                    $("#supplierInfo").html(info);
+                    bg.ui.unlock(null);
+                } else {
+                    bg.ui.unlock(null, response.message, true);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                        "Пожалуйста, попробуйте отправить сообщение позже.", true);
+            });
+};
 
-    var removeImage = function () {
-        $(this).parent().parent().remove();
-    };
+var addOption = function () {
+    var tr = $("<tr></tr>");
 
-    var addGroup = function () {
-        var tr = $("<tr></tr>");
-        var values = $("<td></td>").html('<input name="participatedGroups" value=""/>');
-        var remove = $("<td></td>").append($('<button class="remove" type="button">Удалить</button>').click(removeGroup));
-        tr.append(values).append(remove).insertBefore($("#groupsControls"));
-    };
-
-    var removeGroup = function () {
-        $(this).parent().parent().remove();
-    };
-
-    var addRelationship = function () {
-        var tr = $("<tr></tr>");
-
-        var select = '<select name="relationshipTypes">';
-    <#list RelationshipType.values() as t>
-        select += '<option value="${t.name()}"> <@message code="relationship.${t.name()?lower_case}.label"/>';
-    </#list>
-        select += '</select>';
-
-        var attrs = $("<td></td>").html(select);
-        var values = $("<td></td>").html('<input name="relationshipGroups" value=""/>');
-        var remove = $("<td></td>").append($('<button type="button">Удалить</button>').click(removeRelationship));
-
-        tr.append(attrs).append(values).append(remove).insertBefore($("#relationshipsControls"));
-    };
-
-    var removeRelationship = function () {
-        $(this).parent().parent().remove();
-    };
-
-    var recalculatePrice = function (val) {
-        var v = parseFloat(val);
-        return (v + v * 0.2) * 35 + 10;
-    };
-
-    $("#supplierPrice").change(function () {
-        $("#price").val(recalculatePrice($(this).val()));
+    var select = '<select name="optionIds">';
+    $.each(attributes, function (key, value) {
+        select += '<option value="' + key + '">' + value.name + ', ' + value.unit;
     });
+    select += '</select>';
 
-    $("#supplierPrimordialPrice").change(function () {
-        $("#primordialPrice").val(recalculatePrice($(this).val()));
+    var attrs = $("<td></td>").html(select);
+    var values = $("<td></td>").html('<input name="optionValues" value=""/>');
+    var remove = $("<td></td>").append($('<button type="button">Удалить</button>').click(removeOption));
+
+    tr.append(attrs).append(values).append(remove).insertBefore($("#optionControls"));
+};
+
+var removeOption = function () {
+    $(this).parent().parent().remove();
+};
+
+var addImage = function () {
+    var tr = $("<tr></tr>");
+    var values = $("<td></td>").html('<input name="viewImages" value=""/>');
+    var remove = $("<td></td>").append($('<button type="button">Удалить</button>').click(removeImage));
+    tr.append(values).append(remove).insertBefore($("#imagesControls"));
+};
+
+var removeImage = function () {
+    $(this).parent().parent().remove();
+};
+
+var addGroup = function () {
+    var tr = $("<tr></tr>");
+    var values = $("<td></td>").html('<input name="participatedGroups" value=""/>');
+    var remove = $("<td></td>").append($('<button class="remove" type="button">Удалить</button>').click(removeGroup));
+    tr.append(values).append(remove).insertBefore($("#groupsControls"));
+};
+
+var removeGroup = function () {
+    $(this).parent().parent().remove();
+};
+
+var addRelationship = function () {
+    var tr = $("<tr></tr>");
+
+    var select = '<select name="relationshipTypes">';
+<#list RelationshipType.values() as t>
+    select += '<option value="${t.name()}"> <@message code="relationship.${t.name()?lower_case}.label"/>';
+</#list>
+    select += '</select>';
+
+    var attrs = $("<td></td>").html(select);
+    var values = $("<td></td>").html('<input name="relationshipGroups" value=""/>');
+    var remove = $("<td></td>").append($('<button type="button">Удалить</button>').click(removeRelationship));
+
+    tr.append(attrs).append(values).append(remove).insertBefore($("#relationshipsControls"));
+};
+
+var removeRelationship = function () {
+    $(this).parent().parent().remove();
+};
+
+var recalculatePrice = function (val) {
+    var v = parseFloat(val);
+    return (v + v * 0.2) * 35 + 10;
+};
+
+$("#supplierPrice").change(function () {
+    $("#price").val(recalculatePrice($(this).val()));
+});
+
+$("#supplierPrimordialPrice").change(function () {
+    $("#primordialPrice").val(recalculatePrice($(this).val()));
+});
+
+var optionsTable = $("#optionsTable");
+optionsTable.find("button.add").click(addOption);
+optionsTable.find("button.remove").click(removeOption);
+
+var imagesTable = $("#imagesTable");
+imagesTable.find("button.add").click(addImage);
+imagesTable.find("button.remove").click(removeImage);
+
+var groupsTable = $("#groupsTable");
+groupsTable.find("button.add").click(addGroup);
+groupsTable.find("button.remove").click(removeGroup);
+
+var relationshipsTable = $("#relationshipsTable");
+relationshipsTable.find("button.add").click(addRelationship);
+relationshipsTable.find("button.remove").click(removeRelationship);
+
+$("#supplierReferenceId").change(function () {
+    $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/' + $(this).val());
+});
+
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            var code = data.result.data.code;
+            var uri = data.result.data.uri;
+
+            var s = '';
+            s += '<div class="image">';
+            s += '<img src="${imageResourcesDomain}/' + uri.small + '"/>';
+            s += '<input name="enabledImages" type="checkbox" value="' + code + '" checked="checked"/>';
+            s += '<input name="previewImage" type="radio" value="' + code + '"/>';
+            s += '</div>';
+
+            $(".images").append($(s));
+        }
     });
+});
 
-    var optionsTable = $("#optionsTable");
-    optionsTable.find("button.add").click(addOption);
-    optionsTable.find("button.remove").click(removeOption);
+var attributeValueDialog = $("#attributeValue");
 
-    var imagesTable = $("#imagesTable");
-    imagesTable.find("button.add").click(addImage);
-    imagesTable.find("button.remove").click(removeImage);
+$("#productParameters").find("button").click(function () {
+    var el = $(this).parent().parent();
+    attributeValueDialog.find("input[name=attributeId]").val(el.find('input').val());
+    attributeValueDialog.modal();
+});
 
-    var groupsTable = $("#groupsTable");
-    groupsTable.find("button.add").click(addGroup);
-    groupsTable.find("button.remove").click(removeGroup);
-
-    var relationshipsTable = $("#relationshipsTable");
-    relationshipsTable.find("button.add").click(addRelationship);
-    relationshipsTable.find("button.remove").click(removeRelationship);
-
-    $("#supplierReferenceId").change(function () {
-        $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/' + $(this).val());
-    });
-
-    $(function () {
-        $('#fileupload').fileupload({
-            dataType: 'json',
-            done: function (e, data) {
-                var code = data.result.data.code;
-                var uri = data.result.data.uri;
-
-                var s = '';
-                s += '<div class="image">';
-                s += '<img src="${imageResourcesDomain}/' + uri.small + '"/>';
-                s += '<input name="enabledImages" type="checkbox" value="' + code + '" checked="checked"/>';
-                s += '<input name="previewImage" type="radio" value="' + code + '"/>';
-                s += '</div>';
-
-                $(".images").append($(s));
-            }
-        });
-    });
-
-    var attributeValueDialog = $("#attributeValue");
-
-    $("#productParameters").find("button").click(function () {
-        var el = $(this).parent().parent();
-        attributeValueDialog.find("input[name=attributeId]").val(el.find('input').val());
-        attributeValueDialog.modal();
-    });
-
-    attributeValueDialog.find("button").click(function () {
-        var serializeObject = attributeValueDialog.find('form').serializeObject();
-        $.post("/maintain/category/parameterAddValue.ajax", JSON.stringify(serializeObject))
-                .done(function (response) {
-                    if (response.success) {
-                        bg.ui.unlock(null, "Атрибут добавлен", false);
-                        $("#productParameters").find("select").append("<option value='" + serializeObject['attributeId'] + "'>" + serializeObject['value'] + "</option>");
-                        $.modal.close();
-                    } else {
-                        bg.ui.unlock(null, response.message, true);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
-                });
-    });
+attributeValueDialog.find("button").click(function () {
+    bg.ui.lock(null, "Добавление...");
+    var serializeObject = attributeValueDialog.find('form').serializeObject();
+    $.post("/maintain/category/parameterAddValue.ajax", JSON.stringify(serializeObject))
+            .done(function (response) {
+                if (response.success) {
+                    bg.ui.unlock(null, "Атрибут добавлен", false);
+                    $("#productParameters").find("select").append("<option value='" + serializeObject['attributeId'] + "'>" + serializeObject['value'] + "</option>");
+                    $.modal.close();
+                } else {
+                    bg.ui.unlock(null, response.message, true);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                        "Пожалуйста, попробуйте отправить сообщение позже.", true);
+            });
+});
 </script>

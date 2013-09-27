@@ -1,4 +1,4 @@
-package billiongoods.server.services.arivals;
+package billiongoods.server.services.supplier;
 
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Property;
