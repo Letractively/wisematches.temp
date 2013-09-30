@@ -76,9 +76,7 @@
 
         <tr>
             <td class="layout-container footer-layout">
-                <div class="layout-content footer-content">
-                <#include "footer.ftl"/>
-                </div>
+            <#include "footer.ftl"/>
             </td>
         </tr>
     </table>

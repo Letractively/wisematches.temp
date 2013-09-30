@@ -1,12 +1,12 @@
 ============= CURRENT ====================
+
+============= PLAN ====================
 - Attribute modification works bad: changes are not applied.
 - Reload catalog ability
 - Redefine financial policy
 - Integer filters
 - Orders for filter values/items
-- Click on image to make it primary in maintain
 
-============= PLAN ====================
 - Accounts and personal info
 - Check why not all products can be checked.
 - Forums
@@ -28,6 +28,12 @@
     chars in URL. It's always encoded value and it's up-to browser what to show. In worse can it looks very unfriendly.
 
 ============= DONE ====================
+30.09
++ Add info about PayPal
++ Add PayPal logo at the bottom
++ Redefine shipment address in PayPal order
++ Click on image to make it primary in maintain
+
 27.09
 + Closed product can't be shown: Expression catalog is undefined on line 28, column 32 in content/toolbar.ftl.
 + Exclude items which are not in the filter

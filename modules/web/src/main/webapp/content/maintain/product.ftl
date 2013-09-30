@@ -98,7 +98,7 @@
 </tr>
 <tr>
     <td colspan="2">
-    <hr>
+        <hr>
     </td>
 </tr>
 <tr>
@@ -614,5 +614,9 @@ attributeValueDialog.find("button").click(function () {
                 bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
                         "Пожалуйста, попробуйте отправить сообщение позже.", true);
             });
+});
+
+$(".image img").click(function () {
+    $(this).parent().find("input[name=previewImage]").prop('checked', 'checked');
 });
 </script>

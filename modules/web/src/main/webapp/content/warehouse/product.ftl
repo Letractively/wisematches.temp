@@ -70,7 +70,7 @@
                         </#if>
                     </#if>
                     </div>
-                    <div class="shipment">Бесплатная доставка</div>
+                    <div class="shipment">Бесплатная доставка за 30-40 дней</div>
                 </div>
 
                 <div class="props">

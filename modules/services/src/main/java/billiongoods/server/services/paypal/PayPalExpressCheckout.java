@@ -154,24 +154,25 @@ public class PayPalExpressCheckout implements InitializingBean {
 		paymentDetails.setPaymentAction(PaymentActionCodeType.SALE);
 		paymentDetails.setPaymentDetailsItem(paymentDetailsItem);
 
+		paymentDetails.setShipToAddress(addressType);
+
 		paymentDetails.setItemTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount())));
 		paymentDetails.setShippingTotal(new BasicAmountType(CURRENCY_CODE, Price.string(shipment.getAmount())));
 		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() + shipment.getAmount())));
 
 		final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
 		request.setLocaleCode("RU");
-		request.setAddress(addressType);
-		request.setAddressOverride("0");
-		request.setNoShipping("1");
+		request.setAddressOverride("1");
+		request.setNoShipping("0");
 		request.setReqConfirmShipping("0");
 		request.setChannelType(ChannelType.MERCHANT);
-		request.setSolutionType(SolutionTypeType.MARK);
+		request.setSolutionType(SolutionTypeType.SOLE);
 		request.setReturnURL(returnURL);
 		request.setCancelURL(cancelURL);
 		request.setPaymentDetails(Collections.singletonList(paymentDetails));
 		request.setCppLogoImage("http://static.billiongoods.ru/images/logo.png");
 
-		request.setInvoiceID(String.valueOf(tnxId));
+		request.setInvoiceID("test-" + String.valueOf(tnxId));
 
 		try {
 			final SetExpressCheckoutRequestType setExpressCheckoutRequest = new SetExpressCheckoutRequestType(request);
