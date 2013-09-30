@@ -35,6 +35,9 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 
 	void shipped(Long orderId, String number, String commentary);
 
+	void suspended(Long orderId, String commentary);
+
+	void cancelled(Long orderId, String commentary);
 
 	void failed(Long orderId, String reason);
 

@@ -28,13 +28,6 @@ public interface Product extends ProductDescription {
 	List<String> getImageIds();
 
 	/**
-	 * Returns reference to supplier
-	 *
-	 * @return the reference to supplier
-	 */
-	SupplierInfo getSupplierInfo();
-
-	/**
 	 * Returns characters for this product.
 	 *
 	 * @return the characters for this product.

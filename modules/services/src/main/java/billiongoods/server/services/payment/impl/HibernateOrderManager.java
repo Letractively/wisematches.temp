@@ -166,6 +166,36 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
+	public void suspended(Long orderId, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.suspended(commentary);
+		session.update(order);
+
+		notifyOrderState(order, state);
+
+		log.info("New state was changed to shipped: {}", orderId);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void cancelled(Long orderId, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.cancelled(commentary);
+		session.update(order);
+
+		notifyOrderState(order, state);
+
+		log.info("New state was changed to shipped: {}", orderId);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
 	public void failed(Long orderId, String reason) {
 		final Session session = sessionFactory.getCurrentSession();
 

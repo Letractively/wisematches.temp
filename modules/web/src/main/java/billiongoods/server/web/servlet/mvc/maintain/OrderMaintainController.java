@@ -77,9 +77,6 @@ public class OrderMaintainController extends AbstractController {
 		if (state == null) {
 			errors.rejectValue("value", "order.state.state.empty");
 		}
-		if (value == null) {
-			errors.rejectValue("value", "order.state.value.empty");
-		}
 
 		if (state != null && !errors.hasErrors()) {
 			switch (state) {
@@ -91,6 +88,12 @@ public class OrderMaintainController extends AbstractController {
 					break;
 				case SHIPPED:
 					orderManager.shipped(id, value, comment);
+					break;
+				case SUSPENDED:
+					orderManager.suspended(id, comment);
+					break;
+				case CANCELLED:
+					orderManager.cancelled(id, comment);
 					break;
 				default:
 					errors.rejectValue("value", "order.state.state.incorrect");

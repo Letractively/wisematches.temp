@@ -34,13 +34,6 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 	@Transient
 	private List<Property> properties = new ArrayList<>();
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "amount", column = @Column(name = "price")),
-			@AttributeOverride(name = "primordialAmount", column = @Column(name = "primordialPrice"))
-	})
-	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
-
 	public HibernateProduct() {
 	}
 
@@ -62,11 +55,6 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 	@Override
 	public List<Property> getProperties() {
 		return properties;
-	}
-
-	@Override
-	public HibernateSupplierInfo getSupplierInfo() {
-		return supplierInfo;
 	}
 
 	void setDescription(String description) {

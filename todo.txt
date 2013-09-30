@@ -4,7 +4,8 @@
 - Attribute modification works bad: changes are not applied.
 - Reload catalog ability
 - Redefine financial policy
-- Integer filters
+- Range filters
+- Binominal filters
 - Orders for filter values/items
 
 - Accounts and personal info
@@ -33,6 +34,9 @@
 + Add PayPal logo at the bottom
 + Redefine shipment address in PayPal order
 + Click on image to make it primary in maintain
++ More order states: CANCELLED, SUSPENDED
++ Show SKU in order view for managers
++ Show original USD amount for order for managers
 
 27.09
 + Closed product can't be shown: Expression catalog is undefined on line 28, column 32 in content/toolbar.ftl.

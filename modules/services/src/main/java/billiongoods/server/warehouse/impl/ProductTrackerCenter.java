@@ -19,7 +19,7 @@ public class ProductTrackerCenter {
 
 	private void updateSoldQuantity(List<OrderItem> items) {
 		for (OrderItem item : items) {
-			updateSoldQuantity(item.getProduct(), item.getQuantity());
+			updateSoldQuantity(item.getProduct().getId(), item.getQuantity());
 		}
 	}
 

@@ -1,14 +1,11 @@
 package billiongoods.server.services.payment;
 
+import billiongoods.server.warehouse.ProductDescription;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface OrderItem {
-	String getName();
-
-	Integer getProduct();
-
-
 	int getQuantity();
 
 	double getAmount();
@@ -17,4 +14,6 @@ public interface OrderItem {
 	double getWeight();
 
 	String getOptions();
+
+	ProductDescription getProduct();
 }

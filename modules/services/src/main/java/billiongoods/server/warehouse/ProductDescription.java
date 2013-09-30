@@ -55,7 +55,6 @@ public interface ProductDescription extends ProductImager {
 	 */
 	Date getRegistrationDate();
 
-
 	/**
 	 * Returns current product state.
 	 *
@@ -69,4 +68,11 @@ public interface ProductDescription extends ProductImager {
 	 * @return the information about product's stock state
 	 */
 	StockInfo getStockInfo();
+
+	/**
+	 * Returns reference to supplier
+	 *
+	 * @return the reference to supplier
+	 */
+	SupplierInfo getSupplierInfo();
 }
