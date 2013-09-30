@@ -127,6 +127,10 @@ public class BanggoodDataLoader implements SupplierDataLoader {
         final Elements priceEl = doc.select("#price_sub");
         final Elements pricePrimordialEl = doc.select("#regular_div");
 
+        if (priceEl.isEmpty()) {
+            log.info("There is no price that is not correct: " + data);
+        }
+
         double price = Double.parseDouble(priceEl.text());
         Double primordial = null;
         if (pricePrimordialEl != null && !pricePrimordialEl.isEmpty()) {

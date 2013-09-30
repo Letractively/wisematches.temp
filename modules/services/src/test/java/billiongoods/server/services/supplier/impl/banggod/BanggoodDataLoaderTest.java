@@ -31,7 +31,7 @@ public class BanggoodDataLoaderTest {
 
 //		final String referenceUri = "/Wholesale-Replacement-WLtoys-V911-2_4GHz-4CH-RC-Helicopter-BNF-New-Plug-Version-p-39473.html";
 //		final String referenceUri = "New-PCB-For-WLtoys-V912-RC-Helicopter-p-83053.html";
-        final String referenceUri = "/Waterproof-Shockproof-Dirt-Snow-Proof-Case-Cover-For-IPhone-5-p-80768.html";
+        final String referenceUri = "/3D-Skull-Shape-Soft-Silicone-Case-Skin-Cover-For-IPhone-5-5G-p-85268.html";
         final HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo(referenceUri, "SKU044199 ", Supplier.BANGGOOD, null);
         final SupplierDescription desc = priceValidator.loadDescription(supplierInfo);
         assertNotNull(desc);

@@ -399,13 +399,19 @@ var colors = {
     'black': 'Черный',
     'blue': 'Синий',
     'green': 'Зеленый',
-    'gray': 'Серый',
+    'grey': 'Серый',
     'orange': 'Оранжевый',
     'light green': 'Светло-зеленый',
     'dark green': 'Темно-зеленый',
     'pink': 'Розовый',
     'purple': 'Пурпурный',
+    'dark grey': 'Темно-серый',
+    'light grey': 'Светло-серый',
+    'apricot pink': 'Абрикосово-розовый',
+    'grayish blue': 'Серовато-Синий',
+    'peacock blue': 'Переливчатый-синий',
     'light pink': 'Светло-розовый',
+    'dark blue': 'Темно-синий',
     'red': 'Красный',
     'rose red': 'Бордовый',
     'white': 'Белый',
@@ -418,8 +424,12 @@ var colors = {
     'olive green': 'Оливково-зеленый',
     'light orange': 'Небесно-голубой',
     'dark brown': 'Темно-коричневый',
+    'grass blue': 'Бирюзовый',
+    'light blue': 'Голубой',
     'light brown': 'Светло-коричневый',
     'golden': 'Золотой',
+    'dark purple': 'Темно-пурпурный',
+    'peach red': 'Красный персик',
     'beige': 'Бежевый'
 };
 
@@ -430,7 +440,7 @@ var attributes = {
 };
 
 var loadSupplierDescription = function () {
-    bg.ui.lock(null, "Загрузка информации...");
+//    bg.ui.lock(null, "Загрузка информации...");
     $.post("/maintain/product/loadSupplierInfo.ajax?id=${form.id}")
             .done(function (response) {
                 if (response.success) {
