@@ -64,6 +64,9 @@ public class HibernateProductManagerTest {
 		productManager.updatePrice(product.getId(), new Price(2.3d, null), new Price(3.d, null));
 		productManager.updatePrice(product.getId(), new Price(12.3d, 54.d), new Price(43.d, 765.d));
 
+		final SupplierInfo supplierInfo = productManager.getSupplierInfo(description.getId());
+		assertNotNull(supplierInfo);
+
 		System.out.println("==========");
 		System.out.println(product);
 		assertNotNull(product);

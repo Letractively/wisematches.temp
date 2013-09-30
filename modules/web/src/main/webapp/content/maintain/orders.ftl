@@ -5,7 +5,7 @@
 
 <div class="orders">
     <div class="states">
-    <#list [OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SHIPPING, OrderState.SHIPPED, OrderState.NEW, OrderState.BILLING, OrderState.REJECTED] as o>
+    <#list [OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SUSPENDED, OrderState.SHIPPING, OrderState.SHIPPED, OrderState.NEW, OrderState.BILLING, OrderState.REJECTED] as o>
         <div class="state">
             <input id="status${o.name()}" name="status" type="radio" value="${o.name()}"
                    <#if o==orderState>checked="checked"</#if>>

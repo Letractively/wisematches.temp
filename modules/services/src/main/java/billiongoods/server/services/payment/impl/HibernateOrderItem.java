@@ -4,6 +4,7 @@ import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.payment.OrderItem;
 import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.Property;
+import billiongoods.server.warehouse.impl.HibernateProductDescription;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,11 +19,9 @@ public class HibernateOrderItem implements OrderItem {
 	@EmbeddedId
 	private Pk pk;
 
-	@Column(name = "name")
-	private String name;
-
-	@Column(name = "product")
-	private Integer product;
+	@JoinColumn(name = "product")
+	@OneToOne(targetEntity = HibernateProductDescription.class, fetch = FetchType.LAZY)
+	private ProductDescription description;
 
 	@Column(name = "quantity")
 	private int quantity;
@@ -43,13 +42,13 @@ public class HibernateOrderItem implements OrderItem {
 	public HibernateOrderItem(HibernateOrder order, BasketItem item, int number) {
 		this.pk = new Pk(order.getId(), number);
 
-		final ProductDescription product1 = item.getProduct();
+		final ProductDescription product = item.getProduct();
 
-		this.name = product1.getName();
-		this.product = product1.getId();
+		this.description = product;
 		this.quantity = item.getQuantity();
-		this.amount = product1.getPrice().getAmount();
-		this.weight = product1.getWeight();
+
+		this.weight = product.getWeight();
+		this.amount = product.getPrice().getAmount();
 
 		StringBuilder sb = new StringBuilder();
 		final Collection<Property> options1 = item.getOptions();
@@ -70,13 +69,8 @@ public class HibernateOrderItem implements OrderItem {
 	}
 
 	@Override
-	public Integer getProduct() {
-		return product;
-	}
-
-	@Override
-	public String getName() {
-		return name;
+	public ProductDescription getProduct() {
+		return description;
 	}
 
 	@Override

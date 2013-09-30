@@ -46,6 +46,9 @@ public class AbstractProductDescription implements ProductDescription {
 	@Embedded
 	private HibernateStockInfo stockInfo = new HibernateStockInfo();
 
+	@Embedded
+	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
+
 	@Column(name = "registrationDate")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registrationDate;
@@ -75,6 +78,11 @@ public class AbstractProductDescription implements ProductDescription {
 	@Override
 	public StockInfo getStockInfo() {
 		return stockInfo;
+	}
+
+	@Override
+	public HibernateSupplierInfo getSupplierInfo() {
+		return supplierInfo;
 	}
 
 	@Override

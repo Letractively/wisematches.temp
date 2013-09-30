@@ -82,10 +82,11 @@
                                 <#elseif state.accepted || state.rejected>
                                     Номер платежа:<br>${l.parameter!""}
                                 <#elseif state.processing>
-                                    Номер комплектации:<br>${l.parameter!""}
+                                    Номер комплектации:<br>
+                                    <#if l.parameter?has_content>${l.parameter}<#else>ожидает обработки</#if>
                                 <#elseif state.shipping>
                                     Код почты Китая:<br><a
-                                        href="http://www.flytexpress.com/ShowTraceInfo.aspx?orderid=${l.parameter!""}">${l.parameter!""}</a>
+                                        href="http://www.flytexpress.com/ShowTraceInfo.aspx?orderid=${l.parameter!""}">${l.parameter!"не предоставляется"}</a>
                                 <#elseif state.shipped>
                                     Международный код:<br>
                                     <#if l.parameter?has_content>
@@ -169,21 +170,23 @@
         </td>
     </tr>
 
-<#if order.payer?has_content>
-    <tr>
-        <td colspan="2" align="right">
-            <div class="tracking">
-                <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
-                    уведомления по e-mail
-                </button>
-                <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>Отключить
-                    уведомления по e-mail
-                </button>
-                <span class="sample">(${order.payer})</span>
-            </div>
-        </td>
-    </tr>
-</#if>
+<@bg.security.unauthorized "moderator">
+    <#if order.payer?has_content>
+        <tr>
+            <td colspan="2" align="right">
+                <div class="tracking">
+                    <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
+                        уведомления по e-mail
+                    </button>
+                    <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>Отключить
+                        уведомления по e-mail
+                    </button>
+                    <span class="sample">(${order.payer})</span>
+                </div>
+            </td>
+        </tr>
+    </#if>
+</@bg.security.unauthorized>
 </table>
 
 <div class="basket">
@@ -193,19 +196,37 @@
         <tr>
             <th width="100%">Наименование</th>
             <th>Опции</th>
+        <@bg.security.authorized "moderator">
+            <th>SKU</th>
+        </@bg.security.authorized>
+            <th>Цена</th>
             <th>Количество</th>
             <th>Вес</th>
             <th>Итого</th>
+        <@bg.security.authorized "moderator">
+            <th>Поставщик</th>
+        </@bg.security.authorized>
         </tr>
+
+    <#assign totalAmountUsd=0/>
     <#list order.orderItems as i>
+        <#assign product=i.product/>
         <#assign totalCount=totalCount+i.quantity/>
         <#assign totalWeight=totalWeight+i.weight/>
         <tr class="item">
             <td valign="top" width="100%" align="left">
-                <a href="/warehouse/product/${i.product}">${i.name}</a>
+                <a href="/warehouse/product/${product.id}">${product.name}</a>
             </td>
             <td valign="middle" nowrap="nowrap">
             ${i.options}
+            </td>
+            <@bg.security.authorized "moderator">
+                <td valign="middle" nowrap="nowrap">
+                ${product.supplierInfo.referenceCode}
+                </td>
+            </@bg.security.authorized>
+            <td valign="middle" nowrap="nowrap" align="center">
+                <span class="itemAmount"><@bg.ui.price i.amount "b"/></span>
             </td>
             <td valign="middle" nowrap="nowrap" align="center">
             ${i.quantity}
@@ -216,10 +237,22 @@
             <td valign="middle" nowrap="nowrap" align="left">
                 <span class="itemAmount"><@bg.ui.price i.amount * i.quantity "b"/></span>
             </td>
+            <@bg.security.authorized "moderator">
+                <td valign="middle" nowrap="nowrap" align="left">
+                    <#assign amountUsd=product.supplierInfo.price.amount * i.quantity/>
+                    <#assign totalAmountUsd=totalAmountUsd+amountUsd/>
+                    <@bg.ui.priceU amountUsd/>
+                </td>
+            </@bg.security.authorized>
         </tr>
     </#list>
+
+    <#assign colspan=3/>
+    <@bg.security.authorized "moderator">
+        <#assign colspan=4/>
+    </@bg.security.authorized>
         <tr>
-            <th colspan="2" nowrap="nowrap" align="left">Всего за товары</th>
+            <th colspan="${colspan}" nowrap="nowrap" align="left">Всего за товары</th>
             <th nowrap="nowrap" class="price">
                 <span>${totalCount}</span>
             </th>
@@ -229,18 +262,31 @@
             <th nowrap="nowrap" align="left">
             <@bg.ui.price order.amount/>
             </th>
+        <@bg.security.authorized "moderator">
+            <th valign="middle" nowrap="nowrap" align="left">
+                <@bg.ui.priceU totalAmountUsd/>
+            </th>
+        </@bg.security.authorized>
         </tr>
         <tr>
-            <th colspan="4" nowrap="nowrap" align="left">Стоимость доставки</th>
+            <th colspan="${colspan+2}" nowrap="nowrap" align="left">Стоимость доставки</th>
             <th nowrap="nowrap" align="left">
             <@bg.ui.price shipment.amount/>
             </th>
+        <@bg.security.authorized "moderator">
+            <th valign="middle" nowrap="nowrap" align="left">
+            </th>
+        </@bg.security.authorized>
         </tr>
         <tr>
-            <th colspan="4" nowrap="nowrap" align="left">Итоговая сумма заказа</th>
+            <th colspan="${colspan+2}" nowrap="nowrap" align="left">Итоговая сумма заказа</th>
             <th nowrap="nowrap" align="left">
             <@bg.ui.price order.amount + shipment.amount/>
             </th>
+        <@bg.security.authorized "moderator">
+            <th valign="middle" nowrap="nowrap" align="left">
+            </th>
+        </@bg.security.authorized>
         </tr>
     </table>
 </div>
@@ -248,7 +294,7 @@
 
 <script type="application/javascript">
     $("#showOrderLogs").click(function () {
-        $("#orderLogs").modal({overlayClose: true, minHeight: 360, minWidth: 800});
+        $("#orderLogs").modal({overlayClose: true, minHeight: 360, minWidth: 800, maxWidth: 800});
     });
 
     <#if order.payer?has_content>

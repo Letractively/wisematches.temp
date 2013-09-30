@@ -119,7 +119,7 @@ public class OrderController extends AbstractController {
 
 		if (!errors.hasErrors()) {
 			final Order order = orderManager.getOrder(form.getOrder());
-			if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail())) {
+			if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail().trim())) {
 				errors.reject("order.error.invalid");
 			} else {
 				return viewOrder(form.getOrder(), order, false, model);

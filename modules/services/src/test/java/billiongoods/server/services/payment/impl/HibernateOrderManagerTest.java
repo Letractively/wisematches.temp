@@ -23,7 +23,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -52,8 +53,8 @@ public class HibernateOrderManagerTest {
 		orderManager.setShipmentManager(new DefaultShipmentManager());
 
 		final ProductDescription desc = createMock(ProductDescription.class);
-		expect(desc.getName()).andReturn("Item1").andReturn("Item2");
-		expect(desc.getId()).andReturn(1).andReturn(7);
+//		expect(desc.getName()).andReturn("Item1").andReturn("Item2");
+//		expect(desc.getId()).andReturn(1).andReturn(7);
 		expect(desc.getPrice()).andReturn(new Price(123.34d)).andReturn(new Price(342.21d));
 		expect(desc.getWeight()).andReturn(0.34d).andReturn(2.21d);
 		replay(desc);
@@ -108,16 +109,14 @@ public class HibernateOrderManagerTest {
 		assertEquals("MockStreet, d.344/2 k.1, kv. 9881", address1.getStreetAddress());
 
 		final OrderItem oi0 = orderItems.get(0);
-		assertEquals(1, oi0.getProduct().intValue());
+		assertNotNull(oi0.getProduct());
 		assertEquals(12, oi0.getQuantity());
-		assertEquals("Item1", oi0.getName());
 		assertEquals(0.34d, oi0.getWeight(), 0.0000d);
 		assertEquals(123.34d, oi0.getAmount(), 0.0000d);
 
 		final OrderItem oi1 = orderItems.get(1);
-		assertEquals(7, oi1.getProduct().intValue());
+		assertNotNull(oi1.getProduct());
 		assertEquals(3, oi1.getQuantity());
-		assertEquals("Item2", oi1.getName());
 		assertEquals(2.21d, oi1.getWeight(), 0.0000d);
 		assertEquals(342.21d, oi1.getAmount(), 0.0000d);
 
@@ -156,7 +155,7 @@ public class HibernateOrderManagerTest {
 
 		order = orderManager.getOrder(order.getId());
 		orderManager.failed(order.getId(), "They, close");
-		assertNull(order.getCommentary());
+		assertEquals("They, close", order.getCommentary());
 		assertEquals(OrderState.FAILED, order.getOrderState());
 
 		assertEquals(7, order.getOrderLogs().size());

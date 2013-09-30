@@ -233,11 +233,16 @@ public class HibernateOrder implements Order {
 		updateOrderState("shipped", internationalTracking, commentary, OrderState.SHIPPED);
 	}
 
-	void failed(String reason) {
-		if (reason != null && reason.length() > 254) {
-			reason = reason.substring(0, 254);
-		}
-		updateOrderState("failed", reason, null, OrderState.FAILED);
+	void failed(String commentary) {
+		updateOrderState("failed", null, commentary, OrderState.FAILED);
+	}
+
+	void suspended(String commentary) {
+		updateOrderState("suspended", null, commentary, OrderState.SUSPENDED);
+	}
+
+	void cancelled(String commentary) {
+		updateOrderState("cancelled", null, commentary, OrderState.CANCELLED);
 	}
 
 	void setTracking(boolean tracking) {
