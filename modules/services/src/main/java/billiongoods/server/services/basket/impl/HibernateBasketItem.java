@@ -41,7 +41,8 @@ public class HibernateBasketItem implements BasketItem {
 	@Transient
 	private Collection<Property> options = new ArrayList<>();
 
-	public HibernateBasketItem() {
+	@Deprecated
+	HibernateBasketItem() {
 	}
 
 	public HibernateBasketItem(ProductDescription product, List<Property> options, int quantity) {
@@ -53,7 +54,7 @@ public class HibernateBasketItem implements BasketItem {
 		if (options != null) {
 			this.options = options;
 			for (Property option : options) {
-				optionIds.add(new HibernateBasketOption(option.getAttribute(), option.getValue()));
+				optionIds.add(new HibernateBasketOption(option.getAttribute(), (String) option.getValue()));
 			}
 		}
 	}

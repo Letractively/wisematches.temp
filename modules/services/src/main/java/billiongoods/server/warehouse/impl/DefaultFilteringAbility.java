@@ -12,10 +12,24 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class DefaultFilteringAbility implements FilteringAbility {
+	private final double minPrice;
+	private final double maxPrice;
 	private Map<Attribute, List<FilteringSummary>> attributeListMap;
 
-	public DefaultFilteringAbility(Map<Attribute, List<FilteringSummary>> attributeListMap) {
+	public DefaultFilteringAbility(double minPrice, double maxPrice, Map<Attribute, List<FilteringSummary>> attributeListMap) {
+		this.minPrice = minPrice;
+		this.maxPrice = maxPrice;
 		this.attributeListMap = attributeListMap;
+	}
+
+	@Override
+	public double getMinPrice() {
+		return minPrice;
+	}
+
+	@Override
+	public double getMaxPrice() {
+		return maxPrice;
 	}
 
 	@Override

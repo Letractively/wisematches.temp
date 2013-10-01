@@ -7,3 +7,10 @@ REFERENCES `billiongoods`.`account_personality` (`id`)
 
 ALTER TABLE `billiongoods`.`store_order_item`
 DROP COLUMN `name`;
+
+ALTER TABLE `billiongoods`.`store_product_property`
+CHANGE COLUMN `value` `svalue` VARCHAR(45) NULL DEFAULT NULL,
+ADD COLUMN `ivalue` INT NULL
+AFTER `svalue`,
+ADD COLUMN `dvalue` DOUBLE NULL
+AFTER `ivalue`;

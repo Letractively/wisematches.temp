@@ -36,8 +36,7 @@ public class HibernateProductManagerTest {
 
 	@Test
 	public void test() {
-		final int totalCount = productManager.getTotalCount(null);
-		assertTrue(totalCount > 0);
+		assertTrue(productManager.getTotalCount(null) > 0);
 
 		final List<ProductDescription> descriptions = productManager.searchEntities(null, null, Range.FIRST, null);
 		assertEquals(1, descriptions.size());

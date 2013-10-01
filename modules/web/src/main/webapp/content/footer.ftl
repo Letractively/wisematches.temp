@@ -45,10 +45,7 @@
 <div class="layout-content footer-content">
     <table>
         <tr>
-            <td align="left">
-                © 2013 BillionGoods
-            </td>
-            <td align="right">
+            <td>
                 <!-- PayPal Logo -->
                 <table width="auto" border="0" cellspacing="0" align="right" style="width: auto">
                     <tr>
@@ -60,6 +57,11 @@
                     </tr>
                 </table>
                 <!-- PayPal Logo -->
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                © 2013 BillionGoods
             </td>
         </tr>
     </table>

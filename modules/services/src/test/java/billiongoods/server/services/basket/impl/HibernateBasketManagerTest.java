@@ -52,8 +52,8 @@ public class HibernateBasketManagerTest {
 		replay(product);
 
 		final List<Property> props = new ArrayList<>();
-		props.add(new Property(new HibernateAttribute("mock1", "mock", null, AttributeType.ENUM), "v1"));
-		props.add(new Property(new HibernateAttribute("mock2", "mock", null, AttributeType.ENUM), "v2"));
+		props.add(new Property(new HibernateAttribute("mock1", "mock", null, AttributeType.STRING), "v1"));
+		props.add(new Property(new HibernateAttribute("mock2", "mock", null, AttributeType.STRING), "v2"));
 
 		final BasketItem item1 = manager.addBasketItem(person, product, props, 10);
 		assertEquals(0, item1.getNumber());
