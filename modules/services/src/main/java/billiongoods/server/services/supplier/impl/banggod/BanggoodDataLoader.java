@@ -26,10 +26,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.*;
@@ -37,8 +40,8 @@ import java.util.*;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class BanggoodDataLoader implements SupplierDataLoader {
-    private final HttpClient client;
+public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean, DisposableBean {
+    private HttpClient client;
 
     private static final int DEFAULT_TIMEOUT = 3000;
     private static final HttpHost HOST = new HttpHost("www.banggood.com");
@@ -48,6 +51,21 @@ public class BanggoodDataLoader implements SupplierDataLoader {
     private final ScriptEngine javascript = new ScriptEngineManager().getEngineByName("javascript");
 
     public BanggoodDataLoader() {
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        createClient();
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        closeClient();
+    }
+
+    private void createClient() {
+        closeClient();
+
         final SocketConfig.Builder socketConfig = SocketConfig.custom();
         socketConfig.setSoTimeout(DEFAULT_TIMEOUT);
 
@@ -71,8 +89,23 @@ public class BanggoodDataLoader implements SupplierDataLoader {
         client = builder.build();
     }
 
+    private void closeClient() {
+        if (client instanceof Closeable) {
+            try {
+                ((Closeable) client).close();
+            } catch (IOException ex) {
+                log.info("Client can't be closed", ex);
+            }
+        }
+    }
+
     @Override
     public void initialize() {
+        createClient();
+        changeCountryCode();
+    }
+
+    private void changeCountryCode() {
         final HttpPost post = new HttpPost("/ajax_module.php");
         final List<NameValuePair> nvps = new ArrayList<>();
         nvps.add(new BasicNameValuePair("action", "setDefaltCountry"));
@@ -111,6 +144,10 @@ public class BanggoodDataLoader implements SupplierDataLoader {
                 final String uri1 = parseJavaScriptRedirect(s);
                 log.info("JavaScript redirect received for {} . Parsed to {}", uri, uri1);
                 return loadDescription(uri1, iteration + 1);
+            } else if (s.startsWith("<html><body><h1>400 Bad request")) {
+                log.info("400 Bad request received. Reinitialize client for {}", uri);
+                initialize();
+                return loadDescription(uri, iteration + 1);
             } else {
                 return parseDescription(s);
             }
@@ -128,15 +165,16 @@ public class BanggoodDataLoader implements SupplierDataLoader {
         final Elements pricePrimordialEl = doc.select("#regular_div");
 
         if (priceEl.isEmpty()) {
-            log.info("There is no price that is not correct: " + data);
+            log.info("There is no price that is correct: " + data);
+            return null;
         }
 
-        double price = Double.parseDouble(priceEl.text());
+        double price = Double.parseDouble(priceEl.text().replace("US$", ""));
         Double primordial = null;
         if (pricePrimordialEl != null && !pricePrimordialEl.isEmpty()) {
             final String text = pricePrimordialEl.text().trim();
             if (text.length() != 0) {
-                primordial = Double.valueOf(text.substring(1, text.length() - 1).trim());
+                primordial = Double.valueOf(text.substring(1, text.length() - 1).replace("US$", "").trim());
             }
         }
 
