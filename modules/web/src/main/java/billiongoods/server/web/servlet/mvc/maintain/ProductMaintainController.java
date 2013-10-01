@@ -166,7 +166,8 @@ public class ProductMaintainController extends AbstractController {
 			final Map<Attribute, String> values = createAttributesMap(category);
 
 			for (Property property : product.getProperties()) {
-				values.put(property.getAttribute(), property.getValue());
+				final Attribute attribute = property.getAttribute();
+				values.put(attribute, String.valueOf(property.getValue()));
 			}
 
 			index = 0;

@@ -8,10 +8,22 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ProductFilter {
+	private final Double minPrice;
+	private final Double maxPrice;
 	private final Map<Attribute, List<String>> filter;
 
-	public ProductFilter(Map<Attribute, List<String>> filter) {
+	public ProductFilter(Double minPrice, Double maxPrice, Map<Attribute, List<String>> filter) {
+		this.minPrice = minPrice;
+		this.maxPrice = maxPrice;
 		this.filter = filter;
+	}
+
+	public Double getMinPrice() {
+		return minPrice;
+	}
+
+	public Double getMaxPrice() {
+		return maxPrice;
 	}
 
 	public Set<Attribute> getAttributes() {

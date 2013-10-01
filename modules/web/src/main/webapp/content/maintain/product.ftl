@@ -152,7 +152,7 @@
                                 ${attr.unit}</#if></a>
                             </label>
                         </td>
-                        <#if attr.attributeType == AttributeType.ENUM>
+                        <#if attr.attributeType == AttributeType.STRING>
                             <td>
                                 <select id="property${attr.id}" name="propertyValues" style="width: 100%">
                                     <option value="">-- нет значения --</option>

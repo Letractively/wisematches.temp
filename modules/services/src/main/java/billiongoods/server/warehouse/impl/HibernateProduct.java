@@ -24,9 +24,9 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 	private List<String> imageIds = new ArrayList<>();
 
 	@OrderColumn(name = "position")
-	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateProductProperty.class)
+	@ElementCollection(fetch = FetchType.EAGER, targetClass = HibernateProductOption.class)
 	@CollectionTable(name = "store_product_option", joinColumns = @JoinColumn(name = "productId"))
-	private List<HibernateProductProperty> optionIds = new ArrayList<>();
+	private List<HibernateProductOption> optionIds = new ArrayList<>();
 
 	@Transient
 	private List<Option> options = new ArrayList<>();
@@ -68,7 +68,7 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 		if (options != null) {
 			for (Option option : options) {
 				for (String value : option.getValues()) {
-					this.optionIds.add(new HibernateProductProperty(option.getAttribute(), value));
+					this.optionIds.add(new HibernateProductOption(option.getAttribute(), value));
 				}
 			}
 		}
@@ -91,7 +91,7 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 
 	void initialize(AttributeManager attributeManager) {
 		final Map<Integer, List<String>> values = new HashMap<>();
-		for (HibernateProductProperty optionId : optionIds) {
+		for (HibernateProductOption optionId : optionIds) {
 			List<String> strings = values.get(optionId.getAttributeId());
 			if (strings == null) {
 				strings = new ArrayList<>(4);
@@ -104,11 +104,11 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 			options.add(new Option(attributeManager.getAttribute(entry.getKey()), entry.getValue()));
 		}
 
-		for (HibernateProductProperty propertyId : propertyIds) {
-			if (propertyId != null) {
-				final Attribute attribute = attributeManager.getAttribute(propertyId.getAttributeId());
+		for (HibernateProductProperty property : propertyIds) {
+			if (property != null) {
+				final Attribute attribute = attributeManager.getAttribute(property.getAttributeId());
 				if (attribute != null) {
-					properties.add(new Property(attribute, propertyId.getValue()));
+					properties.add(new Property(attribute, property.getValue(attribute.getAttributeType())));
 				}
 			}
 		}

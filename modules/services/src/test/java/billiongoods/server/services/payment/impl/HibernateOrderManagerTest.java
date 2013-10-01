@@ -59,7 +59,7 @@ public class HibernateOrderManagerTest {
 		expect(desc.getWeight()).andReturn(0.34d).andReturn(2.21d);
 		replay(desc);
 
-		final Property property = new Property(new HibernateAttribute("a1", "mock", null, AttributeType.ENUM), "AV");
+		final Property property = new Property(new HibernateAttribute("a1", "mock", null, AttributeType.STRING), "AV");
 
 		final BasketItem item1 = createMock(BasketItem.class);
 		expect(item1.getNumber()).andReturn(0);
