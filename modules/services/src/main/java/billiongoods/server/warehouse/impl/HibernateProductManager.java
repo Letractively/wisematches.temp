@@ -98,16 +98,31 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 
 		final ProjectionList projection = Projections.projectionList();
 		projection.add(Projections.groupProperty("props.attributeId"));
-		projection.add(Projections.groupProperty("props.value"));
+		projection.add(Projections.groupProperty("props.sValue"));
 		projection.add(Projections.rowCount());
+		projection.add(Projections.min("price.amount"));
+		projection.add(Projections.max("price.amount"));
 
 		criteria.createAlias("product.propertyIds", "props").setProjection(projection);
 
 		Map<Attribute, List<FilteringSummary>> attributeListMap = new HashMap<>();
 
+		double minPrice = Float.NaN;
+		double maxPrice = Float.NaN;
+
 		final List list = criteria.list();
 		for (Object o : list) {
 			Object[] oo = (Object[]) o;
+
+			double min = ((Number) oo[3]).doubleValue();
+			if (Double.isNaN(minPrice) || min < minPrice) {
+				minPrice = min;
+			}
+
+			double max = ((Number) oo[4]).doubleValue();
+			if (Double.isNaN(maxPrice) || max > maxPrice) {
+				maxPrice = max;
+			}
 
 			final Attribute attribute = attributeManager.getAttribute((Integer) oo[0]);
 
@@ -119,7 +134,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 
 			filteringSummaries.add(new FilteringSummary((String) oo[1], ((Number) oo[2]).intValue()));
 		}
-		return new DefaultFilteringAbility(attributeListMap);
+		return new DefaultFilteringAbility(minPrice, maxPrice, attributeListMap);
 	}
 
 	@Override
@@ -267,14 +282,22 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		}
 
 		if (filter != null) {
+			if (filter.getMinPrice() != null) {
+				criteria.add(Restrictions.ge("price.amount", filter.getMinPrice()));
+			}
+			if (filter.getMaxPrice() != null) {
+				criteria.add(Restrictions.le("price.amount", filter.getMaxPrice()));
+			}
+
 			final Criteria props = criteria.createAlias("propertyIds", "props");
 
 			final Set<Attribute> attributes = filter.getAttributes();
 			for (Attribute attribute : attributes) {
 				props.add(Restrictions.and(
 						Restrictions.eq("props.attributeId", attribute.getId()),
-						Restrictions.in("props.value", filter.getValues(attribute))));
+						Restrictions.in("props.sValue", filter.getValues(attribute))));
 			}
+
 		}
 	}
 

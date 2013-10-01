@@ -7,6 +7,10 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface FilteringAbility {
+	double getMinPrice();
+
+	double getMaxPrice();
+
 	Set<Attribute> getAttributes();
 
 	int getValue(Attribute attribute, String code);

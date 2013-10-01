@@ -5,7 +5,8 @@ package billiongoods.server.warehouse;
  */
 public enum AttributeType {
 	UNKNOWN,
-	ENUM,
-	RANGE,
-	BINOMIAL
+	STRING,
+	INTEGER,
+	BOOLEAN,
+	DOUBLE
 }

@@ -321,12 +321,52 @@ bg.assistance.SupportForm = function () {
 
 bg.warehouse = {};
 
-bg.warehouse.Filter = function (params) {
+bg.warehouse.Filter = function (minTotalPrice, maxTotalPrice, minSelectedPrice, maxSelectedPrice, params) {
+    var resolution = 10;
+
+    minTotalPrice = (Math.ceil(minTotalPrice / resolution)) * resolution;
+    maxTotalPrice = (Math.floor(maxTotalPrice / resolution)) * resolution;
+    minSelectedPrice = (Math.ceil(minSelectedPrice / resolution)) * resolution;
+    maxSelectedPrice = (Math.floor(maxSelectedPrice / resolution)) * resolution;
+
+    var priceSlide = $("#priceSlide");
     var inputs = $('#productsFilterForm').find('input');
-    inputs.change(function () {
+
+    function validateInputs() {
+        var min = priceSlide.slider("option", "min");
+        var max = priceSlide.slider("option", "max");
+        var values = priceSlide.slider("values");
+
+        if (values[0] <= min) {
+            $("#minPriceFilter").val("");
+        } else {
+            $("#minPriceFilter").val(values[0]);
+        }
+
+        if (values[1] >= max) {
+            $("#maxPriceFilter").val("");
+        } else {
+            $("#maxPriceFilter").val(values[1]);
+        }
+    }
+
+    function applyFilter() {
         var filterParams = encodeURIComponent(inputs.serialize());
         bg.util.url.redirect(bg.util.url.extend("?" + params, 'filter', filterParams, true));
+    }
+
+    inputs.change(applyFilter);
+
+    priceSlide.slider({
+        range: true,
+        min: 0,
+        max: maxTotalPrice,
+        step: resolution,
+        values: [isNaN(minSelectedPrice) ? 0 : minSelectedPrice, isNaN(maxSelectedPrice) ? maxTotalPrice : maxSelectedPrice],
+        slide: validateInputs,
+        change: applyFilter
     });
+    validateInputs();
 };
 
 bg.warehouse.Basket = function () {

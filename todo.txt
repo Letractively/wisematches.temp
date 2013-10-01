@@ -1,16 +1,16 @@
 ============= CURRENT ====================
+- Range filters
+- Binominal filters
 - Cache size in logs shows strange values
 
 ============= PLAN ====================
+- Page not found should show sitemap instead
 - Attribute modification works bad: changes are not applied.
 - Reload catalog ability
 - Redefine financial policy
-- Range filters
-- Binominal filters
 - Orders for filter values/items
 
 - Accounts and personal info
-- Check why not all products can be checked.
 - Forums
 
 - Export order
@@ -19,7 +19,6 @@
 
 - Hot products view
 - Images cleaner
-- SiteMap generation based on data
 - Own ads on main page
 
 - Your recent history
@@ -30,6 +29,10 @@
     chars in URL. It's always encoded value and it's up-to browser what to show. In worse can it looks very unfriendly.
 
 ============= DONE ====================
+1.09
++ Not all products can be checked
++ Filter by price
+
 30.09
 + Add info about PayPal
 + Add PayPal logo at the bottom

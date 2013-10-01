@@ -36,7 +36,7 @@ public class HibernateAttributeManagerTest {
 		manager.setSessionFactory(sessionFactory);
 		manager.afterPropertiesSet();
 
-		final Attribute attr1 = manager.createAttribute(new Attribute.Editor("mock", "muck", null, AttributeType.ENUM));
+		final Attribute attr1 = manager.createAttribute(new Attribute.Editor("mock", "muck", null, AttributeType.STRING));
 		assertNotNull(attr1);
 
 		assertSame(attr1, manager.getAttribute(attr1.getId()));

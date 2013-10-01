@@ -11,7 +11,7 @@
 <#macro categoryPramaters category>
     <#list category.parameters as p>
         <#assign a=p.attribute/>
-        <#if (a.attributeType=AttributeType.ENUM) && (p.values?size>0)>
+        <#if (a.attributeType=AttributeType.STRING) && (p.values?size>0)>
             <#assign summary=filtering.getFilteringItems(a)/>
         <div class="property">
             <div class="name">
@@ -53,7 +53,7 @@
 <#macro categoryPramaters category>
     <#list category.parameters as p>
         <#assign a=p.attribute/>
-        <#if (a.attributeType=AttributeType.ENUM) && (p.values?size>0)>
+        <#if (a.attributeType=AttributeType.STRING) && (p.values?size>0)>
             <#assign itemsCount=itemsCount+1/>
         <div class="property">
             <div class="name">
@@ -74,6 +74,24 @@
 
 <#if category?? && filtering?? && pageableForm??>
 <div id="productsFilterForm" class="filtering">
+    <div class="property">
+        <div class="name">
+            Цена
+        </div>
+
+        <div>
+            <div>
+                <label for="minPriceFilter">от</label>
+                <input id="minPriceFilter" name="minPrice">
+                &nbsp;&nbsp;
+                <label for="maxPriceFilter">до</label>
+                <input id="maxPriceFilter" name="maxPrice">
+            </div>
+
+            <div id="priceSlide"></div>
+        </div>
+    </div>
+
     <#list category.genealogy.parents as c>
         <@categoryPramaters c/>
     </#list>
@@ -81,15 +99,9 @@
     <@categoryPramaters category/>
 </div>
 
-    <#if (itemsCount>0)>
-    <script type="text/javascript">
-        new bg.warehouse.Filter('<@bg.ui.tableNavigationParams pageableForm "filter" ""/>');
-    </script>
-    <#else>
-    <style type="text/css">
-        #productsFilterForm {
-            display: none;
-        }
-    </style>
-    </#if>
+<script type="text/javascript">
+    new bg.warehouse.Filter(${filtering.minPrice}, ${filtering.maxPrice?ceiling},
+        <#if filter??>${filter.minPrice!"undefined"},${filter.maxPrice!"undefined"}<#else>undefined, undefined</#if>,
+            '<@bg.ui.tableNavigationParams pageableForm "filter" ""/>');
+</script>
 </#if>

@@ -5,9 +5,9 @@ package billiongoods.server.warehouse;
  */
 public final class Property {
 	private final Attribute attribute;
-	private final String value;
+	private final Object value;
 
-	public Property(Attribute attribute, String value) {
+	public Property(Attribute attribute, Object value) {
 		this.attribute = attribute;
 		this.value = value;
 	}
@@ -16,7 +16,7 @@ public final class Property {
 		return attribute;
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
@@ -29,7 +29,6 @@ public final class Property {
 
 		if (!attribute.equals(property.attribute)) return false;
 		if (value != null ? !value.equals(property.value) : property.value != null) return false;
-
 		return true;
 	}
 
