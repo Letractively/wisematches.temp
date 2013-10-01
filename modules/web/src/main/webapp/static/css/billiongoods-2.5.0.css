@@ -1533,6 +1533,17 @@ button.bg-ui-button.selected {
     text-decoration: line-through;
 }
 
+.filtering #priceSlide {
+    font-size: 9px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.filtering #minPriceFilter, .filtering #maxPriceFilter {
+    width: 60px;
+}
+
 .global-search {
     width: 410px;
     height: 30px;
