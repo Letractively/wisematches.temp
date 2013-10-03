@@ -1,7 +1,11 @@
 ============= CURRENT ====================
+- Auto tracking product ability
 - Range filters
 - Binominal filters
 - Cache size in logs shows strange values
+- org.springframework.aop.AopInvocationException: Null return value from advice does not match primitive return type for: public abstract int billiongoods.server.services.basket.BasketManager.getBasketSize(billiongoods.core.Personality) todo.txt
+- move неизвестно to the end of list
+- in search if there is no product with article shear must be done
 
 ============= PLAN ====================
 - Page not found should show sitemap instead
