@@ -35,7 +35,7 @@
 
                     <div class="search-input">
                         <input type="text" id="searchInputField" title="Искать"
-                               value="<#if pageableForm?? && pageableForm.query?has_content>${pageableForm.query}</#if>"
+                               value="<#if pageableForm?? && pageableForm.query?has_content>${pageableForm.query?replace("\"", "&quot;")}</#if>"
                                name="query"
                                autocomplete="off">
                     </div>

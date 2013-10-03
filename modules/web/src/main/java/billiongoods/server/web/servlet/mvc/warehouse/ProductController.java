@@ -42,16 +42,6 @@ public class ProductController extends AbstractController {
 		if (!ProductContext.VISIBLE.contains(product.getState()) && !hasRole("moderator")) {
 			throw new UnknownEntityException(productId, "product");
 		}
-/*
-
-		String postfix = getProductPostfix(product);
-		if (name.length() == 0) {//!postfix.equals(name)) {
-			try {
-				return "redirect:/warehouse/product/" + product.getId() + URLEncoder.encode(postfix, "UTF-8");
-			} catch (UnsupportedEncodingException ignore) {
-			}
-		}
-*/
 
 		final Category category = categoryManager.getCategory(product.getCategoryId());
 

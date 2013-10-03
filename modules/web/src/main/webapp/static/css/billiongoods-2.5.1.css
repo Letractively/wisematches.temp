@@ -1521,7 +1521,8 @@ button.bg-ui-button.selected {
 
 .filtering .property ul {
     margin: 0;
-    padding-left: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .filtering .property input {
@@ -1538,13 +1539,74 @@ button.bg-ui-button.selected {
     margin-right: 10px;
 }
 
-.filtering #priceSlide {
-    font-size: 9px;
-    margin-top: 10px;
+.ui-slider-price {
+    width: 180px;
+    position: relative;
 }
 
-.filtering #minPriceFilter, .filtering #maxPriceFilter {
+.ui-slider-price .ui-slider {
+    height: 5px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+.ui-slider-price input {
     width: 60px;
+}
+
+.ui-slider-price .ui-slider-handle {
+    border: none;
+    position: absolute;
+    display: block;
+    width: 11px;
+    height: 15px;
+    background: url(../images/ui-slider-handle.png) no-repeat;
+    margin: 9px 0 0 -6px;
+    cursor: pointer;
+    outline: 0;
+}
+
+.ui-slider-min {
+    text-align: left;
+}
+
+.ui-slider-med {
+    text-align: center;
+}
+
+.ui-slider-max {
+    text-align: right;
+}
+
+.ui-slider-min:before {
+    left: 0;
+}
+
+.ui-slider-med:before {
+    left: 50%;
+}
+
+.ui-slider-max:before {
+    right: 0;
+}
+
+.ui-slider-min, .ui-slider-med, .ui-slider-max {
+    position: absolute;
+    font-size: 10px;
+    height: 19px;
+    color: #808080;
+    top: -19px;
+    left: -1px;
+    right: -1px;
+}
+
+.ui-slider-min:before, .ui-slider-med:before, .ui-slider-max:before {
+    content: '';
+    height: 6px;
+    width: 1px;
+    background: #ccc;
+    position: absolute;
+    bottom: 0;
 }
 
 .global-search {

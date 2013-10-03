@@ -1,3 +1,8 @@
+============= CRITICAL ====================
+- Tomcat monitoring:
+    http://askubuntu.com/questions/251577/how-to-supervise-and-automatically-restart-a-process
+    http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
+
 ============= CURRENT ====================
 - Ability to subscribe to updates
 - Ability to request description without email and track status
@@ -6,7 +11,7 @@
 - Range filters
 - Binominal filters
 - Cache size in logs shows strange values
-- move 'unknown' to the end of list
+- Move 'unknown' to the end of list
 
 ============= PLAN ====================
 - Page not found should show sitemap instead
@@ -33,6 +38,9 @@
 ============= DONE ====================
 3.09
 + New product can't be created
++ Change search to IN BOOLEAN MODE
++ Price slider works incorrect (also was redesigned)
++ Query with quotes are lost in search input
 + Search by product ID is not correct. If number is entered it thing that is product.
 + Null return value from advice does not match primitive return type for: public abstract int billiongoods.server.services.basket.BasketManager.getBasketSize(billiongoods.core.Personality)
 

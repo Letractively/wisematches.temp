@@ -324,49 +324,40 @@ bg.warehouse = {};
 bg.warehouse.Filter = function (minTotalPrice, maxTotalPrice, minSelectedPrice, maxSelectedPrice, params) {
     var resolution = 10;
 
-    minTotalPrice = (Math.ceil(minTotalPrice / resolution)) * resolution;
-    maxTotalPrice = (Math.floor(maxTotalPrice / resolution)) * resolution;
-    minSelectedPrice = (Math.ceil(minSelectedPrice / resolution)) * resolution;
-    maxSelectedPrice = (Math.floor(maxSelectedPrice / resolution)) * resolution;
-
+    var form = $('#productsFilterForm');
     var priceSlide = $("#priceSlide");
-    var inputs = $('#productsFilterForm').find('input');
 
-    function validateInputs() {
-        var min = priceSlide.slider("option", "min");
-        var max = priceSlide.slider("option", "max");
-        var values = priceSlide.slider("values");
-
-        if (values[0] <= min) {
-            $("#minPriceFilter").val("");
-        } else {
-            $("#minPriceFilter").val(values[0]);
-        }
-
-        if (values[1] >= max) {
-            $("#maxPriceFilter").val("");
-        } else {
-            $("#maxPriceFilter").val(values[1]);
-        }
-    }
+    var minPriceInput = $("#minPriceFilter");
+    var maxPriceInput = $("#maxPriceFilter");
 
     function applyFilter() {
+        var inputs = form.find('input');
+        if (minPriceInput.val() == minTotalPrice) {
+            inputs = inputs.not(minPriceInput);
+        }
+        if (maxPriceInput.val() == maxTotalPrice) {
+            inputs = inputs.not(maxPriceInput);
+        }
         var filterParams = encodeURIComponent(inputs.serialize());
         bg.util.url.redirect(bg.util.url.extend("?" + params, 'filter', filterParams, true));
     }
 
-    inputs.change(applyFilter);
+    form.find('input').change(applyFilter);
 
     priceSlide.slider({
         range: true,
         min: minTotalPrice,
         max: maxTotalPrice,
         step: resolution,
-        values: [isNaN(minSelectedPrice) ? 0 : minSelectedPrice, isNaN(maxSelectedPrice) ? maxTotalPrice : maxSelectedPrice],
-        slide: validateInputs,
+        values: [minSelectedPrice, maxSelectedPrice],
+        slide: function (event, ui) {
+            var min = ui.values[0];
+            var max = ui.values[1];
+            minPriceInput.val(min).attr('exclude', min == minTotalPrice);
+            maxPriceInput.val(max).attr('exclude', max == maxTotalPrice);
+        },
         change: applyFilter
     });
-    validateInputs();
 };
 
 bg.warehouse.Basket = function () {
