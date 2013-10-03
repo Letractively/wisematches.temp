@@ -289,15 +289,15 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 				criteria.add(Restrictions.le("price.amount", filter.getMaxPrice()));
 			}
 
-			final Criteria props = criteria.createAlias("propertyIds", "props");
-
 			final Set<Attribute> attributes = filter.getAttributes();
-			for (Attribute attribute : attributes) {
-				props.add(Restrictions.and(
-						Restrictions.eq("props.attributeId", attribute.getId()),
-						Restrictions.in("props.sValue", filter.getValues(attribute))));
+			if (attributes != null && !attributes.isEmpty()) {
+				final Criteria props = criteria.createAlias("propertyIds", "props");
+				for (Attribute attribute : attributes) {
+					props.add(Restrictions.and(
+							Restrictions.eq("props.attributeId", attribute.getId()),
+							Restrictions.in("props.sValue", filter.getValues(attribute))));
+				}
 			}
-
 		}
 	}
 

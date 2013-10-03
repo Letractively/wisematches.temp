@@ -3,37 +3,38 @@
 
 <#include "/core.ftl">
 
+<#if showcase??>
 <div class="showcase">
-<#list showcase.showcaseGroups as g>
-    <div class="showcase-group">
-        <div class="info-panel">
-            <div class="tit<#if (g.showcaseItems?size>1)> grouped</#if>">
-                <#list g.showcaseItems as i>
-                    <div id="st_${g_index}_${i_index}"
-                         class="item <#if (g.showcaseItems?size > 1 && i_index==0)>active</#if>">
-                    ${i.name}
-                    </div>
-                </#list>
-
-                <div class="more" style="float: right">
+    <#list showcase.showcaseGroups as g>
+        <div class="showcase-group">
+            <div class="info-panel">
+                <div class="tit<#if (g.showcaseItems?size>1)> grouped</#if>">
                     <#list g.showcaseItems as i>
-                        <a id="sl_${g_index}_${i_index}" href="${i.moreInfoUri}"
-                           <#if i_index !=0>style="display: none;" </#if>>Показать все</a>
+                        <div id="st_${g_index}_${i_index}"
+                             class="item <#if (g.showcaseItems?size > 1 && i_index==0)>active</#if>">
+                        ${i.name}
+                        </div>
+                    </#list>
+
+                    <div class="more" style="float: right">
+                        <#list g.showcaseItems as i>
+                            <a id="sl_${g_index}_${i_index}" href="${i.moreInfoUri}"
+                               <#if i_index !=0>style="display: none;" </#if>>Показать все</a>
+                        </#list>
+                    </div>
+                </div>
+
+                <div class="cnt table-content">
+                    <#list g.showcaseItems as i>
+                        <div id="sc_${g_index}_${i_index}" class="item"
+                             <#if i_index !=0>style="display: none;" </#if>>
+                            <@bg.ui.productsViewGrid showcaseCache.get(i)/>
+                        </div>
                     </#list>
                 </div>
             </div>
-
-            <div class="cnt table-content">
-                <#list g.showcaseItems as i>
-                    <div id="sc_${g_index}_${i_index}" class="item"
-                         <#if i_index !=0>style="display: none;" </#if>>
-                        <@bg.ui.productsViewGrid showcaseCache.get(i)/>
-                    </div>
-                </#list>
-            </div>
         </div>
-    </div>
-</#list>
+    </#list>
 </div>
 
 <script type="text/javascript">
@@ -51,3 +52,8 @@
         });
     });
 </script>
+<#else>
+<div style="text-align: center;"><h1>
+    Кагалог продуктов еще не загружен. Пожалуйста, обновите страницу.
+</h1></div>
+</#if>

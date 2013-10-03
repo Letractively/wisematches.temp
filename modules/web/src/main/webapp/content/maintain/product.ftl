@@ -370,7 +370,8 @@
 
     <@bg.ui.bind "form.productState"/>
     <#list ProductState.values() as s>
-        <button class="bg-ui-button<#if bg.ui.actualValue=s> selected</#if>" type="submit"
+        <button class="bg-ui-button<#if !bg.ui.actualValue?is_number && bg.ui.actualValue=s> selected</#if>"
+                type="submit"
                 name="${bg.ui.status.expression}" value="${s.name()}">${s.name()}</button>
     </#list>
     </td>
@@ -379,6 +380,7 @@
 </form>
 </div>
 
+<#if form.id?has_content>
 <div id="attributeValue" style="display: none; white-space: nowrap">
     <form>
         <input name="categoryId" value="${category.id}" type="hidden">
@@ -389,6 +391,7 @@
         <button type="button">Добавить</button>
     </form>
 </div>
+</#if>
 
 <script>
 window.onload = function () {
@@ -439,6 +442,7 @@ var attributes = {
 </#list>
 };
 
+<#if form.id?has_content>
 var loadSupplierDescription = function () {
 //    bg.ui.lock(null, "Загрузка информации...");
     $.post("/maintain/product/loadSupplierInfo.ajax?id=${form.id}")
@@ -531,9 +535,9 @@ var addRelationship = function () {
     var tr = $("<tr></tr>");
 
     var select = '<select name="relationshipTypes">';
-<#list RelationshipType.values() as t>
-    select += '<option value="${t.name()}"> <@message code="relationship.${t.name()?lower_case}.label"/>';
-</#list>
+    <#list RelationshipType.values() as t>
+        select += '<option value="${t.name()}"> <@message code="relationship.${t.name()?lower_case}.label"/>';
+    </#list>
     select += '</select>';
 
     var attrs = $("<td></td>").html(select);
@@ -546,6 +550,7 @@ var addRelationship = function () {
 var removeRelationship = function () {
     $(this).parent().parent().remove();
 };
+</#if>
 
 var recalculatePrice = function (val) {
     var v = parseFloat(val);

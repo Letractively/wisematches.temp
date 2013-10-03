@@ -215,7 +215,7 @@
         <#assign totalWeight=totalWeight+i.weight/>
         <tr class="item">
             <td valign="top" width="100%" align="left">
-                <a href="/warehouse/product/${product.id}">${product.name}</a>
+                <@bg.link.product product>${product.name}</@bg.link.product>
             </td>
             <td valign="middle" nowrap="nowrap">
             ${i.options}

@@ -79,17 +79,19 @@
             Цена
         </div>
 
-        <div>
-            <div>
+        <ul>
+            <li>
                 <label for="minPriceFilter">от</label>
                 <input id="minPriceFilter" name="minPrice">
                 &nbsp;&nbsp;
                 <label for="maxPriceFilter">до</label>
                 <input id="maxPriceFilter" name="maxPrice">
-            </div>
+            </li>
 
-            <div id="priceSlide"></div>
-        </div>
+            <li>
+                <div id="priceSlide"></div>
+            </li>
+        </ul>
     </div>
 
     <#list category.genealogy.parents as c>

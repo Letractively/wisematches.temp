@@ -1,11 +1,12 @@
 ============= CURRENT ====================
+- Ability to subscribe to updates
+- Ability to request description without email and track status
+- Add full product name for URL in translit
 - Auto tracking product ability
 - Range filters
 - Binominal filters
 - Cache size in logs shows strange values
-- org.springframework.aop.AopInvocationException: Null return value from advice does not match primitive return type for: public abstract int billiongoods.server.services.basket.BasketManager.getBasketSize(billiongoods.core.Personality) todo.txt
-- move неизвестно to the end of list
-- in search if there is no product with article shear must be done
+- move 'unknown' to the end of list
 
 ============= PLAN ====================
 - Page not found should show sitemap instead
@@ -29,10 +30,12 @@
 - Our recomendations view on the left of main page: L959 & V911 & v912
 - Ability to track state of a SKU
 
-- Add full product name for URL. Redirect if it's wrong: not very good idea because there is no way to show russian
-    chars in URL. It's always encoded value and it's up-to browser what to show. In worse can it looks very unfriendly.
-
 ============= DONE ====================
+3.09
++ New product can't be created
++ Search by product ID is not correct. If number is entered it thing that is product.
++ Null return value from advice does not match primitive return type for: public abstract int billiongoods.server.services.basket.BasketManager.getBasketSize(billiongoods.core.Personality)
+
 1.09
 + Not all products can be checked
 + Filter by price
