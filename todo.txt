@@ -11,7 +11,7 @@
 - Range filters
 - Binominal filters
 - Cache size in logs shows strange values
-- Move 'unknown' to the end of list
+- Differ catalog view
 
 ============= PLAN ====================
 - Page not found should show sitemap instead
@@ -41,6 +41,7 @@
 + Change search to IN BOOLEAN MODE
 + Price slider works incorrect (also was redesigned)
 + Query with quotes are lost in search input
++ Move 'unknown' to the end of list
 + Search by product ID is not correct. If number is entered it thing that is product.
 + Null return value from advice does not match primitive return type for: public abstract int billiongoods.server.services.basket.BasketManager.getBasketSize(billiongoods.core.Personality)
 

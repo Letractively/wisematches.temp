@@ -38,22 +38,17 @@ public class DefaultFilteringAbility implements FilteringAbility {
 	}
 
 	@Override
-	public int getValue(Attribute attribute, String code) {
+	public FilteringSummary getFilteringItem(Attribute attribute, String code) {
 		final List<FilteringSummary> filteringSummaries = attributeListMap.get(attribute);
 		if (filteringSummaries == null) {
-			return 0;
+			return null;
 		}
 		for (FilteringSummary summary : filteringSummaries) {
 			if (summary.getName().equals(code)) {
-				return summary.getCount();
+				return summary;
 			}
 		}
-		return 0;
-	}
-
-	@Override
-	public boolean hasValue(Attribute attribute, String code) {
-		return getValue(attribute, code) > 0;
+		return null;
 	}
 
 	@Override
