@@ -43,7 +43,7 @@ public class HibernateBasketManager implements BasketManager {
 	@Override
 	@Cacheable(value = "basketSize", key = "#principal")
 	public int getBasketSize(Personality principal) {
-		if (principal == null) {
+		if (principal == null || principal.getId() == null) {
 			return 0;
 		}
 		final Session session = sessionFactory.getCurrentSession();

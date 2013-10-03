@@ -1533,11 +1533,14 @@ button.bg-ui-button.selected {
     text-decoration: line-through;
 }
 
+.filtering .prices {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .filtering #priceSlide {
     font-size: 9px;
     margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 .filtering #minPriceFilter, .filtering #maxPriceFilter {

@@ -15,6 +15,8 @@ import java.util.Formatter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -33,13 +35,15 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		}
 	}
 
+	public static final Pattern PRODUCT_CODE_PATTER = Pattern.compile("A(\\d{6})");
+
 	public MessageFormatter() {
 	}
 
 	public static String getProductCode(Integer id) {
 		synchronized (FORMATTER) {
 			sb.setLength(0);
-			return FORMATTER.format("%06d", id).toString();
+			return "A" + FORMATTER.format("%06d", id).toString();
 		}
 	}
 
@@ -47,6 +51,16 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		return getProductCode(art.getId());
 	}
 
+	public static Integer extractProductId(String code) {
+		if (code == null) {
+			return null;
+		}
+		final Matcher matcher = PRODUCT_CODE_PATTER.matcher(code.trim());
+		if (matcher.find()) {
+			return Integer.valueOf(matcher.group(1));
+		}
+		return null;
+	}
 
 	public String getMessage(String code, Locale locale) {
 		return super.getMessage(code, null, locale);

@@ -359,7 +359,7 @@ bg.warehouse.Filter = function (minTotalPrice, maxTotalPrice, minSelectedPrice, 
 
     priceSlide.slider({
         range: true,
-        min: 0,
+        min: minTotalPrice,
         max: maxTotalPrice,
         step: resolution,
         values: [isNaN(minSelectedPrice) ? 0 : minSelectedPrice, isNaN(maxSelectedPrice) ? maxTotalPrice : maxSelectedPrice],

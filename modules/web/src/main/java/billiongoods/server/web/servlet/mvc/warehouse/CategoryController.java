@@ -2,6 +2,7 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.Range;
+import billiongoods.server.MessageFormatter;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
@@ -78,11 +79,10 @@ public class CategoryController extends AbstractController {
 	public String searchProducts(@RequestParam(value = "category", required = false) Integer categoryId,
 								 @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
 		String query = pageableForm.getQuery();
-		try {
-			if (query != null) {
-				return "redirect:/warehouse/product/" + Integer.valueOf(query.trim());
-			}
-		} catch (NumberFormatException ignore) {
+
+		final Integer pid = MessageFormatter.extractProductId(query);
+		if (pid != null) {
+			return "redirect:/warehouse/product/" + pid;
 		}
 
 		setTitle(model, "Результат поска по запросу");
