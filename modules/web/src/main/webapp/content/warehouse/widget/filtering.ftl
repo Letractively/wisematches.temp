@@ -8,69 +8,45 @@
 <#assign itemsCount=0/>
 
 <#--================ Filtering based on data defined for products ======================-->
+<#macro categoryParameterValue a s>
+    <#if (s.count>0)>
+        <#assign itemsCount=itemsCount+1/>
+    <li class="item">
+        <input id="parameter_${a.id}_${s.name}" type="checkbox" name="${a.id}" value="${s.name}"
+               <#if filter?? && filter.isAllowed(a, s.name)>checked="checked"</#if> />
+        <label for="parameter_${a.id}_${s.name}">
+            <#if s.name?has_content>${s.name}<#else><em>неизвестно</em></#if> (${s.count})
+        </label>
+    </li>
+    </#if>
+</#macro>
+
 <#macro categoryPramaters category>
     <#list category.parameters as p>
         <#assign a=p.attribute/>
-        <#if (a.attributeType=AttributeType.STRING) && (p.values?size>0)>
+        <#if (p.values?size>0)>
             <#assign summary=filtering.getFilteringItems(a)/>
-        <div class="property">
-            <div class="name">
-            ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
-            </div>
 
-            <ul class="items">
-                <#list summary as s>
-                    <#if (s.count>0)>
-                        <#assign itemsCount=itemsCount+1/>
-                        <li class="item">
-                            <input id="parameter_${a.id}_${s.name}" type="checkbox" name="${a.id}" value="${s.name}"
-                                   <#if filter?? && filter.isAllowed(a, s.name)>checked="checked"</#if> />
-                            <label for="parameter_${a.id}_${s.name}">
-                                <#if s.name?has_content>${s.name}<#else><strong>неизвестно</strong></#if> (${s.count})
-                            </label>
-                        </li>
-                    </#if>
+            <#if (a.attributeType=AttributeType.STRING)>
+            <div class="property">
+                <div class="name">
+                ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
+                </div>
+
+                <ul class="items">
+                    <#assign unknownSummary=""/>
+                    <#list summary as s>
+                    <#if s.name?has_content><@categoryParameterValue a s/><#else><#assign unknownSummary=s/></#if>
                 </#list>
-            </ul>
-        </div>
+                    <#if unknownSummary?has_content>
+                    <@categoryParameterValue a unknownSummary/>
+                </#if>
+                </ul>
+            </div>
+            </#if>
         </#if>
     </#list>
 </#macro>
-
-<#--================ Filtering based on predefined info from category ======================-->
-<#--
-<#macro categoryPrameter a v n>
-    <#assign count=filtering.getValue(a, v)/>
-<li class="item <#if count=0>disabled</#if>">
-    <input id="parameter_${a.id}_${v}" type="checkbox" name="${a.id}" value="${v}"
-           <#if count=0>disabled="disabled"
-           <#elseif filter?? && filter.isAllowed(a, v)>checked="checked"
-           </#if> />
-    <label for="parameter_${a.id}_${v}">${n} (${count})</label>
-</li>
-</#macro>
-
-<#macro categoryPramaters category>
-    <#list category.parameters as p>
-        <#assign a=p.attribute/>
-        <#if (a.attributeType=AttributeType.STRING) && (p.values?size>0)>
-            <#assign itemsCount=itemsCount+1/>
-        <div class="property">
-            <div class="name">
-            ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
-            </div>
-
-            <ul class="items">
-                <#list p.values as v>
-                    <@categoryPrameter a v v/>
-                </#list>
-                    <@categoryPrameter a "" "все остальные"/>
-            </ul>
-        </div>
-        </#if>
-    </#list>
-</#macro>
--->
 
 <#if category?? && filtering?? && pageableForm??>
     <#assign minTotalPrice=(filtering.minPrice/10)?floor*10>
