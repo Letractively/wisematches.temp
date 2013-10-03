@@ -73,23 +73,43 @@
 -->
 
 <#if category?? && filtering?? && pageableForm??>
+    <#assign minTotalPrice=(filtering.minPrice/10)?floor*10>
+    <#assign maxTotalPrice=(filtering.maxPrice/10)?ceiling*10>
+
+    <#assign minPrice=minTotalPrice>
+    <#assign maxPrice=maxTotalPrice>
+    <#if filter?? && filter.minPrice??>
+        <#assign minPrice=(filter.minPrice/10)?floor*10>
+    </#if>
+
+    <#if filter?? && filter.maxPrice??>
+        <#assign maxPrice=(filter.maxPrice/10)?ceiling*10>
+    </#if>
+
 <div id="productsFilterForm" class="filtering">
     <div class="property">
         <div class="name">
             Цена
         </div>
 
-        <ul>
+        <ul class="ui-slider-price">
             <li>
-                <label for="minPriceFilter">от</label>
-                <input id="minPriceFilter" name="minPrice">
-                &nbsp;&nbsp;
-                <label for="maxPriceFilter">до</label>
-                <input id="maxPriceFilter" name="maxPrice">
+                <label>
+                    <input id="minPriceFilter" name="minPrice" value="${minPrice}">
+                </label>
+                —
+                <label>
+                    <input id="maxPriceFilter" name="maxPrice" value="${maxPrice}">
+                </label>
+                руб.
             </li>
 
             <li>
-                <div id="priceSlide"></div>
+                <div id="priceSlide">
+                    <span class="ui-slider-min">${minTotalPrice}</span>
+                    <span class="ui-slider-med">${minTotalPrice + (maxTotalPrice-minTotalPrice)/2?round}</span>
+                    <span class="ui-slider-max">${maxTotalPrice}</span>
+                </div>
             </li>
         </ul>
     </div>
@@ -102,8 +122,7 @@
 </div>
 
 <script type="text/javascript">
-    new bg.warehouse.Filter(${filtering.minPrice}, ${filtering.maxPrice?ceiling},
-        <#if filter??>${filter.minPrice!"undefined"},${filter.maxPrice!"undefined"}<#else>undefined, undefined</#if>,
+    new bg.warehouse.Filter(${minTotalPrice}, ${maxTotalPrice}, ${minPrice}, ${maxPrice},
             '<@bg.ui.tableNavigationParams pageableForm "filter" ""/>');
 </script>
 </#if>

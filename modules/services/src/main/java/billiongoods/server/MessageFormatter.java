@@ -35,7 +35,7 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		}
 	}
 
-	public static final Pattern PRODUCT_CODE_PATTER = Pattern.compile("A(\\d{6})");
+	public static final Pattern PRODUCT_CODE_PATTER = Pattern.compile("^A(\\d{6})$");
 
 	public MessageFormatter() {
 	}
