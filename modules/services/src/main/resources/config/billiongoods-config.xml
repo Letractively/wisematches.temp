@@ -214,6 +214,8 @@
 
     <bean class="billiongoods.server.services.notify.impl.center.NotificationOriginCenter">
         <property name="orderManager" ref="orderManager"/>
+        <property name="productManager" ref="productManager"/>
+        <property name="trackingManager" ref="trackingManager"/>
 
         <property name="notificationService" ref="notificationService"/>
     </bean>

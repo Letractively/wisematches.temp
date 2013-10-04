@@ -120,8 +120,12 @@ public class AbstractProductDescription implements ProductDescription {
 		return commentary;
 	}
 
-	void setName(String name) {
-		this.name = name;
+	boolean setName(String name) {
+		if (!this.name.equals(name)) {
+			this.name = name;
+			return true;
+		}
+		return false;
 	}
 
 	void setState(ProductState state) {

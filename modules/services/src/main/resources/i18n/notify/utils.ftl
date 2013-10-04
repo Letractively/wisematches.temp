@@ -6,5 +6,4 @@
 
 <#macro link href target=""><#local content><#nested></#local><a
         href="${serverDescriptor.webHostName}${href}"<#if target?has_content>
-        target="${target}"</#if>><#if content?has_content>${content?string}<#else>${serverDescriptor.webHostName}
-    /${href}</#if></a></#macro>
+        target="${target}"</#if>><#if content?has_content>${content?string}<#else>${serverDescriptor.webHostName}${href}</#if></a></#macro>
