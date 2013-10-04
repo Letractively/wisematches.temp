@@ -102,9 +102,9 @@ public class CategoryController extends AbstractController {
 		final EnumSet<ProductState> productStates = hasRole("moderator") ? ProductContext.NOT_REMOVED : ProductContext.VISIBLE;
 
 		final ProductContext context = new ProductContext(category, true, pageableForm.getQuery(), arrivals, productStates);
-		pageableForm.initialize(productManager.getTotalCount(context, filter));
+		final FilteringAbility filtering = productManager.getFilteringAbility(context, filter);
 
-		final FilteringAbility filtering = productManager.getFilteringAbility(context);
+		pageableForm.initialize(filtering.getTotalCount());
 
 		final Range range = pageableForm.getRange();
 		final Orders orders = pageableForm.getOrders();
