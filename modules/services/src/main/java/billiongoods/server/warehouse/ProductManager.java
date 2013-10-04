@@ -10,10 +10,12 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 
 	void removeProductListener(ProductListener l);
 
+
 	Product getProduct(Integer id);
 
 	Product getProduct(String sku);
 
+	boolean hasProduct(Integer productId);
 
 	ProductDescription getDescription(Integer id);
 

@@ -9,8 +9,8 @@ import billiongoods.server.web.servlet.mvc.ExpiredParametersException;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderCheckoutForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderErrorForm;
+import billiongoods.server.web.servlet.mvc.warehouse.form.OrderTrackingForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderViewForm;
-import billiongoods.server.web.servlet.mvc.warehouse.form.TrackingForm;
 import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -130,7 +130,7 @@ public class OrderController extends AbstractController {
 
 	@RequestMapping("/tracking.ajax")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ServiceResponse changeTrackingState(@RequestBody TrackingForm form, Locale locale) {
+	public ServiceResponse changeTrackingState(@RequestBody OrderTrackingForm form, Locale locale) {
 		if (form.getOrder() == null) {
 			return responseFactory.failure("order.error.id.empty", locale);
 		}

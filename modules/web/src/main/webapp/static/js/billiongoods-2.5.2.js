@@ -456,7 +456,7 @@ bg.warehouse.Order = function () {
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "Подписка не может быть изменения в связи с внутренней ошибкой. Если проблема " +
+                    bg.ui.unlock(null, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
                             "не исчезла, пожалуйста, свяжитесь с нами.", true);
                 });
     };
@@ -508,6 +508,61 @@ bg.warehouse.ProductController = function () {
 
         event.preventDefault();
         return false;
+    });
+
+    $("#requestProductDescription").click(function (event) {
+        $('#subscribeDescriptionForm').dialog({
+            title: 'Запрос на описание товара',
+            draggable: true,
+            modal: true,
+            resizable: false,
+            width: 500,
+            buttons: [
+                {
+                    text: 'Отправить заявку',
+                    click: function () {
+                        bg.ui.lock(null, 'Отправки заявки. Пожалуйста, подождите...');
+                        var serializeObject = $('#subscribeDescriptionForm').find('form').serializeObject();
+                        $.post("/warehouse/product/tracking.ajax", JSON.stringify(serializeObject))
+                                .done(function (response) {
+                                    if (response.success) {
+                                        bg.ui.unlock(null, "Ваша заявка на добавление описание успешно отправлена", false);
+                                    } else {
+                                        bg.ui.unlock(null, response.message, true);
+                                    }
+                                })
+                                .fail(function (jqXHR, textStatus, errorThrown) {
+                                    bg.ui.unlock(null, "Подписка не может быть изменения в связи с внутренней ошибкой. Если проблема " +
+                                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                                });
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: 'Отмена',
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ]
+        });
+    });
+
+    $("#requestProductAvailability").click(function (event) {
+        bg.ui.lock(null, 'Отправки заявки. Пожалуйста, подождите...');
+        var serializeObject = $('#requestProductAvailabilityForm').find('input').serializeObject();
+        $.post("/warehouse/product/tracking.ajax", JSON.stringify(serializeObject))
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, "Ваша заявка успешно отправлена", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
+                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                });
     });
 
     function selectThumb(img) {

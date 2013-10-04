@@ -74,6 +74,17 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	}
 
 	@Override
+	public boolean hasProduct(Integer productId) {
+		if (productId == null) {
+			return false;
+		}
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("select 1 from billiongoods.server.warehouse.impl.HibernateProduct where id=:pid");
+		query.setParameter("pid", productId);
+		return query.uniqueResult() != null;
+	}
+
+	@Override
 	public ProductDescription getDescription(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
 		return (HibernateProductDescription) session.get(HibernateProductDescription.class, id);

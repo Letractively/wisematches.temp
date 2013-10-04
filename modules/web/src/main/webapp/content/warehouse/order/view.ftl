@@ -22,7 +22,9 @@
     </#if>
 </div>
 
-    <#include "metrics.ftl"/>
+    <#if state.accepted>
+        <#include "metrics.ftl"/>
+    </#if>
 </#if>
 
 <div class="tit">

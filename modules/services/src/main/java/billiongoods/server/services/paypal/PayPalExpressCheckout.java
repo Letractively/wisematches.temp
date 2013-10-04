@@ -172,7 +172,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 		request.setPaymentDetails(Collections.singletonList(paymentDetails));
 		request.setCppLogoImage("http://static.billiongoods.ru/images/logo.png");
 
-		request.setInvoiceID("test-" + String.valueOf(tnxId));
+		request.setInvoiceID(String.valueOf(tnxId));
 
 		try {
 			final SetExpressCheckoutRequestType setExpressCheckoutRequest = new SetExpressCheckoutRequestType(request);
