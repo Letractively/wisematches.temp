@@ -14,8 +14,8 @@
             goods: [
                 <#list order.orderItems as i>
                     {
-                        id: "${i.product}",
-                        name: "${i.name}",
+                        id: "${i.product.id}",
+                        name: "${i.product.name}",
                         price: ${i.amount?string("0.00")},
                         quantity: ${i.quantity}
                     }<#if i_has_next>,</#if>

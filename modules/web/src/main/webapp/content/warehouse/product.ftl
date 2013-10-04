@@ -151,16 +151,30 @@
                                 </button>
                             </div>
                         <#else>
-                            <link itemprop="availability" href="http://schema.org/OutOfStock"/>
-                            <#if product.stockInfo.restockDate??>
-                                <meta itemprop="availabilityStarts"
-                                      content="${product.stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
-                            </#if>
+                            <div>
+                                <link itemprop="availability" href="http://schema.org/OutOfStock"/>
+                                <#if product.stockInfo.restockDate??>
+                                    <meta itemprop="availabilityStarts"
+                                          content="${product.stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
+                                </#if>
+                                <p>
+                                    Товара нет в наличии в данный момент, но вы можете подписаться на обновления
+                                    и мы вышлим вам письмо, когда товар снова будет в наличии.
+                                </p>
 
-                            Товара нет в наличии в данный момент. Вы можете <a href="/assistance/contacts#section3">отправить
-                            нам заявку</a> и мы пришлем вам письмо, когда товар снова будет в наличии.
-                            <br>
-                            Не забудьте указать артикул товара: ${sku}!
+                                <div id="requestProductAvailabilityForm">
+                                    <input name="productId" type="hidden" value="${product.id}"/>
+                                    <input name="type" type="hidden" value="AVAILABILITY"/>
+                                    <input name="changeType" type="hidden" value="SUBSCRIBE"/>
+
+                                    <label for="subscribeDescriptionEmail">Адрес эл. почты: </label>
+                                    <input id="subscribeDescriptionEmail" name="email" type="text"
+                                           style="width: 300px">
+                                    <button id="requestProductAvailability" type="button">
+                                        Подписаться на поступления
+                                    </button>
+                                </div>
+                            </div>
                         </#if>
                         </div>
                     </div>
@@ -179,15 +193,12 @@
     <@bg.ui.panel caption="Описание" id="description">
         <#if product.state.promoted>
         <p>
-            Мы еще не подготовили описание этого товара. Пожалуйста, если он вас заинтересовал и вы бы желали
-            увидеть его описание в ближайшее время, <a href="/assistance/contacts#section3">свяжитесь с нами</a> и
-            мы
-            добавим описание в ближайшее время.
+            Мы еще не подготовили описание этого товара. Если же вы хотели бы получить его описание, пожалуйста,
+            дайте нам знать об этом и мы добавим описание в самое ближайшее время.
         </p>
 
-        <p>
-            Пожалуйста, не забудьте указать артикул интересующего вас
-            товара: ${sku}!
+        <p align="right">
+            <button id="requestProductDescription" type="button">Заказать описание товара</button>
         </p>
         <#else>
         <p itemprop="description">
@@ -238,6 +249,23 @@
     </div>
     </@bg.ui.panel>
 </#if>
+</div>
+
+<div id="subscribeDescriptionForm" style="display: none">
+    <p>
+        Если вы хотите незамедлительно получить извещение о добавленном описание, вы можете
+        оставить нам ваш адрес электронной почты и мы вышлем вам соответствующее письмо, как только
+        описание будет добавлено.
+    </p>
+
+    <form name="subscribeDescriptionForm">
+        <input name="productId" type="hidden" value="${product.id}"/>
+        <input name="type" type="hidden" value="DESCRIPTION"/>
+        <input name="changeType" type="hidden" value="SUBSCRIBE"/>
+
+        <label for="subscribeDescriptionEmail">Адрес эл. почты: </label>
+        <input id="subscribeDescriptionEmail" name="email" type="text" style="width: 100%">
+    </form>
 </div>
 
 <script type="application/javascript">
