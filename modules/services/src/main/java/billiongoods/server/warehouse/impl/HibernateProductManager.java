@@ -89,8 +89,22 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	}
 
 	@Override
-	public FilteringAbility getFilteringAbility(ProductContext context) {
+	public FilteringAbility getFilteringAbility(ProductContext context, ProductFilter filter) {
 		final Session session = sessionFactory.getCurrentSession();
+
+		final Criteria countCriteria = session.createCriteria(HibernateProductDescription.class);
+		applyRestrictions(countCriteria, context, filter);
+
+		final ProjectionList countProjection = Projections.projectionList();
+		countProjection.add(Projections.rowCount());
+		countProjection.add(Projections.min("price.amount"));
+		countProjection.add(Projections.max("price.amount"));
+		countCriteria.setProjection(countProjection);
+
+		final Object[] countResult = (Object[]) countCriteria.uniqueResult();
+		int totalCount = ((Number) countResult[0]).intValue();
+		double minPrice = ((Number) countResult[1]).intValue();
+		double maxPrice = ((Number) countResult[2]).intValue();
 
 		final Criteria criteria = session.createCriteria(HibernateProductDescription.class, "product");
 		applyRestrictions(criteria, context, null);
@@ -100,29 +114,13 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		projection.add(Projections.groupProperty("props.attributeId"));
 		projection.add(Projections.groupProperty("props.sValue"));
 		projection.add(Projections.rowCount());
-		projection.add(Projections.min("price.amount"));
-		projection.add(Projections.max("price.amount"));
 
 		criteria.createAlias("product.propertyIds", "props").setProjection(projection);
 
 		Map<Attribute, List<FilteringSummary>> attributeListMap = new HashMap<>();
-
-		double minPrice = Float.NaN;
-		double maxPrice = Float.NaN;
-
 		final List list = criteria.list();
 		for (Object o : list) {
 			Object[] oo = (Object[]) o;
-
-			double min = ((Number) oo[3]).doubleValue();
-			if (Double.isNaN(minPrice) || min < minPrice) {
-				minPrice = min;
-			}
-
-			double max = ((Number) oo[4]).doubleValue();
-			if (Double.isNaN(maxPrice) || max > maxPrice) {
-				maxPrice = max;
-			}
 
 			final Attribute attribute = attributeManager.getAttribute((Integer) oo[0]);
 
@@ -134,7 +132,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 
 			filteringSummaries.add(new FilteringSummary((String) oo[1], ((Number) oo[2]).intValue()));
 		}
-		return new DefaultFilteringAbility(minPrice, maxPrice, attributeListMap);
+		return new DefaultFilteringAbility(totalCount, minPrice, maxPrice, attributeListMap);
 	}
 
 	@Override
