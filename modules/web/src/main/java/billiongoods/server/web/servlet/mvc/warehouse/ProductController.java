@@ -1,6 +1,5 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
-import billiongoods.core.Member;
 import billiongoods.core.Personality;
 import billiongoods.server.services.notify.NotificationException;
 import billiongoods.server.services.notify.NotificationService;
@@ -129,11 +128,11 @@ public class ProductController extends AbstractController {
 
 	private ServiceResponse processSubscription(ProductTrackingForm form, Locale locale, Personality principal) {
 		TrackingContext context;
-		if (principal instanceof Member) {
-			context = new TrackingContext(form.getProductId(), principal.getId(), form.getType());
-		} else {
-			context = new TrackingContext(form.getProductId(), form.getEmail(), form.getType());
-		}
+//		if (principal instanceof Member) {
+//			context = new TrackingContext(form.getProductId(), principal.getId(), form.getType());
+//		} else {
+		context = new TrackingContext(form.getProductId(), form.getEmail(), form.getType());
+//		}
 
 		final List<ProductTracking> trackers = trackingManager.searchEntities(context, null, null, null);
 		if (form.getChangeType() == TrackingChangeType.UNSUBSCRIBE) {
@@ -146,11 +145,11 @@ public class ProductController extends AbstractController {
 			}
 
 			ProductTracking tracking;
-			if (principal instanceof Member) {
-				tracking = trackingManager.createTracking(form.getProductId(), principal, form.getType());
-			} else {
-				tracking = trackingManager.createTracking(form.getProductId(), form.getEmail(), form.getType());
-			}
+//			if (principal instanceof Member) {
+//				tracking = trackingManager.createTracking(form.getProductId(), principal, form.getType());
+//			} else {
+			tracking = trackingManager.createTracking(form.getProductId(), form.getEmail(), form.getType());
+//			}
 			return responseFactory.success(tracking);
 		}
 		return responseFactory.failure("product.subscribe.error.incorrect", locale);

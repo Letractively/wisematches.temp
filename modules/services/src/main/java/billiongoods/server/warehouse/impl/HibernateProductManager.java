@@ -170,11 +170,11 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		if (product == null) {
 			return null;
 		}
-		updateProduct(product, editor);
+		final Set<String> strings = updateProduct(product, editor);
 		session.update(product);
 
 		for (ProductListener listener : listeners) {
-			listener.productUpdated(product);
+			listener.productUpdated(product, strings);
 		}
 		return product;
 	}
@@ -195,7 +195,19 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		return product;
 	}
 
-	private void updateProduct(HibernateProduct product, ProductEditor editor) {
+	private Set<String> updateProduct(HibernateProduct product, ProductEditor editor) {
+		final Set<String> res = new HashSet<>();
+		final StockInfo stockInfo = product.getStockInfo();
+
+		if (product.getState() != editor.getProductState()) {
+			res.add("state");
+		}
+
+		if ((editor.getRestockDate() == null && stockInfo.getRestockDate() != null) ||
+				(editor.getRestockDate() != null && (stockInfo.getRestockDate() == null || !editor.getRestockDate().equals(stockInfo.getRestockDate())))) {
+			res.add("restockDate");
+		}
+
 		product.setName(editor.getName());
 		product.setDescription(editor.getDescription());
 		product.setCategory(editor.getCategoryId());
@@ -214,6 +226,8 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		supplierInfo.setReferenceCode(editor.getReferenceCode());
 		supplierInfo.setWholesaler(editor.getWholesaler());
 		supplierInfo.setPrice(editor.getSupplierPrice());
+
+		return res;
 	}
 
 	@Override
