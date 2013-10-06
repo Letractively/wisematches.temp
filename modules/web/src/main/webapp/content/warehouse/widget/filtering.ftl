@@ -49,6 +49,7 @@
 </#macro>
 
 <#if category?? && filtering?? && pageableForm??>
+<div id="productsFilterForm" class="filtering">
     <#assign minTotalPrice=(filtering.minPrice/10)?floor*10>
     <#assign maxTotalPrice=(filtering.maxPrice/10)?ceiling*10>
 
@@ -62,7 +63,6 @@
         <#assign maxPrice=(filter.maxPrice/10)?ceiling*10>
     </#if>
 
-<div id="productsFilterForm" class="filtering">
     <div class="property">
         <div class="name">
             Цена
