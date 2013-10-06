@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProductDescription.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProductDescription.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify.properties" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify.properties" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -114,7 +115,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/modules/web/src/test/java/billiongoods/server/web/http/ColorDecoderTest.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java" />
         <option value="$PROJECT_DIR$/modules/core/pom.xml" />
         <option value="$PROJECT_DIR$/resources/database/tricks.sql" />
@@ -123,13 +123,14 @@
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/product.ftl" />
         <option value="$PROJECT_DIR$/todo.txt" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/SupplierDataLoader.java" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/HibernatePriceValidator.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/robots.txt" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/category.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl" />
         <option value="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify.properties" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProductDescription.java" />
       </list>
     </option>
   </component>
@@ -215,6 +216,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -248,181 +250,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="i18n" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -642,25 +471,6 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -681,6 +491,25 @@
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -743,23 +572,6 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
-      <method />
-    </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
-      <deployment />
-      <server-settings />
-      <predefined_log_file id="Tomcat" enabled="true" />
-      <predefined_log_file id="Tomcat Catalina" enabled="true" />
-      <predefined_log_file id="Tomcat Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <method />
-    </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -775,6 +587,23 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
+      <deployment />
+      <server-settings />
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="All Tests" type="JUnit" factoryName="JUnit">
@@ -803,7 +632,7 @@
     </configuration>
     <configuration default="false" name="Tomcat 7" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0">
       <option name="OPEN_IN_BROWSER" value="false" />
-      <option name="COMMON_VM_ARGUMENTS" value="-Dbilliongoods.configuration=file:C:\Users\sergey\billiongoods\source\resources\config\integration.properties -Dlogback.configurationFile=C:\Users\sergey\billiongoods\source\resources\config\integ.logback.xml" />
+      <option name="COMMON_VM_ARGUMENTS" value="-Dbilliongoods.configuration=file:C:\Users\sergey\billiongoods\source\resources\config\integration.properties -Dlogback.configurationFile=C:\Users\sergey\billiongoods\source\integ.logback.xml" />
       <deployment>
         <artifact name="web:war exploded">
           <settings>
@@ -880,12 +709,12 @@
     </configuration>
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="JUnit.All Tests" />
-      <item index="1" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 7" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.BanggoodPriceLoaderTest.asd" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.BanggoodPriceLoaderTest.test" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.ColorDecoderTest" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest.asd" />
-      <item index="6" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.BanggoodPriceLoaderTest.asd" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.BanggoodPriceLoaderTest.test" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.ColorDecoderTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest.asd" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest" />
+      <item index="6" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 7" />
     </list>
     <recent_temporary>
       <list size="5">
@@ -995,7 +824,8 @@
       <workItem from="1380862242279" duration="805000" />
       <workItem from="1380905165218" duration="36000" />
       <workItem from="1380905281863" duration="809000" />
-      <workItem from="1380909025242" duration="519000" />
+      <workItem from="1380909025242" duration="2422000" />
+      <workItem from="1380913760119" duration="2057000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -1293,11 +1123,15 @@
       <created>1380784511282</created>
       <updated>1380784511282</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="+">
+      <created>1380909582962</created>
+      <updated>1380909582962</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137804000" />
+    <option name="totallyTimeSpent" value="141764000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1338,19 +1172,19 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4340836" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25530303" sideWeight="0.2652733" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3215434" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30322582" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329582" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18636364" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18636364" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32741934" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5659164" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4340836" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4340836" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3242424" sideWeight="0.49839228" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30322582" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -1360,8 +1194,8 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4742765" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.67903227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.67903227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3279743" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4340836" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1383,8 +1217,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30322582" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18636364" sideWeight="0.5643087" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
@@ -1430,41 +1264,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/robots.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="8" selection-start="109" selection-end="109" vertical-scroll-proportion="0.14261745" vertical-offset="0" max-vertical-offset="596" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/category.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="49" selection-start="402" selection-end="402" vertical-scroll-proportion="-4.576923" vertical-offset="0" max-vertical-offset="221" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar!/freemarker/core/ArithmeticEngine.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="32" selection-start="4486" selection-end="4486" vertical-scroll-proportion="-3.28" vertical-offset="1329" max-vertical-offset="1615" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar!/freemarker/core/ArithmeticExpression.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="38" selection-start="714" selection-end="714" vertical-scroll-proportion="-3.28" vertical-offset="207" max-vertical-offset="510" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar!/freemarker/core/Expression.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="51" selection-start="746" selection-end="746" vertical-scroll-proportion="-3.28" vertical-offset="190" max-vertical-offset="595" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/freemarker/freemarker/2.3.19/freemarker-2.3.19.jar!/freemarker/core/ParentheticalExpression.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="38" selection-start="554" selection-end="714" vertical-scroll-proportion="-3.0" vertical-offset="163" max-vertical-offset="425" />
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/math/BigDecimal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="469" column="0" selection-start="19847" selection-end="19847" vertical-scroll-proportion="0.0" vertical-offset="7214" max-vertical-offset="65076" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/FilteringAbility.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="15" selection-start="192" selection-end="192" vertical-scroll-proportion="0.22818792" vertical-offset="0" max-vertical-offset="596" />
@@ -1478,11 +1277,6 @@
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/DefaultFilteringAbility.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="0" selection-start="559" selection-end="559" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="1343" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="70" selection-start="4071" selection-end="4071" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5457" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/database/latest_patch.sql">
@@ -1502,15 +1296,71 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="2" selection-start="1163" selection-end="1163" vertical-scroll-proportion="0.65604025" vertical-offset="0" max-vertical-offset="596">
-          <folding />
-        </state>
+        <state line="23" column="2" selection-start="1163" selection-end="1163" vertical-scroll-proportion="0.65604025" vertical-offset="0" max-vertical-offset="596" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="21" selection-start="2089" selection-end="2089" vertical-scroll-proportion="-0.9395973" vertical-offset="1274" max-vertical-offset="1870">
+        <state line="42" column="21" selection-start="2089" selection-end="2089" vertical-scroll-proportion="-0.9395973" vertical-offset="1274" max-vertical-offset="1870" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/import.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="23" selection-start="933" selection-end="933" vertical-scroll-proportion="0.59605026" vertical-offset="365" max-vertical-offset="2448">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/ImportingSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="17" selection-start="369" selection-end="369" vertical-scroll-proportion="0.42785236" vertical-offset="0" max-vertical-offset="596">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/DefaultImportingSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="28" selection-start="1745" selection-end="1745" vertical-scroll-proportion="0.39794168" vertical-offset="1094" max-vertical-offset="1700">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="383" selection-end="383" vertical-scroll-proportion="0.35231316" vertical-offset="57" max-vertical-offset="748">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="24" selection-start="1841" selection-end="1841" vertical-scroll-proportion="0.3207547" vertical-offset="595" max-vertical-offset="5457">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateStockInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="9" selection-start="1122" selection-end="1122" vertical-scroll-proportion="1.511745" vertical-offset="0" max-vertical-offset="1088">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProductDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="150" column="29" selection-start="3581" selection-end="3581" vertical-scroll-proportion="0.34991422" vertical-offset="2346" max-vertical-offset="3281">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="190" column="56" selection-start="8667" selection-end="8667" vertical-scroll-proportion="0.2572899" vertical-offset="2995" max-vertical-offset="5236">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
