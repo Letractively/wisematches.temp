@@ -4,14 +4,17 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
+- Split total and filtered count in FilteringAbility
+- Our recomendations view on the left of main page: L959 & V911 & v912
+
 - Check products that should be in stock every night and send notification
+
 - Track product changes are not very good. Must be changed.
 - Add full product name for URL in translit
 - Auto tracking product ability
 - Range filters
 - Binominal filters
 - Differ catalog view
-- Split total and filtered count in FilteringAbility
 
 ============= PLAN ====================
 - Page not found should show sitemap instead
@@ -33,10 +36,12 @@
 - Cache size in logs shows strange values
 
 - Your recent history
-- Our recomendations view on the left of main page: L959 & V911 & v912
 - Ability to track state of a SKU
 
 ============= DONE ====================
+7.09
++ Clear person's cache if it's offline (restore PersonalityStateManager functionality).
+
 4.09
 + test- prefix is added to InvoiceID for PayPal.
 + Order confirm works incorrect: issue with Yandex Metrica

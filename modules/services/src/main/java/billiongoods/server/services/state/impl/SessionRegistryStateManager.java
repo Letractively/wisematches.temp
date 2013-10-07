@@ -1,8 +1,8 @@
-package billiongoods.server.test.state.impl;
+package billiongoods.server.services.state.impl;
 
 import billiongoods.core.Personality;
-import billiongoods.server.test.state.PlayerStateListener;
-import billiongoods.server.test.state.PlayerStateManager;
+import billiongoods.server.services.state.PersonalityStateListener;
+import billiongoods.server.services.state.PersonalityStateManager;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistryImpl;
 
@@ -14,26 +14,26 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class SessionRegistryStateManager extends SessionRegistryImpl implements PlayerStateManager {
-	private final Collection<PlayerStateListener> listeners = new CopyOnWriteArraySet<>();
+public class SessionRegistryStateManager extends SessionRegistryImpl implements PersonalityStateManager {
+	private final Collection<PersonalityStateListener> listeners = new CopyOnWriteArraySet<>();
 
 	public SessionRegistryStateManager() {
 	}
 
 	@Override
-	public void addPlayerStateListener(PlayerStateListener l) {
+	public void addPersonalityStateListener(PersonalityStateListener l) {
 		if (l != null) {
 			listeners.add(l);
 		}
 	}
 
 	@Override
-	public void removePlayerStateListener(PlayerStateListener l) {
+	public void removePlayerStateListener(PersonalityStateListener l) {
 		listeners.remove(l);
 	}
 
 	@Override
-	public boolean isPlayerOnline(Personality personality) {
+	public boolean isPersonalityOnline(Personality personality) {
 		return !getAllSessions(personality, false).isEmpty();
 	}
 
@@ -60,7 +60,7 @@ public class SessionRegistryStateManager extends SessionRegistryImpl implements 
 
 		final SessionInformation info = getSessionInformation(sessionId);
 		if (info != null && info.getPrincipal() instanceof Personality) {
-			processPlayerOnline((Personality) info.getPrincipal());
+			processPersonalityOnline((Personality) info.getPrincipal());
 		}
 	}
 
@@ -70,7 +70,7 @@ public class SessionRegistryStateManager extends SessionRegistryImpl implements 
 
 		final SessionInformation info = getSessionInformation(sessionId);
 		if (info != null && info.getPrincipal() instanceof Personality) {
-			processPlayerAlive((Personality) info.getPrincipal());
+			processPersonalityAlive((Personality) info.getPrincipal());
 		}
 	}
 
@@ -84,7 +84,7 @@ public class SessionRegistryStateManager extends SessionRegistryImpl implements 
 			final Personality player = (Personality) info.getPrincipal();
 			// notify listeners only about last session
 			if (getAllSessions(player, true).isEmpty()) {
-				processPlayerOffline(player);
+				processPersonalityOffline(player);
 			}
 		}
 	}
@@ -93,23 +93,23 @@ public class SessionRegistryStateManager extends SessionRegistryImpl implements 
 		return info;
 	}
 
-	protected void processPlayerOnline(Personality player) {
+	protected void processPersonalityOnline(Personality player) {
 		// notify listeners only about first session
 		if (getAllSessions(player, true).size() == 1) {
-			for (PlayerStateListener listener : listeners) {
+			for (PersonalityStateListener listener : listeners) {
 				listener.playerOnline(player);
 			}
 		}
 	}
 
-	protected void processPlayerAlive(Personality player) {
-		for (PlayerStateListener listener : listeners) {
+	protected void processPersonalityAlive(Personality player) {
+		for (PersonalityStateListener listener : listeners) {
 			listener.playerAlive(player);
 		}
 	}
 
-	protected void processPlayerOffline(Personality player) {
-		for (PlayerStateListener listener : listeners) {
+	protected void processPersonalityOffline(Personality player) {
+		for (PersonalityStateListener listener : listeners) {
 			listener.playerOffline(player);
 		}
 	}

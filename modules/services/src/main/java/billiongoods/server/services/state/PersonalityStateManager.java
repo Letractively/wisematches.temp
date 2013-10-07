@@ -1,4 +1,4 @@
-package billiongoods.server.test.state;
+package billiongoods.server.services.state;
 
 import billiongoods.core.Personality;
 
@@ -9,10 +9,10 @@ import java.util.Date;
  *
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface PlayerStateManager {
-	void addPlayerStateListener(PlayerStateListener l);
+public interface PersonalityStateManager {
+	void addPersonalityStateListener(PersonalityStateListener l);
 
-	void removePlayerStateListener(PlayerStateListener l);
+	void removePlayerStateListener(PersonalityStateListener l);
 
 	/**
 	 * Indicates is player online at this moment or not.
@@ -20,7 +20,7 @@ public interface PlayerStateManager {
 	 * @param personality the player to be checked.
 	 * @return {@code true} if player is online; {@code false} - otherwise.
 	 */
-	boolean isPlayerOnline(Personality personality);
+	boolean isPersonalityOnline(Personality personality);
 
 	/**
 	 * Returns last player's activity date or null if there is no activity for the player or player unknown.
