@@ -220,10 +220,16 @@
         <property name="notificationService" ref="notificationService"/>
     </bean>
 
+    <bean id="playerStateManager" class="billiongoods.server.services.state.impl.HibernatePersonalityStateManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean class="billiongoods.server.services.cleaner.PersonalityCacheCleaner">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="stateManager" ref="playerStateManager"/>
+    </bean>
+
     <!--
-        <bean id="playerStateManager" class="billiongoods.server.test.state.impl.HibernatePlayerStateManager">
-            <property name="sessionFactory" ref="sessionFactory"/>
-        </bean>
 
         <bean id="applicationEventMulticaster" class="org.springframework.context.event.SimpleApplicationEventMulticaster">
             <property name="taskExecutor">

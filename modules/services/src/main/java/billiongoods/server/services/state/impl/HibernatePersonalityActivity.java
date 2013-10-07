@@ -1,4 +1,4 @@
-package billiongoods.server.test.state.impl;
+package billiongoods.server.services.state.impl;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "account_personality")
-public class HibernatePlayerActivity {
+public class HibernatePersonalityActivity {
 	@Id
 	@Column(name = "id")
 	private Long player;
@@ -17,10 +17,10 @@ public class HibernatePlayerActivity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastActivityDate;
 
-	public HibernatePlayerActivity() {
+	public HibernatePersonalityActivity() {
 	}
 
-	public HibernatePlayerActivity(Long player, Date lastActivityDate) {
+	public HibernatePersonalityActivity(Long player, Date lastActivityDate) {
 		this.player = player;
 		this.lastActivityDate = lastActivityDate;
 	}
