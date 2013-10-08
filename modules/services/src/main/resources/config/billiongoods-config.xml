@@ -55,9 +55,9 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
-    <bean id="banggoodPriceLoader" class="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader"/>
+    <bean id="banggoodDataLoader" class="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader"/>
 
-    <bean id="priceValidator" class="billiongoods.server.services.price.impl.HibernatePriceValidator">
+    <bean id="validationManager" class="billiongoods.server.services.validator.impl.HibernateProductValidationManager">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="productManager" ref="productManager"/>
 
@@ -74,13 +74,13 @@
             </bean>
         </property>
 
-        <property name="priceLoader" ref="banggoodPriceLoader"/>
+        <property name="dataLoader" ref="banggoodDataLoader"/>
     </bean>
 
     <bean id="productsImporter" class="billiongoods.server.services.supplier.impl.banggod.BanggoodProductImporter">
         <property name="imageManager" ref="imageManager"/>
         <property name="productManager" ref="productManager"/>
-        <property name="priceLoader" ref="banggoodPriceLoader"/>
+        <property name="priceLoader" ref="banggoodDataLoader"/>
         <property name="priceConverter" ref="priceConverter"/>
         <property name="exchangeManager" ref="exchangeManager"/>
         <property name="relationshipManager" ref="relationshipManager"/>
@@ -158,6 +158,13 @@
         <property name="transactionManager" ref="transactionManager"/>
     </bean>
 
+    <bean id="mailNotificationPublisher"
+          class="billiongoods.server.services.notify.impl.publisher.MailNotificationPublisher">
+        <property name="mailSender" ref="notificationMailSender"/>
+        <property name="serverDescriptor" ref="serverDescriptor"/>
+        <property name="messageSource" ref="notificationMessageSource"/>
+    </bean>
+
     <bean id="notificationService" class="billiongoods.server.services.notify.impl.DistributedNotificationService">
         <property name="taskExecutor">
             <bean class="billiongoods.core.task.executor.TransactionAwareExecutor">
@@ -195,11 +202,7 @@
 
         <property name="notificationPublishers">
             <list>
-                <bean class="billiongoods.server.services.notify.impl.publisher.MailNotificationPublisher">
-                    <property name="mailSender" ref="notificationMailSender"/>
-                    <property name="serverDescriptor" ref="serverDescriptor"/>
-                    <property name="messageSource" ref="notificationMessageSource"/>
-                </bean>
+                <ref bean="mailNotificationPublisher"/>
             </list>
         </property>
     </bean>
@@ -209,7 +212,7 @@
 
         <property name="orderManager" ref="orderManager"/>
         <property name="accountManager" ref="accountManager"/>
-        <property name="priceValidator" ref="priceValidator"/>
+        <property name="validationManager" ref="validationManager"/>
     </bean>
 
     <bean class="billiongoods.server.services.notify.impl.center.NotificationOriginCenter">

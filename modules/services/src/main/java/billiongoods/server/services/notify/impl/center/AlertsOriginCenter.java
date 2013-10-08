@@ -11,10 +11,10 @@ import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderListener;
 import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.payment.OrderState;
-import billiongoods.server.services.price.PriceRenewal;
-import billiongoods.server.services.price.PriceValidator;
-import billiongoods.server.services.price.PriceValidatorListener;
-import billiongoods.server.services.price.ValidationSummary;
+import billiongoods.server.services.validator.ProductValidation;
+import billiongoods.server.services.validator.ProductValidationListener;
+import billiongoods.server.services.validator.ProductValidationManager;
+import billiongoods.server.services.validator.ValidationSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,13 +26,13 @@ import java.util.Date;
 public class AlertsOriginCenter {
 	private OrderManager orderManager;
 	private AccountManager accountManager;
-	private PriceValidator priceValidator;
+	private ProductValidationManager productValidator;
 
 	private NotificationService notificationService;
 
 	private final TheOrderListener orderListener = new TheOrderListener();
 	private final TheAccountListener accountListener = new TheAccountListener();
-	private final ThePriceValidatorListener validatorListener = new ThePriceValidatorListener();
+	private final TheProductValidationListener validatorListener = new TheProductValidationListener();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.alerts.OriginCenter");
 
@@ -41,7 +41,7 @@ public class AlertsOriginCenter {
 
 	protected void raiseAlarm(String subj, Object context) {
 		try {
-			notificationService.raiseNotification(subj, Recipient.ALERTS_BOX, Sender.SUPPORT, context);
+			notificationService.raiseNotification(subj, Recipient.MONITORING, Sender.SUPPORT, context);
 		} catch (Exception ex) {
 			log.error("Alerts can't be sent: subj=[{}], msg=[{}]", subj, context);
 		}
@@ -76,15 +76,15 @@ public class AlertsOriginCenter {
 		}
 	}
 
-	public void setPriceValidator(PriceValidator priceValidator) {
-		if (this.priceValidator != null) {
-			this.priceValidator.removePriceValidatorListener(validatorListener);
+	public void setValidationManager(ProductValidationManager productValidator) {
+		if (this.productValidator != null) {
+			this.productValidator.removePriceValidatorListener(validatorListener);
 		}
 
-		this.priceValidator = priceValidator;
+		this.productValidator = productValidator;
 
-		if (this.priceValidator != null) {
-			this.priceValidator.addPriceValidatorListener(validatorListener);
+		if (this.productValidator != null) {
+			this.productValidator.addPriceValidatorListener(validatorListener);
 		}
 	}
 
@@ -118,21 +118,21 @@ public class AlertsOriginCenter {
 		}
 	}
 
-	private class ThePriceValidatorListener implements PriceValidatorListener {
-		private ThePriceValidatorListener() {
+	private class TheProductValidationListener implements ProductValidationListener {
+		private TheProductValidationListener() {
 		}
 
 		@Override
-		public void priceValidationStarted(Date date, int totalCount) {
+		public void productValidationStarted(Date date, int totalCount) {
 		}
 
 		@Override
-		public void priceValidated(Integer productId, PriceRenewal renewal) {
+		public void productValidated(Integer productId, ProductValidation validation) {
 		}
 
 		@Override
-		public void priceValidationFinished(Date date, ValidationSummary summary) {
-			raiseAlarm("system.price", summary);
+		public void productValidationFinished(Date date, ValidationSummary summary) {
+			raiseAlarm("system.validation", summary);
 		}
 	}
 }

@@ -16,8 +16,8 @@ import java.io.FileReader;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Ignore
-public class HibernatePriceValidatorTest {
-	public HibernatePriceValidatorTest() {
+public class HibernateProductValidationManagerTest {
+	public HibernateProductValidationManagerTest() {
 	}
 
 	@Test

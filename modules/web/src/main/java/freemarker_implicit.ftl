@@ -11,6 +11,7 @@
 
 [#-- @ftlvariable name="imageResolver" type="billiongoods.server.services.image.ImageResolver" --]
 
+[#-- @ftlvariable name="StockState" type="billiongoods.server.warehouse.StockState.static" --]
 [#-- @ftlvariable name="ImageSize" type="billiongoods.server.services.image.ImageSize.static" --]
 [#-- @ftlvariable name="OrderState" type="billiongoods.server.services.payment.OrderState.static" --]
 [#-- @ftlvariable name="ProductState" type="billiongoods.server.warehouse.ProductState.static" --]

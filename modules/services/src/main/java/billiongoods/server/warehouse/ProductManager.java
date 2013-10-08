@@ -1,7 +1,6 @@
 package billiongoods.server.warehouse;
 
 import billiongoods.core.search.SearchManager;
-import billiongoods.server.services.supplier.Availability;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -35,5 +34,6 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 
 	void updateSold(Integer id, int quantity);
 
-	void updateSupplier(Integer id, Price price, Price supplierPrice, Availability availability);
+
+	void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo);
 }

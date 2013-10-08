@@ -133,7 +133,7 @@ public class ProductMaintainController extends AbstractController {
 			form.setWeight(product.getWeight());
 			form.setCommentary(product.getCommentary());
 			form.setProductState(product.getState());
-			form.setStoreAvailable(product.getStockInfo().getRest());
+			form.setStoreAvailable(product.getStockInfo().getAvailable());
 
 			if (product.getStockInfo().getRestockDate() != null) {
 				form.setRestockDate(SIMPLE_DATE_FORMAT.format(product.getStockInfo().getRestockDate()));

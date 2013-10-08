@@ -10,7 +10,8 @@ public class Recipient {
 	private final String email;
 	private final String username;
 
-	public static final Recipient ALERTS_BOX = new Recipient(null, null);
+	public static final Recipient SUPPORT = new Recipient(null, null);
+	public static final Recipient MONITORING = new Recipient(null, null);
 
 	public Recipient(String email) {
 		this(null, email);

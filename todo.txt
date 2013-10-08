@@ -7,17 +7,15 @@
 - Split total and filtered count in FilteringAbility
 - Our recomendations view on the left of main page: L959 & V911 & v912
 
-- Check products that should be in stock every night and send notification
-
 - Track product changes are not very good. Must be changed.
 - Add full product name for URL in translit
-- Auto tracking product ability
 - Range filters
 - Binominal filters
 - Attribute modification works bad: changes are not applied.
 - Redefine financial policy
 - Associate groups with category
 - Disable ability to change category for a product (can cause many issues).
+- Coupons
 
 ============= PLAN ====================
 - Page not found should show sitemap instead
@@ -39,6 +37,8 @@
 
 ============= DONE ====================
 7.09
++ Auto tracking product ability
++ Check products that should be in stock every night and send notification
 + Clear person's cache if it's offline (restore PersonalityStateManager functionality).
 
 4.09

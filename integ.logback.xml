@@ -18,7 +18,7 @@
         <appender-ref ref="ConsoleAppender"/>
     </logger>
 
-    <root level="DEBUG">
+    <root level="ERROR">
         <appender-ref ref="FileAppender"/>
     </root>
 </configuration>

@@ -11,7 +11,6 @@ public interface ProductDescription extends ProductImager {
 
 	String getName();
 
-
 	/**
 	 * Returns price for the product.
 	 *
@@ -61,6 +60,13 @@ public interface ProductDescription extends ProductImager {
 	 * @return the current product state.
 	 */
 	ProductState getState();
+
+	/**
+	 * Returns sold count.
+	 *
+	 * @return the sold count.
+	 */
+	int getSoldCount();
 
 	/**
 	 * Returns information about product's stock state

@@ -1,12 +1,13 @@
 package billiongoods.server.services.supplier.impl.banggod;
 
-import billiongoods.server.services.supplier.Availability;
 import billiongoods.server.services.supplier.DataLoadingException;
 import billiongoods.server.services.supplier.SupplierDataLoader;
 import billiongoods.server.services.supplier.SupplierDescription;
 import billiongoods.server.services.supplier.impl.DefaultSupplierDescription;
 import billiongoods.server.warehouse.Price;
+import billiongoods.server.warehouse.StockInfo;
 import billiongoods.server.warehouse.SupplierInfo;
+import billiongoods.server.warehouse.impl.HibernateStockInfo;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -132,11 +133,15 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 		return loadDescription(supplierInfo.getReferenceUri(), 0);
 	}
 
-	public Availability loadAvailability(SupplierInfo supplierInfo) throws DataLoadingException {
-		return loadAvailability(supplierInfo, 0);
+	@Override
+	public StockInfo loadStockInfo(SupplierInfo supplierInfo) throws DataLoadingException {
+		return loadStockInfo(supplierInfo, 0);
 	}
 
-	private Availability loadAvailability(SupplierInfo supplierInfo, int iteration) throws DataLoadingException {
+	private StockInfo loadStockInfo(SupplierInfo supplierInfo, int iteration) throws DataLoadingException {
+		if (iteration == 4) {
+			initialize();
+		}
 		if (iteration >= 5) {
 			throw new DataLoadingException("Availability can't be loaded after iteration " + iteration + " for " + supplierInfo);
 		}
@@ -154,8 +159,6 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 
 			final HttpResponse execute = client.execute(HOST, request);
 			String s = EntityUtils.toString(execute.getEntity()).trim();
-			log.info("Availability response: " + s);
-
 			s = s.substring(s.indexOf("[") + 1, s.lastIndexOf("]"));
 			final String[] split = s.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
@@ -164,29 +167,32 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 
 			if ("\"success\"".equals(status)) {
 				if (msg.contains("In stock")) {
-					return new Availability(true);
+					return new HibernateStockInfo(null, null);
 				} else if (msg.contains("Out of stock, expected restock in 15")) {
-					return new Availability(new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000));
+					return new HibernateStockInfo(null, new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000));
 				} else if (msg.contains("Expect restock on")) {
 					final Date parse = RESTOCK_DATE_FROMAT.parse(msg.substring(18).replaceAll("st|nd|rd|th", ""));
-					return new Availability(parse);
+					return new HibernateStockInfo(null, parse);
 				} else if (msg.contains("Units Available")) {
-					return new Availability(Integer.parseInt(msg.substring(1, msg.indexOf(" Units")).trim()));
+					return new HibernateStockInfo(Integer.parseInt(msg.substring(1, msg.indexOf(" Units")).trim()), null);
 				} else if (msg.contains("Out of stock")) {
-					return new Availability(false);
+					return new HibernateStockInfo(0, null);
 				}
 			} else {
 				return null;
 			}
 			return null;
 		} catch (SocketTimeoutException ex) {
-			return loadAvailability(supplierInfo, iteration + 1);
+			return loadStockInfo(supplierInfo, iteration + 1);
 		} catch (Exception ex) {
 			throw new DataLoadingException("Price can't be loaded: " + supplierInfo + " " + ex.getMessage(), ex);
 		}
 	}
 
 	private SupplierDescription loadDescription(String uri, int iteration) throws DataLoadingException {
+		if (iteration == 4) {
+			initialize();
+		}
 		if (iteration >= 5) {
 			throw new DataLoadingException("Price can't be loaded after iteration " + iteration + " from " + uri);
 		}

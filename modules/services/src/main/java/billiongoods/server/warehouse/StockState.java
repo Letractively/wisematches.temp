@@ -1,9 +1,9 @@
-package billiongoods.server.services.supplier;
+package billiongoods.server.warehouse;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public enum AvailabilityType {
+public enum StockState {
 	IN_STOCK,
 	OUT_STOCK,
 	LIMITED_NUMBER,

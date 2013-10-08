@@ -1,4 +1,4 @@
-package billiongoods.server.services.price;
+package billiongoods.server.services.validator;
 
 import java.util.Collection;
 import java.util.Date;
@@ -11,9 +11,13 @@ public interface ValidationSummary {
 
 	Date getFinishDate();
 
+
+	int getValidProducts();
+
+	int getBrokenProducts();
+
+
 	int getValidatedProducts();
 
-	Collection<PriceRenewal> getPriceRenewals();
-
-	Collection<PriceBreakdown> getPriceBreakdowns();
+	Collection<ProductValidation> getProductValidations();
 }
