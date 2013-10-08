@@ -3,6 +3,7 @@ package billiongoods.server.services.price.impl;
 import billiongoods.core.search.Range;
 import billiongoods.core.task.CleaningDayListener;
 import billiongoods.server.services.price.*;
+import billiongoods.server.services.supplier.Availability;
 import billiongoods.server.services.supplier.DataLoadingException;
 import billiongoods.server.services.supplier.SupplierDataLoader;
 import billiongoods.server.warehouse.Price;
@@ -130,9 +131,16 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 						final Price oldPrice = (Price) a[1];
 						final Price oldSupplierPrice = supplierInfo.getPrice();
 
+						Availability availability = null;
 						Price newSupplierPrice = oldSupplierPrice;
 						try {
 							newSupplierPrice = priceLoader.loadDescription(supplierInfo).getPrice();
+						} catch (DataLoadingException ex) {
+							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
+							validationSummary.addBreakdown(new Date(), productId, ex);
+						}
+						try {
+							availability = priceLoader.loadAvailability(supplierInfo);
 						} catch (DataLoadingException ex) {
 							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
 							validationSummary.addBreakdown(new Date(), productId, ex);
@@ -145,7 +153,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 							validationSummary.addRenewal(renewal);
 
 							session.save(renewal);
-							productManager.updatePrice(productId, newPrice, newSupplierPrice);
+							productManager.updateSupplier(productId, newPrice, newSupplierPrice, availability);
 						}
 
 						for (PriceValidatorListener listener : listeners) {

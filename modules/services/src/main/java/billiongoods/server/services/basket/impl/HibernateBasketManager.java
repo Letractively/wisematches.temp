@@ -42,7 +42,7 @@ public class HibernateBasketManager implements BasketManager {
 
 	@Override
 	@Cacheable(value = "basketSize", key = "#principal")
-	public int getBasketSize(Personality principal) {
+	public Integer getBasketSize(Personality principal) {
 		if (principal == null || principal.getId() == null) {
 			return 0;
 		}
@@ -51,7 +51,7 @@ public class HibernateBasketManager implements BasketManager {
 		query.setParameter("pid", principal.getId());
 
 		final Number number = (Number) query.uniqueResult();
-		return number == null ? 0 : number.intValue();
+		return number == null ? null : number.intValue();
 	}
 
 	private HibernateBasket getBasketOrCreate(Personality principal, boolean create) {

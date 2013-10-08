@@ -29,9 +29,17 @@ public interface SupplierInfo {
 	String getReferenceUri();
 
 	/**
+	 * Returns reference id. Returns the same that is {@link billiongoods.server.warehouse.Supplier#getReferenceId(SupplierInfo)}
+	 *
+	 * @return the supplier id id
+	 * @see billiongoods.server.warehouse.Supplier#getReferenceId(SupplierInfo)
+	 */
+	String getReferenceId();
+
+	/**
 	 * The reference code. It can differ from reference id.
 	 *
-	 * @return The reference code.
+	 * @return The reference SKU.
 	 */
 	String getReferenceCode();
 

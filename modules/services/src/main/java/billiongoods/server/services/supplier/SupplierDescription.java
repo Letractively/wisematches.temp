@@ -11,5 +11,7 @@ import java.util.Map;
 public interface SupplierDescription {
 	Price getPrice();
 
+	Availability getAvailability();
+
 	public Map<String, Collection<String>> getParameters();
 }

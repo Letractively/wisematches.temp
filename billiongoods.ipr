@@ -38,6 +38,8 @@
             <element id="library" level="project" name="Maven: ch.qos.logback:logback-classic:1.0.9" />
             <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.0.9" />
             <element id="library" level="project" name="Maven: joda-time:joda-time:2.1" />
+            <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.11" />
+            <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.11" />
             <element id="library" level="project" name="Maven: org.springframework:spring-core:3.2.3.RELEASE" />
             <element id="library" level="project" name="Maven: org.springframework:spring-expression:3.2.3.RELEASE" />
             <element id="library" level="project" name="Maven: org.springframework:spring-beans:3.2.3.RELEASE" />
@@ -72,8 +74,6 @@
             </element>
             <element id="library" level="project" name="Maven: net.sf.opencsv:opencsv:2.3" />
             <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.7.2" />
-            <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.11" />
-            <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.11" />
             <element id="library" level="project" name="Maven: org.springframework:spring-web:3.2.3.RELEASE" />
             <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:3.2.3.RELEASE" />
             <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:3.2.0.M2" />
@@ -545,7 +545,7 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/target" />
   </component>
-  <component name="RegexUtilComponent" text="&lt;div id=&quot;hb&quot; class=&quot;hb&quot; onmouseout=&quot;mclosetimes()&quot; onmouseover=&quot;mopens('sty01')&quot;&gt;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&lt;b id=&quot;price_pre&quot;&gt;US$&lt;/b&gt;&lt;i&gt;&lt;/i&gt;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&lt;/div&gt;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&lt;div class=&quot;jq&quot; id=&quot;price_sub&quot; itemprop=&quot;price&quot;&gt;42.99&lt;/div&gt;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&lt;div class=&quot;sc&quot; id=&quot;regular_div&quot;&gt;(49.33)&lt;/div&gt;&#10;&#9;&#9;&#9;&#9;&#9;&lt;/div&gt;&#10;" flags="8" regex="&lt;div.*?id=&quot;(price_sub|regular_div)&quot;.*?&gt;\(?(.+?)\)?&lt;/div&gt;" mode="2" />
+  <component name="RegexUtilComponent" text="&quot;success&quot;,&quot;In stock, usually dispatched in 1 business day &quot;,&quot;col600&quot;,null,&quot;Shipped from GZ warehouse&quot;,&quot;1&quot;,&quot;1785&quot;,null" flags="0" regex=",(?=([^\&quot;]*\&quot;([^\&quot;]*)\&quot;)*[^\&quot;]*$)" mode="2" />
   <component name="ResourceManagerContainer">
     <option name="myResourceBundles">
       <value>

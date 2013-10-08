@@ -12,7 +12,7 @@ import java.util.List;
 public interface BasketManager {
 	Basket getBasket(Personality principal);
 
-	int getBasketSize(Personality principal);
+	Integer getBasketSize(Personality principal);
 
 
 	BasketItem addBasketItem(Personality principal, ProductDescription description, List<Property> options, int quantity);
