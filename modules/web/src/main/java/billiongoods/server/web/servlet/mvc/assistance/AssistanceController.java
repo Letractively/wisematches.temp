@@ -1,5 +1,9 @@
 package billiongoods.server.web.servlet.mvc.assistance;
 
+import billiongoods.server.services.notify.Notification;
+import billiongoods.server.services.notify.Recipient;
+import billiongoods.server.services.notify.Sender;
+import billiongoods.server.services.notify.impl.NotificationPublisher;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.assistance.impl.IssueForm;
@@ -7,9 +11,6 @@ import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -28,7 +28,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/assistance")
 public class AssistanceController extends AbstractController {
-	private JavaMailSender mailSender;
+	private NotificationPublisher notificationPublisher;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.assistance.AssistanceController");
 
@@ -67,19 +67,14 @@ public class AssistanceController extends AbstractController {
 		final String id = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
 
 		try {
-			final MimeMessagePreparator mm = new MimeMessagePreparator() {
-				public void prepare(MimeMessage mimeMessage) throws Exception {
-					final InternetAddress to = new InternetAddress("support@billiongoods.ru", "Служба Поддержки", "UTF-8");
-					final InternetAddress from = new InternetAddress(form.getEmail(), form.getName(), "UTF-8");
+			final String sub = "Обращение в службу поддержки BillionGoods " + id;
+			final String msg = "<p>" + form.getMessage() + "</p><p></p><p>" + form.getName() + "</p>";
+			final InternetAddress replay = new InternetAddress(form.getEmail(), form.getName(), "UTF-8");
 
-					final MimeMessageHelper msg = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-					msg.setFrom(from);
-					msg.setTo(to);
-					msg.setSubject("Обращение в службу поддержки BillionGoods " + id);
-					msg.setText("<p>" + form.getMessage() + "</p><p></p><p>" + form.getName() + "</p>", true);
-				}
-			};
-			mailSender.send(mm);
+			final Notification notification = new Notification(System.currentTimeMillis(),
+					"assistance.question", sub, msg, Recipient.SUPPORT, Sender.SERVER, replay);
+
+			notificationPublisher.publishNotification(notification);
 		} catch (Exception ex) {
 			log.error("Question notification can't be sent", ex);
 			return responseFactory.failure("assistance.question.system", locale);
@@ -88,7 +83,7 @@ public class AssistanceController extends AbstractController {
 	}
 
 	@Autowired
-	public void setMailSender(JavaMailSender mailSender) {
-		this.mailSender = mailSender;
+	public void setNotificationPublisher(NotificationPublisher notificationPublisher) {
+		this.notificationPublisher = notificationPublisher;
 	}
 }

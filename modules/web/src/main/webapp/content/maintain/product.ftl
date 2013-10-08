@@ -68,7 +68,7 @@
     <td><@bg.ui.input path="form.supplierPrice"/></td>
 </tr>
 <tr>
-    <td><label for="supplierPrimordialPrice">Цена поставщика до скодки: </label></td>
+    <td><label for="supplierPrimordialPrice">Цена поставщика до скидки: </label></td>
     <td><@bg.ui.input path="form.supplierPrimordialPrice"/></td>
 </tr>
 <tr>

@@ -1,21 +1,18 @@
-CREATE TABLE `billiongoods`.`store_product_tracking` (
-  `id`           INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `registration` DATETIME     NOT NULL,
-  `productId`    INT          NOT NULL,
-  `type`         INT(2)       NOT NULL,
-  `personId`     BIGINT(20)   NULL,
-  `personEmail`  VARCHAR(145) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `email_index` (`personEmail` ASC),
-  INDEX `product_foreign_idx` (`productId` ASC),
-  INDEX `person_foreign_idx` (`personId` ASC),
-  CONSTRAINT `product_foreign`
-  FOREIGN KEY (`productId`)
-  REFERENCES `billiongoods`.`store_product` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `person_foreign`
-  FOREIGN KEY (`personId`)
-  REFERENCES `billiongoods`.`account_personality` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION);
+CREATE TABLE `billiongoods`.`service_validation` (
+  `id`        INT            NOT NULL AUTO_INCREMENT,
+  `productId` INT            NOT NULL,
+  `timestamp` DATETIME       NOT NULL,
+  `op`        DECIMAL(10, 4) NULL,
+  `opp`       DECIMAL(10, 4) NULL,
+  `osp`       DECIMAL(10, 4) NULL,
+  `ospp`      DECIMAL(10, 4) NULL,
+  `np`        DECIMAL(10, 4) NULL,
+  `npp`       DECIMAL(10, 4) NULL,
+  `nsp`       DECIMAL(10, 4) NULL,
+  `nspp`      DECIMAL(10, 4) NULL,
+  `oa`        INT            NULL,
+  `ord`       DATE           NULL,
+  `na`        INT            NULL,
+  `nrd`       DATE           NULL,
+  `errMsg`    VARCHAR(255)   NULL,
+  PRIMARY KEY (`id`));

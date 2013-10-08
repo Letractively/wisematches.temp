@@ -15,173 +15,181 @@ import java.util.List;
  */
 @MappedSuperclass
 public class AbstractProductDescription implements ProductDescription {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 
-    @Column(name = "name")
-    private String name;
+	@Column(name = "name")
+	private String name;
 
-    @Column(name = "weight")
-    private double weight;
+	@Column(name = "weight")
+	private double weight;
 
-    @Column(name = "categoryId")
-    private Integer categoryId;
+	@Column(name = "categoryId")
+	private Integer categoryId;
 
-    @Column(name = "comment")
-    private String commentary;
+	@Column(name = "comment")
+	private String commentary;
 
-    @Column(name = "state")
-    @Enumerated(EnumType.ORDINAL)
-    private ProductState state = ProductState.DISABLED;
+	@Column(name = "state")
+	@Enumerated(EnumType.ORDINAL)
+	private ProductState state = ProductState.DISABLED;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "amount", column = @Column(name = "price")),
-            @AttributeOverride(name = "primordialAmount", column = @Column(name = "primordialPrice"))
-    })
-    private Price price;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount", column = @Column(name = "price")),
+			@AttributeOverride(name = "primordialAmount", column = @Column(name = "primordialPrice"))
+	})
+	private Price price;
 
-    @Embedded
-    private HibernateStockInfo stockInfo = new HibernateStockInfo();
+	@Column(name = "stockSold")
+	private int soldCount;
 
-    @Embedded
-    private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
+	@Embedded
+	private HibernateStockInfo stockInfo = new HibernateStockInfo();
 
-    @Column(name = "registrationDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date registrationDate;
+	@Embedded
+	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
 
-    @Column(name = "previewImageId")
-    private String previewImageId;
+	@Column(name = "registrationDate")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date registrationDate;
 
-    @OrderColumn(name = "position")
-    @ElementCollection(fetch = FetchType.LAZY, targetClass = HibernateProductProperty.class)
-    @CollectionTable(name = "store_product_property", joinColumns = @JoinColumn(name = "productId"))
-    protected List<HibernateProductProperty> propertyIds = new ArrayList<>();
+	@Column(name = "previewImageId")
+	private String previewImageId;
 
-    public AbstractProductDescription() {
-        registrationDate = new Date();
-    }
+	@OrderColumn(name = "position")
+	@ElementCollection(fetch = FetchType.LAZY, targetClass = HibernateProductProperty.class)
+	@CollectionTable(name = "store_product_property", joinColumns = @JoinColumn(name = "productId"))
+	protected List<HibernateProductProperty> propertyIds = new ArrayList<>();
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
+	public AbstractProductDescription() {
+		registrationDate = new Date();
+	}
 
-    @Override
-    public String getName() {
-        return name;
-    }
+	@Override
+	public Integer getId() {
+		return id;
+	}
 
-    @Override
-    public StockInfo getStockInfo() {
-        return stockInfo;
-    }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public HibernateSupplierInfo getSupplierInfo() {
-        return supplierInfo;
-    }
+	@Override
+	public StockInfo getStockInfo() {
+		return stockInfo;
+	}
 
-    @Override
-    public ProductState getState() {
-        return state;
-    }
+	@Override
+	public HibernateSupplierInfo getSupplierInfo() {
+		return supplierInfo;
+	}
 
-    @Override
-    public double getWeight() {
-        return weight;
-    }
+	@Override
+	public ProductState getState() {
+		return state;
+	}
 
-    @Override
-    public Integer getCategoryId() {
-        return categoryId;
-    }
+	@Override
+	public double getWeight() {
+		return weight;
+	}
 
-    @Override
-    public Price getPrice() {
-        return price;
-    }
+	@Override
+	public Integer getCategoryId() {
+		return categoryId;
+	}
 
-    @Override
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
+	@Override
+	public Price getPrice() {
+		return price;
+	}
 
-    @Override
-    public String getPreviewImageId() {
-        return previewImageId;
-    }
+	@Override
+	public int getSoldCount() {
+		return soldCount;
+	}
 
-    @Override
-    public String getCommentary() {
-        return commentary;
-    }
+	@Override
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
 
-    void setName(String name) {
-        this.name = name;
-    }
+	@Override
+	public String getPreviewImageId() {
+		return previewImageId;
+	}
 
-    void setState(ProductState state) {
-        this.state = state;
-        if (state == ProductState.ACTIVE || state == ProductState.PROMOTED) {
-            this.registrationDate = new Date();
-        }
-    }
+	@Override
+	public String getCommentary() {
+		return commentary;
+	}
 
-    void setCategory(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
+	void setName(String name) {
+		this.name = name;
+	}
 
-    void setWeight(double weight) {
-        this.weight = weight;
-    }
+	void setState(ProductState state) {
+		this.state = state;
+		if (state == ProductState.ACTIVE || state == ProductState.PROMOTED) {
+			this.registrationDate = new Date();
+		}
+	}
 
-    void setCommentary(String commentary) {
-        this.commentary = commentary;
-    }
+	void setCategory(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
 
-    void setPrice(Price price) {
-        this.price = price;
-    }
+	void setWeight(double weight) {
+		this.weight = weight;
+	}
 
-    void setRestockInfo(Integer available, Date restockDate) {
-        this.stockInfo.setRestockInfo(available, restockDate);
-    }
+	void setCommentary(String commentary) {
+		this.commentary = commentary;
+	}
 
-    void setPreviewImageId(String previewImageId) {
-        this.previewImageId = previewImageId;
-    }
+	void setPrice(Price price) {
+		this.price = price;
+	}
 
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AbstractProductDescription)) return false;
+	void setRestockInfo(Integer available, Date restockDate) {
+		this.stockInfo.setRestockInfo(available, restockDate);
+	}
 
-        AbstractProductDescription that = (AbstractProductDescription) o;
-        return !(id != null ? !id.equals(that.id) : that.id != null);
-    }
+	void setPreviewImageId(String previewImageId) {
+		this.previewImageId = previewImageId;
+	}
 
-    @Override
-    public final int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
+	@Override
+	public final boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof AbstractProductDescription)) return false;
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("AbstractProductDescription{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", weight=").append(weight);
-        sb.append(", categoryId=").append(categoryId);
-        sb.append(", state=").append(state);
-        sb.append(", price=").append(price);
-        sb.append(", stockInfo=").append(stockInfo);
-        sb.append(", registrationDate=").append(registrationDate);
-        sb.append(", previewImageId='").append(previewImageId).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
+		AbstractProductDescription that = (AbstractProductDescription) o;
+		return !(id != null ? !id.equals(that.id) : that.id != null);
+	}
+
+	@Override
+	public final int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("AbstractProductDescription{");
+		sb.append("id=").append(id);
+		sb.append(", name='").append(name).append('\'');
+		sb.append(", weight=").append(weight);
+		sb.append(", categoryId=").append(categoryId);
+		sb.append(", state=").append(state);
+		sb.append(", price=").append(price);
+		sb.append(", stockInfo=").append(stockInfo);
+		sb.append(", registrationDate=").append(registrationDate);
+		sb.append(", previewImageId='").append(previewImageId).append('\'');
+		sb.append('}');
+		return sb.toString();
+	}
 }

@@ -14,13 +14,9 @@ import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingManager;
 import billiongoods.server.services.tracking.TrackingContext;
 import billiongoods.server.services.tracking.TrackingType;
-import billiongoods.server.warehouse.Product;
-import billiongoods.server.warehouse.ProductListener;
-import billiongoods.server.warehouse.ProductManager;
-import billiongoods.server.warehouse.ProductState;
+import billiongoods.server.warehouse.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 
 import java.util.Date;
 import java.util.List;
@@ -29,7 +25,7 @@ import java.util.Set;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class NotificationOriginCenter implements BreakingDayListener, InitializingBean {
+public class NotificationOriginCenter implements BreakingDayListener {
 	private OrderManager orderManager;
 	private ProductManager productManager;
 	private ProductTrackingManager trackingManager;
@@ -44,10 +40,6 @@ public class NotificationOriginCenter implements BreakingDayListener, Initializi
 	public NotificationOriginCenter() {
 	}
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-	}
-
 	private void processOrderState(Order order) {
 		if (order.isTracking() && order.getPayer() != null) {
 			fireNotification("order.state", new Recipient(order.getPayer()), order);
@@ -55,7 +47,7 @@ public class NotificationOriginCenter implements BreakingDayListener, Initializi
 	}
 
 	private void processProductUpdated(Product product, Set<String> updatedFields) {
-		if (updatedFields.contains("restockDate") && product.getStockInfo().isAvailable()) {
+		if (updatedFields.contains("restockDate") && product.getStockInfo().getStockState() == StockState.IN_STOCK) {
 			final TrackingContext c = new TrackingContext(product.getId(), TrackingType.AVAILABILITY);
 
 			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);

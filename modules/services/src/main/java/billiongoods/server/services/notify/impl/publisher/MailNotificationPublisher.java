@@ -54,7 +54,7 @@ public class MailNotificationPublisher implements NotificationPublisher {
 				String email = recipient.getEmail();
 				String username = recipient.getUsername();
 
-				if (recipient == Recipient.ALERTS_BOX) {
+				if (recipient == Recipient.MONITORING) {
 					email = serverDescriptor.getAlertsMailBox();
 				}
 				final InternetAddress to = new InternetAddress(email, username, "UTF-8");
@@ -63,9 +63,14 @@ public class MailNotificationPublisher implements NotificationPublisher {
 				final MimeMessageHelper msg = new MimeMessageHelper(mimeMessage, false, "UTF-8");
 				msg.setFrom(from);
 				msg.setTo(to);
+
+				if (notification.getReplayTo() != null) {
+					msg.setReplyTo(notification.getReplayTo());
+				}
+
 				msg.setSubject(notification.getSubject());
 
-				if (recipient == Recipient.ALERTS_BOX) {
+				if (recipient == Recipient.MONITORING) {
 					msg.setText(notification.getMessage(), true);
 				} else {
 					final StringBuilder m = new StringBuilder();

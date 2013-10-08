@@ -2,7 +2,6 @@ package billiongoods.server.warehouse.impl;
 
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.entity.EntitySearchManager;
-import billiongoods.server.services.supplier.Availability;
 import billiongoods.server.warehouse.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -235,28 +234,48 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	@Override
 	public void updateSold(Integer id, int quantity) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct a set a.stockInfo.sold=a.stockInfo.sold+:quantity where a.id=:id");
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct a set a.soldCount=a.soldCount+:quantity where a.id=:id");
 		query.setParameter("id", id);
 		query.setParameter("quantity", quantity);
 		query.executeUpdate();
 	}
 
 	@Override
-	public void updateSupplier(Integer id, Price price, Price supplierPrice, Availability availability) {
+	public void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo) {
+		if (price == null && supplierPrice == null && stockInfo == null) {
+			return;
+		}
+
+		final StringBuilder b = new StringBuilder("update billiongoods.server.warehouse.impl.HibernateProduct a set ");
+		if (price != null) {
+			b.append("a.price.amount=:priceAmount, a.price.primordialAmount=:pricePrimordialAmount, ");
+		}
+		if (supplierPrice != null) {
+			b.append("a.supplierInfo.price.amount=:supplierAmount, a.supplierInfo.price.primordialAmount=:supplierPrimordialAmount, ");
+		}
+		if (stockInfo != null) {
+			b.append("a.stockInfo.available=:available, a.stockInfo.restockDate=:restockDate, ");
+		}
+		b.append("a.supplierInfo.validationDate=:validationDate where a.id=:id");
+
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct a " +
-				"set " +
-				"a.price.amount=:priceAmount, a.price.primordialAmount=:pricePrimordialAmount, " +
-				"a.supplierInfo.price.amount=:supplierAmount, a.supplierInfo.price.primordialAmount=:supplierPrimordialAmount, " +
-				"a.supplierInfo.validationDate=:validationDate " +
-				"where a.id=:id");
+		final Query query = session.createQuery(b.toString());
 
 		query.setParameter("id", id);
-		query.setParameter("priceAmount", price.getAmount());
-		query.setParameter("pricePrimordialAmount", price.getPrimordialAmount());
-		query.setParameter("supplierAmount", supplierPrice.getAmount());
-		query.setParameter("supplierPrimordialAmount", supplierPrice.getPrimordialAmount());
 		query.setParameter("validationDate", new Date());
+
+		if (price != null) {
+			query.setParameter("priceAmount", price.getAmount());
+			query.setParameter("pricePrimordialAmount", price.getPrimordialAmount());
+		}
+		if (supplierPrice != null) {
+			query.setParameter("supplierAmount", supplierPrice.getAmount());
+			query.setParameter("supplierPrimordialAmount", supplierPrice.getPrimordialAmount());
+		}
+		if (stockInfo != null) {
+			query.setParameter("available", stockInfo.getAvailable());
+			query.setParameter("restockDate", stockInfo.getRestockDate());
+		}
 		query.executeUpdate();
 	}
 

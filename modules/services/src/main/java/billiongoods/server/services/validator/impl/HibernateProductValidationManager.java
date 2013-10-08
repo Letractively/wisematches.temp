@@ -1,15 +1,17 @@
-package billiongoods.server.services.price.impl;
+package billiongoods.server.services.validator.impl;
 
 import billiongoods.core.search.Range;
 import billiongoods.core.task.CleaningDayListener;
-import billiongoods.server.services.price.*;
-import billiongoods.server.services.supplier.Availability;
+import billiongoods.server.services.price.ExchangeManager;
+import billiongoods.server.services.price.MarkupType;
+import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.services.supplier.DataLoadingException;
 import billiongoods.server.services.supplier.SupplierDataLoader;
-import billiongoods.server.warehouse.Price;
-import billiongoods.server.warehouse.ProductContext;
-import billiongoods.server.warehouse.ProductManager;
-import billiongoods.server.warehouse.SupplierInfo;
+import billiongoods.server.services.validator.ProductValidationListener;
+import billiongoods.server.services.validator.ProductValidationManager;
+import billiongoods.server.services.validator.ValidationSummary;
+import billiongoods.server.warehouse.*;
+import billiongoods.server.warehouse.impl.HibernateStockInfo;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,14 +32,14 @@ import java.util.concurrent.Future;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernatePriceValidator implements PriceValidator, CleaningDayListener {
-	private SupplierDataLoader priceLoader;
-
+public class HibernateProductValidationManager implements ProductValidationManager, CleaningDayListener {
 	private SessionFactory sessionFactory;
 	private ProductManager productManager;
 
 	private PriceConverter priceConverter;
 	private ExchangeManager exchangeManager;
+
+	private SupplierDataLoader dataLoader;
 
 	private AsyncTaskExecutor taskExecutor;
 	private PlatformTransactionManager transactionManager;
@@ -48,25 +50,25 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 
 	private static final int BULK_PRODUCTS_SIZE = 10;
 
-	private final Collection<PriceValidatorListener> listeners = new CopyOnWriteArrayList<>();
+	private final Collection<ProductValidationListener> listeners = new CopyOnWriteArrayList<>();
 
 	private static final DefaultTransactionAttribute NEW_TRANSACTION_DEFINITION = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.PriceValidator");
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.ProductValidationManager");
 
 
-	public HibernatePriceValidator() {
+	public HibernateProductValidationManager() {
 	}
 
 	@Override
-	public void addPriceValidatorListener(PriceValidatorListener l) {
+	public void addPriceValidatorListener(ProductValidationListener l) {
 		if (l != null) {
 			listeners.add(l);
 		}
 	}
 
 	@Override
-	public void removePriceValidatorListener(PriceValidatorListener l) {
+	public void removePriceValidatorListener(ProductValidationListener l) {
 		if (l != null) {
 			listeners.remove(l);
 		}
@@ -93,11 +95,11 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 				throw ex;
 			}
 
-			for (PriceValidatorListener listener : listeners) {
-				listener.priceValidationStarted(startedDate, count);
+			for (ProductValidationListener listener : listeners) {
+				listener.productValidationStarted(startedDate, count);
 			}
 
-			priceLoader.initialize();
+			dataLoader.initialize();
 
 			int index = 0;
 			while (true) {
@@ -113,7 +115,7 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 				try {
 					Session session = sessionFactory.getCurrentSession();
 
-					final Query query = session.createQuery("select a.id, a.price, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) order by a.id");
+					final Query query = session.createQuery("select a.id, a.price, a.stockInfo, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) order by a.id");
 					query.setParameterList("states", ProductContext.VISIBLE);
 					final List list = range.apply(query).list();
 					if (list.isEmpty()) {
@@ -126,38 +128,42 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 						final Object[] a = (Object[]) o;
 
 						final Integer productId = (Integer) a[0];
-						final SupplierInfo supplierInfo = (SupplierInfo) a[2];
-
 						final Price oldPrice = (Price) a[1];
+						final HibernateStockInfo oldStockInfo = (HibernateStockInfo) a[2];
+						final SupplierInfo supplierInfo = (SupplierInfo) a[3];
+
 						final Price oldSupplierPrice = supplierInfo.getPrice();
 
-						Availability availability = null;
-						Price newSupplierPrice = oldSupplierPrice;
+						final HibernateProductValidation validation = new HibernateProductValidation(productId, new Date(), oldPrice, oldSupplierPrice, oldStockInfo);
+
 						try {
-							newSupplierPrice = priceLoader.loadDescription(supplierInfo).getPrice();
+							final Price newSupplierPrice = dataLoader.loadDescription(supplierInfo).getPrice();
+							final Price newPrice = priceConverter.convert(newSupplierPrice, exchangeRate, MarkupType.REGULAR);
+							validation.priceValidated(newPrice, newSupplierPrice);
 						} catch (DataLoadingException ex) {
+							validation.processingError(ex);
 							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
-							validationSummary.addBreakdown(new Date(), productId, ex);
 						}
 						try {
-							availability = priceLoader.loadAvailability(supplierInfo);
+							final StockInfo newStockInfo = dataLoader.loadStockInfo(supplierInfo);
+							validation.stockValidated(new HibernateStockInfo(newStockInfo));
 						} catch (DataLoadingException ex) {
+							validation.processingError(ex);
 							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
-							validationSummary.addBreakdown(new Date(), productId, ex);
 						}
 
-						final Price newPrice = priceConverter.convert(newSupplierPrice, exchangeRate, MarkupType.REGULAR);
-						final HibernatePriceRenewal renewal = new HibernatePriceRenewal(productId, new Date(), oldPrice, oldSupplierPrice, newPrice, newSupplierPrice);
-						if (!newPrice.equals(oldPrice)) {
-							log.info("Price for product {} from {} has been updated {}", productId, supplierInfo.getReferenceUri(), renewal);
-							validationSummary.addRenewal(renewal);
+						if (validation.getErrorMessage() != null) {
+							validationSummary.addProductValidation(validation);
+						} else if (validation.hasChanges()) {
+							log.info("Product {} has changes: {}", productId, validation);
+							validationSummary.addProductValidation(validation);
 
-							session.save(renewal);
-							productManager.updateSupplier(productId, newPrice, newSupplierPrice, availability);
+							session.save(validation);
+							productManager.validated(productId, validation.getNewPrice(), validation.getNewSupplierPrice(), validation.getNewStockInfo());
 						}
 
-						for (PriceValidatorListener listener : listeners) {
-							listener.priceValidated(productId, renewal);
+						for (ProductValidationListener listener : listeners) {
+							listener.productValidated(productId, validation);
 						}
 					}
 					session.flush();
@@ -173,8 +179,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 			final Date finishedDate = new Date();
 
 			validationSummary.finalize(finishedDate);
-			for (PriceValidatorListener listener : listeners) {
-				listener.priceValidationFinished(finishedDate, validationSummary);
+			for (ProductValidationListener listener : listeners) {
+				listener.productValidationFinished(finishedDate, validationSummary);
 			}
 		} catch (Exception ex) {
 			log.error("Price validation can't be done", ex);
@@ -226,8 +232,8 @@ public class HibernatePriceValidator implements PriceValidator, CleaningDayListe
 		this.taskExecutor = taskExecutor;
 	}
 
-	public void setPriceLoader(SupplierDataLoader priceLoader) {
-		this.priceLoader = priceLoader;
+	public void setDataLoader(SupplierDataLoader dataLoader) {
+		this.dataLoader = dataLoader;
 	}
 
 	public void setSessionFactory(SessionFactory sessionFactory) {

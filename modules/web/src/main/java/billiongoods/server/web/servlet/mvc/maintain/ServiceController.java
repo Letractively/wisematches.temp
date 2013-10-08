@@ -4,7 +4,7 @@ package billiongoods.server.web.servlet.mvc.maintain;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 
-import billiongoods.server.services.price.PriceValidator;
+import billiongoods.server.services.validator.ProductValidationManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ import java.util.StringTokenizer;
 @Controller
 @RequestMapping("/maintain/service")
 public class ServiceController extends AbstractController {
-	private PriceValidator priceValidator;
+	private ProductValidationManager priceValidator;
 
 	public ServiceController() {
 	}
@@ -78,7 +78,7 @@ public class ServiceController extends AbstractController {
 	public String validatePrices(Model model) {
 		model.addAttribute("active", priceValidator.isInProgress());
 		model.addAttribute("summary", priceValidator.getValidationSummary());
-		return "/content/maintain/priceValidation";
+		return "/content/maintain/validation";
 	}
 
 	@RequestMapping(value = "validatePrices", method = RequestMethod.POST)
@@ -96,7 +96,7 @@ public class ServiceController extends AbstractController {
 	}
 
 	@Autowired
-	public void setPriceValidator(PriceValidator priceValidator) {
+	public void setPriceValidator(ProductValidationManager priceValidator) {
 		this.priceValidator = priceValidator;
 	}
 }

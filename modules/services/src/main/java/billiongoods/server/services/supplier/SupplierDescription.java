@@ -1,6 +1,7 @@
 package billiongoods.server.services.supplier;
 
 import billiongoods.server.warehouse.Price;
+import billiongoods.server.warehouse.StockInfo;
 
 import java.util.Collection;
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Map;
 public interface SupplierDescription {
 	Price getPrice();
 
-	Availability getAvailability();
+	StockInfo getStockInfo();
 
 	public Map<String, Collection<String>> getParameters();
 }

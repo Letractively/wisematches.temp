@@ -2,7 +2,6 @@ package billiongoods.server.web.security.filter;
 
 import billiongoods.server.web.security.filter.visitor.SessionVisitorServices;
 import billiongoods.server.web.security.filter.visitor.VisitorServices;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -23,7 +22,7 @@ import java.util.Set;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class VisitorAuthenticationFilter extends GenericFilterBean implements InitializingBean {
+public class VisitorAuthenticationFilter extends GenericFilterBean {
 	private long lastGeneratedVisitorId;
 
 	private AuthenticationManager authenticationManager;

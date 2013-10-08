@@ -1,5 +1,6 @@
 package billiongoods.server.services.notify;
 
+import javax.mail.internet.InternetAddress;
 import java.io.Serializable;
 
 /**
@@ -13,8 +14,13 @@ public class Notification implements Serializable {
 	private final String message;
 	private final Sender sender;
 	private final Recipient recipient;
+	private final InternetAddress replayTo;
 
 	public Notification(long id, String code, String subject, String message, Recipient recipient, Sender sender) {
+		this(id, code, subject, message, recipient, sender, null);
+	}
+
+	public Notification(long id, String code, String subject, String message, Recipient recipient, Sender sender, InternetAddress replayTo) {
 		this.id = id;
 		this.timestamp = System.currentTimeMillis();
 		this.code = code;
@@ -22,6 +28,7 @@ public class Notification implements Serializable {
 		this.message = message;
 		this.recipient = recipient;
 		this.sender = sender;
+		this.replayTo = replayTo;
 	}
 
 	public long getId() {
@@ -44,12 +51,16 @@ public class Notification implements Serializable {
 		return message;
 	}
 
+	public Sender getSender() {
+		return sender;
+	}
+
 	public Recipient getRecipient() {
 		return recipient;
 	}
 
-	public Sender getSender() {
-		return sender;
+	public InternetAddress getReplayTo() {
+		return replayTo;
 	}
 
 	@Override

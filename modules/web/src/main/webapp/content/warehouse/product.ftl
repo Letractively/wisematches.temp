@@ -10,6 +10,7 @@
 <script type="text/javascript" src="<@bg.ui.static "js/jquery.prettyPhoto-3.1.5.js"/>"></script>
 
 <#assign sku=messageSource.getProductCode(product)/>
+<#assign stockInfo=product.stockInfo/>
 
 <div class="product ${product.state.name()?lower_case}" itemscope itemtype="http://schema.org/Product">
 <meta itemprop="url" content="http://www.billiongoods.ru/warehouse/product/${product.id}"/>
@@ -54,21 +55,28 @@
                     (<a href="${product.supplierInfo.referenceUrl.toExternalForm()}"
                         target="_blank">${product.supplierInfo.referenceCode}</a>)
                 </@bg.security.authorized>
-                <#--Продано: <span class="sold">${product.stockInfo.sold}</span>-->
+                <#if (product.soldCount>0)>
+                    Продано: <span class="sold">${product.soldCount}</span>
+                </#if>
                 </div>
 
                 <div class="stock">
                     <div class="ability">
-                    <#if product.stockInfo.restockDate??>
-                        Нет на складе. Поступление
-                        ожидается ${messageSource.formatDate(product.stockInfo.restockDate, locale)}
-                    <#else>
-                        <#if product.stockInfo.rest??>
-                            Торопитесь, осталось всего ${product.stockInfo.rest} штук!
-                        <#else>
+                    <#switch stockInfo.stockState>
+                        <#case StockState.IN_STOCK>
                             В наличии, обычно отправлается в течении 2-3 рабочих дней
-                        </#if>
-                    </#if>
+                            <#break/>
+                        <#case StockState.LIMITED_NUMBER>
+                            Торопитесь, осталось всего ${stockInfo.available} штук!
+                            <#break/>
+                        <#case StockState.SOLD_OUT>
+                            Товар распродан
+                            <#break/>
+                        <#case StockState.OUT_STOCK>
+                            Нет на складе. Поступление
+                            ожидается ${messageSource.formatDate(stockInfo.restockDate, locale)}
+                            <#break/>
+                    </#switch>
                     </div>
                     <div class="shipment">Бесплатная доставка за 30-40 дней</div>
                 </div>
@@ -132,7 +140,7 @@
                     </#if>
 
                         <div class="action">
-                        <#if product.stockInfo.available>
+                        <#if stockInfo.stockState == StockState.IN_STOCK || stockInfo.stockState == StockState.LIMITED_NUMBER>
                             <link itemprop="availability" href="http://schema.org/InStock"/>
 
                             <div class="quantity">
@@ -153,9 +161,9 @@
                         <#else>
                             <div>
                                 <link itemprop="availability" href="http://schema.org/OutOfStock"/>
-                                <#if product.stockInfo.restockDate??>
+                                <#if stockInfo.restockDate??>
                                     <meta itemprop="availabilityStarts"
-                                          content="${product.stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
+                                          content="${stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
                                 </#if>
                                 <p>
                                     Товара нет в наличии в данный момент, но вы можете подписаться на обновления

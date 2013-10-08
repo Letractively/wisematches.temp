@@ -19,7 +19,13 @@ public enum Sender {
 	/**
 	 * Mail was sent from accounts support team.
 	 */
-	ACCOUNTS("account-noreply");
+	ACCOUNTS("account-noreply"),
+
+	/**
+	 * Mail was sent from server to any monitoring address. This email address must be used only
+	 * for internal monitoring and alerts email sent to the same host mailboxes.
+	 */
+	SERVER("server");
 
 	private final String userInfo;
 

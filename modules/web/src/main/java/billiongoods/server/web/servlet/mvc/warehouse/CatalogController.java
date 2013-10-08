@@ -9,7 +9,6 @@ import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.ProductListener;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,7 @@ import java.util.Set;
  */
 @Controller
 @RequestMapping("/warehouse/catalog")
-public class CatalogController extends AbstractController implements InitializingBean {
+public class CatalogController extends AbstractController {
 	private ProductManager productManager;
 	private ShowcaseManager showcaseManager;
 
@@ -39,10 +38,6 @@ public class CatalogController extends AbstractController implements Initializin
 
 	public CatalogController() {
 		super(false, true);
-	}
-
-	@Override
-	public void afterPropertiesSet() throws Exception {
 	}
 
 	@RequestMapping(value = {"", "/"})
