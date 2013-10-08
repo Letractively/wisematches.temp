@@ -38,11 +38,7 @@ public class ReferenceMapCache implements Cache {
 	@Override
 	public ValueWrapper get(Object key) {
 		clearDeadReferences();
-		final ReferenceType.CacheValue cacheValue = cache.get(key);
-		if (cacheValue != null && cacheValue.get() == null) {
-			return null;
-		}
-		return cacheValue;
+		return cache.get(key);
 	}
 
 	@Override

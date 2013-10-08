@@ -52,7 +52,7 @@
                     <span style="margin-right: 30px">Корзина</span>
 
                 <#if basketQuantity??>
-                    <div id="basketQuantity">${basketQuantity}</div>
+                    <div id="basketQuantity">${basketQuantity!"0"}</div>
                 </#if>
                 </a>
             </li>

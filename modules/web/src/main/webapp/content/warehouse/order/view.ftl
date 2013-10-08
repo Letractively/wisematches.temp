@@ -110,7 +110,7 @@
 
 <#if order.commentary?has_content>
     <tr>
-        <td>
+        <td valign="top" nowrap="nowrap">
             <label for="">Комментарий:</label>
         </td>
         <td>

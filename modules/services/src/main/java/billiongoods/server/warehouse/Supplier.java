@@ -7,27 +7,35 @@ import java.net.URL;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public enum Supplier {
-    BANGGOOD("http://www.banggood.com/");
+	BANGGOOD("http://www.banggood.com/") {
+		@Override
+		public String getReferenceId(SupplierInfo info) {
+			String s = info.getReferenceUri();
+			return s.substring(s.lastIndexOf("-") + 1, s.length() - 5);
+		}
+	};
 
-    private final String site;
+	private final String site;
 
-    Supplier(String site) {
-        this.site = site;
-    }
+	Supplier(String site) {
+		this.site = site;
+	}
 
-    public String getSite() {
-        return site;
-    }
+	public String getSite() {
+		return site;
+	}
 
-    public URL getReferenceUrl(String path) {
-        try {
-            return new URL(site + path);
-        } catch (MalformedURLException ex) {
-            throw new IllegalStateException("Very bad, http is illegal URL: " + site + path);
-        }
-    }
+	public URL getReferenceUrl(String path) {
+		try {
+			return new URL(site + path);
+		} catch (MalformedURLException ex) {
+			throw new IllegalStateException("Very bad, http is illegal URL: " + site + path);
+		}
+	}
 
-    public URL getReferenceUrl(SupplierInfo info) {
-        return getReferenceUrl(info.getReferenceUri());
-    }
+	public URL getReferenceUrl(SupplierInfo info) {
+		return getReferenceUrl(info.getReferenceUri());
+	}
+
+	public abstract String getReferenceId(SupplierInfo info);
 }
