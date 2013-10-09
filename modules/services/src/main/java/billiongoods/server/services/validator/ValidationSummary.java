@@ -12,6 +12,8 @@ public interface ValidationSummary {
 	Date getFinishDate();
 
 
+	int getTotalCount();
+
 	int getValidProducts();
 
 	int getBrokenProducts();

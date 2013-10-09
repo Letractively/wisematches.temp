@@ -59,14 +59,14 @@ public class HibernateProductValidation implements ProductValidation {
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "available", column = @Column(name = "oa")),
+			@AttributeOverride(name = "leftovers", column = @Column(name = "oa")),
 			@AttributeOverride(name = "restockDate", column = @Column(name = "ord"))
 	})
 	private HibernateStockInfo oldStockInfo;
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "available", column = @Column(name = "na")),
+			@AttributeOverride(name = "leftovers", column = @Column(name = "na")),
 			@AttributeOverride(name = "restockDate", column = @Column(name = "nrd"))
 	})
 	private HibernateStockInfo newStockInfo;

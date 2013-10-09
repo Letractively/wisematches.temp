@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ReusableValidationSummary implements ValidationSummary {
 	private volatile Date startDate;
 	private volatile Date finishDate;
+	private volatile int totalCount = 0;
 	private volatile int brokenProducts = 0;
 	private volatile int validatedProducts = 0;
 	private final Collection<ProductValidation> validations = new ConcurrentLinkedQueue<>();
@@ -28,6 +29,11 @@ public class ReusableValidationSummary implements ValidationSummary {
 	@Override
 	public Date getFinishDate() {
 		return finishDate;
+	}
+
+	@Override
+	public int getTotalCount() {
+		return totalCount;
 	}
 
 	@Override
@@ -61,8 +67,10 @@ public class ReusableValidationSummary implements ValidationSummary {
 		validations.add(validation);
 	}
 
-	void initialize(Date date) {
+	void initialize(Date date, int totalCount) {
 		this.startDate = date;
+		this.finishDate = null;
+		this.totalCount = totalCount;
 		brokenProducts = 0;
 		validatedProducts = 0;
 		validations.clear();

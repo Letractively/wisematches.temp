@@ -1,5 +1,18 @@
 <#-- @ftlvariable name="context" type="billiongoods.server.services.validator.ValidationSummary" -->
 
+<#macro stockInfo info>
+${info.stockState.name()}
+    <#if info.restockDate??>
+    (${messageSource.formatDate(info.restockDate, locale)})
+    <#elseif info.leftovers??>
+    (остаток ${info.leftovers})
+    </#if>
+</#macro>
+
+<#macro priceInfo price>
+${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordialAmount?string("0.00")}<#else>-</#if>)
+</#macro>
+
 <table>
     <tr>
         <td>Запущено:</td>
@@ -11,7 +24,7 @@
     </tr>
     <tr>
         <td>Проверено:</td>
-        <td>${context.validatedProducts}</td>
+        <td>${context.validatedProducts} из ${context.totalCount}</td>
     </tr>
     <tr>
         <td>Обновлено:</td>
@@ -38,32 +51,60 @@
 
         <#list context.productValidations as r>
             <tr>
-                <td>
-                    <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
+                <td valign="top">
+                <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
                 </td>
                 <#if r.errorMessage?has_content>
-                    <td colspan="5">${r.errorMessage}</td>
+                    <td colspan="5">
+                    ${r.errorMessage}
+                    </td>
                 <#else>
-                    <td>
-                    ${r.oldPrice.amount?string("0.00")}
-                        (<#if r.oldPrice.primordialAmount??>${r.oldPrice.primordialAmount?string("0.00")}<#else>-</#if>)
-                    </td>
-                    <td>
-                    ${r.newPrice.amount?string("0.00")}
-                        (<#if r.newPrice.primordialAmount??>${r.newPrice.primordialAmount?string("0.00")}<#else>-</#if>)
-                    </td>
-                    <td>
-                    ${(r.newPrice.amount - r.oldPrice.amount)?string("0.00")}
-                        (<#if !r.oldPrice.primordialAmount?? && !r.newPrice.primordialAmount??>
-                        -
-                    <#elseif !r.oldPrice.primordialAmount??>
-                        +${r.newPrice.primordialAmount?string("0.00")}
-                    <#elseif !r.newPrice.primordialAmount??>
-                    ${r.oldPrice.primordialAmount?string("0.00")}
+
+                    <#if r.oldPrice.equals(r.newPrice)>
+                        <td colspan="3">
+                            <@priceInfo r.oldPrice/>
+                        </td>
                     <#else>
-                    ${(r.newPrice.primordialAmount - r.oldPrice.primordialAmount)?string("0.00")}
-                    </#if>)
-                    </td>
+                        <td>
+                            <@priceInfo r.oldPrice/>
+                        </td>
+                        <td>
+                            <#if r.newPrice??>
+                                <@priceInfo r.newPrice/>
+                            <#else>
+                                не загрузилась
+                            </#if>
+                        </td>
+                        <td>
+                        ${(r.newPrice.amount - r.oldPrice.amount)?string("0.00")}
+                            (<#if !r.oldPrice.primordialAmount?? && !r.newPrice.primordialAmount??>
+                            -
+                        <#elseif !r.oldPrice.primordialAmount??>
+                            +${r.newPrice.primordialAmount?string("0.00")}
+                        <#elseif !r.newPrice.primordialAmount??>
+                        ${r.oldPrice.primordialAmount?string("0.00")}
+                        <#else>
+                        ${(r.newPrice.primordialAmount - r.oldPrice.primordialAmount)?string("0.00")}
+                        </#if>)
+                        </td>
+                    </#if>
+
+                    <#if r.oldStockInfo.equals(r.newStockInfo)>
+                        <td colspan="2">
+                            <@stockInfo r.oldStockInfo/>
+                        </td>
+                    <#else>
+                        <td>
+                            <@stockInfo r.oldStockInfo/>
+                        </td>
+                        <td>
+                            <#if r.newStockInfo??>
+                                <@stockInfo r.newStockInfo/>
+                            <#else>
+                                не загрузилась
+                            </#if>
+                        </td>
+                    </#if>
                 </#if>
             </tr>
         </#list>

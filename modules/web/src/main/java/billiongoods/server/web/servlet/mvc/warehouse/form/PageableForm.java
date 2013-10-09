@@ -15,8 +15,10 @@ public class PageableForm {
 	private String filter = null;
 	private Integer category = null;
 
-	private Range range;
 	private int totalCount;
+	private int filteredCount;
+
+	private Range range;
 
 	private static final int DEFAULT_COUNT_NUMBER = 24;
 	private static final SortingType DEFAULT_SORT = SortingType.BESTSELLING;
@@ -25,7 +27,7 @@ public class PageableForm {
 	public PageableForm() {
 	}
 
-	public void initialize(int totalCount) {
+	public void initialize(int totalCount, int filteredCount) {
 		if (page < 1) {
 			page = 1;
 		}
@@ -33,13 +35,14 @@ public class PageableForm {
 			count = DEFAULT_COUNT_NUMBER;
 		}
 
-		int k = (int) Math.round((totalCount / (double) count) + 0.5d);
+		int k = (int) Math.round((filteredCount / (double) count) + 0.5d);
 		if (page > k) {
 			page = k;
 		}
 
 		this.orders = null;
 		this.totalCount = totalCount;
+		this.filteredCount = filteredCount;
 		this.range = Range.limit((page - 1) * count, count);
 
 		final SortingType sortingType = SortingType.byCode(sort);
@@ -106,6 +109,10 @@ public class PageableForm {
 
 	public int getTotalCount() {
 		return totalCount;
+	}
+
+	public int getFilteredCount() {
+		return filteredCount;
 	}
 
 	public void disableSorting() {

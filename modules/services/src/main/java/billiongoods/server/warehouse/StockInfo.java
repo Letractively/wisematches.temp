@@ -8,7 +8,7 @@ import java.util.Date;
 public interface StockInfo {
 	Date getRestockDate();
 
-	Integer getAvailable();
+	Integer getLeftovers();
 
 	StockState getStockState();
 }

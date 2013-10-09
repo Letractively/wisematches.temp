@@ -16,3 +16,8 @@ CREATE TABLE `billiongoods`.`service_validation` (
   `nrd`       DATE           NULL,
   `errMsg`    VARCHAR(255)   NULL,
   PRIMARY KEY (`id`));
+
+ALTER TABLE `billiongoods`.`store_product`
+CHANGE COLUMN `stockSold` `soldCount` INT(11) NOT NULL DEFAULT '0',
+CHANGE COLUMN `stockAvailable` `stockLeftovers` INT(11) NULL DEFAULT NULL,
+CHANGE COLUMN `restockDate` `stockRestockDate` DATE NULL DEFAULT NULL;

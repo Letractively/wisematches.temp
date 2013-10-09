@@ -9,6 +9,8 @@ import java.util.Set;
 public interface FilteringAbility {
 	int getTotalCount();
 
+	int getFilteredCount();
+
 	double getMinPrice();
 
 	double getMaxPrice();
