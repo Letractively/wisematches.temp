@@ -104,7 +104,7 @@ public class CategoryController extends AbstractController {
 		final ProductContext context = new ProductContext(category, true, pageableForm.getQuery(), arrivals, productStates);
 		final FilteringAbility filtering = productManager.getFilteringAbility(context, filter);
 
-		pageableForm.initialize(filtering.getTotalCount());
+		pageableForm.initialize(filtering.getTotalCount(), filtering.getFilteredCount());
 
 		final Range range = pageableForm.getRange();
 		final Orders orders = pageableForm.getOrders();
@@ -135,37 +135,41 @@ public class CategoryController extends AbstractController {
 				final String value = split1.length > 1 ? split1[1] : null;
 
 				if (name != null && !name.isEmpty()) {
-					if ("minPrice".equals(name)) {
-						try {
-							if (value != null) {
-								minPrice = Double.valueOf(value);
-							}
-						} catch (NumberFormatException ignore) {
-						}
-					} else if ("maxPrice".equals(name)) {
-						try {
-							if (value != null) {
-								maxPrice = Double.valueOf(value);
-							}
-						} catch (NumberFormatException ignore) {
-						}
-					} else {
-						final Attribute attr = attributeManager.getAttribute(Integer.parseInt(name));
-						if (attr != null) {
-							List<String> strings = res.get(attr);
-							if (strings == null) {
-								strings = new ArrayList<>();
-								res.put(attr, strings);
-							}
-
-							if (split1.length > 1) {
+					switch (name) {
+						case "minPrice":
+							try {
 								if (value != null) {
-									strings.add(value);
+									minPrice = Double.valueOf(value);
 								}
-							} else {
-								strings.add("");
+							} catch (NumberFormatException ignore) {
 							}
-						}
+							break;
+						case "maxPrice":
+							try {
+								if (value != null) {
+									maxPrice = Double.valueOf(value);
+								}
+							} catch (NumberFormatException ignore) {
+							}
+							break;
+						default:
+							final Attribute attr = attributeManager.getAttribute(Integer.parseInt(name));
+							if (attr != null) {
+								List<String> strings = res.get(attr);
+								if (strings == null) {
+									strings = new ArrayList<>();
+									res.put(attr, strings);
+								}
+
+								if (split1.length > 1) {
+									if (value != null) {
+										strings.add(value);
+									}
+								} else {
+									strings.add("");
+								}
+							}
+							break;
 					}
 				}
 			}

@@ -7,6 +7,7 @@ import billiongoods.server.services.price.MarkupType;
 import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.services.supplier.DataLoadingException;
 import billiongoods.server.services.supplier.SupplierDataLoader;
+import billiongoods.server.services.supplier.SupplierDescription;
 import billiongoods.server.services.validator.ProductValidationListener;
 import billiongoods.server.services.validator.ProductValidationManager;
 import billiongoods.server.services.validator.ValidationSummary;
@@ -79,8 +80,6 @@ public class HibernateProductValidationManager implements ProductValidationManag
 			final Date startedDate = new Date();
 			final double exchangeRate = exchangeManager.getExchangeRate();
 
-			validationSummary.initialize(startedDate);
-
 			int count;
 			TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
 			try {
@@ -98,6 +97,8 @@ public class HibernateProductValidationManager implements ProductValidationManag
 			for (ProductValidationListener listener : listeners) {
 				listener.productValidationStarted(startedDate, count);
 			}
+
+			validationSummary.initialize(startedDate, count);
 
 			dataLoader.initialize();
 
@@ -137,16 +138,21 @@ public class HibernateProductValidationManager implements ProductValidationManag
 						final HibernateProductValidation validation = new HibernateProductValidation(productId, new Date(), oldPrice, oldSupplierPrice, oldStockInfo);
 
 						try {
-							final Price newSupplierPrice = dataLoader.loadDescription(supplierInfo).getPrice();
-							final Price newPrice = priceConverter.convert(newSupplierPrice, exchangeRate, MarkupType.REGULAR);
-							validation.priceValidated(newPrice, newSupplierPrice);
+							final SupplierDescription description = dataLoader.loadDescription(supplierInfo);
+							if (description != null) {
+								final Price newSupplierPrice = description.getPrice();
+								final Price newPrice = priceConverter.convert(newSupplierPrice, exchangeRate, MarkupType.REGULAR);
+								validation.priceValidated(newPrice, newSupplierPrice);
+							}
 						} catch (DataLoadingException ex) {
 							validation.processingError(ex);
 							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
 						}
 						try {
 							final StockInfo newStockInfo = dataLoader.loadStockInfo(supplierInfo);
-							validation.stockValidated(new HibernateStockInfo(newStockInfo));
+							if (newStockInfo != null) {
+								validation.stockValidated(new HibernateStockInfo(newStockInfo));
+							}
 						} catch (DataLoadingException ex) {
 							validation.processingError(ex);
 							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());

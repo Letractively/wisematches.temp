@@ -67,7 +67,7 @@
                             В наличии, обычно отправлается в течении 2-3 рабочих дней
                             <#break/>
                         <#case StockState.LIMITED_NUMBER>
-                            Торопитесь, осталось всего ${stockInfo.available} штук!
+                            Торопитесь, осталось всего ${stockInfo.leftovers} штук!
                             <#break/>
                         <#case StockState.SOLD_OUT>
                             Товар распродан

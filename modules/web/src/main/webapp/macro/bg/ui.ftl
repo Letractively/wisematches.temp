@@ -94,10 +94,10 @@
     <div class="table-view">
         <div class="table-pages">
             <div class="table-position">
-                <#if (pageableForm.totalCount > 0)>
+                <#if (pageableForm.filteredCount > 0)>
                     Показано ${(pageableForm.page-1)*pageableForm.count+1}
                     - ${(pageableForm.page-1)*pageableForm.count + products?size}
-                    из ${pageableForm.totalCount} элементов
+                    из ${pageableForm.filteredCount} элементов
                 </#if>
             </div>
 
@@ -184,7 +184,7 @@
 <#macro tableNavigation pageableForm>
     <#assign page=pageableForm.page/>
     <#if (pageableForm.count > 0)>
-        <#assign pagesCount=(pageableForm.totalCount/pageableForm.count)?ceiling/>
+        <#assign pagesCount=(pageableForm.filteredCount/pageableForm.count)?ceiling/>
         <#if (pagesCount > 1)>
         <ul>
             <#if (page > 1)>

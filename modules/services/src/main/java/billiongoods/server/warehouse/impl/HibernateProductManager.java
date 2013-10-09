@@ -144,7 +144,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 			filteringSummaries.add(new FilteringSummary((String) oo[1], ((Number) oo[2]).intValue()));
 		}
 		int filteredCount = getTotalCount(context, filter);
-		return new DefaultFilteringAbility(filteredCount, minPrice, maxPrice, attributeListMap);
+		return new DefaultFilteringAbility(totalCount, filteredCount, minPrice, maxPrice, attributeListMap);
 	}
 
 	@Override
@@ -254,7 +254,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 			b.append("a.supplierInfo.price.amount=:supplierAmount, a.supplierInfo.price.primordialAmount=:supplierPrimordialAmount, ");
 		}
 		if (stockInfo != null) {
-			b.append("a.stockInfo.available=:available, a.stockInfo.restockDate=:restockDate, ");
+			b.append("a.stockInfo.leftovers=:leftovers, a.stockInfo.restockDate=:restockDate, ");
 		}
 		b.append("a.supplierInfo.validationDate=:validationDate where a.id=:id");
 
@@ -273,7 +273,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 			query.setParameter("supplierPrimordialAmount", supplierPrice.getPrimordialAmount());
 		}
 		if (stockInfo != null) {
-			query.setParameter("available", stockInfo.getAvailable());
+			query.setParameter("leftovers", stockInfo.getLeftovers());
 			query.setParameter("restockDate", stockInfo.getRestockDate());
 		}
 		query.executeUpdate();

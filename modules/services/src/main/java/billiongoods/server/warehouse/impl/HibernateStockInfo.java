@@ -18,10 +18,10 @@ public class HibernateStockInfo implements StockInfo {
 	@Formula("0")
 	private byte dummy; // or stockInfo is null: https://issues.jboss.org/browse/HIBERNATE-50
 
-	@Column(name = "stockAvailable")
-	private Integer available;
+	@Column(name = "stockLeftovers")
+	private Integer leftovers;
 
-	@Column(name = "restockDate")
+	@Column(name = "stockRestockDate")
 	@Temporal(TemporalType.DATE)
 	private Date restockDate;
 
@@ -29,24 +29,24 @@ public class HibernateStockInfo implements StockInfo {
 	}
 
 	public HibernateStockInfo(StockInfo stockInfo) {
-		this(stockInfo != null ? stockInfo.getAvailable() : null,
+		this(stockInfo != null ? stockInfo.getLeftovers() : null,
 				stockInfo != null ? stockInfo.getRestockDate() : null);
 	}
 
-	public HibernateStockInfo(Integer available, Date restockDate) {
-		this.available = available;
+	public HibernateStockInfo(Integer leftovers, Date restockDate) {
+		this.leftovers = leftovers;
 		this.restockDate = restockDate;
 	}
 
 	@Override
-	public Integer getAvailable() {
-		return available;
+	public Integer getLeftovers() {
+		return leftovers;
 	}
 
 	@Override
 	public StockState getStockState() {
-		if (available != null) {
-			if (available == 0) {
+		if (leftovers != null) {
+			if (leftovers == 0) {
 				return StockState.SOLD_OUT;
 			} else {
 				return StockState.LIMITED_NUMBER;
@@ -64,7 +64,7 @@ public class HibernateStockInfo implements StockInfo {
 	}
 
 	void setRestockInfo(Integer available, Date restockDate) {
-		this.available = available;
+		this.leftovers = available;
 		this.restockDate = restockDate;
 	}
 
@@ -75,14 +75,14 @@ public class HibernateStockInfo implements StockInfo {
 
 		HibernateStockInfo that = (HibernateStockInfo) o;
 
-		if (available != null ? !available.equals(that.available) : that.available != null) return false;
+		if (leftovers != null ? !leftovers.equals(that.leftovers) : that.leftovers != null) return false;
 		if (restockDate != null ? !restockDate.equals(that.restockDate) : that.restockDate != null) return false;
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = available != null ? available.hashCode() : 0;
+		int result = leftovers != null ? leftovers.hashCode() : 0;
 		result = 31 * result + (restockDate != null ? restockDate.hashCode() : 0);
 		return result;
 	}
@@ -90,7 +90,7 @@ public class HibernateStockInfo implements StockInfo {
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("HibernateStockInfo{");
-		sb.append("available=").append(available);
+		sb.append("leftovers=").append(leftovers);
 		sb.append(", restockDate=").append(restockDate);
 		sb.append('}');
 		return sb.toString();

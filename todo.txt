@@ -4,10 +4,7 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
-- Information about availability is not shown in progress page and final email
--
-- During update total count and progress should be shown
-- Split total and filtered count in FilteringAbility
+- Order: suspended state. Ability to change state from any to any.
 - Our recomendations view on the left of main page: L959 & V911 & v912
 
 - Track product changes are not very good. Must be changed.
@@ -39,19 +36,24 @@
 - Ability to track state of a SKU
 
 ============= DONE ====================
-7.09
+9.10
++ Split total and filtered count in FilteringAbility
++ Information about availability is not shown in progress page and final email
++ During update total count and progress should be shown
+
+8.10
 + Auto tracking product ability
 + Check products that should be in stock every night and send notification
 + Clear person's cache if it's offline (restore PersonalityStateManager functionality).
 
-4.09
+4.10
 + test- prefix is added to InvoiceID for PayPal.
 + Order confirm works incorrect: issue with Yandex Metrica
 + If there is no one property category can't be loaded
 + Ability to subscribe to availability
 + Ability to request description without email and track status
 
-3.09
+3.10
 + New product can't be created
 + Change search to IN BOOLEAN MODE
 + Price slider works incorrect (also was redesigned)
@@ -60,7 +62,7 @@
 + Search by product ID is not correct. If number is entered it thing that is product.
 + Null return value from advice does not match primitive return type for: public abstract int billiongoods.server.services.basket.BasketManager.getBasketSize(billiongoods.core.Personality)
 
-1.09
+1.10
 + Not all products can be checked
 + Filter by price
 

@@ -13,12 +13,14 @@ import java.util.Set;
  */
 public class DefaultFilteringAbility implements FilteringAbility {
 	private final int totalCount;
+	private final int filteredCount;
 	private final double minPrice;
 	private final double maxPrice;
 	private Map<Attribute, List<FilteringSummary>> attributeListMap;
 
-	public DefaultFilteringAbility(int totalCount, double minPrice, double maxPrice, Map<Attribute, List<FilteringSummary>> attributeListMap) {
+	public DefaultFilteringAbility(int totalCount, int filteredCount, double minPrice, double maxPrice, Map<Attribute, List<FilteringSummary>> attributeListMap) {
 		this.totalCount = totalCount;
+		this.filteredCount = filteredCount;
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 		this.attributeListMap = attributeListMap;
@@ -27,6 +29,11 @@ public class DefaultFilteringAbility implements FilteringAbility {
 	@Override
 	public int getTotalCount() {
 		return totalCount;
+	}
+
+	@Override
+	public int getFilteredCount() {
+		return filteredCount;
 	}
 
 	@Override

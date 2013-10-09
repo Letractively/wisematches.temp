@@ -43,7 +43,7 @@ public class AbstractProductDescription implements ProductDescription {
 	})
 	private Price price;
 
-	@Column(name = "stockSold")
+	@Column(name = "soldCount")
 	private int soldCount;
 
 	@Embedded

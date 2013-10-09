@@ -37,18 +37,26 @@
 </p>
 <#elseif context.orderState.shipping>
 <p>
-    Ваш заказ был передан в обработку на почту Китая. Номер вашего отправления на почте Китая:
-    <a href="http://www.flytexpress.com/ShowTraceInfo.aspx?orderid=${context.chinaMailTracking}">${context.chinaMailTracking}</a>
+    Ваш заказ был передан отправлена на почту Китая.
+    <#if context.internationalTracking?has_content>
+        Номер вашего отправления на почте Китая: <a
+            href="http://www.flytexpress.com/ShowTraceInfo.aspx?orderid=${context.chinaMailTracking}">${context.chinaMailTracking}</a>
+    <#else>
+        К сожалению, ваш заказ не предусматривает получение номера для отслеживания.
+    </#if>
 </p>
 <#elseif context.orderState.shipped>
 <p>
-    Ваш заказ был отправл из Китая.
+    Ваш заказ был отправлен.
     <#if context.internationalTracking?has_content>
-        Ваш номер для отслеживания посылки на сайте почты России: ${context.internationalTracking}. Вы так же
-        можете отслеживать теперь свой заказ с помощью сервиса <a
+        Ваш международный номер для отслеживания посылки: ${context.internationalTracking}.
+        Вы можете проверить ее статус на почте <a
+            href="http://www.russianpost.ru/rp/servise/ru/home/postuslug/trackingpo">сайте почты России</a>
+        либо воспользоваться сторонним сервисом <a
             href="http://gdeposylka.ru/${context.internationalTracking}?tos=accept&apikey=418832.b3a52a082d&country=RU">ГдеПосылка.ру</a>
+        для отслеживания посылки.
     <#else>
-        К сожалению, ваш заказ не предусматривает получение международного номер для отслеживания.
+        К сожалению, ваш заказ не предусматривает получение международного номера для отслеживания.
     </#if>
 </p>
 <#elseif context.orderState.suspended>
