@@ -8,11 +8,10 @@ import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.services.supplier.DataLoadingException;
 import billiongoods.server.services.supplier.SupplierDataLoader;
 import billiongoods.server.services.supplier.SupplierDescription;
-import billiongoods.server.services.validator.ProductValidationListener;
 import billiongoods.server.services.validator.ProductValidationManager;
+import billiongoods.server.services.validator.ValidationProgressListener;
 import billiongoods.server.services.validator.ValidationSummary;
 import billiongoods.server.warehouse.*;
-import billiongoods.server.warehouse.impl.HibernateStockInfo;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -51,7 +50,7 @@ public class HibernateProductValidationManager implements ProductValidationManag
 
 	private static final int BULK_PRODUCTS_SIZE = 10;
 
-	private final Collection<ProductValidationListener> listeners = new CopyOnWriteArrayList<>();
+	private final Collection<ValidationProgressListener> listeners = new CopyOnWriteArrayList<>();
 
 	private static final DefaultTransactionAttribute NEW_TRANSACTION_DEFINITION = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 
@@ -62,14 +61,14 @@ public class HibernateProductValidationManager implements ProductValidationManag
 	}
 
 	@Override
-	public void addPriceValidatorListener(ProductValidationListener l) {
+	public void addValidationProgressListener(ValidationProgressListener l) {
 		if (l != null) {
 			listeners.add(l);
 		}
 	}
 
 	@Override
-	public void removePriceValidatorListener(ProductValidationListener l) {
+	public void removeValidationProgressListener(ValidationProgressListener l) {
 		if (l != null) {
 			listeners.remove(l);
 		}
@@ -94,8 +93,8 @@ public class HibernateProductValidationManager implements ProductValidationManag
 				throw ex;
 			}
 
-			for (ProductValidationListener listener : listeners) {
-				listener.productValidationStarted(startedDate, count);
+			for (ValidationProgressListener listener : listeners) {
+				listener.validationStarted(startedDate, count);
 			}
 
 			validationSummary.initialize(startedDate, count);
@@ -130,7 +129,7 @@ public class HibernateProductValidationManager implements ProductValidationManag
 
 						final Integer productId = (Integer) a[0];
 						final Price oldPrice = (Price) a[1];
-						final HibernateStockInfo oldStockInfo = (HibernateStockInfo) a[2];
+						final StockInfo oldStockInfo = (StockInfo) a[2];
 						final SupplierInfo supplierInfo = (SupplierInfo) a[3];
 
 						final Price oldSupplierPrice = supplierInfo.getPrice();
@@ -151,7 +150,7 @@ public class HibernateProductValidationManager implements ProductValidationManag
 						try {
 							final StockInfo newStockInfo = dataLoader.loadStockInfo(supplierInfo);
 							if (newStockInfo != null) {
-								validation.stockValidated(new HibernateStockInfo(newStockInfo));
+								validation.stockValidated(new StockInfo(newStockInfo));
 							}
 						} catch (DataLoadingException ex) {
 							validation.processingError(ex);
@@ -168,7 +167,7 @@ public class HibernateProductValidationManager implements ProductValidationManag
 							productManager.validated(productId, validation.getNewPrice(), validation.getNewSupplierPrice(), validation.getNewStockInfo());
 						}
 
-						for (ProductValidationListener listener : listeners) {
+						for (ValidationProgressListener listener : listeners) {
 							listener.productValidated(productId, validation);
 						}
 					}
@@ -185,8 +184,8 @@ public class HibernateProductValidationManager implements ProductValidationManag
 			final Date finishedDate = new Date();
 
 			validationSummary.finalize(finishedDate);
-			for (ProductValidationListener listener : listeners) {
-				listener.productValidationFinished(finishedDate, validationSummary);
+			for (ValidationProgressListener listener : listeners) {
+				listener.validationFinished(finishedDate, validationSummary);
 			}
 		} catch (Exception ex) {
 			log.error("Price validation can't be done", ex);

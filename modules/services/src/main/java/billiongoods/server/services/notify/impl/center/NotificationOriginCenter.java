@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -33,7 +32,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 	private NotificationService notificationService;
 
 	private final OrderListener orderListener = new TheOrderListener();
-	private final ProductListener productListener = new TheProductListener();
+	private final ProductStateListener productStateListener = new TheStateProductListener();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.OriginCenter");
 
@@ -46,23 +45,25 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 	}
 
-	private void processProductUpdated(Product product, Set<String> updatedFields) {
-		if (updatedFields.contains("restockDate") && product.getStockInfo().getStockState() == StockState.IN_STOCK) {
-			final TrackingContext c = new TrackingContext(product.getId(), TrackingType.AVAILABILITY);
+	private void processProductStock(ProductDescription description, StockInfo oldStock, StockInfo newStock) {
+		if (newStock.getStockState() == StockState.IN_STOCK) {
+			final TrackingContext c = new TrackingContext(description.getId(), TrackingType.AVAILABILITY);
 
 			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
 			for (ProductTracking tracking : tracks) {
-				fireNotification("product.availability", new Recipient(tracking.getPersonEmail()), product);
+				fireNotification("product.availability", new Recipient(tracking.getPersonEmail()), description);
 				trackingManager.removeTracking(tracking.getId());
 			}
 		}
+	}
 
-		if (updatedFields.contains("state") && product.getState() == ProductState.ACTIVE) {
-			final TrackingContext c = new TrackingContext(product.getId(), TrackingType.DESCRIPTION);
+	private void processProductState(ProductDescription description, ProductState oldState, ProductState newState) {
+		if (newState == ProductState.ACTIVE) {
+			final TrackingContext c = new TrackingContext(description.getId(), TrackingType.DESCRIPTION);
 
 			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
 			for (ProductTracking tracking : tracks) {
-				fireNotification("product.description", new Recipient(tracking.getPersonEmail()), product);
+				fireNotification("product.description", new Recipient(tracking.getPersonEmail()), description);
 				trackingManager.removeTracking(tracking.getId());
 			}
 		}
@@ -95,13 +96,13 @@ public class NotificationOriginCenter implements BreakingDayListener {
 
 	public void setProductManager(ProductManager productManager) {
 		if (this.productManager != null) {
-			this.productManager.removeProductListener(productListener);
+			this.productManager.removeProductStateListener(productStateListener);
 		}
 
 		this.productManager = productManager;
 
 		if (this.productManager != null) {
-			this.productManager.addProductListener(productListener);
+			this.productManager.addProductStateListener(productStateListener);
 		}
 	}
 
@@ -123,21 +124,22 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 	}
 
-	private class TheProductListener implements ProductListener {
-		private TheProductListener() {
+	private class TheStateProductListener implements ProductStateListener {
+		private TheStateProductListener() {
 		}
 
 		@Override
-		public void productCreated(Product product) {
+		public void productPriceChanged(ProductDescription description, Price oldPrice, Price newPrice) {
 		}
 
 		@Override
-		public void productUpdated(Product product, Set<String> updatedFields) {
-			processProductUpdated(product, updatedFields);
+		public void productStockChanged(ProductDescription description, StockInfo oldStock, StockInfo newStock) {
+			processProductStock(description, oldStock, newStock);
 		}
 
 		@Override
-		public void productRemoved(Product product) {
+		public void productStateChanged(ProductDescription description, ProductState oldState, ProductState newState) {
+			processProductState(description, oldState, newState);
 		}
 	}
 }

@@ -4,9 +4,9 @@ package billiongoods.server.services.validator;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ProductValidationManager {
-	void addPriceValidatorListener(ProductValidationListener l);
+	void addValidationProgressListener(ValidationProgressListener l);
 
-	void removePriceValidatorListener(ProductValidationListener l);
+	void removeValidationProgressListener(ValidationProgressListener l);
 
 
 	void startPriceValidation();
@@ -14,6 +14,7 @@ public interface ProductValidationManager {
 	void stopPriceValidation();
 
 	boolean isInProgress();
+
 
 	ValidationSummary getValidationSummary();
 }

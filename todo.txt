@@ -4,24 +4,23 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
+- Associate groups with category
+- Attribute modification works bad: changes are not applied.
+
 - Order: suspended state. Ability to change state from any to any.
 - Our recomendations view on the left of main page: L959 & V911 & v912
+- Coupons
 
-- Track product changes are not very good. Must be changed.
-- Add full product name for URL in translit
 - Range filters
 - Binominal filters
-- Attribute modification works bad: changes are not applied.
 - Redefine financial policy
-- Associate groups with category
-- Disable ability to change category for a product (can cause many issues).
-- Coupons
 
 ============= PLAN ====================
 - Page not found should show sitemap instead
 - Reload catalog ability
 - Orders for filter values/items
 - Differ catalog view
+- Add full product name for URL in translit
 
 - Accounts and personal info
 - Forums
@@ -36,6 +35,11 @@
 - Ability to track state of a SKU
 
 ============= DONE ====================
+10.10
++ Grey price for unavailable products in categories view
++ Track product changes are not very good. Must be changed.
++ Disable ability to change category for a product (can cause many issues).
+
 9.10
 + Split total and filtered count in FilteringAbility
 + Information about availability is not shown in progress page and final email

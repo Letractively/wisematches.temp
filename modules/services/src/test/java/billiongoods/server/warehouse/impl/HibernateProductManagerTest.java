@@ -61,8 +61,8 @@ public class HibernateProductManagerTest {
 
 		productManager.updateSold(product.getId(), 10);
 
-		productManager.validated(product.getId(), new Price(2.3d, null), new Price(3.d, null), new HibernateStockInfo(0, null));
-		productManager.validated(product.getId(), new Price(12.3d, 54.d), new Price(43.d, 765.d), new HibernateStockInfo(null, new Date()));
+		productManager.validated(product.getId(), new Price(2.3d, null), new Price(3.d, null), new StockInfo(0, null));
+		productManager.validated(product.getId(), new Price(12.3d, 54.d), new Price(43.d, 765.d), new StockInfo(null, new Date()));
 
 		final SupplierInfo supplierInfo = productManager.getSupplierInfo(description.getId());
 		assertNotNull(supplierInfo);

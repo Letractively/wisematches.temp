@@ -7,7 +7,6 @@ import billiongoods.server.services.supplier.impl.DefaultSupplierDescription;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.StockInfo;
 import billiongoods.server.warehouse.SupplierInfo;
-import billiongoods.server.warehouse.impl.HibernateStockInfo;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -167,16 +166,16 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 
 			if ("\"success\"".equals(status)) {
 				if (msg.contains("In stock")) {
-					return new HibernateStockInfo(null, null);
+					return new StockInfo(null, null);
 				} else if (msg.contains("Out of stock, expected restock in 15")) {
-					return new HibernateStockInfo(null, new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000));
+					return new StockInfo(null, new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000));
 				} else if (msg.contains("Expect restock on")) {
 					final Date parse = RESTOCK_DATE_FROMAT.parse(msg.substring(18).replaceAll("st|nd|rd|th", ""));
-					return new HibernateStockInfo(null, parse);
+					return new StockInfo(null, parse);
 				} else if (msg.contains("Units Available")) {
-					return new HibernateStockInfo(Integer.parseInt(msg.substring(1, msg.indexOf(" Units")).trim()), null);
+					return new StockInfo(Integer.parseInt(msg.substring(1, msg.indexOf(" Units")).trim()), null);
 				} else if (msg.contains("Out of stock")) {
-					return new HibernateStockInfo(0, null);
+					return new StockInfo(0, null);
 				}
 			} else {
 				return null;

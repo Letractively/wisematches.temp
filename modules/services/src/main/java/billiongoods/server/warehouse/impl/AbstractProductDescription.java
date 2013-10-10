@@ -47,7 +47,7 @@ public class AbstractProductDescription implements ProductDescription {
 	private int soldCount;
 
 	@Embedded
-	private HibernateStockInfo stockInfo = new HibernateStockInfo();
+	private StockInfo stockInfo = new StockInfo();
 
 	@Embedded
 	private HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo();
@@ -155,8 +155,8 @@ public class AbstractProductDescription implements ProductDescription {
 		this.price = price;
 	}
 
-	void setRestockInfo(Integer available, Date restockDate) {
-		this.stockInfo.setRestockInfo(available, restockDate);
+	void setRestockInfo(StockInfo info) {
+		this.stockInfo = info;
 	}
 
 	void setPreviewImageId(String previewImageId) {

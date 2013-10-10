@@ -67,9 +67,12 @@
         </@bg.link.product>
         <@discountDiv product/>
     </div>
-    <div class="name" itemprop="name"><@bg.link.product product>${product.name}</@bg.link.product></div>
-    <div itemprop="offers" itemscope
-         itemtype="http://schema.org/Offer"><@bg.ui.price product.price.amount/></div>
+    <#assign outStock=(product.stockInfo.stockState=StockState.SOLD_OUT || product.stockInfo.stockState=StockState.OUT_STOCK)/>
+    <#if outStock><#assign color="g"/><#else><#assign color=""/></#if>
+    <div class="name<#if outStock> sample</#if>"
+         itemprop="name"><@bg.link.product product>${product.name}</@bg.link.product></div>
+    <div <#if outStock>class="outstock"</#if> itemprop="offers" itemscope
+         itemtype="http://schema.org/Offer"><@bg.ui.price product.price.amount color/></div>
     <#if ops["showCategory"]?? && ops["showCategory"]>
         <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(product.categoryId)/></div>
     </#if>
