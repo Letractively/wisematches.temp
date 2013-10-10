@@ -3,7 +3,6 @@ package billiongoods.server.services.validator.impl;
 import billiongoods.server.services.validator.ProductValidation;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.StockInfo;
-import billiongoods.server.warehouse.impl.HibernateStockInfo;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -62,20 +61,20 @@ public class HibernateProductValidation implements ProductValidation {
 			@AttributeOverride(name = "leftovers", column = @Column(name = "oa")),
 			@AttributeOverride(name = "restockDate", column = @Column(name = "ord"))
 	})
-	private HibernateStockInfo oldStockInfo;
+	private StockInfo oldStockInfo;
 
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "leftovers", column = @Column(name = "na")),
 			@AttributeOverride(name = "restockDate", column = @Column(name = "nrd"))
 	})
-	private HibernateStockInfo newStockInfo;
+	private StockInfo newStockInfo;
 
 	@Deprecated
 	HibernateProductValidation() {
 	}
 
-	public HibernateProductValidation(Integer productId, Date timestamp, Price oldPrice, Price oldSupplierPrice, HibernateStockInfo oldStockInfo) {
+	public HibernateProductValidation(Integer productId, Date timestamp, Price oldPrice, Price oldSupplierPrice, StockInfo oldStockInfo) {
 		this.productId = productId;
 		this.timestamp = timestamp;
 		this.oldPrice = oldPrice;
@@ -147,7 +146,7 @@ public class HibernateProductValidation implements ProductValidation {
 		this.newSupplierPrice = newSupplierPrice;
 	}
 
-	void stockValidated(HibernateStockInfo newStockInfo) {
+	void stockValidated(StockInfo newStockInfo) {
 		this.newStockInfo = newStockInfo;
 	}
 

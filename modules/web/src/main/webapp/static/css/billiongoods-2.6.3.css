@@ -73,8 +73,12 @@ span.dot {
     text-indent: -1000em;
 }
 
-.sample {
+.sample, .sample a:link, .sample a:visited {
     color: gray;
+}
+
+.sample a:hover, .sample a:active {
+    color: #900;
 }
 
 .error-layout {
@@ -870,6 +874,11 @@ button.bg-ui-button.selected {
 
 .primordial, .primordial .price span {
     color: #808080;
+    font-weight: normal;
+}
+
+.outstock, .outstock .price span {
+    color: #6e6e6e;
     font-weight: normal;
 }
 

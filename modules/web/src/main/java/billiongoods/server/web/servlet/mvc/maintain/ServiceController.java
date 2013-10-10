@@ -24,7 +24,7 @@ import java.util.StringTokenizer;
 @Controller
 @RequestMapping("/maintain/service")
 public class ServiceController extends AbstractController {
-	private ProductValidationManager priceValidator;
+	private ProductValidationManager validationManager;
 
 	public ServiceController() {
 	}
@@ -74,29 +74,29 @@ public class ServiceController extends AbstractController {
 		return "/content/maintain/url";
 	}
 
-	@RequestMapping("validatePrices")
+	@RequestMapping("validation")
 	public String validatePrices(Model model) {
-		model.addAttribute("active", priceValidator.isInProgress());
-		model.addAttribute("summary", priceValidator.getValidationSummary());
+		model.addAttribute("active", validationManager.isInProgress());
+		model.addAttribute("summary", validationManager.getValidationSummary());
 		return "/content/maintain/validation";
 	}
 
-	@RequestMapping(value = "validatePrices", method = RequestMethod.POST)
-	public String validatePricesAction(@RequestParam("action") String action, Model model) {
+	@RequestMapping(value = "validation", method = RequestMethod.POST)
+	public String validatePricesAction(@RequestParam("action") String action) {
 		if ("start".equalsIgnoreCase(action)) {
-			if (!priceValidator.isInProgress()) {
-				priceValidator.startPriceValidation();
+			if (!validationManager.isInProgress()) {
+				validationManager.startPriceValidation();
 			}
 		} else if ("stop".equalsIgnoreCase(action)) {
-			if (priceValidator.isInProgress()) {
-				priceValidator.stopPriceValidation();
+			if (validationManager.isInProgress()) {
+				validationManager.stopPriceValidation();
 			}
 		}
 		return "redirect:/maintain/service/validatePrices";
 	}
 
 	@Autowired
-	public void setPriceValidator(ProductValidationManager priceValidator) {
-		this.priceValidator = priceValidator;
+	public void setValidationManager(ProductValidationManager validationManager) {
+		this.validationManager = validationManager;
 	}
 }

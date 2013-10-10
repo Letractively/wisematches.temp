@@ -34,10 +34,20 @@
 <tr>
     <td valign="top"><label for="categoryId">Категория: </label></td>
     <td>
-    <@bg.ui.selectCategory "form.categoryId" catalog false>
-        <#if bg.ui.statusValue?has_content>(<a href="/maintain/category?id=${bg.ui.statusValue}"
-                                               target="_blank">открыть в новом</a>)</#if>
-    </@bg.ui.selectCategory>
+    <#if form.id??>
+        <@bg.ui.input "form.categoryId" "" "hidden">
+            <#assign category=catalog.getCategory(bg.ui.actualValue)/>
+            <#list category.genealogy.parents as c>
+                <a href="/maintain/category?id=${c.id}" target="_blank">${c.name}</a> ->
+            </#list>
+            <a href="/maintain/category?id=${category.id}" target="_blank">${category.name}</a>
+        </@bg.ui.input>
+    <#else>
+        <@bg.ui.selectCategory "form.categoryId" catalog false>
+            <#if bg.ui.statusValue?has_content>(<a href="/maintain/category?id=${bg.ui.statusValue}"
+                                                   target="_blank">открыть в новом</a>)</#if>
+        </@bg.ui.selectCategory>
+    </#if>
     </td>
 </tr>
 <tr>

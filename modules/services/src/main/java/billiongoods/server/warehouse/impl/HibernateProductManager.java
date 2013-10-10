@@ -3,6 +3,7 @@ package billiongoods.server.warehouse.impl;
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.warehouse.*;
+import org.hibernate.Cache;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -24,6 +25,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	private AttributeManager attributeManager;
 
 	private final Collection<ProductListener> listeners = new CopyOnWriteArrayList<>();
+	private final Collection<ProductStateListener> stateListeners = new CopyOnWriteArrayList<>();
 
 	private static final int ONE_WEEK_MILLIS = 1000 * 60 * 60 * 24 * 7;
 
@@ -42,6 +44,20 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	public void removeProductListener(ProductListener l) {
 		if (l != null) {
 			listeners.remove(l);
+		}
+	}
+
+	@Override
+	public void addProductStateListener(ProductStateListener l) {
+		if (l != null) {
+			stateListeners.add(l);
+		}
+	}
+
+	@Override
+	public void removeProductStateListener(ProductStateListener l) {
+		if (l != null) {
+			stateListeners.remove(l);
 		}
 	}
 
@@ -171,11 +187,18 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		if (product == null) {
 			return null;
 		}
-		final Set<String> strings = updateProduct(product, editor);
+
+		final Price price = product.getPrice();
+		final ProductState state = product.getState();
+		final StockInfo stockInfo = product.getStockInfo();
+
+		updateProduct(product, editor);
 		session.update(product);
 
+		processProduceValidation(product, price, state, stockInfo);
+
 		for (ProductListener listener : listeners) {
-			listener.productUpdated(product, strings);
+			listener.productUpdated(product);
 		}
 		return product;
 	}
@@ -196,25 +219,13 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		return product;
 	}
 
-	private Set<String> updateProduct(HibernateProduct product, ProductEditor editor) {
-		final Set<String> res = new HashSet<>();
-		final StockInfo stockInfo = product.getStockInfo();
-
-		if (product.getState() != editor.getProductState()) {
-			res.add("state");
-		}
-
-		if ((editor.getRestockDate() == null && stockInfo.getRestockDate() != null) ||
-				(editor.getRestockDate() != null && (stockInfo.getRestockDate() == null || !editor.getRestockDate().equals(stockInfo.getRestockDate())))) {
-			res.add("restockDate");
-		}
-
+	private void updateProduct(HibernateProduct product, ProductEditor editor) {
 		product.setName(editor.getName());
 		product.setDescription(editor.getDescription());
 		product.setCategory(editor.getCategoryId());
 		product.setPrice(editor.getPrice());
 		product.setWeight(editor.getWeight());
-		product.setRestockInfo(editor.getStoreAvailable(), editor.getRestockDate());
+		product.setRestockInfo(new StockInfo(editor.getStoreAvailable(), editor.getRestockDate()));
 		product.setPreviewImageId(editor.getPreviewImage());
 		product.setImageIds(editor.getImageIds());
 		product.setOptions(editor.getOptions());
@@ -227,8 +238,6 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		supplierInfo.setReferenceCode(editor.getReferenceCode());
 		supplierInfo.setWholesaler(editor.getWholesaler());
 		supplierInfo.setPrice(editor.getSupplierPrice());
-
-		return res;
 	}
 
 	@Override
@@ -246,6 +255,12 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 			return;
 		}
 
+		final Session session = sessionFactory.getCurrentSession();
+		final HibernateProductDescription product = (HibernateProductDescription) session.get(HibernateProductDescription.class, id);
+		if (product == null) {
+			return;
+		}
+
 		final StringBuilder b = new StringBuilder("update billiongoods.server.warehouse.impl.HibernateProduct a set ");
 		if (price != null) {
 			b.append("a.price.amount=:priceAmount, a.price.primordialAmount=:pricePrimordialAmount, ");
@@ -258,7 +273,6 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		}
 		b.append("a.supplierInfo.validationDate=:validationDate where a.id=:id");
 
-		final Session session = sessionFactory.getCurrentSession();
 		final Query query = session.createQuery(b.toString());
 
 		query.setParameter("id", id);
@@ -277,6 +291,32 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 			query.setParameter("restockDate", stockInfo.getRestockDate());
 		}
 		query.executeUpdate();
+
+		final Cache cache = sessionFactory.getCache();
+		if (cache != null) {
+			cache.evictEntity(HibernateProduct.class, id);
+			cache.evictEntity(HibernateProductDescription.class, id);
+		}
+
+		processProduceValidation(product, price, product.getState(), stockInfo);
+	}
+
+	private void processProduceValidation(ProductDescription product, Price price, ProductState state, StockInfo stockInfo) {
+		if (!price.equals(product.getPrice())) {
+			for (ProductStateListener validationListener : stateListeners) {
+				validationListener.productPriceChanged(product, price, product.getPrice());
+			}
+		}
+		if (!state.equals(product.getState())) {
+			for (ProductStateListener validationListener : stateListeners) {
+				validationListener.productStateChanged(product, state, product.getState());
+			}
+		}
+		if (!stockInfo.equals(product.getStockInfo())) {
+			for (ProductStateListener validationListener : stateListeners) {
+				validationListener.productStockChanged(product, stockInfo, product.getStockInfo());
+			}
+		}
 	}
 
 	@Override

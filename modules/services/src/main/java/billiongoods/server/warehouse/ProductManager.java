@@ -11,6 +11,11 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 	void removeProductListener(ProductListener l);
 
 
+	void addProductStateListener(ProductStateListener l);
+
+	void removeProductStateListener(ProductStateListener l);
+
+
 	Product getProduct(Integer id);
 
 	Product getProduct(String sku);
@@ -33,7 +38,6 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 
 
 	void updateSold(Integer id, int quantity);
-
 
 	void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo);
 }

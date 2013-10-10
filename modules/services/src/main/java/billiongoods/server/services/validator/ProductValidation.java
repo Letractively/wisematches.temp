@@ -18,6 +18,7 @@ public interface ProductValidation {
 
 	Price getNewPrice();
 
+
 	Price getOldSupplierPrice();
 
 	Price getNewSupplierPrice();

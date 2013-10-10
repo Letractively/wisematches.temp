@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -108,7 +107,7 @@ public class CatalogController extends AbstractController {
 		}
 
 		@Override
-		public void productUpdated(Product product, Set<String> updatedFields) {
+		public void productUpdated(Product product) {
 			invalidateShowcaseCache();
 		}
 
