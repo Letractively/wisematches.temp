@@ -4,14 +4,12 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
-- Associate groups with category
-
+- Binominal filters
 - Order: suspended state. Ability to change state from any to any.
 - Our recomendations view on the left of main page: L959 & V911 & v912
 - Coupons
 
 - Range filters
-- Binominal filters
 - Redefine financial policy
 
 ============= PLAN ====================
@@ -19,7 +17,7 @@
 - Reload catalog ability
 - Orders for filter values/items
 - Differ catalog view
-- Add full product name for URL in translit
+- Add full product name for URL in translite
 
 - Accounts and personal info
 - Forums
@@ -39,6 +37,8 @@
 + Track product changes are not very good. Must be changed.
 + Disable ability to change category for a product (can cause many issues).
 + Attribute modification works bad: changes are not applied.
++ Duplicate products in accessories and references if there are more than one group with the same product
++ Associate groups with category
 
 9.10
 + Split total and filtered count in FilteringAbility

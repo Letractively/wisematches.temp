@@ -1,3 +1,22 @@
+# 10.10
+ALTER TABLE `billiongoods`.`store_group`
+ADD COLUMN `categoryId` INT NULL
+AFTER `name`,
+ADD INDEX `category_foreign_idx` (`categoryId` ASC);
+ALTER TABLE `billiongoods`.`store_group`
+ADD CONSTRAINT `category_foreign`
+FOREIGN KEY (`categoryId`)
+REFERENCES `billiongoods`.`store_category` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+# 9.10
+ALTER TABLE `billiongoods`.`store_product`
+CHANGE COLUMN `stockSold` `soldCount` INT(11) NOT NULL DEFAULT '0',
+CHANGE COLUMN `stockAvailable` `stockLeftovers` INT(11) NULL DEFAULT NULL,
+CHANGE COLUMN `restockDate` `stockRestockDate` DATE NULL DEFAULT NULL;
+
+# 8.10
 CREATE TABLE `billiongoods`.`service_validation` (
   `id`        INT            NOT NULL AUTO_INCREMENT,
   `productId` INT            NOT NULL,
@@ -17,7 +36,3 @@ CREATE TABLE `billiongoods`.`service_validation` (
   `errMsg`    VARCHAR(255)   NULL,
   PRIMARY KEY (`id`));
 
-ALTER TABLE `billiongoods`.`store_product`
-CHANGE COLUMN `stockSold` `soldCount` INT(11) NOT NULL DEFAULT '0',
-CHANGE COLUMN `stockAvailable` `stockLeftovers` INT(11) NULL DEFAULT NULL,
-CHANGE COLUMN `restockDate` `stockRestockDate` DATE NULL DEFAULT NULL;

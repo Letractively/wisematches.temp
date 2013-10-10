@@ -26,6 +26,13 @@
                         </tr>
 
                         <tr>
+                            <td><label for="n">Категория: </label></td>
+                            <td>
+                            <@bg.ui.selectCategory "form.categoryId" catalog true/>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td></td>
                             <td>
                             <@bg.ui.input path="form.id" fieldType="hidden"/>

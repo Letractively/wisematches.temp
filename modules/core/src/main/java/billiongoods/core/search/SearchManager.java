@@ -13,6 +13,7 @@ import java.util.List;
  *
  * @param <E> the entity type that is supported by search manager.
  * @param <C> the context type that is supported by search manager.
+ * @param <F> the filter for searching or {@code Void} if filter is not required.
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface SearchManager<E, C, F> {

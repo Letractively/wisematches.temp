@@ -39,7 +39,7 @@ public class HibernateRelationshipManagerTest {
 		expect(category.getId()).andReturn(13).anyTimes();
 		replay(category);
 
-		final Group group = relationshipManager.createGroup("Mock group");
+		final Group group = relationshipManager.createGroup("Mock group", null);
 
 		final ProductEditor editor = new ProductEditor();
 		editor.setDescription("desc");

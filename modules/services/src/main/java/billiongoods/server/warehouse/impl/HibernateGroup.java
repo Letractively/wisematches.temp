@@ -21,15 +21,20 @@ public class HibernateGroup implements Group {
 	@Column(name = "name")
 	private String name;
 
+	@Column(name = "categoryId")
+	private Integer categoryId;
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = HibernateProductDescription.class)
 	@JoinTable(name = "store_group_item", joinColumns = @JoinColumn(name = "groupId"), inverseJoinColumns = @JoinColumn(name = "productId"))
 	private List<ProductDescription> products = new ArrayList<>();
 
-	public HibernateGroup() {
+	@Deprecated
+	HibernateGroup() {
 	}
 
-	public HibernateGroup(String name) {
+	public HibernateGroup(String name, Integer categoryId) {
 		this.name = name;
+		this.categoryId = categoryId;
 	}
 
 	@Override
@@ -40,6 +45,11 @@ public class HibernateGroup implements Group {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public Integer getCategoryId() {
+		return categoryId;
 	}
 
 	@Override
@@ -57,6 +67,10 @@ public class HibernateGroup implements Group {
 
 	void setName(String name) {
 		this.name = name;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	@Override

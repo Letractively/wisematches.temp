@@ -280,7 +280,7 @@
 </#macro>
 
 <#macro categoryOption category level selected>
-<option <#if category.id?string==selected>selected="selected"</#if> value="${category.id}"><#list 0..level as i>
+<option <#if category.id==selected>selected="selected"</#if> value="${category.id}"><#list 0..level as i>
     -- </#list>${category.name} /${category.id}</option>
     <#list category.children as c>
         <@categoryOption c level+1 selected/>
@@ -293,7 +293,7 @@
         <#if root>
             <option value="">ROOT</option></#if>
         <#list catalog.rootCategories as c>
-            <@categoryOption c 0 status.value!""/>
+            <@categoryOption c 0 status.actualValue!0/>
         </#list>
     </select>
         <#nested/>

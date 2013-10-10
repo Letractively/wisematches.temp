@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="groups" type="billiongoods.server.warehouse.Group[]" -->
 <#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
 
 <#include "/core.ftl">
@@ -79,6 +80,15 @@ ${a.name}<#if a.unit?has_content>, <strong>${a.unit}</strong></#if> <span class=
                 </#list>
                 </td>
             </tr>
+        <#if groups??>
+            <tr>
+                <td colspan="2">
+                    <#list groups as g>
+                        <a href="/maintain/group?id=${g.id}" target="_blank">#${g.id} ${g.name}</a>
+                    </#list>
+                </td>
+            </tr>
+        </#if>
         </table>
     </form>
 </div>
