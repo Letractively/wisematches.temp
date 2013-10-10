@@ -25,9 +25,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -71,13 +72,13 @@ public class ProductController extends AbstractController {
 		model.addAttribute("product", product);
 		model.addAttribute("category", category);
 
-		final List<ProductDescription> related = new ArrayList<>();
+		final Set<ProductDescription> related = new HashSet<>();
 		final List<Group> groups = relationshipManager.getGroups(product.getId());
 		for (Group group : groups) {
 			related.addAll(group.getDescriptions());
 		}
 
-		final List<ProductDescription> accessories = new ArrayList<>();
+		final Set<ProductDescription> accessories = new HashSet<>();
 		final List<Relationship> relationships = relationshipManager.getRelationships(product.getId());
 		for (Relationship relationship : relationships) {
 			if (relationship.getType() == RelationshipType.ACCESSORIES) {

@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/maintain/group")
-public class GroupMaintainController extends AbstractController {
+public class RelationshipsMaintainController extends AbstractController {
 	private RelationshipManager relationshipManager;
 
-	public GroupMaintainController() {
+	public RelationshipsMaintainController() {
 	}
 
 	@RequestMapping("")
@@ -30,6 +30,7 @@ public class GroupMaintainController extends AbstractController {
 		if (form.getId() != null) {
 			final Group group = relationshipManager.getGroup(form.getId());
 			form.setName(group.getName());
+			form.setCategoryId(group.getCategoryId());
 			model.addAttribute("group", group);
 		}
 		return "/content/maintain/group";
@@ -50,9 +51,9 @@ public class GroupMaintainController extends AbstractController {
 			} else {
 				Group group;
 				if ("update".equalsIgnoreCase(form.getAction())) {
-					group = relationshipManager.updateGroup(form.getId(), form.getName());
+					group = relationshipManager.updateGroup(form.getId(), form.getName(), form.getCategoryId());
 				} else {
-					group = relationshipManager.createGroup(form.getName());
+					group = relationshipManager.createGroup(form.getName(), form.getCategoryId());
 				}
 				return "redirect:/maintain/group?id=" + group.getId();
 			}

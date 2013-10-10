@@ -7,6 +7,7 @@ public class GroupForm {
 	private Integer id;
 	private String name;
 	private String action;
+	private Integer categoryId;
 
 	public GroupForm() {
 	}
@@ -33,5 +34,13 @@ public class GroupForm {
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 }

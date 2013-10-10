@@ -10,5 +10,7 @@ public interface Group {
 
 	String getName();
 
+	Integer getCategoryId();
+
 	List<ProductDescription> getDescriptions();
 }

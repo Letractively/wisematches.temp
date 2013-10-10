@@ -26,8 +26,8 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Group createGroup(String name) {
-		final HibernateGroup group = new HibernateGroup(name);
+	public Group createGroup(String name, Integer categoryId) {
+		final HibernateGroup group = new HibernateGroup(name, categoryId);
 		sessionFactory.getCurrentSession().save(group);
 		return group;
 	}
@@ -45,11 +45,12 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Group updateGroup(Integer id, String name) {
+	public Group updateGroup(Integer id, String name, Integer categoryId) {
 		final Session session = sessionFactory.getCurrentSession();
 		final HibernateGroup group = getGroup(id);
 		if (group != null) {
 			group.setName(name);
+			group.setCategoryId(categoryId);
 			session.update(group);
 		}
 		return group;
@@ -62,6 +63,16 @@ public class HibernateRelationshipManager implements RelationshipManager {
 		final Session session = sessionFactory.getCurrentSession();
 		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateGroup g where g.name like:name");
 		query.setParameter("name", "%" + name + "%");
+		return query.list();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public List<Group> searchGroups(Integer categoryId) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("from billiongoods.server.warehouse.impl.HibernateGroup g where g.categoryId=:cid");
+		query.setParameter("cid", categoryId);
 		return query.list();
 	}
 
