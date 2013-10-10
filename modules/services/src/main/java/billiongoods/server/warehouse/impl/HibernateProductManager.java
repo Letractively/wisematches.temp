@@ -138,9 +138,12 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		applyProjections(criteria, context, null);
 
 		final ProjectionList projection = Projections.projectionList();
-		projection.add(Projections.groupProperty("props.attributeId"));
-		projection.add(Projections.groupProperty("props.sValue"));
-		projection.add(Projections.rowCount());
+		projection.add(Projections.groupProperty("props.attributeId")); //0
+		projection.add(Projections.groupProperty("props.sValue")); // 1
+		projection.add(Projections.groupProperty("props.bValue")); // 2
+		projection.add(Projections.rowCount()); // 3
+		projection.add(Projections.min("props.iValue")); // 4
+		projection.add(Projections.max("props.iValue")); // 5
 
 		criteria.createAlias("product.propertyIds", "props").setProjection(projection);
 
@@ -149,7 +152,15 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		for (Object o : list) {
 			Object[] oo = (Object[]) o;
 
-			final Attribute attribute = attributeManager.getAttribute((Integer) oo[0]);
+			final Integer attributeId = ((Number) oo[0]).intValue();
+			final String sValue = (String) oo[1];
+			final Boolean bValue = (Boolean) oo[2];
+
+			final Integer count = ((Number) oo[3]).intValue();
+			final Integer min = oo[4] != null ? ((Number) oo[4]).intValue() : null;
+			final Integer max = oo[5] != null ? ((Number) oo[5]).intValue() : null;
+
+			final Attribute attribute = attributeManager.getAttribute(attributeId);
 
 			List<FilteringSummary> filteringSummaries = attributeListMap.get(attribute);
 			if (filteringSummaries == null) {
@@ -157,7 +168,13 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 				attributeListMap.put(attribute, filteringSummaries);
 			}
 
-			filteringSummaries.add(new FilteringSummary((String) oo[1], ((Number) oo[2]).intValue()));
+			if (attribute.getAttributeType() == AttributeType.BOOLEAN) {
+				filteringSummaries.add(new FilteringSummary(bValue, count));
+			} else if (attribute.getAttributeType() == AttributeType.INTEGER) {
+				filteringSummaries.add(new FilteringSummary(min, max));
+			} else {
+				filteringSummaries.add(new FilteringSummary(sValue, count));
+			}
 		}
 		int filteredCount = getTotalCount(context, filter);
 		return new DefaultFilteringAbility(totalCount, filteredCount, minPrice, maxPrice, attributeListMap);

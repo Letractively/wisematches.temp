@@ -14,16 +14,14 @@ public class HibernateProductProperty {
 	@Column(name = "attributeId")
 	private Integer attributeId;
 
-	@Column(name = "dvalue")
-	private Double dValue;
+	@Column(name = "svalue")
+	private String sValue;
 
 	@Column(name = "ivalue")
 	private Integer iValue;
 
-	@Column(name = "svalue")
-	private String sValue;
-
-	private static final Integer BOOLEAN_TRUE = 1;
+	@Column(name = "bvalue")
+	private Boolean bValue;
 
 	@Deprecated
 	public HibernateProductProperty() {
@@ -31,22 +29,30 @@ public class HibernateProductProperty {
 
 	public HibernateProductProperty(Attribute attribute, Object value) {
 		this.attributeId = attribute.getId();
-		switch (attribute.getAttributeType()) {
-			case STRING:
-			case UNKNOWN:
-				this.sValue = (String) value;
-				break;
-			case INTEGER:
-				this.iValue = (Integer) value;
-				break;
-			case DOUBLE:
-				this.dValue = (Double) value;
-				break;
-			case BOOLEAN:
-				this.iValue = (value != null && value == Boolean.TRUE) ? 1 : 0;
-				break;
-			default:
-				throw new IllegalArgumentException("Unsupported attribute type: " + attribute);
+
+		if (value != null) {
+			switch (attribute.getAttributeType()) {
+				case STRING:
+				case UNKNOWN:
+					this.sValue = (String) value;
+					break;
+				case INTEGER:
+					if (value instanceof String) {
+						this.iValue = Integer.valueOf((String) value);
+					} else {
+						this.iValue = (Integer) value;
+					}
+					break;
+				case BOOLEAN:
+					if (value instanceof String) {
+						this.bValue = Boolean.valueOf((String) value);
+					} else {
+						this.bValue = (Boolean) value;
+					}
+					break;
+				default:
+					throw new IllegalArgumentException("Unsupported attribute type: " + attribute);
+			}
 		}
 	}
 
@@ -54,8 +60,8 @@ public class HibernateProductProperty {
 		return attributeId;
 	}
 
-	public Double getDValue() {
-		return dValue;
+	public Boolean getBValue() {
+		return bValue;
 	}
 
 	public Integer getIValue() {
@@ -70,10 +76,8 @@ public class HibernateProductProperty {
 		switch (type) {
 			case INTEGER:
 				return iValue;
-			case DOUBLE:
-				return dValue;
 			case BOOLEAN:
-				return BOOLEAN_TRUE.equals(iValue);
+				return bValue;
 			default:
 				return sValue;
 		}
