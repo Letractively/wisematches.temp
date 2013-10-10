@@ -629,15 +629,17 @@ attributeValueDialog.find("button").click(function () {
             .done(function (response) {
                 if (response.success) {
                     bg.ui.unlock(null, "Атрибут добавлен", false);
-                    $("#productParameters").find("select").append("<option value='" + serializeObject['attributeId'] + "'>" + serializeObject['value'] + "</option>");
-                    $.modal.close();
+                    var value = serializeObject['value'];
+                    $("#productParameters").find("select").append("<option value='" + value + "'>" + value + "</option>").val(value);
                 } else {
                     bg.ui.unlock(null, response.message, true);
                 }
+                $.modal.close();
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
                         "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                $.modal.close();
             });
 });
 
