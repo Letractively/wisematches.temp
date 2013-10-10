@@ -3,6 +3,7 @@ ALTER TABLE `billiongoods`.`store_group`
 ADD COLUMN `categoryId` INT NULL
 AFTER `name`,
 ADD INDEX `category_foreign_idx` (`categoryId` ASC);
+
 ALTER TABLE `billiongoods`.`store_group`
 ADD CONSTRAINT `category_foreign`
 FOREIGN KEY (`categoryId`)
