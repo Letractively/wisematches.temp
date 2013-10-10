@@ -23,9 +23,7 @@ public interface CategoryManager {
 	/**
 	 * Adds new catalog with specified to specified parent catalog.
 	 *
-	 * @param name     the name of new catalog item.
-	 * @param parent   parent catalog;
-	 * @param position
+	 * @param editor category editor
 	 * @return create catalog item.
 	 * @throws NullPointerException     if name or parent is null
 	 * @throws IllegalArgumentException if parent catalog already has item with the same name
@@ -35,12 +33,7 @@ public interface CategoryManager {
 	/**
 	 * Updates settings of exist category
 	 *
-	 * @param id          the category id
-	 * @param name        new name
-	 * @param description new description
-	 * @param attributes  new attributes set
-	 * @param parent      new parent
-	 * @param position
+	 * @param editor category editor
 	 * @return updated category
 	 */
 	Category updateCategory(Category.Editor editor);

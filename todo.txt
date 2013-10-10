@@ -5,7 +5,6 @@
 
 ============= CURRENT ====================
 - Associate groups with category
-- Attribute modification works bad: changes are not applied.
 
 - Order: suspended state. Ability to change state from any to any.
 - Our recomendations view on the left of main page: L959 & V911 & v912
@@ -39,6 +38,7 @@
 + Grey price for unavailable products in categories view
 + Track product changes are not very good. Must be changed.
 + Disable ability to change category for a product (can cause many issues).
++ Attribute modification works bad: changes are not applied.
 
 9.10
 + Split total and filtered count in FilteringAbility

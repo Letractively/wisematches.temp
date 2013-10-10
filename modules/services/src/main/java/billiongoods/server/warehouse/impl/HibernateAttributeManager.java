@@ -30,8 +30,8 @@ public class HibernateAttributeManager implements AttributeManager, Initializing
 		final List list = query.list();
 		for (Object o : list) {
 			final HibernateAttribute a = (HibernateAttribute) o;
-			attributeMap.put(a.getId(), a);
 			session.evict(a);
+			attributeMap.put(a.getId(), a);
 		}
 	}
 
@@ -76,7 +76,7 @@ public class HibernateAttributeManager implements AttributeManager, Initializing
 	public Attribute updateAttribute(Attribute.Editor editor) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateAttribute ha = (HibernateAttribute) session.get(HibernateAttribute.class, editor.getId());
+		final HibernateAttribute ha = (HibernateAttribute) attributeMap.get(editor.getId());
 		if (ha == null) {
 			throw new IllegalArgumentException("Unknown attribute: " + editor.getId());
 		}
@@ -86,8 +86,7 @@ public class HibernateAttributeManager implements AttributeManager, Initializing
 		ha.setDescription(editor.getDescription());
 		ha.setAttributeType(editor.getAttributeType());
 
-		session.update(ha);
-		attributeMap.put(ha.getId(), ha);
+		session.merge(ha);
 		return ha;
 	}
 
