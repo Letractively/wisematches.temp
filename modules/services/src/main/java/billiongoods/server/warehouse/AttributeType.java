@@ -7,6 +7,5 @@ public enum AttributeType {
 	UNKNOWN,
 	STRING,
 	INTEGER,
-	BOOLEAN,
-	DOUBLE
+	BOOLEAN
 }

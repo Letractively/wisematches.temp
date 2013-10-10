@@ -174,6 +174,15 @@
                             <td>
                                 <button type="button">Добавить</button>
                             </td>
+                        <#elseif attr.attributeType == AttributeType.BOOLEAN>
+                            <td>
+                                <select id="property${attr.id}" name="propertyValues" style="width: 100%">
+                                    <option value="">-- нет значения --</option>
+                                    <option value="false" <#if value="false">selected="selected"</#if>>нет</option>
+                                    <option value="true" <#if value="true">selected="selected"</#if>>да</option>
+                                </select>
+                            </td>
+                            <td></td>
                         <#else>
                             <td>
                                 <input id="property${attr.id}" name="propertyValues" value="${value}"
@@ -211,8 +220,8 @@
                             <label for="option${id}" class="attribute">${id}</label>
                             <input name="optionIds" type="hidden" value="${id}"/>
                         </td>
-                        <td>
-                            <input id="option${id}" name="optionValues" value="${value}"/>
+                        <td width="100%">
+                            <input style="width: 100%" id="option${id}" name="optionValues" value="${value}"/>
                         </td>
                         <td>
                             <button class="remove" type="button">Удалить</button>

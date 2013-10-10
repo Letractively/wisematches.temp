@@ -8,7 +8,7 @@
 <#assign itemsCount=0/>
 
 <#--================ Filtering based on data defined for products ======================-->
-<#macro categoryParameterValue a s>
+<#macro attributeValueString a s>
     <#if (s.count>0)>
         <#assign itemsCount=itemsCount+1/>
     <li class="item">
@@ -21,26 +21,49 @@
     </#if>
 </#macro>
 
+<#macro categoryAttributeString a summary>
+    <#assign unknownSummary=""/>
+    <#list summary as s>
+        <#if s.name?has_content><@attributeValueString a s/><#else><#assign unknownSummary=s/></#if>
+    </#list>
+    <#if unknownSummary?has_content>
+        <@attributeValueString a unknownSummary/>
+    </#if>
+</#macro>
+
+<#macro categoryAttributeBoolean a summary>
+    <#assign itemsCount=itemsCount+1/>
+<li class="item">
+    <input id="parameter_${a.id}_yes" type="radio" name="${a.id}" value="true"/>
+    <label for="parameter_${a.id}_yes">Да</label>
+</li>
+<li class="item">
+    <input id="parameter_${a.id}_no" type="radio" name="${a.id}" value="false"/>
+    <label for="parameter_${a.id}_no">Нет</label>
+</li>
+<li class="item">
+    <input id="parameter_${a.id}" type="radio" name="${a.id}" value=""/>
+    <label for="parameter_${a.id}">Неважно</label>
+</li>
+</#macro>
+
 <#macro categoryPramaters category>
     <#list category.parameters as p>
         <#assign a=p.attribute/>
         <#if (p.values?size>0)>
             <#assign summary=filtering.getFilteringItems(a)/>
 
-            <#if (a.attributeType=AttributeType.STRING)>
+            <#if (a.attributeType=AttributeType.STRING || a.attributeType=AttributeType.BOOLEAN)>
             <div class="property">
                 <div class="name">
                 ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
                 </div>
 
                 <ul class="items">
-                    <#assign unknownSummary=""/>
-                    <#list summary as s>
-                    <#if s.name?has_content><@categoryParameterValue a s/><#else><#assign unknownSummary=s/></#if>
-                </#list>
-                    <#if unknownSummary?has_content>
-                    <@categoryParameterValue a unknownSummary/>
-                </#if>
+                    <#switch a.attributeType>
+                <#case AttributeType.STRING><@categoryAttributeString a summary/><#break>
+                        <#case AttributeType.BOOLEAN><@categoryAttributeBoolean a summary/><#break>
+                    </#switch>
                 </ul>
             </div>
             </#if>

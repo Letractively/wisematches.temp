@@ -4,10 +4,14 @@ package billiongoods.core;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public abstract class Localization {
+	private final String no;
+	private final String yes;
 	private final String momentAgo;
 	private final String[][] timeDeclension;
 
-	static Localization ENGLISH = new Localization("a moment", new String[][]{
+	static Localization ENGLISH = new Localization(
+			"no", "yes",
+			"a moment", new String[][]{
 			{"d", "day", "days", "days"},
 			{"h", "hour", "hours", "hours"},
 			{"m", "minute", "minutes", "minutes"}}) {
@@ -34,7 +38,9 @@ public abstract class Localization {
 		}
 	};
 
-	static Localization RUSSIAN = new Localization("одно мгновенье", new String[][]{
+	static Localization RUSSIAN = new Localization(
+			"нет", "да",
+			"одно мгновенье", new String[][]{
 			{"д", "день", "дня", "дней"},
 			{"ч", "час", "часа", "часов"},
 			{"м", "минута", "минуты", "минут"}}) {
@@ -61,9 +67,19 @@ public abstract class Localization {
 	};
 
 
-	public Localization(String momentAgo, String[][] timeDeclension) {
+	public Localization(String no, String yes, String momentAgo, String[][] timeDeclension) {
+		this.no = no;
+		this.yes = yes;
 		this.momentAgo = momentAgo;
 		this.timeDeclension = timeDeclension;
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public String getYes() {
+		return yes;
 	}
 
 	public String getDaysCode() {

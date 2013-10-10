@@ -10,6 +10,9 @@ REFERENCES `billiongoods`.`store_category` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
+ALTER TABLE `billiongoods`.`store_product_property`
+CHANGE COLUMN `dvalue` `bvalue` INT(1) NULL DEFAULT NULL;
+
 # 9.10
 ALTER TABLE `billiongoods`.`store_product`
 CHANGE COLUMN `stockSold` `soldCount` INT(11) NOT NULL DEFAULT '0',

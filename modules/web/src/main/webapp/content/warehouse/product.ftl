@@ -92,7 +92,7 @@
                             <#if p.value?has_content>
                                 <tr>
                                     <td>${p.attribute.name}</td>
-                                    <td>${p.value} ${p.attribute.unit}</td>
+                                    <td>${messageSource.formatPropertyValue(p.value, locale)} ${p.attribute.unit}</td>
                                 </tr>
                             </#if>
                         </#list>

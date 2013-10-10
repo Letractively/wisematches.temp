@@ -86,6 +86,16 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		return TIME_FORMATTER.get(locale).format(date);
 	}
 
+	public String formatPropertyValue(Object o, Locale locale) {
+		if (o instanceof String) {
+			return (String) o;
+		} else if (o instanceof Boolean) {
+			final Localization localization = Language.byLocale(locale).getLocalization();
+			return o == Boolean.TRUE ? localization.getYes() : localization.getNo();
+		}
+		return String.valueOf(o);
+	}
+
 	public String formatElapsedTime(Date date, Locale locale) {
 		final long startTime = date.getTime();
 		final long endTime = System.currentTimeMillis();
