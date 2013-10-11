@@ -75,7 +75,7 @@ public class HibernateProductManagerTest {
 
 	@Test
 	public void testFilteringAbility() {
-		final FilteringAbility filteringAbility = productManager.getFilteringAbility(null, null);
+		final Filtering filteringAbility = productManager.getFilteringAbility(null, null);
 		assertNotNull(filteringAbility);
 
 		System.out.println(filteringAbility);

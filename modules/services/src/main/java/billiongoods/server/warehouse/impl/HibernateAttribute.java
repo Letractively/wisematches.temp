@@ -25,6 +25,9 @@ public class HibernateAttribute implements Attribute {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "priority")
+	private int priority;
+
 	@Column(name = "type")
 	private AttributeType attributeType;
 
@@ -55,6 +58,11 @@ public class HibernateAttribute implements Attribute {
 	}
 
 	@Override
+	public int getPriority() {
+		return priority;
+	}
+
+	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -74,6 +82,10 @@ public class HibernateAttribute implements Attribute {
 
 	void setDescription(String description) {
 		this.description = description;
+	}
+
+	void setPriority(int priority) {
+		this.priority = priority;
 	}
 
 	void setAttributeType(AttributeType attributeType) {

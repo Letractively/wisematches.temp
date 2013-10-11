@@ -10,6 +10,8 @@ public interface Attribute {
 
 	String getUnit();
 
+	int getPriority();
+
 	String getDescription();
 
 	AttributeType getAttributeType();
@@ -18,6 +20,7 @@ public interface Attribute {
 		private Integer id;
 		private String name;
 		private String unit;
+		private int priority;
 		private String description;
 		private AttributeType attributeType;
 
@@ -76,10 +79,19 @@ public interface Attribute {
 			this.attributeType = attributeType;
 		}
 
+		public int getPriority() {
+			return priority;
+		}
+
+		public void setPriority(int priority) {
+			this.priority = priority;
+		}
+
 		public void init(Attribute attribute) {
 			this.id = attribute.getId();
 			this.name = attribute.getName();
 			this.unit = attribute.getUnit();
+			this.priority = attribute.getPriority();
 			this.description = attribute.getDescription();
 			this.attributeType = attribute.getAttributeType();
 		}

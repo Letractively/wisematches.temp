@@ -1,6 +1,5 @@
 package billiongoods.server.warehouse;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,13 +9,21 @@ import java.util.Set;
 public class ProductFilter {
 	private final Double minPrice;
 	private final Double maxPrice;
-	private final Map<Attribute, List<String>> filter;
+	private final Map<Attribute, FilteringValue> filter;
 
+	public ProductFilter(Double minPrice, Double maxPrice, Map<Attribute, FilteringValue> filter) {
+		this.minPrice = minPrice;
+		this.maxPrice = maxPrice;
+		this.filter = filter;
+	}
+
+	/*
 	public ProductFilter(Double minPrice, Double maxPrice, Map<Attribute, List<String>> filter) {
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
 		this.filter = filter;
 	}
+*/
 
 	public Double getMinPrice() {
 		return minPrice;
@@ -30,6 +37,12 @@ public class ProductFilter {
 		return filter.keySet();
 	}
 
+	public FilteringValue getValue(Attribute attribute) {
+		return filter.get(attribute);
+	}
+
+/*
+
 	public List<String> getValues(Attribute attribute) {
 		return filter.get(attribute);
 	}
@@ -38,4 +51,5 @@ public class ProductFilter {
 		final List<String> strings = filter.get(attr);
 		return strings != null && strings.contains(value);
 	}
+*/
 }

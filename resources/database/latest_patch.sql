@@ -1,3 +1,9 @@
+# 10.11
+ALTER TABLE `billiongoods`.`store_attribute`
+ADD COLUMN `priority` TINYINT NULL DEFAULT 0
+AFTER `type`;
+
+
 # 10.10
 ALTER TABLE `billiongoods`.`store_group`
 ADD COLUMN `categoryId` INT NULL

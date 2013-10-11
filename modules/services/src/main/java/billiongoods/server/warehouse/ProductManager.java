@@ -27,7 +27,7 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 
 	SupplierInfo getSupplierInfo(Integer id);
 
-	FilteringAbility getFilteringAbility(ProductContext context, ProductFilter filter);
+	Filtering getFilteringAbility(ProductContext context, ProductFilter filter);
 
 
 	Product createProduct(ProductEditor editor);

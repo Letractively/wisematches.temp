@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.*;
 
@@ -102,7 +104,7 @@ public class CategoryController extends AbstractController {
 		final EnumSet<ProductState> productStates = hasRole("moderator") ? ProductContext.NOT_REMOVED : ProductContext.VISIBLE;
 
 		final ProductContext context = new ProductContext(category, true, pageableForm.getQuery(), arrivals, productStates);
-		final FilteringAbility filtering = productManager.getFilteringAbility(context, filter);
+		final Filtering filtering = productManager.getFilteringAbility(context, filter);
 
 		pageableForm.initialize(filtering.getTotalCount(), filtering.getFilteredCount());
 
@@ -117,57 +119,84 @@ public class CategoryController extends AbstractController {
 		model.addAttribute("filtering", filtering);
 	}
 
+	private Map<String, Object> decodeFilter(String filter) throws UnsupportedEncodingException {
+		final Map<String, Object> res = new HashMap<>();
+		final String decode = URLDecoder.decode(filter, "UTF-8");
+
+		final String[] split = decode.split("&");
+		for (String s : split) {
+			final String[] split1 = s.split("=");
+			final String name = split1[0];
+			final String value = split1.length > 1 ? split1[1] : null;
+
+			Object o = res.get(name);
+			if (o != null) {
+				if (o.getClass().isArray()) {
+					final String[] arr = (String[]) o;
+					final String[] ar = new String[arr.length + 1];
+					System.arraycopy(arr, 0, ar, 0, arr.length);
+					ar[arr.length] = value;
+					o = ar;
+				} else {
+					o = new String[]{(String) o, value};
+				}
+			} else {
+				o = value;
+			}
+			res.put(name, o);
+		}
+		return res;
+	}
+
 	private ProductFilter prepareFilter(String filter) {
 		if (filter == null || filter.isEmpty()) {
 			return null;
 		}
 		try {
-			final Map<Attribute, List<String>> res = new HashMap<>();
-
 			Double minPrice = null;
 			Double maxPrice = null;
 
-			final String decode = URLDecoder.decode(filter, "UTF-8");
-			final String[] split = decode.split("&");
-			for (String s : split) {
-				final String[] split1 = s.split("=");
-				final String name = split1[0];
-				final String value = split1.length > 1 ? split1[1] : null;
-
-				if (name != null && !name.isEmpty()) {
+			final Map<Attribute, FilteringValue> res = new HashMap<>();
+			final Map<String, Object> stringObjectMap = decodeFilter(filter);
+			for (Map.Entry<String, Object> entry : stringObjectMap.entrySet()) {
+				final String name = entry.getKey();
+				final Object value = entry.getValue();
+				if (name != null && !name.isEmpty() && value != null) {
 					switch (name) {
 						case "minPrice":
 							try {
-								if (value != null) {
-									minPrice = Double.valueOf(value);
-								}
+								minPrice = Double.valueOf((String) value);
 							} catch (NumberFormatException ignore) {
 							}
 							break;
 						case "maxPrice":
 							try {
-								if (value != null) {
-									maxPrice = Double.valueOf(value);
-								}
+								maxPrice = Double.valueOf((String) value);
 							} catch (NumberFormatException ignore) {
 							}
 							break;
 						default:
 							final Attribute attr = attributeManager.getAttribute(Integer.parseInt(name));
 							if (attr != null) {
-								List<String> strings = res.get(attr);
-								if (strings == null) {
-									strings = new ArrayList<>();
-									res.put(attr, strings);
-								}
-
-								if (split1.length > 1) {
-									if (value != null) {
-										strings.add(value);
-									}
+								final FilteringValue filterValue;
+								final AttributeType type = attr.getAttributeType();
+								if (type == AttributeType.INTEGER) {
+									final String[] a = (String[]) value;
+									final BigDecimal min = a[0].trim().isEmpty() ? null : new BigDecimal(a[0]);
+									final BigDecimal max = a[1].trim().isEmpty() ? null : new BigDecimal(a[1]);
+									filterValue = new FilteringValue.Range(min, max);
+								} else if (type == AttributeType.BOOLEAN) {
+									filterValue = new FilteringValue.Bool(Boolean.valueOf((String) value));
 								} else {
-									strings.add("");
+									final Set<String> v = new HashSet<>();
+									if (value.getClass().isArray()) {
+										Collections.addAll(v, (String[]) value);
+									} else {
+										v.add((String) value);
+									}
+									filterValue = new FilteringValue.Enum(v);
 								}
+								res.put(attr, filterValue);
 							}
 							break;
 					}

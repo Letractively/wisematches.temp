@@ -1,74 +1,63 @@
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="filter" type="billiongoods.server.warehouse.ProductFilter" -->
-<#-- @ftlvariable name="filtering" type="billiongoods.server.warehouse.FilteringAbility" -->
+<#-- @ftlvariable name="filtering" type="billiongoods.server.warehouse.Filtering" -->
 <#-- @ftlvariable name="pageableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.PageableForm" -->
 
 <#include "/core.ftl"/>
 
-<#assign itemsCount=0/>
-
 <#--================ Filtering based on data defined for products ======================-->
-<#macro attributeValueString a s>
-    <#if (s.count>0)>
-        <#assign itemsCount=itemsCount+1/>
-    <li class="item">
-        <input id="parameter_${a.id}_${s.name}" type="checkbox" name="${a.id}" value="${s.name}"
-               <#if filter?? && filter.isAllowed(a, s.name)>checked="checked"</#if> />
-        <label for="parameter_${a.id}_${s.name}">
-            <#if s.name?has_content>${s.name}<#else><em>неизвестно</em></#if> (${s.count})
-        </label>
-    </li>
-    </#if>
-</#macro>
-
-<#macro categoryAttributeString a summary>
-    <#assign unknownSummary=""/>
-    <#list summary as s>
-        <#if s.name?has_content><@attributeValueString a s/><#else><#assign unknownSummary=s/></#if>
-    </#list>
-    <#if unknownSummary?has_content>
-        <@attributeValueString a unknownSummary/>
-    </#if>
-</#macro>
-
-<#macro categoryAttributeBoolean a summary>
-    <#assign itemsCount=itemsCount+1/>
+<#macro attributeValueString a v c>
 <li class="item">
-    <input id="parameter_${a.id}_yes" type="radio" name="${a.id}" value="true"/>
+    <input id="parameter_${a.id}_${v}" type="checkbox" name="${a.id}" value="${v}"
+           <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(v)>checked="checked"</#if> />
+    <label for="parameter_${a.id}_${v}">
+        <#if v?has_content>${v}<#else><em>неизвестно</em></#if> (${c})
+    </label>
+</li>
+</#macro>
+
+<#macro categoryAttributeEnum a item>
+    <#list item.values as v>
+        <#if v?has_content>
+            <@attributeValueString a v item.getValueCount(v)/>
+        </#if>
+    </#list>
+    <#assign cnt=item.getValueCount("")/>
+    <#if (cnt>0)>
+        <@attributeValueString a "" cnt/>
+    </#if>
+</#macro>
+
+<#--
+<#macro categoryAttributeEnum a item>
+    <#assign totalCount=0/>
+    <#list item.values as v>
+        <#assign localCount=item.getValueCount(v)/>
+        <#assign totalCount=totalCount+localCount/>
+        <@attributeValueString a v localCount/>
+    </#list>
+    <#if (totalCount<filtering.totalCount)>
+        <@attributeValueString a "" filtering.totalCount-totalCount/>
+    </#if>
+</#macro>
+-->
+
+<#macro categoryAttributeBoolean a item>
+<li class="item">
+    <input id="parameter_${a.id}_yes" type="radio" name="${a.id}" value="true"
+           <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(true)>checked="checked"</#if>/>
     <label for="parameter_${a.id}_yes">Да</label>
 </li>
 <li class="item">
-    <input id="parameter_${a.id}_no" type="radio" name="${a.id}" value="false"/>
+    <input id="parameter_${a.id}_no" type="radio" name="${a.id}" value="false"
+           <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(false)>checked="checked"</#if>/>
     <label for="parameter_${a.id}_no">Нет</label>
 </li>
 <li class="item">
-    <input id="parameter_${a.id}" type="radio" name="${a.id}" value=""/>
+    <input id="parameter_${a.id}" type="radio" name="${a.id}" value=""
+           <#if !filter?? || !filter.getValue(a)??>checked="checked"</#if>/>
     <label for="parameter_${a.id}">Неважно</label>
 </li>
-</#macro>
-
-<#macro categoryPramaters category>
-    <#list category.parameters as p>
-        <#assign a=p.attribute/>
-        <#if (p.values?size>0)>
-            <#assign summary=filtering.getFilteringItems(a)/>
-
-            <#if (a.attributeType=AttributeType.STRING || a.attributeType=AttributeType.BOOLEAN)>
-            <div class="property">
-                <div class="name">
-                ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
-                </div>
-
-                <ul class="items">
-                    <#switch a.attributeType>
-                <#case AttributeType.STRING><@categoryAttributeString a summary/><#break>
-                        <#case AttributeType.BOOLEAN><@categoryAttributeBoolean a summary/><#break>
-                    </#switch>
-                </ul>
-            </div>
-            </#if>
-        </#if>
-    </#list>
 </#macro>
 
 <#if category?? && filtering?? && pageableForm??>
@@ -113,11 +102,23 @@
         </ul>
     </div>
 
-    <#list category.genealogy.parents as c>
-        <@categoryPramaters c/>
-    </#list>
+    <#list filtering.filteringItems as i>
+        <#if !i.empty>
+            <#assign a = i.attribute/>
+            <div class="property">
+                <div class="name">
+                ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
+                </div>
 
-    <@categoryPramaters category/>
+                <ul class="items">
+                    <#switch a.attributeType>
+                        <#case AttributeType.STRING><@categoryAttributeEnum a i/><#break>
+                        <#case AttributeType.BOOLEAN><@categoryAttributeBoolean a i/><#break>
+                    </#switch>
+                </ul>
+            </div>
+        </#if>
+    </#list>
 </div>
 
 <script type="text/javascript">
