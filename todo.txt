@@ -5,7 +5,8 @@
 
 ============= CURRENT ====================
 - Range filters
-- Binominal filters
+
+- Notifications schema is not clear. Recipient is very complex and not localized.
 
 - Order: suspended state. Ability to change state from any to any.
 - Our recomendations view on the left of main page: L959 & V911 & v912
@@ -33,6 +34,9 @@
 - Ability to track state of a SKU
 
 ============= DONE ====================
+11.10
++ Binominal filters (filtering principles were redesigned)
+
 10.10
 + Grey price for unavailable products in categories view
 + Track product changes are not very good. Must be changed.

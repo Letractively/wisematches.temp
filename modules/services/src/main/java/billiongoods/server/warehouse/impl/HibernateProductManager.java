@@ -2,6 +2,7 @@ package billiongoods.server.warehouse.impl;
 
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.entity.EntitySearchManager;
+import billiongoods.core.utils.StringComparators;
 import billiongoods.server.warehouse.*;
 import org.hibernate.Cache;
 import org.hibernate.Criteria;
@@ -15,6 +16,7 @@ import org.hibernate.type.StringType;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -116,7 +118,8 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	}
 
 	@Override
-	public FilteringAbility getFilteringAbility(ProductContext context, ProductFilter filter) {
+	@SuppressWarnings("unchecked")
+	public Filtering getFilteringAbility(ProductContext context, ProductFilter filter) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		Criteria countCriteria = session.createCriteria(HibernateProductDescription.class);
@@ -147,37 +150,47 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 
 		criteria.createAlias("product.propertyIds", "props").setProjection(projection);
 
-		Map<Attribute, List<FilteringSummary>> attributeListMap = new HashMap<>();
+		final List<FilteringItem> items = new ArrayList<>();
+		Map<Attribute, SortedMap<?, Integer>> attributeListMap = new HashMap<>();
 		final List list = criteria.list();
 		for (Object o : list) {
 			Object[] oo = (Object[]) o;
 
 			final Integer attributeId = ((Number) oo[0]).intValue();
-			final String sValue = (String) oo[1];
-			final Boolean bValue = (Boolean) oo[2];
-
 			final Integer count = ((Number) oo[3]).intValue();
-			final Integer min = oo[4] != null ? ((Number) oo[4]).intValue() : null;
-			final Integer max = oo[5] != null ? ((Number) oo[5]).intValue() : null;
 
 			final Attribute attribute = attributeManager.getAttribute(attributeId);
-
-			List<FilteringSummary> filteringSummaries = attributeListMap.get(attribute);
-			if (filteringSummaries == null) {
-				filteringSummaries = new ArrayList<>();
-				attributeListMap.put(attribute, filteringSummaries);
-			}
-
-			if (attribute.getAttributeType() == AttributeType.BOOLEAN) {
-				filteringSummaries.add(new FilteringSummary(bValue, count));
-			} else if (attribute.getAttributeType() == AttributeType.INTEGER) {
-				filteringSummaries.add(new FilteringSummary(min, max));
-			} else {
-				filteringSummaries.add(new FilteringSummary(sValue, count));
+			final AttributeType type = attribute.getAttributeType();
+			if (type == AttributeType.INTEGER) {
+				final Integer min = oo[4] != null ? ((Number) oo[4]).intValue() : null;
+				final Integer max = oo[5] != null ? ((Number) oo[5]).intValue() : null;
+				items.add(new FilteringItem.Range(attribute,
+						min != null ? new BigDecimal(min) : null,
+						max != null ? new BigDecimal(max) : null));
+			} else if (type == AttributeType.STRING) {
+				final String sValue = (String) oo[1];
+				SortedMap<String, Integer> filteringSummaries = (SortedMap<String, Integer>) attributeListMap.get(attribute);
+				if (filteringSummaries == null) {
+					filteringSummaries = new TreeMap<>(StringComparators.getNaturalComparator());
+					attributeListMap.put(attribute, filteringSummaries);
+				}
+				filteringSummaries.put(sValue, count);
+			} else if (type == AttributeType.BOOLEAN) {
+				final Boolean bValue = (Boolean) oo[2];
+				SortedMap<Boolean, Integer> filteringSummaries = (SortedMap<Boolean, Integer>) attributeListMap.get(attribute);
+				if (filteringSummaries == null) {
+					filteringSummaries = new TreeMap<>();
+					attributeListMap.put(attribute, filteringSummaries);
+				}
+				filteringSummaries.put(bValue, count);
 			}
 		}
+
 		int filteredCount = getTotalCount(context, filter);
-		return new DefaultFilteringAbility(totalCount, filteredCount, minPrice, maxPrice, attributeListMap);
+		for (Map.Entry<Attribute, SortedMap<?, Integer>> entry : attributeListMap.entrySet()) {
+			items.add(new FilteringItem.Enum(entry.getKey(), entry.getValue()));
+		}
+		return new DefaultFiltering(totalCount, filteredCount, minPrice, maxPrice, items);
 	}
 
 	@Override
@@ -394,9 +407,42 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 			if (attributes != null && !attributes.isEmpty()) {
 				final Criteria props = criteria.createAlias("propertyIds", "props");
 				for (Attribute attribute : attributes) {
-					props.add(Restrictions.and(
-							Restrictions.eq("props.attributeId", attribute.getId()),
-							Restrictions.in("props.sValue", filter.getValues(attribute))));
+					final FilteringValue value = filter.getValue(attribute);
+					if (value instanceof FilteringValue.Bool) {
+						final FilteringValue.Bool v = (FilteringValue.Bool) value;
+						final Boolean aBoolean = v.getValue();
+						if (aBoolean != null) {
+							props.add(Restrictions.and(
+									Restrictions.eq("props.attributeId", attribute.getId()),
+									Restrictions.eq("props.bValue", aBoolean)));
+						}
+					} else if (value instanceof FilteringValue.Enum) {
+						final FilteringValue.Enum v = (FilteringValue.Enum) value;
+						final Set<String> values = v.getValues();
+						if (values != null) {
+							props.add(Restrictions.and(
+									Restrictions.eq("props.attributeId", attribute.getId()),
+									Restrictions.in("props.sValue", values)));
+						}
+					} else if (value instanceof FilteringValue.Range) {
+						final FilteringValue.Range v = (FilteringValue.Range) value;
+						final BigDecimal min = v.getMin();
+						final BigDecimal max = v.getMax();
+						if (min != null && max != null) {
+							props.add(Restrictions.and(
+									Restrictions.eq("props.attributeId", attribute.getId()),
+									Restrictions.ge("props.iValue", min),
+									Restrictions.le("props.iValue", max)));
+						} else if (min != null) {
+							props.add(Restrictions.and(
+									Restrictions.eq("props.attributeId", attribute.getId()),
+									Restrictions.ge("props.iValue", min)));
+						} else if (max != null) {
+							props.add(Restrictions.and(
+									Restrictions.eq("props.attributeId", attribute.getId()),
+									Restrictions.le("props.iValue", max)));
+						}
+					}
 				}
 			}
 		}
