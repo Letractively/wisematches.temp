@@ -25,6 +25,19 @@ public class ProductFilter {
 	}
 */
 
+	public boolean isEmpty() {
+		if (filter == null || filter.isEmpty()) {
+			return true;
+		}
+
+		for (FilteringValue filteringValue : filter.values()) {
+			if (!filteringValue.isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public Double getMinPrice() {
 		return minPrice;
 	}
@@ -35,6 +48,11 @@ public class ProductFilter {
 
 	public Set<Attribute> getAttributes() {
 		return filter.keySet();
+	}
+
+	public boolean hasValue(Attribute attribute) {
+		final FilteringValue filteringValue = filter.get(attribute);
+		return filteringValue != null && !filteringValue.isEmpty();
 	}
 
 	public FilteringValue getValue(Attribute attribute) {

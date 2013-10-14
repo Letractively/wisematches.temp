@@ -12,7 +12,7 @@
         <input id="parameter_${a.id}_${v}" type="checkbox" name="${a.id}" value="${v}"
                <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(v)>checked="checked"</#if> />
         <label for="parameter_${a.id}_${v}">
-        ${v} (${c})
+        ${v} <span class="count">(${c})</span>
         </label>
     </li>
     </#if>
@@ -34,16 +34,20 @@
 <li class="item">
     <input id="parameter_${a.id}_yes" type="radio" name="${a.id}" value="true"
            <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(true)>checked="checked"</#if>/>
-    <label for="parameter_${a.id}_yes">Да</label>
+    <label for="parameter_${a.id}_yes">
+        Да <span class="count">(${item.getValueCount(true)})</span>
+    </label>
 </li>
 <li class="item">
     <input id="parameter_${a.id}_no" type="radio" name="${a.id}" value="false"
            <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(false)>checked="checked"</#if>/>
-    <label for="parameter_${a.id}_no">Нет</label>
+    <label for="parameter_${a.id}_no">
+        Нет <span class="count">(${item.getValueCount(true)})</span>
+    </label>
 </li>
 <li class="item">
-    <input id="parameter_${a.id}" type="radio" name="${a.id}" value=""
-           <#if !filter?? || !filter.getValue(a)??>checked="checked"</#if>/>
+    <input id="parameter_${a.id}" class="default" type="radio" name="${a.id}" value=""
+        <#if !filter?? || !filter.getValue(a)??>checked="checked"</#if>/>
     <label for="parameter_${a.id}">Неважно</label>
 </li>
 </#macro>
@@ -96,6 +100,9 @@
             <div class="property">
                 <div class="name">
                 ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
+                    <span class="clean">
+                        <span class="pseudolink reset" <#if !filter.hasValue(a)>style="display: none"</#if>>Сбросить фильтр</span>
+                    </span>
                 </div>
 
                 <ul class="items">
@@ -107,6 +114,12 @@
             </div>
         </#if>
     </#list>
+
+    <#if !filter.empty>
+        <div style="text-align: right">
+            <button class="resetFilter" type="button">Сбросить фильтр</button>
+        </div>
+    </#if>
 </div>
 
 <script type="text/javascript">
