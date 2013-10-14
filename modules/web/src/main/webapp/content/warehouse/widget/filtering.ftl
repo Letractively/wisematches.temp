@@ -47,7 +47,7 @@
 </li>
 <li class="item">
     <input id="parameter_${a.id}" class="default" type="radio" name="${a.id}" value=""
-        <#if !filter?? || !filter.getValue(a)??>checked="checked"</#if>/>
+           <#if !filter?? || !filter.getValue(a)??>checked="checked"</#if>/>
     <label for="parameter_${a.id}">Неважно</label>
 </li>
 </#macro>
@@ -100,9 +100,11 @@
             <div class="property">
                 <div class="name">
                 ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
-                    <span class="clean">
+                    <#if filter??>
+                        <span class="clean">
                         <span class="pseudolink reset" <#if !filter.hasValue(a)>style="display: none"</#if>>Сбросить фильтр</span>
                     </span>
+                    </#if>
                 </div>
 
                 <ul class="items">
@@ -115,9 +117,9 @@
         </#if>
     </#list>
 
-    <#if !filter.empty>
+    <#if filter?? && !filter.empty>
         <div style="text-align: right">
-            <button class="resetFilter" type="button">Сбросить фильтр</button>
+            <button id="resetFilterButton" type="button">Сбросить фильтр</button>
         </div>
     </#if>
 </div>
