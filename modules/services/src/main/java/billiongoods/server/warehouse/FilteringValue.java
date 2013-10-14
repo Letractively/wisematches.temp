@@ -7,13 +7,20 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface FilteringValue {
-	public boolean isAllowed(Object value);
+	boolean isEmpty();
+
+	boolean isAllowed(Object value);
 
 	public static class Enum implements FilteringValue {
 		private final Set<String> values;
 
 		public Enum(Set<String> values) {
 			this.values = values;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return values.isEmpty() || (values.size() == 1 && values.contains(""));
 		}
 
 		public Set<String> getValues() {
@@ -33,6 +40,11 @@ public interface FilteringValue {
 			this.value = value;
 		}
 
+		@Override
+		public boolean isEmpty() {
+			return value == null;
+		}
+
 		public Boolean getValue() {
 			return value;
 		}
@@ -50,6 +62,11 @@ public interface FilteringValue {
 		public Range(BigDecimal min, BigDecimal max) {
 			this.min = min;
 			this.max = max;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return min == null && max == null;
 		}
 
 		public BigDecimal getMin() {

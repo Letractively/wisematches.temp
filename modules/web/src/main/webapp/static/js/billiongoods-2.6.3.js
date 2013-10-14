@@ -344,6 +344,13 @@ bg.warehouse.Filter = function (minTotalPrice, maxTotalPrice, minSelectedPrice, 
 
     form.find('input').change(applyFilter);
 
+    form.find('.reset').click(function () {
+        var prop = $(this).closest('.property');
+        prop.find('input[type=checkbox]').attr('checked', false);
+        prop.find('input[type=radio].default').attr('checked', true);
+        applyFilter();
+    });
+
     priceSlide.slider({
         range: true,
         min: minTotalPrice,

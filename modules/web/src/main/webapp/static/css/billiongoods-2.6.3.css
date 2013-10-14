@@ -47,12 +47,18 @@ input {
     margin: 0;
 }
 
-a:link, a:visited {
+.pseudolink {
+    color: black;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+a:link, a:visited, .pseudolink {
     color: black;
     text-decoration: underline;
 }
 
-a:hover, a:active {
+a:hover, a:active, .pseudolink:hover {
     color: #900;
     text-decoration: underline;
 }
@@ -79,6 +85,10 @@ span.dot {
 
 .sample a:hover, .sample a:active {
     color: #900;
+}
+
+.clean {
+    display: block;
 }
 
 .error-layout {
@@ -1526,6 +1536,22 @@ button.bg-ui-button.selected {
 
 .filtering .property .name {
     font-weight: bold;
+}
+
+.filtering .property .count {
+    color: #808080;
+    font-size: 10px;
+}
+
+.filtering .property .reset {
+    color: #808080;
+    font-size: 12px;
+    text-decoration: none;
+    border-bottom: 1px dotted;
+}
+
+.filtering .property .reset:hover {
+    color: #900;
 }
 
 .filtering .property ul {
