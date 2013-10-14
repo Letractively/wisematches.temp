@@ -8,10 +8,7 @@ import org.hibernate.Cache;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.hibernate.type.StringType;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -405,24 +402,26 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 
 			final Set<Attribute> attributes = filter.getAttributes();
 			if (attributes != null && !attributes.isEmpty()) {
-				final Criteria props = criteria.createAlias("propertyIds", "props");
+				int index = 0;
 				for (Attribute attribute : attributes) {
+					String alias = "p" + (index++);
+					DetachedCriteria props = DetachedCriteria.forClass(HibernateProductProperty.class, alias).setProjection(Projections.distinct(Projections.property(alias + ".productId")));
 					final FilteringValue value = filter.getValue(attribute);
 					if (value instanceof FilteringValue.Bool) {
 						final FilteringValue.Bool v = (FilteringValue.Bool) value;
 						final Boolean aBoolean = v.getValue();
 						if (aBoolean != null) {
 							props.add(Restrictions.and(
-									Restrictions.eq("props.attributeId", attribute.getId()),
-									Restrictions.eq("props.bValue", aBoolean)));
+									Restrictions.eq(alias + ".attributeId", attribute.getId()),
+									Restrictions.eq(alias + ".bValue", aBoolean)));
 						}
 					} else if (value instanceof FilteringValue.Enum) {
 						final FilteringValue.Enum v = (FilteringValue.Enum) value;
 						final Set<String> values = v.getValues();
 						if (values != null) {
 							props.add(Restrictions.and(
-									Restrictions.eq("props.attributeId", attribute.getId()),
-									Restrictions.in("props.sValue", values)));
+									Restrictions.eq(alias + ".attributeId", attribute.getId()),
+									Restrictions.in(alias + ".sValue", values)));
 						}
 					} else if (value instanceof FilteringValue.Range) {
 						final FilteringValue.Range v = (FilteringValue.Range) value;
@@ -430,19 +429,20 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 						final BigDecimal max = v.getMax();
 						if (min != null && max != null) {
 							props.add(Restrictions.and(
-									Restrictions.eq("props.attributeId", attribute.getId()),
-									Restrictions.ge("props.iValue", min),
-									Restrictions.le("props.iValue", max)));
+									Restrictions.eq(alias + ".attributeId", attribute.getId()),
+									Restrictions.ge(alias + ".iValue", min),
+									Restrictions.le(alias + ".iValue", max)));
 						} else if (min != null) {
 							props.add(Restrictions.and(
-									Restrictions.eq("props.attributeId", attribute.getId()),
-									Restrictions.ge("props.iValue", min)));
+									Restrictions.eq(alias + ".attributeId", attribute.getId()),
+									Restrictions.ge(alias + ".iValue", min)));
 						} else if (max != null) {
 							props.add(Restrictions.and(
-									Restrictions.eq("props.attributeId", attribute.getId()),
-									Restrictions.le("props.iValue", max)));
+									Restrictions.eq(alias + ".attributeId", attribute.getId()),
+									Restrictions.le(alias + ".iValue", max)));
 						}
 					}
+					criteria.add(Subqueries.propertyIn("id", props));
 				}
 			}
 		}

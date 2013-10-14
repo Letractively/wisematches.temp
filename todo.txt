@@ -5,9 +5,9 @@
 
 ============= CURRENT ====================
 - Range filters
-
 - Notifications schema is not clear. Recipient is very complex and not localized.
 
+- Ability to pay for broken order again (no needs to create new order).
 - Order: suspended state. Ability to change state from any to any.
 - Our recomendations view on the left of main page: L959 & V911 & v912
 - Coupons
@@ -34,6 +34,10 @@
 - Ability to track state of a SKU
 
 ============= DONE ====================
+14.10
++ Filters work incorrect
++ last_activity column not found
+
 11.10
 + Binominal filters (filtering principles were redesigned)
 

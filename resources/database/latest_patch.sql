@@ -1,3 +1,7 @@
+# 10.14
+ALTER TABLE `billiongoods`.`account_personality`
+CHANGE COLUMN `lastActivityDate` `lastActivity` DATETIME NULL;
+
 # 10.11
 ALTER TABLE `billiongoods`.`store_attribute`
 ADD COLUMN `priority` TINYINT NULL DEFAULT 0

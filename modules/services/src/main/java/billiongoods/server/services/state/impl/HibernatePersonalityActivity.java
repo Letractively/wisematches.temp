@@ -13,7 +13,7 @@ public class HibernatePersonalityActivity {
 	@Column(name = "id")
 	private Long player;
 
-	@Column(name = "last_activity")
+	@Column(name = "lastActivity")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastActivityDate;
 

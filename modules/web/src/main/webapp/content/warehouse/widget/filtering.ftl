@@ -7,13 +7,15 @@
 
 <#--================ Filtering based on data defined for products ======================-->
 <#macro attributeValueString a v c>
-<li class="item">
-    <input id="parameter_${a.id}_${v}" type="checkbox" name="${a.id}" value="${v}"
-           <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(v)>checked="checked"</#if> />
-    <label for="parameter_${a.id}_${v}">
-        <#if v?has_content>${v}<#else><em>неизвестно</em></#if> (${c})
-    </label>
-</li>
+    <#if v?has_content>
+    <li class="item">
+        <input id="parameter_${a.id}_${v}" type="checkbox" name="${a.id}" value="${v}"
+               <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(v)>checked="checked"</#if> />
+        <label for="parameter_${a.id}_${v}">
+        ${v} (${c})
+        </label>
+    </li>
+    </#if>
 </#macro>
 
 <#macro categoryAttributeEnum a item>
@@ -27,20 +29,6 @@
         <@attributeValueString a "" cnt/>
     </#if>
 </#macro>
-
-<#--
-<#macro categoryAttributeEnum a item>
-    <#assign totalCount=0/>
-    <#list item.values as v>
-        <#assign localCount=item.getValueCount(v)/>
-        <#assign totalCount=totalCount+localCount/>
-        <@attributeValueString a v localCount/>
-    </#list>
-    <#if (totalCount<filtering.totalCount)>
-        <@attributeValueString a "" filtering.totalCount-totalCount/>
-    </#if>
-</#macro>
--->
 
 <#macro categoryAttributeBoolean a item>
 <li class="item">

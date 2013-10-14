@@ -80,7 +80,7 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 		this.properties = properties;
 		if (properties != null) {
 			for (Property property : properties) {
-				this.propertyIds.add(new HibernateProductProperty(property.getAttribute(), property.getValue()));
+				this.propertyIds.add(new HibernateProductPropertyCollection(property.getAttribute(), property.getValue()));
 			}
 		}
 	}
@@ -104,7 +104,7 @@ public class HibernateProduct extends AbstractProductDescription implements Prod
 			options.add(new Option(attributeManager.getAttribute(entry.getKey()), entry.getValue()));
 		}
 
-		for (HibernateProductProperty property : propertyIds) {
+		for (HibernateProductPropertyCollection property : propertyIds) {
 			if (property != null) {
 				final Attribute attribute = attributeManager.getAttribute(property.getAttributeId());
 				if (attribute != null) {
