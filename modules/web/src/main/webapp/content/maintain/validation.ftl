@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="active" type="boolean" -->
 <#-- @ftlvariable name="summary" type="billiongoods.server.services.validator.ValidationSummary" -->
 
-<form action="/maintain/service/validatePrices" method="post">
+<form action="/maintain/service/validation" method="post">
 <#if active>
     Проверка в процессе:
     <button name="action" value="stop" type="submit">Остановить проверку</button>
