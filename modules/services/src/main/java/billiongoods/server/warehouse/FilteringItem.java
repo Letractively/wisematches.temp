@@ -30,7 +30,7 @@ public abstract class FilteringItem {
 
 		@Override
 		public boolean isEmpty() {
-			return valuesCount.isEmpty() || (valuesCount.size() == 1 && valuesCount.containsKey(""));
+			return valuesCount.size() <= 1;
 		}
 
 		public Set<?> getValues() {

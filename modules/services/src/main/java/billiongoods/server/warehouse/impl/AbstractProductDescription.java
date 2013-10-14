@@ -60,9 +60,9 @@ public class AbstractProductDescription implements ProductDescription {
 	private String previewImageId;
 
 	@OrderColumn(name = "position")
-	@ElementCollection(fetch = FetchType.LAZY, targetClass = HibernateProductProperty.class)
+	@ElementCollection(fetch = FetchType.LAZY, targetClass = HibernateProductPropertyCollection.class)
 	@CollectionTable(name = "store_product_property", joinColumns = @JoinColumn(name = "productId"))
-	protected List<HibernateProductProperty> propertyIds = new ArrayList<>();
+	protected List<HibernateProductPropertyCollection> propertyIds = new ArrayList<>();
 
 	public AbstractProductDescription() {
 		registrationDate = new Date();

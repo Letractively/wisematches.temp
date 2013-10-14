@@ -329,7 +329,7 @@ public class ProductForm implements ProductImager {
 		sb.append(", participatedGroups=").append(Arrays.toString(participatedGroups));
 		sb.append(", relationshipGroups=").append(Arrays.toString(relationshipGroups));
 		sb.append(", relationshipTypes=").append(Arrays.toString(relationshipTypes));
-		sb.append(", propertyIds=").append(Arrays.toString(propertyIds));
+		sb.append(", properties=").append(Arrays.toString(propertyIds));
 		sb.append(", propertyValues=").append(Arrays.toString(propertyValues));
 		sb.append(", optionIds=").append(Arrays.toString(optionIds));
 		sb.append(", optionValues=").append(Arrays.toString(optionValues));

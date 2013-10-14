@@ -1,16 +1,23 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Attribute;
-import billiongoods.server.warehouse.AttributeType;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-@Embeddable
+@Entity
+@Table(name = "store_product_property")
 public class HibernateProductProperty {
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name = "productId")
+	private Integer productId;
+
+	@Column(name = "position")
+	private Integer position;
 	@Column(name = "attributeId")
 	private Integer attributeId;
 
@@ -24,62 +31,14 @@ public class HibernateProductProperty {
 	private Boolean bValue;
 
 	@Deprecated
-	public HibernateProductProperty() {
+	HibernateProductProperty() {
 	}
 
-	public HibernateProductProperty(Attribute attribute, Object value) {
-		this.attributeId = attribute.getId();
-
-		if (value != null) {
-			switch (attribute.getAttributeType()) {
-				case STRING:
-				case UNKNOWN:
-					this.sValue = (String) value;
-					break;
-				case INTEGER:
-					if (value instanceof String) {
-						this.iValue = Integer.valueOf((String) value);
-					} else {
-						this.iValue = (Integer) value;
-					}
-					break;
-				case BOOLEAN:
-					if (value instanceof String) {
-						this.bValue = Boolean.valueOf((String) value);
-					} else {
-						this.bValue = (Boolean) value;
-					}
-					break;
-				default:
-					throw new IllegalArgumentException("Unsupported attribute type: " + attribute);
-			}
-		}
+	public Integer getId() {
+		return id;
 	}
 
-	public Integer getAttributeId() {
-		return attributeId;
-	}
-
-	public Boolean getBValue() {
-		return bValue;
-	}
-
-	public Integer getIValue() {
-		return iValue;
-	}
-
-	public String getSValue() {
-		return sValue;
-	}
-
-	public Object getValue(AttributeType type) {
-		switch (type) {
-			case INTEGER:
-				return iValue;
-			case BOOLEAN:
-				return bValue;
-			default:
-				return sValue;
-		}
+	public Integer getProductId() {
+		return productId;
 	}
 }
