@@ -4,10 +4,9 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
-- Collapse filters with to many values (more than 6)
+- Notifications schema is not clear. Recipient is very complex and not localized.
 
 - Redesign main catalog view. Idea is in my head.
-- Notifications schema is not clear. Recipient is very complex and not localized.
 - Order: unused state SHIPPING. Looks like not required and we have both values at the same time.
 - Order: new state closed
 - Our recomendations view on the left of main page: L959 & V911 & v912
@@ -37,8 +36,10 @@
 
 ============= DONE ====================
 17.10
++ Incorrect count for boolean 'no' option
 + Add new attribute changes values in all inputs
 + Ability to track targets for Google
++ Collapse filters with to many values (more than 5)
 
 14.10
 + Reset filter ability

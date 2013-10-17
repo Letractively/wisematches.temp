@@ -19,37 +19,47 @@
 </#macro>
 
 <#macro categoryAttributeEnum a item>
+<ul>
     <#list item.values as v>
-        <#if v?has_content>
-            <@attributeValueString a v item.getValueCount(v)/>
-        </#if>
+        <#if (v_index<6)><@attributeValueString a v item.getValueCount(v)/></#if>
     </#list>
-    <#assign cnt=item.getValueCount("")/>
-    <#if (cnt>0)>
-        <@attributeValueString a "" cnt/>
+</ul>
+    <#if (item.values?size>6)>
+    <div class="others" style="display: none">
+        <ul>
+            <#list item.values as v>
+                <#if (v_index>=6)>
+                <@attributeValueString a v item.getValueCount(v)/>
+            </#if>
+            </#list>
+        </ul>
+    </div>
+    <span class="pseudolink fulllist">Показать еще</span>
     </#if>
 </#macro>
 
 <#macro categoryAttributeBoolean a item>
-<li class="item">
-    <input id="parameter_${a.id}_yes" type="radio" name="${a.id}" value="true"
-           <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(true)>checked="checked"</#if>/>
-    <label for="parameter_${a.id}_yes">
-        Да <span class="count">(${item.getValueCount(true)})</span>
-    </label>
-</li>
-<li class="item">
-    <input id="parameter_${a.id}_no" type="radio" name="${a.id}" value="false"
-           <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(false)>checked="checked"</#if>/>
-    <label for="parameter_${a.id}_no">
-        Нет <span class="count">(${item.getValueCount(true)})</span>
-    </label>
-</li>
-<li class="item">
-    <input id="parameter_${a.id}" class="default" type="radio" name="${a.id}" value=""
-           <#if !filter?? || !filter.getValue(a)??>checked="checked"</#if>/>
-    <label for="parameter_${a.id}">Неважно</label>
-</li>
+<ul>
+    <li class="item">
+        <input id="parameter_${a.id}_yes" type="radio" name="${a.id}" value="true"
+               <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(true)>checked="checked"</#if>/>
+        <label for="parameter_${a.id}_yes">
+            Да <span class="count">(${item.getValueCount(true)})</span>
+        </label>
+    </li>
+    <li class="item">
+        <input id="parameter_${a.id}_no" type="radio" name="${a.id}" value="false"
+               <#if filter?? && filter.getValue(a)?? && filter.getValue(a).isAllowed(false)>checked="checked"</#if>/>
+        <label for="parameter_${a.id}_no">
+            Нет <span class="count">(${item.getValueCount(false)})</span>
+        </label>
+    </li>
+    <li class="item">
+        <input id="parameter_${a.id}" class="default" type="radio" name="${a.id}" value=""
+               <#if !filter?? || !filter.getValue(a)??>checked="checked"</#if>/>
+        <label for="parameter_${a.id}">Неважно</label>
+    </li>
+</ul>
 </#macro>
 
 <#if category?? && filtering?? && pageableForm??>
@@ -72,7 +82,7 @@
             Цена
         </div>
 
-        <ul class="ui-slider-price">
+        <ul class="ui-slider-price prices">
             <li>
                 <label>
                     <input id="minPriceFilter" name="minPrice" value="${minPrice}">
@@ -107,12 +117,12 @@
                     </#if>
                 </div>
 
-                <ul class="items">
+                <div class="items">
                     <#switch a.attributeType>
                         <#case AttributeType.STRING><@categoryAttributeEnum a i/><#break>
                         <#case AttributeType.BOOLEAN><@categoryAttributeBoolean a i/><#break>
                     </#switch>
-                </ul>
+                </div>
             </div>
         </#if>
     </#list>

@@ -1,8 +1,8 @@
 package billiongoods.server.warehouse;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -21,9 +21,9 @@ public abstract class FilteringItem {
 	}
 
 	public static class Enum extends FilteringItem {
-		private final SortedMap<?, Integer> valuesCount;
+		private final Map<?, Integer> valuesCount;
 
-		public Enum(Attribute attribute, SortedMap<?, Integer> valuesCount) {
+		public Enum(Attribute attribute, Map<?, Integer> valuesCount) {
 			super(attribute);
 			this.valuesCount = valuesCount;
 		}
