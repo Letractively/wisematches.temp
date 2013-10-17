@@ -1554,10 +1554,27 @@ button.bg-ui-button.selected {
     color: #900;
 }
 
+.filtering .property .others ul {
+    border-top: 1px #808080 dashed;
+}
+
+.filtering .property .fulllist {
+    text-decoration: none;
+    border-bottom: 1px dotted;
+}
+
+.filtering .property .fulllist:hover {
+    color: #900;
+}
+
 .filtering .property ul {
     margin: 0;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0;
+}
+
+.filtering .property .items {
+    padding: 0;
+    margin: 0 10px;
 }
 
 .filtering .property input {
@@ -1570,12 +1587,12 @@ button.bg-ui-button.selected {
 }
 
 .filtering .prices {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-top: 5px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
 }
 
 .ui-slider-price {
-    width: 180px;
     position: relative;
 }
 
