@@ -1,6 +1,7 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Personality;
+import billiongoods.server.MessageFormatter;
 import billiongoods.server.services.notify.NotificationException;
 import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.Recipient;
@@ -112,9 +113,9 @@ public class ProductController extends AbstractController {
 
 		try {
 			if (form.getChangeType() == TrackingChangeType.SUBSCRIBE) {
-				notificationService.raiseNotification(
-						"system." + form.getType().name().toLowerCase(),
-						Recipient.MONITORING, Sender.SERVER, description);
+				notificationService.raiseNotification(Recipient.MONITORING, Sender.SERVER,
+						"system." + form.getType().name().toLowerCase(), description,
+						MessageFormatter.getProductCode(description));
 			}
 		} catch (NotificationException e) {
 			log.error("Product description request can't be send: " + form, e);

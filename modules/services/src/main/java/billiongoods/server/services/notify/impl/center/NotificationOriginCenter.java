@@ -71,7 +71,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 
 	private void fireNotification(String code, Recipient recipient, Object context) {
 		try {
-			notificationService.raiseNotification(code, recipient, Sender.UNDEFINED, context);
+			notificationService.raiseNotification(recipient, Sender.UNDEFINED, code, context);
 			log.info("Notification was raised to {} [{}]", recipient, code);
 		} catch (NotificationException ex) {
 			log.error("Notification can't be sent to player: code=" + code + ", recipient=" + recipient, ex);

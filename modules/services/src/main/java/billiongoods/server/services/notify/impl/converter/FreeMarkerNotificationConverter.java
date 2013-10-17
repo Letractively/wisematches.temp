@@ -31,10 +31,10 @@ public class FreeMarkerNotificationConverter implements NotificationConverter {
 	}
 
 	@Override
-	public Notification createNotification(String code, Recipient recipient, Sender sender, Object context) throws TransformationException {
+	public Notification createNotification(Recipient recipient, Sender sender, String code, Object context, Object... args) throws TransformationException {
 		final Locale locale = Language.RU.getLocale();
 
-		final String subject = messageSource.getMessage("notify.subject." + code, null, locale);
+		final String subject = messageSource.getMessage("notify.subject." + code, args, locale);
 
 		final Map<String, Object> variables = new HashMap<>();
 		// info

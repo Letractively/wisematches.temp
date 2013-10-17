@@ -516,6 +516,11 @@ button.bg-ui-button.selected {
     border-right-color: #FF5A00;
 }
 
+.catalog .ct-head .ct-toc {
+    text-indent: 5px;
+    font-weight: bold;
+}
+
 .catalog .ct-plain .item {
     padding-left: 10px;
 }
@@ -601,6 +606,7 @@ button.bg-ui-button.selected {
     width: 210px;
     left: -1px;
     top: 40px;
+    z-index: 999;
     position: absolute;
     background: #f0f0f0;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);

@@ -39,9 +39,9 @@ public class AlertsOriginCenter {
 	public AlertsOriginCenter() {
 	}
 
-	protected void raiseAlarm(String subj, Object context) {
+	protected void raiseAlarm(String subj, Object context, Object... args) {
 		try {
-			notificationService.raiseNotification(subj, Recipient.MONITORING, Sender.SERVER, context);
+			notificationService.raiseNotification(Recipient.MONITORING, Sender.SERVER, subj, context, args);
 		} catch (Exception ex) {
 			log.error("Alerts can't be sent: subj=[{}], msg=[{}]", subj, context);
 		}
@@ -95,7 +95,7 @@ public class AlertsOriginCenter {
 		@Override
 		public void orderStateChange(Order order, OrderState oldState, OrderState newState) {
 			if (newState == OrderState.ACCEPTED) {
-				raiseAlarm("system.order", order);
+				raiseAlarm("system.order", order, order.getId());
 			}
 		}
 	}
@@ -106,7 +106,7 @@ public class AlertsOriginCenter {
 
 		@Override
 		public void accountCreated(Account account) {
-			raiseAlarm("system.account", account);
+			raiseAlarm("system.account", account, account.getUsername());
 		}
 
 		@Override
@@ -132,7 +132,7 @@ public class AlertsOriginCenter {
 
 		@Override
 		public void validationFinished(Date date, ValidationSummary summary) {
-			raiseAlarm("system.validation", summary);
+			raiseAlarm("system.validation", summary, summary.getStartDate());
 		}
 	}
 }

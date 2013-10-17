@@ -13,5 +13,5 @@ package billiongoods.server.services.notify;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface NotificationService {
-	Notification raiseNotification(String code, Recipient recipient, Sender sender, Object context) throws NotificationException;
+	Notification raiseNotification(Recipient recipient, Sender sender, String code, Object context, Object... args) throws NotificationException;
 }
