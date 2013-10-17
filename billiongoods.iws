@@ -2,19 +2,13 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/product.ftl" line="653" mnemonic="2" />
-    <bookmark url="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl" line="36" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl" line="40" mnemonic="1" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="+">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/FilteringValue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/FilteringItem.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/FilteringItem.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
+    <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\web\src\main\webapp\static\js\billiongoods-2.7.2.js" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-2.7.3.js" />
-      <change type="MOVED" beforePath="C:\Source\bg\modules\web\src\main\webapp\static\css\billiongoods-2.7.2.css" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-2.7.3.css" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,7 +101,16 @@
       <file leaf-file-name="todo.txt" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/todo.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="40" selection-start="465" selection-end="465" vertical-scroll-proportion="0.18235995" vertical-offset="0" max-vertical-offset="4607">
+            <state line="29" column="77" selection-start="977" selection-end="977" vertical-scroll-proportion="0.37187126" vertical-offset="181" max-vertical-offset="4624">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="filtering.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="56" selection-start="523" selection-end="523" vertical-scroll-proportion="-1.3076923" vertical-offset="102" max-vertical-offset="2567">
               <folding />
             </state>
           </provider>
@@ -145,8 +148,8 @@
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-2.7.2.css" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-2.7.3.js" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-2.7.3.css" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl" />
         <option value="$PROJECT_DIR$/todo.txt" />
       </list>
     </option>
@@ -2059,7 +2062,7 @@
       <workItem from="1381992883590" duration="147000" />
       <workItem from="1381993263748" duration="165000" />
       <workItem from="1381993511513" duration="125000" />
-      <workItem from="1381993659146" duration="15741000" />
+      <workItem from="1381993659146" duration="16184000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -2401,11 +2404,15 @@
       <created>1382003757704</created>
       <updated>1382003757704</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="+">
+      <created>1382014873437</created>
+      <updated>1382014873437</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237461000" />
+    <option name="totallyTimeSpent" value="237904000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -2661,17 +2668,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="41" selection-start="3160" selection-end="3160" vertical-scroll-proportion="-5.5" vertical-offset="1285" max-vertical-offset="2499">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-2.7.3.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1589" column="29" selection-start="25531" selection-end="25531" vertical-scroll-proportion="0.0" vertical-offset="26844" max-vertical-offset="30056">
@@ -2679,9 +2675,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/widget/filtering.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="56" selection-start="523" selection-end="523" vertical-scroll-proportion="-1.3076923" vertical-offset="102" max-vertical-offset="2567">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/todo.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="40" selection-start="465" selection-end="465" vertical-scroll-proportion="0.18235995" vertical-offset="0" max-vertical-offset="4607">
+        <state line="29" column="77" selection-start="977" selection-end="977" vertical-scroll-proportion="0.37187126" vertical-offset="181" max-vertical-offset="4624">
           <folding />
         </state>
       </provider>

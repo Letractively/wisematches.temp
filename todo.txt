@@ -36,10 +36,11 @@
 
 ============= DONE ====================
 17.10
-+ Incorrect count for boolean 'no' option
++ Incorrect filtering count for boolean 'no'
 + Add new attribute changes values in all inputs
 + Ability to track targets for Google
 + Collapse filters with to many values (more than 5)
++ Adaptive collapse: if count > 8, show only first 5 otherwise show all.
 
 14.10
 + Reset filter ability
