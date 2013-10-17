@@ -405,9 +405,8 @@
         <input name="categoryId" value="${category.id}" type="hidden">
         <input name="attributeId" type="hidden">
         <label>
-            <input name="value">
+            <input name="value" style="width: 100%">
         </label>
-        <button type="button">Добавить</button>
     </form>
 </div>
 </#if>
@@ -625,13 +624,7 @@ $(function () {
 
 var attributeValueDialog = $("#attributeValue");
 
-$("#productParameters").find("button").click(function () {
-    var el = $(this).parent().parent();
-    attributeValueDialog.find("input[name=attributeId]").val(el.find('input').val());
-    attributeValueDialog.modal();
-});
-
-attributeValueDialog.find("button").click(function () {
+var addNewAttributeValue = function (attrId) {
     bg.ui.lock(null, "Добавление...");
     var serializeObject = attributeValueDialog.find('form').serializeObject();
     $.post("/maintain/category/parameterAddValue.ajax", JSON.stringify(serializeObject))
@@ -639,17 +632,37 @@ attributeValueDialog.find("button").click(function () {
                 if (response.success) {
                     bg.ui.unlock(null, "Атрибут добавлен", false);
                     var value = serializeObject['value'];
-                    $("#productParameters").find("select").append("<option value='" + value + "'>" + value + "</option>").val(value);
+                    $("#productParameters").find("#property" + attrId).append("<option value='" + value + "'>" + value + "</option>").val(value);
                 } else {
                     bg.ui.unlock(null, response.message, true);
                 }
-                $.modal.close();
+                attributeValueDialog.dialog("close");
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
                 bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
                         "Пожалуйста, попробуйте отправить сообщение позже.", true);
-                $.modal.close();
+                attributeValueDialog.dialog("close");
             });
+};
+
+$("#productParameters").find("button").click(function () {
+    var el = $(this).parent().parent();
+    var attrId = el.find('input').val();
+    attributeValueDialog.find("input[name=attributeId]").val(attrId);
+    attributeValueDialog.dialog({
+        title: 'Добавление нового значения',
+        height: 'auto',
+        width: 350,
+        modal: true,
+        buttons: {
+            "Добавить": function () {
+                addNewAttributeValue(attrId);
+            },
+            "Отменить": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
 });
 
 $(".image img").click(function () {
