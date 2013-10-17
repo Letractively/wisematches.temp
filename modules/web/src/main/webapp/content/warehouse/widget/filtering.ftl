@@ -19,16 +19,20 @@
 </#macro>
 
 <#macro categoryAttributeEnum a item>
+    <#assign splitCount=5/>
+    <#if item.values?size<8>
+        <#assign splitCount=7/>
+    </#if>
 <ul>
     <#list item.values as v>
-        <#if (v_index<6)><@attributeValueString a v item.getValueCount(v)/></#if>
+        <#if (v_index<splitCount)><@attributeValueString a v item.getValueCount(v)/></#if>
     </#list>
 </ul>
-    <#if (item.values?size>6)>
+    <#if (item.values?size>splitCount)>
     <div class="others" style="display: none">
         <ul>
             <#list item.values as v>
-                <#if (v_index>=6)>
+                <#if (v_index>=splitCount)>
                 <@attributeValueString a v item.getValueCount(v)/>
             </#if>
             </#list>
