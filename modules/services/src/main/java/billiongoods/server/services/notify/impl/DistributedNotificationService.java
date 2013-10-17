@@ -23,9 +23,8 @@ public class DistributedNotificationService implements NotificationService {
 	public DistributedNotificationService() {
 	}
 
-	@Override
-	public Notification raiseNotification(String code, Recipient recipient, Sender sender, Object context) throws NotificationException {
-		final Notification notification = notificationConverter.createNotification(code, recipient, sender, context);
+	public Notification raiseNotification(Recipient recipient, Sender sender, String code, Object context, Object... args) throws NotificationException {
+		final Notification notification = notificationConverter.createNotification(recipient, sender, code, context, args);
 
 		taskExecutor.execute(new Runnable() {
 			@Override

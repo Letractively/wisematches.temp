@@ -9,5 +9,5 @@ import billiongoods.server.services.notify.TransformationException;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface NotificationConverter {
-	Notification createNotification(String code, Recipient recipient, Sender sender, Object context) throws TransformationException;
+	Notification createNotification(Recipient recipient, Sender sender, String code, Object context, Object... args) throws TransformationException;
 }

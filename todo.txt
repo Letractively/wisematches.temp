@@ -6,7 +6,6 @@
 ============= CURRENT ====================
 - Notifications schema is not clear. Recipient is very complex and not localized.
 
-- Redesign main catalog view. Idea is in my head.
 - Order: unused state SHIPPING. Looks like not required and we have both values at the same time.
 - Order: new state closed
 - Our recomendations view on the left of main page: L959 & V911 & v912
@@ -41,6 +40,8 @@
 + Ability to track targets for Google
 + Collapse filters with to many values (more than 5)
 + Adaptive collapse: if count > 8, show only first 5 otherwise show all.
++ More intelligent subject
++ Redesign main catalog view. Idea is in my head.
 
 14.10
 + Reset filter ability
