@@ -389,6 +389,24 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 				criteria.add(Restrictions.in("state", context.getProductStates()));
 			}
 
+			if (context.getStockState() != null) {
+				switch (context.getStockState()) {
+					case IN_STOCK:
+						criteria.add(Restrictions.isNull("stockInfo.leftovers"));
+						criteria.add(Restrictions.isNull("stockInfo.restockDate"));
+						break;
+					case LIMITED_NUMBER:
+						criteria.add(Restrictions.gt("stockInfo.leftovers", 0));
+						break;
+					case OUT_STOCK:
+						criteria.add(Restrictions.isNotNull("stockInfo.restockDate"));
+						break;
+					case SOLD_OUT:
+						criteria.add(Restrictions.eq("stockInfo.leftovers", 0));
+						break;
+				}
+			}
+
 			if (context.isArrival()) {
 				criteria.add(Restrictions.ge("registrationDate", new java.sql.Date(System.currentTimeMillis() - ONE_WEEK_MILLIS)));
 			}

@@ -3,6 +3,7 @@ package billiongoods.server.services.showcase.impl;
 import billiongoods.server.services.showcase.ShowcaseItem;
 import billiongoods.server.warehouse.CategoryManager;
 import billiongoods.server.warehouse.ProductContext;
+import billiongoods.server.warehouse.StockState;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -62,7 +63,7 @@ public class HibernateShowcaseItem implements ShowcaseItem, Comparable<Hibernate
 	}
 
 	void initialize(CategoryManager manager) {
-		context = new ProductContext(manager.getCategory(category), subCategories, null, arrival, ProductContext.ACTIVE_ONLY);
+		context = new ProductContext(manager.getCategory(category), subCategories, null, arrival, ProductContext.ACTIVE_ONLY, StockState.IN_STOCK);
 	}
 
 	@Override
