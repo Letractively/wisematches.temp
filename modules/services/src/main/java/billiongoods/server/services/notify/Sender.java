@@ -1,7 +1,5 @@
 package billiongoods.server.services.notify;
 
-import billiongoods.server.services.ServerDescriptor;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -27,10 +25,10 @@ public enum Sender {
 	 */
 	SERVER("server");
 
-	private final String userInfo;
+	private final String code;
 
-	Sender(String userInfo) {
-		this.userInfo = userInfo;
+	Sender(String code) {
+		this.code = code;
 	}
 
 	/**
@@ -38,11 +36,7 @@ public enum Sender {
 	 *
 	 * @return the sender' user info
 	 */
-	public String getUserInfo() {
-		return userInfo;
-	}
-
-	public String getMailAddress(ServerDescriptor descriptor) {
-		return userInfo + "@" + descriptor.getMailHostName();
+	public String getCode() {
+		return code;
 	}
 }

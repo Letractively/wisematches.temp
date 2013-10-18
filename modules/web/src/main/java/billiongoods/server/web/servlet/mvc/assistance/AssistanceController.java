@@ -1,9 +1,8 @@
 package billiongoods.server.web.servlet.mvc.assistance;
 
-import billiongoods.server.services.notify.Notification;
+import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.Recipient;
 import billiongoods.server.services.notify.Sender;
-import billiongoods.server.services.notify.impl.NotificationPublisher;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.assistance.impl.IssueForm;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.mail.internet.InternetAddress;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -28,7 +26,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/assistance")
 public class AssistanceController extends AbstractController {
-	private NotificationPublisher notificationPublisher;
+	private NotificationService notificationService;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.assistance.AssistanceController");
 
@@ -67,14 +65,10 @@ public class AssistanceController extends AbstractController {
 		final String id = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
 
 		try {
-			final String sub = "Обращение в службу поддержки BillionGoods " + id;
-			final String msg = "<p>" + form.getMessage() + "</p><p></p><p>" + form.getName() + "</p>";
-			final InternetAddress replay = new InternetAddress(form.getEmail(), form.getName(), "UTF-8");
+			final Recipient returnAddress = Recipient.get(form.getEmail(), form.getName());
+			final Recipient recipient = Recipient.get(Recipient.MailBox.SUPPORT, returnAddress);
 
-			final Notification notification = new Notification(System.currentTimeMillis(),
-					"assistance.question", sub, msg, Recipient.SUPPORT, Sender.SERVER, replay);
-
-			notificationPublisher.publishNotification(notification);
+			notificationService.raiseNotification(recipient, Sender.SERVER, "system.support", form, id);
 		} catch (Exception ex) {
 			log.error("Question notification can't be sent", ex);
 			return responseFactory.failure("assistance.question.system", locale);
@@ -83,7 +77,7 @@ public class AssistanceController extends AbstractController {
 	}
 
 	@Autowired
-	public void setNotificationPublisher(NotificationPublisher notificationPublisher) {
-		this.notificationPublisher = notificationPublisher;
+	public void setNotificationService(NotificationService notificationService) {
+		this.notificationService = notificationService;
 	}
 }

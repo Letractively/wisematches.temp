@@ -39,11 +39,11 @@ public class AlertsOriginCenter {
 	public AlertsOriginCenter() {
 	}
 
-	protected void raiseAlarm(String subj, Object context, Object... args) {
+	protected void raiseAlarm(String code, Object context, Object... args) {
 		try {
-			notificationService.raiseNotification(Recipient.MONITORING, Sender.SERVER, subj, context, args);
+			notificationService.raiseNotification(Recipient.get(Recipient.MailBox.MONITORING), Sender.SERVER, code, context, args);
 		} catch (Exception ex) {
-			log.error("Alerts can't be sent: subj=[{}], msg=[{}]", subj, context);
+			log.error("Alerts can't be sent: code=[{}], msg=[{}]", code, context);
 		}
 	}
 
