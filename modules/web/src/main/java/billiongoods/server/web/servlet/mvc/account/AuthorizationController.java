@@ -138,7 +138,7 @@ public class AuthorizationController extends AbstractController {
 
 			status.setComplete();
 			try {
-				notificationService.raiseNotification(new Recipient(account), Sender.ACCOUNTS, "account.created", account, account.getUsername());
+				notificationService.raiseNotification(Recipient.get(account), Sender.ACCOUNTS, "account.created", account, account.getUsername());
 			} catch (NotificationException e) {
 				log.error("Notification about new account can't be sent", e);
 			}

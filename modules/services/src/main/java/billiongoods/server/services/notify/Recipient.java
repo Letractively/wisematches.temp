@@ -6,48 +6,82 @@ import billiongoods.core.account.Account;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class Recipient {
-	private final String email;
-	private final String username;
-
-	public static final Recipient SUPPORT = new Recipient(null, null);
-	public static final Recipient MONITORING = new Recipient(null, null);
-
-	public Recipient(String email) {
-		this(null, email);
+public abstract class Recipient {
+	private Recipient() {
 	}
 
-	public Recipient(Member member) {
-		this(member.getUsername(), member.getEmail());
+	public static Recipient get(String email) {
+		return new Person(email, null);
 	}
 
-	public Recipient(Account account) {
-		this(account.getUsername(), account.getEmail());
+	public static Recipient get(String email, String username) {
+		return new Person(email, username);
 	}
 
-	private Recipient(String username, String email) {
-		this.email = email;
-		this.username = username;
+	public static Recipient get(Member member) {
+		return new Person(member.getEmail(), member.getUsername());
 	}
 
-	public String getEmail() {
-		return email;
+	public static Recipient get(Account account) {
+		return new Person(account.getEmail(), account.getUsername());
 	}
 
-	public String getUsername() {
-		return username;
+	public static Recipient get(MailBox mailBox) {
+		return new Application(mailBox, null);
 	}
 
-	public boolean isVisitor() {
-		return username == null;
+	public static Recipient get(MailBox mailBox, Recipient returnAddress) {
+		return new Application(mailBox, returnAddress);
 	}
 
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("Recipient{");
-		sb.append("email='").append(email).append('\'');
-		sb.append(", username='").append(username).append('\'');
-		sb.append('}');
-		return sb.toString();
+	public static enum MailBox {
+		SUPPORT("support"),
+		MONITORING("monitoring");
+
+		private final String code;
+
+		MailBox(String code) {
+			this.code = code;
+		}
+
+		public String getCode() {
+			return code;
+		}
+	}
+
+	public static final class Person extends Recipient {
+		private final String email;
+		private final String username;
+
+		private Person(String email, String username) {
+			this.email = email;
+			this.username = username;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public String getUsername() {
+			return username;
+		}
+	}
+
+	public static final class Application extends Recipient {
+		private final MailBox mailBox;
+		private final Recipient returnAddress;
+
+		private Application(MailBox mailBox, Recipient returnAddress) {
+			this.mailBox = mailBox;
+			this.returnAddress = returnAddress;
+		}
+
+		public MailBox getMailBox() {
+			return mailBox;
+		}
+
+		public Recipient getReturnAddress() {
+			return returnAddress;
+		}
 	}
 }

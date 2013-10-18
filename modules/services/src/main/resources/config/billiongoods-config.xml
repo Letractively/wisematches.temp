@@ -8,7 +8,6 @@
     <bean id="serverDescriptor" class="billiongoods.server.services.ServerDescriptor">
         <constructor-arg name="webHostName" value="${server.web.host}"/>
         <constructor-arg name="mailHostName" value="${server.mail.host}"/>
-        <constructor-arg name="alertsMailBox" value="${server.alerts.box}"/>
     </bean>
 
     <bean id="priceConverter" class="billiongoods.server.services.price.impl.DefaultPriceConverter">

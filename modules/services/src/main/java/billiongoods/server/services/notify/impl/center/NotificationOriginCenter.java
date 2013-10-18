@@ -41,7 +41,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 
 	private void processOrderState(Order order) {
 		if (order.isTracking() && order.getPayer() != null) {
-			fireNotification("order.state", new Recipient(order.getPayer()), order);
+			fireNotification("order.state", Recipient.get(order.getPayer()), order, order.getId());
 		}
 	}
 
@@ -51,7 +51,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 
 			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
 			for (ProductTracking tracking : tracks) {
-				fireNotification("product.availability", new Recipient(tracking.getPersonEmail()), description);
+				fireNotification("product.availability", Recipient.get(tracking.getPersonEmail()), description, description.getId());
 				trackingManager.removeTracking(tracking.getId());
 			}
 		}
@@ -63,15 +63,15 @@ public class NotificationOriginCenter implements BreakingDayListener {
 
 			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
 			for (ProductTracking tracking : tracks) {
-				fireNotification("product.description", new Recipient(tracking.getPersonEmail()), description);
+				fireNotification("product.description", Recipient.get(tracking.getPersonEmail()), description, description.getId());
 				trackingManager.removeTracking(tracking.getId());
 			}
 		}
 	}
 
-	private void fireNotification(String code, Recipient recipient, Object context) {
+	private void fireNotification(String code, Recipient recipient, Object context, Object... args) {
 		try {
-			notificationService.raiseNotification(recipient, Sender.UNDEFINED, code, context);
+			notificationService.raiseNotification(recipient, Sender.UNDEFINED, code, context, args);
 			log.info("Notification was raised to {} [{}]", recipient, code);
 		} catch (NotificationException ex) {
 			log.error("Notification can't be sent to player: code=" + code + ", recipient=" + recipient, ex);
@@ -113,6 +113,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 	public void setNotificationService(NotificationService notificationDistributor) {
 		this.notificationService = notificationDistributor;
 	}
+
 
 	private class TheOrderListener implements OrderListener {
 		private TheOrderListener() {

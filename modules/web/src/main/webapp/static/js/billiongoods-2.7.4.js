@@ -876,15 +876,19 @@ $(document).ready(function () {
                 }, 250);
             });
 
-    $(".catalog").find(".ct-item").hover(function () {
-        var $2 = $(this);
-        $2.find(".ct-toc").addClass("hover");
-        $2.find(".ct-list").show();
-    }, function () {
-        var $2 = $(this);
-        $2.find(".ct-toc").removeClass("hover");
-        $2.find(".ct-list").hide();
-    });
+    $(".catalog").find(".ct-item")
+            .hover(function () {
+                var $2 = $(this);
+                $2.find(".ct-toc").addClass("hover");
+                $2.find(".ct-list").show();
+            }, function () {
+                var $2 = $(this);
+                $2.find(".ct-toc").removeClass("hover");
+                $2.find(".ct-list").hide();
+            })
+            .click(function () {
+                bg.util.url.redirect($(this).find("a").attr("href"));
+            });
 
     var globalCatalog = $("#globalCatalog");
     $(".tb-item-catalog").hover(function () {

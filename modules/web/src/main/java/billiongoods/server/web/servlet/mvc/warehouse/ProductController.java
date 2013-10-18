@@ -113,7 +113,7 @@ public class ProductController extends AbstractController {
 
 		try {
 			if (form.getChangeType() == TrackingChangeType.SUBSCRIBE) {
-				notificationService.raiseNotification(Recipient.MONITORING, Sender.SERVER,
+				notificationService.raiseNotification(Recipient.get(Recipient.MailBox.MONITORING), Sender.SERVER,
 						"system." + form.getType().name().toLowerCase(), description,
 						MessageFormatter.getProductCode(description));
 			}
