@@ -4,9 +4,8 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
-- Exclude unavailable products from showcase. Refresh showcase after validation.
-
 - Order: unused state SHIPPING. Looks like not required and we have both values at the same time.
+
 - Order: new state closed
 - Our recomendations view on the left of main page: L959 & V911 & v912
 - Coupons
@@ -37,6 +36,7 @@
 18.10
 + Notifications schema is not clear. Recipient is very complex and not localized.
 + Catalog doesn't track click on button (only text)
++ Exclude unavailable products from showcase. Refresh showcase after validation.
 
 17.10
 + Incorrect filtering count for boolean 'no'
