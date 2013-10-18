@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ import java.util.List;
 @RequestMapping("/maintain/order")
 public class OrderMaintainController extends AbstractController {
 	private OrderManager orderManager;
+
+	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
 	public OrderMaintainController() {
 	}
@@ -90,10 +93,14 @@ public class OrderMaintainController extends AbstractController {
 					orderManager.shipped(id, value, comment);
 					break;
 				case SUSPENDED:
-					orderManager.suspended(id, comment);
+					try {
+						orderManager.suspended(id, value != null && !value.isEmpty() ? SIMPLE_DATE_FORMAT.parse(value) : null, comment);
+					} catch (Exception ex) {
+						errors.rejectValue("value", "order.state.date.incorrect");
+					}
 					break;
 				case CANCELLED:
-					orderManager.cancelled(id, comment);
+					orderManager.cancelled(id, value, comment);
 					break;
 				default:
 					errors.rejectValue("value", "order.state.state.incorrect");
