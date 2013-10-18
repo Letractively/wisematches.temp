@@ -4,6 +4,8 @@ import billiongoods.core.Personality;
 import billiongoods.core.search.SearchManager;
 import billiongoods.server.services.basket.Basket;
 
+import java.util.Date;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -24,6 +26,12 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 
 	void bill(Long orderId, String token);
 
+
+	void failed(Long orderId, String reason);
+
+	void failed(String token, String reason);
+
+
 	void accept(Long orderId, String person, String paymentId, String note);
 
 	void reject(Long orderId, String person, String paymentId, String note);
@@ -35,13 +43,10 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 
 	void shipped(Long orderId, String number, String commentary);
 
-	void suspended(Long orderId, String commentary);
 
-	void cancelled(Long orderId, String commentary);
+	void suspended(Long orderId, Date resumeDate, String commentary);
 
-	void failed(Long orderId, String reason);
-
-	void failed(String token, String reason);
+	void cancelled(Long orderId, String refundId, String commentary);
 
 
 	void setOrderTracking(Order order, boolean enable);

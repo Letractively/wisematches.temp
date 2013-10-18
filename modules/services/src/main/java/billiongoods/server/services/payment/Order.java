@@ -48,4 +48,9 @@ public interface Order {
 	String getChinaMailTracking();
 
 	String getInternationalTracking();
+
+
+	String getRefundToken();
+
+	Date getExpectedResume();
 }

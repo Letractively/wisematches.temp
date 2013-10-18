@@ -85,8 +85,12 @@
                                     Номер комплектации:<br>
                                     <#if l.parameter?has_content>${l.parameter}<#else>ожидает обработки</#if>
                                 <#elseif state.shipping>
-                                    Код почты Китая:<br><a
-                                        href="http://www.flytexpress.com/ShowTraceInfo.aspx?orderid=${l.parameter!""}">${l.parameter!"не предоставляется"}</a>
+                                    Код почты Китая:<br>
+                                    <#if l.parameter?has_content>
+                                        <a href="http://www.flytexpress.com/ShowTraceInfo.aspx?orderid=${l.parameter}">${l.parameter}</a>
+                                    <#else>
+                                        не предоставляется
+                                    </#if>
                                 <#elseif state.shipped>
                                     Международный код:<br>
                                     <#if l.parameter?has_content>
@@ -94,8 +98,17 @@
                                     <#else>
                                         не предоставляется
                                     </#if>
+                                <#elseif  state.suspended>
+                                    <#if l.parameter?has_content>
+                                        Приостановлен до:<br>
+                                    ${messageSource.formatDate(l.parameter?number?long, locale)}
+                                    </#if>
+                                <#elseif  state.cancelled>
+                                    <#if l.parameter?has_content>
+                                        Код возврата средств:<br>${l.parameter}
+                                    </#if>
                                 <#elseif  state.failed>
-                                    Заказ отменен:<br>${l.parameter!""}
+                                    Описание ошибки:<br>${l.parameter!""}
                                 </#if>
                             </td>
                         </tr>

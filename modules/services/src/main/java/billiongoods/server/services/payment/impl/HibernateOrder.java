@@ -58,6 +58,13 @@ public class HibernateOrder implements Order {
 	@Column(name = "tracking")
 	private boolean tracking;
 
+	@Column(name = "exceptedResume")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date exceptedResume;
+
+	@Column(name = "refundToken")
+	private String refundToken;
+
 	@Column(name = "commentary")
 	private String commentary;
 
@@ -184,6 +191,16 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public String getRefundToken() {
+		return refundToken;
+	}
+
+	@Override
+	public Date getExpectedResume() {
+		return exceptedResume;
+	}
+
+	@Override
 	public List<OrderItem> getOrderItems() {
 		return orderItems;
 	}
@@ -237,12 +254,16 @@ public class HibernateOrder implements Order {
 		updateOrderState("failed", null, commentary, OrderState.FAILED);
 	}
 
-	void suspended(String commentary) {
-		updateOrderState("suspended", null, commentary, OrderState.SUSPENDED);
+	void suspended(Date exceptedResume, String commentary) {
+		this.exceptedResume = exceptedResume;
+
+		updateOrderState("suspended", exceptedResume != null ? String.valueOf(exceptedResume.getTime()) : null, commentary, OrderState.SUSPENDED);
 	}
 
-	void cancelled(String commentary) {
-		updateOrderState("cancelled", null, commentary, OrderState.CANCELLED);
+	void cancelled(String refundId, String commentary) {
+		this.refundToken = refundId;
+
+		updateOrderState("cancelled", refundId, commentary, OrderState.CANCELLED);
 	}
 
 	void setTracking(boolean tracking) {
@@ -256,6 +277,10 @@ public class HibernateOrder implements Order {
 	private void updateOrderState(String code, String parameter, String commentary, OrderState orderState) {
 		this.timestamp = new Date();
 		this.orderState = orderState;
+
+		if (orderState != OrderState.SUSPENDED) {
+			exceptedResume = null;
+		}
 
 		if (commentary != null && commentary.length() > 254) {
 			this.commentary = commentary.substring(0, 254);
@@ -272,19 +297,25 @@ public class HibernateOrder implements Order {
 		sb.append(", buyer=").append(buyer);
 		sb.append(", token='").append(token).append('\'');
 		sb.append(", amount=").append(amount);
-		sb.append(", shipment=").append(shipment);
+		sb.append(", shipmentAmount=").append(shipmentAmount);
 		sb.append(", shipmentType=").append(shipmentType);
+		sb.append(", shipmentAddress=").append(shipmentAddress);
+		sb.append(", creationTime=").append(creationTime);
+		sb.append(", timestamp=").append(timestamp);
 		sb.append(", payer='").append(payer).append('\'');
-		sb.append(", tracking=").append(tracking);
 		sb.append(", payerNote='").append(payerNote).append('\'');
+		sb.append(", paymentId='").append(paymentId).append('\'');
+		sb.append(", tracking=").append(tracking);
+		sb.append(", exceptedResume=").append(exceptedResume);
+		sb.append(", refundToken='").append(refundToken).append('\'');
 		sb.append(", commentary='").append(commentary).append('\'');
 		sb.append(", referenceTracking='").append(referenceTracking).append('\'');
 		sb.append(", chinaMailTracking='").append(chinaMailTracking).append('\'');
 		sb.append(", internationalTracking='").append(internationalTracking).append('\'');
-		sb.append(", shipmentAddress=").append(shipmentAddress);
 		sb.append(", orderState=").append(orderState);
 		sb.append(", orderItems=").append(orderItems);
 		sb.append(", orderLogs=").append(orderLogs);
+		sb.append(", shipment=").append(shipment);
 		sb.append('}');
 		return sb.toString();
 	}

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -166,12 +167,12 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void suspended(Long orderId, String commentary) {
+	public void suspended(Long orderId, Date resumeDate, String commentary) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
 		final OrderState state = order.getOrderState();
-		order.suspended(commentary);
+		order.suspended(resumeDate, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -181,12 +182,12 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void cancelled(Long orderId, String commentary) {
+	public void cancelled(Long orderId, String refundId, String commentary) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
 		final OrderState state = order.getOrderState();
-		order.cancelled(commentary);
+		order.cancelled(refundId, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);

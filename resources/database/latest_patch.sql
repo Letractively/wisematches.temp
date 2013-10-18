@@ -1,3 +1,13 @@
+# 10.18
+ALTER TABLE `billiongoods`.`store_order`
+ADD COLUMN `exceptedResume` DATETIME NULL DEFAULT NULL
+AFTER `internationalTracking`,
+ADD COLUMN `refundId` VARCHAR(45) NULL DEFAULT NULL
+AFTER `exceptedResume`;
+
+ALTER TABLE `billiongoods`.`store_order`
+CHANGE COLUMN `refundId` `refundToken` VARCHAR(45) NULL DEFAULT NULL;
+
 # 10.14
 ALTER TABLE `billiongoods`.`account_personality`
 CHANGE COLUMN `lastActivityDate` `lastActivity` DATETIME NULL;
