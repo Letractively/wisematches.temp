@@ -25,7 +25,8 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	private final Collection<ProductListener> listeners = new CopyOnWriteArrayList<>();
 	private final Collection<ProductStateListener> stateListeners = new CopyOnWriteArrayList<>();
 
-	private static final int ONE_WEEK_MILLIS = 1000 * 60 * 60 * 24 * 7;
+	private static final int ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
+	private static final int ONE_WEEK_MILLIS = ONE_DAY_MILLIS * 7;
 
 	public HibernateProductManager() {
 		super(HibernateProductDescription.class);
@@ -283,6 +284,15 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	}
 
 	@Override
+	public void updateRecommendation(Integer id, boolean b) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct a set a.recommended=:recommended where a.id=:id");
+		query.setParameter("id", id);
+		query.setParameter("recommended", b);
+		query.executeUpdate();
+	}
+
+	@Override
 	public void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo) {
 		if (price == null && supplierPrice == null && stockInfo == null) {
 			return;
@@ -411,9 +421,14 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 				criteria.add(Restrictions.ge("registrationDate", new java.sql.Date(System.currentTimeMillis() - ONE_WEEK_MILLIS)));
 			}
 
+			if (context.isOnlyRecommended()) {
+				criteria.add(Restrictions.eq("recommended", Boolean.TRUE));
+			}
+
 			if (context.getSearch() != null && !context.getSearch().trim().isEmpty()) {
 				criteria.add(Restrictions.sqlRestriction("MATCH(name, description) AGAINST(? IN BOOLEAN MODE)", context.getSearch(), StringType.INSTANCE));
 			}
+
 		}
 
 		if (filter != null) {

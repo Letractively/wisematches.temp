@@ -3,6 +3,7 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.Range;
 import billiongoods.server.MessageFormatter;
+import billiongoods.server.services.advise.ProductAdviseManager;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
@@ -30,6 +31,7 @@ import java.util.*;
 @RequestMapping("/warehouse")
 public class CategoryController extends AbstractController {
 	private ProductManager productManager;
+	private ProductAdviseManager adviseManager;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.CategoryController");
 
@@ -117,6 +119,8 @@ public class CategoryController extends AbstractController {
 
 		model.addAttribute("filter", filter);
 		model.addAttribute("filtering", filtering);
+
+		model.addAttribute("recommendations", adviseManager.getRecommendations(category, 5));
 	}
 
 	private Map<String, Object> decodeFilter(String filter) throws UnsupportedEncodingException {
@@ -212,5 +216,10 @@ public class CategoryController extends AbstractController {
 	@Autowired
 	public void setProductManager(ProductManager productManager) {
 		this.productManager = productManager;
+	}
+
+	@Autowired
+	public void setAdviseManager(ProductAdviseManager adviseManager) {
+		this.adviseManager = adviseManager;
 	}
 }

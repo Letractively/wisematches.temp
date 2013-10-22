@@ -22,11 +22,11 @@ public interface Category {
 
 	boolean isActive();
 
-
 	Category getParent();
 
 	Genealogy getGenealogy();
 
+	boolean isAssignableFrom(Category category);
 
 	List<Category> getChildren();
 

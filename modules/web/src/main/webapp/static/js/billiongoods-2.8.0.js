@@ -487,6 +487,28 @@ bg.warehouse.Order = function () {
     };
 };
 
+bg.warehouse.Maintain = new function () {
+    this.editProduct = function (pid) {
+        bg.util.url.redirect('/maintain/product?id=' + pid);
+    };
+
+    this.recommend = function (pid, recommend) {
+        bg.ui.lock(null, 'Изменение рекомендации продукта...');
+        $.post("/maintain/recommends/" + (recommend ? "add.ajax" : "remove.ajax") + "?id=" + pid)
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, recommend ? "Продукт добавлен в рекомендации" : "Продукт удален из рекомендаций", false);
+                        bg.util.url.reload();
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "Возникли системные проблемы. Состояние продукта не может быть обновлено в данный момент.", true);
+                });
+    };
+};
+
 bg.warehouse.ProductController = function () {
     var addToBasket = function (callback) {
         bg.ui.lock(null, 'Добавление в корзину. Пожалуйста, подождите...');
@@ -613,7 +635,7 @@ bg.warehouse.ProductController = function () {
         social_tools: false,
         deeplinking: false,
         show_title: false,
-        allow_resize: true,
+        allow_resize: false,
         overlay_gallery: true,
         default_width: 600,
         default_height: 600
@@ -661,6 +683,7 @@ bg.warehouse.ProductController = function () {
         clickBar: 1
     });
 };
+
 
 $(document).ready(function () {
     jQuery.fn.extend({
@@ -714,7 +737,7 @@ $(document).ready(function () {
         ajaxCache: true,
         activation: 'click',
         closePosition: 'bottom',
-        closeText: 'Закрыть',
+        closeText: '???????',
         arrows: false,
         sticky: true,
         ajaxProcess: function (response) {

@@ -42,11 +42,6 @@
             <div class="info">
                 <div class="name" itemprop="name">
                 ${product.name}
-                <@bg.security.authorized "moderator">
-                    <div style="float: right">
-                        <a href="/maintain/product?id=${product.id}">Изменить</a>
-                    </div>
-                </@bg.security.authorized>
                 </div>
 
                 <div class="articular">
@@ -58,6 +53,16 @@
                 <#if (product.soldCount>0)>
                     Продано: <span class="sold">${product.soldCount}</span>
                 </#if>
+                <@bg.security.authorized "moderator">
+                    <div style="float: right">
+                        <button type="button"
+                                onclick="bg.warehouse.Maintain.recommend(${product.id}, ${(!product.recommended)?string})">
+                            <#if product.recommended>Не рекомендовать<#else>Рекомендовать</#if>
+                        </button>
+                        <button type="button" onclick="bg.warehouse.Maintain.editProduct(${product.id})">Изменить
+                        </button>
+                    </div>
+                </@bg.security.authorized>
                 </div>
 
                 <div class="stock">
@@ -276,6 +281,6 @@
     </form>
 </div>
 
-<script type="application/javascript">
+<script type="text/javascript">
     new bg.warehouse.ProductController();
 </script>

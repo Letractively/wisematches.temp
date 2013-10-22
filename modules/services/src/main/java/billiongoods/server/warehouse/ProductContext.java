@@ -11,6 +11,7 @@ public class ProductContext {
 	private final Category category;
 	private final boolean subCategories;
 	private final StockState stockState;
+	private final boolean onlyRecommended;
 	private final EnumSet<ProductState> productStates;
 
 	public static final EnumSet<ProductState> ACTIVE_ONLY = EnumSet.of(ProductState.ACTIVE);
@@ -28,12 +29,17 @@ public class ProductContext {
 	}
 
 	public ProductContext(Category category, boolean subCategories, String search, boolean arrival, EnumSet<ProductState> productStates, StockState stockState) {
+		this(category, subCategories, search, arrival, false, productStates, stockState);
+	}
+
+	public ProductContext(Category category, boolean subCategories, String search, boolean arrival, boolean onlyRecommended, EnumSet<ProductState> productStates, StockState stockState) {
 		this.search = search;
 		this.arrival = arrival;
 		this.category = category;
 		this.stockState = stockState;
 		this.subCategories = subCategories;
 		this.productStates = productStates;
+		this.onlyRecommended = onlyRecommended;
 	}
 
 	public String getSearch() {
@@ -50,6 +56,10 @@ public class ProductContext {
 
 	public boolean isSubCategories() {
 		return subCategories;
+	}
+
+	public boolean isOnlyRecommended() {
+		return onlyRecommended;
 	}
 
 	public StockState getStockState() {

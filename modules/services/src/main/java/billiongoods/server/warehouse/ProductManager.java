@@ -22,6 +22,7 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 
 	boolean hasProduct(Integer productId);
 
+
 	ProductDescription getDescription(Integer id);
 
 
@@ -38,6 +39,8 @@ public interface ProductManager extends SearchManager<ProductDescription, Produc
 
 
 	void updateSold(Integer id, int quantity);
+
+	void updateRecommendation(Integer id, boolean b);
 
 	void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo);
 }

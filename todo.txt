@@ -4,10 +4,8 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
-
 - Coupons
 - Range filters
-- Our recomendations view on the left of main page: L959 & V911 & v912
 
 ============= PLAN ====================
 - Redefine financial policy
@@ -20,6 +18,7 @@
 - View more info about orders (Google? Graphs?)
 
 - Accounts and personal info
+    - Ability to pay for broken order again (no needs to create new order).
     - validate pending orders before payment. It's possible that price is not the same now.
 
 - Forums
@@ -31,8 +30,6 @@
 - Own ads on main page
 
 - Your recent history
-- Ability to pay for broken order again (no needs to create new order).
-    can be done only for registered users
 
 ============= DONE ====================
 22.10
@@ -40,6 +37,8 @@
 + Disable order's notification for shipping and closed
 + Remove OrderState#REJECTED. There is no use case.
 + Order's admin page: not clear
++ Don't resize images in full view
++ Our recomendations view on the left of main page: L959 & V911 & v912
 
 18.10
 + Order: expected date for suspended state

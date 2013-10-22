@@ -46,6 +46,9 @@ public class AbstractProductDescription implements ProductDescription {
 	@Column(name = "soldCount")
 	private int soldCount;
 
+	@Column(name = "recommended")
+	private boolean recommended;
+
 	@Embedded
 	private StockInfo stockInfo = new StockInfo();
 
@@ -114,6 +117,11 @@ public class AbstractProductDescription implements ProductDescription {
 	}
 
 	@Override
+	public boolean isRecommended() {
+		return recommended;
+	}
+
+	@Override
 	public Date getRegistrationDate() {
 		return registrationDate;
 	}
@@ -134,6 +142,7 @@ public class AbstractProductDescription implements ProductDescription {
 
 	void setState(ProductState state) {
 		this.state = state;
+
 		if (state == ProductState.ACTIVE || state == ProductState.PROMOTED) {
 			this.registrationDate = new Date();
 		}
@@ -157,6 +166,10 @@ public class AbstractProductDescription implements ProductDescription {
 
 	void setRestockInfo(StockInfo info) {
 		this.stockInfo = info;
+	}
+
+	void setRecommended(boolean recommended) {
+		this.recommended = recommended;
 	}
 
 	void setPreviewImageId(String previewImageId) {

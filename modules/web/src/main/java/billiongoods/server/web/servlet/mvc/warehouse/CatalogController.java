@@ -3,6 +3,7 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 import billiongoods.core.search.Order;
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.Range;
+import billiongoods.server.services.advise.ProductAdviseManager;
 import billiongoods.server.services.showcase.*;
 import billiongoods.server.warehouse.Product;
 import billiongoods.server.warehouse.ProductDescription;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class CatalogController extends AbstractController {
 	private ProductManager productManager;
 	private ShowcaseManager showcaseManager;
+	private ProductAdviseManager adviseManager;
 
 	private Showcase showcase;
 	private final Map<ShowcaseItem, List<ProductDescription>> showcaseCache = new HashMap<>();
@@ -49,6 +51,7 @@ public class CatalogController extends AbstractController {
 
 		model.addAttribute("showcase", showcase);
 		model.addAttribute("showcaseCache", showcaseCache);
+		model.addAttribute("recommendations", adviseManager.getRecommendations(null, 8));
 
 		return "/content/warehouse/catalog";
 	}
@@ -95,6 +98,11 @@ public class CatalogController extends AbstractController {
 		if (this.showcaseManager != null) {
 			this.showcaseManager.addShowcaseListener(catalogRefreshListener);
 		}
+	}
+
+	@Autowired
+	public void setAdviseManager(ProductAdviseManager adviseManager) {
+		this.adviseManager = adviseManager;
 	}
 
 	private final class TheCatalogRefreshListener implements ProductListener, ShowcaseListener {
