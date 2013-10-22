@@ -5,7 +5,7 @@
 
 <div class="orders">
     <div class="states">
-    <#list [OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SUSPENDED, OrderState.SHIPPING, OrderState.SHIPPED, OrderState.NEW, OrderState.BILLING, OrderState.REJECTED] as o>
+    <#list [OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SUSPENDED, OrderState.SHIPPING, OrderState.SHIPPED, OrderState.BILLING] as o>
         <div class="state">
             <input id="status${o.name()}" name="status" type="radio" value="${o.name()}"
                    <#if o==orderState>checked="checked"</#if>>
@@ -16,9 +16,9 @@
 
     <div class="search">
         <input name="id" value="">
-        <button type="button" value="id">По Номеру</button>
-        <button type="button" value="token">По Коду</button>
-        <button type="button" value="ref">По Внешнему</button>
+        <button type="button" value="id">По инденификатору (ID)</button>
+        <button type="button" value="token">По PayPal коду (TOKEN)</button>
+        <button type="button" value="ref">По BG коду (BG order #)</button>
     </div>
 
     <div class="cnt">

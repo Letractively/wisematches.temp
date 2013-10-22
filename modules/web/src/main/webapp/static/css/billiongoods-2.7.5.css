@@ -1288,15 +1288,15 @@ button.bg-ui-button.selected {
     font-weight: bold;
 }
 
-.order.rejected .status {
-    color: darkred;
-}
-
 .order.failed .status {
     color: red;
 }
 
 .order.shipped .status {
+    color: green;
+}
+
+.order.closed .status {
     color: green;
 }
 

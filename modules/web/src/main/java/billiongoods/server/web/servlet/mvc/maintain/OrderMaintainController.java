@@ -94,13 +94,16 @@ public class OrderMaintainController extends AbstractController {
 					break;
 				case SUSPENDED:
 					try {
-						orderManager.suspended(id, value != null && !value.isEmpty() ? SIMPLE_DATE_FORMAT.parse(value) : null, comment);
+						orderManager.suspend(id, value != null && !value.isEmpty() ? SIMPLE_DATE_FORMAT.parse(value) : null, comment);
 					} catch (Exception ex) {
 						errors.rejectValue("value", "order.state.date.incorrect");
 					}
 					break;
 				case CANCELLED:
-					orderManager.cancelled(id, value, comment);
+					orderManager.cancel(id, value, comment);
+					break;
+				case CLOSED:
+					orderManager.close(id, comment);
 					break;
 				default:
 					errors.rejectValue("value", "order.state.state.incorrect");

@@ -27,7 +27,7 @@
 
 <div class="tit">
     <div style="display: inline-block">
-        Заказ #${order.id} от ${messageSource.formatDate(order.creationTime, locale)}
+        Заказ #${order.id} от ${messageSource.formatDate(order.created, locale)}
     </div>
     <div style="display: inline-block; float: right">
     <#if order.internationalTracking?has_content>
@@ -79,7 +79,7 @@
                             <td valign="top" width="20%">
                                 <#if state.billing>
                                     Номер счета:<br>${l.parameter!""}
-                                <#elseif state.accepted || state.rejected>
+                                <#elseif state.accepted>
                                     Номер платежа:<br>${l.parameter!""}
                                 <#elseif state.processing>
                                     Номер комплектации:<br>

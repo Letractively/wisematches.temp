@@ -96,7 +96,7 @@ public class NotificationOriginCenterTest {
 		final Order order = new HibernateOrder(123L, basket, new Shipment(12d, address, ShipmentType.REGISTERED), true);
 
 		final OrderListener listener = listenerCapture.getValue();
-		listener.orderStateChange(order, null, OrderState.NEW);
+		listener.orderStateChanged(order, null, OrderState.NEW);
 
 		publisherCenter.setOrderManager(null);
 	}

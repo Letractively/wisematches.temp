@@ -131,11 +131,6 @@ public class HibernateOrderManagerTest {
 		assertEquals(OrderState.ACCEPTED, order.getOrderState());
 
 		order = orderManager.getOrder(order.getId());
-		orderManager.reject(order.getId(), "mock2@mock.mock", "ASDAWEQWEASD", "my note");
-		assertEquals("mock2@mock.mock", order.getPayer());
-		assertEquals(OrderState.REJECTED, order.getOrderState());
-
-		order = orderManager.getOrder(order.getId());
 		orderManager.processing(order.getId(), "124343", "Comment1");
 		assertEquals("124343", order.getReferenceTracking());
 		assertEquals("Comment1", order.getCommentary());
@@ -157,6 +152,11 @@ public class HibernateOrderManagerTest {
 		orderManager.failed(order.getId(), "They, close");
 		assertEquals("They, close", order.getCommentary());
 		assertEquals(OrderState.FAILED, order.getOrderState());
+
+		order = orderManager.getOrder(order.getId());
+		orderManager.cancel(order.getId(), "ASASDASDASD23123", "my note");
+		assertEquals("ASASDASDASD23123", order.getRefundToken());
+		assertEquals(OrderState.CANCELLED, order.getOrderState());
 
 		assertEquals(7, order.getOrderLogs().size());
 
