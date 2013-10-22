@@ -68,9 +68,6 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, null);
-
-		log.info("New order has been placed: {}", order.getId());
-
 		return order;
 	}
 
@@ -86,8 +83,17 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
+	}
 
-		log.info("New state was changed to billing: {}", orderId);
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void reject(Long orderId, String payer, String paymentId, String note) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+		session.delete(order);
+
+		log.info("Order has been rejected and removed from system: {}", orderId);
 	}
 
 	@Override
@@ -101,23 +107,6 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
-
-		log.info("New state was changed to accepted: {}", orderId);
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public void reject(Long orderId, String payer, String paymentId, String note) {
-		final Session session = sessionFactory.getCurrentSession();
-
-		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.reject(payer, paymentId, note);
-		session.update(order);
-
-		notifyOrderState(order, state);
-
-		log.info("New state was changed to rejected: {}", orderId);
 	}
 
 	@Override
@@ -131,8 +120,6 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
-
-		log.info("New state was changed to processing: {}", orderId);
 	}
 
 	@Override
@@ -146,8 +133,6 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
-
-		log.info("New state was changed to shipping: {}", orderId);
 	}
 
 	@Override
@@ -161,13 +146,11 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
-
-		log.info("New state was changed to shipped: {}", orderId);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void suspended(Long orderId, Date resumeDate, String commentary) {
+	public void suspend(Long orderId, Date resumeDate, String commentary) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
@@ -176,13 +159,11 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
-
-		log.info("New state was changed to shipped: {}", orderId);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void cancelled(Long orderId, String refundId, String commentary) {
+	public void cancel(Long orderId, String refundId, String commentary) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
@@ -191,8 +172,6 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
-
-		log.info("New state was changed to shipped: {}", orderId);
 	}
 
 	@Override
@@ -206,8 +185,6 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
-
-		log.info("New state was changed to failed: {}", orderId);
 	}
 
 	@Override
@@ -224,13 +201,27 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 				notifyOrderState(order, state);
 
-				log.info("New state was changed to failed: {}", order.getId());
 			} else {
 				log.warn("Where is no order for token: {}", token);
 			}
 		} catch (Exception ex) {
 			log.warn("Where is no order for token: {}", token);
 		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void close(Long orderId, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState state = order.getOrderState();
+		order.close(commentary);
+		session.update(order);
+
+		notifyOrderState(order, state);
+
+		log.info("New state was changed to shipped: {}", orderId);
 	}
 
 	@Override
@@ -281,8 +272,10 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 	}
 
 	private void notifyOrderState(Order order, OrderState oldState) {
+		log.info("Order state was changed from {} to {}: {}", oldState, order.getOrderState(), order.getId());
+
 		for (OrderListener listener : listeners) {
-			listener.orderStateChange(order, oldState, order.getOrderState());
+			listener.orderStateChanged(order, oldState, order.getOrderState());
 		}
 	}
 

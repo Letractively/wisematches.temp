@@ -93,7 +93,7 @@ public class AlertsOriginCenter {
 		}
 
 		@Override
-		public void orderStateChange(Order order, OrderState oldState, OrderState newState) {
+		public void orderStateChanged(Order order, OrderState oldState, OrderState newState) {
 			if (newState == OrderState.ACCEPTED) {
 				raiseAlarm("system.order", order, order.getId());
 			}

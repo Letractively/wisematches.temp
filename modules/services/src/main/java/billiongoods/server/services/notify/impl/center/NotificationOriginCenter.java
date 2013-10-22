@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -34,6 +35,9 @@ public class NotificationOriginCenter implements BreakingDayListener {
 	private final OrderListener orderListener = new TheOrderListener();
 	private final ProductStateListener productStateListener = new TheStateProductListener();
 
+	private static final EnumSet<OrderState> ORDER_STATES =
+			EnumSet.of(OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SHIPPED, OrderState.SUSPENDED, OrderState.CANCELLED);
+
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.OriginCenter");
 
 	public NotificationOriginCenter() {
@@ -45,7 +49,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 	}
 
-	private void processProductStock(ProductDescription description, StockInfo oldStock, StockInfo newStock) {
+	private void processProductStock(ProductDescription description, StockInfo newStock) {
 		if (newStock.getStockState() == StockState.IN_STOCK) {
 			final TrackingContext c = new TrackingContext(description.getId(), TrackingType.AVAILABILITY);
 
@@ -57,7 +61,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 	}
 
-	private void processProductState(ProductDescription description, ProductState oldState, ProductState newState) {
+	private void processProductState(ProductDescription description, ProductState newState) {
 		if (newState == ProductState.ACTIVE) {
 			final TrackingContext c = new TrackingContext(description.getId(), TrackingType.DESCRIPTION);
 
@@ -120,8 +124,12 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 
 		@Override
-		public void orderStateChange(Order order, OrderState oldState, OrderState newState) {
-			processOrderState(order);
+		public void orderStateChanged(Order order, OrderState oldState, OrderState newState) {
+			if (ORDER_STATES.contains(newState)) {
+				processOrderState(order);
+			} else {
+				log.info("Order's new state doesn't suppose notifications: {} -> {}", order.getId(), newState);
+			}
 		}
 	}
 
@@ -135,12 +143,12 @@ public class NotificationOriginCenter implements BreakingDayListener {
 
 		@Override
 		public void productStockChanged(ProductDescription description, StockInfo oldStock, StockInfo newStock) {
-			processProductStock(description, oldStock, newStock);
+			processProductStock(description, newStock);
 		}
 
 		@Override
 		public void productStateChanged(ProductDescription description, ProductState oldState, ProductState newState) {
-			processProductState(description, oldState, newState);
+			processProductState(description, newState);
 		}
 	}
 }

@@ -1,3 +1,19 @@
+#10.22
+ALTER TABLE `billiongoods`.`store_order`
+CHANGE COLUMN `creationTime` `created` DATETIME NOT NULL,
+ADD COLUMN `closed` DATETIME NULL
+AFTER `created`;
+
+UPDATE store_order
+SET state=state - 1
+WHERE state > 1;
+
+ALTER TABLE `billiongoods`.`paypal_transaction`
+DROP FOREIGN KEY `fk_paypal_transaction_store_order1`;
+ALTER TABLE `billiongoods`.`paypal_transaction`
+DROP INDEX `fk_paypal_transaction_store_order1_idx`,
+ADD INDEX `INDEX_orderId` (`orderId` ASC);
+
 # 10.18
 ALTER TABLE `billiongoods`.`store_order`
 ADD COLUMN `exceptedResume` DATETIME NULL DEFAULT NULL
@@ -17,6 +33,9 @@ ALTER TABLE `billiongoods`.`store_attribute`
 ADD COLUMN `priority` TINYINT NULL DEFAULT 0
 AFTER `type`;
 
+UPDATE store_order
+SET state=state - 1
+WHERE state > 1;
 
 # 10.10
 ALTER TABLE `billiongoods`.`store_group`

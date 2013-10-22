@@ -4,6 +4,7 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
+
 - Coupons
 - Range filters
 - Our recomendations view on the left of main page: L959 & V911 & v912
@@ -15,9 +16,12 @@
 - Orders for filter values/items
 - Differ catalog view
 - Add full product name for URL in translite
-- Order: new state closed
+
+- View more info about orders (Google? Graphs?)
 
 - Accounts and personal info
+    - validate pending orders before payment. It's possible that price is not the same now.
+
 - Forums
 
 - Export order
@@ -31,6 +35,12 @@
     can be done only for registered users
 
 ============= DONE ====================
+22.10
++ Order: new state closed
++ Disable order's notification for shipping and closed
++ Remove OrderState#REJECTED. There is no use case.
++ Order's admin page: not clear
+
 18.10
 + Order: expected date for suspended state
 + Order: money back ID for cancelled operation

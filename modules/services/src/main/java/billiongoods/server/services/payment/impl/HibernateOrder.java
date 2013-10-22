@@ -38,9 +38,13 @@ public class HibernateOrder implements Order {
 	@Embedded
 	private HibernateAddress shipmentAddress;
 
-	@Column(name = "creationTime", updatable = false)
+	@Column(name = "created", updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationTime;
+	private Date created;
+
+	@Column(name = "closed")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date closed;
 
 	@Column(name = "timestamp")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -105,7 +109,7 @@ public class HibernateOrder implements Order {
 		this.tracking = tracking;
 		this.orderState = OrderState.NEW;
 		timestamp = new Date();
-		creationTime = new Date();
+		created = new Date();
 	}
 
 	@Override
@@ -141,8 +145,13 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public Date getCreationTime() {
-		return creationTime;
+	public Date getCreated() {
+		return created;
+	}
+
+	@Override
+	public Date getClosed() {
+		return closed;
 	}
 
 	@Override
@@ -224,14 +233,6 @@ public class HibernateOrder implements Order {
 		updateOrderState("accepted", paymentId, null, OrderState.ACCEPTED);
 	}
 
-	void reject(String payer, String paymentId, String note) {
-		this.payer = payer;
-		this.payerNote = note;
-		this.paymentId = paymentId;
-
-		updateOrderState("rejected", paymentId, null, OrderState.REJECTED);
-	}
-
 	void processing(String referenceTracking, String commentary) {
 		this.referenceTracking = referenceTracking;
 
@@ -264,6 +265,16 @@ public class HibernateOrder implements Order {
 		this.refundToken = refundId;
 
 		updateOrderState("cancelled", refundId, commentary, OrderState.CANCELLED);
+	}
+
+	void close(String commentary) {
+		this.closed = new Date();
+
+		updateOrderState("closed", null, commentary, OrderState.CLOSED);
+	}
+
+	void remove(String commentary) {
+		updateOrderState("removed", null, commentary, OrderState.REMOVED);
 	}
 
 	void setTracking(boolean tracking) {
@@ -300,7 +311,7 @@ public class HibernateOrder implements Order {
 		sb.append(", shipmentAmount=").append(shipmentAmount);
 		sb.append(", shipmentType=").append(shipmentType);
 		sb.append(", shipmentAddress=").append(shipmentAddress);
-		sb.append(", creationTime=").append(creationTime);
+		sb.append(", created=").append(created);
 		sb.append(", timestamp=").append(timestamp);
 		sb.append(", payer='").append(payer).append('\'');
 		sb.append(", payerNote='").append(payerNote).append('\'');

@@ -44,9 +44,12 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	void shipped(Long orderId, String number, String commentary);
 
 
-	void suspended(Long orderId, Date resumeDate, String commentary);
+	void cancel(Long orderId, String refundId, String commentary);
 
-	void cancelled(Long orderId, String refundId, String commentary);
+	void suspend(Long orderId, Date resumeDate, String commentary);
+
+
+	void close(Long orderId, String commentary);
 
 
 	void setOrderTracking(Order order, boolean enable);

@@ -19,9 +19,11 @@ public interface Order {
 	Shipment getShipment();
 
 
-	Date getTimestamp();
+	Date getCreated();
 
-	Date getCreationTime();
+	Date getClosed();
+
+	Date getTimestamp();
 
 	OrderState getOrderState();
 
