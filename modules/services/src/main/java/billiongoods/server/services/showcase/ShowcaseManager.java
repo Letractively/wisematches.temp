@@ -11,5 +11,6 @@ public interface ShowcaseManager {
 
 	Showcase getShowcase();
 
+
 	void reloadShowcase();
 }

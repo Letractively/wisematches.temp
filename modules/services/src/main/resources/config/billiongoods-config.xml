@@ -54,6 +54,12 @@
         <property name="attributeManager" ref="attributeManager"/>
     </bean>
 
+    <bean id="productAdviseManager" class="billiongoods.server.services.advise.impl.DefaultProductAdviseManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="productManager" ref="productManager"/>
+        <property name="categoryManager" ref="catalogManager"/>
+    </bean>
+
     <bean id="banggoodDataLoader" class="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader"/>
 
     <bean id="validationManager" class="billiongoods.server.services.validator.impl.HibernateProductValidationManager">

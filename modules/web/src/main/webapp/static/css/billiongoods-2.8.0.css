@@ -428,12 +428,17 @@ button.bg-ui-button.selected {
     margin-right: 10px;
 }
 
-.navigation .category {
+.navigation .category, .navigation .filtering, .navigation .recommends {
     border: 1px solid #ebebeb;
 }
 
 .navigation .category .container {
     padding: 5px 3px;
+}
+
+.navigation .filtering {
+    padding: 5px;
+    margin-top: 10px;
 }
 
 .category .item {
@@ -476,7 +481,7 @@ button.bg-ui-button.selected {
     padding: 0;
 }
 
-.catalog .ct-tit, .assistance .title {
+.catalog .ct-tit, .assistance .title, .recommends .title {
     padding: 10px;
     color: #fa6302;
     font-weight: bold;
@@ -1528,12 +1533,6 @@ button.bg-ui-button.selected {
     border-left: 1px dotted #9aa7b5;
 }
 
-.navigation .filtering {
-    padding: 5px;
-    margin-top: 10px;
-    border: 1px solid #d67632;
-}
-
 .filtering .property {
     margin-bottom: 5px;
     padding-bottom: 5px;
@@ -1765,4 +1764,43 @@ button.bg-ui-button.selected {
     -moz-border-radius: 0 5px 5px 0;
     border-radius: 0 5px 5px 0;
     padding-top: 0;
+}
+
+.recommends {
+    margin-top: 10px;
+}
+
+.recommends .title {
+    color: #000000;
+    padding: 5px 5px 5px 10px;
+    text-shadow: 1px 1px 2px white;
+}
+
+.recommends .container {
+    padding: 5px;
+}
+
+.recommends .container ul {
+    width: auto;
+    margin: 7px 0 0;
+    padding: 0;
+    height: 70px;
+    border-bottom: 1px dashed #cccccc;
+}
+
+.recommends .container .pic {
+    float: left;
+    width: 55px;
+    height: 55px;
+    padding: 0;
+    margin: 0 5px 0 0;
+}
+
+.recommends .container .name {
+    float: left;
+    width: 130px;
+    height: 65px;
+    overflow: hidden;
+    font-size: 11px;
+    text-align: left;
 }

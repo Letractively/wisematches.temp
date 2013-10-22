@@ -9,6 +9,11 @@ public interface ProductDescription extends ProductImager {
 	@Override
 	Integer getId();
 
+	/**
+	 * Returns name of the product.
+	 *
+	 * @return the name of the product.
+	 */
 	String getName();
 
 	/**
@@ -34,6 +39,12 @@ public interface ProductDescription extends ProductImager {
 	@Override
 	Integer getCategoryId();
 
+	/**
+	 * Indicates is product recommended or how product or not.
+	 *
+	 * @return {@code true} if product is recommended; {@code false} otherwise
+	 */
+	boolean isRecommended();
 
 	/**
 	 * Returns moderator's commentary for this product. This value never must be shown for customers.

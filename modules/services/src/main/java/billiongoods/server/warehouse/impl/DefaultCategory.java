@@ -66,6 +66,15 @@ public class DefaultCategory implements Category {
 	}
 
 	@Override
+	public boolean isAssignableFrom(Category category) {
+		Category ct = category;
+		while (ct != null && !ct.equals(this)) {
+			ct = ct.getParent();
+		}
+		return ct != null;
+	}
+
+	@Override
 	public List<Category> getChildren() {
 		return children;
 	}

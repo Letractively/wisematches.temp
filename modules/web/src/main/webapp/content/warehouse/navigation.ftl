@@ -1,15 +1,6 @@
 <#include "/core.ftl"/>
 
 <div class="navigation">
-<#--
-Good for big catalog. Can't be used for small
-<#if category??>
-    <#include "widget/category.ftl"/>
-<#elseif catalog??>
-    <#include "widget/catalog.ftl"/>
-</#if>
-
--->
 <#if category??>
     <#include "widget/category.ftl"/>
 <#elseif catalog??>
@@ -17,4 +8,6 @@ Good for big catalog. Can't be used for small
 </#if>
 
 <#include "widget/filtering.ftl"/>
+
+<#include "widget/recomendations.ftl"/>
 </div>

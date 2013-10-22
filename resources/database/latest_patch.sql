@@ -14,6 +14,11 @@ ALTER TABLE `billiongoods`.`paypal_transaction`
 DROP INDEX `fk_paypal_transaction_store_order1_idx`,
 ADD INDEX `INDEX_orderId` (`orderId` ASC);
 
+ALTER TABLE `billiongoods`.`store_product`
+ADD COLUMN `recommended` INT(1) NOT NULL DEFAULT 0
+AFTER `state`,
+ADD INDEX `recommended_index` (`recommended` ASC);
+
 # 10.18
 ALTER TABLE `billiongoods`.`store_order`
 ADD COLUMN `exceptedResume` DATETIME NULL DEFAULT NULL

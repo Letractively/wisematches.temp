@@ -27,6 +27,9 @@
         <div>
             <a href="/maintain/showcase">Витрина</a>
         </div>
+        <div>
+            <a href="/maintain/recommends">Рекомендации</a>
+        </div>
 
         <div>&nbsp;</div>
 
