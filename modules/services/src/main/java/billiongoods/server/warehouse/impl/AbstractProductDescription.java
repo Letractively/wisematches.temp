@@ -164,7 +164,7 @@ public class AbstractProductDescription implements ProductDescription {
 		this.price = price;
 	}
 
-	void setRestockInfo(StockInfo info) {
+	void setStockInfo(StockInfo info) {
 		this.stockInfo = info;
 	}
 
