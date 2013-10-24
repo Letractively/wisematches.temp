@@ -1,7 +1,7 @@
 package billiongoods.server.web.servlet.mvc.maintain.form;
 
 import billiongoods.server.services.tracking.ProductTracking;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,17 +11,17 @@ import java.util.Map;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class TrackingSummary {
-	private final Map<ProductDescription, List<ProductTracking>> trackingSummary;
+	private final Map<ProductPreview, List<ProductTracking>> trackingSummary;
 
-	public TrackingSummary(Map<ProductDescription, List<ProductTracking>> trackingSummary) {
+	public TrackingSummary(Map<ProductPreview, List<ProductTracking>> trackingSummary) {
 		this.trackingSummary = trackingSummary;
 	}
 
-	public Collection<ProductDescription> getProducts() {
+	public Collection<ProductPreview> getProducts() {
 		return trackingSummary.keySet();
 	}
 
-	public List<ProductTracking> getProductTrackings(ProductDescription description) {
-		return trackingSummary.get(description);
+	public List<ProductTracking> getProductTrackings(ProductPreview preview) {
+		return trackingSummary.get(preview);
 	}
 }

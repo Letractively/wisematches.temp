@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @Entity
 @Table(name = "store_product")
-public class HibernateProduct extends AbstractProductDescription implements Product {
+public class HibernateProduct extends AbstractProduct implements Product {
 	@Column(name = "description")
 	private String description;
 

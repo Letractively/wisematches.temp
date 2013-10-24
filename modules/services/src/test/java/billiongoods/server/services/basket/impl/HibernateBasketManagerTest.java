@@ -3,7 +3,7 @@ package billiongoods.server.services.basket.impl;
 import billiongoods.core.Visitor;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.warehouse.AttributeType;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Property;
 import billiongoods.server.warehouse.impl.HibernateAttribute;
 import org.hibernate.SessionFactory;
@@ -47,7 +47,7 @@ public class HibernateBasketManagerTest {
 		final HibernateBasket basket = manager.getBasket(person);
 		assertNull(basket);
 
-		final ProductDescription product = createMock(ProductDescription.class);
+		final ProductPreview product = createMock(ProductPreview.class);
 		expect(product.getId()).andReturn(120).anyTimes();
 		replay(product);
 

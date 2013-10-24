@@ -7,7 +7,7 @@ import billiongoods.server.services.payment.*;
 import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.warehouse.AttributeType;
 import billiongoods.server.warehouse.Price;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Property;
 import billiongoods.server.warehouse.impl.HibernateAttribute;
 import org.hibernate.SessionFactory;
@@ -52,7 +52,7 @@ public class HibernateOrderManagerTest {
 		orderManager.setSessionFactory(sessionFactory);
 		orderManager.setShipmentManager(new DefaultShipmentManager());
 
-		final ProductDescription desc = createMock(ProductDescription.class);
+		final ProductPreview desc = createMock(ProductPreview.class);
 //		expect(desc.getName()).andReturn("Item1").andReturn("Item2");
 //		expect(desc.getId()).andReturn(1).andReturn(7);
 		expect(desc.getPrice()).andReturn(new Price(123.34d)).andReturn(new Price(342.21d));

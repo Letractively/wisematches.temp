@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="recommendations" type="billiongoods.server.warehouse.ProductDescription[]" -->
+<#-- @ftlvariable name="recommendations" type="billiongoods.server.warehouse.ProductPreview[]" -->
 
 <#include "/core.ftl"/>
 

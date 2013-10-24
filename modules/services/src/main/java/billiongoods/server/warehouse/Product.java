@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface Product extends ProductDescription {
+public interface Product extends ProductPreview {
 	/**
 	 * Returns full description for this product.
 	 *

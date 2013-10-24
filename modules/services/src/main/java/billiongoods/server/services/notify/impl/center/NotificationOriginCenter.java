@@ -49,25 +49,25 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 	}
 
-	private void processProductStock(ProductDescription description, StockInfo newStock) {
+	private void processProductStock(ProductPreview preview, StockInfo newStock) {
 		if (newStock.getStockState() == StockState.IN_STOCK) {
-			final TrackingContext c = new TrackingContext(description.getId(), TrackingType.AVAILABILITY);
+			final TrackingContext c = new TrackingContext(preview.getId(), TrackingType.AVAILABILITY);
 
 			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
 			for (ProductTracking tracking : tracks) {
-				fireNotification("product.availability", Recipient.get(tracking.getPersonEmail()), description, description.getId());
+				fireNotification("product.availability", Recipient.get(tracking.getPersonEmail()), preview, preview.getId());
 				trackingManager.removeTracking(tracking.getId());
 			}
 		}
 	}
 
-	private void processProductState(ProductDescription description, ProductState newState) {
+	private void processProductState(ProductPreview preview, ProductState newState) {
 		if (newState == ProductState.ACTIVE) {
-			final TrackingContext c = new TrackingContext(description.getId(), TrackingType.DESCRIPTION);
+			final TrackingContext c = new TrackingContext(preview.getId(), TrackingType.DESCRIPTION);
 
 			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
 			for (ProductTracking tracking : tracks) {
-				fireNotification("product.description", Recipient.get(tracking.getPersonEmail()), description, description.getId());
+				fireNotification("product.preview", Recipient.get(tracking.getPersonEmail()), preview, preview.getId());
 				trackingManager.removeTracking(tracking.getId());
 			}
 		}
@@ -138,17 +138,17 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 
 		@Override
-		public void productPriceChanged(ProductDescription description, Price oldPrice, Price newPrice) {
+		public void productPriceChanged(ProductPreview preview, Price oldPrice, Price newPrice) {
 		}
 
 		@Override
-		public void productStockChanged(ProductDescription description, StockInfo oldStock, StockInfo newStock) {
-			processProductStock(description, newStock);
+		public void productStockChanged(ProductPreview preview, StockInfo oldStock, StockInfo newStock) {
+			processProductStock(preview, newStock);
 		}
 
 		@Override
-		public void productStateChanged(ProductDescription description, ProductState oldState, ProductState newState) {
-			processProductState(description, newState);
+		public void productStateChanged(ProductPreview preview, ProductState oldState, ProductState newState) {
+			processProductState(preview, newState);
 		}
 	}
 }

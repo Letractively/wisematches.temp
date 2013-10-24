@@ -3,7 +3,7 @@ package billiongoods.server.services.image.impl;
 import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.image.ImageSize;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -35,7 +35,7 @@ public class FileImageManager implements ImageManager {
 	}
 
 	@Override
-	public void addImage(ProductDescription product, String code, InputStream in) throws IOException {
+	public void addImage(ProductPreview product, String code, InputStream in) throws IOException {
 		Files.createDirectories(imageResolver.resolvePath(product));
 
 		final Path originalFiles = imageResolver.resolveFile(product, code, null);
@@ -53,7 +53,7 @@ public class FileImageManager implements ImageManager {
 	}
 
 	@Override
-	public void removeImage(ProductDescription product, String code) throws IOException {
+	public void removeImage(ProductPreview product, String code) throws IOException {
 		final Path originalFiles = imageResolver.resolveFile(product, code, null);
 		Files.deleteIfExists(originalFiles);
 
@@ -64,7 +64,7 @@ public class FileImageManager implements ImageManager {
 	}
 
 	@Override
-	public Collection<String> getImageCodes(ProductDescription product) throws IOException {
+	public Collection<String> getImageCodes(ProductPreview product) throws IOException {
 		final Path path = imageResolver.resolvePath(product);
 		if (Files.notExists(path)) {
 			return Collections.emptySet();

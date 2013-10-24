@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="product" type="billiongoods.server.warehouse.Product" -->
-<#-- @ftlvariable name="related" type="billiongoods.server.warehouse.ProductDescription[]" -->
-<#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ProductDescription[]" -->
+<#-- @ftlvariable name="related" type="billiongoods.server.warehouse.ProductPreview[]" -->
+<#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ProductPreview[]" -->
 
 <#include "/core.ftl">
 

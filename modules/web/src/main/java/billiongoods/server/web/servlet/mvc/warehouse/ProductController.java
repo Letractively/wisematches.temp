@@ -73,13 +73,13 @@ public class ProductController extends AbstractController {
 		model.addAttribute("product", product);
 		model.addAttribute("category", category);
 
-		final Set<ProductDescription> related = new HashSet<>();
+		final Set<ProductPreview> related = new HashSet<>();
 		final List<Group> groups = relationshipManager.getGroups(product.getId());
 		for (Group group : groups) {
 			related.addAll(group.getDescriptions());
 		}
 
-		final Set<ProductDescription> accessories = new HashSet<>();
+		final Set<ProductPreview> accessories = new HashSet<>();
 		final List<Relationship> relationships = relationshipManager.getRelationships(product.getId());
 		for (Relationship relationship : relationships) {
 			if (relationship.getType() == RelationshipType.ACCESSORIES) {
@@ -106,19 +106,19 @@ public class ProductController extends AbstractController {
 			return responseFactory.failure("product.subscribe.error.unknown", locale);
 		}
 
-		final ProductDescription description = productManager.getDescription(form.getProductId());
-		if (description == null) {
+		final ProductPreview preview = productManager.getPreview(form.getProductId());
+		if (preview == null) {
 			return responseFactory.failure("product.subscribe.error.unknown", locale);
 		}
 
 		try {
 			if (form.getChangeType() == TrackingChangeType.SUBSCRIBE) {
 				notificationService.raiseNotification(Recipient.get(Recipient.MailBox.MONITORING), Sender.SERVER,
-						"system." + form.getType().name().toLowerCase(), description,
-						MessageFormatter.getProductCode(description));
+						"system." + form.getType().name().toLowerCase(), preview,
+						MessageFormatter.getProductCode(preview));
 			}
 		} catch (NotificationException e) {
-			log.error("Product description request can't be send: " + form, e);
+			log.error("Product preview request can't be send: " + form, e);
 			return responseFactory.failure("product.subscribe.error.system", locale);
 		}
 

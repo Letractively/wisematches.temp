@@ -18,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernateProductManager extends EntitySearchManager<ProductDescription, ProductContext, ProductFilter> implements ProductManager {
+public class HibernateProductManager extends EntitySearchManager<ProductPreview, ProductContext, ProductFilter> implements ProductManager {
 	private AttributeManager attributeManager;
 
 	private final Collection<ProductListener> listeners = new CopyOnWriteArrayList<>();
@@ -28,7 +28,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	private static final int ONE_WEEK_MILLIS = ONE_DAY_MILLIS * 7;
 
 	public HibernateProductManager() {
-		super(HibernateProductDescription.class);
+		super(HibernateProductPreview.class);
 	}
 
 	@Override
@@ -99,9 +99,9 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	}
 
 	@Override
-	public ProductDescription getDescription(Integer id) {
+	public ProductPreview getPreview(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
-		return (HibernateProductDescription) session.get(HibernateProductDescription.class, id);
+		return (HibernateProductPreview) session.get(HibernateProductPreview.class, id);
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	public Filtering getFilteringAbility(ProductContext context, ProductFilter filter) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		Criteria countCriteria = session.createCriteria(HibernateProductDescription.class);
+		Criteria countCriteria = session.createCriteria(HibernateProductPreview.class);
 		applyRestrictions(countCriteria, context, null);
 
 		final ProjectionList countProjection = Projections.projectionList();
@@ -132,7 +132,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		double minPrice = countResult[1] != null ? ((Number) countResult[1]).doubleValue() : 0;
 		double maxPrice = countResult[2] != null ? ((Number) countResult[2]).doubleValue() : 10000;
 
-		final Criteria criteria = session.createCriteria(HibernateProductDescription.class, "product");
+		final Criteria criteria = session.createCriteria(HibernateProductPreview.class, "product");
 		applyRestrictions(criteria, context, null);
 		applyProjections(criteria, context, null);
 
@@ -298,7 +298,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		}
 
 		final Session session = sessionFactory.getCurrentSession();
-		HibernateProductDescription product = (HibernateProductDescription) session.get(HibernateProductDescription.class, id);
+		HibernateProductPreview product = (HibernateProductPreview) session.get(HibernateProductPreview.class, id);
 		if (product == null) {
 			return;
 		}
@@ -323,7 +323,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		processProduceValidation(product, oldPrice, oldState, oldStock);
 	}
 
-	private void processProduceValidation(ProductDescription product, Price oldPrice, ProductState oldState, StockInfo oldStock) {
+	private void processProduceValidation(ProductPreview product, Price oldPrice, ProductState oldState, StockInfo oldStock) {
 		if (oldPrice != null && !oldPrice.equals(product.getPrice())) {
 			for (ProductStateListener validationListener : stateListeners) {
 				validationListener.productPriceChanged(product, oldPrice, product.getPrice());

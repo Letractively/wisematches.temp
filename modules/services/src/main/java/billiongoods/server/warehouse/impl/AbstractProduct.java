@@ -1,7 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
 import billiongoods.server.warehouse.Price;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.ProductState;
 import billiongoods.server.warehouse.StockInfo;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @MappedSuperclass
-public class AbstractProductDescription implements ProductDescription {
+public class AbstractProduct implements ProductPreview {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,7 +67,7 @@ public class AbstractProductDescription implements ProductDescription {
 	@CollectionTable(name = "store_product_property", joinColumns = @JoinColumn(name = "productId"))
 	protected List<HibernateProductPropertyCollection> propertyIds = new ArrayList<>();
 
-	public AbstractProductDescription() {
+	public AbstractProduct() {
 		registrationDate = new Date();
 	}
 
@@ -179,9 +179,9 @@ public class AbstractProductDescription implements ProductDescription {
 	@Override
 	public final boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof AbstractProductDescription)) return false;
+		if (!(o instanceof AbstractProduct)) return false;
 
-		AbstractProductDescription that = (AbstractProductDescription) o;
+		AbstractProduct that = (AbstractProduct) o;
 		return !(id != null ? !id.equals(that.id) : that.id != null);
 	}
 
@@ -192,7 +192,7 @@ public class AbstractProductDescription implements ProductDescription {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("AbstractProductDescription{");
+		final StringBuilder sb = new StringBuilder("AbstractProduct{");
 		sb.append("id=").append(id);
 		sb.append(", name='").append(name).append('\'');
 		sb.append(", weight=").append(weight);
