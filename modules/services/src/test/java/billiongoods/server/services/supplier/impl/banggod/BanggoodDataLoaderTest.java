@@ -1,7 +1,6 @@
 package billiongoods.server.services.supplier.impl.banggod;
 
 import billiongoods.server.services.supplier.SupplierDescription;
-import billiongoods.server.warehouse.StockInfo;
 import billiongoods.server.warehouse.Supplier;
 import billiongoods.server.warehouse.impl.HibernateSupplierInfo;
 import org.junit.Test;
@@ -40,44 +39,5 @@ public class BanggoodDataLoaderTest {
 		assertNotNull(desc);
 		assertNotNull(desc.getPrice());
 		System.out.println(desc);
-	}
-
-	@Test
-	public void testAvailability() throws Exception {
-		BanggoodDataLoader dataLoader = new BanggoodDataLoader();
-		dataLoader.initialize();
-
-		final String referenceUri = "/Wltoys-L202-2_4G-1-12-Brushless-Remote-Comtrol-RC-Racing-Car-p-71969.html";
-		final HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo(referenceUri, "SKU063099", Supplier.BANGGOOD, null);
-
-		final StockInfo stockInfo = dataLoader.loadStockInfo(supplierInfo);
-		assertNotNull(stockInfo);
-		System.out.println(stockInfo);
-	}
-
-	@Test
-	public void testAvailability2() throws Exception {
-		BanggoodDataLoader dataLoader = new BanggoodDataLoader();
-		dataLoader.initialize();
-
-		final String referenceUri = "/Hubsan-X4-H107C-2_4G-4CH-RC-Quadcopter-With-Camera-Mode-2-RTF-p-75824.html";
-		final HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo(referenceUri, "SKU078173", Supplier.BANGGOOD, null);
-
-		final StockInfo stockInfo = dataLoader.loadStockInfo(supplierInfo);
-		assertNotNull(stockInfo);
-		System.out.println(stockInfo);
-	}
-
-	@Test
-	public void testAvailability3() throws Exception {
-		BanggoodDataLoader dataLoader = new BanggoodDataLoader();
-		dataLoader.initialize();
-
-		final String referenceUri = "/Wholesale-2012-Hot-Sale-New-Kids-Toys-2010E-Q2-Mini-RC-Stunt-Car-Toys-For-Children-p-50064.html";
-		final HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo(referenceUri, "SKU041071", Supplier.BANGGOOD, null);
-
-		final StockInfo stockInfo = dataLoader.loadStockInfo(supplierInfo);
-		assertNotNull(stockInfo);
-		System.out.println(stockInfo);
 	}
 }

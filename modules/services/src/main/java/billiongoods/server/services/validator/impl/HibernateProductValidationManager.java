@@ -140,17 +140,14 @@ public class HibernateProductValidationManager implements ProductValidationManag
 							final SupplierDescription description = dataLoader.loadDescription(supplierInfo);
 							if (description != null) {
 								final Price newSupplierPrice = description.getPrice();
-								final Price newPrice = priceConverter.convert(newSupplierPrice, exchangeRate, MarkupType.REGULAR);
-								validation.priceValidated(newPrice, newSupplierPrice);
-							}
-						} catch (DataLoadingException ex) {
-							validation.processingError(ex);
-							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
-						}
-						try {
-							final StockInfo newStockInfo = dataLoader.loadStockInfo(supplierInfo);
-							if (newStockInfo != null) {
-								validation.stockValidated(new StockInfo(newStockInfo));
+								if (newSupplierPrice != null) {
+									final Price newPrice = priceConverter.convert(newSupplierPrice, exchangeRate, MarkupType.REGULAR);
+									validation.priceValidated(newPrice, newSupplierPrice);
+								}
+
+								if (description.getStockInfo() != null) {
+									validation.stockValidated(description.getStockInfo());
+								}
 							}
 						} catch (DataLoadingException ex) {
 							validation.processingError(ex);
