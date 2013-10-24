@@ -3,7 +3,6 @@ package billiongoods.server.warehouse.impl;
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.warehouse.*;
-import org.hibernate.Cache;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -222,14 +221,14 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 			return null;
 		}
 
-		final Price price = product.getPrice();
-		final ProductState state = product.getState();
-		final StockInfo stockInfo = product.getStockInfo();
+		final Price oldPrice = product.getPrice();
+		final ProductState oldState = product.getState();
+		final StockInfo oldStock = product.getStockInfo();
 
 		updateProduct(product, editor);
 		session.update(product);
 
-		processProduceValidation(product, price, state, stockInfo);
+		processProduceValidation(product, oldPrice, oldState, oldStock);
 
 		for (ProductListener listener : listeners) {
 			listener.productUpdated(product);
@@ -259,7 +258,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 		product.setCategory(editor.getCategoryId());
 		product.setPrice(editor.getPrice());
 		product.setWeight(editor.getWeight());
-		product.setRestockInfo(new StockInfo(editor.getStoreAvailable(), editor.getRestockDate()));
+		product.setStockInfo(new StockInfo(editor.getStoreAvailable(), editor.getRestockDate()));
 		product.setPreviewImageId(editor.getPreviewImage());
 		product.setImageIds(editor.getImageIds());
 		product.setOptions(editor.getOptions());
@@ -293,71 +292,51 @@ public class HibernateProductManager extends EntitySearchManager<ProductDescript
 	}
 
 	@Override
-	public void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo) {
-		if (price == null && supplierPrice == null && stockInfo == null) {
+	public void validated(Integer id, Price newPrice, Price newSupplierPrice, StockInfo newStockInfo) {
+		if (newPrice == null && newSupplierPrice == null && newStockInfo == null) {
 			return;
 		}
 
 		final Session session = sessionFactory.getCurrentSession();
-		final HibernateProductDescription product = (HibernateProductDescription) session.get(HibernateProductDescription.class, id);
+		HibernateProductDescription product = (HibernateProductDescription) session.get(HibernateProductDescription.class, id);
 		if (product == null) {
 			return;
 		}
 
-		final StringBuilder b = new StringBuilder("update billiongoods.server.warehouse.impl.HibernateProduct a set ");
-		if (price != null) {
-			b.append("a.price.amount=:priceAmount, a.price.primordialAmount=:pricePrimordialAmount, ");
-		}
-		if (supplierPrice != null) {
-			b.append("a.supplierInfo.price.amount=:supplierAmount, a.supplierInfo.price.primordialAmount=:supplierPrimordialAmount, ");
-		}
-		if (stockInfo != null) {
-			b.append("a.stockInfo.leftovers=:leftovers, a.stockInfo.restockDate=:restockDate, ");
-		}
-		b.append("a.supplierInfo.validationDate=:validationDate where a.id=:id");
+		final Price oldPrice = product.getPrice();
+		final ProductState oldState = product.getState();
+		final StockInfo oldStock = product.getStockInfo();
 
-		final Query query = session.createQuery(b.toString());
-
-		query.setParameter("id", id);
-		query.setParameter("validationDate", new Date());
-
-		if (price != null) {
-			query.setParameter("priceAmount", price.getAmount());
-			query.setParameter("pricePrimordialAmount", price.getPrimordialAmount());
-		}
-		if (supplierPrice != null) {
-			query.setParameter("supplierAmount", supplierPrice.getAmount());
-			query.setParameter("supplierPrimordialAmount", supplierPrice.getPrimordialAmount());
-		}
-		if (stockInfo != null) {
-			query.setParameter("leftovers", stockInfo.getLeftovers());
-			query.setParameter("restockDate", stockInfo.getRestockDate());
-		}
-		query.executeUpdate();
-
-		final Cache cache = sessionFactory.getCache();
-		if (cache != null) {
-			cache.evictEntity(HibernateProduct.class, id);
-			cache.evictEntity(HibernateProductDescription.class, id);
+		if (newPrice != null) {
+			product.setPrice(newPrice);
 		}
 
-		processProduceValidation(product, price, product.getState(), stockInfo);
+		if (newSupplierPrice != null) {
+			product.getSupplierInfo().setPrice(newSupplierPrice);
+		}
+
+		if (newStockInfo != null) {
+			product.setStockInfo(newStockInfo);
+		}
+		session.update(product);
+
+		processProduceValidation(product, oldPrice, oldState, oldStock);
 	}
 
-	private void processProduceValidation(ProductDescription product, Price price, ProductState state, StockInfo stockInfo) {
-		if (price != null && !price.equals(product.getPrice())) {
+	private void processProduceValidation(ProductDescription product, Price oldPrice, ProductState oldState, StockInfo oldStock) {
+		if (oldPrice != null && !oldPrice.equals(product.getPrice())) {
 			for (ProductStateListener validationListener : stateListeners) {
-				validationListener.productPriceChanged(product, price, product.getPrice());
+				validationListener.productPriceChanged(product, oldPrice, product.getPrice());
 			}
 		}
-		if (state != null && !state.equals(product.getState())) {
+		if (oldState != null && !oldState.equals(product.getState())) {
 			for (ProductStateListener validationListener : stateListeners) {
-				validationListener.productStateChanged(product, state, product.getState());
+				validationListener.productStateChanged(product, oldState, product.getState());
 			}
 		}
-		if (stockInfo != null && !stockInfo.equals(product.getStockInfo())) {
+		if (oldStock != null && !oldStock.equals(product.getStockInfo())) {
 			for (ProductStateListener validationListener : stateListeners) {
-				validationListener.productStockChanged(product, stockInfo, product.getStockInfo());
+				validationListener.productStockChanged(product, oldStock, product.getStockInfo());
 			}
 		}
 	}
