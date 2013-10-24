@@ -68,7 +68,7 @@ public class DefaultProductAdviseManager implements ProductAdviseManager, Initia
 		for (Iterator<ProductDescription> iterator = recommendations.iterator(); iterator.hasNext() && res.size() < count; ) {
 			final ProductDescription p = iterator.next();
 			final Category ct = categoryManager.getCategory(p.getCategoryId());
-			if (category == null || category.isAssignableFrom(ct)) {
+			if (category == null || category.isRealKinship(ct)) {
 				res.add(p);
 			}
 		}

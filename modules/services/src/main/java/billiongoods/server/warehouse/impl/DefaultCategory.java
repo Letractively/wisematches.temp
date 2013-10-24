@@ -66,9 +66,9 @@ public class DefaultCategory implements Category {
 	}
 
 	@Override
-	public boolean isAssignableFrom(Category category) {
-		Category ct = category;
-		while (ct != null && !ct.equals(this)) {
+	public boolean isRealKinship(Category category) {
+		Category ct = this;
+		while (ct != null && !ct.equals(category)) {
 			ct = ct.getParent();
 		}
 		return ct != null;

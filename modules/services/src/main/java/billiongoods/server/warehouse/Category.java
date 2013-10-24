@@ -26,7 +26,14 @@ public interface Category {
 
 	Genealogy getGenealogy();
 
-	boolean isAssignableFrom(Category category);
+	/**
+	 * Determines if this catalog is either the same as, or is a parent of, the catalog represented by the specified
+	 * {@code category} para. It returns true if so; otherwise it returns false.
+	 *
+	 * @param category the category to be checked.
+	 * @return {@code true} if this catalog is the same or parent of specified catalog; {@code false} - otherwise.
+	 */
+	boolean isRealKinship(Category category);
 
 	List<Category> getChildren();
 

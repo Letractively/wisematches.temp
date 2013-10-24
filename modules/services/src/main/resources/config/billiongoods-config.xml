@@ -60,6 +60,10 @@
         <property name="categoryManager" ref="catalogManager"/>
     </bean>
 
+    <bean id="couponManager" class="billiongoods.server.services.coupon.impl.HibernateCouponManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="banggoodDataLoader" class="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader"/>
 
     <bean id="validationManager" class="billiongoods.server.services.validator.impl.HibernateProductValidationManager">
