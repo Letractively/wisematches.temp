@@ -22,6 +22,9 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	Order getByReference(String reference);
 
 
+	OrdersSummary getOrdersSummary();
+
+
 	Order create(Personality person, Basket basket, Address address, ShipmentType shipmentType, boolean track);
 
 	void bill(Long orderId, String token);
