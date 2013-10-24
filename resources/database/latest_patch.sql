@@ -1,3 +1,24 @@
+#10.23
+CREATE TABLE `billiongoods`.`store_coupon` (
+  `id`             INT         NOT NULL AUTO_INCREMENT,
+  `code`           VARCHAR(10) NOT NULL,
+  `created`        DATETIME    NOT NULL,
+  `amount`         DOUBLE      NOT NULL,
+  `couponType`     TINYINT     NOT NULL,
+  `referenceId`    INT         NOT NULL,
+  `referenceType`  TINYINT     NOT NULL,
+  `started`        DATETIME    NULL DEFAULT NULL,
+  `finished`       DATETIME    NULL DEFAULT NULL,
+  `scheduledCount` SMALLINT    NULL DEFAULT 0,
+  `remainingCount` SMALLINT    NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `code_UNIQUE` (`code` ASC),
+  INDEX `code_INDEX` (`code` ASC));
+
+ALTER TABLE `billiongoods`.`store_coupon`
+ADD COLUMN `closure` INT(1) NULL DEFAULT 0
+AFTER `remainingCount`;
+
 #10.22
 ALTER TABLE `billiongoods`.`store_order`
 CHANGE COLUMN `creationTime` `created` DATETIME NOT NULL,
