@@ -130,8 +130,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 	@Override
 	public SupplierDescription loadDescription(SupplierInfo supplierInfo) throws DataLoadingException {
 		final StockInfo stockInfo = loadStockInfo(supplierInfo, 0);
-		final SupplierDescription description = loadDescription(supplierInfo.getReferenceUri(), 0);
-		return new DefaultSupplierDescription(description.getPrice(), stockInfo, description.getParameters());
+		return loadDescription(supplierInfo.getReferenceUri(), stockInfo, 0);
 	}
 
 	private StockInfo loadStockInfo(SupplierInfo supplierInfo, int iteration) throws DataLoadingException {
@@ -185,7 +184,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 		}
 	}
 
-	private SupplierDescription loadDescription(String uri, int iteration) throws DataLoadingException {
+	private SupplierDescription loadDescription(String uri, StockInfo stockInfo, int iteration) throws DataLoadingException {
 		if (iteration == 4) {
 			initialize();
 		}
@@ -203,22 +202,22 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 			if (s.startsWith("<html><head><meta http-equiv=")) {
 				final String uri1 = parseJavaScriptRedirect(s);
 				log.info("JavaScript redirect received for {} . Parsed to {}", uri, uri1);
-				return loadDescription(uri1, iteration + 1);
+				return loadDescription(uri1, stockInfo, iteration + 1);
 			} else if (s.startsWith("<html><body><h1>400 Bad request")) {
 				log.info("400 Bad request received. Reinitialize client for {}", uri);
 				initialize();
-				return loadDescription(uri, iteration + 1);
+				return loadDescription(uri, stockInfo, iteration + 1);
 			} else {
-				return parseDescription(s);
+				return parseDescription(s, stockInfo);
 			}
 		} catch (SocketTimeoutException ex) {
-			return loadDescription(uri, iteration + 1);
+			return loadDescription(uri, stockInfo, iteration + 1);
 		} catch (Exception ex) {
 			throw new DataLoadingException("Price can't be loaded: " + uri + " " + ex.getMessage(), ex);
 		}
 	}
 
-	private SupplierDescription parseDescription(String data) throws IOException, DataLoadingException {
+	private SupplierDescription parseDescription(String data, StockInfo stockInfo) throws IOException, DataLoadingException {
 		final Document doc = Jsoup.parse(data);
 
 		final Elements priceEl = doc.select("#price_sub");
@@ -251,7 +250,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 			}
 			parameters.put(name, values);
 		}
-		return new DefaultSupplierDescription(new Price(price, primordial), null, parameters);
+		return new DefaultSupplierDescription(new Price(price, primordial), stockInfo, parameters);
 	}
 
 	protected String parseJavaScriptRedirect(String response) {

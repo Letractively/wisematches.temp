@@ -151,7 +151,7 @@ public class HibernateProductValidationManager implements ProductValidationManag
 							}
 						} catch (DataLoadingException ex) {
 							validation.processingError(ex);
-							log.info("Price for product {} can't be updated: {}", productId, ex.getMessage());
+							log.info("Data for product {} can't be updated: {}", productId, ex.getMessage());
 						}
 
 						if (validation.getErrorMessage() != null) {
