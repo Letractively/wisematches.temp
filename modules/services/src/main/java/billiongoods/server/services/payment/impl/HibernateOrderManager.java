@@ -8,16 +8,15 @@ import billiongoods.server.services.payment.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -256,6 +255,26 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.referenceTracking=:ref");
 		query.setParameter("ref", reference);
 		return (HibernateOrder) query.uniqueResult();
+	}
+
+	@Override
+	public OrdersSummary getOrdersSummary() {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final ProjectionList projection = Projections.projectionList();
+		projection.add(Projections.groupProperty("orderState"));
+		projection.add(Projections.rowCount());
+
+		final Criteria criteria = session.createCriteria(HibernateOrder.class);
+		criteria.setProjection(projection);
+
+		final Map<OrderState, Integer> map = new HashMap<>();
+		final List list = criteria.list();
+		for (Object o : list) {
+			final Object[] arr = (Object[]) o;
+			map.put((OrderState) arr[0], ((Number) arr[1]).intValue());
+		}
+		return new OrdersSummary(map);
 	}
 
 	@Override
