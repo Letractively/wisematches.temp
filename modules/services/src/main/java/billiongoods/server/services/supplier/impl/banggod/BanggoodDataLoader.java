@@ -129,12 +129,9 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 
 	@Override
 	public SupplierDescription loadDescription(SupplierInfo supplierInfo) throws DataLoadingException {
-		return loadDescription(supplierInfo.getReferenceUri(), 0);
-	}
-
-	@Override
-	public StockInfo loadStockInfo(SupplierInfo supplierInfo) throws DataLoadingException {
-		return loadStockInfo(supplierInfo, 0);
+		final StockInfo stockInfo = loadStockInfo(supplierInfo, 0);
+		final SupplierDescription description = loadDescription(supplierInfo.getReferenceUri(), 0);
+		return new DefaultSupplierDescription(description.getPrice(), stockInfo, description.getParameters());
 	}
 
 	private StockInfo loadStockInfo(SupplierInfo supplierInfo, int iteration) throws DataLoadingException {

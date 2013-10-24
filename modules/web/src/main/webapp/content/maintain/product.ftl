@@ -102,7 +102,11 @@
     </td>
     <td>
         <div id="supplierInfo">
-            <a href="#" onclick="loadSupplierDescription();">загрузить информацию</a>
+            <span class="action">
+                <span><a href="#" onclick="loadSupplierDescription(); return false;">загрузить информацию</a></span>
+                <span class="progress" style="display: none"></span>
+            </span>
+            <span class="data"></span>
         </div>
     </td>
 </tr>
@@ -462,7 +466,12 @@ var attributes = {
 
 <#if form.id?has_content>
 var loadSupplierDescription = function () {
-//    bg.ui.lock(null, "Загрузка информации...");
+    var siEl = $("#supplierInfo");
+    var dataEl = siEl.find(".data");
+    var actionEl = siEl.find(".action span");
+
+    dataEl.html('');
+    actionEl.toggle();
     $.post("/maintain/product/loadSupplierInfo.ajax?id=${form.id}")
             .done(function (response) {
                 if (response.success) {
@@ -471,7 +480,22 @@ var loadSupplierDescription = function () {
                     var info = "";
 
                     info += "<table>";
-                    info += "  <tr><td><label>Цена:</label></td><td>" + data.price.amount + " (" + data.price.primordialAmount + ")</td></tr>";
+                    if (data.price != null) {
+                        info += "  <tr><td><label>Цена:</label></td><td>" + data.price.amount + " (" + data.price.primordialAmount + ")</td></tr>";
+                    }
+
+                    if (data.stockInfo != null) {
+                        info += "  <tr><td><label>Доступность:</label></td><td>";
+
+                        if (data.stockInfo.leftovers != null) {
+                            info += "осталось " + data.stockInfo.leftovers;
+                        } else if (data.stockInfo.restockDate != null) {
+                            info += "дата поставки " + data.stockInfo.restockDate;
+                        } else {
+                            info += "доступен";
+                        }
+                        info += "</td></tr>";
+                    }
 
                     $.each(data.parameters, function (key, value) {
                         info += "  <tr>";
@@ -495,14 +519,17 @@ var loadSupplierDescription = function () {
                         info += "  </tr>";
                     });
                     info += "</table>";
-                    $("#supplierInfo").html(info);
-                    bg.ui.unlock(null);
+                    dataEl.html(info);
+                    actionEl.toggle();
+                    bg.ui.unlock(actionEl);
                 } else {
-                    bg.ui.unlock(null, response.message, true);
+                    actionEl.toggle();
+                    bg.ui.unlock(actionEl, response.message, true);
                 }
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
-                bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                actionEl.toggle();
+                bg.ui.unlock(actionEl, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
                         "Пожалуйста, попробуйте отправить сообщение позже.", true);
             });
 };
