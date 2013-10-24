@@ -5,7 +5,7 @@ import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.coupon.CouponType;
 import billiongoods.server.services.coupon.ReferenceType;
 import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -66,7 +66,7 @@ public class HibernateCouponManager implements CouponManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Coupon createCoupon(String code, double amount, CouponType type, ProductDescription product, int count) {
+	public Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, int count) {
 		if (getCoupon(code) != null) {
 			return null;
 		}
@@ -90,7 +90,7 @@ public class HibernateCouponManager implements CouponManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Coupon createCoupon(String code, double amount, CouponType type, ProductDescription product, Date started, Date finished) {
+	public Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, Date started, Date finished) {
 		if (getCoupon(code) != null) {
 			return null;
 		}

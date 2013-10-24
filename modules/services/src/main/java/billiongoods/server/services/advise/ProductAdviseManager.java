@@ -1,7 +1,7 @@
 package billiongoods.server.services.advise;
 
 import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ public interface ProductAdviseManager {
 	void removeRecommendation(Integer pid);
 
 
-	List<ProductDescription> getRecommendations();
+	List<ProductPreview> getRecommendations();
 
-	List<ProductDescription> getRecommendations(Category category, int count);
+	List<ProductPreview> getRecommendations(Category category, int count);
 
 
 	void reloadRecommendations();

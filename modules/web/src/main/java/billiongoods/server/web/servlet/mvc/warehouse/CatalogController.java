@@ -6,9 +6,9 @@ import billiongoods.core.search.Range;
 import billiongoods.server.services.advise.ProductAdviseManager;
 import billiongoods.server.services.showcase.*;
 import billiongoods.server.warehouse.Product;
-import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.ProductListener;
 import billiongoods.server.warehouse.ProductManager;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ public class CatalogController extends AbstractController {
 	private ProductAdviseManager adviseManager;
 
 	private Showcase showcase;
-	private final Map<ShowcaseItem, List<ProductDescription>> showcaseCache = new HashMap<>();
+	private final Map<ShowcaseItem, List<ProductPreview>> showcaseCache = new HashMap<>();
 
 	private final TheCatalogRefreshListener catalogRefreshListener = new TheCatalogRefreshListener();
 

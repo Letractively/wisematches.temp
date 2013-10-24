@@ -1,7 +1,7 @@
 package billiongoods.server.services.coupon;
 
 import billiongoods.server.warehouse.Category;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 
 import java.util.Date;
 
@@ -37,10 +37,10 @@ public interface CouponManager {
 
 	Coupon createCoupon(String code, double amount, CouponType type, Category category, int count);
 
-	Coupon createCoupon(String code, double amount, CouponType type, ProductDescription product, int count);
+	Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, int count);
 
 
 	Coupon createCoupon(String code, double amount, CouponType type, Category category, Date started, Date finished);
 
-	Coupon createCoupon(String code, double amount, CouponType type, ProductDescription product, Date started, Date finished);
+	Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, Date started, Date finished);
 }

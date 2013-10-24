@@ -2,8 +2,8 @@ package billiongoods.server.services.basket.impl;
 
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.warehouse.AttributeManager;
-import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.ProductManager;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Property;
 
 import javax.persistence.*;
@@ -36,7 +36,7 @@ public class HibernateBasketItem implements BasketItem {
 	private List<HibernateBasketOption> optionIds = new ArrayList<>();
 
 	@Transient
-	private ProductDescription product;
+	private ProductPreview product;
 
 	@Transient
 	private Collection<Property> options = new ArrayList<>();
@@ -45,7 +45,7 @@ public class HibernateBasketItem implements BasketItem {
 	HibernateBasketItem() {
 	}
 
-	public HibernateBasketItem(ProductDescription product, List<Property> options, int quantity) {
+	public HibernateBasketItem(ProductPreview product, List<Property> options, int quantity) {
 		this.product = product;
 		this.productId = product.getId();
 
@@ -83,7 +83,7 @@ public class HibernateBasketItem implements BasketItem {
 	}
 
 	@Override
-	public ProductDescription getProduct() {
+	public ProductPreview getProduct() {
 		return product;
 	}
 
@@ -98,7 +98,7 @@ public class HibernateBasketItem implements BasketItem {
 
 	void initialize(ProductManager productManager, AttributeManager attributeManager) {
 		if (this.product == null || !this.product.getId().equals(productId)) {
-			this.product = productManager.getDescription(productId);
+			this.product = productManager.getPreview(productId);
 		}
 
 		if (options.isEmpty()) {

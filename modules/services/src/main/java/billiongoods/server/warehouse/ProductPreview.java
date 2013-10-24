@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface ProductDescription extends ProductImager {
+public interface ProductPreview extends ProductImager {
 	@Override
 	Integer getId();
 

@@ -1,6 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Relationship;
 import billiongoods.server.warehouse.RelationshipType;
 
@@ -36,7 +36,7 @@ public class HibernateRelationship implements Relationship {
 	}
 
 	@Override
-	public List<ProductDescription> getDescriptions() {
+	public List<ProductPreview> getDescriptions() {
 		return pk.group.getDescriptions();
 	}
 

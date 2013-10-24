@@ -4,8 +4,8 @@ import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.payment.OrdersSummary;
 import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingManager;
-import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.ProductManager;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.TrackingSummary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +36,10 @@ public class MaintenanceController extends AbstractController {
 		final OrdersSummary ordersSummary = orderManager.getOrdersSummary();
 		model.addAttribute("ordersSummary", ordersSummary);
 
-		Map<ProductDescription, List<ProductTracking>> trackingSummary = new HashMap<>();
+		Map<ProductPreview, List<ProductTracking>> trackingSummary = new HashMap<>();
 		final List<ProductTracking> attributeValue = trackingManager.searchEntities(null, null, null, null);
 		for (ProductTracking pt : attributeValue) {
-			final ProductDescription pd = productManager.getDescription(pt.getProductId());
+			final ProductPreview pd = productManager.getPreview(pt.getProductId());
 			List<ProductTracking> productTrackings = trackingSummary.get(pd);
 			if (productTrackings == null) {
 				productTrackings = new ArrayList<>(3);

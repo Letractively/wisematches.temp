@@ -90,12 +90,12 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	@Transactional(propagation = Propagation.MANDATORY)
 	public Group addGroupItem(Integer groupId, Integer productId) {
 		final Session session = sessionFactory.getCurrentSession();
-		final ProductDescription description = productManager.getDescription(productId);
+		final ProductPreview preview = productManager.getPreview(productId);
 		final HibernateGroup group = getGroup(groupId);
 		if (group == null) {
 			return null;
 		}
-		if (group.addProduct(description)) {
+		if (group.addProduct(preview)) {
 			session.update(group);
 		}
 		return group;
@@ -105,12 +105,12 @@ public class HibernateRelationshipManager implements RelationshipManager {
 	@Transactional(propagation = Propagation.MANDATORY)
 	public Group removeGroupItem(Integer groupId, Integer productId) {
 		final Session session = sessionFactory.getCurrentSession();
-		final ProductDescription description = productManager.getDescription(productId);
+		final ProductPreview preview = productManager.getPreview(productId);
 		final HibernateGroup group = getGroup(groupId);
 		if (group == null) {
 			return null;
 		}
-		if (group.removeProduct(description)) {
+		if (group.removeProduct(preview)) {
 			session.update(group);
 		}
 		return group;

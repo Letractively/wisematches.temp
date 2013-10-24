@@ -1,6 +1,6 @@
 package billiongoods.server.services.basket;
 
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Property;
 
 import java.util.Collection;
@@ -15,7 +15,7 @@ public interface BasketItem {
 
 	double getAmount();
 
-	ProductDescription getProduct();
+	ProductPreview getProduct();
 
 	Collection<Property> getOptions();
 }

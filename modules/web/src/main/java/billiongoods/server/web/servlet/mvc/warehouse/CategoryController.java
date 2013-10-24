@@ -112,7 +112,7 @@ public class CategoryController extends AbstractController {
 
 		final Range range = pageableForm.getRange();
 		final Orders orders = pageableForm.getOrders();
-		final List<ProductDescription> products = productManager.searchEntities(context, filter, range, orders);
+		final List<ProductPreview> products = productManager.searchEntities(context, filter, range, orders);
 
 		model.addAttribute("category", category);
 		model.addAttribute("products", products);

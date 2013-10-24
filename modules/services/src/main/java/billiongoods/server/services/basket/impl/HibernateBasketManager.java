@@ -6,8 +6,8 @@ import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.basket.BasketManager;
 import billiongoods.server.warehouse.AttributeManager;
-import billiongoods.server.warehouse.ProductDescription;
 import billiongoods.server.warehouse.ProductManager;
+import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Property;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -97,8 +97,8 @@ public class HibernateBasketManager implements BasketManager {
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	@CacheEvict(value = {"basket", "basketSize"}, key = "#principal")
-	public BasketItem addBasketItem(Personality principal, ProductDescription description, List<Property> options, int quantity) {
-		final HibernateBasketItem item = new HibernateBasketItem(description, options, quantity);
+	public BasketItem addBasketItem(Personality principal, ProductPreview preview, List<Property> options, int quantity) {
+		final HibernateBasketItem item = new HibernateBasketItem(preview, options, quantity);
 
 		final HibernateBasket basket = getBasketOrCreate(principal, true);
 		basket.addBasketItem(item);

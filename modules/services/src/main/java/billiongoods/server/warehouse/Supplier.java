@@ -7,7 +7,7 @@ import java.net.URL;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public enum Supplier {
-	BANGGOOD("http://www.banggood.com/") {
+	BANGGOOD("http://www.banggood.com") {
 		@Override
 		public String getReferenceId(SupplierInfo info) {
 			String s = info.getReferenceUri();
@@ -27,7 +27,7 @@ public enum Supplier {
 
 	public URL getReferenceUrl(String path) {
 		try {
-			return new URL(site + path);
+			return new URL(site + (path.startsWith("/") ? path : "/" + path));
 		} catch (MalformedURLException ex) {
 			throw new IllegalStateException("Very bad, http is illegal URL: " + site + path);
 		}

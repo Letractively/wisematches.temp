@@ -91,7 +91,7 @@
     <@bg.ui.input path="form.supplierReferenceId" size=90>
         <#if bg.ui.statusValue?has_content>
             (<a id="supplierReferenceLink"
-                href="http://www.banggood.com/${bg.ui.statusValue}"
+                href="http://www.banggood.com${bg.ui.statusValue}"
                 target="_blank">открыть в новом окне</a>)</#if>
     </@bg.ui.input>
     </td>
@@ -600,7 +600,7 @@ relationshipsTable.find("button.add").click(addRelationship);
 relationshipsTable.find("button.remove").click(removeRelationship);
 
 $("#supplierReferenceId").change(function () {
-    $("#supplierReferenceLink").attr('href', 'http://www.banggood.com/' + $(this).val());
+    $("#supplierReferenceLink").attr('href', 'http://www.banggood.com' + $(this).val());
 });
 
 $(function () {

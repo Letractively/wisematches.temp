@@ -2,7 +2,7 @@ package billiongoods.server;
 
 import billiongoods.core.Language;
 import billiongoods.core.Localization;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
@@ -47,7 +47,7 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		}
 	}
 
-	public static String getProductCode(ProductDescription art) {
+	public static String getProductCode(ProductPreview art) {
 		return getProductCode(art.getId());
 	}
 

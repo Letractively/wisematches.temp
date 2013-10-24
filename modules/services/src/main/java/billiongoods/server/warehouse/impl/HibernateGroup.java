@@ -1,7 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
 import billiongoods.server.warehouse.Group;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,9 +24,9 @@ public class HibernateGroup implements Group {
 	@Column(name = "categoryId")
 	private Integer categoryId;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = HibernateProductDescription.class)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = HibernateProductPreview.class)
 	@JoinTable(name = "store_group_item", joinColumns = @JoinColumn(name = "groupId"), inverseJoinColumns = @JoinColumn(name = "productId"))
-	private List<ProductDescription> products = new ArrayList<>();
+	private List<ProductPreview> products = new ArrayList<>();
 
 	@Deprecated
 	HibernateGroup() {
@@ -53,15 +53,15 @@ public class HibernateGroup implements Group {
 	}
 
 	@Override
-	public List<ProductDescription> getDescriptions() {
+	public List<ProductPreview> getDescriptions() {
 		return products;
 	}
 
-	boolean addProduct(ProductDescription product) {
+	boolean addProduct(ProductPreview product) {
 		return this.products.add(product);
 	}
 
-	boolean removeProduct(ProductDescription product) {
+	boolean removeProduct(ProductPreview product) {
 		return this.products.remove(product);
 	}
 

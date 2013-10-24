@@ -8,7 +8,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "store_product")
-public class HibernateProductDescription extends AbstractProductDescription {
-	public HibernateProductDescription() {
+public class HibernateProductPreview extends AbstractProduct {
+	public HibernateProductPreview() {
 	}
 }

@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="showcase" type="billiongoods.server.services.showcase.Showcase" -->
-<#-- @ftlvariable name="showcaseCache" type="java.util.Map<billiongoods.server.services.showcase.ShowcaseItem, billiongoods.server.warehouse.ProductDescription[]>" -->
+<#-- @ftlvariable name="showcaseCache" type="java.util.Map<billiongoods.server.services.showcase.ShowcaseItem, billiongoods.server.warehouse.ProductPreview[]>" -->
 
 <#include "/core.ftl">
 

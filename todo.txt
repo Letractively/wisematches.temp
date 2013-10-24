@@ -8,6 +8,9 @@
 - Range filters
 - Show info about filtering options (attribute description)
 
+- Maintain: Show waiting image while product info is loading
+- Maintain: Load stock info
+
 ============= PLAN ====================
 - Redefine financial policy
 - Page not found should show sitemap instead
@@ -37,10 +40,7 @@
 + Maintain: orders summary
 + Maintain: list of subscriptions
 + Maintain: There are no notifications after validation
-
-- Maintain: Show waiting image while product info is loading
-- Maintain: Load stock info
-
++ ProductDescription is not good. Replace to ProductPreview.
 
 22.10
 + Order: new state closed

@@ -20,7 +20,7 @@ public class DefaultProductAdviseManager implements ProductAdviseManager, Initia
 	private ProductManager productManager;
 	private CategoryManager categoryManager;
 
-	private final List<ProductDescription> recommendations = new ArrayList<>();
+	private final List<ProductPreview> recommendations = new ArrayList<>();
 
 	public DefaultProductAdviseManager() {
 	}
@@ -40,33 +40,33 @@ public class DefaultProductAdviseManager implements ProductAdviseManager, Initia
 
 	@Override
 	public void addRecommendation(Integer pid) {
-		final ProductDescription description = productManager.getDescription(pid);
-		if (description != null) {
+		final ProductPreview preview = productManager.getPreview(pid);
+		if (preview != null) {
 			productManager.updateRecommendation(pid, true);
-			recommendations.add(description);
+			recommendations.add(preview);
 		}
 	}
 
 	@Override
 	public void removeRecommendation(Integer pid) {
-		final ProductDescription description = productManager.getDescription(pid);
-		if (description != null) {
+		final ProductPreview preview = productManager.getPreview(pid);
+		if (preview != null) {
 			productManager.updateRecommendation(pid, false);
-			recommendations.remove(description);
+			recommendations.remove(preview);
 		}
 	}
 
 	@Override
-	public List<ProductDescription> getRecommendations() {
+	public List<ProductPreview> getRecommendations() {
 		return recommendations;
 	}
 
 	@Override
-	public List<ProductDescription> getRecommendations(Category category, int count) {
-		List<ProductDescription> res = new ArrayList<>();
+	public List<ProductPreview> getRecommendations(Category category, int count) {
+		List<ProductPreview> res = new ArrayList<>();
 
-		for (Iterator<ProductDescription> iterator = recommendations.iterator(); iterator.hasNext() && res.size() < count; ) {
-			final ProductDescription p = iterator.next();
+		for (Iterator<ProductPreview> iterator = recommendations.iterator(); iterator.hasNext() && res.size() < count; ) {
+			final ProductPreview p = iterator.next();
 			final Category ct = categoryManager.getCategory(p.getCategoryId());
 			if (category == null || category.isRealKinship(ct)) {
 				res.add(p);

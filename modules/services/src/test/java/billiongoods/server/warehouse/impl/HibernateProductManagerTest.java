@@ -39,19 +39,19 @@ public class HibernateProductManagerTest {
 	public void test() {
 		assertTrue(productManager.getTotalCount(null) > 0);
 
-		final List<ProductDescription> descriptions = productManager.searchEntities(null, null, Range.FIRST, null);
+		final List<ProductPreview> descriptions = productManager.searchEntities(null, null, Range.FIRST, null);
 		assertEquals(1, descriptions.size());
 
-		final ProductDescription description = descriptions.get(0);
+		final ProductPreview description = descriptions.get(0);
 
 		final DefaultCategory category = new DefaultCategory(new HibernateCategory("asdf", "test", null, 0), null);
 
-		final List<ProductDescription> ctxDescriptions1 = productManager.searchEntities(new ProductContext(category), null, Range.FIRST, null);
+		final List<ProductPreview> ctxDescriptions1 = productManager.searchEntities(new ProductContext(category), null, Range.FIRST, null);
 		assertEquals(0, ctxDescriptions1.size());
 
 		final Category category1 = categoryManager.getCategory(description.getCategoryId());
 
-		final List<ProductDescription> ctxDescriptions2 = productManager.searchEntities(new ProductContext(category1), null, Range.FIRST, null);
+		final List<ProductPreview> ctxDescriptions2 = productManager.searchEntities(new ProductContext(category1), null, Range.FIRST, null);
 		assertEquals(1, ctxDescriptions2.size());
 
 		final Product product = productManager.getProduct(description.getId());

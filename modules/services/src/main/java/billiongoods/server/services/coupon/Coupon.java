@@ -1,7 +1,7 @@
 package billiongoods.server.services.coupon;
 
 import billiongoods.server.warehouse.Catalog;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 
 import java.util.Date;
 
@@ -114,7 +114,7 @@ public interface Coupon {
 	 * @param product the product to be checked.
 	 * @return final amount for the product discounted by this coupon.
 	 */
-	double process(ProductDescription product, Catalog catalog);
+	double process(ProductPreview product, Catalog catalog);
 
 	/**
 	 * Checks that this coupon can be applied to specified product (or it's category).
@@ -122,6 +122,6 @@ public interface Coupon {
 	 * @param product the product to be checked.
 	 * @return {@code true} if ; {@code false} -
 	 */
-	boolean isApplicable(ProductDescription product, Catalog catalog);
+	boolean isApplicable(ProductPreview product, Catalog catalog);
 
 }

@@ -1,6 +1,6 @@
 package billiongoods.server.services.payment;
 
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -15,5 +15,5 @@ public interface OrderItem {
 
 	String getOptions();
 
-	ProductDescription getProduct();
+	ProductPreview getProduct();
 }

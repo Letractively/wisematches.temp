@@ -4,7 +4,7 @@ import billiongoods.server.services.coupon.Coupon;
 import billiongoods.server.services.coupon.CouponType;
 import billiongoods.server.services.coupon.ReferenceType;
 import billiongoods.server.warehouse.Catalog;
-import billiongoods.server.warehouse.ProductDescription;
+import billiongoods.server.warehouse.ProductPreview;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -169,7 +169,7 @@ public class HibernateCoupon implements Coupon {
 	}
 
 	@Override
-	public double process(ProductDescription product, Catalog catalog) {
+	public double process(ProductPreview product, Catalog catalog) {
 		final double pa = product.getPrice().getAmount();
 		if (isApplicable(product, catalog)) {
 			switch (couponType) {
@@ -187,7 +187,7 @@ public class HibernateCoupon implements Coupon {
 	}
 
 	@Override
-	public boolean isApplicable(ProductDescription product, Catalog catalog) {
+	public boolean isApplicable(ProductPreview product, Catalog catalog) {
 		if (!isActive()) {
 			return false;
 		}
