@@ -198,7 +198,9 @@ public class HibernateProductValidationManager implements ProductValidationManag
 		if (isInProgress()) {
 			return;
 		}
-		validationProgress = taskExecutor.submit(new Runnable() {
+        log.info("Validation progress was interrupted");
+
+        validationProgress = taskExecutor.submit(new Runnable() {
 			@Override
 			public void run() {
 				doValidation();
