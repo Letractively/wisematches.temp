@@ -1,3 +1,14 @@
+#10.28
+ALTER TABLE `billiongoods`.`store_order_item`
+DROP FOREIGN KEY `fk_store_order_item_store_order1`;
+ALTER TABLE `billiongoods`.`store_order_item`
+ADD CONSTRAINT `fk_store_order_item_store_order1`
+FOREIGN KEY (`orderId`)
+REFERENCES `billiongoods`.`store_order` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION;
+
+
 #10.23
 CREATE TABLE `billiongoods`.`store_coupon` (
   `id`             INT         NOT NULL AUTO_INCREMENT,

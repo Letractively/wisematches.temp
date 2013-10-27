@@ -4,6 +4,11 @@
     http://stackoverflow.com/questions/16549285/how-to-start-tomcat-as-non-root-on-boot
 
 ============= CURRENT ====================
+- Page can't be opened: /maintain/order/view?id=10&type=id
+	freemarker.core.NonNumericalException: Error: on line 104, column 64 in content/warehouse/order/view.ftl Expecting a number here, found: ERROR-10002: Account is restricted 
+- New availability response: Coming soon (Preorder button?)
+- New availability response: In transit, shipping in 1-3 business da
+- Our recomendations view on the left of main page: L959 & V911 & v912
 - Coupons
 - Range filters
 - Show info about filtering options (attribute description)
