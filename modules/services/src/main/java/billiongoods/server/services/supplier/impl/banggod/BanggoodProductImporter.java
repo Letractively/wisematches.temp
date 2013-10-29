@@ -22,6 +22,7 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -185,13 +186,19 @@ public class BanggoodProductImporter implements ProductImporter {
 		String[] nextLine = reader.readNext(); // ignore header
 		while ((nextLine = reader.readNext()) != null) {
 			final String sku = nextLine[0];
-			final String name = nextLine[1];
-			final double price = Double.parseDouble(nextLine[3]);
-			final double weight = Double.parseDouble(nextLine[4]);
-			final String desc = cleanSpan(nextLine[5]);
-			final URL url = new URL(nextLine[6]);
-			final String uri = url.getFile();
-			res.add(new SuppliedProduct(sku, url, uri, name, desc, price, weight));
+			try {
+				final String name = nextLine[1];
+				final double price = Double.parseDouble(nextLine[3]);
+				final double weight = Double.parseDouble(nextLine[4]);
+				final String desc = cleanSpan(nextLine[5]);
+				final URL url = new URL(nextLine[6]);
+				final String uri = url.getFile();
+				res.add(new SuppliedProduct(sku, url, uri, name, desc, price, weight));
+			} catch (NumberFormatException ex) {
+				throw new IOException("Product price or weight can't be parsed: " + sku, ex);
+			} catch (MalformedURLException ex) {
+				throw new IOException("Product url can't be parsed: " + sku, ex);
+			}
 		}
 		return res;
 	}
