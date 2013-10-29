@@ -7,19 +7,21 @@ import billiongoods.server.services.supplier.impl.DefaultSupplierDescription;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.StockInfo;
 import billiongoods.server.warehouse.SupplierInfo;
-import org.apache.http.*;
+import org.apache.http.Consts;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.config.SocketConfig;
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.DefaultConnectionReuseStrategy;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
@@ -36,7 +38,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.Closeable;
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -45,9 +46,10 @@ import java.util.*;
  */
 public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean, DisposableBean {
 	private HttpClient client;
+	private BasicCookieStore cookieStore;
 	private HttpClientConnectionManager connectionManager;
 
-	private static final int DEFAULT_TIMEOUT = 2000;
+	private static final int DEFAULT_TIMEOUT = 3000;
 	private static final HttpHost HOST = new HttpHost("www.banggood.com");
 
 	private static final SimpleDateFormat RESTOCK_DATE_FROMAT = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
@@ -72,22 +74,25 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 	private void createClient() {
 		closeClient();
 
-		connectionManager = new PoolingHttpClientConnectionManager();
+		cookieStore = new BasicCookieStore();
+		connectionManager = new BasicHttpClientConnectionManager();
 
 		final SocketConfig.Builder socketConfig = SocketConfig.custom();
 		socketConfig.setSoTimeout(DEFAULT_TIMEOUT);
 
 		final RequestConfig.Builder requestConfig = RequestConfig.custom();
+		requestConfig.setSocketTimeout(DEFAULT_TIMEOUT);
+		requestConfig.setConnectTimeout(DEFAULT_TIMEOUT);
+		requestConfig.setAuthenticationEnabled(false);
 		requestConfig.setCircularRedirectsAllowed(false);
 
 		final HttpClientBuilder builder = HttpClientBuilder.create();
 		builder.setDefaultSocketConfig(socketConfig.build());
 		builder.setDefaultRequestConfig(requestConfig.build());
 
-		builder.setDefaultCookieStore(new BasicCookieStore());
-
 		builder.setUserAgent("Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.17 Safari/537.36");
 
+		builder.setDefaultCookieStore(cookieStore);
 		builder.setConnectionManager(connectionManager);
 
 		builder.setConnectionReuseStrategy(new DefaultConnectionReuseStrategy());
@@ -114,7 +119,12 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 			connectionManager.shutdown();
 			connectionManager = null;
 		}
+
+		if (cookieStore != null) {
+			cookieStore.clear();
+		}
 	}
+
 
 	@Override
 	public void initialize() {
@@ -147,15 +157,19 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 	}
 
 	private StockInfo loadStockInfo(SupplierInfo supplierInfo, int iteration) throws DataLoadingException {
+/*
 		if (iteration == 4) {
 			initialize();
 		}
 		if (iteration >= 5) {
 			throw new DataLoadingException("Availability can't be loaded after iteration " + iteration + " for " + supplierInfo);
 		}
+*/
 
 		try {
 			final HttpPost request = new HttpPost("/ajax_module.php");
+			request.addHeader("Origin", supplierInfo.getWholesaler().getSite());
+			request.addHeader("Referer", supplierInfo.getReferenceUrl().toString());
 
 			final List<NameValuePair> nvps = new ArrayList<>();
 			nvps.add(new BasicNameValuePair("action", "get_stocks"));
@@ -171,9 +185,8 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 			final String[] split = s.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
 			final String status = split[0];
-			final String msg = split[1];
-
 			if ("\"success\"".equals(status)) {
+				final String msg = split[1];
 				if (msg.contains("In stock")) {
 					return new StockInfo(null, null);
 				} else if (msg.contains("Out of stock, expected restock in 15")) {
@@ -192,20 +205,25 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 				}
 			}
 			return null;
-		} catch (NoHttpResponseException | ConnectTimeoutException | SocketTimeoutException ex) {
-			return loadStockInfo(supplierInfo, iteration + 1);
+//		} catch (ConnectTimeoutException | SocketTimeoutException ex) {
+//			throw new DataLoadingException("Availability can't be loaded after iteration " + iteration + " for " + supplierInfo);
+//		} catch (NoHttpResponseException | ) {
+//			throw new DataLoadingException("Availability can't be loaded after iteration " + iteration + " for " + supplierInfo);
+//			return loadStockInfo(supplierInfo, iteration + 1);
 		} catch (Exception ex) {
 			throw new DataLoadingException("Price can't be loaded: " + supplierInfo + " " + ex.getMessage(), ex);
 		}
 	}
 
 	private SupplierDescription loadDescription(String uri, StockInfo stockInfo, int iteration) throws DataLoadingException {
+/*
 		if (iteration == 4) {
 			initialize();
 		}
 		if (iteration >= 5) {
 			throw new DataLoadingException("Price can't be loaded after iteration " + iteration + " from " + uri);
 		}
+*/
 
 		try {
 			final HttpGet request = new HttpGet(uri.startsWith("/") ? uri : "/" + uri);
@@ -225,8 +243,8 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 			} else {
 				return parseDescription(s, stockInfo);
 			}
-		} catch (NoHttpResponseException | ConnectTimeoutException | SocketTimeoutException ex) {
-			return loadDescription(uri, stockInfo, iteration + 1);
+//		} catch (NoHttpResponseException | ConnectTimeoutException | SocketTimeoutException ex) {
+//			return loadDescription(uri, stockInfo, iteration + 1);
 		} catch (Exception ex) {
 			throw new DataLoadingException("Price can't be loaded: " + uri + " " + ex.getMessage(), ex);
 		}

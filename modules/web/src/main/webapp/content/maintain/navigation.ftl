@@ -30,6 +30,11 @@
         <div>
             <a href="/maintain/recommends">Рекомендации</a>
         </div>
+        <div>&nbsp;</div>
+
+        <div>
+            <a href="/maintain/service/validation">Проверка цен</a>
+        </div>
 
         <div>&nbsp;</div>
 
