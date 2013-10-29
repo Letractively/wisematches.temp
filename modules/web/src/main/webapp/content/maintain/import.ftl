@@ -89,6 +89,14 @@
         </tr>
         <tr>
             <td>
+                <label for="group">Проверять цены:</label>
+            </td>
+            <td>
+                <@bg.ui.input path="form.validatePrice" fieldType="checkbox"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <label for="group">Состоит в группе:</label>
             </td>
             <td>
@@ -97,7 +105,7 @@
         </tr>
         <#if attributes??>
             <tr>
-                <td>
+                <td valign="top">
                     <label>Аттритубы:</label>
                 </td>
                 <td>
