@@ -17,5 +17,17 @@ public enum CouponType {
 	/**
 	 * Indicates that a coupon contains discount percents.
 	 */
-	PERCENT
+	PERCENT;
+
+	public boolean isPrice() {
+		return this == PRICE;
+	}
+
+	public boolean isFixed() {
+		return this == FIXED;
+	}
+
+	public boolean isPercent() {
+		return this == PERCENT;
+	}
 }

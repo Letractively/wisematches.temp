@@ -54,48 +54,24 @@ public class HibernateCouponManager implements CouponManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Coupon createCoupon(String code, double amount, CouponType type, Category category, int count) {
+	public Coupon createCoupon(String code, double amount, CouponType type, Category category, int count, Date started, Date finished) {
 		if (getCoupon(code) != null) {
 			return null;
 		}
 
-		HibernateCoupon hc = new HibernateCoupon(code, amount, type, category.getId(), ReferenceType.CATEGORY, count);
+		HibernateCoupon hc = new HibernateCoupon(code, amount, type, category.getId(), ReferenceType.CATEGORY, started, finished, count);
 		sessionFactory.getCurrentSession().save(hc);
 		return hc;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, int count) {
+	public Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, int count, Date started, Date finished) {
 		if (getCoupon(code) != null) {
 			return null;
 		}
 
-		HibernateCoupon hc = new HibernateCoupon(code, amount, type, product.getId(), ReferenceType.PRODUCT, count);
-		sessionFactory.getCurrentSession().save(hc);
-		return hc;
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public Coupon createCoupon(String code, double amount, CouponType type, Category category, Date started, Date finished) {
-		if (getCoupon(code) != null) {
-			return null;
-		}
-
-		HibernateCoupon hc = new HibernateCoupon(code, amount, type, category.getId(), ReferenceType.CATEGORY, started, finished);
-		sessionFactory.getCurrentSession().save(hc);
-		return hc;
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, Date started, Date finished) {
-		if (getCoupon(code) != null) {
-			return null;
-		}
-
-		HibernateCoupon hc = new HibernateCoupon(code, amount, type, product.getId(), ReferenceType.PRODUCT, started, finished);
+		HibernateCoupon hc = new HibernateCoupon(code, amount, type, product.getId(), ReferenceType.PRODUCT, started, finished, count);
 		sessionFactory.getCurrentSession().save(hc);
 		return hc;
 	}
