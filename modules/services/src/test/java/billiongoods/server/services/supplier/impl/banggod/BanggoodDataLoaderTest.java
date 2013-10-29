@@ -30,14 +30,18 @@ public class BanggoodDataLoaderTest {
 		BanggoodDataLoader dataLoader = new BanggoodDataLoader();
 		dataLoader.afterPropertiesSet();
 
-//		final String referenceUri = "/Wholesale-Replacement-WLtoys-V911-2_4GHz-4CH-RC-Helicopter-BNF-New-Plug-Version-p-39473.html";
-//		final String referenceUri = "New-PCB-For-WLtoys-V912-RC-Helicopter-p-83053.html";
-		final String referenceUri = "/3D-Skull-Shape-Soft-Silicone-Case-Skin-Cover-For-IPhone-5-5G-p-85268.html";
-		final HibernateSupplierInfo supplierInfo = new HibernateSupplierInfo(referenceUri, "SKU044199 ", Supplier.BANGGOOD, null);
+		dataLoader.initialize();
 
-		final SupplierDescription desc = dataLoader.loadDescription(supplierInfo);
-		assertNotNull(desc);
-		assertNotNull(desc.getPrice());
-		System.out.println(desc);
+		final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/3D-Skull-Shape-Soft-Silicone-Case-Skin-Cover-For-IPhone-5-5G-p-85268.html", "SKU044199", Supplier.BANGGOOD, null);
+		final SupplierDescription desc1 = dataLoader.loadDescription(info1);
+		assertNotNull(desc1);
+		assertNotNull(desc1.getPrice());
+		System.out.println(desc1);
+
+		final HibernateSupplierInfo info2 = new HibernateSupplierInfo("/Wholesale-Replacement-WLtoys-V911-2_4GHz-4CH-RC-Helicopter-BNF-New-Plug-Version-p-39473.html", "SKU043151", Supplier.BANGGOOD, null);
+		final SupplierDescription desc2 = dataLoader.loadDescription(info2);
+		assertNotNull(desc2);
+		assertNotNull(desc2.getPrice());
+		System.out.println(desc2);
 	}
 }

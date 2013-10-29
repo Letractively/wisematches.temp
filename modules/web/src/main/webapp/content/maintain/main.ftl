@@ -33,8 +33,7 @@
                             <@bg.link.product p>${p.name}</@bg.link.product>
                         </td>
                         <td valign="top" nowrap="nowrap">
-                        ${p.price.amount?string("0.00")}<#if p.price.primordialAmount??>
-                            (p.price.primordialAmount?string("0.00"))</#if>
+                        ${p.price.amount?string("0.00")}<#if p.price.primordialAmount??> ${p.price.primordialAmount?string("0.00")}</#if>
 
                             <#assign stockInfo=p.stockInfo/>
                             <#if stockInfo.restockDate??>

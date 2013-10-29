@@ -167,6 +167,7 @@ public class HibernateProductValidationManager implements ProductValidationManag
 						for (ValidationProgressListener listener : listeners) {
 							listener.productValidated(productId, validation);
 						}
+						Thread.sleep(100);
 					}
 					session.flush();
 					transactionManager.commit(transaction);
@@ -198,9 +199,9 @@ public class HibernateProductValidationManager implements ProductValidationManag
 		if (isInProgress()) {
 			return;
 		}
-        log.info("Validation progress was interrupted");
+		log.info("Validation progress was interrupted");
 
-        validationProgress = taskExecutor.submit(new Runnable() {
+		validationProgress = taskExecutor.submit(new Runnable() {
 			@Override
 			public void run() {
 				doValidation();

@@ -99,7 +99,7 @@
                                         не предоставляется
                                     </#if>
                                 <#elseif  state.suspended>
-                                    <#if l.parameter?has_content>
+                                    <#if l.parameter?has_content && l.parameter?is_number>
                                         Приостановлен до:<br>
                                     ${messageSource.formatDate(l.parameter?number?long, locale)}
                                     </#if>
