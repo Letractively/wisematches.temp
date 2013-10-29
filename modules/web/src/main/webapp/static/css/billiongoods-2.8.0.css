@@ -231,6 +231,10 @@ span.dot {
     text-shadow: 1px 1px 2px white;
 }
 
+.layout-line > div {
+    display: inline-block;
+}
+
 .layout-container {
     width: 100%;
 }

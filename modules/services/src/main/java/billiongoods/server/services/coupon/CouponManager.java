@@ -35,12 +35,7 @@ public interface CouponManager {
 	Coupon closeCoupon(Integer id);
 
 
-	Coupon createCoupon(String code, double amount, CouponType type, Category category, int count);
+	Coupon createCoupon(String code, double amount, CouponType type, Category category, int count, Date started, Date finished);
 
-	Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, int count);
-
-
-	Coupon createCoupon(String code, double amount, CouponType type, Category category, Date started, Date finished);
-
-	Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, Date started, Date finished);
+	Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, int count, Date started, Date finished);
 }

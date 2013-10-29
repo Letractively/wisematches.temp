@@ -8,5 +8,13 @@ package billiongoods.server.services.coupon;
  */
 public enum ReferenceType {
 	PRODUCT,
-	CATEGORY
+	CATEGORY;
+
+	public boolean isProduct() {
+		return this == PRODUCT;
+	}
+
+	public boolean isCategory() {
+		return this == CATEGORY;
+	}
 }

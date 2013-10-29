@@ -3,12 +3,10 @@ package billiongoods.server.web.servlet.mvc.maintain.form;
 import billiongoods.server.services.coupon.CouponType;
 import billiongoods.server.services.coupon.ReferenceType;
 
-import java.util.Date;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class CouponModel {
+public class CouponForm {
 	private String code;
 
 	private double amount;
@@ -22,12 +20,12 @@ public class CouponModel {
 
 	private int count;
 
-	private Date started;
+	private String started;
 
-	private Date finished;
+	private String finished;
 
 
-	public CouponModel() {
+	public CouponForm() {
 	}
 
 	public String getCode() {
@@ -78,19 +76,19 @@ public class CouponModel {
 		this.count = count;
 	}
 
-	public Date getStarted() {
+	public String getStarted() {
 		return started;
 	}
 
-	public void setStarted(Date started) {
+	public void setStarted(String started) {
 		this.started = started;
 	}
 
-	public Date getFinished() {
+	public String getFinished() {
 		return finished;
 	}
 
-	public void setFinished(Date finished) {
+	public void setFinished(String finished) {
 		this.finished = finished;
 	}
 }

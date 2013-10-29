@@ -43,6 +43,10 @@
     <#list props?keys as k>${k}="${props[k]}"</#list>>
 </#macro>
 
+<#macro coupon coupon>
+<#--Купон на <#if coupon./>-->
+</#macro>
+
 <#macro productsView items type ops={}>
     <#if type =='grid'>
         <@productsViewGrid items ops/>

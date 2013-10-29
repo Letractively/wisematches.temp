@@ -23,6 +23,14 @@
         </div>
 
         <div>&nbsp;</div>
+        <div>
+            <a href="/maintain/coupon/view">Найти купон</a>
+        </div>
+        <div>
+            <a href="/maintain/coupon/create">Создать купон</a>
+        </div>
+
+        <div>&nbsp;</div>
 
         <div>
             <a href="/maintain/showcase">Витрина</a>
