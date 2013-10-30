@@ -19,8 +19,8 @@
                     <div class="layout-line">
                     <@bg.ui.input "form.amount"/>
 
-                    <@bg.ui.field "form.couponType">
-                        <select id="couponType" name="couponType">
+                    <@bg.ui.field "form.amountType">
+                        <select id="amountType" name="amountType">
                             <option value="PERCENT">Процент от стоимости</option>
                             <option value="FIXED">Фиксированная скидка</option>
                             <option value="PRICE">Фиксированная цена</option>
@@ -36,7 +36,7 @@
                 </td>
                 <td>
                     <div class="layout-line">
-                    <@bg.ui.input "form.referenceId"/>
+                    <@bg.ui.input "form.reference"/>
 
                     <@bg.ui.field "form.referenceType">
                         <select id="referenceType" name="referenceType">
@@ -52,23 +52,15 @@
                     <label for="code">Максимальное количество:</label>
                 </td>
                 <td>
-                <@bg.ui.input path="form.count"/>
+                <@bg.ui.input path="form.allocatedCount"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="started">Начало действия:</label>
+                    <label for="termination">Действует до:</label>
                 </td>
                 <td>
-                <@bg.ui.input path="form.started"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="finished">Конец действия:</label>
-                </td>
-                <td>
-                <@bg.ui.input path="form.finished"/>
+                <@bg.ui.input path="form.termination"/>
                 </td>
             </tr>
 
@@ -91,6 +83,6 @@
 <script type="text/javascript">
     $(function () {
         $("#started").datepicker({ "dateFormat": "yy-mm-dd"});
-        $("#finished").datepicker({ "dateFormat": "yy-mm-dd"});
+        $("#termination").datepicker({ "dateFormat": "yy-mm-dd"});
     });
 </script>

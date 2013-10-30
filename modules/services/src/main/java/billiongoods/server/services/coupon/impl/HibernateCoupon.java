@@ -1,8 +1,8 @@
 package billiongoods.server.services.coupon.impl;
 
 import billiongoods.server.services.coupon.Coupon;
-import billiongoods.server.services.coupon.CouponType;
-import billiongoods.server.services.coupon.ReferenceType;
+import billiongoods.server.services.coupon.CouponAmountType;
+import billiongoods.server.services.coupon.CouponReferenceType;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.ProductPreview;
 
@@ -23,64 +23,51 @@ public class HibernateCoupon implements Coupon {
 	@Column(name = "code", nullable = false, updatable = false, unique = true)
 	private String code;
 
-	@Column(name = "created")
+	@Column(name = "creation")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
+	private Date creation;
 
-	@Column(name = "closure")
+	@Column(name = "termination")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date closure;
+	private Date termination;
 
 	@Column(name = "amount")
 	private double amount;
 
-	@Column(name = "couponType")
+	@Column(name = "amountType")
 	@Enumerated(EnumType.ORDINAL)
-	private CouponType couponType;
+	private CouponAmountType amountType;
 
-	@Column(name = "referenceId")
-	private Integer referenceId;
+	@Column(name = "reference")
+	private Integer reference;
 
 	@Column(name = "referenceType")
 	@Enumerated(EnumType.ORDINAL)
-	private ReferenceType referenceType;
+	private CouponReferenceType referenceType;
 
-	@Column(name = "started")
+	@Column(name = "utilizedCount")
+	private int utilizedCount;
+
+	@Column(name = "allocatedCount")
+	private int allocatedCount;
+
+	@Column(name = "lastUtilization")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date started;
-
-	@Column(name = "finished")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date finished;
-
-	@Column(name = "scheduledCount")
-	private int scheduledCount;
-
-	@Column(name = "remainingCount")
-	private int remainingCount;
+	private Date lastUtilization;
 
 	@Deprecated
 	HibernateCoupon() {
 	}
 
-	public HibernateCoupon(String code, double amount, CouponType couponType, Integer referenceId, ReferenceType referenceType, int scheduledCount) {
-		this(code, amount, couponType, referenceId, referenceType, null, null, scheduledCount);
-	}
-
-	public HibernateCoupon(String code, double amount, CouponType couponType, Integer referenceId, ReferenceType referenceType, Date started, Date finished) {
-		this(code, amount, couponType, referenceId, referenceType, started, finished, 0);
-	}
-
-	public HibernateCoupon(String code, double amount, CouponType couponType, Integer referenceId, ReferenceType referenceType, Date started, Date finished, int scheduledCount) {
+	public HibernateCoupon(String code, double amount, CouponAmountType amountType, Integer reference, CouponReferenceType referenceType, int allocatedCount, Date termination) {
 		this.code = code;
+		this.creation = new Date();
+		this.termination = termination;
 		this.amount = amount;
-		this.couponType = couponType;
-		this.referenceId = referenceId;
+		this.amountType = amountType;
+		this.reference = reference;
 		this.referenceType = referenceType;
-		this.finished = finished;
-		this.started = started;
-		this.created = new Date();
-		this.scheduledCount = this.remainingCount = scheduledCount;
+		this.allocatedCount = allocatedCount;
 	}
 
 	@Override
@@ -94,13 +81,13 @@ public class HibernateCoupon implements Coupon {
 	}
 
 	@Override
-	public Date getCreated() {
-		return created;
+	public Date getCreation() {
+		return creation;
 	}
 
 	@Override
-	public Date getClosure() {
-		return closure;
+	public Date getTermination() {
+		return termination;
 	}
 
 	@Override
@@ -109,70 +96,55 @@ public class HibernateCoupon implements Coupon {
 	}
 
 	@Override
-	public CouponType getCouponType() {
-		return couponType;
+	public CouponAmountType getAmountType() {
+		return amountType;
 	}
 
 	@Override
-	public Integer getReferenceId() {
-		return referenceId;
+	public Integer getReference() {
+		return reference;
 	}
 
 	@Override
-	public ReferenceType getReferenceType() {
+	public CouponReferenceType getReferenceType() {
 		return referenceType;
 	}
 
 	@Override
-	public Date getStarted() {
-		return started;
+	public int getUtilizedCount() {
+		return utilizedCount;
 	}
 
 	@Override
-	public Date getFinished() {
-		return finished;
+	public int getAllocatedCount() {
+		return allocatedCount;
 	}
 
 	@Override
-	public int getScheduledCount() {
-		return scheduledCount;
-	}
-
-	@Override
-	public int getRemainingCount() {
-		return remainingCount;
-	}
-
-	void close() {
-		this.closure = new Date();
-	}
-
-	void usedCoupons(int count) {
-		remainingCount = remainingCount - count;
+	public Date getLastUtilization() {
+		return lastUtilization;
 	}
 
 	@Override
 	public boolean isActive() {
-		if (closure != null) {
-			return false;
-		}
-		if (scheduledCount != 0 && remainingCount == 0) {
-			return false;
-		}
-		if (started != null && started.getTime() > System.currentTimeMillis()) { // future
-			return false;
-		}
-		if (finished != null && finished.getTime() < System.currentTimeMillis()) { // history
-			return false;
-		}
-		return true;
+		return !isTerminated() && !isFullyUtilized();
+	}
+
+	@Override
+	public boolean isTerminated() {
+		return termination != null && termination.getTime() < System.currentTimeMillis();
+	}
+
+	@Override
+	public boolean isFullyUtilized() {
+		return allocatedCount != 0 && utilizedCount >= allocatedCount;
 	}
 
 	@Override
 	public double process(ProductPreview product, Catalog catalog) {
 		final double pa = product.getPrice().getAmount();
 		if (isApplicable(product, catalog)) {
-			switch (couponType) {
+			switch (amountType) {
 				case PRICE:
 					return pa < amount ? pa : amount;
 				case FIXED:
@@ -180,7 +152,7 @@ public class HibernateCoupon implements Coupon {
 				case PERCENT:
 					return pa - pa * (amount / 100.d);
 				default:
-					throw new IllegalArgumentException("Unsupported coupon type: " + couponType);
+					throw new IllegalArgumentException("Unsupported coupon type: " + amountType);
 			}
 		}
 		return pa;
@@ -192,12 +164,21 @@ public class HibernateCoupon implements Coupon {
 			return false;
 		}
 
-		if (referenceType == ReferenceType.PRODUCT) {
-			return product.getId().equals(referenceId);
-		} else if (referenceType == ReferenceType.CATEGORY) {
-			return catalog.getCategory(referenceId).isRealKinship(catalog.getCategory(product.getCategoryId()));
+		if (referenceType == CouponReferenceType.PRODUCT) {
+			return product.getId().equals(reference);
+		} else if (referenceType == CouponReferenceType.CATEGORY) {
+			return catalog.getCategory(reference).isRealKinship(catalog.getCategory(product.getCategoryId()));
 		} else {
 			throw new IllegalArgumentException("Unsupported reference type: " + referenceType);
 		}
+	}
+
+	void close() {
+		this.termination = new Date();
+	}
+
+	void couponUsed(int count) {
+		utilizedCount += count;
+		lastUtilization = new Date();
 	}
 }

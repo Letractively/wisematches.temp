@@ -24,7 +24,7 @@
 
         <div>&nbsp;</div>
         <div>
-            <a href="/maintain/coupon/view">Найти купон</a>
+            <a href="/maintain/coupon/search">Найти купон</a>
         </div>
         <div>
             <a href="/maintain/coupon/create">Создать купон</a>

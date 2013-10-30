@@ -1,7 +1,7 @@
 package billiongoods.server.web.servlet.mvc.maintain.form;
 
-import billiongoods.server.services.coupon.CouponType;
-import billiongoods.server.services.coupon.ReferenceType;
+import billiongoods.server.services.coupon.CouponAmountType;
+import billiongoods.server.services.coupon.CouponReferenceType;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -9,20 +9,20 @@ import billiongoods.server.services.coupon.ReferenceType;
 public class CouponForm {
 	private String code;
 
+
 	private double amount;
 
-	private CouponType couponType;
-
-	private int referenceId;
-
-	private ReferenceType referenceType;
+	private CouponAmountType amountType;
 
 
-	private int count;
+	private Integer reference;
 
-	private String started;
+	private CouponReferenceType referenceType;
 
-	private String finished;
+
+	private int allocatedCount;
+
+	private String termination;
 
 
 	public CouponForm() {
@@ -44,51 +44,43 @@ public class CouponForm {
 		this.amount = amount;
 	}
 
-	public CouponType getCouponType() {
-		return couponType;
+	public CouponAmountType getAmountType() {
+		return amountType;
 	}
 
-	public void setCouponType(CouponType couponType) {
-		this.couponType = couponType;
+	public void setAmountType(CouponAmountType amountType) {
+		this.amountType = amountType;
 	}
 
-	public int getReferenceId() {
-		return referenceId;
+	public Integer getReference() {
+		return reference;
 	}
 
-	public void setReferenceId(int referenceId) {
-		this.referenceId = referenceId;
+	public void setReference(Integer reference) {
+		this.reference = reference;
 	}
 
-	public ReferenceType getReferenceType() {
+	public CouponReferenceType getReferenceType() {
 		return referenceType;
 	}
 
-	public void setReferenceType(ReferenceType referenceType) {
+	public void setReferenceType(CouponReferenceType referenceType) {
 		this.referenceType = referenceType;
 	}
 
-	public int getCount() {
-		return count;
+	public int getAllocatedCount() {
+		return allocatedCount;
 	}
 
-	public void setCount(int count) {
-		this.count = count;
+	public void setAllocatedCount(int allocatedCount) {
+		this.allocatedCount = allocatedCount;
 	}
 
-	public String getStarted() {
-		return started;
+	public String getTermination() {
+		return termination;
 	}
 
-	public void setStarted(String started) {
-		this.started = started;
-	}
-
-	public String getFinished() {
-		return finished;
-	}
-
-	public void setFinished(String finished) {
-		this.finished = finished;
+	public void setTermination(String termination) {
+		this.termination = termination;
 	}
 }

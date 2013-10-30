@@ -90,6 +90,10 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		return TIME_FORMATTER.get(locale).format(date);
 	}
 
+	public String formatDateTime(Date date, Locale locale) {
+		return formatDate(date, locale) + " " + formatTime(date, locale);
+	}
+
 	public String formatPropertyValue(Object o, Locale locale) {
 		if (o instanceof String) {
 			return (String) o;

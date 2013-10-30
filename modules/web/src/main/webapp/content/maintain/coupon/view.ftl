@@ -2,29 +2,99 @@
 
 <#include "/core.ftl">
 
-<div style="padding: 10px; border: 1px solid gray;">
-    <form action="/maintain/coupon/view" method="get">
-        <input name="code" type="text" value=""/>
-        <button type="submit">Найти купон</button>
-    </form>
+<div style="padding: 10px; border: 1px solid gray;" xmlns="http://www.w3.org/1999/html">
+    <strong>Описание купона:</strong>
+    <hr>
 
-<#if coupon??>
-    Купон ${coupon.code}
-    <#if coupon.couponType.fixed>
-        предоставляет право купить за ${coupon.amount?string("0.00")}}руб.
-    <#elseif coupon.couponType.price>
-        снизить стоимость на ${coupon.amount?string("0.00")}}руб. за
-    <#elseif coupon.couponType.percent>
-        дает ${coupon.amount?string("0")}% скидку на
-    </#if>
-
-    <#if coupon.referenceType.product>
-        товар <a
-            href="/warehouse/product/${coupon.referenceId}">${messageSource.getProductCode(coupon.referenceId)}</a>.
-    <#elseif coupon.referenceType.category>
-        <#assign category=catalog.getCategory(coupon.referenceId)/>
-        товары категории <@bg.link.categoryLink category>${category.name}</@bg.link.categoryLink>.
-    </#if>
-</#if>
+    <table cellpadding="3">
+        <tr>
+            <td>Номер:</td>
+            <td>#${coupon.id}</td>
+        </tr>
+        <tr>
+            <td>
+                Код:
+            </td>
+            <td>
+            ${coupon.code}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Состояние:
+            </td>
+            <td>
+            <#if coupon.active>Активен<#else>Не активен</#if>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Сумма:
+            </td>
+            <td>
+            ${coupon.amount}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Вид скидки:
+            </td>
+            <td>
+            ${coupon.amountType}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Действует на:
+            </td>
+            <td>
+            <#if coupon.referenceType.product>
+                Продукт <a
+                    href="/warehouse/product/${coupon.reference}">${messageSource.getProductCode(coupon.reference)}</a>
+            <#elseif coupon.referenceType.category>
+                <#assign category=catalog.getCategory(coupon.reference)/>
+                Категорию <@bg.link.categoryLink category>#${category.id} ${category.name}</@bg.link.categoryLink>
+            <#else>
+                Незвестный тип ${coupon.referenceType}
+            </#if>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Действует до:
+            </td>
+            <td>
+            <#if coupon.termination??>${messageSource.formatDate(coupon.termination, locale)}
+                (${messageSource.formatRemainedTime(coupon.termination, locale)})<#else>Бессрочный</#if>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Выделенное количество:
+            </td>
+            <td>
+            ${coupon.allocatedCount}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Уже использован раз:
+            </td>
+            <td>
+            ${coupon.utilizedCount}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Дата последнего использования:
+            </td>
+            <td>
+            <#if lastUtilization??>
+            ${messageSource.formatDateTime(coupon.lastUtilization, locale)}}
+            <#else>
+                не использовался
+            </#if>
+            </td>
+        </tr>
+    </table>
 </div>
-

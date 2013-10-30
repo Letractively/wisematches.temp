@@ -23,26 +23,28 @@ public interface Coupon {
 	 */
 	String getCode();
 
+
 	/**
 	 * Return time when coupon has been created. This time hasn't been used in any decisions.
 	 *
 	 * @return the time when the coupon has been created.
 	 */
-	Date getCreated();
+	Date getCreation();
 
 	/**
 	 * Returns time when coupon has been closed. This time hasn't been used in any decisions.
 	 *
 	 * @return the time when the coupon has been closed.
 	 */
-	Date getClosure();
+	Date getTermination();
+
 
 	/**
-	 * Returns amount of the coupon. Depends on {@link CouponType}
+	 * Returns amount of the coupon. Depends on {@link CouponAmountType}
 	 * it can be fixed discount, fixed price or perscents.
 	 *
 	 * @return discount amount
-	 * @see #getCouponType()
+	 * @see #getAmountType()
 	 */
 	double getAmount();
 
@@ -51,52 +53,43 @@ public interface Coupon {
 	 *
 	 * @return the type of the coupon.
 	 */
-	CouponType getCouponType();
+	CouponAmountType getAmountType();
 
 
 	/**
-	 * Reference id that can be product or category depends on {@link ReferenceType}.
+	 * Reference id that can be product or category depends on {@link CouponReferenceType}.
 	 *
 	 * @return reference object id.
 	 */
-	Integer getReferenceId();
+	Integer getReference();
 
 	/**
 	 * Returns type of object represented by reference id value.
 	 *
 	 * @return the type of object represented by reference id value.
 	 */
-	ReferenceType getReferenceType();
-
-
-	/**
-	 * Returns time when coupon can be used after or {@code null} if there is no start time for the coupon
-	 *
-	 * @return the start time for the coupon or {@code null}
-	 */
-	Date getStarted();
+	CouponReferenceType getReferenceType();
 
 	/**
-	 * Returns time till coupon can be used or {@code null} if there is no finish time for the coupon
+	 * Returns number of utilized coupons.
 	 *
-	 * @return the finish time for the coupon or {@code null}
+	 * @return the number of utilized coupons. Never negative number. Zero if coupon wasn't used.
 	 */
-	Date getFinished();
+	int getUtilizedCount();
 
 	/**
-	 * Returns number of times when the coupon can be used.
+	 * Returns number of allocated coupons.
 	 *
-	 * @return the number of times when the coupon can be used.
+	 * @return the number of allocated coupons. Zero if unlimited number of coupons was allocated.
 	 */
-	int getScheduledCount();
+	int getAllocatedCount();
 
 	/**
-	 * Returns number of elapsed times when the coupon can be used.
+	 * Returns date of last utilization.
 	 *
-	 * @return the number of elapsed times when the coupon can be used.
+	 * @return the date of last utilization or {@code null} if coupon hasn't been used yet.
 	 */
-	int getRemainingCount();
-
+	Date getLastUtilization();
 
 	/**
 	 * Checks is the coupon still active or not.
@@ -106,6 +99,20 @@ public interface Coupon {
 	 * @return {@code true} if coupon is active and can be used; {@code false} - otherwise.
 	 */
 	boolean isActive();
+
+	/**
+	 * Checks is this coupon was terminated.
+	 *
+	 * @return {@code true} if the coupon is terminated; {@code false} - otherwise.
+	 */
+	boolean isTerminated();
+
+	/**
+	 * Checks is this coupon was fully utilized.
+	 *
+	 * @return {@code true} if the coupon was fully utilized; {@code false} - otherwise.
+	 */
+	boolean isFullyUtilized();
 
 
 	/**
@@ -123,5 +130,4 @@ public interface Coupon {
 	 * @return {@code true} if ; {@code false} -
 	 */
 	boolean isApplicable(ProductPreview product, Catalog catalog);
-
 }
