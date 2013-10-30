@@ -1,14 +1,14 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
 import billiongoods.server.services.coupon.Coupon;
+import billiongoods.server.services.coupon.CouponContext;
 import billiongoods.server.services.coupon.CouponManager;
-import billiongoods.server.services.coupon.ReferenceType;
+import billiongoods.server.services.coupon.CouponReferenceType;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.CouponForm;
-import org.codehaus.jackson.map.util.ISO8601Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,7 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -31,15 +36,32 @@ public class CouponMaintainController extends AbstractController {
 	private CouponManager couponManager;
 	private ProductManager productManager;
 
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
 	public CouponMaintainController() {
 	}
 
-	@RequestMapping(value = "view")
-	public String viewCoupon(@RequestParam(value = "code", required = false) String code, Model model) {
-		if (code != null) {
-			model.addAttribute("coupon", couponManager.getCoupon(code));
-		}
+	@RequestMapping(value = "/view")
+	public String viewCoupon(@RequestParam(value = "id", required = false) Integer id, Model model) {
+		model.addAttribute("coupon", couponManager.getCoupon(id));
 		return "/content/maintain/coupon/view";
+	}
+
+	@RequestMapping(value = "/search")
+	public String viewCoupon(@ModelAttribute("form") CouponForm form, Model model) {
+		if (form.getCode() != null && !form.getCode().isEmpty()) {
+			final Coupon coupon = couponManager.getCoupon(form.getCode());
+			if (coupon != null) {
+				model.addAttribute("coupons", Collections.singleton(coupon));
+			} else {
+				model.addAttribute("coupons", Collections.<Coupon>emptyList());
+			}
+		} else if (form.getReference() != null && form.getReferenceType() != null) {
+			final CouponContext context = new CouponContext(form.getReference(), form.getReferenceType());
+			final List<Coupon> coupons = couponManager.searchEntities(context, null, null, null);
+			model.addAttribute("coupons", coupons);
+		}
+		return "/content/maintain/coupon/search";
 	}
 
 	@RequestMapping(value = "/create")
@@ -57,34 +79,36 @@ public class CouponMaintainController extends AbstractController {
 		if (coupon != null) {
 			errors.rejectValue("code", "error.coupon.exist");
 		} else {
-			final String formStarted = form.getStarted();
-			final String formFinished = form.getFinished();
-			final Date started = formStarted != null && !formStarted.isEmpty() ? ISO8601Utils.parse(formStarted) : null;
-			final Date finished = formFinished != null && !formFinished.isEmpty() ? ISO8601Utils.parse(formFinished) : null;
+			Date termination = null;
+			try {
+				final String formFinished = form.getTermination();
+				if (formFinished != null && !formFinished.isEmpty()) {
+					termination = DATE_FORMAT.parse(formFinished);
+				}
+			} catch (ParseException ignore) {
+			}
 
 			Coupon res = null;
-			if (form.getReferenceType() == ReferenceType.CATEGORY) {
-				final Category category = categoryManager.getCategory(form.getReferenceId());
+			if (form.getReferenceType() == CouponReferenceType.CATEGORY) {
+				final Category category = categoryManager.getCategory(form.getReference());
 				if (category == null) {
 					errors.rejectValue("referenceId", "error.coupon.reference.category.unknown");
 				} else {
-					res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getCouponType(), category,
-							form.getCount(), started, finished);
+					res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getAmountType(), category, form.getAllocatedCount(), termination);
 				}
-			} else if (form.getReferenceType() == ReferenceType.PRODUCT) {
-				final ProductPreview preview = productManager.getPreview(form.getReferenceId());
+			} else if (form.getReferenceType() == CouponReferenceType.PRODUCT) {
+				final ProductPreview preview = productManager.getPreview(form.getReference());
 				if (preview == null) {
 					errors.rejectValue("referenceId", "error.coupon.reference.preview.unknown");
 				} else {
-					res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getCouponType(), preview,
-							form.getCount(), started, finished);
+					res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getAmountType(), preview, form.getAllocatedCount(), termination);
 				}
 			} else {
 				errors.rejectValue("referenceType", "error.coupon.reference.type.unknown");
 			}
 
 			if (res != null) {
-				return "redirect:/maintain/coupon/view?code=" + res.getCode();
+				return "redirect:/maintain/coupon/view?id=" + res.getId();
 			}
 		}
 		return "/content/maintain/coupon/create";

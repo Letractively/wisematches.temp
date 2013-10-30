@@ -1,3 +1,42 @@
+#10.30
+ALTER TABLE `billiongoods`.`store_coupon`
+CHANGE COLUMN `closure` `closure` DATETIME NULL DEFAULT NULL,
+ADD COLUMN `lastUsed` DATETIME NULL DEFAULT NULL
+AFTER `closure`;
+
+ALTER TABLE `billiongoods`.`store_coupon`
+DROP COLUMN `lastUsed`,
+DROP COLUMN `finished`,
+DROP COLUMN `started`,
+CHANGE COLUMN `created` `creation` DATETIME NOT NULL,
+CHANGE COLUMN `amount` `termination` DATETIME NOT NULL,
+CHANGE COLUMN `couponType` `amountType` TINYINT(4) NOT NULL,
+CHANGE COLUMN `referenceId` `reference` INT(11) NOT NULL,
+CHANGE COLUMN `scheduledCount` `utilizedCount` SMALLINT(6) NULL DEFAULT '0',
+CHANGE COLUMN `remainingCount` `allocatedCount` SMALLINT(6) NULL DEFAULT '0',
+CHANGE COLUMN `closure` `lastUtilization` DATETIME NULL DEFAULT NULL,
+ADD INDEX `reference_index` (`reference` ASC),
+ADD INDEX `reference_type_index` (`referenceType` ASC);
+
+ALTER TABLE `billiongoods`.`store_coupon`
+ADD COLUMN `amount` DOUBLE NOT NULL
+AFTER `termination`;
+
+ALTER TABLE `billiongoods`.`store_coupon`
+CHANGE COLUMN `termination` `termination` DATETIME NULL;
+
+CREATE TABLE `billiongoods`.`system_version` (
+  `version`      INT      NOT NULL,
+  `modification` DATETIME NOT NULL);
+
+ALTER TABLE `billiongoods`.`system_version`
+ADD PRIMARY KEY (`version`);
+
+ALTER TABLE `billiongoods`.`system_version`
+CHANGE COLUMN `modification` `modification` TIMESTAMP NOT NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1030');
+
 #10.28
 ALTER TABLE `billiongoods`.`store_order_item`
 DROP FOREIGN KEY `fk_store_order_item_store_order1`;
@@ -37,7 +76,7 @@ ADD COLUMN `closed` DATETIME NULL
 AFTER `created`;
 
 UPDATE store_order
-SET state=state - 1
+SET state = state - 1
 WHERE state > 1;
 
 ALTER TABLE `billiongoods`.`paypal_transaction`
@@ -71,7 +110,7 @@ ADD COLUMN `priority` TINYINT NULL DEFAULT 0
 AFTER `type`;
 
 UPDATE store_order
-SET state=state - 1
+SET state = state - 1
 WHERE state > 1;
 
 # 10.10

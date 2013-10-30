@@ -1,7 +1,7 @@
 package billiongoods.server.services.coupon.impl;
 
-import billiongoods.server.services.coupon.CouponType;
-import billiongoods.server.services.coupon.ReferenceType;
+import billiongoods.server.services.coupon.CouponAmountType;
+import billiongoods.server.services.coupon.CouponReferenceType;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Price;
@@ -22,24 +22,27 @@ public class HibernateCouponTest {
 
 	@Test
 	public void test_isActive() throws InterruptedException {
-		final HibernateCoupon c1 = new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 10, ReferenceType.CATEGORY, 100);
+		final HibernateCoupon c1 = new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 10, CouponReferenceType.CATEGORY, 100, null);
 		assertTrue(c1.isActive());
-		c1.usedCoupons(99);
-		assertTrue(c1.isActive());
-		c1.usedCoupons(1);
-		assertFalse(c1.isActive());
+		assertFalse(c1.isTerminated());
+		assertFalse(c1.isFullyUtilized());
 
-		final HibernateCoupon c2 = new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 10, ReferenceType.CATEGORY, new Date(System.currentTimeMillis() + 100), null);
+		c1.couponUsed(99);
+		assertTrue(c1.isActive());
+		assertFalse(c1.isTerminated());
+		assertFalse(c1.isFullyUtilized());
+
+		c1.couponUsed(1);
+		assertFalse(c1.isActive());
+		assertFalse(c1.isTerminated());
+		assertTrue(c1.isFullyUtilized());
+
+		final HibernateCoupon c2 = new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 10, CouponReferenceType.CATEGORY, 0, new Date(System.currentTimeMillis() + 100));
 		assertFalse(c2.isActive());
 		Thread.sleep(102);
 		assertTrue(c2.isActive());
 
-		final HibernateCoupon c3 = new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 10, ReferenceType.CATEGORY, null, new Date(System.currentTimeMillis() + 100));
-		assertTrue(c3.isActive());
-		Thread.sleep(102);
-		assertFalse(c3.isActive());
-
-		final HibernateCoupon c4 = new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 10, ReferenceType.CATEGORY, null, null, 0);
+		final HibernateCoupon c4 = new HibernateCoupon("MOCK1", 0, CouponAmountType.FIXED, 10, CouponReferenceType.CATEGORY, 0, null);
 		assertTrue(c4.isActive());
 		c4.close();
 		assertFalse(c4.isActive());
@@ -66,14 +69,14 @@ public class HibernateCouponTest {
 		expect(catalog.getCategory(2)).andReturn(c2).anyTimes();
 		replay(catalog);
 
-		assertTrue(new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 1, ReferenceType.PRODUCT, 100).isApplicable(product, catalog));
-		assertFalse(new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 2, ReferenceType.PRODUCT, 100).isApplicable(product, catalog));
+		assertTrue(new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 1, CouponReferenceType.PRODUCT, 100, null).isApplicable(product, catalog));
+		assertFalse(new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 2, CouponReferenceType.PRODUCT, 100, null).isApplicable(product, catalog));
 
-		assertTrue(new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 1, ReferenceType.CATEGORY, 100).isApplicable(product, catalog));
-		assertTrue(new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 2, ReferenceType.CATEGORY, 100).isApplicable(product, catalog));
+		assertTrue(new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 1, CouponReferenceType.CATEGORY, 100, null).isApplicable(product, catalog));
+		assertTrue(new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 2, CouponReferenceType.CATEGORY, 100, null).isApplicable(product, catalog));
 
-		assertTrue(new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 1, ReferenceType.CATEGORY, 100).isApplicable(product, catalog));
-		assertFalse(new HibernateCoupon("MOCK1", 12.3d, CouponType.FIXED, 2, ReferenceType.CATEGORY, 100).isApplicable(product, catalog));
+		assertTrue(new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 1, CouponReferenceType.CATEGORY, 100, null).isApplicable(product, catalog));
+		assertFalse(new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 2, CouponReferenceType.CATEGORY, 100, null).isApplicable(product, catalog));
 	}
 
 	@Test
@@ -83,10 +86,10 @@ public class HibernateCouponTest {
 		expect(product.getPrice()).andReturn(new Price(100.d)).anyTimes();
 		replay(product);
 
-		assertEquals(80.d, new HibernateCoupon("MOCK1", 20.d, CouponType.FIXED, 1, ReferenceType.PRODUCT, 100).process(product, null), 0.00000001);
-		assertEquals(0.d, new HibernateCoupon("MOCK1", 200.d, CouponType.FIXED, 1, ReferenceType.PRODUCT, 100).process(product, null), 0.00000001);
-		assertEquals(20.d, new HibernateCoupon("MOCK1", 20.d, CouponType.PRICE, 1, ReferenceType.PRODUCT, 100).process(product, null), 0.00000001);
-		assertEquals(100.d, new HibernateCoupon("MOCK1", 200.d, CouponType.PRICE, 1, ReferenceType.PRODUCT, 100).process(product, null), 0.00000001);
-		assertEquals(80.d, new HibernateCoupon("MOCK1", 20.d, CouponType.PERCENT, 1, ReferenceType.PRODUCT, 100).process(product, null), 0.00000001);
+		assertEquals(80.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.FIXED, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
+		assertEquals(0.d, new HibernateCoupon("MOCK1", 200.d, CouponAmountType.FIXED, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
+		assertEquals(20.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.PRICE, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
+		assertEquals(100.d, new HibernateCoupon("MOCK1", 200.d, CouponAmountType.PRICE, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
+		assertEquals(80.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.PERCENT, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
 	}
 }

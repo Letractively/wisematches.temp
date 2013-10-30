@@ -3,7 +3,7 @@ package billiongoods.server.services.coupon;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public enum CouponType {
+public enum CouponAmountType {
 	/**
 	 * Indicates that a coupon contains fixed price
 	 */

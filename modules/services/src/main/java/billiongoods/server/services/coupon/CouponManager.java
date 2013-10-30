@@ -1,5 +1,6 @@
 package billiongoods.server.services.coupon;
 
+import billiongoods.core.search.SearchManager;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.ProductPreview;
 
@@ -8,7 +9,7 @@ import java.util.Date;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface CouponManager {
+public interface CouponManager extends SearchManager<Coupon, CouponContext, Void> {
 	/**
 	 * Returns coupon by it's id.
 	 *
@@ -35,7 +36,7 @@ public interface CouponManager {
 	Coupon closeCoupon(Integer id);
 
 
-	Coupon createCoupon(String code, double amount, CouponType type, Category category, int count, Date started, Date finished);
+	Coupon createCoupon(String code, double amount, CouponAmountType amountType, Category category, int count, Date termination);
 
-	Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, int count, Date started, Date finished);
+	Coupon createCoupon(String code, double amount, CouponAmountType amountType, ProductPreview product, int count, Date termination);
 }

@@ -1,14 +1,11 @@
 package billiongoods.server.services.coupon.impl;
 
-import billiongoods.server.services.coupon.Coupon;
-import billiongoods.server.services.coupon.CouponManager;
-import billiongoods.server.services.coupon.CouponType;
-import billiongoods.server.services.coupon.ReferenceType;
+import billiongoods.core.search.entity.EntitySearchManager;
+import billiongoods.server.services.coupon.*;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.ProductPreview;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +15,9 @@ import java.util.Date;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernateCouponManager implements CouponManager {
-	private SessionFactory sessionFactory;
-
+public class HibernateCouponManager extends EntitySearchManager<Coupon, CouponContext, Void> implements CouponManager {
 	public HibernateCouponManager() {
+		super(HibernateCoupon.class);
 	}
 
 	@Override
@@ -54,29 +50,39 @@ public class HibernateCouponManager implements CouponManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Coupon createCoupon(String code, double amount, CouponType type, Category category, int count, Date started, Date finished) {
+	public Coupon createCoupon(String code, double amount, CouponAmountType amountType, Category category, int count, Date termination) {
 		if (getCoupon(code) != null) {
 			return null;
 		}
 
-		HibernateCoupon hc = new HibernateCoupon(code, amount, type, category.getId(), ReferenceType.CATEGORY, started, finished, count);
+		HibernateCoupon hc = new HibernateCoupon(code, amount, amountType, category.getId(), CouponReferenceType.CATEGORY, count, termination);
 		sessionFactory.getCurrentSession().save(hc);
 		return hc;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Coupon createCoupon(String code, double amount, CouponType type, ProductPreview product, int count, Date started, Date finished) {
+	public Coupon createCoupon(String code, double amount, CouponAmountType amountType, ProductPreview product, int count, Date termination) {
 		if (getCoupon(code) != null) {
 			return null;
 		}
 
-		HibernateCoupon hc = new HibernateCoupon(code, amount, type, product.getId(), ReferenceType.PRODUCT, started, finished, count);
+		HibernateCoupon hc = new HibernateCoupon(code, amount, amountType, product.getId(), CouponReferenceType.PRODUCT, count, termination);
 		sessionFactory.getCurrentSession().save(hc);
 		return hc;
 	}
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	@Override
+	protected void applyRestrictions(Criteria criteria, CouponContext context, Void filter) {
+		if (context != null) {
+			if (context.getReference() != null && context.getReferenceType() != null) {
+				criteria.add(Restrictions.eq("reference", context.getReference()));
+				criteria.add(Restrictions.eq("referenceType", context.getReferenceType()));
+			}
+		}
+	}
+
+	@Override
+	protected void applyProjections(Criteria criteria, CouponContext context, Void filter) {
 	}
 }

@@ -6,7 +6,7 @@ package billiongoods.server.services.coupon;
  *
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public enum ReferenceType {
+public enum CouponReferenceType {
 	PRODUCT,
 	CATEGORY;
 
