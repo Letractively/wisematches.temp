@@ -67,7 +67,13 @@ public class OrderController extends AbstractController {
 		try {
 			basketManager.closeBasket(getPrincipal());
 		} catch (Exception ex) {
-			log.error("Basket can't be closed", ex);
+			log.error("Basket can't be closed for order " + order.getId(), ex);
+		}
+
+		try {
+			couponManager.redeemCoupon(order.getCoupon());
+		} catch (Exception ex) {
+			log.error("Coupon can't be redeemed for order " + order.getId(), ex);
 		}
 
 		request.setAttribute(ORDER_ID_PARAM, order.getId(), RequestAttributes.SCOPE_SESSION);

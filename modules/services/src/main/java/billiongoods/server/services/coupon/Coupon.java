@@ -11,13 +11,6 @@ import java.util.Date;
  */
 public interface Coupon {
 	/**
-	 * Unique id for this coupon.
-	 *
-	 * @return the id for this coupon.
-	 */
-	Integer getId();
-
-	/**
 	 * Returns unique code for this coupon.
 	 *
 	 * @return the unique code for this coupon.

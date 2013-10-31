@@ -3,12 +3,10 @@ package billiongoods.server.services.payment.impl;
 import billiongoods.core.Visitor;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
+import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.*;
 import billiongoods.server.services.price.ExchangeManager;
-import billiongoods.server.warehouse.AttributeType;
-import billiongoods.server.warehouse.Price;
-import billiongoods.server.warehouse.ProductPreview;
-import billiongoods.server.warehouse.Property;
+import billiongoods.server.warehouse.*;
 import billiongoods.server.warehouse.impl.HibernateAttribute;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
@@ -44,6 +42,12 @@ public class HibernateOrderManagerTest {
 
 	@Test
 	public void test() {
+		final CategoryManager categoryManager = createMock(CategoryManager.class);
+
+		final CouponManager couponManager = createMock(CouponManager.class);
+		expect(couponManager.getCoupon(null)).andReturn(null);
+		replay(couponManager);
+
 		final ExchangeManager exchangeManager = createMock(ExchangeManager.class);
 		expect(exchangeManager.getExchangeRate()).andReturn(33.3d);
 		replay(exchangeManager);
@@ -51,10 +55,10 @@ public class HibernateOrderManagerTest {
 		final HibernateOrderManager orderManager = new HibernateOrderManager();
 		orderManager.setSessionFactory(sessionFactory);
 		orderManager.setShipmentManager(new DefaultShipmentManager());
+		orderManager.setCouponManager(couponManager);
+		orderManager.setCategoryManager(categoryManager);
 
 		final ProductPreview desc = createMock(ProductPreview.class);
-//		expect(desc.getName()).andReturn("Item1").andReturn("Item2");
-//		expect(desc.getId()).andReturn(1).andReturn(7);
 		expect(desc.getPrice()).andReturn(new Price(123.34d)).andReturn(new Price(342.21d));
 		expect(desc.getWeight()).andReturn(0.34d).andReturn(2.21d);
 		replay(desc);
@@ -79,6 +83,7 @@ public class HibernateOrderManagerTest {
 		expect(basket.getAmount()).andReturn(23.9d).times(2);
 		expect(basket.getWeight()).andReturn(23.9d).times(2);
 		expect(basket.getBasketItems()).andReturn(Arrays.asList(item1, item2));
+		expect(basket.getCoupon()).andReturn(null);
 		replay(basket);
 
 		final HibernateAddress address = new HibernateAddress();

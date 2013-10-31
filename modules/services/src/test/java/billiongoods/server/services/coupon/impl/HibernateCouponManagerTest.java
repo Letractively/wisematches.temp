@@ -30,6 +30,6 @@ public class HibernateCouponManagerTest {
 		final HibernateCouponManager manager = new HibernateCouponManager();
 		manager.setSessionFactory(sessionFactory);
 
-		final Coupon coupon = manager.getCoupon(1);
+		final Coupon coupon = manager.getCoupon("mock");
 	}
 }

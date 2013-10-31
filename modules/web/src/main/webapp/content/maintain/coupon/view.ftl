@@ -8,10 +8,6 @@
 
     <table cellpadding="3">
         <tr>
-            <td>Номер:</td>
-            <td>#${coupon.id}</td>
-        </tr>
-        <tr>
             <td>
                 Код:
             </td>

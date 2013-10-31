@@ -41,7 +41,7 @@ public interface Order {
 	boolean isTracking();
 
 
-	Integer getCoupon();
+	String getCoupon();
 
 	String getCommentary();
 

@@ -20,10 +20,6 @@ import java.util.List;
 @Table(name = "store_coupon")
 public class HibernateCoupon implements Coupon {
 	@Id
-	@Column(name = "id", nullable = false, updatable = false, unique = true)
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
 	@Column(name = "code", nullable = false, updatable = false, unique = true)
 	private String code;
 
@@ -72,11 +68,6 @@ public class HibernateCoupon implements Coupon {
 		this.reference = reference;
 		this.referenceType = referenceType;
 		this.allocatedCount = allocatedCount;
-	}
-
-	@Override
-	public Integer getId() {
-		return id;
 	}
 
 	@Override
@@ -192,8 +183,8 @@ public class HibernateCoupon implements Coupon {
 		this.termination = new Date();
 	}
 
-	void couponUsed(int count) {
-		utilizedCount += count;
+	void redeemCoupon() {
+		utilizedCount += 1;
 		lastUtilization = new Date();
 	}
 }

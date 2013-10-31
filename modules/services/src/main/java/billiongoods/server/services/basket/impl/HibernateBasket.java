@@ -22,7 +22,7 @@ public class HibernateBasket implements Basket {
 	private Long principal;
 
 	@Column(name = "coupon")
-	private Integer coupon;
+	private String coupon;
 
 	@Column(name = "creationTime", updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -76,7 +76,7 @@ public class HibernateBasket implements Basket {
 	}
 
 	@Override
-	public Integer getCoupon() {
+	public String getCoupon() {
 		return coupon;
 	}
 
@@ -127,7 +127,7 @@ public class HibernateBasket implements Basket {
 	}
 
 	void setCoupon(Coupon coupon) {
-		this.coupon = coupon == null ? null : coupon.getId();
+		this.coupon = coupon == null ? null : coupon.getCode();
 	}
 
 	private int getAvailableItemIndex() {

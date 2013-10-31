@@ -289,7 +289,7 @@
             </th>
             <@bg.security.authorized "moderator">
                 <th valign="middle" nowrap="nowrap" align="left">
-                    <a href="/maintain/coupon/view?id=${order.coupon}">#${order.coupon}</a>
+                    <a href="/maintain/coupon/view?code=${order.coupon}">${order.coupon}</a>
                 </th>
             </@bg.security.authorized>
         </tr>

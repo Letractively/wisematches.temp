@@ -9,6 +9,19 @@ AFTER `amount`,
 ADD COLUMN `coupon` INT NULL
 AFTER `shipmentType`;
 
+ALTER TABLE `billiongoods`.`store_coupon`
+DROP COLUMN `id`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`code`),
+DROP INDEX `code_INDEX`,
+DROP INDEX `code_UNIQUE`;
+
+ALTER TABLE `billiongoods`.`store_order`
+CHANGE COLUMN `coupon` `coupon` VARCHAR(10) NULL DEFAULT NULL;
+
+ALTER TABLE `billiongoods`.`store_basket`
+CHANGE COLUMN `coupon` `coupon` VARCHAR(10) NULL DEFAULT NULL;
+
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1031');
 
 #10.30
