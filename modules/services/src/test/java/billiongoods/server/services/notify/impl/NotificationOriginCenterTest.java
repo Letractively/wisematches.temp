@@ -1,7 +1,6 @@
 package billiongoods.server.services.notify.impl;
 
 import billiongoods.core.task.executor.TransactionAwareExecutor;
-import billiongoods.server.services.basket.impl.HibernateBasket;
 import billiongoods.server.services.notify.Notification;
 import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.impl.center.NotificationOriginCenter;
@@ -90,10 +89,9 @@ public class NotificationOriginCenterTest {
 
 		publisherCenter.setOrderManager(orderManager);
 
-		final HibernateBasket basket = new HibernateBasket();
 		final HibernateAddress address = new HibernateAddress();
 
-		final Order order = new HibernateOrder(123L, basket, new Shipment(12d, address, ShipmentType.REGISTERED), true);
+		final Order order = new HibernateOrder(123L, 10d, 1d, null, new Shipment(12d, address, ShipmentType.REGISTERED), true);
 
 		final OrderListener listener = listenerCapture.getValue();
 		listener.orderStateChanged(order, null, OrderState.NEW);

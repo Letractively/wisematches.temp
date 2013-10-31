@@ -1,6 +1,7 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.server.services.basket.Basket;
+import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.paypal.PayPalException;
@@ -36,6 +37,7 @@ import java.util.Locale;
 @RequestMapping("/warehouse/order")
 public class OrderController extends AbstractController {
 	private OrderManager orderManager;
+	private CouponManager couponManager;
 
 	public static final String ORDER_ID_PARAM = "ORDER_ID";
 
@@ -159,5 +161,10 @@ public class OrderController extends AbstractController {
 	@Autowired
 	public void setOrderManager(OrderManager orderManager) {
 		this.orderManager = orderManager;
+	}
+
+	@Autowired
+	public void setCouponManager(CouponManager couponManager) {
+		this.couponManager = couponManager;
 	}
 }

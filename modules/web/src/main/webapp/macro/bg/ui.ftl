@@ -63,33 +63,29 @@
 </#macro>
 
 <#macro coupon coupon>
-Купон <em>${coupon.code}</em>
-    <#if coupon.active>
-        <#if coupon.amountType.fixed>
-        предоставляет право купить за ${coupon.amount?string("0.00")}}руб.
-        <#elseif coupon.amountType.price>
-        снизить стоимость на ${coupon.amount?string("0.00")}}руб. за
-        <#elseif coupon.amountType.percent>
-        дает ${coupon.amount?string("0")}% скидку на
-        </#if>
-
-        <#if coupon.referenceType.product>
-        товар <a
-                href="/warehouse/product/${coupon.reference}">${messageSource.getProductCode(coupon.reference)}</a>.
-        <#elseif coupon.referenceType.category>
-            <#assign category=catalog.getCategory(coupon.reference)/>
-        товары категории <@bg.link.categoryLink category>${category.name}</@bg.link.categoryLink>.
-        </#if>
+    <#if !coupon??>
+    Неизвестный купон.
     <#else>
-    не активен и не может быть использован.
-    </#if>
+    Купон <em>${coupon.code}</em>
+        <#if coupon.active>
+            <#if coupon.amountType.fixed>
+            предоставляет право купить за ${coupon.amount?string("0.00")}}руб.
+            <#elseif coupon.amountType.price>
+            снизить стоимость на ${coupon.amount?string("0.00")}}руб. за
+            <#elseif coupon.amountType.percent>
+            дает ${coupon.amount?string("0")}% скидку на
+            </#if>
 
-    <#if (coupon.allocatedCount>0)>
-    Купон может быть использован еще ${coupon.allocatedCount-coupon.utilizedCount} раз.
-    </#if>
-    <#if coupon.termination??>
-    Купон действителен до ${messageSource.formatDate(coupon.termination, locale)}
-    (${messageSource.formatRemainedTime(coupon.termination, locale)}).
+            <#if coupon.referenceType.product>
+            товар <a
+                    href="/warehouse/product/${coupon.reference}">${messageSource.getProductCode(coupon.reference)}</a>.
+            <#elseif coupon.referenceType.category>
+                <#assign category=catalog.getCategory(coupon.reference)/>
+            товары категории <@bg.link.categoryLink category>${category.name}</@bg.link.categoryLink>.
+            </#if>
+        <#else>
+        не активен и не может быть использован.
+        </#if>
     </#if>
 </#macro>
 

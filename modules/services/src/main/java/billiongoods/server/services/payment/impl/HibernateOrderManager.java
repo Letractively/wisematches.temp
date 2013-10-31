@@ -4,7 +4,10 @@ import billiongoods.core.Personality;
 import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
+import billiongoods.server.services.coupon.Coupon;
+import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.*;
+import billiongoods.server.warehouse.CategoryManager;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,7 +26,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateOrderManager extends EntitySearchManager<Order, OrderContext, Void> implements OrderManager {
+	private CouponManager couponManager;
 	private ShipmentManager shipmentManager;
+	private CategoryManager categoryManager;
 
 	private final Collection<OrderListener> listeners = new CopyOnWriteArrayList<>();
 
@@ -52,10 +57,17 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 	public Order create(Personality person, Basket basket, Address address, ShipmentType shipmentType, boolean track) {
 		final Session session = sessionFactory.getCurrentSession();
 
+		final double amount = basket.getAmount();
+		final Integer couponId = basket.getCoupon();
+		final Coupon coupon = couponManager.getCoupon(couponId);
+		double discount = 0;
+		if (coupon != null) {
+			discount = coupon.getDiscount(basket, categoryManager.getCatalog());
+		}
 		final double shipmentCost = shipmentManager.getShipmentCost(basket, shipmentType);
 		final Shipment shipment = new Shipment(shipmentCost, address, shipmentType);
 
-		final HibernateOrder order = new HibernateOrder(person.getId(), basket, shipment, track);
+		final HibernateOrder order = new HibernateOrder(person.getId(), amount, discount, couponId, shipment, track);
 		session.save(order);
 
 		int index = 0;
@@ -296,6 +308,14 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		for (OrderListener listener : listeners) {
 			listener.orderStateChanged(order, oldState, order.getOrderState());
 		}
+	}
+
+	public void setCouponManager(CouponManager couponManager) {
+		this.couponManager = couponManager;
+	}
+
+	public void setCategoryManager(CategoryManager categoryManager) {
+		this.categoryManager = categoryManager;
 	}
 
 	public void setShipmentManager(ShipmentManager shipmentManager) {

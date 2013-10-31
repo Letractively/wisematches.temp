@@ -130,6 +130,8 @@
 
     <bean id="orderManager" class="billiongoods.server.services.payment.impl.HibernateOrderManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="couponManager" ref="couponManager"/>
+        <property name="categoryManager" ref="catalogManager"/>
         <property name="shipmentManager" ref="shipmentManager"/>
     </bean>
 

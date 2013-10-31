@@ -149,6 +149,15 @@ public class PayPalExpressCheckout implements InitializingBean {
 			paymentDetailsItem.add(item);
 		}
 
+		if (order.getCoupon() != null && order.getDiscount() > 0d) {
+			final PaymentDetailsItemType item = new PaymentDetailsItemType();
+			item.setName("Скидка");
+			item.setDescription("Купон " + order.getCoupon());
+			item.setAmount(new BasicAmountType(CURRENCY_CODE, Price.string(order.getDiscount() * -1)));
+
+			paymentDetailsItem.add(item);
+		}
+
 		final PaymentDetailsType paymentDetails = new PaymentDetailsType();
 		paymentDetails.setOrderURL(orderURL);
 		paymentDetails.setPaymentAction(PaymentActionCodeType.SALE);
@@ -156,9 +165,9 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		paymentDetails.setShipToAddress(addressType);
 
-		paymentDetails.setItemTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount())));
+		paymentDetails.setItemTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() - order.getDiscount())));
 		paymentDetails.setShippingTotal(new BasicAmountType(CURRENCY_CODE, Price.string(shipment.getAmount())));
-		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() + shipment.getAmount())));
+		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() + shipment.getAmount() - order.getDiscount())));
 
 		final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
 		request.setLocaleCode("RU");

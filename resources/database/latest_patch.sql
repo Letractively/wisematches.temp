@@ -1,3 +1,16 @@
+#10.31
+ALTER TABLE `billiongoods`.`store_basket`
+ADD COLUMN `coupon` INT(11) NULL
+AFTER `updatingTime`;
+
+ALTER TABLE `billiongoods`.`store_order`
+ADD COLUMN `discount` DECIMAL(10, 4) NOT NULL DEFAULT 0
+AFTER `amount`,
+ADD COLUMN `coupon` INT NULL
+AFTER `shipmentType`;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1031');
+
 #10.30
 ALTER TABLE `billiongoods`.`store_coupon`
 CHANGE COLUMN `closure` `closure` DATETIME NULL DEFAULT NULL,

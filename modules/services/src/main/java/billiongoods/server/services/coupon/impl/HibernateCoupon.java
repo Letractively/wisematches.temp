@@ -1,13 +1,17 @@
 package billiongoods.server.services.coupon.impl;
 
+import billiongoods.server.services.basket.Basket;
+import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.coupon.Coupon;
 import billiongoods.server.services.coupon.CouponAmountType;
 import billiongoods.server.services.coupon.CouponReferenceType;
 import billiongoods.server.warehouse.Catalog;
+import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.ProductPreview;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -141,21 +145,32 @@ public class HibernateCoupon implements Coupon {
 	}
 
 	@Override
-	public double process(ProductPreview product, Catalog catalog) {
-		final double pa = product.getPrice().getAmount();
-		if (isApplicable(product, catalog)) {
-			switch (amountType) {
-				case PRICE:
-					return pa < amount ? pa : amount;
-				case FIXED:
-					return pa - amount < 0d ? 0d : pa - amount;
-				case PERCENT:
-					return pa - pa * (amount / 100.d);
-				default:
-					throw new IllegalArgumentException("Unsupported coupon type: " + amountType);
-			}
+	public double getDiscount(Basket basket, Catalog catalog) {
+		double res = 0d;
+		final List<BasketItem> basketItems = basket.getBasketItems();
+		for (BasketItem item : basketItems) {
+			res += getDiscount(item.getProduct(), catalog) * item.getQuantity();
 		}
-		return pa;
+		return Price.round(res);
+	}
+
+	@Override
+	public double getDiscount(ProductPreview product, Catalog catalog) {
+		if (!isApplicable(product, catalog)) {
+			return 0d;
+		}
+
+		final double pa = product.getPrice().getAmount();
+		switch (amountType) {
+			case PRICE:
+				return pa < amount ? 0d : pa - amount;
+			case FIXED:
+				return pa - amount < 0d ? 0d : amount;
+			case PERCENT:
+				return pa * (amount / 100.d);
+			default:
+				throw new IllegalArgumentException("Unsupported coupon type: " + amountType);
+		}
 	}
 
 	@Override

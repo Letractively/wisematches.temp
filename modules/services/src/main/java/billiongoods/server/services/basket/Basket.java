@@ -13,11 +13,16 @@ public interface Basket extends Iterable<BasketItem> {
 
 	double getWeight();
 
+
+	Integer getCoupon();
+
+
 	Date getCreationTime();
 
 	Date getUpdatingTime();
 
-	BasketItem getBasketItem(int number);
 
 	List<BasketItem> getBasketItems();
+
+	BasketItem getBasketItem(int number);
 }

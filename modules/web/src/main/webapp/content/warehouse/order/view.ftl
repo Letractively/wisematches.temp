@@ -281,6 +281,19 @@
             </th>
         </@bg.security.authorized>
         </tr>
+    <#if order.coupon?? && (order.discount>0)>
+        <tr>
+            <th colspan="${colspan+2}" nowrap="nowrap" align="left">Скидка по купону</th>
+            <th nowrap="nowrap" align="left">
+                <@bg.ui.price order.discount/>
+            </th>
+            <@bg.security.authorized "moderator">
+                <th valign="middle" nowrap="nowrap" align="left">
+                    <a href="/maintain/coupon/view?id=${order.coupon}">#${order.coupon}</a>
+                </th>
+            </@bg.security.authorized>
+        </tr>
+    </#if>
         <tr>
             <th colspan="${colspan+2}" nowrap="nowrap" align="left">Стоимость доставки</th>
             <th nowrap="nowrap" align="left">
@@ -294,7 +307,7 @@
         <tr>
             <th colspan="${colspan+2}" nowrap="nowrap" align="left">Итоговая сумма заказа</th>
             <th nowrap="nowrap" align="left">
-            <@bg.ui.price order.amount + shipment.amount/>
+            <@bg.ui.price order.amount + shipment.amount - order.discount/>
             </th>
         <@bg.security.authorized "moderator">
             <th valign="middle" nowrap="nowrap" align="left">

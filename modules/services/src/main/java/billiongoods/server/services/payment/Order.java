@@ -16,6 +16,8 @@ public interface Order {
 
 	double getAmount();
 
+	double getDiscount();
+
 	Shipment getShipment();
 
 
@@ -38,6 +40,8 @@ public interface Order {
 
 	boolean isTracking();
 
+
+	Integer getCoupon();
 
 	String getCommentary();
 
