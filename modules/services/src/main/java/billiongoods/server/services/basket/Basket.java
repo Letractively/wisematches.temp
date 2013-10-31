@@ -14,7 +14,7 @@ public interface Basket extends Iterable<BasketItem> {
 	double getWeight();
 
 
-	Integer getCoupon();
+	String getCoupon();
 
 
 	Date getCreationTime();

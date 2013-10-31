@@ -38,7 +38,7 @@ public class HibernateOrder implements Order {
 	private ShipmentType shipmentType;
 
 	@Column(name = "coupon", updatable = false)
-	private Integer coupon;
+	private String coupon;
 
 	@Embedded
 	private HibernateAddress shipmentAddress;
@@ -105,7 +105,7 @@ public class HibernateOrder implements Order {
 	HibernateOrder() {
 	}
 
-	public HibernateOrder(Long buyer, double amount, double discount, Integer coupon, Shipment shipment, boolean tracking) {
+	public HibernateOrder(Long buyer, double amount, double discount, String coupon, Shipment shipment, boolean tracking) {
 		this.buyer = buyer;
 		this.amount = amount;
 		this.coupon = coupon;
@@ -140,7 +140,7 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public Integer getCoupon() {
+	public String getCoupon() {
 		return coupon;
 	}
 

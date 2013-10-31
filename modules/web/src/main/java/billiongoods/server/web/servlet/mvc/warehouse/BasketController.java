@@ -217,7 +217,7 @@ public class BasketController extends AbstractController {
 			} else if (!coupon.isActive()) {
 				errors.rejectValue("coupon", "basket.error.coupon.inactive");
 			} else {
-				if (!coupon.getId().equals(basket.getCoupon())) {
+				if (!coupon.getCode().equals(basket.getCoupon())) {
 					basketManager.applyCoupon(principal, coupon);
 				}
 			}

@@ -42,8 +42,8 @@ public class CouponMaintainController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/view")
-	public String viewCoupon(@RequestParam(value = "id", required = false) Integer id, Model model) {
-		model.addAttribute("coupon", couponManager.getCoupon(id));
+	public String viewCoupon(@RequestParam(value = "code", required = false) String code, Model model) {
+		model.addAttribute("coupon", couponManager.getCoupon(code));
 		return "/content/maintain/coupon/view";
 	}
 
@@ -108,7 +108,7 @@ public class CouponMaintainController extends AbstractController {
 			}
 
 			if (res != null) {
-				return "redirect:/maintain/coupon/view?id=" + res.getId();
+				return "redirect:/maintain/coupon/view?code=" + res.getCode();
 			}
 		}
 		return "/content/maintain/coupon/create";

@@ -21,36 +21,40 @@ public class HibernateCouponManager extends EntitySearchManager<Coupon, CouponCo
 	}
 
 	@Override
-	public Coupon getCoupon(Integer id) {
-		if (id == null) {
-			return null;
-		}
-		final Session session = sessionFactory.getCurrentSession();
-		return (Coupon) session.get(HibernateCoupon.class, id);
-	}
-
-	@Override
 	public Coupon getCoupon(String code) {
 		if (code == null) {
 			return null;
 		}
-		final Session session = sessionFactory.getCurrentSession();
-
-		final Criteria criteria = session.createCriteria(HibernateCoupon.class);
-		criteria.add(Restrictions.eq("code", code));
-		return (Coupon) criteria.uniqueResult();
+		return (Coupon) sessionFactory.getCurrentSession().get(HibernateCoupon.class, code);
 	}
 
 	@Override
-	public Coupon closeCoupon(Integer id) {
-		final Session session = sessionFactory.getCurrentSession();
-
-		final HibernateCoupon hc = (HibernateCoupon) session.get(HibernateCoupon.class, id);
-		if (hc == null) {
+	public Coupon closeCoupon(String code) {
+		if (code == null) {
 			return null;
 		}
-		hc.close();
-		session.update(hc);
+
+		final Session session = sessionFactory.getCurrentSession();
+		final HibernateCoupon hc = (HibernateCoupon) session.get(HibernateCoupon.class, code);
+		if (hc != null) {
+			hc.close();
+			session.update(hc);
+		}
+		return hc;
+	}
+
+	@Override
+	public Coupon redeemCoupon(String code) {
+		if (code == null) {
+			return null;
+		}
+
+		final Session session = sessionFactory.getCurrentSession();
+		final HibernateCoupon hc = (HibernateCoupon) session.get(HibernateCoupon.class, code);
+		if (hc != null) {
+			hc.redeemCoupon();
+			session.update(hc);
+		}
 		return hc;
 	}
 

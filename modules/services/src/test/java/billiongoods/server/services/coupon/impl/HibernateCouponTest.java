@@ -22,29 +22,36 @@ public class HibernateCouponTest {
 
 	@Test
 	public void test_isActive() throws InterruptedException {
-		final HibernateCoupon c1 = new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 10, CouponReferenceType.CATEGORY, 100, null);
+		final HibernateCoupon c1 = new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 10, CouponReferenceType.CATEGORY, 2, null);
 		assertTrue(c1.isActive());
 		assertFalse(c1.isTerminated());
 		assertFalse(c1.isFullyUtilized());
+		assertEquals(0, c1.getUtilizedCount());
+		assertEquals(2, c1.getAllocatedCount());
 
-		c1.couponUsed(99);
+		c1.redeemCoupon();
 		assertTrue(c1.isActive());
 		assertFalse(c1.isTerminated());
 		assertFalse(c1.isFullyUtilized());
+		assertEquals(1, c1.getUtilizedCount());
+		assertEquals(2, c1.getAllocatedCount());
 
-		c1.couponUsed(1);
+		c1.redeemCoupon();
 		assertFalse(c1.isActive());
 		assertFalse(c1.isTerminated());
 		assertTrue(c1.isFullyUtilized());
+		assertEquals(2, c1.getUtilizedCount());
+		assertEquals(2, c1.getAllocatedCount());
 
 		final HibernateCoupon c2 = new HibernateCoupon("MOCK1", 12.3d, CouponAmountType.FIXED, 10, CouponReferenceType.CATEGORY, 0, new Date(System.currentTimeMillis() + 100));
-		assertFalse(c2.isActive());
-		Thread.sleep(102);
 		assertTrue(c2.isActive());
+		Thread.sleep(102);
+		assertFalse(c2.isActive());
 
 		final HibernateCoupon c4 = new HibernateCoupon("MOCK1", 0, CouponAmountType.FIXED, 10, CouponReferenceType.CATEGORY, 0, null);
 		assertTrue(c4.isActive());
 		c4.close();
+		Thread.sleep(102);
 		assertFalse(c4.isActive());
 	}
 

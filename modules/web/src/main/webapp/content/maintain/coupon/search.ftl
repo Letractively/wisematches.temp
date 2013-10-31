@@ -49,7 +49,7 @@
             <#list coupons as c>
                 <tr>
                     <td valign="top" nowrap="nowrap">
-                        <a href="/maintain/coupon/view?id=${c.id}">#${c.id}</a>
+                        <a href="/maintain/coupon/view?code=${c.code}">${c.code}</a>
                     </td>
                     <td valign="top" nowrap="nowrap">
                     ${c.code}

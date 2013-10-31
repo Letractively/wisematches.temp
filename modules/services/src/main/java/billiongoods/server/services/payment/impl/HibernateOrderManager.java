@@ -58,7 +58,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final double amount = basket.getAmount();
-		final Integer couponId = basket.getCoupon();
+		final String couponId = basket.getCoupon();
 		final Coupon coupon = couponManager.getCoupon(couponId);
 		double discount = 0;
 		if (coupon != null) {
