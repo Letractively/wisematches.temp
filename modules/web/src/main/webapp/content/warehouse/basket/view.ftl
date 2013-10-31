@@ -300,7 +300,7 @@
 </tr>
 </#if>
 <tr class="empty" <#if basket?has_content>style="display: none"</#if>>
-    <td colspan="6">
+    <td colspan="7">
         <div class="empty">
             У вас в корзине нет ни одного товара. Посмотрите наши <a href="/warehouse/arrivals">последние
             поступления</a> что бы
