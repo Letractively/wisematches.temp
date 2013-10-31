@@ -6,7 +6,7 @@ AFTER `updatingTime`;
 ALTER TABLE `billiongoods`.`store_order`
 ADD COLUMN `discount` DECIMAL(10, 4) NOT NULL DEFAULT 0
 AFTER `amount`,
-ADD COLUMN `coupon` INT NULL
+ADD COLUMN `coupon` INT NULL DEFAULT NULL
 AFTER `shipmentType`;
 
 ALTER TABLE `billiongoods`.`store_coupon`
