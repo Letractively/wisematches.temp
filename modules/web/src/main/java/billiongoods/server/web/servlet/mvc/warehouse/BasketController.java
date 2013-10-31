@@ -3,7 +3,10 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
+import billiongoods.server.services.coupon.Coupon;
+import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.ShipmentManager;
+import billiongoods.server.services.payment.ShipmentRates;
 import billiongoods.server.services.payment.ShipmentType;
 import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.ProductManager;
@@ -36,6 +39,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/warehouse/basket")
 public class BasketController extends AbstractController {
+	private CouponManager couponManager;
 	private ProductManager productManager;
 	private ShipmentManager shipmentManager;
 
@@ -51,7 +55,7 @@ public class BasketController extends AbstractController {
 	@RequestMapping(value = {""}, method = RequestMethod.GET)
 	public String viewBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
 		final Basket basket = basketManager.getBasket(getPrincipal());
-		return prepareBasketView(basket, model);
+		return prepareBasketView(basket, form, model);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -61,15 +65,15 @@ public class BasketController extends AbstractController {
 		basketManager.closeBasket(principal);
 
 		final Basket basket = basketManager.getBasket(principal);
-		return prepareBasketView(basket, model);
+		return prepareBasketView(basket, form, model);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=update")
-	public String validateBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+	public String validateBasket(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model) {
 		final Personality principal = getPrincipal();
-		final Basket basket = validateBasket(principal, form);
-		return prepareBasketView(basket, model);
+		final Basket basket = validateBasket(principal, form, errors);
+		return prepareBasketView(basket, form, model);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -82,9 +86,9 @@ public class BasketController extends AbstractController {
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=checkout")
 	public String checkoutBasket(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model, WebRequest request) {
 		final Personality principal = getPrincipal();
-		final Basket basket = validateBasket(principal, form);
+		final Basket basket = validateBasket(principal, form, errors);
 		if (basket == null) {
-			return prepareBasketView(null, model);
+			return prepareBasketView(null, form, model);
 		}
 
 		checkAddressField("name", form.getName(), errors);
@@ -97,17 +101,12 @@ public class BasketController extends AbstractController {
 			errors.rejectValue("postalCode", "basket.error.postalCode.format");
 		}
 
-		final ShipmentType shipmentType = form.getShipment();
-		if (shipmentType == null) {
-			errors.rejectValue("shipment", "basket.error.shipment.empty");
-		}
-
 		if (!errors.hasErrors()) {
 			request.setAttribute(ORDER_CHECKOUT_FORM_PARAM, form, RequestAttributes.SCOPE_REQUEST);
 			request.setAttribute(BASKET_PARAM, basket, RequestAttributes.SCOPE_REQUEST);
 			return "forward:/warehouse/order/checkout";
 		}
-		return prepareBasketView(basket, model);
+		return prepareBasketView(basket, form, model);
 	}
 
 	@RequestMapping("rollback")
@@ -173,7 +172,7 @@ public class BasketController extends AbstractController {
 		}
 	}
 
-	private Basket validateBasket(Personality principal, OrderCheckoutForm form) {
+	private Basket validateBasket(Personality principal, OrderCheckoutForm form, Errors errors) {
 		Basket basket = basketManager.getBasket(principal);
 		if (basket == null || basket.getBasketItems() == null) {
 			return null;
@@ -204,17 +203,50 @@ public class BasketController extends AbstractController {
 				basketManager.updateBasketItem(principal, number, quantity);
 			}
 		}
-		return basket;
+
+		final ShipmentType shipmentType = form.getShipment();
+		if (shipmentType == null) {
+			errors.rejectValue("shipment", "basket.error.shipment.empty");
+		}
+
+		final String couponCode = form.getCoupon();
+		if (couponCode != null && !couponCode.isEmpty()) {
+			final Coupon coupon = couponManager.getCoupon(couponCode);
+			if (coupon == null) {
+				errors.rejectValue("coupon", "basket.error.coupon.empty");
+			} else if (!coupon.isActive()) {
+				errors.rejectValue("coupon", "basket.error.coupon.inactive");
+			} else {
+				if (!coupon.getId().equals(basket.getCoupon())) {
+					basketManager.applyCoupon(principal, coupon);
+				}
+			}
+		} else {
+			if (basket.getCoupon() != null) {
+				basketManager.applyCoupon(principal, null);
+			}
+		}
+		return basketManager.getBasket(principal);
 	}
 
-	private String prepareBasketView(Basket basket, Model model) {
+	private String prepareBasketView(Basket basket, OrderCheckoutForm form, Model model) {
 		model.addAttribute("basket", basket);
 
 		if (basket != null) {
-			model.addAttribute("shipmentRates", shipmentManager.getShipmentRates(basket));
-		}
+			final Coupon coupon = couponManager.getCoupon(basket.getCoupon());
+			final ShipmentRates shipmentRates = shipmentManager.getShipmentRates(basket);
 
+			form.setCoupon(coupon == null ? null : coupon.getCode());
+
+			model.addAttribute("coupon", coupon);
+			model.addAttribute("shipmentRates", shipmentRates);
+		}
 		return "/content/warehouse/basket/view";
+	}
+
+	@Autowired
+	public void setCouponManager(CouponManager couponManager) {
+		this.couponManager = couponManager;
 	}
 
 	@Autowired

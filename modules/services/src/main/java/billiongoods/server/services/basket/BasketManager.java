@@ -1,6 +1,7 @@
 package billiongoods.server.services.basket;
 
 import billiongoods.core.Personality;
+import billiongoods.server.services.coupon.Coupon;
 import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Property;
 
@@ -13,6 +14,9 @@ public interface BasketManager {
 	Basket getBasket(Personality principal);
 
 	Integer getBasketSize(Personality principal);
+
+
+	Basket applyCoupon(Personality principal, Coupon coupon);
 
 
 	BasketItem addBasketItem(Personality principal, ProductPreview preview, List<Property> options, int quantity);

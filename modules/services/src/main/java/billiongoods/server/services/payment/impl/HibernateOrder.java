@@ -1,6 +1,5 @@
 package billiongoods.server.services.payment.impl;
 
-import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.payment.*;
 
 import javax.persistence.*;
@@ -28,12 +27,18 @@ public class HibernateOrder implements Order {
 	@Column(name = "amount", updatable = false)
 	private double amount;
 
+	@Column(name = "discount", updatable = false)
+	private double discount;
+
 	@Column(name = "shipment", updatable = false)
 	private double shipmentAmount;
 
 	@Column(name = "shipmentType", updatable = false)
 	@Enumerated(EnumType.ORDINAL)
 	private ShipmentType shipmentType;
+
+	@Column(name = "coupon", updatable = false)
+	private Integer coupon;
 
 	@Embedded
 	private HibernateAddress shipmentAddress;
@@ -100,9 +105,11 @@ public class HibernateOrder implements Order {
 	HibernateOrder() {
 	}
 
-	public HibernateOrder(Long buyer, Basket basket, Shipment shipment, boolean tracking) {
+	public HibernateOrder(Long buyer, double amount, double discount, Integer coupon, Shipment shipment, boolean tracking) {
 		this.buyer = buyer;
-		this.amount = basket.getAmount();
+		this.amount = amount;
+		this.coupon = coupon;
+		this.discount = discount;
 		this.shipmentAmount = shipment.getAmount();
 		this.shipmentType = shipment.getType();
 		this.shipmentAddress = new HibernateAddress(shipment.getAddress());
@@ -132,6 +139,17 @@ public class HibernateOrder implements Order {
 		return amount;
 	}
 
+	@Override
+	public Integer getCoupon() {
+		return coupon;
+	}
+
+	@Override
+	public double getDiscount() {
+		return discount;
+	}
+
+	@Override
 	public Shipment getShipment() {
 		if (shipment == null) {
 			shipment = new Shipment(shipmentAmount, shipmentAddress, shipmentType);

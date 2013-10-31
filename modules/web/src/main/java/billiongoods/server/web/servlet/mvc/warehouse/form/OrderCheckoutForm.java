@@ -7,100 +7,110 @@ import billiongoods.server.services.payment.ShipmentType;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class OrderCheckoutForm implements Address {
-    private int[] itemQuantities;
-    private Integer[] itemNumbers;
+	private int[] itemQuantities;
+	private Integer[] itemNumbers;
 
-    private String name;
-    private String region;
-    private String city;
-    private String postalCode;
-    private String streetAddress;
+	private String name;
+	private String region;
+	private String city;
+	private String postalCode;
+	private String streetAddress;
 
-    private String action = null;
-    private boolean notifications = true;
+	private String action = null;
 
-    private ShipmentType shipment = ShipmentType.FREE;
+	private String coupon = null;
+	private boolean notifications = true;
 
-    public OrderCheckoutForm() {
-    }
+	private ShipmentType shipment = ShipmentType.FREE;
 
-    public Integer[] getItemNumbers() {
-        return itemNumbers;
-    }
+	public OrderCheckoutForm() {
+	}
 
-    public void setItemNumbers(Integer[] itemNumbers) {
-        this.itemNumbers = itemNumbers;
-    }
+	public Integer[] getItemNumbers() {
+		return itemNumbers;
+	}
 
-    public int[] getItemQuantities() {
-        return itemQuantities;
-    }
+	public void setItemNumbers(Integer[] itemNumbers) {
+		this.itemNumbers = itemNumbers;
+	}
 
-    public void setItemQuantities(int[] itemQuantities) {
-        this.itemQuantities = itemQuantities;
-    }
+	public int[] getItemQuantities() {
+		return itemQuantities;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setItemQuantities(int[] itemQuantities) {
+		this.itemQuantities = itemQuantities;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getRegion() {
-        return region;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setRegion(String region) {
-        this.region = region;
-    }
+	public String getRegion() {
+		return region;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public void setRegion(String region) {
+		this.region = region;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public String getPostalCode() {
-        return postalCode;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
+	public String getPostalCode() {
+		return postalCode;
+	}
 
-    public String getStreetAddress() {
-        return streetAddress;
-    }
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
 
-    public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
-    }
+	public String getStreetAddress() {
+		return streetAddress;
+	}
 
-    public ShipmentType getShipment() {
-        return shipment;
-    }
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
 
-    public void setShipment(ShipmentType shipment) {
-        this.shipment = shipment;
-    }
+	public ShipmentType getShipment() {
+		return shipment;
+	}
 
-    public boolean isNotifications() {
-        return notifications;
-    }
+	public void setShipment(ShipmentType shipment) {
+		this.shipment = shipment;
+	}
 
-    public void setNotifications(boolean notifications) {
-        this.notifications = notifications;
-    }
+	public boolean isNotifications() {
+		return notifications;
+	}
 
-    public String getAction() {
-        return action;
-    }
+	public void setNotifications(boolean notifications) {
+		this.notifications = notifications;
+	}
 
-    public void setAction(String action) {
-        this.action = action;
-    }
+	public String getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(String coupon) {
+		this.coupon = coupon;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
 }

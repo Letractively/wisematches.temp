@@ -22,12 +22,18 @@ public class HibernateCouponManager extends EntitySearchManager<Coupon, CouponCo
 
 	@Override
 	public Coupon getCoupon(Integer id) {
+		if (id == null) {
+			return null;
+		}
 		final Session session = sessionFactory.getCurrentSession();
 		return (Coupon) session.get(HibernateCoupon.class, id);
 	}
 
 	@Override
 	public Coupon getCoupon(String code) {
+		if (code == null) {
+			return null;
+		}
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Criteria criteria = session.createCriteria(HibernateCoupon.class);

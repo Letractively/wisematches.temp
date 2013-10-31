@@ -16,7 +16,7 @@ public interface CouponManager extends SearchManager<Coupon, CouponContext, Void
 	 * @param id the id of coupon
 	 * @return the coupon by specified id or {@code null}  if there is no coupon with specified code.
 	 */
-	Object getCoupon(Integer id);
+	Coupon getCoupon(Integer id);
 
 	/**
 	 * Returns coupon by it's code.

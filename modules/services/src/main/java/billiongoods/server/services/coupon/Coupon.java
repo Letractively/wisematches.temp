@@ -1,5 +1,6 @@
 package billiongoods.server.services.coupon;
 
+import billiongoods.server.services.basket.Basket;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.ProductPreview;
 
@@ -116,12 +117,21 @@ public interface Coupon {
 
 
 	/**
-	 * Calculates new price for the product after applying this coupon.
+	 * Calculates discount for whole basket.
+	 *
+	 * @param basket the basket to be recalculated.
+	 * @return discount for specified basket by this coupon.
+	 */
+	double getDiscount(Basket basket, Catalog catalog);
+
+	/**
+	 * Calculates discount for specified product.
 	 *
 	 * @param product the product to be checked.
-	 * @return final amount for the product discounted by this coupon.
+	 * @return discount for specified product by this coupon.
 	 */
-	double process(ProductPreview product, Catalog catalog);
+	double getDiscount(ProductPreview product, Catalog catalog);
+
 
 	/**
 	 * Checks that this coupon can be applied to specified product (or it's category).

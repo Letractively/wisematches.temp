@@ -49,7 +49,10 @@
             <#list coupons as c>
                 <tr>
                     <td valign="top" nowrap="nowrap">
-                        <a href="/maintain/coupon/view?id=${c.id}">#${c.id} (${c.code})</a>
+                        <a href="/maintain/coupon/view?id=${c.id}">#${c.id}</a>
+                    </td>
+                    <td valign="top" nowrap="nowrap">
+                    ${c.code}
                     </td>
                     <td>
                         <@bg.ui.coupon c/>

@@ -3,6 +3,7 @@ package billiongoods.server.services.basket.impl;
 import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
+import billiongoods.server.services.coupon.Coupon;
 import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.ProductManager;
@@ -19,6 +20,9 @@ public class HibernateBasket implements Basket {
 	@Id
 	@Column(name = "pid", nullable = false, updatable = false, unique = true)
 	private Long principal;
+
+	@Column(name = "coupon")
+	private Integer coupon;
 
 	@Column(name = "creationTime", updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -71,6 +75,11 @@ public class HibernateBasket implements Basket {
 		return Price.round(res);
 	}
 
+	@Override
+	public Integer getCoupon() {
+		return coupon;
+	}
+
 	public Integer getExpirationDays() {
 		return expirationDays;
 	}
@@ -95,7 +104,6 @@ public class HibernateBasket implements Basket {
 		return basketItems;
 	}
 
-
 	@Override
 	public HibernateBasketItem getBasketItem(int number) {
 		for (BasketItem basketItem : basketItems) {
@@ -116,6 +124,10 @@ public class HibernateBasket implements Basket {
 		if (basketItems.remove(item)) {
 			this.updatingTime = new Date();
 		}
+	}
+
+	void setCoupon(Coupon coupon) {
+		this.coupon = coupon == null ? null : coupon.getId();
 	}
 
 	private int getAvailableItemIndex() {

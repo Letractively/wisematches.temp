@@ -400,12 +400,14 @@ bg.warehouse.Basket = function () {
         var totalAmount = 0;
         var totalWeight = 0;
 
+        var discountAmount = 0;
         basket.find('.cnt tr.item').each(function (i, el) {
             var row = $(el);
             var quantity = row.find('[name="itemQuantities"]').val();
 
             totalAmount += quantity * row.find('[name="itemAmounts"]').val();
             totalWeight += quantity * row.find('[name="itemWeights"]').val();
+            discountAmount += quantity * row.find('[name="itemDiscounts"]').val();
         });
 
         var shipmentItem = basket.find('[name="shipment"]:checked');
@@ -432,7 +434,8 @@ bg.warehouse.Basket = function () {
 
         updatePrice(basket.find('.payment-order .price'), totalAmount);
         updatePrice(basket.find('.payment-shipment .price'), shipmentAmount);
-        updatePrice(basket.find('.payment-total .price'), totalAmount + shipmentAmount);
+        updatePrice(basket.find('.payment-discount .price'), discountAmount);
+        updatePrice(basket.find('.payment-total .price'), totalAmount + shipmentAmount - discountAmount);
     };
 
     basket.find('[name="shipment"]').change(function () {

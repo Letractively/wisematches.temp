@@ -5,6 +5,7 @@ import billiongoods.core.Visitor;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.basket.BasketManager;
+import billiongoods.server.services.coupon.Coupon;
 import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.ProductPreview;
@@ -88,6 +89,22 @@ public class HibernateBasketManager implements BasketManager {
 			final Basket basket = (Basket) session.get(HibernateBasket.class, principal.getId());
 			if (basket != null) {
 				session.delete(basket);
+			}
+			return basket;
+		}
+		return null;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	@CacheEvict(value = {"basket", "basketSize"}, key = "#principal")
+	public Basket applyCoupon(Personality principal, Coupon coupon) {
+		if (principal != null) {
+			final Session session = sessionFactory.getCurrentSession();
+			final HibernateBasket basket = (HibernateBasket) session.get(HibernateBasket.class, principal.getId());
+			if (basket != null) {
+				basket.setCoupon(coupon);
+				session.update(basket);
 			}
 			return basket;
 		}

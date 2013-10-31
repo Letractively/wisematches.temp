@@ -80,16 +80,16 @@ public class HibernateCouponTest {
 	}
 
 	@Test
-	public void test_process() {
+	public void test_getDiscount_Product() {
 		final Product product = createMock(Product.class);
 		expect(product.getId()).andReturn(1).anyTimes();
 		expect(product.getPrice()).andReturn(new Price(100.d)).anyTimes();
 		replay(product);
 
-		assertEquals(80.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.FIXED, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
-		assertEquals(0.d, new HibernateCoupon("MOCK1", 200.d, CouponAmountType.FIXED, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
-		assertEquals(20.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.PRICE, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
-		assertEquals(100.d, new HibernateCoupon("MOCK1", 200.d, CouponAmountType.PRICE, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
-		assertEquals(80.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.PERCENT, 1, CouponReferenceType.PRODUCT, 100, null).process(product, null), 0.00000001);
+		assertEquals(20.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.FIXED, 1, CouponReferenceType.PRODUCT, 100, null).getDiscount(product, null), 0.00000001);
+		assertEquals(0.d, new HibernateCoupon("MOCK1", 200.d, CouponAmountType.FIXED, 1, CouponReferenceType.PRODUCT, 100, null).getDiscount(product, null), 0.00000001);
+		assertEquals(80.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.PRICE, 1, CouponReferenceType.PRODUCT, 100, null).getDiscount(product, null), 0.00000001);
+		assertEquals(0.d, new HibernateCoupon("MOCK1", 200.d, CouponAmountType.PRICE, 1, CouponReferenceType.PRODUCT, 100, null).getDiscount(product, null), 0.00000001);
+		assertEquals(20.d, new HibernateCoupon("MOCK1", 20.d, CouponAmountType.PERCENT, 1, CouponReferenceType.PRODUCT, 100, null).getDiscount(product, null), 0.00000001);
 	}
 }
