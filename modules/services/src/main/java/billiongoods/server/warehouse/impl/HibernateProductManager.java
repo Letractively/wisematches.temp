@@ -405,7 +405,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 			}
 
 			if (context.getSearch() != null && !context.getSearch().trim().isEmpty()) {
-				criteria.add(Restrictions.sqlRestriction("MATCH(name, description) AGAINST(? IN BOOLEAN MODE)", context.getSearch(), StringType.INSTANCE));
+				criteria.add(Restrictions.sqlRestriction("MATCH(name, description) AGAINST(?)", context.getSearch(), StringType.INSTANCE));
 			}
 
 		}

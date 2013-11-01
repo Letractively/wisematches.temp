@@ -30,6 +30,7 @@ public class RelationshipsMaintainController extends AbstractController {
 		if (form.getId() != null) {
 			final Group group = relationshipManager.getGroup(form.getId());
 			form.setName(group.getName());
+			form.setType(group.getType());
 			form.setCategoryId(group.getCategoryId());
 			model.addAttribute("group", group);
 		}
@@ -51,9 +52,9 @@ public class RelationshipsMaintainController extends AbstractController {
 			} else {
 				Group group;
 				if ("update".equalsIgnoreCase(form.getAction())) {
-					group = relationshipManager.updateGroup(form.getId(), form.getName(), form.getCategoryId());
+					group = relationshipManager.updateGroup(form.getId(), form.getName(), form.getType(), form.getCategoryId());
 				} else {
-					group = relationshipManager.createGroup(form.getName(), form.getCategoryId());
+					group = relationshipManager.createGroup(form.getName(), form.getType(), form.getCategoryId());
 				}
 				return "redirect:/maintain/group?id=" + group.getId();
 			}

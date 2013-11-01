@@ -995,7 +995,7 @@ button.bg-ui-button.selected {
     height: 75px;
     line-height: 75px;
     font-size: 22px !important;
-    background: url('../images/discountn.png') no-repeat no-repeat;
+    background: url('../images/discountn.png') 100% 100% no-repeat;
 }
 
 .product-item .discount {
@@ -1004,7 +1004,7 @@ button.bg-ui-button.selected {
     text-indent: 0;
     line-height: 53px;
     font-size: 14px !important;
-    background: url('../images/discounts.png') no-repeat no-repeat;
+    background: url('../images/discounts.png') 100% 100% no-repeat;
 }
 
 .product-item.grid {
@@ -1477,33 +1477,33 @@ button.bg-ui-button.selected {
     background: #d67632;
 }
 
-.product .related .cnt {
+.product .group-horizontal .cnt {
     width: 968px;
 }
 
-.product .related .sly-pages, .product .accessories .sly-pages {
+.product .sly-pages {
     float: right;
     margin: 3px 0 0;
 }
 
-.product .related .sly-frame li {
+.product .group-horizontal .sly-frame li {
     width: 170px;
 }
 
-.product .related .product-item {
+.product .group-horizontal .product-item {
     margin-left: auto;
     margin-right: auto;
 }
 
-.product .related .sly-scrollbar {
+.product .group-horizontal .sly-scrollbar {
     margin-top: 6px;
 }
 
-.product .accessories {
+.product .group-vertical {
     position: relative;
 }
 
-.product .accessories .sly-frame, .product .accessories .sly-scrollbar {
+.product .group-vertical .sly-frame, .product .group-vertical .sly-scrollbar {
     height: 225px;
 }
 
@@ -1511,6 +1511,14 @@ button.bg-ui-button.selected {
     float: left;
     width: 75px;
     margin-right: 10px;
+}
+
+.accessories .product-item .discount {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 8px !important;
+    background: url('../images/discountt.png') 100% 100% no-repeat;
 }
 
 .accessories .product-item .image img {

@@ -11,7 +11,7 @@
                     <table style="width: 200px">
                     <#if group??>
                         <tr>
-                            <td><label for="n">Номер: </label></td>
+                            <td><label>Номер: </label></td>
                             <td>
                             ${group.id}
                             </td>
@@ -19,14 +19,21 @@
                     </#if>
 
                         <tr>
-                            <td><label for="n">Имя: </label></td>
+                            <td><label for="name">Имя: </label></td>
                             <td>
                             <@bg.ui.input path="form.name"/>
                             </td>
                         </tr>
 
                         <tr>
-                            <td><label for="n">Категория: </label></td>
+                            <td><label for="type">Тип: </label></td>
+                            <td>
+                            <@bg.ui.enum "form.type" GroupType.values()/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="categoryId">Категория: </label></td>
                             <td>
                             <@bg.ui.selectCategory "form.categoryId" catalog true/>
                             </td>

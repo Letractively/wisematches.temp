@@ -26,8 +26,8 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Group createGroup(String name, Integer categoryId) {
-		final HibernateGroup group = new HibernateGroup(name, categoryId);
+	public Group createGroup(String name, GroupType type, Integer categoryId) {
+		final HibernateGroup group = new HibernateGroup(name, type, categoryId);
 		sessionFactory.getCurrentSession().save(group);
 		return group;
 	}
@@ -45,11 +45,12 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Group updateGroup(Integer id, String name, Integer categoryId) {
+	public Group updateGroup(Integer id, String name, GroupType type, Integer categoryId) {
 		final Session session = sessionFactory.getCurrentSession();
 		final HibernateGroup group = getGroup(id);
 		if (group != null) {
 			group.setName(name);
+			group.setType(type);
 			group.setCategoryId(categoryId);
 			session.update(group);
 		}
@@ -125,7 +126,7 @@ public class HibernateRelationshipManager implements RelationshipManager {
 		if (group == null) {
 			throw new IllegalArgumentException("Unknown group: " + groupId);
 		}
-		session.save(new HibernateRelationship(group, type, productId));
+		session.save(new HibernateRelationship(productId, group, type));
 	}
 
 	@Override

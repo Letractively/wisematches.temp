@@ -14,22 +14,23 @@
                     <span id="searchCatName" class="search-cat-name">Все разделы</span>
                     <span class="search-cat-arrow"></span>
 
+                <#assign selectedCategory=""/>
+                <#if pageableForm?? && pageableForm.category?has_content>
+                    <#assign selectedCategory=catalog.getCategory(pageableForm.category)!""/>
+                </#if>
+
                     <select id="searchCatalog" class="search-catalog" name="category" title="Искать в">
                         <option value="0" selected="selected">Все разделы</option>
-
-                    <#if pageableForm?? && pageableForm.category?has_content>
-                        <#assign rootCategory=catalog.getCategory(pageableForm.category)!""/>
-                        <#if rootCategory?has_content>
-                            <#assign rootCategory=rootCategory.genealogy.root/>
+                    <#list catalog.rootCategories as c>
+                        <option value="${c.id}" <#if c=selectedCategory>selected="selected"</#if>>${c.name}</option>
+                        <#if c.children?has_content>
+                            <#list c.children as sc>
+                                <option value="${sc.id}"
+                                        <#if sc=selectedCategory>selected="selected"</#if>>
+                                    &nbsp;&nbsp;${sc.name}</option>
+                            </#list>
                         </#if>
-                        <#list catalog.rootCategories as c>
-                            <option value="${c.id}" <#if c=rootCategory>selected="selected"</#if>>${c.name}</option>
-                        </#list>
-                    <#else>
-                        <#list catalog.rootCategories as c>
-                            <option value="${c.id}">${c.name}</option>
-                        </#list>
-                    </#if>
+                    </#list>
                     </select>
                 </span>
 

@@ -73,10 +73,15 @@ public class ProductController extends AbstractController {
 		model.addAttribute("product", product);
 		model.addAttribute("category", category);
 
-		final Set<ProductPreview> related = new HashSet<>();
+		final Set<ProductPreview> mode = new HashSet<>();
+		final Set<ProductPreview> similar = new HashSet<>();
 		final List<Group> groups = relationshipManager.getGroups(product.getId());
 		for (Group group : groups) {
-			related.addAll(group.getDescriptions());
+			if (group.getType() == GroupType.MODE) {
+				mode.addAll(group.getDescriptions());
+			} else if (group.getType() == GroupType.SIMILAR) {
+				similar.addAll(group.getDescriptions());
+			}
 		}
 
 		final Set<ProductPreview> accessories = new HashSet<>();
@@ -86,10 +91,13 @@ public class ProductController extends AbstractController {
 				accessories.addAll(relationship.getDescriptions());
 			}
 		}
-		related.remove(product);
+
+		mode.remove(product);
+		similar.remove(product);
 		accessories.remove(product);
 
-		model.addAttribute("related", related);
+		model.addAttribute("mode", mode);
+		model.addAttribute("similar", similar);
 		model.addAttribute("accessories", accessories);
 
 		hideNavigation(model);

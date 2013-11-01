@@ -1,6 +1,7 @@
 package billiongoods.server.warehouse.impl;
 
 import billiongoods.server.warehouse.Group;
+import billiongoods.server.warehouse.GroupType;
 import billiongoods.server.warehouse.ProductPreview;
 
 import javax.persistence.*;
@@ -21,6 +22,10 @@ public class HibernateGroup implements Group {
 	@Column(name = "name")
 	private String name;
 
+	@Column(name = "type")
+	@Enumerated(EnumType.ORDINAL)
+	private GroupType type;
+
 	@Column(name = "categoryId")
 	private Integer categoryId;
 
@@ -32,8 +37,9 @@ public class HibernateGroup implements Group {
 	HibernateGroup() {
 	}
 
-	public HibernateGroup(String name, Integer categoryId) {
+	public HibernateGroup(String name, GroupType type, Integer categoryId) {
 		this.name = name;
+		this.type = type;
 		this.categoryId = categoryId;
 	}
 
@@ -45,6 +51,11 @@ public class HibernateGroup implements Group {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public GroupType getType() {
+		return type;
 	}
 
 	@Override
@@ -69,7 +80,11 @@ public class HibernateGroup implements Group {
 		this.name = name;
 	}
 
-	public void setCategoryId(Integer categoryId) {
+	void setType(GroupType type) {
+		this.type = type;
+	}
+
+	void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
 
