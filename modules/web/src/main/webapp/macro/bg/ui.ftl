@@ -300,6 +300,17 @@
 </div>
 </#macro>
 
+<#macro enum path values attributes="">
+    <@bg.ui.field path>
+    <select id="${bg.ui.status.expression}" name="${bg.ui.status.expression}">
+        <#list values as v>
+            <option value="${v.name()}"
+                    <#if bg.ui.actualValue=v>selected="selected"</#if>><@message code="enum.${v.name()?lower_case}.label"/></option>
+        </#list>
+    </select>
+    </@bg.ui.field>
+</#macro>
+
 <#macro input path attributes="" fieldType="text" size=30 value="">
     <@bg.ui.field path>
     <input type="${fieldType}" id="${bg.ui.status.expression}" name="${status.expression}" size="${size}"

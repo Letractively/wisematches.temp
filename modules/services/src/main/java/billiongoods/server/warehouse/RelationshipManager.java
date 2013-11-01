@@ -11,9 +11,9 @@ public interface RelationshipManager {
 	Group removeGroup(Integer id);
 
 
-	Group createGroup(String name, Integer categoryId);
+	Group createGroup(String name, GroupType type, Integer categoryId);
 
-	Group updateGroup(Integer id, String name, Integer categoryId);
+	Group updateGroup(Integer id, String name, GroupType type, Integer categoryId);
 
 
 	List<Group> searchGroups(String name);

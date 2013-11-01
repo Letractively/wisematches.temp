@@ -649,7 +649,7 @@ bg.warehouse.ProductController = function () {
         $.prettyPhoto.changePage(parseInt($(".thumb img.selected").attr("page")));
     });
 
-    var relatedScroll = $('#related');
+    var relatedScroll = $('.group-horizontal');
     relatedScroll.find('.sly-frame').sly({
         horizontal: 1,
         itemNav: 'basic',
@@ -671,7 +671,7 @@ bg.warehouse.ProductController = function () {
         clickBar: 1
     });
 
-    var accessoriesScroll = $('#accessories');
+    var accessoriesScroll = $('.group-vertical');
     accessoriesScroll.find('.sly-frame').sly({
         horizontal: 0,
         smart: 1,
@@ -810,7 +810,7 @@ $(document).ready(function () {
         var searchCatalog = $("#searchCatalog");
         var find = searchCatalog.find('option:selected');
         $("#searchCatId").val(find.val());
-        $("#searchCatName").text(find.text());
+        $("#searchCatName").text(find.text().trim());
 
         $("#searchInputField").css('padding-left', searchCatalog.width()).css('padding-right', $("#searchAction").width());
     }

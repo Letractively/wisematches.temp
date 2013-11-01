@@ -21,18 +21,18 @@ public class HibernateRelationship implements Relationship {
 	public HibernateRelationship() {
 	}
 
-	public HibernateRelationship(HibernateGroup group, RelationshipType type, Integer productId) {
-		this.pk = new Pk(productId, type, group);
-	}
-
-	@Override
-	public RelationshipType getType() {
-		return pk.type;
+	public HibernateRelationship(Integer product, HibernateGroup group, RelationshipType type) {
+		this.pk = new Pk(product, type, group);
 	}
 
 	@Override
 	public HibernateGroup getGroup() {
 		return pk.group;
+	}
+
+	@Override
+	public RelationshipType getType() {
+		return pk.type;
 	}
 
 	@Override

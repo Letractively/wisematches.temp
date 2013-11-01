@@ -18,4 +18,5 @@
 [#-- @ftlvariable name="ShipmentType" type="billiongoods.server.services.payment.ShipmentType.static" --]
 [#-- @ftlvariable name="SortingType" type="billiongoods.server.web.servlet.mvc.warehouse.form.SortingType.static" --]
 [#-- @ftlvariable name="AttributeType" type="billiongoods.server.warehouse.AttributeType.static" --]
+[#-- @ftlvariable name="GroupType" type="billiongoods.server.warehouse.GroupType.static" --]
 [#-- @ftlvariable name="RelationshipType" type="billiongoods.server.warehouse.RelationshipType.static" --]

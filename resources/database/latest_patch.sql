@@ -1,3 +1,13 @@
+#11.01
+UPDATE store_product_relationship
+SET type = 0;
+
+ALTER TABLE `billiongoods`.`store_group`
+ADD COLUMN `type` INT(2) NOT NULL DEFAULT 0
+AFTER `name`;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1101');
+
 #10.31
 ALTER TABLE `billiongoods`.`store_basket`
 ADD COLUMN `coupon` INT(11) NULL

@@ -1,5 +1,6 @@
 <#-- @ftlvariable name="product" type="billiongoods.server.warehouse.Product" -->
-<#-- @ftlvariable name="related" type="billiongoods.server.warehouse.ProductPreview[]" -->
+<#-- @ftlvariable name="mode" type="billiongoods.server.warehouse.ProductPreview[]" -->
+<#-- @ftlvariable name="similar" type="billiongoods.server.warehouse.ProductPreview[]" -->
 <#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ProductPreview[]" -->
 
 <#include "/core.ftl">
@@ -107,8 +108,9 @@
 
                 <div style="text-align: right; width: 100%">
                     <a href="#description">Описание</a>
-                <#if accessories?has_content>| <a href="#accessories">Запачные части</a></#if>
-                <#if related?has_content>| <a href="#related">Похожие продукты</a></#if>
+                <#if accessories?has_content>| <a href="#accessories">Запасные части</a></#if>
+                <#if mode?has_content>| <a href="#mode">Модификации</a></#if>
+                <#if similar?has_content>| <a href="#similar">Похожие продукты</a></#if>
                 </div>
 
                 <form id="shoppingForm" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -222,7 +224,7 @@
 </#if>
 
 <#if accessories?has_content>
-    <@bg.ui.panel "Запасные части <ul class=\"sly-pages\"></ul>" "accessories">
+    <@bg.ui.panel "Запасные части <ul class=\"sly-pages\"></ul>" "accessories" "accessories group-vertical">
     <div class="sly-scrollbar vertical">
         <div class="handle">
             <div class="mousearea"></div>
@@ -243,11 +245,31 @@
     </@bg.ui.panel>
 </#if>
 
-<#if related?has_content>
-    <@bg.ui.panel "Похожие продукты <ul class=\"sly-pages\"></ul>" "related">
+<#if mode?has_content>
+    <@bg.ui.panel "Модификации <ul class=\"sly-pages\"></ul>" "mode" "mode group-horizontal">
     <div class="sly-frame">
         <ul>
-            <#list related as a>
+            <#list mode as a>
+                <li>
+                    <@bg.ui.productItem a 'grid'/>
+                </li>
+            </#list>
+        </ul>
+    </div>
+
+    <div class="sly-scrollbar horizontal">
+        <div class="handle">
+            <div class="mousearea"></div>
+        </div>
+    </div>
+    </@bg.ui.panel>
+</#if>
+
+<#if similar?has_content>
+    <@bg.ui.panel "Похожие продукты <ul class=\"sly-pages\"></ul>" "similar" "similar group-horizontal">
+    <div class="sly-frame">
+        <ul>
+            <#list similar as a>
                 <li>
                     <@bg.ui.productItem a 'grid'/>
                 </li>

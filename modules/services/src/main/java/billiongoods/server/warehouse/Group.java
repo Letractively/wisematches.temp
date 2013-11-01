@@ -10,6 +10,8 @@ public interface Group {
 
 	String getName();
 
+	GroupType getType();
+
 	Integer getCategoryId();
 
 	List<ProductPreview> getDescriptions();
