@@ -20,7 +20,7 @@ public class Relationships {
 				previews = new ArrayList<>();
 				productsMap.put(type, previews);
 			}
-			previews.addAll(relationship.getDescriptions());
+			previews.addAll(relationship.getProductPreviews());
 		}
 	}
 

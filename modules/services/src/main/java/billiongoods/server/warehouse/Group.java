@@ -14,5 +14,5 @@ public interface Group {
 
 	Integer getCategoryId();
 
-	List<ProductPreview> getDescriptions();
+	List<ProductPreview> getProductPreviews();
 }
