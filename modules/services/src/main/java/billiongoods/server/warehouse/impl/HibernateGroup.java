@@ -64,7 +64,7 @@ public class HibernateGroup implements Group {
 	}
 
 	@Override
-	public List<ProductPreview> getDescriptions() {
+	public List<ProductPreview> getProductPreviews() {
 		return products;
 	}
 

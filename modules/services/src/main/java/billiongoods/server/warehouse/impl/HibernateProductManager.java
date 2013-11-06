@@ -4,6 +4,7 @@ import billiongoods.core.search.Orders;
 import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.warehouse.*;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.*;
@@ -346,8 +347,14 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 	}
 
 	@Override
-	protected void applyOrders(Criteria criteria, Orders orders) {
-		super.applyOrders(criteria, orders);
+	protected void applyOrders(Criteria criteria, ProductContext context, Orders orders) {
+/*
+		if (context.getSearch() != null && !context.getSearch().trim().isEmpty()) {
+			criteria.addOrder(new SqlOrder("MATCH(name, description) AGAINST(\"" + context.getSearch() + "\")", false));
+		} else {
+*/
+		super.applyOrders(criteria, context, orders);
+//		}
 		criteria.addOrder(Order.asc("id"));// always sort by id at the end
 	}
 
@@ -407,7 +414,6 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 			if (context.getSearch() != null && !context.getSearch().trim().isEmpty()) {
 				criteria.add(Restrictions.sqlRestriction("MATCH(name, description) AGAINST(?)", context.getSearch(), StringType.INSTANCE));
 			}
-
 		}
 
 		if (filter != null) {
@@ -468,6 +474,17 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 
 	public void setAttributeManager(AttributeManager attributeManager) {
 		this.attributeManager = attributeManager;
+	}
+
+	private static final class SqlOrder extends Order {
+		protected SqlOrder(String propertyName, boolean ascending) {
+			super(propertyName, ascending);
+		}
+
+		@Override
+		public String toSqlString(Criteria criteria, CriteriaQuery criteriaQuery) throws HibernateException {
+			return getPropertyName() + (isAscending() ? " asc" : " desc");
+		}
 	}
 
 	private static final class CountedValue implements Comparable<CountedValue> {

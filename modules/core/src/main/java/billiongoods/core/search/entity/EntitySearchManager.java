@@ -45,8 +45,8 @@ public abstract class EntitySearchManager<E, C, F> implements SearchManager<E, C
 		final Criteria criteria = session.createCriteria(entityType);
 		applyRestrictions(criteria, context, filter);
 		applyProjections(criteria, context, filter);
-		applyOrders(criteria, orders);
-		applyRange(range, criteria);
+		applyOrders(criteria, context, orders);
+		applyRange(range, context, criteria);
 
 		final List list = criteria.list();
 		initializeEntities(list);
@@ -60,13 +60,13 @@ public abstract class EntitySearchManager<E, C, F> implements SearchManager<E, C
 	protected void initializeEntities(List<E> list) {
 	}
 
-	protected void applyRange(Range range, Criteria criteria) {
+	protected void applyRange(Range range, C context, Criteria criteria) {
 		if (range != null) {
 			range.apply(criteria);
 		}
 	}
 
-	protected void applyOrders(Criteria criteria, Orders orders) {
+	protected void applyOrders(Criteria criteria, C context, Orders orders) {
 		if (orders != null) {
 			orders.apply(criteria);
 		}

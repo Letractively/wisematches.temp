@@ -82,7 +82,6 @@
 
 <script type="text/javascript">
     $(function () {
-        $("#started").datepicker({ "dateFormat": "yy-mm-dd"});
-        $("#termination").datepicker({ "dateFormat": "yy-mm-dd"});
+        $("#termination").datepicker({ "dateFormat": "yy.mm.dd"});
     });
 </script>

@@ -121,7 +121,9 @@
 </tr>
 <tr>
     <td><label for="storeAvailable">Количество на складе: </label></td>
-    <td><@bg.ui.input path="form.storeAvailable"/></td>
+    <td><@bg.ui.input path="form.storeAvailable">
+        <button id="notAvailable" type="button">Нет в наличии</button>
+        <button id="available" type="button">В наличии</button></@bg.ui.input></td>
 </tr>
 
 <tr>
@@ -694,5 +696,14 @@ $("#productParameters").find("button").click(function () {
 
 $(".image img").click(function () {
     $(this).parent().find("input[name=previewImage]").prop('checked', 'checked');
+});
+
+$("#restockDate").datepicker({ "dateFormat": "yy.mm.dd"});
+
+$("#notAvailable").click(function () {
+    $("#storeAvailable").val("0");
+});
+$("#available").click(function () {
+    $("#storeAvailable").val("");
 });
 </script>

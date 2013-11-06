@@ -77,10 +77,14 @@ public class ProductController extends AbstractController {
 		final Set<ProductPreview> similar = new HashSet<>();
 		final List<Group> groups = relationshipManager.getGroups(product.getId());
 		for (Group group : groups) {
-			if (group.getType() == GroupType.MODE) {
-				mode.addAll(group.getDescriptions());
-			} else if (group.getType() == GroupType.SIMILAR) {
-				similar.addAll(group.getDescriptions());
+			for (ProductPreview preview : group.getProductPreviews()) {
+				if (ProductContext.ACTIVE_ONLY.contains(preview.getState())) {
+					if (group.getType() == GroupType.MODE) {
+						mode.add(preview);
+					} else if (group.getType() == GroupType.SIMILAR) {
+						similar.add(preview);
+					}
+				}
 			}
 		}
 
@@ -88,7 +92,11 @@ public class ProductController extends AbstractController {
 		final List<Relationship> relationships = relationshipManager.getRelationships(product.getId());
 		for (Relationship relationship : relationships) {
 			if (relationship.getType() == RelationshipType.ACCESSORIES) {
-				accessories.addAll(relationship.getDescriptions());
+				for (ProductPreview preview : relationship.getProductPreviews()) {
+					if (ProductContext.ACTIVE_ONLY.contains(preview.getState())) {
+						accessories.add(preview);
+					}
+				}
 			}
 		}
 

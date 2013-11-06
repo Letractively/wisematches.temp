@@ -36,7 +36,7 @@ public class CouponMaintainController extends AbstractController {
 	private CouponManager couponManager;
 	private ProductManager productManager;
 
-	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
 	public CouponMaintainController() {
 	}
@@ -89,22 +89,26 @@ public class CouponMaintainController extends AbstractController {
 			}
 
 			Coupon res = null;
-			if (form.getReferenceType() == CouponReferenceType.CATEGORY) {
-				final Category category = categoryManager.getCategory(form.getReference());
-				if (category == null) {
-					errors.rejectValue("referenceId", "error.coupon.reference.category.unknown");
-				} else {
-					res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getAmountType(), category, form.getAllocatedCount(), termination);
-				}
-			} else if (form.getReferenceType() == CouponReferenceType.PRODUCT) {
-				final ProductPreview preview = productManager.getPreview(form.getReference());
-				if (preview == null) {
-					errors.rejectValue("referenceId", "error.coupon.reference.preview.unknown");
-				} else {
-					res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getAmountType(), preview, form.getAllocatedCount(), termination);
-				}
+			if (form.getReference() == null) {
+				errors.rejectValue("reference", "error.coupon.reference.unknown");
 			} else {
-				errors.rejectValue("referenceType", "error.coupon.reference.type.unknown");
+				if (form.getReferenceType() == CouponReferenceType.CATEGORY) {
+					final Category category = categoryManager.getCategory(form.getReference());
+					if (category == null) {
+						errors.rejectValue("referenceId", "error.coupon.reference.category.unknown");
+					} else {
+						res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getAmountType(), category, form.getAllocatedCount(), termination);
+					}
+				} else if (form.getReferenceType() == CouponReferenceType.PRODUCT) {
+					final ProductPreview preview = productManager.getPreview(form.getReference());
+					if (preview == null) {
+						errors.rejectValue("referenceId", "error.coupon.reference.preview.unknown");
+					} else {
+						res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getAmountType(), preview, form.getAllocatedCount(), termination);
+					}
+				} else {
+					errors.rejectValue("referenceType", "error.coupon.reference.type.unknown");
+				}
 			}
 
 			if (res != null) {

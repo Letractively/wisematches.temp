@@ -36,8 +36,8 @@ public class HibernateRelationship implements Relationship {
 	}
 
 	@Override
-	public List<ProductPreview> getDescriptions() {
-		return pk.group.getDescriptions();
+	public List<ProductPreview> getProductPreviews() {
+		return pk.group.getProductPreviews();
 	}
 
 	public static class Pk implements Serializable {

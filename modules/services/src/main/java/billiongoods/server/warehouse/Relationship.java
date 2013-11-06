@@ -10,5 +10,5 @@ public interface Relationship {
 
 	RelationshipType getType();
 
-	List<ProductPreview> getDescriptions();
+	List<ProductPreview> getProductPreviews();
 }

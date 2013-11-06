@@ -61,7 +61,7 @@
             <div>
                 <#list groups as g>
                     <div>
-                        <a href="/maintain/group?id=${g.id}">${g.name} (${g.descriptions?size})</a>
+                        <a href="/maintain/group?id=${g.id}">${g.name} (${g.productPreviews?size})</a>
                     </div>
                 </#list>
             </div>
@@ -73,11 +73,21 @@
 <#if group??>
 <div style="padding-top: 20px">
     <table>
-        <#if group.descriptions?size != 0>
-            <#list group.descriptions as a>
+        <#if group.productPreviews?size != 0>
+            <#list group.productPreviews as a>
+                <#assign active=a.state == ProductState.ACTIVE || a.state == ProductState.PROMOTED/>
                 <tr>
-                    <td><@bg.link.product a>${messageSource.getProductCode(a)}</@bg.link.product></td>
+                    <td>
+                        <@bg.link.product a>
+                            <span <#if !active>style="text-decoration: line-through"</#if>>
+                            ${messageSource.getProductCode(a)}
+                            </span>
+                        </@bg.link.product>
+                    </td>
                     <td width="100%">${a.name}</td>
+                    <td>
+                        <span <#if active>class="sample"</#if>>(${a.state})</span>
+                    </td>
                     <td>
                         <button type="button">Удалить</button>
                     </td>
