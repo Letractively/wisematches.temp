@@ -141,9 +141,12 @@ public class AbstractProduct implements ProductPreview {
 	}
 
 	void setState(ProductState state) {
+		final ProductState oldState = this.state;
+
 		this.state = state;
 
-		if (state == ProductState.ACTIVE || state == ProductState.PROMOTED) {
+		if ((state == ProductState.ACTIVE || state == ProductState.PROMOTED) &&
+				(oldState != ProductState.ACTIVE && oldState != ProductState.PROMOTED)) {
 			this.registrationDate = new Date();
 		}
 	}

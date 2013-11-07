@@ -8,18 +8,18 @@
         <input name="id" type="hidden" value="${order.id}">
 
         <div class="info">
-            <#if order.orderState!=OrderState.SHIPPED>
-                <#if order.orderState==OrderState.ACCEPTED>
-                    Внутренний номер поставщика:
-                <#elseif order.orderState==OrderState.PROCESSING>
-                    Номер доставки почты Китая:
-                <#elseif order.orderState==OrderState.SHIPPING>
-                    Международный номер доставки (если есть):
-                <#else>
-                    Внутренний номер поставщика/Номер доставки почты Китая/Международный номер доставки:
-                </#if>
-                <@bg.ui.input path="form.value" fieldType="text"/>
+            <#if order.orderState==OrderState.ACCEPTED>
+                Внутренний номер поставщика:
+            <#elseif order.orderState==OrderState.PROCESSING>
+                Номер доставки почты Китая:
+            <#elseif order.orderState==OrderState.SHIPPING>
+                Международный номер доставки (если есть):
+            <#elseif order.orderState==OrderState.SHIPPED>
+                Дата вручения (yyyy.MM.dd):
+            <#else>
+                Внутренний номер поставщика/Номер доставки почты Китая/Международный номер доставки:
             </#if>
+            <@bg.ui.input path="form.value" fieldType="text"/>
 
             Коментарий:
             <@bg.ui.field path="form.commentary">
@@ -67,7 +67,12 @@
     $("#allowExtendedOperations").change(function () {
         $("#extendedOptions").find("button").prop('disabled', !$(this).prop('checked'));
     });
+
+        <#if order.orderState==OrderState.SHIPPED>
+        $("#value").datepicker({ "dateFormat": "yy.mm.dd"});
+        </#if>
 </script>
 </#if>
+
 
 <#include "/content/warehouse/order/view.ftl"/>
