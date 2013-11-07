@@ -7,9 +7,9 @@ import billiongoods.core.search.Range;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class PageableForm {
-	private int page = 1;
-	private int count = DEFAULT_COUNT_NUMBER;
-	private String sort = DEFAULT_SORT.getCode();
+	private int page;
+	private int count;
+	private String sort;
 
 	private String query = null;
 	private String filter = null;
@@ -19,20 +19,25 @@ public class PageableForm {
 	private int filteredCount;
 
 	private Range range;
-
-	private static final int DEFAULT_COUNT_NUMBER = 24;
-	private static final SortingType DEFAULT_SORT = SortingType.BESTSELLING;
 	private Orders orders;
 
 	public PageableForm() {
 	}
 
 	public void initialize(int totalCount, int filteredCount) {
+		if (sort == null) {
+			if (query != null) {
+				sort = SortingType.RELEVANCE.getCode();
+			} else {
+				sort = SortingType.BESTSELLING.getCode();
+			}
+		}
+
 		if (page < 1) {
 			page = 1;
 		}
 		if (count < 1) {
-			count = DEFAULT_COUNT_NUMBER;
+			count = 24;
 		}
 
 		int k = (int) Math.round((filteredCount / (double) count) + 0.5d);
@@ -47,7 +52,7 @@ public class PageableForm {
 
 		final SortingType sortingType = SortingType.byCode(sort);
 		if (sortingType != null) {
-			this.orders = Orders.of(sortingType.getOrder());
+			this.orders = sortingType.getOrders();
 		}
 	}
 

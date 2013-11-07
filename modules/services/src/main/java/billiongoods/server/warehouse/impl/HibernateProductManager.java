@@ -348,13 +348,11 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 
 	@Override
 	protected void applyOrders(Criteria criteria, ProductContext context, Orders orders) {
-/*
-		if (context.getSearch() != null && !context.getSearch().trim().isEmpty()) {
+		if (context.getSearch() != null && !context.getSearch().trim().isEmpty() && orders == null) {
 			criteria.addOrder(new SqlOrder("MATCH(name, description) AGAINST(\"" + context.getSearch() + "\")", false));
 		} else {
-*/
-		super.applyOrders(criteria, context, orders);
-//		}
+			super.applyOrders(criteria, context, orders);
+		}
 		criteria.addOrder(Order.asc("id"));// always sort by id at the end
 	}
 

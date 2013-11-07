@@ -141,9 +141,6 @@
         </div>
 
         <div class="table-filter">
-        <#--<input id="tableFormPage" type="hidden" value="${pageableForm.page}"/>-->
-        <#--<input id="tableFormCount" type="hidden" value="${pageableForm.count}"/>-->
-
             <div class="ipp">
                 <strong>На странице: </strong>
                 <ul>
@@ -157,11 +154,14 @@
 
             <#if pageableForm.sort?has_content>
                 <div class="sort">
-                    <strong>Сортировать по: </strong>
+                    <strong><label for="tableSorting">Сортировать по: </label></strong>
                     <select id="tableSorting" name="sort">
                         <#list SortingType.values() as s>
-                            <option value="?<@tableNavigationParams pageableForm "sort" s.getCode()/>"
-                                    <#if s.getCode()==pageableForm.sort>selected="selected"</#if>><@message code="product.sort.type.${s.getCode()}"/></option>
+                            <!-- RELEVANCE only if search-->
+                            <#if pageableForm.query?has_content || s != SortingType.RELEVANCE>
+                                <option value="?<@tableNavigationParams pageableForm "sort" s.getCode()/>"
+                                        <#if s.getCode()==pageableForm.sort>selected="selected"</#if>><@message code="product.sort.type.${s.getCode()}"/></option>
+                            </#if>
                         </#list>
                     </select>
                 </div>
