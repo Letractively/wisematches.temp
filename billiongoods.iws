@@ -6,15 +6,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/Orders.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/Orders.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/PageableForm.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/PageableForm.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/ProductController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/ProductController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/SortingType.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/SortingType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProduct.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProduct.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrder.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -99,7 +99,17 @@
     <favorites_list name="application" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="todo.txt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/todo.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="68" selection-start="1116" selection-end="1116" vertical-scroll-proportion="0.74970204" vertical-offset="0" max-vertical-offset="5508">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -118,16 +128,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/coupon/Coupon.java" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasket.java" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/Basket.java" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrder.java" />
-        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/Order.java" />
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/coupon/impl/HibernateCouponManagerTest.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/coupon/search.ftl" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/coupon/view.ftl" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/coupon/CouponManager.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/coupon/impl/HibernateCouponManager.java" />
@@ -167,8 +170,15 @@
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/PageableForm.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/SortingType.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/ProductController.java" />
-        <option value="$PROJECT_DIR$/todo.txt" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProduct.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderManager.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrder.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl" />
+        <option value="$PROJECT_DIR$/todo.txt" />
       </list>
     </option>
   </component>
@@ -615,7 +625,7 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
       <deployment />
       <server-settings />
       <predefined_log_file id="Tomcat" enabled="true" />
@@ -656,7 +666,7 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="Tomcat 7" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7">
+    <configuration default="false" name="Tomcat 7" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER" value="false" />
       <option name="COMMON_VM_ARGUMENTS" value="-Dbilliongoods.configuration=file:C:\Source\bg\resources\config\integration.properties -Dlogback.configurationFile=C:\Source\bg\integ.logback.xml -Dhttp.proxyHost=surf-proxy.intranet.db.com -Dhttp.proxyPort=8080" />
       <deployment>
@@ -885,7 +895,9 @@
       <workItem from="1383289475355" duration="8000" />
       <workItem from="1383289510583" duration="11199000" />
       <workItem from="1383742459602" duration="4632000" />
-      <workItem from="1383808667953" duration="3060000" />
+      <workItem from="1383808667953" duration="3226000" />
+      <workItem from="1383811983418" duration="461000" />
+      <workItem from="1383822372426" duration="1296000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -1319,11 +1331,15 @@
       <created>1383747085606</created>
       <updated>1383747085607</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="+">
+      <created>1383811739123</created>
+      <updated>1383811739123</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="387565000" />
+    <option name="totallyTimeSpent" value="389488000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1364,7 +1380,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25530303" sideWeight="0.2652733" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33485195" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32077625" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26537585" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2648402" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1465,74 +1481,9 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="69" selection-start="4030" selection-end="4046" vertical-scroll-proportion="0.0" vertical-offset="1191" max-vertical-offset="2193">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/attribute.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1350" selection-end="1723" vertical-scroll-proportion="-18.923077" vertical-offset="205" max-vertical-offset="1275" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/macro/message.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="8" selection-start="8" selection-end="8" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="839">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/freemarker/freemarker/2.3.19/freemarker-2.3.19-sources.jar!/freemarker/ext/beans/SimpleMethodModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="0" selection-start="5534" selection-end="5534" vertical-scroll-proportion="0.7605634" vertical-offset="763" max-vertical-offset="1615" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="74" selection-start="969" selection-end="969" vertical-scroll-proportion="0.3292978" vertical-offset="0" max-vertical-offset="826">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/RelationshipsMaintainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="43" selection-start="1071" selection-end="1071" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1037">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/form/GroupForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="25" selection-start="870" selection-end="870" vertical-scroll-proportion="0.6983568" vertical-offset="0" max-vertical-offset="852" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/discounts.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/discountn.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/image/ImageSize.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="12" selection-start="548" selection-end="548" vertical-scroll-proportion="0.14320096" vertical-offset="0" max-vertical-offset="1666" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/discountt.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-3.0.2.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1485" column="15" selection-start="23700" selection-end="23700" vertical-scroll-proportion="0.0" vertical-offset="25217" max-vertical-offset="31110">
-          <folding />
-        </state>
+        <state line="1485" column="15" selection-start="23700" selection-end="23700" vertical-scroll-proportion="0.0" vertical-offset="25217" max-vertical-offset="31110" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/product.ftl">
@@ -1577,53 +1528,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="6" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1003">
-          <folding />
-        </state>
+        <state line="14" column="6" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1003" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductContext.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="27" selection-start="138" selection-end="152" vertical-scroll-proportion="0.0" vertical-offset="56" max-vertical-offset="1088">
-          <folding />
-        </state>
+        <state line="7" column="27" selection-start="138" selection-end="152" vertical-scroll-proportion="0.0" vertical-offset="56" max-vertical-offset="1088" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Relationship.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="43" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
-          <folding />
-        </state>
+        <state line="12" column="43" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateRelationship.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="42" selection-start="917" selection-end="917" vertical-scroll-proportion="0.0" vertical-offset="192" max-vertical-offset="1411">
-          <folding />
-        </state>
+        <state line="39" column="42" selection-start="917" selection-end="917" vertical-scroll-proportion="0.0" vertical-offset="192" max-vertical-offset="1411" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateGroup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="44" selection-start="988" selection-end="988" vertical-scroll-proportion="0.0" vertical-offset="338" max-vertical-offset="1190">
-          <folding>
-            <element signature="docComment;class#HibernateGroup#0" expanded="false" />
-            <element signature="e#329#336#0" expanded="false" />
-            <element signature="e#414#417#0" expanded="false" />
-            <element signature="e#1497#1498#0" expanded="true" />
-            <element signature="e#1519#1520#0" expanded="true" />
-            <element signature="method#addProduct#0;class#HibernateGroup#0" expanded="false" />
-            <element signature="method#removeProduct#0;class#HibernateGroup#0" expanded="false" />
-            <element signature="method#toString#0;class#HibernateGroup#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="33" column="44" selection-start="988" selection-end="988" vertical-scroll-proportion="0.0" vertical-offset="338" max-vertical-offset="1190" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Group.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="12" selection-start="281" selection-end="281" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
-          <folding />
-        </state>
+        <state line="17" column="12" selection-start="281" selection-end="281" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/group.ftl">
@@ -1633,23 +1563,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/MaintenanceController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="55" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
-          <folding />
-        </state>
+        <state line="29" column="55" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ProductMaintainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="89" selection-start="2152" selection-end="2152" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7021">
-          <folding />
-        </state>
+        <state line="46" column="89" selection-start="2152" selection-end="2152" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7021" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/coupon/impl/HibernateCoupon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="24" selection-start="976" selection-end="976" vertical-scroll-proportion="0.0" vertical-offset="617" max-vertical-offset="2805">
-          <folding />
-        </state>
+        <state line="31" column="24" selection-start="976" selection-end="976" vertical-scroll-proportion="0.0" vertical-offset="617" max-vertical-offset="2805" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/form/CouponForm.java">
@@ -1662,77 +1586,44 @@
         <state line="721" column="0" selection-start="26865" selection-end="26865" vertical-scroll-proportion="0.0" vertical-offset="11484" max-vertical-offset="33915" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/coupon/create.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="95" selection-start="2320" selection-end="2320" vertical-scroll-proportion="-15.423077" vertical-offset="738" max-vertical-offset="1564" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/CouponMaintainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="37" selection-start="3676" selection-end="3676" vertical-scroll-proportion="0.0" vertical-offset="807" max-vertical-offset="1955">
-          <folding />
-        </state>
+        <state line="92" column="37" selection-start="3676" selection-end="3676" vertical-scroll-proportion="0.0" vertical-offset="807" max-vertical-offset="1955" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="54" selection-start="4157" selection-end="4157" vertical-scroll-proportion="0.592723" vertical-offset="889" max-vertical-offset="4641">
-          <folding>
-            <element signature="e#2760#2879#0" expanded="true" />
-            <element signature="e#2873#2874#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="108" column="54" selection-start="4157" selection-end="4157" vertical-scroll-proportion="0.592723" vertical-offset="889" max-vertical-offset="4641" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/PriceConverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="10" selection-start="189" selection-end="189" vertical-scroll-proportion="0.15962441" vertical-offset="0" max-vertical-offset="852">
-          <folding />
-        </state>
+        <state line="8" column="10" selection-start="189" selection-end="189" vertical-scroll-proportion="0.15962441" vertical-offset="0" max-vertical-offset="852" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/DefaultPriceConverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="60" selection-start="365" selection-end="365" vertical-scroll-proportion="0.19953051" vertical-offset="0" max-vertical-offset="852">
-          <folding />
-        </state>
+        <state line="12" column="60" selection-start="365" selection-end="365" vertical-scroll-proportion="0.19953051" vertical-offset="0" max-vertical-offset="852" />
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.5.Final/hibernate-core-4.2.5.Final-sources.jar!/org/hibernate/Criteria.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="31" selection-start="4712" selection-end="4712" vertical-scroll-proportion="0.33333334" vertical-offset="1399" max-vertical-offset="9282">
-          <folding />
-        </state>
+        <state line="129" column="31" selection-start="4712" selection-end="4712" vertical-scroll-proportion="0.33333334" vertical-offset="1399" max-vertical-offset="9282" />
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.5.Final/hibernate-core-4.2.5.Final-sources.jar!/org/hibernate/criterion/Order.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="24" selection-start="3958" selection-end="3958" vertical-scroll-proportion="0.78" vertical-offset="1649" max-vertical-offset="2499">
-          <folding>
-            <element signature="e#0#4033#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#3549#3550#0" expanded="true" />
-            <element signature="e#3575#3576#0" expanded="true" />
-            <element signature="e#3608#3609#0" expanded="true" />
-            <element signature="e#3631#3632#0" expanded="true" />
-            <element signature="e#3665#3666#0" expanded="true" />
-            <element signature="e#3689#3690#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="136" column="24" selection-start="3958" selection-end="3958" vertical-scroll-proportion="0.78" vertical-offset="1649" max-vertical-offset="2499" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/Order.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="14" selection-start="320" selection-end="320" vertical-scroll-proportion="0.29929578" vertical-offset="0" max-vertical-offset="918">
-          <folding />
-        </state>
+        <state line="15" column="14" selection-start="320" selection-end="320" vertical-scroll-proportion="0.29929578" vertical-offset="0" max-vertical-offset="918" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/entity/EntitySearchManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="60" selection-start="910" selection-end="910" vertical-scroll-proportion="0.0" vertical-offset="389" max-vertical-offset="1241">
-          <folding />
-        </state>
+        <state line="31" column="60" selection-start="910" selection-end="910" vertical-scroll-proportion="0.0" vertical-offset="389" max-vertical-offset="1241" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/product.ftl">
@@ -1744,75 +1635,133 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/Orders.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="66" selection-start="460" selection-end="460" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2159">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="21" column="66" selection-start="460" selection-end="460" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2159" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="41" selection-start="2023" selection-end="2023" vertical-scroll-proportion="0.0" vertical-offset="494" max-vertical-offset="1972">
-          <folding />
-        </state>
+        <state line="40" column="41" selection-start="2023" selection-end="2023" vertical-scroll-proportion="0.0" vertical-offset="494" max-vertical-offset="1972" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/CategoryController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="20" selection-start="2684" selection-end="2684" vertical-scroll-proportion="0.078638494" vertical-offset="749" max-vertical-offset="3468">
-          <folding />
-        </state>
+        <state line="70" column="20" selection-start="2684" selection-end="2684" vertical-scroll-proportion="0.078638494" vertical-offset="749" max-vertical-offset="3468" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/PageableForm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="45" selection-start="1186" selection-end="1186" vertical-scroll-proportion="0.57276994" vertical-offset="413" max-vertical-offset="1666">
-          <folding />
-        </state>
+        <state line="54" column="45" selection-start="1186" selection-end="1186" vertical-scroll-proportion="0.57276994" vertical-offset="413" max-vertical-offset="1666" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/SortingType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="30" selection-start="540" selection-end="540" vertical-scroll-proportion="0.37910798" vertical-offset="0" max-vertical-offset="852">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#799#800#0" expanded="true" />
-            <element signature="e#819#820#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="19" column="30" selection-start="540" selection-end="540" vertical-scroll-proportion="0.37910798" vertical-offset="0" max-vertical-offset="852" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8670">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8670" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/ProductController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="0" selection-start="3939" selection-end="3939" vertical-scroll-proportion="0.57276994" vertical-offset="770" max-vertical-offset="2873">
-          <folding />
-        </state>
+        <state line="103" column="0" selection-start="3939" selection-end="3939" vertical-scroll-proportion="0.57276994" vertical-offset="770" max-vertical-offset="2873" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="0" selection-start="5243" selection-end="5243" vertical-scroll-proportion="0.25461254" vertical-offset="2224" max-vertical-offset="5916">
+        <state line="143" column="0" selection-start="5243" selection-end="5243" vertical-scroll-proportion="0.25461254" vertical-offset="2224" max-vertical-offset="5916" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProduct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="43" selection-start="354" selection-end="354" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1768">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProduct.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="68" selection-start="2288" selection-end="2288" vertical-scroll-proportion="0.0" vertical-offset="1173" max-vertical-offset="2839">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="10" selection-start="645" selection-end="651" vertical-scroll-proportion="0.43896714" vertical-offset="0" max-vertical-offset="1207">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/coupon/create.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="0" selection-start="2645" selection-end="2712" vertical-scroll-proportion="-27.192308" vertical-offset="738" max-vertical-offset="1564">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="57" selection-start="2203" selection-end="2203" vertical-scroll-proportion="0.32082325" vertical-offset="500" max-vertical-offset="1411">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="0" selection-start="3818" selection-end="3818" vertical-scroll-proportion="0.45292014" vertical-offset="1082" max-vertical-offset="1921">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="9" selection-start="1303" selection-end="1303" vertical-scroll-proportion="0.78051645" vertical-offset="185" max-vertical-offset="1037">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="233" column="60" selection-start="7325" selection-end="7325" vertical-scroll-proportion="0.39788732" vertical-offset="3282" max-vertical-offset="5168">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/util/Date.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="882" column="0" selection-start="37658" selection-end="37658" vertical-scroll-proportion="0.0" vertical-offset="14230" max-vertical-offset="22151">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2979" column="43" selection-start="118799" selection-end="118799" vertical-scroll-proportion="0.0" vertical-offset="49777" max-vertical-offset="52292">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="318" column="0" selection-start="7034" selection-end="7034" vertical-scroll-proportion="0.22183098" vertical-offset="4316" max-vertical-offset="5168">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="105" column="77" selection-start="5183" selection-end="5183" vertical-scroll-proportion="0.31719127" vertical-offset="1523" max-vertical-offset="5848">
           <folding>
-            <element signature="e#6714#6740#0" expanded="true" />
-            <element signature="e#8828#8878#0" expanded="true" />
-            <element signature="e#9559#9609#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#td#1;n#tr#0;n#table#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/todo.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="111" selection-start="83" selection-end="83" vertical-scroll-proportion="0.040524434" vertical-offset="0" max-vertical-offset="5474">
+        <state line="37" column="68" selection-start="1116" selection-end="1116" vertical-scroll-proportion="0.74970204" vertical-offset="0" max-vertical-offset="5508">
           <folding />
         </state>
       </provider>

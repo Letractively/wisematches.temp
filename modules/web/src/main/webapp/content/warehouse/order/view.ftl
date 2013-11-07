@@ -103,6 +103,11 @@
                                         Приостановлен до:<br>
                                     ${messageSource.formatDate(l.parameter?number?long, locale)}
                                     </#if>
+                                <#elseif state.closed>
+                                    <#if l.parameter?has_content>
+                                        Дата вручения:<br>
+                                    ${messageSource.formatDate(l.parameter?number?long, locale)}
+                                    </#if>
                                 <#elseif  state.cancelled>
                                     <#if l.parameter?has_content>
                                         Код возврата средств:<br>${l.parameter}

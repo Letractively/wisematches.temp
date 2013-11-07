@@ -222,12 +222,12 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void close(Long orderId, String commentary) {
+	public void close(Long orderId, Date deliveryDate, String commentary) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
 		final OrderState state = order.getOrderState();
-		order.close(commentary);
+		order.close(deliveryDate, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);

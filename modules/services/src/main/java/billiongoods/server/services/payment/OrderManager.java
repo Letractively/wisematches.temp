@@ -52,7 +52,7 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	void suspend(Long orderId, Date resumeDate, String commentary);
 
 
-	void close(Long orderId, String commentary);
+	void close(Long orderId, Date deliveryDate, String commentary);
 
 
 	void setOrderTracking(Order order, boolean enable);

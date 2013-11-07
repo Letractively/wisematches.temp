@@ -285,10 +285,10 @@ public class HibernateOrder implements Order {
 		updateOrderState("cancelled", refundId, commentary, OrderState.CANCELLED);
 	}
 
-	void close(String commentary) {
+	void close(Date deliveryDate, String commentary) {
 		this.closed = new Date();
 
-		updateOrderState("closed", null, commentary, OrderState.CLOSED);
+		updateOrderState("closed", deliveryDate != null ? String.valueOf(deliveryDate.getTime()) : null, commentary, OrderState.CLOSED);
 	}
 
 	void remove(String commentary) {
