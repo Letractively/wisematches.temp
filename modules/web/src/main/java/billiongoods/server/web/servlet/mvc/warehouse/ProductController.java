@@ -102,6 +102,7 @@ public class ProductController extends AbstractController {
 
 		mode.remove(product);
 		similar.remove(product);
+		similar.removeAll(mode); // remove all modes
 		accessories.remove(product);
 
 		model.addAttribute("mode", mode);
