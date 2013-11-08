@@ -171,6 +171,10 @@ public class HibernateProductValidationManager implements ProductValidationManag
 					}
 					session.flush();
 					transactionManager.commit(transaction);
+				} catch (InterruptedException ex) {
+					log.info("Price validation has been cancelled");
+					transactionManager.rollback(transaction);
+					break;
 				} catch (Exception ex) {
 					log.error("Bulk checks can't be processed for range: " + range, ex);
 					transactionManager.rollback(transaction);

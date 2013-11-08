@@ -1,6 +1,13 @@
 ============= CURRENT ====================
 
 ============= PLAN ====================
+- Account: social login
+- Account: enable public account
+
+- Accounts and personal info
+    - Ability to pay for broken order again (no needs to create new order).
+    - validate pending orders before payment. It's possible that price is not the same now.
+
 - Images cleaner
 - Recent history
 - Coupons: discount by amount (for example, 5$ if sum > 100$)
@@ -9,7 +16,6 @@
 - Gallery catalog view
 
 - Range filters
-- Add new flag to a product: accessory
 - Show info about filtering options (attribute description)
 
 - Redefine financial policy
@@ -19,10 +25,6 @@
 - Orders for filter values/items
 - Add full product name for URL in translite
 
-- Accounts and personal info
-    - Ability to pay for broken order again (no needs to create new order).
-    - validate pending orders before payment. It's possible that price is not the same now.
-
 - Forums
 - Wish list
 - Export order
@@ -31,6 +33,9 @@
 - Maintain: No whereabouts
 
 ============= DONE ====================
+08.11
++ No errors if validation has been interrupted
+
 07.11
 + Remove modes from list of similar items
 + In search mode order by relevance by default (add this item to combobox for search results)
