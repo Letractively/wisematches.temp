@@ -48,7 +48,7 @@
                 </button>
             </#if>
 
-            <#if order.orderState==OrderState.PROCESSING>
+            <#if order.orderState==OrderState.PROCESSING || order.orderState == OrderState.ACCEPTED>
                 <div id="extendedOptions">
                     <input id="allowExtendedOperations" type="checkbox">
                     <button type="submit" name="state" value="${OrderState.SUSPENDED.name()}" disabled="disabled">
