@@ -115,8 +115,8 @@ public class HibernateProductValidationManager implements ProductValidationManag
 				try {
 					Session session = sessionFactory.getCurrentSession();
 
-					final Query query = session.createQuery("select a.id, a.price, a.stockInfo, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) order by a.id");
-					query.setParameterList("states", ProductContext.VISIBLE);
+                    final Query query = session.createQuery("select a.id, a.price, a.stockInfo, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) and a.id>9497 order by a.id");
+                    query.setParameterList("states", ProductContext.VISIBLE);
 					final List list = range.apply(query).list();
 					if (list.isEmpty()) {
 						transactionManager.commit(transaction);

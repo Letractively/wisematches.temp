@@ -1,8 +1,4 @@
 -- Revert prices
-update service_price_renewal r
-left join store_product p on p.id=r.productId
-set
-p.price=r.oldPrice, p.primordialPrice=r.oldPrimordialPrice,
-p.buyPrice=r.oldSupplierPrice, p.buyPrimordialPrice=r.oldSupplierPrimordialPrice
-WHERE timestamp like '2013-09-28%';
-
+update store_product p right join service_validation v on p.id=v.productId 
+set p.price=v.np, p.primordialPrice=v.npp, p.buyPrice=v.nsp, p.buyPrimordialPrice=v.nspp,
+p.stockLeftovers=v.na, p.stockRestockDate=v.nrd, p.validationDate=v.timestamp where v.timestamp>'2013-11-07';
