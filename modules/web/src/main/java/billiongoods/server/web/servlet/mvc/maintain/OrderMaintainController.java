@@ -47,7 +47,7 @@ public class OrderMaintainController extends AbstractController {
 	}
 
 	@RequestMapping(value = "view")
-	public String viewOrder(@RequestParam("id") String id, @RequestParam("type") String type, Model model) {
+	public String viewOrder(@RequestParam("id") String id, @RequestParam("type") String type, @ModelAttribute("form") OrderStateForm form, Model model) {
 		Order order;
 		if ("ref".equalsIgnoreCase(type)) {
 			order = orderManager.getByReference(id);
@@ -61,8 +61,11 @@ public class OrderMaintainController extends AbstractController {
 			throw new UnknownEntityException(id, "order");
 		}
 
+		form.setId(order.getId());
+		form.setState(order.getOrderState());
+		form.setCommentary(order.getCommentary());
+
 		model.addAttribute("order", order);
-		model.addAttribute("form", new OrderStateForm());
 		return "/content/maintain/order";
 	}
 

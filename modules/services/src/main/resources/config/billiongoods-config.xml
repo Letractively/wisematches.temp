@@ -243,24 +243,6 @@
         <property name="stateManager" ref="playerStateManager"/>
     </bean>
 
-    <!--
-
-        <bean id="applicationEventMulticaster" class="org.springframework.context.event.SimpleApplicationEventMulticaster">
-            <property name="taskExecutor">
-                <bean class="billiongoods.core.task.executor.TransactionAwareExecutor">
-                    <property name="taskExecutor">
-                        <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
-                            <property name="poolSize" value="1"/>
-                            <property name="threadNamePrefix" value="AEM"/>
-                            <property name="waitForTasksToCompleteOnShutdown" value="true"/>
-                        </bean>
-                    </property>
-                    <property name="transactionManager" ref="transactionManager"/>
-                </bean>
-            </property>
-        </bean>
--->
-
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>

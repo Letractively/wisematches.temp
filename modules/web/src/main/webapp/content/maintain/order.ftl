@@ -32,12 +32,12 @@
                     Перевести в статус "Обработка" (PROCESSING)
                 </button>
             </#if>
-            <#if order.orderState==OrderState.PROCESSING  || order.orderState==OrderState.SUSPENDED>
+            <#if order.orderState==OrderState.PROCESSING || order.orderState==OrderState.SUSPENDED>
                 <button type="submit" name="state" value="${OrderState.SHIPPING.name()}">
                     Перевести в статус "Доставка" (SHIPPING)
                 </button>
             </#if>
-            <#if order.orderState==OrderState.SHIPPING || order.orderState==OrderState.SUSPENDED>
+            <#if order.orderState==OrderState.PROCESSING || order.orderState==OrderState.SHIPPING || order.orderState==OrderState.SUSPENDED>
                 <button type="submit" name="state" value="${OrderState.SHIPPED.name()}">
                     Перевести в статус "Отправлено" (SHIPPED)
                 </button>

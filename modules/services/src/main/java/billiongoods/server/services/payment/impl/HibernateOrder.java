@@ -311,12 +311,18 @@ public class HibernateOrder implements Order {
 			exceptedResume = null;
 		}
 
+
 		if (commentary != null && commentary.length() > 254) {
-			this.commentary = commentary.substring(0, 254);
-		} else {
-			this.commentary = commentary;
+			commentary = commentary.substring(0, 254);
 		}
-		orderLogs.add(new HibernateOrderLog(id, code, parameter, this.commentary, orderState));
+
+		String comment = null;
+		// comment was updated - change it.
+		if (((this.commentary != null || commentary != null)) && ((this.commentary == null || !this.commentary.equals(commentary)))) {
+			this.commentary = comment = commentary;
+		}
+
+		orderLogs.add(new HibernateOrderLog(id, code, parameter, comment, orderState));
 	}
 
 	@Override
