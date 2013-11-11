@@ -77,6 +77,10 @@
             <element id="library" level="project" name="Maven: org.springframework:spring-web:3.2.3.RELEASE" />
             <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:3.2.3.RELEASE" />
             <element id="library" level="project" name="Maven: org.springframework.security:spring-security-web:3.2.0.M2" />
+            <element id="library" level="project" name="Maven: org.springframework.social:spring-social-core:1.0.3.RELEASE" />
+            <element id="library" level="project" name="Maven: org.springframework.social:spring-social-web:1.0.3.RELEASE" />
+            <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />
+            <element id="library" level="project" name="Maven: org.springframework.social:spring-social-facebook:1.0.3.RELEASE" />
           </element>
         </element>
       </root>
@@ -856,6 +860,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1.1/activation-1.1.1-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: javax.inject:javax.inject:1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/inject/javax.inject/1/javax.inject-1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/inject/javax.inject/1/javax.inject-1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/inject/javax.inject/1/javax.inject-1-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: javax.mail:mail:1.4.5">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4.5/mail-1.4.5.jar!/" />
@@ -1251,6 +1266,39 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/3.2.0.M2/spring-security-web-3.2.0.M2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.springframework.social:spring-social-core:1.0.3.RELEASE">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.springframework.social:spring-social-facebook:1.0.3.RELEASE">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-facebook/1.0.3.RELEASE/spring-social-facebook-1.0.3.RELEASE.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-facebook/1.0.3.RELEASE/spring-social-facebook-1.0.3.RELEASE-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-facebook/1.0.3.RELEASE/spring-social-facebook-1.0.3.RELEASE-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.springframework.social:spring-social-web:1.0.3.RELEASE">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-web/1.0.3.RELEASE/spring-social-web-1.0.3.RELEASE.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-web/1.0.3.RELEASE/spring-social-web-1.0.3.RELEASE-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-web/1.0.3.RELEASE/spring-social-web-1.0.3.RELEASE-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.springframework:spring-aop:3.2.3.RELEASE">

@@ -82,8 +82,9 @@
                                 <#elseif state.accepted>
                                     Номер платежа:<br>${l.parameter!""}
                                 <#elseif state.processing>
-                                    Номер комплектации:<br>
-                                    <#if l.parameter?has_content>${l.parameter}<#else>ожидает обработки</#if>
+                                    <#if l.parameter?has_content>
+                                        Номер комплектации:<br>${l.parameter}
+                                    </#if>
                                 <#elseif state.shipping>
                                     Код почты Китая:<br>
                                     <#if l.parameter?has_content>

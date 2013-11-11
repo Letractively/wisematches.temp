@@ -4,6 +4,7 @@ import billiongoods.core.Member;
 import billiongoods.core.Personality;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.security.core.session.SessionDestroyedEvent;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,12 @@ public class HibernatePersonalityStateManager extends SessionRegistryStateManage
 	private final Map<Personality, Date> lastActivityMap = new HashMap<>();
 
 	public HibernatePersonalityStateManager() {
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void onApplicationEvent(SessionDestroyedEvent event) {
+		super.onApplicationEvent(event);
 	}
 
 	@Override

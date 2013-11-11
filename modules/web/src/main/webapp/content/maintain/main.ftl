@@ -67,12 +67,13 @@
                     <strong>Заказы</strong>
                 </div>
 
+            <#assign mainStates=[OrderState.ACCEPTED, OrderState.SUSPENDED, OrderState.PROCESSING, OrderState.SHIPPING, OrderState.SHIPPED, OrderState.CLOSED]/>
                 <table>
-                <#list OrderState.values() as s>
+                <#list mainStates as s>
                     <tr>
                         <td>
                             <a href="/maintain/order?state=${s.name()}">
-                                    <@message code="order.status.${s.name()?lower_case}.label"/></label>
+                                <@message code="order.status.${s.name()?lower_case}.label"/>
                             </a>
                         </td>
                         <td style="padding-left: 5px">
@@ -82,8 +83,41 @@
                         </td>
                     </tr>
                 </#list>
+                    <tr>
+                        <td colspan="2" align="right">
+                            <a id="showAllOrders" href="#" onclick="return false;">показать остальные</a>
+                        </td>
+                    </tr>
                 </table>
+
+                <div id="allOrdersLayer" style="display: none">
+                    <table>
+                    <#list OrderState.values() as s>
+                        <#if !mainStates?seq_contains(s)>
+                            <tr>
+                                <td>
+                                    <a href="/maintain/order?state=${s.name()}">
+                                        <@message code="order.status.${s.name()?lower_case}.label"/>
+                                    </a>
+                                </td>
+                                <td style="padding-left: 5px">
+                                    <a href="/maintain/order?state=${s.name()}">
+                                    ${ordersSummary.getOrdersCount(s)}
+                                    </a>
+                                </td>
+                            </tr>
+                        </#if>
+                    </#list>
+                    </table>
+                </div>
             </div>
         </td>
     </tr>
 </table>
+
+<script type="application/javascript">
+    $("#showAllOrders").click(function () {
+        $(this).hide();
+        $("#allOrdersLayer").toggle();
+    });
+</script>
