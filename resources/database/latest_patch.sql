@@ -2,6 +2,7 @@
 ALTER TABLE `billiongoods`.`store_order_log`
 DROP COLUMN `code`;
 
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1112');
 #11.01
 UPDATE store_product_relationship
 SET type = 0;
