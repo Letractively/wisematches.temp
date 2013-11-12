@@ -1,3 +1,7 @@
+#11.12
+ALTER TABLE `billiongoods`.`store_order_log`
+DROP COLUMN `code`;
+
 #11.01
 UPDATE store_product_relationship
 SET type = 0;

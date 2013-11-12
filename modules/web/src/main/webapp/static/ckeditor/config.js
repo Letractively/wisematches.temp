@@ -6,9 +6,11 @@ CKEDITOR.editorConfig = function (config) {
     config.language = 'ru';
     config.allowedContent = true;
 
+    config.extraPlugins = 'youtube';
+
     config.toolbar = [
         {name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-        {name: 'insert', items: ['CreatePlaceholder', 'Image', 'Flash', 'Table', 'HorizontalRule', 'PageBreak', 'InsertPre']},
+        {name: 'insert', items: ['CreatePlaceholder', 'Image', 'Flash', 'Youtube', 'Table', 'HorizontalRule', 'PageBreak', 'InsertPre']},
         {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
         {name: 'others', items: ['ShowBlocks', '-', 'Source', '-', 'Maximize']},
         '/',

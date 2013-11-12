@@ -5,6 +5,7 @@
 ============= PLAN ====================
 - Account: social login
 - Account: enable public account
+- Show items by group id
 
 - ERROR-10486: This transaction couldn't be completed. Please redirect your customer to PayPal.
 
@@ -37,6 +38,10 @@
 - Maintain: No whereabouts
 
 ============= DONE ====================
+12.11
++ Add youtube plugin to ckeditor: http://ckeditor.com/addon/youtube
++ Remove 'code' from OrderLog (DB change is required)
+
 11.11
 + No transaction for ApplicationEventMulticaster
 + Ability to move to shipped state without shipping

@@ -20,9 +20,6 @@ public class HibernateOrderLog implements OrderLog {
 	@Column(name = "orderId", updatable = false)
 	private Long orderId;
 
-	@Column(name = "code", updatable = false)
-	private String code;
-
 	@Column(name = "timestamp", updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timestamp;
@@ -41,18 +38,12 @@ public class HibernateOrderLog implements OrderLog {
 	HibernateOrderLog() {
 	}
 
-	public HibernateOrderLog(Long orderId, String code, String parameter, String commentary, OrderState orderState) {
+	public HibernateOrderLog(Long orderId, String parameter, String commentary, OrderState orderState) {
 		this.orderId = orderId;
-		this.code = code;
 		this.timestamp = new Date();
 		this.parameter = parameter;
 		this.commentary = commentary;
 		this.orderState = orderState;
-	}
-
-	@Override
-	public String getCode() {
-		return code;
 	}
 
 	@Override
@@ -80,11 +71,10 @@ public class HibernateOrderLog implements OrderLog {
 		final StringBuilder sb = new StringBuilder("HibernateOrderLog{");
 		sb.append("id=").append(id);
 		sb.append(", orderId=").append(orderId);
-		sb.append(", code='").append(code).append('\'');
+		sb.append(", state=").append(orderState);
 		sb.append(", timestamp=").append(timestamp);
 		sb.append(", parameter='").append(parameter).append('\'');
 		sb.append(", commentary='").append(commentary).append('\'');
-		sb.append(", orderState=").append(orderState);
 		sb.append('}');
 		return sb.toString();
 	}

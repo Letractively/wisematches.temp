@@ -240,7 +240,7 @@ public class HibernateOrder implements Order {
 	void bill(String token) {
 		this.token = token;
 
-		updateOrderState("billing", token, null, OrderState.BILLING);
+		updateOrderState(OrderState.BILLING, null, token);
 	}
 
 	void accept(String payer, String paymentId, String note) {
@@ -248,51 +248,51 @@ public class HibernateOrder implements Order {
 		this.payerNote = note;
 		this.paymentId = paymentId;
 
-		updateOrderState("accepted", paymentId, null, OrderState.ACCEPTED);
+		updateOrderState(OrderState.ACCEPTED, null, paymentId);
 	}
 
 	void processing(String referenceTracking, String commentary) {
 		this.referenceTracking = referenceTracking;
 
-		updateOrderState("processing", referenceTracking, commentary, OrderState.PROCESSING);
+		updateOrderState(OrderState.PROCESSING, commentary, referenceTracking);
 	}
 
 	void shipping(String chinaMailTracking, String commentary) {
 		this.chinaMailTracking = chinaMailTracking;
 
-		updateOrderState("shipping", chinaMailTracking, commentary, OrderState.SHIPPING);
+		updateOrderState(OrderState.SHIPPING, commentary, chinaMailTracking);
 	}
 
 	void shipped(String internationalTracking, String commentary) {
 		this.internationalTracking = internationalTracking;
 
-		updateOrderState("shipped", internationalTracking, commentary, OrderState.SHIPPED);
+		updateOrderState(OrderState.SHIPPED, commentary, internationalTracking);
 	}
 
 	void failed(String commentary) {
-		updateOrderState("failed", null, commentary, OrderState.FAILED);
+		updateOrderState(OrderState.FAILED, commentary, null);
 	}
 
 	void suspended(Date exceptedResume, String commentary) {
 		this.exceptedResume = exceptedResume;
 
-		updateOrderState("suspended", exceptedResume != null ? String.valueOf(exceptedResume.getTime()) : null, commentary, OrderState.SUSPENDED);
+		updateOrderState(OrderState.SUSPENDED, commentary, exceptedResume != null ? String.valueOf(exceptedResume.getTime()) : null);
 	}
 
 	void cancelled(String refundId, String commentary) {
 		this.refundToken = refundId;
 
-		updateOrderState("cancelled", refundId, commentary, OrderState.CANCELLED);
+		updateOrderState(OrderState.CANCELLED, commentary, refundId);
 	}
 
 	void close(Date deliveryDate, String commentary) {
 		this.closed = new Date();
 
-		updateOrderState("closed", deliveryDate != null ? String.valueOf(deliveryDate.getTime()) : null, commentary, OrderState.CLOSED);
+		updateOrderState(OrderState.CLOSED, commentary, deliveryDate != null ? String.valueOf(deliveryDate.getTime()) : null);
 	}
 
 	void remove(String commentary) {
-		updateOrderState("removed", null, commentary, OrderState.REMOVED);
+		updateOrderState(OrderState.REMOVED, commentary, null);
 	}
 
 	void setTracking(boolean tracking) {
@@ -303,11 +303,11 @@ public class HibernateOrder implements Order {
 		this.orderItems = orderItems;
 	}
 
-	private void updateOrderState(String code, String parameter, String commentary, OrderState orderState) {
+	private void updateOrderState(OrderState state, String commentary, String parameter) {
 		this.timestamp = new Date();
-		this.orderState = orderState;
+		this.orderState = state;
 
-		if (orderState != OrderState.SUSPENDED) {
+		if (state != OrderState.SUSPENDED) {
 			exceptedResume = null;
 		}
 
@@ -322,7 +322,7 @@ public class HibernateOrder implements Order {
 			this.commentary = comment = commentary;
 		}
 
-		orderLogs.add(new HibernateOrderLog(id, code, parameter, comment, orderState));
+		orderLogs.add(new HibernateOrderLog(id, parameter, comment, state));
 	}
 
 	@Override
