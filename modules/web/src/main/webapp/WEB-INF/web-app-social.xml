@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
         <property name="connectionFactories">
@@ -14,8 +14,8 @@
 
                 -->
                 <bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
-                    <constructor-arg value="${facebook.clientId}"/>
-                    <constructor-arg value="${facebook.clientSecret}"/>
+                    <constructor-arg value="${facebook.clientId:no}"/>
+                    <constructor-arg value="${facebook.clientSecret:no}"/>
                 </bean>
             </list>
         </property>
@@ -30,14 +30,4 @@
 
         <property name="tablePrefix" value="account_"/>
     </bean>
-
-    <bean id="connectionRepository"
-          factory-method="createConnectionRepository"
-          factory-bean="usersConnectionRepository"
-          scope="request">
-        <constructor-arg value="#{request.userPrincipal.name}"/>
-        <aop:scoped-proxy proxy-target-class="false"/>
-    </bean>
-
-    <!--<bean id="signInAdapter" class="com.test.social.SimpleSignInAdapter"/>-->
 </beans>

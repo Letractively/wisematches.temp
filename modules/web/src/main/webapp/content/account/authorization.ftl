@@ -3,8 +3,8 @@
 
 <div class="account-action">
     <div class="account-login">
-        <form id="loginForm" method="post" action="/account/loginProcessing">
-            <table cellpadding="0" cellspacing="0" border="0">
+        <form id="loginForm" method="post" action="/account/processing">
+        <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
                     <td>
                         <label style="white-space: nowrap;"
@@ -54,6 +54,13 @@
                     </td>
                 </tr>
             </table>
+        </form>
+
+        <form id="facebookLogin" action="/account/social/facebook" method="POST">
+            <input type="hidden" name="scope" value="offline_access"/>
+            <button type="submit">
+                <img src="/static/images/social/sign-in-with-facebook.png"/>
+            </button>
         </form>
     </div>
 

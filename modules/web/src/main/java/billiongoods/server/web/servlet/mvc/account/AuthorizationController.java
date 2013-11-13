@@ -44,12 +44,13 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Controller
+@Deprecated
 @RequestMapping("/account")
 public class AuthorizationController extends AbstractController {
 	private AccountManager accountManager;
 	private NotificationService notificationService;
 
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.AccountController");
+	private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.AuthorizationController");
 
 	public AuthorizationController() {
 	}
@@ -59,14 +60,15 @@ public class AuthorizationController extends AbstractController {
 		return true;
 	}
 
-	@RequestMapping("login")
+	@RequestMapping("/login")
 	public String loginPage(@ModelAttribute("login") AccountLoginForm login,
 							@ModelAttribute("registration") AccountRegistrationForm register, Model model) {
 		hideNavigation(model);
 		return "/content/account/authorization";
 	}
 
-	@RequestMapping("loginAuth")
+
+	@RequestMapping("/loginAuth")
 	public String loginFailed(@ModelAttribute("registration") AccountRegistrationForm form,
 							  @ModelAttribute("login") AccountLoginForm login, BindingResult result, HttpSession session) {
 		restoreAccountLoginForm(login, session);
@@ -75,19 +77,19 @@ public class AuthorizationController extends AbstractController {
 
 		switch (error) {
 			case "credential":
-				result.rejectValue("j_password", "account.login.err.credential");
+				result.rejectValue("j_password", "account.signin.err.credential");
 				break;
 			case "status": {
 				final AuthenticationException ex = (AuthenticationException) session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 				if (ex instanceof AccountStatusException) {
 					if (ex instanceof LockedException) {
-						result.rejectValue("j_password", "account.login.err.status.locked");
+						result.rejectValue("j_password", "account.signin.err.status.locked");
 					} else if (ex instanceof DisabledException) {
-						result.rejectValue("j_password", "account.login.err.status.disabled");
+						result.rejectValue("j_password", "account.signin.err.status.disabled");
 					} else if (ex instanceof CredentialsExpiredException) {
-						result.rejectValue("j_password", "account.login.err.status.credential");
+						result.rejectValue("j_password", "account.signin.err.status.credential");
 					} else if (ex instanceof AccountExpiredException) {
-						result.rejectValue("j_password", "account.login.err.status.expired");
+						result.rejectValue("j_password", "account.signin.err.status.expired");
 					}
 				}
 				break;
@@ -101,8 +103,8 @@ public class AuthorizationController extends AbstractController {
 		return "/content/account/authorization";
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
 	@RequestMapping(value = "create", method = RequestMethod.POST)
+	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
 	public String createAccount(@ModelAttribute("login") AccountLoginForm login,
 								@Valid @ModelAttribute("registration") AccountRegistrationForm form,
 								BindingResult result, SessionStatus status, Locale locale) {
@@ -210,13 +212,14 @@ public class AuthorizationController extends AbstractController {
 				b.append("&").append("rememberMe=true");
 			}
 			//noinspection SpringMVCViewInspection
-			return "forward:/account/loginProcessing?" + b;
+			return "forward:/account/processing?" + b;
 		} catch (UnsupportedEncodingException ex) {
 			log.error("Very strange exception that mustn't be here", ex);
 			//noinspection SpringMVCViewInspection
 			return "redirect:/account/login";
 		}
 	}
+
 
 	@Autowired
 	public void setAccountManager(AccountManager accountManager) {
