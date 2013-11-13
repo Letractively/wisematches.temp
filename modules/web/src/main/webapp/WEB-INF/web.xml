@@ -14,6 +14,7 @@
             classpath:/config/personality-config.xml
             classpath:/config/billiongoods-config.xml
             /WEB-INF/web-app-security.xml
+            /WEB-INF/web-app-social.xml
         </param-value>
     </context-param>
 
@@ -110,7 +111,7 @@
 
     <filter-mapping>
         <filter-name>hiddenHttpMethodFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/connect/*</url-pattern>
     </filter-mapping>
 
     <servlet>

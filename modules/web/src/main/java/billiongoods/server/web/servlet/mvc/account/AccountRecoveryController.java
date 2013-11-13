@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/account/recovery")
 @Deprecated
-public class RecoveryController extends AbstractController {
+public class AccountRecoveryController extends AbstractController {
 /*
 	private AccountManager accountManager;
     private NotificationService notificationService;

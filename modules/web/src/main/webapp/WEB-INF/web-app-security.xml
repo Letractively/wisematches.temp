@@ -56,7 +56,7 @@
     <beans:bean id="authenticationFailureHandler"
                 class="billiongoods.server.web.security.authentication.WMAuthenticationFailureHandler">
         <beans:property name="redirectStrategy" ref="redirectStrategy"/>
-        <beans:property name="failureUrl" value="/account/loginAuth?error="/>
+        <beans:property name="failureUrl" value="/account/sign?error="/>
         <beans:property name="defaultCode" value="system"/>
         <beans:property name="allowSessionCreation" value="true"/>
         <beans:property name="exceptionCodes">
@@ -123,7 +123,7 @@
     <beans:bean id="concurrentSessionFilter"
                 class="org.springframework.security.web.session.ConcurrentSessionFilter">
         <beans:property name="sessionRegistry" ref="sessionRegistry"/>
-        <beans:property name="expiredUrl" value="/account/loginAuth?error=session"/>
+        <beans:property name="expiredUrl" value="/account/sign?error=session"/>
     </beans:bean>
 
     <beans:bean id="sessionControlStrategy"
@@ -139,6 +139,9 @@
 
     <http pattern="/static/**" security="none"/>
     <http pattern="/image/**" security="none"/>
+
+    <http pattern="/account/social/*" security="none"/>
+
     <http pattern="/warehouse/paypal/*" security="none"/>
 
     <http use-expressions="true">
@@ -162,13 +165,13 @@
 
         <http-basic entry-point-ref="authenticationEntryPoint"/>
 
-        <form-login login-page="/account/login"
-                    login-processing-url="/account/loginProcessing"
+        <form-login login-page="/account/sign"
+                    login-processing-url="/account/processing"
                     authentication-success-handler-ref="authenticationSuccessHandler"
                     authentication-failure-handler-ref="authenticationFailureHandler"/>
 
-        <logout logout-url="/account/logout"
-                logout-success-url="/account/login"
+        <logout logout-url="/account/signout"
+                logout-success-url="/"
                 invalidate-session="false"/>
     </http>
 </beans:beans>
