@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="basketQuantity" type="java.lang.Integer" -->
-<#-- @ftlvariable name="pageableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.PageableForm" -->
+<#-- @ftlvariable name="pageableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.ProductsPageableForm" -->
 
 <#include "/core.ftl"/>
 

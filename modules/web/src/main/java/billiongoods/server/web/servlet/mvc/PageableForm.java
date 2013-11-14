@@ -1,7 +1,8 @@
-package billiongoods.server.web.servlet.mvc.warehouse.form;
+package billiongoods.server.web.servlet.mvc;
 
 import billiongoods.core.search.Orders;
 import billiongoods.core.search.Range;
+import billiongoods.server.web.servlet.mvc.warehouse.form.SortingType;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -10,10 +11,6 @@ public class PageableForm {
 	private int page;
 	private int count;
 	private String sort;
-
-	private String query = null;
-	private String filter = null;
-	private Integer category = null;
 
 	private int totalCount;
 	private int filteredCount;
@@ -25,13 +22,6 @@ public class PageableForm {
 	}
 
 	public void initialize(int totalCount, int filteredCount) {
-		if (sort == null) {
-			if (query != null) {
-				sort = SortingType.RELEVANCE.getCode();
-			} else {
-				sort = SortingType.BESTSELLING.getCode();
-			}
-		}
 
 		if (page < 1) {
 			page = 1;
@@ -78,30 +68,6 @@ public class PageableForm {
 
 	public void setSort(String sort) {
 		this.sort = sort;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getFilter() {
-		return filter;
-	}
-
-	public void setFilter(String filter) {
-		this.filter = filter;
-	}
-
-	public Integer getCategory() {
-		return category;
-	}
-
-	public void setCategory(Integer category) {
-		this.category = category;
 	}
 
 	public Range getRange() {

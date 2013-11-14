@@ -293,6 +293,13 @@ bg.ui = new function () {
     });
 };
 
+bg.account = {};
+
+bg.account.SignIn = function () {
+
+};
+
+
 bg.assistance = {};
 
 bg.assistance.SupportForm = function () {
@@ -318,6 +325,7 @@ bg.assistance.SupportForm = function () {
         });
     }
 };
+
 
 bg.warehouse = {};
 
@@ -801,9 +809,7 @@ $(document).ready(function () {
             bg.util.url.redirect(url);
         }
     });
-});
 
-$(document).ready(function () {
     var timeoutID;
 
     function updateSearchFields() {

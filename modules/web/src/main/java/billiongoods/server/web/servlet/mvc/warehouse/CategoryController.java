@@ -7,7 +7,7 @@ import billiongoods.server.services.advise.ProductAdviseManager;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
-import billiongoods.server.web.servlet.mvc.warehouse.form.PageableForm;
+import billiongoods.server.web.servlet.mvc.warehouse.form.ProductsPageableForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.SortingType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ public class CategoryController extends AbstractController {
 
 	@RequestMapping("/category/{categoryId}")
 	public String showCategory(@PathVariable("categoryId") Integer categoryId,
-							   @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
+							   @ModelAttribute("pageableForm") ProductsPageableForm pageableForm, Model model) {
 		final Category category = categoryManager.getCategory(categoryId);
 		if (category == null) {
 			throw new UnknownEntityException(categoryId, "category");
@@ -62,7 +62,7 @@ public class CategoryController extends AbstractController {
 
 	@RequestMapping("/arrivals")
 	public String showNewArrivals(@RequestParam(value = "category", required = false) Integer categoryId,
-								  @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
+								  @ModelAttribute("pageableForm") ProductsPageableForm pageableForm, Model model) {
 		setTitle(model, "Новые поступления - Бесплатная доставка");
 		pageableForm.setSort(SortingType.ARRIVAL_DATE.getCode());
 		prepareProducts(categoryId, pageableForm, model, true);
@@ -71,7 +71,7 @@ public class CategoryController extends AbstractController {
 
 	@RequestMapping("/topselling")
 	public String showTopSellers(@RequestParam(value = "category", required = false) Integer categoryId,
-								 @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
+								 @ModelAttribute("pageableForm") ProductsPageableForm pageableForm, Model model) {
 		setTitle(model, "Лучшие продажи - Бесплатная доставка");
 		pageableForm.setSort(SortingType.BESTSELLING.getCode());
 		prepareProducts(categoryId, pageableForm, model, false);
@@ -81,7 +81,7 @@ public class CategoryController extends AbstractController {
 
 	@RequestMapping("/search")
 	public String searchProducts(@RequestParam(value = "category", required = false) Integer categoryId,
-								 @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
+								 @ModelAttribute("pageableForm") ProductsPageableForm pageableForm, Model model) {
 		String query = pageableForm.getQuery();
 
 		final Integer pid = MessageFormatter.extractProductId(query);
@@ -94,7 +94,7 @@ public class CategoryController extends AbstractController {
 		return "/content/warehouse/category";
 	}
 
-	private void prepareProducts(Integer categoryId, PageableForm pageableForm, Model model, boolean arrivals) {
+	private void prepareProducts(Integer categoryId, ProductsPageableForm pageableForm, Model model, boolean arrivals) {
 		Category category = null;
 		if (categoryId != null && categoryId != 0) {
 			category = categoryManager.getCategory(categoryId);
