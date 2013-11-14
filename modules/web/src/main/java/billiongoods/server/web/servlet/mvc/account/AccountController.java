@@ -1,6 +1,8 @@
 package billiongoods.server.web.servlet.mvc.account;
 
 import billiongoods.core.Visitor;
+import billiongoods.core.account.Account;
+import billiongoods.core.account.AccountEditor;
 import billiongoods.core.account.AccountManager;
 import billiongoods.server.services.ServerDescriptor;
 import billiongoods.server.services.notify.NotificationService;
@@ -24,6 +26,7 @@ import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.connect.web.ConnectSupport;
 import org.springframework.social.connect.web.ProviderSignInAttempt;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +44,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/account")
 public class AccountController extends AbstractController {
-	private static final String SOCIAL_SIGNING_ATTEMPT = "SOCIAL_SIGNING_ATTEMPT";
 	private AccountManager accountManager;
 	private NotificationService notificationService;
 
@@ -49,6 +51,8 @@ public class AccountController extends AbstractController {
 	private UsersConnectionRepository usersConnectionRepository;
 
 	private final ConnectSupport webSupport = new ConnectSupport();
+
+	private static final String SOCIAL_SIGNING_ATTEMPT = "SOCIAL_SIGNING_ATTEMPT";
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.AccountSocialController");
 
@@ -96,13 +100,37 @@ public class AccountController extends AbstractController {
 		return "/content/account/authorization";
 	}
 
-	@RequestMapping("/social/association")
-	public String socialAssociation(NativeWebRequest request) {
+	@RequestMapping(value = "/social/association", method = RequestMethod.GET)
+	public String socialAssociation(Model model, NativeWebRequest request) {
 		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(SOCIAL_SIGNING_ATTEMPT, RequestAttributes.SCOPE_SESSION);
 		if (attempt == null) {
 			return "redirect:/account/signin";
 		}
+		model.addAttribute("signInAttempt", attempt);
 		return "/content/account/social/association";
+	}
+
+	@RequestMapping(value = "/social/association", method = RequestMethod.POST)
+	public String socialAssociationAction(Model model, NativeWebRequest request) {
+		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(SOCIAL_SIGNING_ATTEMPT, RequestAttributes.SCOPE_SESSION);
+		if (attempt == null) {
+			return "redirect:/account/signin";
+		}
+
+		final AccountEditor editor = new AccountEditor();
+		editor.setEmail("");
+		editor.setUsername("");
+
+//		accountManager.createAccount(new)
+
+/*
+		usersConnectionRepository.createConnectionRepository(userId).updateConnection(connection);
+		attempt.getConnection()
+		final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
+*/
+
+
+		return "redirect:/"; // TODO: redirect to authorization
 	}
 
 	@RequestMapping(value = "/social/{providerId}", method = RequestMethod.POST)
@@ -130,22 +158,18 @@ public class AccountController extends AbstractController {
 		if (connection != null) {
 			List<String> userIds = usersConnectionRepository.findUserIdsWithConnection(connection);
 			if (userIds.size() == 0) {
-				// Check personality here
-
 				final ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, usersConnectionRepository);
 				request.setAttribute(SOCIAL_SIGNING_ATTEMPT, signInAttempt, RequestAttributes.SCOPE_SESSION);
-				// create new user here
-
-//				request.setAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, signInAttempt, RequestAttributes.SCOPE_SESSION);
-//				return redirect(signUpUrl);
+				return "redirect:/account/social/association";
 			} else if (userIds.size() == 1) {
-				// Authorize here
+				final String userId = userIds.get(0);
+				final Account account = accountManager.getAccount(Long.getLong(userId));
 
-//				usersConnectionRepository.createConnectionRepository(userIds.get(0)).updateConnection(connection);
-//				String originalUrl = signInAdapter.signIn(userIds.get(0), connection, request);
-//				return originalUrl != null ? redirect(originalUrl) : redirect(postSignInUrl);
+				if (account != null) {
+					usersConnectionRepository.createConnectionRepository(userId).updateConnection(connection);
+				}
 			} else {
-				// Redirect here for authorization
+				// TODO: TODO:Redirect here for authorization
 
 //				return redirect(URIBuilder.fromUri(signInUrl).queryParam("error", "multiple_users").build().toString());
 			}

@@ -23,10 +23,11 @@
     </bean>
 
     <bean id="visitorAuthenticationProvider"
-          class="billiongoods.core.security.authentication.VisitorAuthenticationProvider">
+          class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+        <constructor-arg name="key" value="visitor"/>
     </bean>
 
-    <bean id="playerAuthenticationProvider"
+    <bean id="memberAuthenticationProvider"
           class="billiongoods.core.security.authentication.MemberAuthenticationProvider">
         <property name="accountManager" ref="accountManager"/>
         <property name="accountLockManager" ref="accountLockManager"/>

@@ -271,6 +271,11 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	public OrdersSummary getOrdersSummary() {
+		return getOrdersSummary(null);
+	}
+
+	@Override
+	public OrdersSummary getOrdersSummary(Personality principal) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final ProjectionList projection = Projections.projectionList();
@@ -279,6 +284,9 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 		final Criteria criteria = session.createCriteria(HibernateOrder.class);
 		criteria.setProjection(projection);
+		if (principal != null) {
+			criteria.add(Restrictions.eq("buyer", principal.getId()));
+		}
 
 		final Map<OrderState, Integer> map = new HashMap<>();
 		final List list = criteria.list();
@@ -298,6 +306,10 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		if (context != null) {
 			if (context.getOrderState() != null) {
 				criteria.add(Restrictions.eq("orderState", context.getOrderState()));
+			}
+
+			if (context.getPersonality() != null) {
+				criteria.add(Restrictions.eq("buyer", context.getPersonality()));
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package billiongoods.server.web.security.filter;
 
+import billiongoods.core.Visitor;
 import billiongoods.server.web.security.filter.visitor.SessionVisitorServices;
 import billiongoods.server.web.security.filter.visitor.VisitorServices;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -45,7 +46,7 @@ public class VisitorAuthenticationFilter extends GenericFilterBean {
 				visitorServices.saveVisitorId(visitorId, req, res);
 			}
 
-			final AnonymousAuthenticationToken authentication = new AnonymousAuthenticationToken(getClass().getSimpleName(), visitorId, DEFAULT_AUTHORITIES);
+			final AnonymousAuthenticationToken authentication = new AnonymousAuthenticationToken("visitor", new Visitor(visitorId), DEFAULT_AUTHORITIES);
 			final Authentication authenticate = authenticationManager.authenticate(authentication);
 
 			SecurityContextHolder.getContext().setAuthentication(authenticate);

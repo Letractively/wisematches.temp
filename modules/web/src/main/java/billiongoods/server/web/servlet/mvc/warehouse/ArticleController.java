@@ -11,18 +11,19 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Controller
+@Deprecated
 @RequestMapping("/warehouse/article")
 public class ArticleController {
-    public ArticleController() {
-    }
+	public ArticleController() {
+	}
 
-    @RequestMapping("/{articleId}")
-    public View redirectToProduct(@PathVariable("articleId") String articleId) {
-        RedirectView rv = new RedirectView("/warehouse/product/" + articleId);
-        rv.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
-        rv.setExposeModelAttributes(false);
-        rv.setExpandUriTemplateVariables(false);
-        rv.setExposePathVariables(false);
-        return rv;
-    }
+	@RequestMapping("/{articleId}")
+	public View redirectToProduct(@PathVariable("articleId") String articleId) {
+		RedirectView rv = new RedirectView("/warehouse/product/" + articleId);
+		rv.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
+		rv.setExposeModelAttributes(false);
+		rv.setExpandUriTemplateVariables(false);
+		rv.setExposePathVariables(false);
+		return rv;
+	}
 }

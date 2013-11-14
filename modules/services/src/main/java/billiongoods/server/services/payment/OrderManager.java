@@ -24,6 +24,8 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 
 	OrdersSummary getOrdersSummary();
 
+	OrdersSummary getOrdersSummary(Personality principal);
+
 
 	Order create(Personality person, Basket basket, Address address, ShipmentType shipmentType, boolean track);
 

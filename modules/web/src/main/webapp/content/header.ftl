@@ -16,14 +16,7 @@
         </td>
 
         <td align="right" valign="middle">
-        <#--
-                    <div class="table-cell header-welcome">
-                        Добро Пожаловать!
-                        <a class="highlight" href="/account/login">Войти</a>
-                        или
-                        <a class="highlight" href="/account/register">Зарегистрироваться</a>
-                    </div>
-        -->
+        <#include "account/widget/signin.ftl"/>
 
             <div class="table-cell header-links">
             <@bg.security.authorized "moderator">

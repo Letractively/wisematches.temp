@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="category" type="billiongoods.server.warehouse.Category" -->
 <#-- @ftlvariable name="filter" type="billiongoods.server.warehouse.ProductFilter" -->
 <#-- @ftlvariable name="filtering" type="billiongoods.server.warehouse.Filtering" -->
-<#-- @ftlvariable name="pageableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.PageableForm" -->
+<#-- @ftlvariable name="pageableForm" type="billiongoods.server.web.servlet.mvc.warehouse.form.ProductsPageableForm" -->
 
 <#include "/core.ftl"/>
 

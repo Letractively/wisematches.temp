@@ -23,6 +23,16 @@ public enum OrderState {
 	CLOSED,    // indicates that order was processed, shipped and received by customer.
 	REMOVED; // indicates that order was removed by customer
 
+	private final String code;
+
+	OrderState() {
+		this.code = name().toLowerCase();
+	}
+
+	public String getCode() {
+		return code;
+	}
+
 	public boolean isNew() {
 		return this == NEW;
 	}

@@ -49,14 +49,14 @@
 
     <beans:bean id="authenticationSuccessHandler"
                 class="billiongoods.server.web.security.authentication.WMAuthenticationSuccessHandler">
-        <beans:property name="defaultTargetUrl" value="/account/view"/>
+        <beans:property name="defaultTargetUrl" value="/privacy/view"/>
         <beans:property name="targetUrlParameter" value="continue"/>
     </beans:bean>
 
     <beans:bean id="authenticationFailureHandler"
                 class="billiongoods.server.web.security.authentication.WMAuthenticationFailureHandler">
         <beans:property name="redirectStrategy" ref="redirectStrategy"/>
-        <beans:property name="failureUrl" value="/account/sign?error="/>
+        <beans:property name="failureUrl" value="/account/signin?error="/>
         <beans:property name="defaultCode" value="system"/>
         <beans:property name="allowSessionCreation" value="true"/>
         <beans:property name="exceptionCodes">
@@ -102,8 +102,8 @@
     </beans:bean>
 
     <beans:bean id="accessDeniedHandler" class="billiongoods.server.web.security.access.WMAccessDeniedHandler">
-        <beans:property name="restrictedErrorPage" value="/account/login"/>
-        <beans:property name="insufficientErrorPage" value="/account/loginAuth?error=insufficient"/>
+        <beans:property name="restrictedErrorPage" value="/account/signin"/>
+        <beans:property name="insufficientErrorPage" value="/account/signin?error=insufficient"/>
     </beans:bean>
 
     <beans:bean id="authenticationEntryPoint"
@@ -123,7 +123,7 @@
     <beans:bean id="concurrentSessionFilter"
                 class="org.springframework.security.web.session.ConcurrentSessionFilter">
         <beans:property name="sessionRegistry" ref="sessionRegistry"/>
-        <beans:property name="expiredUrl" value="/account/sign?error=session"/>
+        <beans:property name="expiredUrl" value="/account/signin?error=session"/>
     </beans:bean>
 
     <beans:bean id="sessionControlStrategy"
@@ -133,21 +133,22 @@
     </beans:bean>
 
     <authentication-manager alias="authenticationManager">
-        <authentication-provider ref="playerAuthenticationProvider"/>
         <authentication-provider ref="visitorAuthenticationProvider"/>
+        <authentication-provider ref="memberAuthenticationProvider"/>
     </authentication-manager>
 
-    <http pattern="/static/**" security="none"/>
     <http pattern="/image/**" security="none"/>
+    <http pattern="/static/**" security="none"/>
 
     <http pattern="/account/social/*" security="none"/>
-
     <http pattern="/warehouse/paypal/*" security="none"/>
 
     <http use-expressions="true">
+        <intercept-url pattern="/privacy/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/privacy/settings" access="isFullyAuthenticated()"/>
+
         <intercept-url pattern="/maintain/**" access="hasRole('admin') and isFullyAuthenticated()"/>
 
-        <!--<intercept-url pattern="/account/modify" access="isFullyAuthenticated()"/>-->
         <intercept-url pattern="/**" access="permitAll"/>
 
         <custom-filter before="ANONYMOUS_FILTER" ref="visitorAuthenticationFilter"/>
@@ -165,7 +166,7 @@
 
         <http-basic entry-point-ref="authenticationEntryPoint"/>
 
-        <form-login login-page="/account/sign"
+        <form-login login-page="/account/signin"
                     login-processing-url="/account/processing"
                     authentication-success-handler-ref="authenticationSuccessHandler"
                     authentication-failure-handler-ref="authenticationFailureHandler"/>

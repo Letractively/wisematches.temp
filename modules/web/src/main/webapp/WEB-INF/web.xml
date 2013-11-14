@@ -74,6 +74,13 @@
 
     <filter-mapping>
         <filter-name>openSessionInViewFilter</filter-name>
+        <url-pattern>/privacy/*</url-pattern>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>openSessionInViewFilter</filter-name>
         <url-pattern>/assistance/*</url-pattern>
         <dispatcher>ERROR</dispatcher>
         <dispatcher>REQUEST</dispatcher>
@@ -144,6 +151,11 @@
     <servlet-mapping>
         <servlet-name>web-app</servlet-name>
         <url-pattern>/account/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>web-app</servlet-name>
+        <url-pattern>/privacy/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
