@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="principal" type="billiongoods.core.Member" -->
+
 <#include "/core.ftl">
 
 <table style="height: 40px">
@@ -16,9 +18,25 @@
         </td>
 
         <td align="right" valign="middle">
-        <#include "account/widget/signin.ftl"/>
+            <div class="table-cell header-welcome">
+            <@bg.security.permitted "member";member>
+                <#if member>
+                    Добро Пожаловать,
+                    <a class="highlight" href="/privacy/view">${principal.username}</a>
+                <#else>
+                    Добро Пожаловать!
+                    <a class="highlight" href="/account/signin">Войти</a>
+                </#if>
+            </@bg.security.permitted>
+            </div>
 
             <div class="table-cell header-links">
+            <@bg.security.authorized "member">
+                <a class="sample" style="color: gray; " href="/account/signout">Выйти</a>
+
+                <div class="divider">|</div>
+            </@bg.security.authorized>
+
             <@bg.security.authorized "moderator">
                 <div><a href="/maintain/main">Поддержка</a></div>
                 <div class="divider">|</div>
