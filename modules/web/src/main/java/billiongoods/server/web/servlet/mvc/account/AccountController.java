@@ -60,12 +60,18 @@ public class AccountController extends AbstractController {
 
 	private final ConnectSupport webSupport = new ConnectSupport();
 
+	private static final String INITIATE_SOCIAL_SIGNIN = "INITIATE_SOCIAL_SIGNIN";
 	private static final String SOCIAL_SIGNING_ATTEMPT = "SOCIAL_SIGNING_ATTEMPT";
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.AccountSocialController");
 
 	public AccountController() {
 		super(true, false);
+	}
+
+	@RequestMapping(value = {"", "/", "/create"}, method = RequestMethod.GET)
+	public String mainAccountPage() {
+		return "redirect:/account/signin";
 	}
 
 	@RequestMapping("/signin")
@@ -75,7 +81,9 @@ public class AccountController extends AbstractController {
 		restoreAccountLoginForm(login, request);
 
 		final String error = login.getError();
-		if (error != null) {
+		if (error != null)
+
+		{
 			switch (error) {
 				case "credential":
 					result.rejectValue("j_password", "account.signin.err.status.credential");
@@ -102,6 +110,7 @@ public class AccountController extends AbstractController {
 				}
 			}
 		}
+
 		return "/content/account/authorization";
 	}
 
@@ -125,13 +134,24 @@ public class AccountController extends AbstractController {
 		}
 	}
 
+	@RequestMapping("/social/start")
+	public String socialStart(NativeWebRequest request) {
+		request.setAttribute(INITIATE_SOCIAL_SIGNIN, Boolean.TRUE, RequestAttributes.SCOPE_REQUEST);
+		return "forward:/account/social/" + request.getParameter("provider");
+
+//		return "/content/account/social/start";
+	}
+
 	@RequestMapping(value = "/social/association", method = RequestMethod.GET)
 	public String socialAssociation(Model model, NativeWebRequest request) {
 		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(SOCIAL_SIGNING_ATTEMPT, RequestAttributes.SCOPE_SESSION);
 		if (attempt == null) {
 			return "redirect:/account/signin";
 		}
-		model.addAttribute("signInAttempt", attempt);
+
+		model.addAttribute("plain", Boolean.TRUE);
+		model.addAttribute("connection", attempt.getConnection());
+
 		return "/content/account/social/association";
 	}
 
@@ -143,8 +163,8 @@ public class AccountController extends AbstractController {
 		}
 
 		final AccountEditor editor = new AccountEditor();
-		editor.setEmail("");
-		editor.setUsername("");
+//		editor.setEmail(atte);
+//		editor.setUsername("");
 
 //		accountManager.createAccount(new)
 
@@ -158,48 +178,48 @@ public class AccountController extends AbstractController {
 		return "redirect:/"; // TODO: redirect to authorization
 	}
 
-	@RequestMapping(value = "/social/{providerId}", method = RequestMethod.POST)
-	public String socialSignIn(@PathVariable String providerId, NativeWebRequest request) {
-		final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
-		if (connectionFactory == null) {
-			throw new ProviderNotFoundException(providerId);
-		}
-		return "redirect:" + webSupport.buildOAuthUrl(connectionFactory, request);
-	}
-
-	@RequestMapping(value = "/social/{providerId}", method = RequestMethod.GET)
+	@RequestMapping("/social/{providerId}")
 	public String socialProcessing(@PathVariable String providerId, NativeWebRequest request) {
-		final String code = request.getParameter("code");
-		final String token = request.getParameter("oauth_token");
-
-		Connection<?> connection = null;
-		final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
-		if (code != null) { // OAuth2
-			connection = webSupport.completeConnection((OAuth2ConnectionFactory<?>) connectionFactory, request);
-		} else if (token != null) { // OAuth1
-			connection = webSupport.completeConnection((OAuth1ConnectionFactory<?>) connectionFactory, request);
-		}
-
-		if (connection != null) {
-			List<String> userIds = usersConnectionRepository.findUserIdsWithConnection(connection);
-			if (userIds.size() == 0) {
-				final ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, usersConnectionRepository);
-				request.setAttribute(SOCIAL_SIGNING_ATTEMPT, signInAttempt, RequestAttributes.SCOPE_SESSION);
-				return "redirect:/account/social/association";
-			} else if (userIds.size() == 1) {
-				final String userId = userIds.get(0);
-				final Account account = accountManager.getAccount(Long.getLong(userId));
-
-				if (account != null) {
-					usersConnectionRepository.createConnectionRepository(userId).updateConnection(connection);
-				}
+		if (request.getAttribute(INITIATE_SOCIAL_SIGNIN, RequestAttributes.SCOPE_REQUEST) == Boolean.TRUE) {
+			final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
+			if (connectionFactory == null) {
+				throw new ProviderNotFoundException(providerId);
+			}
+			return "redirect:" + webSupport.buildOAuthUrl(connectionFactory, request);
+		} else {
+			final String code = request.getParameter("code");
+			final String token = request.getParameter("oauth_token");
+			Connection<?> connection;
+			final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
+			if (code != null) { // OAuth2
+				connection = webSupport.completeConnection((OAuth2ConnectionFactory<?>) connectionFactory, request);
+			} else if (token != null) { // OAuth1
+				connection = webSupport.completeConnection((OAuth1ConnectionFactory<?>) connectionFactory, request);
 			} else {
-				// TODO: TODO:Redirect here for authorization
+				throw new IllegalArgumentException("Unsupported response. No code or toke: " + request.getParameterMap());
+			}
+
+			if (connection != null) {
+				List<String> userIds = usersConnectionRepository.findUserIdsWithConnection(connection);
+				if (userIds.size() == 0) {
+					final ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, usersConnectionRepository);
+					request.setAttribute(SOCIAL_SIGNING_ATTEMPT, signInAttempt, RequestAttributes.SCOPE_SESSION);
+					return "redirect:/account/social/association";
+				} else if (userIds.size() == 1) {
+					final String userId = userIds.get(0);
+					final Account account = accountManager.getAccount(Long.getLong(userId));
+
+					if (account != null) {
+						usersConnectionRepository.createConnectionRepository(userId).updateConnection(connection);
+					}
+				} else {
+					// TODO: TODO:Redirect here for authorization
 
 //				return redirect(URIBuilder.fromUri(signInUrl).queryParam("error", "multiple_users").build().toString());
+				}
 			}
+			return "redirect:/account/signin";
 		}
-		return "redirect:/account/signin";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)

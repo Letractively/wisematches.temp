@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/ico-16.png" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\web\src\main\webapp\content\account\widget\signin.ftl" afterPath="" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\web\src\main\java\billiongoods\server\web\servlet\mvc\account\AuthorizationController.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/icons24.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/icons32.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/head.ftl" />
+      <change type="DELETED" beforePath="C:\Source\bg\modules\web\src\main\webapp\static\images\social\sign-in-with-twitter-d.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Source\bg\modules\web\src\main\webapp\static\images\social\sign-in-with-facebook.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/social/association.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/social/association.ftl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-4.0.0.css" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-4.0.0.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-4.0.0.js" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-4.0.0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/exceptions.properties" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/exceptions.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/config/integration.properties" afterPath="$PROJECT_DIR$/resources/config/integration.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-social.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-social.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
+      <change type="MOVED" beforePath="C:\Source\bg\modules\web\src\main\webapp\static\images\social\ico-16.png" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/icons16.png" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,23 +81,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" line="183" class="billiongoods.server.web.servlet.mvc.account.AccountController" package="billiongoods.server.web.servlet.mvc.account">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
@@ -98,7 +91,55 @@
     <favorites_list name="application" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="authorization.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="22" selection-start="2312" selection-end="2312" vertical-scroll-proportion="-3.5769231" vertical-offset="689" max-vertical-offset="3196">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="association.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/account/social/association.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="25" selection-start="229" selection-end="229" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="1054">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountController.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="189" column="52" selection-start="7930" selection-end="7930" vertical-scroll-proportion="0.10211267" vertical-offset="1698" max-vertical-offset="3672">
+              <folding>
+                <element signature="docComment;class#AccountController#0" expanded="false" />
+                <element signature="e#2497#2508#0" expanded="false" />
+                <element signature="method#mainAccountPage#0;class#AccountController#0" expanded="false" />
+                <element signature="method#signinInternal#0;class#AccountController#0" expanded="false" />
+                <element signature="method#forwardToAuthentication#0;class#AccountController#0" expanded="false" />
+                <element signature="method#validateAccount#0;class#AccountController#0" expanded="false" />
+                <element signature="method#createAccount#1;class#AccountController#0" expanded="false" />
+                <element signature="e#12703#12735#0" expanded="true" />
+                <element signature="method#restoreAccountLoginForm#0;class#AccountController#0" expanded="false" />
+                <element signature="method#setServerDescriptor#0;class#AccountController#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConnectSupport.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-web/1.0.3.RELEASE/spring-social-web-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/web/ConnectSupport.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="187" column="19" selection-start="9338" selection-end="9338" vertical-scroll-proportion="0.0" vertical-offset="2136" max-vertical-offset="2975">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -117,15 +158,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/todo.txt" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountSocialController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountRecoveryController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/OldAccountController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/SocialIntegrationController.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/signin.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/unauthorized.ftl" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/social/association.ftl" />
-        <option value="$PROJECT_DIR$/resources/config/integration.properties" />
         <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/shipping.properties" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-3.0.2.js" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl" />
@@ -159,15 +193,22 @@
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/orders.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/PrivacyController.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderContext.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/widget/signin.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AuthorizationController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl" />
+        <option value="$PROJECT_DIR$/todo.txt" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/exceptions.properties" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-4.0.0.js" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-social.xml" />
+        <option value="$PROJECT_DIR$/resources/config/integration.properties" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/head.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-4.0.0.css" />
         <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/social/association.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" />
       </list>
     </option>
   </component>
@@ -295,8 +336,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -631,44 +670,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="content" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="account" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -923,6 +924,94 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="freemarker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="mvc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1029,6 +1118,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1076,15 +1167,15 @@
     <property name="extract.method.default.visibility" value="private" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="billiongoods.server.services.coupon.impl" />
       <recent name="billiongoods.server.warehouse.impl" />
       <recent name="billiongoods.server.services.paypal.impl" />
       <recent name="billiongoods.server.services.payment.impl" />
       <recent name="billiongoods.server.services.basket.impl" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="billiongoods.core" />
@@ -1096,19 +1187,19 @@
       <recent name="C:\Source\bg\modules\web\src\main\webapp\content\assistance" />
       <recent name="C:\Source\bg\modules\web\src\main\webapp\content\maintain" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Source\bg\modules\web\src\main\webapp\static\images\social" />
-      <recent name="C:\Source\bg\modules\web\src\main\webapp\content\privacy" />
-      <recent name="C:\Source\bg\modules\web\src\main\webapp\content\warehouse\widget" />
-      <recent name="C:\Source\bg\modules\web\src\main\webapp\content\warehouse\basket" />
-      <recent name="C:\Source\bg\modules\services\src\main\resources\config" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="billiongoods.server.warehouse" />
       <recent name="billiongoods.server.services.price.impl.loader" />
       <recent name="billiongoods.server.warehouse.impl.loader" />
       <recent name="billiongoods.server.services.notify.impl" />
       <recent name="billiongoods.server.services" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Source\bg\modules\web\src\main\webapp\static\images\social" />
+      <recent name="C:\Source\bg\modules\web\src\main\webapp\content\privacy" />
+      <recent name="C:\Source\bg\modules\web\src\main\webapp\content\warehouse\widget" />
+      <recent name="C:\Source\bg\modules\web\src\main\webapp\content\warehouse\basket" />
+      <recent name="C:\Source\bg\modules\services\src\main\resources\config" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 7">
@@ -1659,7 +1750,9 @@
       <workItem from="1384431977053" duration="6372000" />
       <workItem from="1384502056726" duration="5535000" />
       <workItem from="1384513607230" duration="3075000" />
-      <workItem from="1384516735739" duration="3596000" />
+      <workItem from="1384516735739" duration="3666000" />
+      <workItem from="1384758299937" duration="1248000" />
+      <workItem from="1384759592207" duration="9869000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -2121,11 +2214,15 @@
       <created>1384438341849</created>
       <updated>1384438341849</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="+">
+      <created>1384520344513</created>
+      <updated>1384520344513</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="469424000" />
+    <option name="totallyTimeSpent" value="480611000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -2149,10 +2246,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1272" y="-8" width="1296" height="1010" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37785387" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37699318" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2162,18 +2259,18 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.67903227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32687926" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3929385" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29452056" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25530303" sideWeight="0.2652733" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33485195" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31776765" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26082003" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2596811" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30794165" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32687926" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16045381" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22528364" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33257404" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2187,7 +2284,7 @@
     </layout>
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37785387" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37699318" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2199,7 +2296,7 @@
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32687926" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26012966" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22528364" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.410859" sideWeight="0.49839228" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33257404" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
@@ -2208,10 +2305,10 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4191344" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901135" sideWeight="0.6879271" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3321918" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32118452" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33143508" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29384965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25530303" sideWeight="0.2652733" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2625571" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2596811" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2267,171 +2364,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/3.2.0.M2/spring-security-core-3.2.0.M2-sources.jar!/org/springframework/security/access/expression/SecurityExpressionRoot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="0" selection-start="3096" selection-end="3096" vertical-scroll-proportion="0.332" vertical-offset="1381" max-vertical-offset="2176" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/MemberAuthenticationProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="64" selection-start="666" selection-end="666" vertical-scroll-proportion="0.0" vertical-offset="46" max-vertical-offset="1071" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/3.2.0.M2/spring-security-core-3.2.0.M2-sources.jar!/org/springframework/security/authentication/AnonymousAuthenticationProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="78" selection-start="1536" selection-end="1536" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1326" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/filter/VisitorAuthenticationFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="52" selection-start="1084" selection-end="1084" vertical-scroll-proportion="0.08" vertical-offset="51" max-vertical-offset="1037" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/security/authentication/MemberAuthenticationToken.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="72" selection-start="983" selection-end="983" vertical-scroll-proportion="0.38" vertical-offset="119" max-vertical-offset="969">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#656#674#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/src/main/resources/config/personality-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="43" selection-start="466" selection-end="466" vertical-scroll-proportion="0.14875" vertical-offset="0" max-vertical-offset="800">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/assistance/whereabouts.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="9" selection-start="34" selection-end="34" vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="221" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/CatalogController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="36" selection-start="1543" selection-end="1543" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="2023">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/CentralController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="42" selection-start="1050" selection-end="1050" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1292">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/ArticleController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="460" selection-end="460" vertical-scroll-proportion="0.28" vertical-offset="0" max-vertical-offset="850">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/whereabouts.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="55" selection-start="864" selection-end="864" vertical-scroll-proportion="0.92354125" vertical-offset="0" max-vertical-offset="561" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/navigation.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="25" selection-end="258" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="323" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/security.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="37" selection-start="71" selection-end="71" vertical-scroll-proportion="0.06841046" vertical-offset="0" max-vertical-offset="497">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-security.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="48" selection-start="7097" selection-end="7097" vertical-scroll-proportion="0.18875502" vertical-offset="2269" max-vertical-offset="3111">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/core/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="69" selection-start="432" selection-end="432" vertical-scroll-proportion="0.22" vertical-offset="0" max-vertical-offset="1122">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="28" selection-start="397" selection-end="421" vertical-scroll-proportion="0.18" vertical-offset="0" max-vertical-offset="5848">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/ProductsPageableForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="36" selection-start="634" selection-end="634" vertical-scroll-proportion="0.4847943" vertical-offset="171" max-vertical-offset="833" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/PageableForm.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="16" selection-start="488" selection-end="488" vertical-scroll-proportion="0.50626117" vertical-offset="108" max-vertical-offset="1326" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/settings.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/wishlist.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="29" selection-start="899" selection-end="899" vertical-scroll-proportion="0.63570565" vertical-offset="0" max-vertical-offset="1377" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/Order.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="8" selection-start="376" selection-end="376" vertical-scroll-proportion="0.33293125" vertical-offset="200" max-vertical-offset="1139" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/view.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="102" selection-end="126" vertical-scroll-proportion="0.041923553" vertical-offset="0" max-vertical-offset="811" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/CategoryController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="0" selection-start="4548" selection-end="4645" vertical-scroll-proportion="0.3112745" vertical-offset="1310" max-vertical-offset="3468">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/social.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/3.2.3.RELEASE/spring-web-3.2.3.RELEASE-sources.jar!/org/springframework/web/bind/annotation/PathVariable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="18" selection-start="1413" selection-end="1413" vertical-scroll-proportion="0.4" vertical-offset="0" max-vertical-offset="850" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/addresses.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/orders.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="37" selection-start="314" selection-end="314" vertical-scroll-proportion="0.26820388" vertical-offset="0" max-vertical-offset="824" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderContext.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="40" selection-start="209" selection-end="209" vertical-scroll-proportion="0.16" vertical-offset="0" max-vertical-offset="850" />
@@ -2442,11 +2374,6 @@
         <state line="41" column="78" selection-start="1773" selection-end="1773" vertical-scroll-proportion="0.36320192" vertical-offset="53" max-vertical-offset="1972">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="27" selection-start="385" selection-end="385" vertical-scroll-proportion="0.30784708" vertical-offset="0" max-vertical-offset="1530" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/PrivacyController.java">
@@ -2482,34 +2409,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/sign-in-with-facebook.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/todo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0609319" vertical-offset="0" max-vertical-offset="5933" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/ico-16.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/navigation.ftl">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="40" selection-start="49" selection-end="49" vertical-scroll-proportion="0.068136275" vertical-offset="0" max-vertical-offset="499">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="67" selection-start="1294" selection-end="1294" vertical-scroll-proportion="0.78356713" vertical-offset="153" max-vertical-offset="1105">
-          <folding>
-            <element signature="n#style#0;n#a#0;n#div#1;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2536,9 +2439,7 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.3.RELEASE/spring-webmvc-3.2.3.RELEASE-sources.jar!/org/springframework/web/servlet/support/BindStatus.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="271" column="23" selection-start="8721" selection-end="8721" vertical-scroll-proportion="0.0" vertical-offset="3843" max-vertical-offset="5134">
-          <folding />
-        </state>
+        <state line="271" column="23" selection-start="8721" selection-end="8721" vertical-scroll-proportion="0.0" vertical-offset="3843" max-vertical-offset="5134" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl">
@@ -2550,43 +2451,482 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/exceptions.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+        <state line="13" column="2" selection-start="898" selection-end="898" vertical-scroll-proportion="0.2634088" vertical-offset="0" max-vertical-offset="839">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java">
+    <entry file="file://$PROJECT_DIR$/todo.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="47" selection-start="3687" selection-end="3687" vertical-scroll-proportion="0.2431466" vertical-offset="459" max-vertical-offset="4777">
+        <state line="5" column="18" selection-start="128" selection-end="128" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5967">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/oauth2/OAuth2ServiceProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="14" selection-start="1142" selection-end="1142" vertical-scroll-proportion="0.45868465" vertical-offset="0" max-vertical-offset="593">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/ServiceProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="17" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.35172415" vertical-offset="0" max-vertical-offset="580">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/ConnectionFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="23" selection-start="2369" selection-end="2369" vertical-scroll-proportion="0.7166948" vertical-offset="306" max-vertical-offset="1207">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/utils.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="41" selection-start="282" selection-end="282" vertical-scroll-proportion="0.10290557" vertical-offset="0" max-vertical-offset="826">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-4.0.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="262" column="0" selection-start="8081" selection-end="8081" vertical-scroll-proportion="0.3933254" vertical-offset="469" max-vertical-offset="1394">
           <folding>
-            <element signature="e#12068#12100#0" expanded="true" />
+            <element signature="e#76#240#0" expanded="false" />
+            <element signature="e#91#134#0" expanded="false" />
+            <element signature="e#146#186#0" expanded="false" />
+            <element signature="e#199#238#0" expanded="false" />
+            <element signature="e#273#2525#0" expanded="false" />
+            <element signature="e#305#346#0" expanded="false" />
+            <element signature="e#384#422#0" expanded="false" />
+            <element signature="e#479#1352#0" expanded="false" />
+            <element signature="e#729#1253#0" expanded="false" />
+            <element signature="e#842#1243#0" expanded="false" />
+            <element signature="e#963#1229#0" expanded="false" />
+            <element signature="e#1444#2522#0" expanded="false" />
+            <element signature="e#1695#2243#0" expanded="false" />
+            <element signature="e#1808#2233#0" expanded="false" />
+            <element signature="e#1953#2219#0" expanded="false" />
+            <element signature="e#2706#2874#0" expanded="false" />
+            <element signature="e#2913#3001#0" expanded="false" />
+            <element signature="e#3020#3115#0" expanded="false" />
+            <element signature="e#3169#3399#0" expanded="false" />
+            <element signature="e#3454#3630#0" expanded="false" />
+            <element signature="e#3684#3763#0" expanded="false" />
+            <element signature="e#3823#4332#0" expanded="false" />
+            <element signature="e#3892#3930#0" expanded="false" />
+            <element signature="e#3951#4127#0" expanded="false" />
+            <element signature="e#4148#4272#0" expanded="false" />
+            <element signature="e#4184#4260#0" expanded="false" />
+            <element signature="e#4206#4221#0" expanded="false" />
+            <element signature="e#4244#4259#0" expanded="false" />
+            <element signature="e#4369#4563#0" expanded="false" />
+            <element signature="e#4464#4502#0" expanded="false" />
+            <element signature="e#4508#4557#0" expanded="false" />
+            <element signature="e#4610#4902#0" expanded="false" />
+            <element signature="e#4665#4720#0" expanded="false" />
+            <element signature="e#4726#4777#0" expanded="false" />
+            <element signature="e#4831#4896#0" expanded="false" />
+            <element signature="e#4958#5378#0" expanded="false" />
+            <element signature="e#5009#5047#0" expanded="false" />
+            <element signature="e#5102#5144#0" expanded="false" />
+            <element signature="e#5150#5188#0" expanded="false" />
+            <element signature="e#5243#5281#0" expanded="false" />
+            <element signature="e#5287#5372#0" expanded="false" />
+            <element signature="e#5435#6103#0" expanded="false" />
+            <element signature="e#5453#5649#0" expanded="false" />
+            <element signature="e#5705#5746#0" expanded="false" />
+            <element signature="e#5752#5789#0" expanded="false" />
+            <element signature="e#5830#6001#0" expanded="false" />
+            <element signature="e#5889#5939#0" expanded="false" />
+            <element signature="e#5945#5991#0" expanded="false" />
+            <element signature="e#6163#6856#0" expanded="false" />
+            <element signature="e#6207#6848#0" expanded="false" />
+            <element signature="e#6365#6838#0" expanded="false" />
+            <element signature="e#6383#6592#0" expanded="false" />
+            <element signature="e#6456#6574#0" expanded="false" />
+            <element signature="e#6610#6824#0" expanded="false" />
+            <element signature="e#6687#6806#0" expanded="false" />
+            <element signature="e#6923#7625#0" expanded="false" />
+            <element signature="e#6973#7199#0" expanded="false" />
+            <element signature="e#7231#7619#0" expanded="false" />
+            <element signature="e#7401#7607#0" expanded="false" />
+            <element signature="e#7435#7516#0" expanded="false" />
+            <element signature="e#7522#7593#0" expanded="false" />
+            <element signature="e#7671#7927#0" expanded="false" />
+            <element signature="e#7747#7831#0" expanded="false" />
+            <element signature="e#7837#7921#0" expanded="false" />
+            <element signature="e#8328#9705#0" expanded="false" />
+            <element signature="e#8719#9167#0" expanded="false" />
+            <element signature="e#8859#9000#0" expanded="false" />
+            <element signature="e#9046#9157#0" expanded="false" />
+            <element signature="e#9345#9557#0" expanded="false" />
+            <element signature="e#9429#9496#0" expanded="false" />
+            <element signature="e#9603#9697#0" expanded="false" />
+            <element signature="e#9762#9766#0" expanded="false" />
+            <element signature="e#9831#11053#0" expanded="false" />
+            <element signature="e#9905#11051#0" expanded="false" />
+            <element signature="e#10035#11043#0" expanded="false" />
+            <element signature="e#10307#10722#0" expanded="false" />
+            <element signature="e#10355#10595#0" expanded="false" />
+            <element signature="e#10601#10700#0" expanded="false" />
+            <element signature="e#10792#11031#0" expanded="false" />
+            <element signature="e#11183#13101#0" expanded="false" />
+            <element signature="e#11412#11841#0" expanded="false" />
+            <element signature="e#11505#11564#0" expanded="false" />
+            <element signature="e#11615#11674#0" expanded="false" />
+            <element signature="e#11872#12034#0" expanded="false" />
+            <element signature="e#12123#12181#0" expanded="false" />
+            <element signature="e#12230#12518#0" expanded="false" />
+            <element signature="e#12321#12417#0" expanded="false" />
+            <element signature="e#12423#12512#0" expanded="false" />
+            <element signature="e#12576#12610#0" expanded="false" />
+            <element signature="e#12636#13097#0" expanded="false" />
+            <element signature="e#12831#13062#0" expanded="false" />
+            <element signature="e#13138#16291#0" expanded="false" />
+            <element signature="e#13215#13273#0" expanded="false" />
+            <element signature="e#13317#13376#0" expanded="false" />
+            <element signature="e#13418#15212#0" expanded="false" />
+            <element signature="e#13569#13919#0" expanded="false" />
+            <element signature="e#14104#14458#0" expanded="false" />
+            <element signature="e#14212#14265#0" expanded="false" />
+            <element signature="e#14464#14792#0" expanded="false" />
+            <element signature="e#15271#15306#0" expanded="false" />
+            <element signature="e#15357#15797#0" expanded="false" />
+            <element signature="e#15850#15955#0" expanded="false" />
+            <element signature="e#16009#16119#0" expanded="false" />
+            <element signature="e#16175#16287#0" expanded="false" />
+            <element signature="e#16327#17293#0" expanded="false" />
+            <element signature="e#16400#17290#0" expanded="false" />
+            <element signature="e#16637#16996#0" expanded="false" />
+            <element signature="e#16681#16881#0" expanded="false" />
+            <element signature="e#16887#16978#0" expanded="false" />
+            <element signature="e#17062#17282#0" expanded="false" />
+            <element signature="e#17336#18295#0" expanded="false" />
+            <element signature="e#17376#17444#0" expanded="false" />
+            <element signature="e#17494#18292#0" expanded="false" />
+            <element signature="e#17700#18061#0" expanded="false" />
+            <element signature="e#17744#17946#0" expanded="false" />
+            <element signature="e#17952#18043#0" expanded="false" />
+            <element signature="e#18127#18284#0" expanded="false" />
+            <element signature="e#18343#25029#0" expanded="false" />
+            <element signature="e#18387#19985#0" expanded="false" />
+            <element signature="e#18587#18673#0" expanded="false" />
+            <element signature="e#18731#18823#0" expanded="false" />
+            <element signature="e#18944#19695#0" expanded="false" />
+            <element signature="e#18988#19300#0" expanded="false" />
+            <element signature="e#19306#19534#0" expanded="false" />
+            <element signature="e#19602#19677#0" expanded="false" />
+            <element signature="e#19761#19977#0" expanded="false" />
+            <element signature="e#20025#20110#0" expanded="false" />
+            <element signature="e#20151#20314#0" expanded="false" />
+            <element signature="e#20185#20251#0" expanded="false" />
+            <element signature="e#20377#22109#0" expanded="false" />
+            <element signature="e#20425#22101#0" expanded="false" />
+            <element signature="e#20604#22091#0" expanded="false" />
+            <element signature="e#20622#21892#0" expanded="false" />
+            <element signature="e#20709#21874#0" expanded="false" />
+            <element signature="e#21065#21451#0" expanded="false" />
+            <element signature="e#21125#21288#0" expanded="false" />
+            <element signature="e#21294#21417#0" expanded="false" />
+            <element signature="e#21533#21801#0" expanded="false" />
+            <element signature="e#21910#22077#0" expanded="false" />
+            <element signature="e#21987#22059#0" expanded="false" />
+            <element signature="e#22173#23033#0" expanded="false" />
+            <element signature="e#22472#22739#0" expanded="false" />
+            <element signature="e#22516#22624#0" expanded="false" />
+            <element signature="e#22630#22721#0" expanded="false" />
+            <element signature="e#22805#23025#0" expanded="false" />
+            <element signature="e#23067#23238#0" expanded="false" />
+            <element signature="e#23358#23466#0" expanded="false" />
+            <element signature="e#23499#23552#0" expanded="false" />
+            <element signature="e#23577#23817#0" expanded="false" />
+            <element signature="e#23866#23992#0" expanded="false" />
+            <element signature="e#24085#24588#0" expanded="false" />
+            <element signature="e#24687#25025#0" expanded="false" />
+            <element signature="e#25063#32025#0" expanded="false" />
+            <element signature="e#25086#25889#0" expanded="false" />
+            <element signature="e#25125#25883#0" expanded="false" />
+            <element signature="e#25285#25839#0" expanded="false" />
+            <element signature="e#25355#25414#0" expanded="false" />
+            <element signature="e#25420#25471#0" expanded="false" />
+            <element signature="e#25524#25749#0" expanded="false" />
+            <element signature="e#25579#25675#0" expanded="false" />
+            <element signature="e#25755#25825#0" expanded="false" />
+            <element signature="e#26055#26219#0" expanded="false" />
+            <element signature="e#26115#26205#0" expanded="false" />
+            <element signature="e#26245#26411#0" expanded="false" />
+            <element signature="e#26305#26397#0" expanded="false" />
+            <element signature="e#26487#27531#0" expanded="false" />
+            <element signature="e#26738#26862#0" expanded="false" />
+            <element signature="e#26774#26827#0" expanded="false" />
+            <element signature="e#26886#26997#0" expanded="false" />
+            <element signature="e#27032#27363#0" expanded="false" />
+            <element signature="e#27115#27216#0" expanded="false" />
+            <element signature="e#27399#27525#0" expanded="false" />
+            <element signature="e#27571#28338#0" expanded="false" />
+            <element signature="e#27764#27804#0" expanded="false" />
+            <element signature="e#27839#28170#0" expanded="false" />
+            <element signature="e#27922#28023#0" expanded="false" />
+            <element signature="e#28206#28332#0" expanded="false" />
+            <element signature="e#28385#28537#0" expanded="false" />
+            <element signature="e#28481#28531#0" expanded="false" />
+            <element signature="e#28595#28931#0" expanded="false" />
+            <element signature="e#29054#29117#0" expanded="false" />
+            <element signature="e#29162#30421#0" expanded="false" />
+            <element signature="e#29224#29304#0" expanded="false" />
+            <element signature="e#29357#29561#0" expanded="false" />
+            <element signature="e#29419#29485#0" expanded="false" />
+            <element signature="e#29491#29551#0" expanded="false" />
+            <element signature="e#29631#29814#0" expanded="false" />
+            <element signature="e#29718#29765#0" expanded="false" />
+            <element signature="e#29875#30070#0" expanded="false" />
+            <element signature="e#30135#30377#0" expanded="false" />
+            <element signature="e#30196#30264#0" expanded="false" />
+            <element signature="e#30480#31136#0" expanded="false" />
+            <element signature="e#30630#30837#0" expanded="false" />
+            <element signature="e#30936#30997#0" expanded="false" />
+            <element signature="e#31048#31119#0" expanded="false" />
+            <element signature="e#31174#31341#0" expanded="false" />
+            <element signature="e#31234#31320#0" expanded="false" />
+            <element signature="e#31411#31558#0" expanded="false" />
+            <element signature="e#31572#31722#0" expanded="false" />
+            <element signature="e#31755#31840#0" expanded="false" />
+            <element signature="e#31933#31970#0" expanded="false" />
+            <element signature="e#31984#32021#0" expanded="false" />
+            <marker date="1384762067788" expanded="false" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/social.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="34" selection-start="3792" selection-end="3792" vertical-scroll-proportion="-7.8461537" vertical-offset="1173" max-vertical-offset="2958">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="826">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-twitter/1.0.3.RELEASE/spring-social-twitter-1.0.3.RELEASE.jar!/org/springframework/social/twitter/connect/TwitterConnectionFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="185" selection-end="185" vertical-scroll-proportion="0.10278114" vertical-offset="0" max-vertical-offset="827">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/config/integration.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="21" selection-start="249" selection-end="249" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="731">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-social.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="78" selection-start="476" selection-end="476" vertical-scroll-proportion="0.20987654" vertical-offset="0" max-vertical-offset="612">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/lang/StringBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="0" selection-start="4391" selection-end="4391" vertical-scroll-proportion="0.0" vertical-offset="1656" max-vertical-offset="7140">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/3.2.3.RELEASE/spring-webmvc-3.2.3.RELEASE-sources.jar!/org/springframework/web/servlet/view/freemarker/FreeMarkerViewResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="13" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.5318893" vertical-offset="0" max-vertical-offset="831">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/freemarker/freemarker/2.3.19/freemarker-2.3.19-sources.jar!/freemarker/ext/servlet/HttpRequestHashModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="27" selection-start="3655" selection-end="3655" vertical-scroll-proportion="-0.14834206" vertical-offset="663" max-vertical-offset="1343">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/view/freemarker/WMFreeMarkerViewResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="82" selection-start="660" selection-end="660" vertical-scroll-proportion="0.25757575" vertical-offset="0" max-vertical-offset="782">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="96" selection-start="3213" selection-end="3213" vertical-scroll-proportion="0.0" vertical-offset="907" max-vertical-offset="2193">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/view/freemarker/WMFreeMarkerView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="47" selection-start="1619" selection-end="1619" vertical-scroll-proportion="0.0" vertical-offset="290" max-vertical-offset="884">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/icons24.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/icons16.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/social/icons32.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/UserProfile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="13" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.0" vertical-offset="266" max-vertical-offset="1309">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/ConnectionKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="18" selection-start="1582" selection-end="1582" vertical-scroll-proportion="0.33253872" vertical-offset="282" max-vertical-offset="1241">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="58" selection-start="159" selection-end="159" vertical-scroll-proportion="0.12348668" vertical-offset="0" max-vertical-offset="1105">
           <folding>
-            <element signature="n#style#0;n#label#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#td#2;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#td#0;n#tr#1;n#table#0;n#form#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#td#2;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#td#0;n#tr#2;n#table#0;n#form#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#td#2;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#td#0;n#tr#3;n#table#0;n#form#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#td#2;n#tr#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/head.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="1665" selection-end="1665" vertical-scroll-proportion="0.5762712" vertical-offset="0" max-vertical-offset="826">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/billiongoods.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="245" selection-end="268" vertical-scroll-proportion="0.20581114" vertical-offset="0" max-vertical-offset="1122">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-4.0.0.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1143" column="21" selection-start="18526" selection-end="18526" vertical-scroll-proportion="0.0" vertical-offset="19343" max-vertical-offset="31569">
+        <state line="1846" column="45" selection-start="0" selection-end="30363" vertical-scroll-proportion="0.48122066" vertical-offset="30972" max-vertical-offset="31824">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="21" selection-start="7687" selection-end="7687" vertical-scroll-proportion="0.2705602" vertical-offset="2272" max-vertical-offset="3553">
+        <state line="180" column="58" selection-start="10278" selection-end="10278" vertical-scroll-proportion="0.45292014" vertical-offset="2680" max-vertical-offset="3519">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="32" selection-start="4791" selection-end="4791" vertical-scroll-proportion="0.73659116" vertical-offset="589" max-vertical-offset="1428">
+          <folding>
+            <marker date="1370429384000" expanded="true" signature="-1:-1" placeholder="select userI..missingValueUserConnection..." />
+            <marker date="1370429384000" expanded="true" signature="-1:-1" placeholder="select userI..missingValueUserConnection..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/UsersConnectionRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="25" selection-start="2839" selection-end="2839" vertical-scroll-proportion="0.79022646" vertical-offset="0" max-vertical-offset="839">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-web/1.0.3.RELEASE/spring-social-web-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/web/ProviderSignInAttempt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="16" selection-start="3047" selection-end="3047" vertical-scroll-proportion="0.6352801" vertical-offset="113" max-vertical-offset="952">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="42" selection-start="624" selection-end="658" vertical-scroll-proportion="0.019953052" vertical-offset="0" max-vertical-offset="1836">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/oauth2/OAuth2Template.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="257" column="19" selection-start="11805" selection-end="11805" vertical-scroll-proportion="0.33253872" vertical-offset="3546" max-vertical-offset="4624">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/oauth2/OAuth2Operations.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="11" selection-start="1888" selection-end="1888" vertical-scroll-proportion="0.33333334" vertical-offset="209" max-vertical-offset="1530">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.0.3.RELEASE/spring-social-core-1.0.3.RELEASE-sources.jar!/org/springframework/social/oauth1/OAuth1Version.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="4" selection-start="958" selection-end="958" vertical-scroll-proportion="0.35915494" vertical-offset="0" max-vertical-offset="852">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-web/1.0.3.RELEASE/spring-social-web-1.0.3.RELEASE-sources.jar!/org/springframework/social/connect/web/ConnectSupport.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="187" column="19" selection-start="9338" selection-end="9338" vertical-scroll-proportion="0.0" vertical-offset="2136" max-vertical-offset="2975">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="22" selection-start="2312" selection-end="2312" vertical-scroll-proportion="-3.5769231" vertical-offset="689" max-vertical-offset="3196">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/account/social/association.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="25" selection-start="229" selection-end="229" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="1054">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="189" column="52" selection-start="7930" selection-end="7930" vertical-scroll-proportion="0.10211267" vertical-offset="1698" max-vertical-offset="3672">
+          <folding>
+            <element signature="docComment;class#AccountController#0" expanded="false" />
+            <element signature="e#2497#2508#0" expanded="false" />
+            <element signature="method#mainAccountPage#0;class#AccountController#0" expanded="false" />
+            <element signature="method#signinInternal#0;class#AccountController#0" expanded="false" />
+            <element signature="method#forwardToAuthentication#0;class#AccountController#0" expanded="false" />
+            <element signature="method#validateAccount#0;class#AccountController#0" expanded="false" />
+            <element signature="method#createAccount#1;class#AccountController#0" expanded="false" />
+            <element signature="e#12703#12735#0" expanded="true" />
+            <element signature="method#restoreAccountLoginForm#0;class#AccountController#0" expanded="false" />
+            <element signature="method#setServerDescriptor#0;class#AccountController#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1836,17 +1836,32 @@ button.bg-ui-button.selected {
     background: url("../images/progress.gif");
 }
 
-.social-button {
+.social-signin-link {
+    margin-left: 5px;
+}
+
+.social-icon-16 {
     width: 16px;
     height: 16px;
     display: inline-block !important;
-    background: url("../images/social/ico-16.png");
+    background: url("../images/social/icons16.png");
 }
 
-.social-button-vk {
-    background-position: 0 0;
+.social-icon-24 {
+    width: 24px;
+    height: 24px;
+    display: inline-block !important;
+    background: url("../images/social/icons24.png");
 }
 
-.social-button-fb {
+.social-icon-twitter {
+    background-position: 0 -64px;
+}
+
+.social-icon-facebook {
     background-position: 0 -32px;
+}
+
+.social-icon-vkontakte {
+    background-position: 0 0;
 }

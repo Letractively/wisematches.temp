@@ -54,11 +54,24 @@
                             <td>
                                 <button type="submit">Войти</button>
                             </td>
-                            <td align="right">
-                                <ul>
-                                    <li>
-                                    </li>
-                                </ul>
+                            <td align="right" valign="bottom">
+                                <div class="social-signin">
+                                <#list ["facebook", "twitter", "vkontakte"] as p>
+                                    <a class="social-signin-link" href="/account/social/start?provider=${p}"><i
+                                            class="social-icon-24 social-icon-${p}"></i></a>
+                                </#list>
+                                </div>
+
+                                <script type="application/javascript">
+                                    $(".social-signin-link").click(function (event) {
+                                        event.preventDefault();
+
+                                        var link = $(this);
+                                        var newWin = bg.ui.popupwindow(link.attr("href"), "BillionGoods: Авторизация", 500, 300);
+                                        newWin.focus();
+
+                                    });
+                                </script>
                             </td>
                         </tr>
                         <tr>
@@ -69,8 +82,8 @@
                         </tr>
                     </table>
                 </form>
-            <#--
 
+            <#--
                         <form id="facebookLogin" action="/account/social/facebook" method="POST">
                             <input type="hidden" name="scope" value="offline_access"/>
                             <button type="submit">
@@ -150,6 +163,7 @@
                                     <li>- Хранения товаров в корзине без ограничения по времени;</li>
                                     <li>- Управления адресами доставки и быстрый выбор адреса при оформление заказа;
                                     </li>
+                                    <li>- а так же множество других преимуществ.</li>
                                 </ul>
                             </div>
                         </td>
