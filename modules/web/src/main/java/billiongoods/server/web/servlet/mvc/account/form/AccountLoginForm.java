@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class AccountLoginForm implements Serializable {
 	public String j_username;
 	public String j_password;
-	public String rememberMe = "false";
+	public String rememberMe = "true";
 	public String error;
 
 	public AccountLoginForm() {

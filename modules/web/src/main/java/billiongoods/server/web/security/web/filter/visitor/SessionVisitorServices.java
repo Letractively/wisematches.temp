@@ -1,4 +1,4 @@
-package billiongoods.server.web.security.filter.visitor;
+package billiongoods.server.web.security.web.filter.visitor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

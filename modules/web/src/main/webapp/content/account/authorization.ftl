@@ -1,4 +1,3 @@
-<#-- @ftlvariable name="showRememberMe" type="java.lang.Boolean" -->
 <#include "/core.ftl">
 
 <table class="account" cellspacing="0" cellpadding="0">
@@ -29,27 +28,15 @@
                             <@bg.ui.input path="login.j_password" fieldType="password" size="0"/>
                             </td>
                         </tr>
-                    <#if showRememberMe?? && showRememberMe>
                         <tr>
-                            <td align="right" valign="middle"
-                                style="text-align: right; vertical-align: middle;">
-                                <@bg.ui.field path="login.rememberMe">
-                                    <input type="checkbox" id="rememberMe" name="rememberMe" value="true"
-                                           <#if bg.ui.statusValue=="true">checked="checked"</#if>/>
-                                </@bg.ui.field>
+                            <td>
                             </td>
-                            <td align="left" valign="middle"
-                                style="text-align: left; vertical-align: middle;">
-                                <label for="rememberMe"><@message code="account.login.remember.label"/></label>
+                            <td align="left" valign="middle" nowrap="nowrap">
+                            <@bg.ui.input path="login.rememberMe" fieldType="checkbox" attributes="style='width: auto; vertical-align: middle'">
+                                <label style="vertical-align: middle" for="rememberMe">запомнить меня</label>
+                            </@bg.ui.input>
                             </td>
                         </tr>
-                    <#else>
-                        <tr>
-                            <td colspan="2">
-                                <input type="hidden" id="rememberMe" name="rememberMe" value="true"/>
-                            </td>
-                        </tr>
-                    </#if>
                         <tr>
                             <td>
                                 <button type="submit">Войти</button>

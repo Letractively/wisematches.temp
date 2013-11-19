@@ -3,15 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
-        <property name="connectionFactories">
+    <bean id="connectionFactoryLocator" class="org.springframework.social.security.SocialAuthenticationServiceRegistry">
+        <property name="authenticationServices">
             <list>
-                <bean class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+                <bean class="org.springframework.social.twitter.security.TwitterAuthenticationService">
                     <constructor-arg value="${twitter.consumerKey:no}"/>
                     <constructor-arg value="${twitter.consumerSecret:no}"/>
                 </bean>
 
-                <bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+                <bean class="org.springframework.social.facebook.security.FacebookAuthenticationService">
                     <constructor-arg value="${facebook.clientId:no}"/>
                     <constructor-arg value="${facebook.clientSecret:no}"/>
                 </bean>

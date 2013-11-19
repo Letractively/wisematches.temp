@@ -30,8 +30,7 @@
         Продолжив, вы сможете входить в интернет-магазин BillionGoods без ввода пароля, при помощи
         профиля
         <span style="font-size: 16px">
-        <i class="social-icon-16 social-icon-${provider}"></i> <@message code="account.social.type.${provider}"/>
-            <strong>${connection.displayName}</strong></span>.
+        <i class="social-icon-16 social-icon-${provider}"></i> <strong>${connection.displayName}</strong></span>.
         <br>
         <br>
         Пожалуйста, дайте нам знать, являетесь ли вы новым покупателем, либо у вас уже есть логин / пароль в нашем
