@@ -19,6 +19,10 @@ public final class PersonalityContext {
 		}
 
 		final Object principal = authentication.getPrincipal();
+		if (principal instanceof PersonalityContainer) {
+			return ((PersonalityContainer) principal).getPersonality();
+		}
+
 		if (principal instanceof Personality) {
 			return (Personality) principal;
 		}

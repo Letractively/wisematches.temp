@@ -52,16 +52,13 @@ import java.util.Set;
 @Controller
 @RequestMapping("/account")
 public class AccountController extends AbstractController {
+	private ConnectSupport connectSupport;
+
 	private AccountManager accountManager;
 	private NotificationService notificationService;
 
 	private ConnectionFactoryLocator connectionFactoryLocator;
 	private UsersConnectionRepository usersConnectionRepository;
-
-	private final ConnectSupport webSupport = new ConnectSupport();
-
-	private static final String INITIATE_SOCIAL_SIGNIN = "INITIATE_SOCIAL_SIGNIN";
-	private static final String SOCIAL_SIGNING_ATTEMPT = "SOCIAL_SIGNING_ATTEMPT";
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.AccountSocialController");
 
@@ -77,13 +74,11 @@ public class AccountController extends AbstractController {
 	@RequestMapping("/signin")
 	public String signinInternal(@ModelAttribute("login") AccountLoginForm login, BindingResult result,
 								 @ModelAttribute("registration") AccountRegistrationForm register,
-								 NativeWebRequest request) {
+								 Model model, NativeWebRequest request) {
 		restoreAccountLoginForm(login, request);
 
 		final String error = login.getError();
-		if (error != null)
-
-		{
+		if (error != null) {
 			switch (error) {
 				case "credential":
 					result.rejectValue("j_password", "account.signin.err.status.credential");
@@ -110,7 +105,6 @@ public class AccountController extends AbstractController {
 				}
 			}
 		}
-
 		return "/content/account/authorization";
 	}
 
@@ -136,15 +130,20 @@ public class AccountController extends AbstractController {
 
 	@RequestMapping("/social/start")
 	public String socialStart(NativeWebRequest request) {
-		request.setAttribute(INITIATE_SOCIAL_SIGNIN, Boolean.TRUE, RequestAttributes.SCOPE_REQUEST);
-		return "forward:/account/social/" + request.getParameter("provider");
-
-//		return "/content/account/social/start";
+		final String provider = request.getParameter("provider");
+		if (!connectionFactoryLocator.registeredProviderIds().contains(provider)) {
+			throw new IllegalStateException("Unsupported provider: " + provider);
+		}
+		final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(provider);
+		if (connectionFactory == null) {
+			throw new ProviderNotFoundException(provider);
+		}
+		return "redirect:" + connectSupport.buildOAuthUrl(connectionFactory, request);
 	}
 
 	@RequestMapping(value = "/social/association", method = RequestMethod.GET)
 	public String socialAssociation(Model model, NativeWebRequest request) {
-		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(SOCIAL_SIGNING_ATTEMPT, RequestAttributes.SCOPE_SESSION);
+		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 		if (attempt == null) {
 			return "redirect:/account/signin";
 		}
@@ -157,7 +156,7 @@ public class AccountController extends AbstractController {
 
 	@RequestMapping(value = "/social/association", method = RequestMethod.POST)
 	public String socialAssociationAction(Model model, NativeWebRequest request) {
-		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(SOCIAL_SIGNING_ATTEMPT, RequestAttributes.SCOPE_SESSION);
+		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 		if (attempt == null) {
 			return "redirect:/account/signin";
 		}
@@ -180,46 +179,38 @@ public class AccountController extends AbstractController {
 
 	@RequestMapping("/social/{providerId}")
 	public String socialProcessing(@PathVariable String providerId, NativeWebRequest request) {
-		if (request.getAttribute(INITIATE_SOCIAL_SIGNIN, RequestAttributes.SCOPE_REQUEST) == Boolean.TRUE) {
-			final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
-			if (connectionFactory == null) {
-				throw new ProviderNotFoundException(providerId);
-			}
-			return "redirect:" + webSupport.buildOAuthUrl(connectionFactory, request);
+		final String code = request.getParameter("code");
+		final String token = request.getParameter("oauth_token");
+		Connection<?> connection;
+		final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
+		if (code != null) { // OAuth2
+			connection = connectSupport.completeConnection((OAuth2ConnectionFactory<?>) connectionFactory, request);
+		} else if (token != null) { // OAuth1
+			connection = connectSupport.completeConnection((OAuth1ConnectionFactory<?>) connectionFactory, request);
 		} else {
-			final String code = request.getParameter("code");
-			final String token = request.getParameter("oauth_token");
-			Connection<?> connection;
-			final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
-			if (code != null) { // OAuth2
-				connection = webSupport.completeConnection((OAuth2ConnectionFactory<?>) connectionFactory, request);
-			} else if (token != null) { // OAuth1
-				connection = webSupport.completeConnection((OAuth1ConnectionFactory<?>) connectionFactory, request);
+			throw new IllegalArgumentException("Unsupported response. No code or toke: " + request.getParameterMap());
+		}
+
+		if (connection != null) {
+			List<String> userIds = usersConnectionRepository.findUserIdsWithConnection(connection);
+			if (userIds.size() == 0) {
+				final ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, usersConnectionRepository);
+				request.setAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, signInAttempt, RequestAttributes.SCOPE_SESSION);
+				return "redirect:/account/social/association";
+			} else if (userIds.size() == 1) {
+				final String userId = userIds.get(0);
+				final Account account = accountManager.getAccount(Long.getLong(userId));
+
+				if (account != null) {
+					usersConnectionRepository.createConnectionRepository(userId).updateConnection(connection);
+				}
 			} else {
-				throw new IllegalArgumentException("Unsupported response. No code or toke: " + request.getParameterMap());
-			}
-
-			if (connection != null) {
-				List<String> userIds = usersConnectionRepository.findUserIdsWithConnection(connection);
-				if (userIds.size() == 0) {
-					final ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, usersConnectionRepository);
-					request.setAttribute(SOCIAL_SIGNING_ATTEMPT, signInAttempt, RequestAttributes.SCOPE_SESSION);
-					return "redirect:/account/social/association";
-				} else if (userIds.size() == 1) {
-					final String userId = userIds.get(0);
-					final Account account = accountManager.getAccount(Long.getLong(userId));
-
-					if (account != null) {
-						usersConnectionRepository.createConnectionRepository(userId).updateConnection(connection);
-					}
-				} else {
-					// TODO: TODO:Redirect here for authorization
+				// TODO: TODO:Redirect here for authorization
 
 //				return redirect(URIBuilder.fromUri(signInUrl).queryParam("error", "multiple_users").build().toString());
-				}
 			}
-			return "redirect:/account/signin";
 		}
+		return "redirect:/account/signin";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
@@ -321,8 +312,14 @@ public class AccountController extends AbstractController {
 	}
 
 	@Autowired
-	public void setServerDescriptor(ServerDescriptor descriptor) {
-		webSupport.setApplicationUrl(descriptor.getWebHostName());
+	public void setServerDescriptor(final ServerDescriptor descriptor) {
+		connectSupport = new ConnectSupport() {
+			@Override
+			protected String callbackUrl(NativeWebRequest request) {
+				return descriptor.getWebHostName() + "/account/social/" + request.getParameter("provider");
+			}
+		};
+		connectSupport.setUseAuthenticateUrl(true);
 	}
 
 	@Autowired

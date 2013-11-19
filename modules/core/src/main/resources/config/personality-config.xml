@@ -21,16 +21,4 @@
           class="billiongoods.core.account.impl.HibernateAccountRecoveryManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
-    <bean id="visitorAuthenticationProvider"
-          class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
-        <constructor-arg name="key" value="visitor"/>
-    </bean>
-
-    <bean id="memberAuthenticationProvider"
-          class="billiongoods.core.security.authentication.MemberAuthenticationProvider">
-        <property name="accountManager" ref="accountManager"/>
-        <property name="accountLockManager" ref="accountLockManager"/>
-        <property name="accountRecoveryManager" ref="accountRecoveryManager"/>
-    </bean>
 </beans>

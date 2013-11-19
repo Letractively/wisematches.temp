@@ -98,14 +98,20 @@
 
         <dependency>
             <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-security</artifactId>
+            <version>${org.springframework.social.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-facebook</artifactId>
-            <version>${org.springframework.social.facebook.version}</version>
+            <version>${org.springframework.social.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-twitter</artifactId>
-            <version>${org.springframework.social.twitter.version}</version>
+            <version>${org.springframework.social.version}</version>
         </dependency>
 
         <dependency>

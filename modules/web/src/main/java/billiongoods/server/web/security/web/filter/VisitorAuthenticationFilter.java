@@ -1,8 +1,8 @@
-package billiongoods.server.web.security.filter;
+package billiongoods.server.web.security.web.filter;
 
 import billiongoods.core.Visitor;
-import billiongoods.server.web.security.filter.visitor.SessionVisitorServices;
-import billiongoods.server.web.security.filter.visitor.VisitorServices;
+import billiongoods.server.web.security.web.filter.visitor.SessionVisitorServices;
+import billiongoods.server.web.security.web.filter.visitor.VisitorServices;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
