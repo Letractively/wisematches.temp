@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="userIds" type="org.springframework.social.connect.Connection" -->
 <#-- @ftlvariable name="connection" type="org.springframework.social.connect.Connection" -->
 <#include "/core.ftl">
 

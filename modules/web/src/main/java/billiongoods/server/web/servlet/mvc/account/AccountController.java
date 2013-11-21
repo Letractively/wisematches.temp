@@ -10,6 +10,7 @@ import billiongoods.server.services.notify.Sender;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.account.form.AccountLoginForm;
 import billiongoods.server.web.servlet.mvc.account.form.AccountRegistrationForm;
+import billiongoods.server.web.servlet.mvc.account.form.SocialAssociationForm;
 import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.WebAttributes;
-import org.springframework.social.connect.ConnectionFactory;
-import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.connect.*;
 import org.springframework.social.connect.web.ConnectSupport;
 import org.springframework.social.connect.web.ProviderSignInAttempt;
 import org.springframework.stereotype.Controller;
@@ -40,6 +39,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -115,10 +116,10 @@ public class AccountController extends AbstractController {
 		if (a.isAvailable()) {
 			return responseFactory.success();
 		} else {
-			if (!a.isEmailAvailable()) {
+			if (result != null && !a.isEmailAvailable()) {
 				result.rejectValue("email", "account.register.email.err.busy");
 			}
-			if (!a.isUsernameProhibited()) {
+			if (result != null && !a.isUsernameProhibited()) {
 				result.rejectValue("nickname", "account.register.nickname.err.incorrect");
 			}
 			return responseFactory.failure("account.register.err.busy", locale);
@@ -139,10 +140,17 @@ public class AccountController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/social/association", method = RequestMethod.GET)
-	public String socialAssociation(Model model, NativeWebRequest request) {
+	public String socialAssociation(@ModelAttribute("form") SocialAssociationForm form, Model model, NativeWebRequest request) {
 		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 		if (attempt == null) {
 			return "redirect:/account/signin";
+		}
+
+		final List<String> userIds = usersConnectionRepository.findUserIdsWithConnection(attempt.getConnection());
+		if (userIds.size() == 0) {
+			model.addAttribute("userIds", Collections.emptyList());
+		} else {
+
 		}
 
 		model.addAttribute("plain", Boolean.TRUE);
@@ -152,26 +160,37 @@ public class AccountController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/social/association", method = RequestMethod.POST)
-	public String socialAssociationAction(Model model, NativeWebRequest request) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
+	public String socialAssociationAction(@ModelAttribute("form") SocialAssociationForm form, Model model, NativeWebRequest request) {
 		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 		if (attempt == null) {
 			return "redirect:/account/signin";
 		}
 
+		final Connection<?> connection = attempt.getConnection();
+		final UserProfile profile = connection.fetchUserProfile();
+
+		final String email = profile.getEmail();
+		final String username = profile.getName() == null ? profile.getUsername() : profile.getName();
+
 		final AccountEditor editor = new AccountEditor();
-//		editor.setEmail(atte);
-//		editor.setUsername("");
+		editor.setEmail(email);
+		editor.setUsername(username);
 
-//		accountManager.createAccount(new)
+		try {
+			final Account account = accountManager.createAccount(editor.createAccount(), "");
 
-/*
-		usersConnectionRepository.createConnectionRepository(userId).updateConnection(connection);
-		attempt.getConnection()
-		final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
-*/
+			final String userId = String.valueOf(account);
 
+			final ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(userId);
+			connectionRepository.addConnection(connection);
 
-		return "redirect:/"; // TODO: redirect to authorization
+			return forwardToAuthorization(request, account, true);
+		} catch (DuplicateAccountException e) {
+			return "/content/account/social/association";
+		} catch (InadmissibleUsernameException e) {
+			return "/content/account/social/association";
+		}
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
