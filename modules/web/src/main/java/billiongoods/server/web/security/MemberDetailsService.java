@@ -42,6 +42,10 @@ public class MemberDetailsService implements UserDetailsService, SocialUserDetai
 		return createUserDetails(accountManager.getAccount(Long.decode(userId)), userId);
 	}
 
+	public MemberDetails loadUserByAccount(Account account) throws UsernameNotFoundException, DataAccessException {
+		return createUserDetails(account, null);
+	}
+
 	private MemberDetails createUserDetails(Account account, Object id) {
 		if (account == null) {
 			throw new UsernameNotFoundException("Account not found in the system: " + id);
