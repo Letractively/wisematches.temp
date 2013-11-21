@@ -19,12 +19,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.WebAttributes;
-import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.support.OAuth1ConnectionFactory;
-import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.connect.web.ConnectSupport;
 import org.springframework.social.connect.web.ProviderSignInAttempt;
 import org.springframework.stereotype.Controller;
@@ -34,15 +31,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -74,7 +71,7 @@ public class AccountController extends AbstractController {
 	@RequestMapping("/signin")
 	public String signinInternal(@ModelAttribute("login") AccountLoginForm login, BindingResult result,
 								 @ModelAttribute("registration") AccountRegistrationForm register,
-								 Model model, NativeWebRequest request) {
+								 NativeWebRequest request) {
 		restoreAccountLoginForm(login, request);
 
 		final String error = login.getError();
@@ -177,47 +174,11 @@ public class AccountController extends AbstractController {
 		return "redirect:/"; // TODO: redirect to authorization
 	}
 
-	@RequestMapping("/social/{providerId}")
-	public String socialProcessing(@PathVariable String providerId, NativeWebRequest request) {
-		final String code = request.getParameter("code");
-		final String token = request.getParameter("oauth_token");
-		Connection<?> connection;
-		final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId);
-		if (code != null) { // OAuth2
-			connection = connectSupport.completeConnection((OAuth2ConnectionFactory<?>) connectionFactory, request);
-		} else if (token != null) { // OAuth1
-			connection = connectSupport.completeConnection((OAuth1ConnectionFactory<?>) connectionFactory, request);
-		} else {
-			throw new IllegalArgumentException("Unsupported response. No code or toke: " + request.getParameterMap());
-		}
-
-		if (connection != null) {
-			List<String> userIds = usersConnectionRepository.findUserIdsWithConnection(connection);
-			if (userIds.size() == 0) {
-				final ProviderSignInAttempt signInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, usersConnectionRepository);
-				request.setAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, signInAttempt, RequestAttributes.SCOPE_SESSION);
-				return "redirect:/account/social/association";
-			} else if (userIds.size() == 1) {
-				final String userId = userIds.get(0);
-				final Account account = accountManager.getAccount(Long.getLong(userId));
-
-				if (account != null) {
-					usersConnectionRepository.createConnectionRepository(userId).updateConnection(connection);
-				}
-			} else {
-				// TODO: TODO:Redirect here for authorization
-
-//				return redirect(URIBuilder.fromUri(signInUrl).queryParam("error", "multiple_users").build().toString());
-			}
-		}
-		return "redirect:/account/signin";
-	}
-
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
 	public String createAccount(@ModelAttribute("login") AccountLoginForm login,
 								@Valid @ModelAttribute("registration") AccountRegistrationForm form, BindingResult result,
-								SessionStatus status, Locale locale) {
+								NativeWebRequest request, SessionStatus status, Locale locale) {
 		log.info("Create new account request: {}", form);
 		// Validate before next steps
 		validateAccount(form, result, locale);
@@ -254,30 +215,15 @@ public class AccountController extends AbstractController {
 			} catch (NotificationException e) {
 				log.error("Notification about new account can't be sent", e);
 			}
-			return forwardToAuthentication(form.getEmail(), form.getPassword(), form.isRememberMe());
+			return forwardToAuthorization(request, account, form.isRememberMe());
 		}
 	}
 
-	protected static String forwardToAuthentication(final String email, final String password, final boolean rememberMe) {
-		try {
-			final StringBuilder b = new StringBuilder();
-			b.append("j_username=").append(URLEncoder.encode(email, "UTF-8"));
-			b.append("&");
-			b.append("j_password=").append(URLEncoder.encode(password, "UTF-8"));
-			b.append("&");
-			b.append("continue=").append("/");
-			if (rememberMe) {
-				b.append("&").append("rememberMe=true");
-			}
-			//noinspection SpringMVCViewInspection
-			return "forward:/account/processing?" + b;
-		} catch (UnsupportedEncodingException ex) {
-			log.error("Very strange exception that mustn't be here", ex);
-			//noinspection SpringMVCViewInspection
-			return "redirect:/account/login";
-		}
+	private String forwardToAuthorization(final NativeWebRequest request, final Account account, final boolean rememberMe) {
+		request.setAttribute("rememberMe", rememberMe, RequestAttributes.SCOPE_REQUEST);
+		request.setAttribute("PRE_AUTHENTICATED_ACCOUNT", account, RequestAttributes.SCOPE_REQUEST);
+		return "forward:/account/authorization";
 	}
-
 
 	private void validateAccount(AccountRegistrationForm form, Errors errors, Locale locale) {
 		if (!form.getPassword().equals(form.getConfirm())) {
@@ -312,6 +258,11 @@ public class AccountController extends AbstractController {
 	}
 
 	@Autowired
+	public void setAccountManager(AccountManager accountManager) {
+		this.accountManager = accountManager;
+	}
+
+	@Autowired
 	public void setServerDescriptor(final ServerDescriptor descriptor) {
 		connectSupport = new ConnectSupport() {
 			@Override
@@ -320,11 +271,6 @@ public class AccountController extends AbstractController {
 			}
 		};
 		connectSupport.setUseAuthenticateUrl(true);
-	}
-
-	@Autowired
-	public void setAccountManager(AccountManager accountManager) {
-		this.accountManager = accountManager;
 	}
 
 	@Autowired

@@ -29,6 +29,20 @@ public class WMRememberMeServices extends PersistentTokenBasedRememberMeServices
 	}
 
 	@Override
+	protected boolean rememberMeRequested(HttpServletRequest request, String parameter) {
+		if (super.rememberMeRequested(request, parameter)) {
+			return true;
+		}
+
+		Object paramValue = request.getAttribute(parameter);
+		if (paramValue != null && paramValue instanceof Boolean) {
+			request.removeAttribute(parameter);
+			return (Boolean) paramValue;
+		}
+		return false;
+	}
+
+	@Override
 	protected UserDetails processAutoLoginCookie(String[] cookieTokens, HttpServletRequest request, HttpServletResponse response) {
 
 		if (cookieTokens.length != 2) {

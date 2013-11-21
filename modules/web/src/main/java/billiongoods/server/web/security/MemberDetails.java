@@ -1,7 +1,6 @@
 package billiongoods.server.web.security;
 
 import billiongoods.core.Member;
-import billiongoods.core.Personality;
 import billiongoods.core.account.Account;
 import billiongoods.core.security.PersonalityContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,11 +28,6 @@ public class MemberDetails implements SocialUserDetails, PersonalityContainer {
 		this.authorities = createAuthorities(account.getRoles());
 	}
 
-	@Override
-	public Personality getPersonality() {
-		return member;
-	}
-
 	public Long getId() {
 		return member.getId();
 	}
@@ -41,6 +35,11 @@ public class MemberDetails implements SocialUserDetails, PersonalityContainer {
 	@Override
 	public String getUserId() {
 		return String.valueOf(member.getId());
+	}
+
+	@Override
+	public Member getPersonality() {
+		return member;
 	}
 
 	@Override
