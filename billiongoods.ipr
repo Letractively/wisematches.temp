@@ -88,6 +88,8 @@
             <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.2.2" />
             <element id="library" level="project" name="Maven: org.springframework.social:spring-social-twitter:1.1.0.M4" />
             <element id="library" level="project" name="Maven: org.springframework.security:spring-security-crypto:3.1.4.RELEASE" />
+            <element id="library" level="project" name="Maven: org.springframework.social:spring-social-vkontakte:1.0.0" />
+            <element id="library" level="project" name="Maven: org.springframework.social:spring-social-google:1.0.0.M3" />
           </element>
         </element>
       </root>
@@ -1353,6 +1355,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-facebook/1.1.0.M4/spring-social-facebook-1.1.0.M4-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: org.springframework.social:spring-social-google:1.0.0.M3">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-google/1.0.0.M3/spring-social-google-1.0.0.M3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-google/1.0.0.M3/spring-social-google-1.0.0.M3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-google/1.0.0.M3/spring-social-google-1.0.0.M3-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: org.springframework.social:spring-social-security:1.1.0.M4">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-security/1.1.0.M4/spring-social-security-1.1.0.M4.jar!/" />
@@ -1373,6 +1386,17 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-twitter/1.1.0.M4/spring-social-twitter-1.1.0.M4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.springframework.social:spring-social-vkontakte:1.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-vkontakte/1.0.0/spring-social-vkontakte-1.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-vkontakte/1.0.0/spring-social-vkontakte-1.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-vkontakte/1.0.0/spring-social-vkontakte-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.springframework.social:spring-social-web:1.1.0.M4">
