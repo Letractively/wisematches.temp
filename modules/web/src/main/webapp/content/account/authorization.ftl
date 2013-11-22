@@ -43,7 +43,7 @@
                             </td>
                             <td align="right" valign="bottom">
                                 <div class="social-signin">
-                                <#list ["facebook", "twitter", "vkontakte"] as p>
+                                <#list ["facebook", "twitter", "vkontakte", "odnoklassniki", "mailru", "google"] as p>
                                     <a class="social-signin-link" href="/account/social/start?provider=${p}"><i
                                             class="social-icon-24 social-icon-${p}"></i></a>
                                 </#list>
@@ -69,15 +69,6 @@
                         </tr>
                     </table>
                 </form>
-
-            <#--
-                        <form id="facebookLogin" action="/account/social/facebook" method="POST">
-                            <input type="hidden" name="scope" value="offline_access"/>
-                            <button type="submit">
-                                <img src="/static/images/social/sign-in-with-facebook.png"/>
-                            </button>
-                        </form>
-            -->
             </div>
         </td>
 

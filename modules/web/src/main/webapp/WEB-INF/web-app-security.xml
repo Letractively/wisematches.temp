@@ -146,15 +146,26 @@
 
     <beans:bean id="socialAuthenticationFilter"
                 class="org.springframework.social.security.SocialAuthenticationFilter">
+        <beans:property name="filterProcessesUrl" value="/account/social"/>
+
         <beans:constructor-arg name="authManager" ref="authenticationManager"/>
         <beans:constructor-arg name="userIdSource" ref="memberDetailsService"/>
         <beans:constructor-arg name="authServiceLocator" ref="connectionFactoryLocator"/>
         <beans:constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>
 
+        <beans:property name="updateConnections" value="true"/>
+
         <beans:property name="signupUrl" value="/account/social/association"/>
+        <beans:property name="defaultFailureUrl" value="/account/social/finish"/>
+        <beans:property name="connectionAddedRedirectUrl" value="/account/social/finish"/>
+
         <beans:property name="rememberMeServices" ref="rememberMeServices"/>
 
-        <beans:property name="filterProcessesUrl" value="/account/social"/>
+        <beans:property name="authenticationSuccessHandler">
+            <beans:bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+                <beans:constructor-arg value="/account/social/finish"/>
+            </beans:bean>
+        </beans:property>
     </beans:bean>
 
     <beans:bean id="accountAuthenticationFilter"
@@ -162,10 +173,10 @@
         <beans:property name="filterProcessesUrl" value="/account/authorization"/>
         <beans:property name="authenticationManager" ref="authenticationManager"/>
 
-        <beans:property name="rememberMeServices" ref="rememberMeServices"/>
-
         <beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
         <beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+
+        <beans:property name="rememberMeServices" ref="rememberMeServices"/>
     </beans:bean>
 
     <beans:bean id="visitorAuthenticationFilter"

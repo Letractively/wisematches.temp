@@ -1854,14 +1854,26 @@ button.bg-ui-button.selected {
     background: url("../images/social/icons24.png");
 }
 
-.social-icon-twitter {
-    background-position: 0 -64px;
+.social-icon-vkontakte {
+    background-position: 0 0;
 }
 
 .social-icon-facebook {
     background-position: 0 -32px;
 }
 
-.social-icon-vkontakte {
-    background-position: 0 0;
+.social-icon-twitter {
+    background-position: 0 -64px;
+}
+
+.social-icon-mailru {
+    background-position: 0 -96px;
+}
+
+.social-icon-google {
+    background-position: 0 -128px;
+}
+
+.social-icon-odnoklassniki {
+    background-position: 0 -160px;
 }

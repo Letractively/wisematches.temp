@@ -20,9 +20,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.WebAttributes;
-import org.springframework.social.connect.*;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.UserProfile;
+import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectSupport;
 import org.springframework.social.connect.web.ProviderSignInAttempt;
+import org.springframework.social.security.SocialAuthenticationServiceLocator;
+import org.springframework.social.security.provider.SocialAuthenticationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,7 +44,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -55,8 +60,8 @@ public class AccountController extends AbstractController {
 	private AccountManager accountManager;
 	private NotificationService notificationService;
 
-	private ConnectionFactoryLocator connectionFactoryLocator;
 	private UsersConnectionRepository usersConnectionRepository;
+	private SocialAuthenticationServiceLocator authenticationServiceLocator;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.AccountSocialController");
 
@@ -129,68 +134,95 @@ public class AccountController extends AbstractController {
 	@RequestMapping("/social/start")
 	public String socialStart(NativeWebRequest request) {
 		final String provider = request.getParameter("provider");
-		if (!connectionFactoryLocator.registeredProviderIds().contains(provider)) {
+		if (!authenticationServiceLocator.registeredProviderIds().contains(provider)) {
 			throw new IllegalStateException("Unsupported provider: " + provider);
 		}
-		final ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(provider);
-		if (connectionFactory == null) {
+		final SocialAuthenticationService<?> authenticationService = authenticationServiceLocator.getAuthenticationService(provider);
+		if (authenticationService == null) {
 			throw new ProviderNotFoundException(provider);
 		}
-		return "redirect:" + connectSupport.buildOAuthUrl(connectionFactory, request);
+		return "redirect:" + connectSupport.buildOAuthUrl(authenticationService.getConnectionFactory(), request);
 	}
 
 	@RequestMapping(value = "/social/association", method = RequestMethod.GET)
+	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
 	public String socialAssociation(@ModelAttribute("form") SocialAssociationForm form, Model model, NativeWebRequest request) {
 		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 		if (attempt == null) {
-			return "redirect:/account/signin";
+			return "redirect:/account/social/finish";
 		}
 
-		final List<String> userIds = usersConnectionRepository.findUserIdsWithConnection(attempt.getConnection());
-		if (userIds.size() == 0) {
-			model.addAttribute("userIds", Collections.emptyList());
-		} else {
+		final Connection<?> connection = attempt.getConnection();
+		final UserProfile userProfile = connection.fetchUserProfile();
+		final String email = userProfile.getEmail();
 
+		if (email != null && !email.isEmpty()) {
+			final Account account = accountManager.findByEmail(email);
+			if (account != null) {
+				addAccountAssociation(account, connection);
+				return forwardToAuthorization(request, account, true, true);
+			}
+		}
+
+		final List<String> registeredUserIds = usersConnectionRepository.findUserIdsWithConnection(attempt.getConnection());
+		final List<Account> accounts = new ArrayList<>(registeredUserIds.size());
+		if (registeredUserIds.size() > 1) {
+			for (String registeredUserId : registeredUserIds) {
+				accounts.add(accountManager.getAccount(Long.decode(registeredUserId)));
+			}
 		}
 
 		model.addAttribute("plain", Boolean.TRUE);
-		model.addAttribute("connection", attempt.getConnection());
-
+		model.addAttribute("accounts", accounts);
+		model.addAttribute("connection", connection);
 		return "/content/account/social/association";
 	}
 
 	@RequestMapping(value = "/social/association", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
-	public String socialAssociationAction(@ModelAttribute("form") SocialAssociationForm form, Model model, NativeWebRequest request) {
+	public String socialAssociationAction(@ModelAttribute("form") SocialAssociationForm form, Errors errors, Model model, NativeWebRequest request) {
 		final ProviderSignInAttempt attempt = (ProviderSignInAttempt) request.getAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 		if (attempt == null) {
-			return "redirect:/account/signin";
+			return "redirect:/account/social/finish";
 		}
 
 		final Connection<?> connection = attempt.getConnection();
-		final UserProfile profile = connection.fetchUserProfile();
+		if (form.getUserId() != null) { // selection
+			final Account account = accountManager.getAccount(form.getUserId());
+			if (account != null) {
+				return forwardToAuthorization(request, account, true, true);
+			} else {
+				log.error("Very strange. No account after selection. Start again?");
+				errors.reject("Inadmissible username");
+			}
+		} else {
+			final UserProfile profile = connection.fetchUserProfile();
 
-		final String email = profile.getEmail();
-		final String username = profile.getName() == null ? profile.getUsername() : profile.getName();
+			final String email = profile.getEmail();
+			final String username = profile.getName() == null ? profile.getUsername() : profile.getName();
 
-		final AccountEditor editor = new AccountEditor();
-		editor.setEmail(email);
-		editor.setUsername(username);
+			final AccountEditor editor = new AccountEditor();
+			editor.setEmail(email);
+			editor.setUsername(username);
 
-		try {
-			final Account account = accountManager.createAccount(editor.createAccount(), "");
-
-			final String userId = String.valueOf(account);
-
-			final ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(userId);
-			connectionRepository.addConnection(connection);
-
-			return forwardToAuthorization(request, account, true);
-		} catch (DuplicateAccountException e) {
-			return "/content/account/social/association";
-		} catch (InadmissibleUsernameException e) {
-			return "/content/account/social/association";
+			try {
+				final Account account = accountManager.createAccount(editor.createAccount(), "");
+				addAccountAssociation(account, connection);
+				return forwardToAuthorization(request, account, true, true);
+			} catch (DuplicateAccountException e) {
+				log.error("Very strange. DuplicateAccountException shouldn't be here.", e);
+				errors.reject("Account with the same email already registered");
+			} catch (InadmissibleUsernameException e) {
+				log.error("Very strange. InadmissibleUsernameException is not what we suppose", e);
+				errors.reject("Inadmissible username");
+			}
 		}
+		return socialAssociation(form, model, request);
+	}
+
+	@RequestMapping("/social/finish")
+	public String socialAssociationFinish(Model model, NativeWebRequest request) {
+		return "/content/account/social/finish";
 	}
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
@@ -234,14 +266,21 @@ public class AccountController extends AbstractController {
 			} catch (NotificationException e) {
 				log.error("Notification about new account can't be sent", e);
 			}
-			return forwardToAuthorization(request, account, form.isRememberMe());
+			return forwardToAuthorization(request, account, form.isRememberMe(), false);
 		}
 	}
 
-	private String forwardToAuthorization(final NativeWebRequest request, final Account account, final boolean rememberMe) {
+	private String forwardToAuthorization(final NativeWebRequest request, final Account account, final boolean rememberMe, final boolean redirectToFinish) {
+		request.removeAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
+
 		request.setAttribute("rememberMe", rememberMe, RequestAttributes.SCOPE_REQUEST);
 		request.setAttribute("PRE_AUTHENTICATED_ACCOUNT", account, RequestAttributes.SCOPE_REQUEST);
-		return "forward:/account/authorization";
+		return "forward:/account/authorization" + (redirectToFinish ? "?continue=/account/social/finish" : "");
+	}
+
+	private void addAccountAssociation(Account account, Connection<?> connection) {
+		final ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(String.valueOf(account.getId()));
+		connectionRepository.addConnection(connection);
 	}
 
 	private void validateAccount(AccountRegistrationForm form, Errors errors, Locale locale) {
@@ -298,12 +337,12 @@ public class AccountController extends AbstractController {
 	}
 
 	@Autowired
-	public void setConnectionFactoryLocator(ConnectionFactoryLocator connectionFactoryLocator) {
-		this.connectionFactoryLocator = connectionFactoryLocator;
+	public void setUsersConnectionRepository(UsersConnectionRepository usersConnectionRepository) {
+		this.usersConnectionRepository = usersConnectionRepository;
 	}
 
 	@Autowired
-	public void setUsersConnectionRepository(UsersConnectionRepository usersConnectionRepository) {
-		this.usersConnectionRepository = usersConnectionRepository;
+	public void setAuthenticationServiceLocator(SocialAuthenticationServiceLocator authenticationServiceLocator) {
+		this.authenticationServiceLocator = authenticationServiceLocator;
 	}
 }
