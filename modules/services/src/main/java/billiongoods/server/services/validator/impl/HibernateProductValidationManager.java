@@ -99,8 +99,8 @@ public class HibernateProductValidationManager implements ProductValidationManag
 							if (validation == null || !validation.isValidated()) {
 								brokenProducts.add(detail);
 								validationSummary.incrementBroken();
-							} else {
-								validations.add(validation);
+                            } else if (validation.hasChanges()) {
+                                validations.add(validation);
 								validationSummary.registerValidation(validation);
 							}
 							validationSummary.incrementProcessed();
@@ -113,8 +113,8 @@ public class HibernateProductValidationManager implements ProductValidationManag
 						final ProductDetails detail = iterator.next();
 
 						final HibernateProductValidation validation = validateProduct(detail);
-						if (validation != null && validation.isValidated()) {
-							validations.add(validation);
+                        if (validation != null && validation.isValidated() && validation.hasChanges()) {
+                            validations.add(validation);
 							validationSummary.registerValidation(validation);
 							iterator.remove();
 						}
