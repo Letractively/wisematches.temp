@@ -1,3 +1,10 @@
+#11.25
+ALTER TABLE `billiongoods`.`account_personality`
+CHANGE COLUMN `password` `password` VARCHAR(100) NULL,
+CHANGE COLUMN `email` `email` VARCHAR(150) NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1125');
+
 #11.12
 ALTER TABLE `billiongoods`.`store_order_log`
 DROP COLUMN `code`;

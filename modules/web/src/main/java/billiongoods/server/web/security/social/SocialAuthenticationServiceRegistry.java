@@ -9,7 +9,7 @@ import org.springframework.social.security.provider.OAuth1AuthenticationService;
 import org.springframework.social.security.provider.OAuth2AuthenticationService;
 import org.springframework.social.security.provider.SocialAuthenticationService;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +18,7 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class SocialAuthenticationServiceRegistry extends ConnectionFactoryRegistry implements SocialAuthenticationServiceLocator {
-	private final Map<String, SocialAuthenticationService<?>> cache = new HashMap<>();
+	private final Map<String, SocialAuthenticationService<?>> cache = new LinkedHashMap<>();
 
 	public SocialAuthenticationServiceRegistry() {
 	}
@@ -30,7 +30,7 @@ public class SocialAuthenticationServiceRegistry extends ConnectionFactoryRegist
 
 	@Override
 	public Set<String> registeredAuthenticationProviderIds() {
-		return registeredProviderIds();
+		return cache.keySet();
 	}
 
 	@Override

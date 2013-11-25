@@ -44,10 +44,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -77,7 +74,7 @@ public class AccountController extends AbstractController {
 	@RequestMapping("/signin")
 	public String signinInternal(@ModelAttribute("login") AccountLoginForm login, BindingResult result,
 								 @ModelAttribute("registration") AccountRegistrationForm register,
-								 NativeWebRequest request) {
+								 Model model, NativeWebRequest request) {
 		restoreAccountLoginForm(login, request);
 
 		final String error = login.getError();
@@ -108,6 +105,7 @@ public class AccountController extends AbstractController {
 				}
 			}
 		}
+		model.addAttribute("socialProviders", authenticationServiceLocator.registeredAuthenticationProviderIds());
 		return "/content/account/authorization";
 	}
 
@@ -206,7 +204,7 @@ public class AccountController extends AbstractController {
 			editor.setUsername(username);
 
 			try {
-				final Account account = accountManager.createAccount(editor.createAccount(), "");
+				final Account account = accountManager.createAccount(editor.createAccount(), UUID.randomUUID().toString());
 				addAccountAssociation(account, connection);
 				return forwardToAuthorization(request, account, true, true);
 			} catch (DuplicateAccountException e) {
@@ -229,7 +227,7 @@ public class AccountController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
 	public String createAccount(@ModelAttribute("login") AccountLoginForm login,
 								@Valid @ModelAttribute("registration") AccountRegistrationForm form, BindingResult result,
-								NativeWebRequest request, SessionStatus status, Locale locale) {
+								Model model, NativeWebRequest request, SessionStatus status, Locale locale) {
 		log.info("Create new account request: {}", form);
 		// Validate before next steps
 		validateAccount(form, result, locale);
@@ -256,7 +254,7 @@ public class AccountController extends AbstractController {
 
 		if (result.hasErrors() || account == null) {
 			log.info("Account form is not correct: {}", result);
-			return "/content/account/authorization";
+			return signinInternal(login, result, form, model, request);
 		} else {
 			log.info("Account has been created.");
 

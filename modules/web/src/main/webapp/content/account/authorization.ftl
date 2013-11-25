@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="socialProviders" type="java.lang.String[]" -->
+
 <#include "/core.ftl">
 
 <table class="account" cellspacing="0" cellpadding="0">
@@ -43,22 +45,11 @@
                             </td>
                             <td align="right" valign="bottom">
                                 <div class="social-signin">
-                                <#list ["facebook", "twitter", "vkontakte", "odnoklassniki", "mailru", "google"] as p>
+                                <#list socialProviders as p>
                                     <a class="social-signin-link" href="/account/social/start?provider=${p}"><i
                                             class="social-icon-24 social-icon-${p}"></i></a>
                                 </#list>
                                 </div>
-
-                                <script type="application/javascript">
-                                    $(".social-signin-link").click(function (event) {
-                                        event.preventDefault();
-
-                                        var link = $(this);
-                                        var newWin = bg.ui.popupwindow(link.attr("href"), "BillionGoods: Авторизация", 500, 300);
-                                        newWin.focus();
-
-                                    });
-                                </script>
                             </td>
                         </tr>
                         <tr>
@@ -153,8 +144,15 @@
 </table>
 
 <script type="text/javascript">
-    $("#recoveryLink").click(function () {
+    $("#recoveryLink").click(function (event) {
+        event.preventDefault();
         wm.util.url.redirect(wm.util.url.extend($(this).attr('href'), "email", $("#j_username").val(), true));
+        return false;
+    });
+
+    $(".social-signin-link").click(function (event) {
+        event.preventDefault();
+        bg.ui.popupwindow($(this).attr("href"), "BillionGoods: Авторизация", 500, 300).focus();
         return false;
     });
 </script>

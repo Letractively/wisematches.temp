@@ -49,7 +49,7 @@ public class MemberDetails implements SocialUserDetails, PersonalityContainer {
 
 	@Override
 	public String getUsername() {
-		return member.getEmail();
+		return member.getUsername();
 	}
 
 	@Override
