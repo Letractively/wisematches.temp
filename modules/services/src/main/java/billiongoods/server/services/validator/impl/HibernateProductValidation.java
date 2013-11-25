@@ -25,9 +25,6 @@ public class HibernateProductValidation implements ProductValidation {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timestamp;
 
-	@Column(name = "errMsg")
-	private String errorMessage;
-
 	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "amount", column = @Column(name = "op")),
@@ -74,9 +71,8 @@ public class HibernateProductValidation implements ProductValidation {
 	HibernateProductValidation() {
 	}
 
-	public HibernateProductValidation(Integer productId, Date timestamp, Price oldPrice, Price oldSupplierPrice, StockInfo oldStockInfo) {
+	public HibernateProductValidation(Integer productId, Price oldPrice, Price oldSupplierPrice, StockInfo oldStockInfo) {
 		this.productId = productId;
-		this.timestamp = timestamp;
 		this.oldPrice = oldPrice;
 		this.oldSupplierPrice = oldSupplierPrice;
 		this.oldStockInfo = oldStockInfo;
@@ -137,24 +133,15 @@ public class HibernateProductValidation implements ProductValidation {
 	}
 
 	@Override
-	public String getErrorMessage() {
-		return errorMessage;
+	public boolean isValidated() {
+		return timestamp != null;
 	}
 
-	void priceValidated(Price newPrice, Price newSupplierPrice) {
+	void validated(Price newPrice, Price newSupplierPrice, StockInfo stockInfo) {
 		this.newPrice = newPrice;
 		this.newSupplierPrice = newSupplierPrice;
-	}
-
-	void stockValidated(StockInfo newStockInfo) {
-		this.newStockInfo = newStockInfo;
-	}
-
-	void processingError(Exception ex) {
-		this.errorMessage = ex.getMessage();
-		if (this.errorMessage.length() > 250) {
-			this.errorMessage = this.errorMessage.substring(0, 250);
-		}
+		this.newStockInfo = stockInfo;
+		this.timestamp = new Date();
 	}
 
 	@Override
@@ -163,7 +150,6 @@ public class HibernateProductValidation implements ProductValidation {
 		sb.append("id=").append(id);
 		sb.append(", productId=").append(productId);
 		sb.append(", timestamp=").append(timestamp);
-		sb.append(", errorMessage='").append(errorMessage).append('\'');
 		sb.append(", oldPrice=").append(oldPrice);
 		sb.append(", oldSupplierPrice=").append(oldSupplierPrice);
 		sb.append(", newPrice=").append(newPrice);

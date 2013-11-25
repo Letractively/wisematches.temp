@@ -13,9 +13,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ReusableValidationSummary implements ValidationSummary {
 	private volatile Date startDate;
 	private volatile Date finishDate;
+
+	private volatile int iteration = 0;
+
 	private volatile int totalCount = 0;
 	private volatile int brokenProducts = 0;
-	private volatile int validatedProducts = 0;
+	private volatile int processedProducts = 0;
+
 	private final Collection<ProductValidation> validations = new ConcurrentLinkedQueue<>();
 
 	public ReusableValidationSummary() {
@@ -42,13 +46,38 @@ public class ReusableValidationSummary implements ValidationSummary {
 	}
 
 	@Override
-	public int getValidProducts() {
-		return validations.size() - brokenProducts;
+	public int getUpdateProducts() {
+		return validations.size();
 	}
 
 	@Override
-	public int getValidatedProducts() {
-		return validatedProducts;
+	public int getProcessedProducts() {
+		return processedProducts;
+	}
+
+	void incrementBroken() {
+		brokenProducts++;
+	}
+
+	void incrementProcessed() {
+		processedProducts++;
+	}
+
+	void registerValidation(ProductValidation validation) {
+		validations.add(validation);
+	}
+
+	void initialize(Date date, int totalCount) {
+		this.startDate = date;
+		this.finishDate = null;
+
+		this.iteration = 0;
+
+		this.totalCount = totalCount;
+		this.brokenProducts = 0;
+		this.processedProducts = 0;
+
+		validations.clear();
 	}
 
 	@Override
@@ -56,24 +85,15 @@ public class ReusableValidationSummary implements ValidationSummary {
 		return validations;
 	}
 
-	void incrementValidated() {
-		validatedProducts++;
+	int getIteration() {
+		return iteration;
 	}
 
-	void addProductValidation(ProductValidation validation) {
-		if (validation.getErrorMessage() != null) {
-			brokenProducts++;
-		}
-		validations.add(validation);
-	}
+	void incrementIteration(int broken) {
+		iteration++;
 
-	void initialize(Date date, int totalCount) {
-		this.startDate = date;
-		this.finishDate = null;
-		this.totalCount = totalCount;
-		brokenProducts = 0;
-		validatedProducts = 0;
-		validations.clear();
+		brokenProducts -= broken;
+		processedProducts -= broken;
 	}
 
 	void finalize(Date finish) {
@@ -85,8 +105,10 @@ public class ReusableValidationSummary implements ValidationSummary {
 		final StringBuilder sb = new StringBuilder("ReusableValidationSummary{");
 		sb.append("startDate=").append(startDate);
 		sb.append(", finishDate=").append(finishDate);
-		sb.append(", validatedProducts=").append(validatedProducts);
-		sb.append(", validations=").append(validations);
+		sb.append(", totalCount=").append(totalCount);
+		sb.append(", brokenProducts=").append(brokenProducts);
+		sb.append(", updateProducts=").append(validations.size());
+		sb.append(", processedProducts=").append(processedProducts);
 		sb.append('}');
 		return sb.toString();
 	}

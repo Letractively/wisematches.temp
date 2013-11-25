@@ -14,12 +14,12 @@ public interface ValidationSummary {
 
 	int getTotalCount();
 
-	int getValidProducts();
+	int getUpdateProducts();
 
 	int getBrokenProducts();
 
+	int getProcessedProducts();
 
-	int getValidatedProducts();
 
 	Collection<ProductValidation> getProductValidations();
 }

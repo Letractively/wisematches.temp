@@ -9,11 +9,12 @@ public interface ProductValidationManager {
 	void removeValidationProgressListener(ValidationProgressListener l);
 
 
+	boolean isInProgress();
+
+
 	void startPriceValidation();
 
 	void stopPriceValidation();
-
-	boolean isInProgress();
 
 
 	ValidationSummary getValidationSummary();
