@@ -24,8 +24,9 @@
                     Добро Пожаловать,
                     <a class="highlight" href="/privacy/view">${principal.username}</a>
                 <#else>
-                    Добро Пожаловать!
-                    <a class="highlight" href="/account/signin">Войти</a>
+                <#-- TODO: account management is not fully ready -->
+                <#--Добро Пожаловать!-->
+                <#--<a class="highlight" href="/account/signin">Войти</a>-->
                 </#if>
             </@bg.security.permitted>
             </div>
