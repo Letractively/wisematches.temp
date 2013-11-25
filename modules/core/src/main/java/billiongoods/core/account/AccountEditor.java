@@ -43,9 +43,11 @@ public class AccountEditor {
 	}
 
 	public Account createAccount() {
+/*
 		if (email == null) {
 			throw new IllegalArgumentException("email is not specified");
 		}
+*/
 		if (username == null) {
 			throw new IllegalArgumentException("username is not specified");
 		}
