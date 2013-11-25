@@ -7,7 +7,7 @@
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/core.iml" afterPath="$PROJECT_DIR$/modules/core/core.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -97,10 +97,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="HibernateProductValidationManager.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="HibernateProductValidationManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="51" selection-start="3090" selection-end="3090" vertical-scroll-proportion="0.44939965" vertical-offset="656" max-vertical-offset="4318">
+            <state line="125" column="92" selection-start="5953" selection-end="5953" vertical-scroll-proportion="0.0" vertical-offset="1841" max-vertical-offset="5440">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#8144#8270#0" expanded="true" />
+                <element signature="e#8259#8260#0" expanded="true" />
+                <element signature="e#8682#8683#0" expanded="true" />
+                <element signature="e#8722#8723#0" expanded="true" />
+                <element signature="e#11200#11201#0" expanded="true" />
+                <element signature="e#11248#11249#0" expanded="true" />
+                <element signature="e#11312#11313#0" expanded="true" />
+                <element signature="e#11356#11357#0" expanded="true" />
+                <element signature="e#11424#11425#0" expanded="true" />
+                <element signature="e#11476#11477#0" expanded="true" />
+                <element signature="e#11544#11545#0" expanded="true" />
+                <element signature="e#11596#11597#0" expanded="true" />
+                <element signature="e#11664#11665#0" expanded="true" />
+                <element signature="e#11716#11717#0" expanded="true" />
+                <element signature="e#11787#11788#0" expanded="true" />
+                <element signature="e#11841#11842#0" expanded="true" />
+                <element signature="e#11929#11930#0" expanded="true" />
+                <element signature="e#11989#11990#0" expanded="true" />
+                <element signature="e#12494#12495#0" expanded="true" />
+                <element signature="e#12527#12528#0" expanded="true" />
+                <element signature="e#12562#12563#0" expanded="true" />
+                <element signature="e#12598#12599#0" expanded="true" />
+                <element signature="e#12641#12642#0" expanded="true" />
+                <element signature="e#12681#12682#0" expanded="true" />
+                <element signature="e#12730#12731#0" expanded="true" />
+                <element signature="e#12773#12774#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="todo.txt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/todo.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="51" selection-start="137" selection-end="137" vertical-scroll-proportion="0.05831904" vertical-offset="0" max-vertical-offset="5967">
               <folding />
             </state>
           </provider>
@@ -139,10 +176,10 @@
         <option value="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/availability.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket/view.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl" />
-        <option value="$PROJECT_DIR$/todo.txt" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java" />
         <option value="$PROJECT_DIR$/resources/database/latest_patch.sql" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java" />
+        <option value="$PROJECT_DIR$/todo.txt" />
       </list>
     </option>
   </component>
@@ -623,6 +660,26 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -643,26 +700,6 @@
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -725,6 +762,23 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
+      <deployment />
+      <server-settings />
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -742,23 +796,6 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
-      <deployment />
-      <server-settings />
-      <predefined_log_file id="Tomcat" enabled="true" />
-      <predefined_log_file id="Tomcat Catalina" enabled="true" />
-      <predefined_log_file id="Tomcat Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <method />
-    </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="All Tests" type="JUnit" factoryName="JUnit">
@@ -1028,7 +1065,8 @@
       <workItem from="1384276699616" duration="1281000" />
       <workItem from="1385392434271" duration="127000" />
       <workItem from="1385392670562" duration="1201000" />
-      <workItem from="1385395025440" duration="306000" />
+      <workItem from="1385395025440" duration="784000" />
+      <workItem from="1385398937908" duration="1365000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -1374,11 +1412,15 @@
       <created>1385394291339</created>
       <updated>1385394291339</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="+">
+      <created>1385395361582</created>
+      <updated>1385395361582</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191424000" />
+    <option name="totallyTimeSpent" value="193267000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1441,8 +1483,8 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4742765" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.67903227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.67903227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3279743" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4340836" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1464,8 +1506,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3022508" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2090909" sideWeight="0.56752414" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
@@ -1516,10 +1558,50 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="337" column="0" selection-start="12450" selection-end="12450" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5831" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="216" column="52" selection-start="9135" selection-end="9135" vertical-scroll-proportion="0.0" vertical-offset="3672" max-vertical-offset="5372">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="165" selection-start="4008" selection-end="4008" vertical-scroll-proportion="0.0" vertical-offset="1904" max-vertical-offset="3825">
-          <folding />
+        <state line="186" column="71" selection-start="7018" selection-end="7018" vertical-scroll-proportion="0.0" vertical-offset="3162" max-vertical-offset="3825">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8144#8270#0" expanded="true" />
+            <element signature="e#8259#8260#0" expanded="true" />
+            <element signature="e#8682#8683#0" expanded="true" />
+            <element signature="e#8722#8723#0" expanded="true" />
+            <element signature="e#11200#11201#0" expanded="true" />
+            <element signature="e#11248#11249#0" expanded="true" />
+            <element signature="e#11312#11313#0" expanded="true" />
+            <element signature="e#11356#11357#0" expanded="true" />
+            <element signature="e#11424#11425#0" expanded="true" />
+            <element signature="e#11476#11477#0" expanded="true" />
+            <element signature="e#11544#11545#0" expanded="true" />
+            <element signature="e#11596#11597#0" expanded="true" />
+            <element signature="e#11664#11665#0" expanded="true" />
+            <element signature="e#11716#11717#0" expanded="true" />
+            <element signature="e#11787#11788#0" expanded="true" />
+            <element signature="e#11841#11842#0" expanded="true" />
+            <element signature="e#11929#11930#0" expanded="true" />
+            <element signature="e#11989#11990#0" expanded="true" />
+            <element signature="e#12494#12495#0" expanded="true" />
+            <element signature="e#12527#12528#0" expanded="true" />
+            <element signature="e#12562#12563#0" expanded="true" />
+            <element signature="e#12598#12599#0" expanded="true" />
+            <element signature="e#12641#12642#0" expanded="true" />
+            <element signature="e#12681#12682#0" expanded="true" />
+            <element signature="e#12730#12731#0" expanded="true" />
+            <element signature="e#12773#12774#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1538,36 +1620,45 @@
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="186" column="71" selection-start="7018" selection-end="7018" vertical-scroll-proportion="0.0" vertical-offset="3162" max-vertical-offset="3825">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8144#8270#0" expanded="true" />
+            <element signature="e#8259#8260#0" expanded="true" />
+            <element signature="e#8682#8683#0" expanded="true" />
+            <element signature="e#8722#8723#0" expanded="true" />
+            <element signature="e#11200#11201#0" expanded="true" />
+            <element signature="e#11248#11249#0" expanded="true" />
+            <element signature="e#11312#11313#0" expanded="true" />
+            <element signature="e#11356#11357#0" expanded="true" />
+            <element signature="e#11424#11425#0" expanded="true" />
+            <element signature="e#11476#11477#0" expanded="true" />
+            <element signature="e#11544#11545#0" expanded="true" />
+            <element signature="e#11596#11597#0" expanded="true" />
+            <element signature="e#11664#11665#0" expanded="true" />
+            <element signature="e#11716#11717#0" expanded="true" />
+            <element signature="e#11787#11788#0" expanded="true" />
+            <element signature="e#11841#11842#0" expanded="true" />
+            <element signature="e#11929#11930#0" expanded="true" />
+            <element signature="e#11989#11990#0" expanded="true" />
+            <element signature="e#12494#12495#0" expanded="true" />
+            <element signature="e#12527#12528#0" expanded="true" />
+            <element signature="e#12562#12563#0" expanded="true" />
+            <element signature="e#12598#12599#0" expanded="true" />
+            <element signature="e#12641#12642#0" expanded="true" />
+            <element signature="e#12681#12682#0" expanded="true" />
+            <element signature="e#12730#12731#0" expanded="true" />
+            <element signature="e#12773#12774#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/todo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="337" column="0" selection-start="12450" selection-end="12450" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5831" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="216" column="52" selection-start="9135" selection-end="9135" vertical-scroll-proportion="0.0" vertical-offset="3672" max-vertical-offset="5372">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="71" selection-start="7018" selection-end="7018" vertical-scroll-proportion="0.0" vertical-offset="3162" max-vertical-offset="3825">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/todo.txt">
-      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="561" column="0" selection-start="52158" selection-end="52158" vertical-scroll-proportion="0.0" vertical-offset="9263" max-vertical-offset="15181" />
       </provider>
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1579,16 +1670,44 @@
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="186" column="71" selection-start="7018" selection-end="7018" vertical-scroll-proportion="0.0" vertical-offset="3162" max-vertical-offset="3825">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8144#8270#0" expanded="true" />
+            <element signature="e#8259#8260#0" expanded="true" />
+            <element signature="e#8682#8683#0" expanded="true" />
+            <element signature="e#8722#8723#0" expanded="true" />
+            <element signature="e#11200#11201#0" expanded="true" />
+            <element signature="e#11248#11249#0" expanded="true" />
+            <element signature="e#11312#11313#0" expanded="true" />
+            <element signature="e#11356#11357#0" expanded="true" />
+            <element signature="e#11424#11425#0" expanded="true" />
+            <element signature="e#11476#11477#0" expanded="true" />
+            <element signature="e#11544#11545#0" expanded="true" />
+            <element signature="e#11596#11597#0" expanded="true" />
+            <element signature="e#11664#11665#0" expanded="true" />
+            <element signature="e#11716#11717#0" expanded="true" />
+            <element signature="e#11787#11788#0" expanded="true" />
+            <element signature="e#11841#11842#0" expanded="true" />
+            <element signature="e#11929#11930#0" expanded="true" />
+            <element signature="e#11989#11990#0" expanded="true" />
+            <element signature="e#12494#12495#0" expanded="true" />
+            <element signature="e#12527#12528#0" expanded="true" />
+            <element signature="e#12562#12563#0" expanded="true" />
+            <element signature="e#12598#12599#0" expanded="true" />
+            <element signature="e#12641#12642#0" expanded="true" />
+            <element signature="e#12681#12682#0" expanded="true" />
+            <element signature="e#12730#12731#0" expanded="true" />
+            <element signature="e#12773#12774#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/todo.txt">
-      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="561" column="0" selection-start="52158" selection-end="52158" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15181" />
+      </provider>
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java">
@@ -1601,7 +1720,35 @@
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="133" column="55" selection-start="4985" selection-end="4985" vertical-scroll-proportion="0.0" vertical-offset="2261" max-vertical-offset="3825">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8144#8270#0" expanded="true" />
+            <element signature="e#8259#8260#0" expanded="true" />
+            <element signature="e#8682#8683#0" expanded="true" />
+            <element signature="e#8722#8723#0" expanded="true" />
+            <element signature="e#11200#11201#0" expanded="true" />
+            <element signature="e#11248#11249#0" expanded="true" />
+            <element signature="e#11312#11313#0" expanded="true" />
+            <element signature="e#11356#11357#0" expanded="true" />
+            <element signature="e#11424#11425#0" expanded="true" />
+            <element signature="e#11476#11477#0" expanded="true" />
+            <element signature="e#11544#11545#0" expanded="true" />
+            <element signature="e#11596#11597#0" expanded="true" />
+            <element signature="e#11664#11665#0" expanded="true" />
+            <element signature="e#11716#11717#0" expanded="true" />
+            <element signature="e#11787#11788#0" expanded="true" />
+            <element signature="e#11841#11842#0" expanded="true" />
+            <element signature="e#11929#11930#0" expanded="true" />
+            <element signature="e#11989#11990#0" expanded="true" />
+            <element signature="e#12494#12495#0" expanded="true" />
+            <element signature="e#12527#12528#0" expanded="true" />
+            <element signature="e#12562#12563#0" expanded="true" />
+            <element signature="e#12598#12599#0" expanded="true" />
+            <element signature="e#12641#12642#0" expanded="true" />
+            <element signature="e#12681#12682#0" expanded="true" />
+            <element signature="e#12730#12731#0" expanded="true" />
+            <element signature="e#12773#12774#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1771,14 +1918,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/todo.txt">
-      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="53" selection-start="1365" selection-end="1365" vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="5984" />
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.1.0.M4/spring-social-core-1.1.0.M4.jar!/org/springframework/social/connect/jdbc/JdbcUsersConnectionRepository.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="70" selection-start="938" selection-end="938" vertical-scroll-proportion="0.39605734" vertical-offset="0" max-vertical-offset="558" />
@@ -1801,11 +1940,56 @@
         <state line="17" column="70" selection-start="1040" selection-end="1040" vertical-scroll-proportion="0.5026087" vertical-offset="0" max-vertical-offset="3825" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/util/concurrent/TimeUnit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="51" selection-start="3090" selection-end="3090" vertical-scroll-proportion="0.44939965" vertical-offset="656" max-vertical-offset="4318">
+        <state line="164" column="16" selection-start="6544" selection-end="6544" vertical-scroll-proportion="0.33221477" vertical-offset="2029" max-vertical-offset="5729">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateProductValidationManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="125" column="92" selection-start="5953" selection-end="5953" vertical-scroll-proportion="0.0" vertical-offset="1841" max-vertical-offset="5440">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8144#8270#0" expanded="true" />
+            <element signature="e#8259#8260#0" expanded="true" />
+            <element signature="e#8682#8683#0" expanded="true" />
+            <element signature="e#8722#8723#0" expanded="true" />
+            <element signature="e#11200#11201#0" expanded="true" />
+            <element signature="e#11248#11249#0" expanded="true" />
+            <element signature="e#11312#11313#0" expanded="true" />
+            <element signature="e#11356#11357#0" expanded="true" />
+            <element signature="e#11424#11425#0" expanded="true" />
+            <element signature="e#11476#11477#0" expanded="true" />
+            <element signature="e#11544#11545#0" expanded="true" />
+            <element signature="e#11596#11597#0" expanded="true" />
+            <element signature="e#11664#11665#0" expanded="true" />
+            <element signature="e#11716#11717#0" expanded="true" />
+            <element signature="e#11787#11788#0" expanded="true" />
+            <element signature="e#11841#11842#0" expanded="true" />
+            <element signature="e#11929#11930#0" expanded="true" />
+            <element signature="e#11989#11990#0" expanded="true" />
+            <element signature="e#12494#12495#0" expanded="true" />
+            <element signature="e#12527#12528#0" expanded="true" />
+            <element signature="e#12562#12563#0" expanded="true" />
+            <element signature="e#12598#12599#0" expanded="true" />
+            <element signature="e#12641#12642#0" expanded="true" />
+            <element signature="e#12681#12682#0" expanded="true" />
+            <element signature="e#12730#12731#0" expanded="true" />
+            <element signature="e#12773#12774#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="51" selection-start="137" selection-end="137" vertical-scroll-proportion="0.05831904" vertical-offset="0" max-vertical-offset="5967">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
       </provider>
     </entry>
   </component>
