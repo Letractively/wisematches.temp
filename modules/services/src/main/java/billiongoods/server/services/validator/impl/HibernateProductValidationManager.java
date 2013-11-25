@@ -23,9 +23,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Future;
 
@@ -36,22 +34,20 @@ public class HibernateProductValidationManager implements ProductValidationManag
 	private SessionFactory sessionFactory;
 	private ProductManager productManager;
 
+	private Future validationProgress;
+	private AsyncTaskExecutor taskExecutor;
+
 	private PriceConverter priceConverter;
 	private ExchangeManager exchangeManager;
 
 	private SupplierDataLoader dataLoader;
 
-	private AsyncTaskExecutor taskExecutor;
 	private PlatformTransactionManager transactionManager;
-
-	private Future validationProgress;
-
 	private final ReusableValidationSummary validationSummary = new ReusableValidationSummary();
-
-	private static final int BULK_PRODUCTS_SIZE = 10;
 
 	private final Collection<ValidationProgressListener> listeners = new CopyOnWriteArrayList<>();
 
+	private static final int BULK_PRODUCTS_SIZE = 10;
 	private static final DefaultTransactionAttribute NEW_TRANSACTION_DEFINITION = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.ProductValidationManager");
@@ -75,122 +71,84 @@ public class HibernateProductValidationManager implements ProductValidationManag
 	}
 
 	private void doValidation() {
+		final Session session = sessionFactory.openSession();
 		try {
-			final Date startedDate = new Date();
-			final double exchangeRate = exchangeManager.getExchangeRate();
+			final Query countQuery = session.createQuery("select count(*) from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states)");
+			countQuery.setParameterList("states", ProductContext.VISIBLE);
 
-			int count;
-			TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
-			try {
-				Session session = sessionFactory.getCurrentSession();
-				final Query countQuery = session.createQuery("select count(*) from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states)");
-				countQuery.setParameterList("states", ProductContext.VISIBLE);
-
-				count = ((Number) countQuery.uniqueResult()).intValue();
-				transactionManager.commit(transaction);
-			} catch (Exception ex) {
-				transactionManager.rollback(transaction);
-				throw ex;
-			}
-
-			for (ValidationProgressListener listener : listeners) {
-				listener.validationStarted(startedDate, count);
-			}
-
-			validationSummary.initialize(startedDate, count);
+			final int totalProductsCount = ((Number) countQuery.uniqueResult()).intValue();
 
 			dataLoader.initialize();
+			validationSummary.initialize(new Date(), totalProductsCount);
 
-			int index = 0;
-			while (true) {
-				synchronized (this) {
-					if (validationProgress == null || validationProgress.isCancelled() || validationProgress.isDone()) {
-						log.info("Validation progress was interrupted");
-						break;
+			for (ValidationProgressListener listener : listeners) {
+				listener.validationStarted(validationSummary.getStartDate(), validationSummary.getTotalCount());
+			}
+
+			final List<ProductDetails> brokenProducts = new ArrayList<>();
+			while (validationSummary.getIteration() < 5 && !isInterrupted()) {
+				final List<HibernateProductValidation> validations = new ArrayList<>();
+
+				if (validationSummary.getIteration() == 0) { // first iteration - load from DB
+					int position = 0;
+					List<ProductDetails> details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
+					while (details != null && !isInterrupted()) {
+						for (Iterator<ProductDetails> iterator = details.iterator(); iterator.hasNext() && !isInterrupted(); ) {
+							ProductDetails detail = iterator.next();
+							final HibernateProductValidation validation = validateProduct(detail);
+							if (validation == null || !validation.isValidated()) {
+								brokenProducts.add(detail);
+								validationSummary.incrementBroken();
+							} else {
+								validations.add(validation);
+								validationSummary.registerValidation(validation);
+							}
+							validationSummary.incrementProcessed();
+						}
+						position += BULK_PRODUCTS_SIZE;
+						details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
+					}
+				} else { // next iteration - process only broken
+					for (Iterator<ProductDetails> iterator = brokenProducts.iterator(); iterator.hasNext() && !isInterrupted(); ) {
+						final ProductDetails detail = iterator.next();
+
+						final HibernateProductValidation validation = validateProduct(detail);
+						if (validation != null && validation.isValidated()) {
+							validations.add(validation);
+							validationSummary.registerValidation(validation);
+							iterator.remove();
+						}
+
+						validationSummary.incrementProcessed();
 					}
 				}
-				final Range range = Range.limit(index, BULK_PRODUCTS_SIZE);
 
-				transaction = transactionManager.getTransaction(new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW));
+				final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
 				try {
-					Session session = sessionFactory.getCurrentSession();
-
-                    final Query query = session.createQuery("select a.id, a.price, a.stockInfo, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) order by a.id");
-                    query.setParameterList("states", ProductContext.VISIBLE);
-					final List list = range.apply(query).list();
-					if (list.isEmpty()) {
-						transactionManager.commit(transaction);
-						break;
-					}
-					for (Object o : list) {
-						validationSummary.incrementValidated();
-
-						final Object[] a = (Object[]) o;
-
-						final Integer productId = (Integer) a[0];
-						final Price oldPrice = (Price) a[1];
-						final StockInfo oldStockInfo = (StockInfo) a[2];
-						final SupplierInfo supplierInfo = (SupplierInfo) a[3];
-
-						final Price oldSupplierPrice = supplierInfo.getPrice();
-
-						final HibernateProductValidation validation = new HibernateProductValidation(productId, new Date(), oldPrice, oldSupplierPrice, oldStockInfo);
-
-						try {
-							final SupplierDescription description = dataLoader.loadDescription(supplierInfo);
-							if (description != null) {
-								final Price newSupplierPrice = description.getPrice();
-								if (newSupplierPrice != null) {
-									final Price newPrice = priceConverter.convert(newSupplierPrice, exchangeRate, MarkupType.REGULAR);
-									validation.priceValidated(newPrice, newSupplierPrice);
-								}
-
-								if (description.getStockInfo() != null) {
-									validation.stockValidated(description.getStockInfo());
-								}
-							}
-						} catch (DataLoadingException ex) {
-							validation.processingError(ex);
-							log.info("Data for product {} can't be updated: {}", productId, ex.getMessage());
-						}
-
-						if (validation.getErrorMessage() != null) {
-							validationSummary.addProductValidation(validation);
-						} else if (validation.hasChanges()) {
-							log.info("Product {} has changes: {}", productId, validation);
-							validationSummary.addProductValidation(validation);
-
-							session.save(validation);
-							productManager.validated(productId, validation.getNewPrice(), validation.getNewSupplierPrice(), validation.getNewStockInfo());
-						}
+					for (HibernateProductValidation validation : validations) {
+						session.save(validation);
+						productManager.validated(validation.getProductId(), validation.getNewPrice(), validation.getNewSupplierPrice(), validation.getNewStockInfo());
 
 						for (ValidationProgressListener listener : listeners) {
-							listener.productValidated(productId, validation);
+							listener.productValidated(validation.getProductId(), validation);
 						}
-						Thread.sleep(100);
 					}
 					session.flush();
 					transactionManager.commit(transaction);
-				} catch (InterruptedException ex) {
-					log.info("Price validation has been cancelled");
-					transactionManager.rollback(transaction);
-					break;
 				} catch (Exception ex) {
-					log.error("Bulk checks can't be processed for range: " + range, ex);
 					transactionManager.rollback(transaction);
-					break;
 				}
-				index += BULK_PRODUCTS_SIZE;
+				validationSummary.incrementIteration(brokenProducts.size());
 			}
 
-			final Date finishedDate = new Date();
-
-			validationSummary.finalize(finishedDate);
+			validationSummary.finalize(new Date());
 			for (ValidationProgressListener listener : listeners) {
-				listener.validationFinished(finishedDate, validationSummary);
+				listener.validationFinished(validationSummary.getFinishDate(), validationSummary);
 			}
 		} catch (Exception ex) {
-			log.error("Price validation can't be done", ex);
+			log.error("Validation error found", ex);
+		} finally {
+			session.close();
 		}
 
 		synchronized (this) {
@@ -236,6 +194,53 @@ public class HibernateProductValidationManager implements ProductValidationManag
 		startPriceValidation();
 	}
 
+	private synchronized boolean isInterrupted() {
+		return validationProgress == null || validationProgress.isCancelled() || validationProgress.isDone();
+	}
+
+	private List<ProductDetails> loadProductDetails(Session session, int position, int count) {
+		final Range range = Range.limit(position, count);
+		final Query query = session.createQuery("select a.id, a.price, a.stockInfo, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) order by a.id");
+		query.setParameterList("states", ProductContext.VISIBLE);
+		final List list = range.apply(query).list();
+		if (list.size() == 0) {
+			return null;
+		}
+
+		final List<ProductDetails> res = new ArrayList<>(count);
+		for (Object o : list) {
+			final Object[] a = (Object[]) o;
+
+			final Integer productId = (Integer) a[0];
+			final Price price = (Price) a[1];
+			final StockInfo stockInfo = (StockInfo) a[2];
+			final SupplierInfo supplierInfo = (SupplierInfo) a[3];
+
+			res.add(new ProductDetails(productId, price, stockInfo, supplierInfo));
+		}
+		return res;
+	}
+
+	private HibernateProductValidation validateProduct(ProductDetails detail) {
+		try {
+			final SupplierDescription description = dataLoader.loadDescription(detail.getSupplierInfo());
+			if (description != null) {
+				final HibernateProductValidation validation = new HibernateProductValidation(detail.getId(), detail.getPrice(), detail.getSupplierInfo().getPrice(), detail.getStockInfo());
+
+				final Price supplierPrice = description.getPrice();
+				final StockInfo stockInfo = description.getStockInfo();
+				if (supplierPrice != null && stockInfo != null) {
+					final Price price = priceConverter.convert(supplierPrice, exchangeManager.getExchangeRate(), MarkupType.REGULAR);
+					validation.validated(price, supplierPrice, stockInfo);
+				}
+				return validation;
+			}
+			return null;
+		} catch (DataLoadingException ex) {
+			log.info("Product state can't be loaded: {} - {}", detail.getId(), ex.getMessage());
+			return null;
+		}
+	}
 
 	public void setTaskExecutor(AsyncTaskExecutor taskExecutor) {
 		this.taskExecutor = taskExecutor;
@@ -263,5 +268,35 @@ public class HibernateProductValidationManager implements ProductValidationManag
 
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {
 		this.transactionManager = transactionManager;
+	}
+
+	private static final class ProductDetails {
+		private final Integer id;
+		private final Price price;
+		private final StockInfo stockInfo;
+		private final SupplierInfo supplierInfo;
+
+		private ProductDetails(Integer id, Price price, StockInfo stockInfo, SupplierInfo supplierInfo) {
+			this.id = id;
+			this.price = price;
+			this.stockInfo = stockInfo;
+			this.supplierInfo = supplierInfo;
+		}
+
+		public Integer getId() {
+			return id;
+		}
+
+		public Price getPrice() {
+			return price;
+		}
+
+		public StockInfo getStockInfo() {
+			return stockInfo;
+		}
+
+		public SupplierInfo getSupplierInfo() {
+			return supplierInfo;
+		}
 	}
 }

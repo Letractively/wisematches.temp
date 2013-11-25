@@ -31,5 +31,5 @@ public interface ProductValidation {
 
 	boolean hasChanges();
 
-	String getErrorMessage();
+	boolean isValidated();
 }

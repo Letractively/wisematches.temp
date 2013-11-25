@@ -24,11 +24,11 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
     </tr>
     <tr>
         <td>Проверено:</td>
-        <td>${context.validatedProducts} из ${context.totalCount}</td>
+        <td>${context.processedProducts} из ${context.totalCount}</td>
     </tr>
     <tr>
         <td>Обновлено:</td>
-        <td>${context.validProducts}</td>
+        <td>${context.updateProducts}</td>
     </tr>
     <tr>
         <td>Ошибок проверки:</td>
@@ -52,59 +52,52 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
         <#list context.productValidations as r>
             <tr>
                 <td valign="top">
-                <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
+                    <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
                 </td>
-                <#if r.errorMessage?has_content>
-                    <td colspan="5">
-                    ${r.errorMessage}
+                <#if r.oldPrice.equals(r.newPrice)>
+                    <td colspan="3">
+                        <@priceInfo r.oldPrice/>
                     </td>
                 <#else>
-
-                    <#if r.oldPrice.equals(r.newPrice)>
-                        <td colspan="3">
-                            <@priceInfo r.oldPrice/>
-                        </td>
-                    <#else>
-                        <td>
-                            <@priceInfo r.oldPrice/>
-                        </td>
-                        <td>
-                            <#if r.newPrice??>
-                                <@priceInfo r.newPrice/>
-                            <#else>
-                                не загрузилась
-                            </#if>
-                        </td>
-                        <td>
-                        ${(r.newPrice.amount - r.oldPrice.amount)?string("0.00")}
-                            (<#if !r.oldPrice.primordialAmount?? && !r.newPrice.primordialAmount??>
-                            -
-                        <#elseif !r.oldPrice.primordialAmount??>
-                            +${r.newPrice.primordialAmount?string("0.00")}
-                        <#elseif !r.newPrice.primordialAmount??>
-                        ${r.oldPrice.primordialAmount?string("0.00")}
+                    <td>
+                        <@priceInfo r.oldPrice/>
+                    </td>
+                    <td>
+                        <#if r.newPrice??>
+                            <@priceInfo r.newPrice/>
                         <#else>
-                        ${(r.newPrice.primordialAmount - r.oldPrice.primordialAmount)?string("0.00")}
-                        </#if>)
-                        </td>
-                    </#if>
-
-                    <#if r.oldStockInfo.equals(r.newStockInfo)>
-                        <td colspan="2">
-                            <@stockInfo r.oldStockInfo/>
-                        </td>
+                            не загрузилась
+                        </#if>
+                    </td>
+                    <td>
+                    ${(r.newPrice.amount - r.oldPrice.amount)?string("0.00")}
+                        (<#if !r.oldPrice.primordialAmount?? && !r.newPrice.primordialAmount??>
+                        -
+                    <#elseif !r.oldPrice.primordialAmount??>
+                        +${r.newPrice.primordialAmount?string("0.00")}
+                    <#elseif !r.newPrice.primordialAmount??>
+                    ${r.oldPrice.primordialAmount?string("0.00")}
                     <#else>
-                        <td>
-                            <@stockInfo r.oldStockInfo/>
-                        </td>
-                        <td>
-                            <#if r.newStockInfo??>
-                                <@stockInfo r.newStockInfo/>
-                            <#else>
-                                не загрузилась
-                            </#if>
-                        </td>
-                    </#if>
+                    ${(r.newPrice.primordialAmount - r.oldPrice.primordialAmount)?string("0.00")}
+                    </#if>)
+                    </td>
+                </#if>
+
+                <#if r.oldStockInfo.equals(r.newStockInfo)>
+                    <td colspan="2">
+                        <@stockInfo r.oldStockInfo/>
+                    </td>
+                <#else>
+                    <td>
+                        <@stockInfo r.oldStockInfo/>
+                    </td>
+                    <td>
+                        <#if r.newStockInfo??>
+                            <@stockInfo r.newStockInfo/>
+                        <#else>
+                            не загрузилась
+                        </#if>
+                    </td>
                 </#if>
             </tr>
         </#list>
