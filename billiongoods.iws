@@ -6,32 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/config/secret.rar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-google/1.0.0/spring-social-google-1.0.0-sources.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-google/1.0.0/spring-social-google-1.0.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-odnoklassniki/1.0.0.FIX/spring-social-odnoklassniki-1.0.0.FIX-sources.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-odnoklassniki/1.0.0.FIX/spring-social-odnoklassniki-1.0.0.FIX.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-vkontakte/1.1.3/spring-social-vkontakte-1.1.3-sources.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-vkontakte/1.1.3/spring-social-vkontakte-1.1.3.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/install.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-google/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-odnoklassniki/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-vkontakte/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-google/1.0.0/spring-social-google-1.0.0.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-odnoklassniki/1.0.0.FIX/spring-social-odnoklassniki-1.0.0.FIX.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repository/org/springframework/social/spring-social-vkontakte/1.1.3/spring-social-vkontakte-1.1.3.pom" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountEditor.java" afterPath="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountEditor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/MemberDetails.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/MemberDetails.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/social/SocialAuthenticationServiceRegistry.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/social/SocialAuthenticationServiceRegistry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/account/authorization.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.ipr" afterPath="$PROJECT_DIR$/billiongoods.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/database/latest_patch.sql" afterPath="$PROJECT_DIR$/resources/database/latest_patch.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/pom.xml" afterPath="$PROJECT_DIR$/modules/web/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-social.xml" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-social.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/web.iml" afterPath="$PROJECT_DIR$/modules/web/web.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -117,7 +93,19 @@
     <favorites_list name="application" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="header.ftl" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="21" selection-start="709" selection-end="709" vertical-scroll-proportion="0.08252427" vertical-offset="204" max-vertical-offset="1122">
+              <folding>
+                <element signature="n#style#0;n#a#0;n#div#1;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -136,7 +124,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AuthorizationController.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/exceptions.properties" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-4.0.0.js" />
@@ -187,6 +174,7 @@
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/AccountController.java" />
         <option value="$PROJECT_DIR$/resources/config/integration.properties" />
         <option value="$PROJECT_DIR$/resources/config/secret.properties" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl" />
       </list>
     </option>
   </component>
@@ -619,112 +607,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1574,7 +1456,7 @@
       <workItem from="1384940570272" duration="11766000" />
       <workItem from="1385029830639" duration="11226000" />
       <workItem from="1385109348626" duration="18359000" />
-      <workItem from="1385360911378" duration="13149000" />
+      <workItem from="1385360911378" duration="13364000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -2060,11 +1942,15 @@
       <created>1385129914905</created>
       <updated>1385129914905</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="+">
+      <created>1385376257407</created>
+      <updated>1385376257407</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="559927000" />
+    <option name="totallyTimeSpent" value="560142000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -2088,7 +1974,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1272" y="-8" width="1296" height="1010" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37328768" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2112,7 +1998,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30794165" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266745" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27228525" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27228525" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33254993" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2206,13 +2092,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/util/LinkedHashMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8075">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/social/spring-social-core/1.1.0.M4/spring-social-core-1.1.0.M4-sources.jar!/org/springframework/social/connect/support/ConnectionFactoryRegistry.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="86" column="34" selection-start="3766" selection-end="3766" vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1275">
@@ -2238,7 +2117,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="41" selection-start="1012" selection-end="1012" vertical-scroll-proportion="0.28848484" vertical-offset="102" max-vertical-offset="952">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2572,6 +2451,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="73" selection-start="806" selection-end="806" vertical-scroll-proportion="0.6" vertical-offset="0" max-vertical-offset="850">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/header.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="21" selection-start="709" selection-end="709" vertical-scroll-proportion="0.08252427" vertical-offset="204" max-vertical-offset="1122">
+          <folding>
+            <element signature="n#style#0;n#a#0;n#div#1;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
