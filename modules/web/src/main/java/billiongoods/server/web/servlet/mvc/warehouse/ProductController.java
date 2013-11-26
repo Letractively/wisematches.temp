@@ -1,11 +1,6 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Personality;
-import billiongoods.server.MessageFormatter;
-import billiongoods.server.services.notify.NotificationException;
-import billiongoods.server.services.notify.NotificationService;
-import billiongoods.server.services.notify.Recipient;
-import billiongoods.server.services.notify.Sender;
 import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingManager;
 import billiongoods.server.services.tracking.TrackingContext;
@@ -40,7 +35,6 @@ public class ProductController extends AbstractController {
 	private ProductManager productManager;
 	private ProductTrackingManager trackingManager;
 	private RelationshipManager relationshipManager;
-	private NotificationService notificationService;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.ProductController");
 
@@ -128,17 +122,6 @@ public class ProductController extends AbstractController {
 			return responseFactory.failure("product.subscribe.error.unknown", locale);
 		}
 
-		try {
-			if (form.getChangeType() == TrackingChangeType.SUBSCRIBE) {
-				notificationService.raiseNotification(Recipient.get(Recipient.MailBox.MONITORING), Sender.SERVER,
-						"system." + form.getType().name().toLowerCase(), preview,
-						MessageFormatter.getProductCode(preview));
-			}
-		} catch (NotificationException e) {
-			log.error("Product preview request can't be send: " + form, e);
-			return responseFactory.failure("product.subscribe.error.system", locale);
-		}
-
 		if (form.getEmail() != null && !form.getEmail().isEmpty()) {
 			return processSubscription(form, locale, principal);
 		}
@@ -191,10 +174,5 @@ public class ProductController extends AbstractController {
 	@Autowired
 	public void setRelationshipManager(RelationshipManager relationshipManager) {
 		this.relationshipManager = relationshipManager;
-	}
-
-	@Autowired
-	public void setNotificationService(NotificationService notificationService) {
-		this.notificationService = notificationService;
 	}
 }

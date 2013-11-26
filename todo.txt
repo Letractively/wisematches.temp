@@ -1,29 +1,27 @@
 ============= CURRENT ====================
-- Subscription: check that email already subscribed
-- Common: remove dependency on jQuery UI (if possible).
 
 ============= PLAN ====================
-- Show items by group id
-- Add expected resume date for suspended state.
-- More info about next order state and times (order's steps line?).
-- ERROR-10486: This transaction couldn't be completed. Please redirect your customer to PayPal.
-- Images cleaner
-- Recent history
+- Orders: Add expected resume date for suspended state.
+- Orders: More info about next order state and times (order's steps line?).
+- Errors: ERROR-10486: This transaction couldn't be completed. Please redirect your customer to PayPal.
+- Maintain: Images cleaner
+- Common: Recent history
 - Coupons: discount by amount (for example, 5$ if sum > 100$)
-- List catalog view
-- Gallery catalog view
-- Range filters
-- Show info about filtering options (attribute description)
-- Redefine financial policy
-- Page not found should show sitemap instead
-- Reload catalog ability
-- Orders for filter values/items
-- Add full product name for URL in translite
-- Forums
-- Wish list
-- Export order
-- Own ads on main page
+- Common: List catalog view
+- Common: Gallery catalog view
+- Common: Range filters
+- Common: Show info about filtering options (attribute description)
+- Maintain: Redefine financial policy
+- Common: Page not found should show sitemap instead
+- Maintain: Reload catalog ability
+- Common: Orders for filter values/items
+- Common: Add full product name for URL in translite
+- Common: Forums
+- Common: Wish list
+- Maintain: Export order
+- Common: Own ads on main page
 - Maintain: No whereabouts
+- Common: remove dependency on jQuery UI (if possible).
 
 ============= DONE ====================
 26.11
@@ -31,6 +29,7 @@
 + Validation: re-implement validation logic: five iterations but for broken only
 + Validation: Improve errors description for validations.
 + Maintain: orders summary on orders maintain page (like for main page).
++ Subscription: check that email already subscribed
 
 25.11
 + Account: integration with Social networks

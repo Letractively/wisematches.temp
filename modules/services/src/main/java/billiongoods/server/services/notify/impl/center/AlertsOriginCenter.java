@@ -11,7 +11,11 @@ import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderListener;
 import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.payment.OrderState;
+import billiongoods.server.services.tracking.ProductTracking;
+import billiongoods.server.services.tracking.ProductTrackingListener;
+import billiongoods.server.services.tracking.ProductTrackingManager;
 import billiongoods.server.services.validator.*;
+import billiongoods.server.warehouse.ProductManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,13 +29,16 @@ import java.util.Map;
 public class AlertsOriginCenter {
 	private OrderManager orderManager;
 	private AccountManager accountManager;
+	private ProductManager productManager;
 	private ValidationManager productValidator;
+	private ProductTrackingManager trackingManager;
 
 	private NotificationService notificationService;
 
 	private final TheOrderListener orderListener = new TheOrderListener();
 	private final TheAccountListener accountListener = new TheAccountListener();
 	private final TheValidationListener validatorListener = new TheValidationListener();
+	private final TheProductTrackingListener trackingListener = new TheProductTrackingListener();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.alerts.OriginCenter");
 
@@ -72,6 +79,22 @@ public class AlertsOriginCenter {
 
 		if (this.accountManager != null) {
 			this.accountManager.addAccountListener(accountListener);
+		}
+	}
+
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
+	}
+
+	public void setTrackingManager(ProductTrackingManager trackingManager) {
+		if (this.trackingManager != null) {
+			this.trackingManager.removeProductTrackingListener(trackingListener);
+		}
+
+		this.trackingManager = trackingManager;
+
+		if (this.trackingManager != null) {
+			this.trackingManager.addProductTrackingListener(trackingListener);
 		}
 	}
 
@@ -135,6 +158,20 @@ public class AlertsOriginCenter {
 
 		@Override
 		public void validationProcessed(ValidationChange validation) {
+		}
+	}
+
+	private class TheProductTrackingListener implements ProductTrackingListener {
+		private TheProductTrackingListener() {
+		}
+
+		@Override
+		public void trackingAdded(ProductTracking tracking) {
+			raiseAlarm("system." + tracking.getTrackingType().name().toLowerCase(), productManager.getPreview(tracking.getProductId()));
+		}
+
+		@Override
+		public void trackingRemoved(ProductTracking tracking) {
 		}
 	}
 }

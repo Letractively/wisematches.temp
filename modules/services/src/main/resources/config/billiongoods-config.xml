@@ -223,6 +223,8 @@
 
         <property name="orderManager" ref="orderManager"/>
         <property name="accountManager" ref="accountManager"/>
+        <property name="productManager" ref="productManager"/>
+        <property name="trackingManager" ref="trackingManager"/>
         <property name="validationManager" ref="validationManager"/>
     </bean>
 
