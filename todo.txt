@@ -1,5 +1,4 @@
 ============= CURRENT ====================
-- Validation: auto load validation summary
 - Subscription: check that email already subscribed
 - Maintain: orders summary on orders maintain page (like for main page).
 - Common: remove dependency on jQuery UI (if possible).
@@ -28,11 +27,14 @@
 - Maintain: No whereabouts
 
 ============= DONE ====================
+26.11
++ Validation: auto load validation summary
++ Validation: reimplement validation logic: five iterations but for broken only
++ Validation: Improve errors description for validations.
+
 25.11
 + Account: integration with Social networks
-+ Validation: reimplement validation logic: five iterations but for broken only
 + Validation: exclude errors from main page / email
-+ Validation: Improve errors description for validations.
 
 19.11
 + Enable RememberMe service

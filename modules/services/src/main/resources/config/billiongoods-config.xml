@@ -66,7 +66,7 @@
 
     <bean id="banggoodDataLoader" class="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader"/>
 
-    <bean id="validationManager" class="billiongoods.server.services.validator.impl.HibernateProductValidationManager">
+    <bean id="validationManager" class="billiongoods.server.services.validator.impl.HibernateValidationManager">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="productManager" ref="productManager"/>
 

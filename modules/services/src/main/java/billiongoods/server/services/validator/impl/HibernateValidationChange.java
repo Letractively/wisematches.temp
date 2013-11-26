@@ -1,6 +1,6 @@
 package billiongoods.server.services.validator.impl;
 
-import billiongoods.server.services.validator.ProductValidation;
+import billiongoods.server.services.validator.ValidationChange;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.StockInfo;
 
@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "service_validation")
-public class HibernateProductValidation implements ProductValidation {
+public class HibernateValidationChange implements ValidationChange {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -68,10 +68,10 @@ public class HibernateProductValidation implements ProductValidation {
 	private StockInfo newStockInfo;
 
 	@Deprecated
-	HibernateProductValidation() {
+	HibernateValidationChange() {
 	}
 
-	public HibernateProductValidation(Integer productId, Price oldPrice, Price oldSupplierPrice, StockInfo oldStockInfo) {
+	public HibernateValidationChange(Integer productId, Price oldPrice, Price oldSupplierPrice, StockInfo oldStockInfo) {
 		this.productId = productId;
 		this.oldPrice = oldPrice;
 		this.oldSupplierPrice = oldSupplierPrice;
@@ -146,7 +146,7 @@ public class HibernateProductValidation implements ProductValidation {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("HibernateProductValidation{");
+		final StringBuilder sb = new StringBuilder("HibernateValidationChange{");
 		sb.append("id=").append(id);
 		sb.append(", productId=").append(productId);
 		sb.append(", timestamp=").append(timestamp);

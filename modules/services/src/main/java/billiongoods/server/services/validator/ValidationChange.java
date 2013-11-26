@@ -8,10 +8,15 @@ import java.util.Date;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface ProductValidation {
+public interface ValidationChange {
 	Date getTimestamp();
 
 	Integer getProductId();
+
+
+	boolean hasChanges();
+
+	boolean isValidated();
 
 
 	Price getOldPrice();
@@ -27,9 +32,4 @@ public interface ProductValidation {
 	StockInfo getOldStockInfo();
 
 	StockInfo getNewStockInfo();
-
-
-	boolean hasChanges();
-
-	boolean isValidated();
 }
