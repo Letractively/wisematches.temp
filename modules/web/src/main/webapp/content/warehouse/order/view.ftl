@@ -47,14 +47,17 @@
 </#if>
 
 <#assign currentIndex=steps?seq_index_of(alignedState)/>
-    <ul>
-    <#list steps as s>
-        <#assign index=s_index/>
-        <li class="<#if index==0>first<#elseif index==(steps?size-1)>last</#if> <#if (index==currentIndex)>current</#if> <#if (index==currentIndex-1)>previous</#if> <#if (currentIndex>index)>done</#if>">
-            <@message code="order.steps.${s.code}.label"/>
-        </li>
-    </#list>
-    </ul>
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+        <#list steps as s>
+            <#assign index=s_index/>
+            <td class="<#if index==0>first<#elseif index==(steps?size-1)>last</#if> <#if (index==currentIndex)>current</#if> <#if (index==currentIndex-1)>previous</#if> <#if (currentIndex>index)>done</#if>"
+                width="${100/(steps?size)}%">
+                <@message code="order.steps.${s.code}.label"/>
+            </td>
+        </#list>
+        </tr>
+    </table>
 </div>
 
 <table class="info">
@@ -65,9 +68,12 @@
         <td>
             <div style="display: inline-block">
                 <span class="status">
-                ${messageSource.formatDate(order.timestamp, locale)}, <@message code="order.status.${stateName}.label"/>
+                <@message code="order.status.${stateName}.label"/>
                 <#if state==OrderState.SUSPENDED && order.expectedResume??>
-                    до ${messageSource.formatDate(order.expectedResume, locale)}</#if>
+                    до ${messageSource.formatDate(order.expectedResume, locale)}
+                <#else>
+                ${messageSource.formatDate(order.timestamp, locale)}
+                </#if>
                 </span>
 
                 <div class="sample">
@@ -257,7 +263,7 @@
         <#assign totalWeight=totalWeight+i.weight/>
         <tr class="item">
             <td valign="top" width="50px" style="border-right: none">
-                <@bg.link.product product><@bg.ui.productImage product product.previewImageId ImageSize.TINY/></@bg.link.product>
+                <@bg.link.product product><@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/></@bg.link.product>
             </td>
             <td valign="top" width="100%" align="left" style="border-left: none">
                 <@bg.link.product product>${product.name}</@bg.link.product>
