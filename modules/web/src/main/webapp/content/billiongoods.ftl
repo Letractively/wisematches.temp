@@ -7,7 +7,7 @@
 
 <html>
 <head>
-<#include "head.ftl"/>
+<#include "meta.ftl"/>
 </head>
 
 <body>

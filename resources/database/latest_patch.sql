@@ -1,3 +1,15 @@
+#11.26
+ALTER TABLE `billiongoods`.`store_order`
+ADD COLUMN `shipped` DATETIME NULL
+AFTER `created`;
+
+UPDATE store_order o LEFT JOIN store_order_log l
+    ON o.id = l.orderId
+SET o.shipped = l.timestamp
+WHERE l.orderState = 5;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1126');
+
 #11.25
 ALTER TABLE `billiongoods`.`account_personality`
 CHANGE COLUMN `password` `password` VARCHAR(100) NULL,
