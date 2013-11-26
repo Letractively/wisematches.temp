@@ -1,6 +1,5 @@
 ============= CURRENT ====================
 - Subscription: check that email already subscribed
-- Maintain: orders summary on orders maintain page (like for main page).
 - Common: remove dependency on jQuery UI (if possible).
 
 ============= PLAN ====================
@@ -29,8 +28,9 @@
 ============= DONE ====================
 26.11
 + Validation: auto load validation summary
-+ Validation: reimplement validation logic: five iterations but for broken only
++ Validation: re-implement validation logic: five iterations but for broken only
 + Validation: Improve errors description for validations.
++ Maintain: orders summary on orders maintain page (like for main page).
 
 25.11
 + Account: integration with Social networks
