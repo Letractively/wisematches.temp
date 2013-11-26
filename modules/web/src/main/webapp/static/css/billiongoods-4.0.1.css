@@ -1289,6 +1289,12 @@ button.bg-ui-button.selected {
     padding-top: 20px;
 }
 
+.order .basket .options {
+    margin-left: 20px;
+    padding-left: 5px;
+    border-left: #808080 solid 2px;
+}
+
 #orderLogs.simplemodal-data td {
     padding-top: 10px;
     padding-bottom: 5px;
@@ -1876,4 +1882,42 @@ button.bg-ui-button.selected {
 
 .social-icon-odnoklassniki {
     background-position: 0 -160px;
+}
+
+.order .steps ul {
+    margin: 10px 0 15px;
+    padding: 0;
+    height: 20px;
+}
+
+.order .steps li {
+    width: 141px;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    margin-left: 0;
+    padding: 0 15px 0 0;
+    text-align: center;
+    background: url('../images/sprite-step.png') no-repeat scroll 100% 0 #e8e8e8;
+}
+
+.order .steps li.done {
+    background-color: #ffe8bb;
+    background-position: 100% -40px;
+}
+
+.order .steps li.previous {
+    background-position: 100% -20px !important;
+}
+
+.order .steps li.current {
+    background-color: #f90;
+    color: #fff;
+}
+
+.order .steps li.last {
+    background-position: 100% -200px;
 }

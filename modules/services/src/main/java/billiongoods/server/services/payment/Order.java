@@ -23,7 +23,10 @@ public interface Order {
 
 	Date getCreated();
 
+	Date getShipped();
+
 	Date getClosed();
+
 
 	Date getTimestamp();
 

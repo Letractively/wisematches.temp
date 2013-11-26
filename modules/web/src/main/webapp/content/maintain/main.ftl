@@ -26,33 +26,36 @@
             <#list trackingSummary.products as p>
                 <table cellpadding="3" style="border-bottom: 1px dashed #808080">
                     <tr>
-                        <td valign="top" rowspan="2" nowrap="nowrap">
+                        <td valign="top" nowrap="nowrap">
                             <@bg.link.product p>${messageSource.getProductCode(p)}</@bg.link.product>
                         </td>
                         <td width="100%" style="overflow: hidden">
                             <@bg.link.product p>${p.name}</@bg.link.product>
                         </td>
                         <td valign="top" nowrap="nowrap">
-                        ${p.price.amount?string("0.00")}<#if p.price.primordialAmount??> ${p.price.primordialAmount?string("0.00")}</#if>
-
-                            <#assign stockInfo=p.stockInfo/>
-                            <#if stockInfo.restockDate??>
-                            ${messageSource.formatDate(stockInfo.restockDate, locale)}
-                            <#elseif (stockInfo.leftovers??)>
-                            ${stockInfo.leftovers}
-                            <#else>
-                                <strong>в наличии</strong>
-                            </#if>
+                            <strong>
+                                <#assign stockInfo=p.stockInfo/>
+                                <#if stockInfo.restockDate??>
+                                ${messageSource.formatDate(stockInfo.restockDate, locale)}
+                                <#elseif (stockInfo.leftovers??)>
+                                    осталось ${stockInfo.leftovers}
+                                <#else>
+                                    <strong>в наличии</strong>
+                                </#if>
+                            </strong>
+                            (${p.price.amount?string("0.00")}<#if p.price.primordialAmount??> ${p.price.primordialAmount?string("0.00")}</#if>
+                            руб)
                         </td>
                     </tr>
                     <tr>
-                        <#list trackingSummary.getProductTrackings(p) as t>
-                            <td>${t.personId!t.personEmail}</td>
-                            <td nowrap="nowrap">
-                            ${t.trackingType.name()?substring(0, 1)}
-                            ${messageSource.formatDate(t.registration, locale)}
-                            </td>
-                        </#list>
+                        <td></td>
+                        <td colspan="2">
+                            <#list trackingSummary.getProductTrackings(p) as t>
+                                <div>
+                                ${t.personId!t.personEmail} ${t.trackingType.name()?substring(0, 1)} ${messageSource.formatDate(t.registration, locale)}
+                                </div>
+                            </#list>
+                        </td>
                     </tr>
                 </table>
             </#list>

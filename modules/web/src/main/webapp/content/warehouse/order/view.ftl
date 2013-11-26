@@ -36,6 +36,27 @@
     </div>
 </div>
 
+<div class="steps">
+<#assign steps=[OrderState.BILLING, OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SHIPPED, OrderState.CLOSED]/>
+
+<#assign alignedState=state/>
+<#if alignedState == OrderState.SHIPPING || alignedState == OrderState.SUSPENDED>
+    <#assign alignedState=OrderState.PROCESSING/>
+<#elseif alignedState == OrderState.FAILED || alignedState == OrderState.CANCELLED || alignedState == OrderState.REMOVED>
+    <#assign alignedState=OrderState.CLOSED/>
+</#if>
+
+<#assign currentIndex=steps?seq_index_of(alignedState)/>
+    <ul>
+    <#list steps as s>
+        <#assign index=s_index/>
+        <li class="<#if index==0>first<#elseif index==(steps?size-1)>last</#if> <#if (index==currentIndex)>current</#if> <#if (index==currentIndex-1)>previous</#if> <#if (currentIndex>index)>done</#if>">
+            <@message code="order.steps.${s.code}.label"/>
+        </li>
+    </#list>
+    </ul>
+</div>
+
 <table class="info">
     <tr>
         <td valign="top" nowrap="nowrap">
@@ -43,8 +64,11 @@
         </td>
         <td>
             <div style="display: inline-block">
-                <span class="status"><@message code="order.status.${stateName}.label"/></span>,
-            ${messageSource.formatDate(order.timestamp, locale)}
+                <span class="status">
+                ${messageSource.formatDate(order.timestamp, locale)}, <@message code="order.status.${stateName}.label"/>
+                <#if state==OrderState.SUSPENDED && order.expectedResume??>
+                    до ${messageSource.formatDate(order.expectedResume, locale)}</#if>
+                </span>
 
                 <div class="sample">
                 <@message code="order.status.${stateName}.description"/>
@@ -100,9 +124,9 @@
                                         не предоставляется
                                     </#if>
                                 <#elseif  state.suspended>
-                                    <#if l.parameter?has_content>
+                                    <#if order.expectedResume??>
                                         Приостановлен до:<br>
-                                    ${messageSource.formatDate(l.parameter?number?long, locale)}
+                                    ${messageSource.formatDate(order.expectedResume, locale)}
                                     </#if>
                                 <#elseif state.closed>
                                     <#if l.parameter?has_content>
@@ -213,8 +237,7 @@
 <#assign totalWeight=0/>
     <table class="cnt">
         <tr>
-            <th width="100%">Наименование</th>
-            <th>Опции</th>
+            <th colspan="2" width="100%">Наименование</th>
         <@bg.security.authorized "moderator">
             <th>SKU</th>
         </@bg.security.authorized>
@@ -233,11 +256,16 @@
         <#assign totalCount=totalCount+i.quantity/>
         <#assign totalWeight=totalWeight+i.weight/>
         <tr class="item">
-            <td valign="top" width="100%" align="left">
-                <@bg.link.product product>${product.name}</@bg.link.product>
+            <td valign="top" width="50px" style="border-right: none">
+                <@bg.link.product product><@bg.ui.productImage product product.previewImageId ImageSize.TINY/></@bg.link.product>
             </td>
-            <td valign="middle" nowrap="nowrap">
-            ${i.options}
+            <td valign="top" width="100%" align="left" style="border-left: none">
+                <@bg.link.product product>${product.name}</@bg.link.product>
+                <#if i.options??>
+                    <div class="options">
+                    ${i.options}
+                    </div>
+                </#if>
             </td>
             <@bg.security.authorized "moderator">
                 <td valign="middle" nowrap="nowrap">

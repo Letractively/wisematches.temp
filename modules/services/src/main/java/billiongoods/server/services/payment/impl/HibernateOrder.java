@@ -47,6 +47,10 @@ public class HibernateOrder implements Order {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 
+	@Column(name = "shipped")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date shipped;
+
 	@Column(name = "closed")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date closed;
@@ -168,6 +172,11 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public Date getShipped() {
+		return shipped;
+	}
+
+	@Override
 	public Date getClosed() {
 		return closed;
 	}
@@ -264,6 +273,7 @@ public class HibernateOrder implements Order {
 	}
 
 	void shipped(String internationalTracking, String commentary) {
+		this.shipped = new Date();
 		this.internationalTracking = internationalTracking;
 
 		updateOrderState(OrderState.SHIPPED, commentary, internationalTracking);
