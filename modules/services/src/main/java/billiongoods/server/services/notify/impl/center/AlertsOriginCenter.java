@@ -11,14 +11,13 @@ import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderListener;
 import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.payment.OrderState;
-import billiongoods.server.services.validator.ProductValidation;
-import billiongoods.server.services.validator.ProductValidationManager;
-import billiongoods.server.services.validator.ValidationProgressListener;
-import billiongoods.server.services.validator.ValidationSummary;
+import billiongoods.server.services.validator.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -26,13 +25,13 @@ import java.util.Date;
 public class AlertsOriginCenter {
 	private OrderManager orderManager;
 	private AccountManager accountManager;
-	private ProductValidationManager productValidator;
+	private ValidationManager productValidator;
 
 	private NotificationService notificationService;
 
 	private final TheOrderListener orderListener = new TheOrderListener();
 	private final TheAccountListener accountListener = new TheAccountListener();
-	private final TheValidationProgressListener validatorListener = new TheValidationProgressListener();
+	private final TheValidationListener validatorListener = new TheValidationListener();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.alerts.OriginCenter");
 
@@ -76,7 +75,7 @@ public class AlertsOriginCenter {
 		}
 	}
 
-	public void setValidationManager(ProductValidationManager productValidator) {
+	public void setValidationManager(ValidationManager productValidator) {
 		if (this.productValidator != null) {
 			this.productValidator.removeValidationProgressListener(validatorListener);
 		}
@@ -118,21 +117,24 @@ public class AlertsOriginCenter {
 		}
 	}
 
-	private class TheValidationProgressListener implements ValidationProgressListener {
-		private TheValidationProgressListener() {
+	private class TheValidationListener implements ValidationListener {
+		private TheValidationListener() {
 		}
 
 		@Override
-		public void validationStarted(Date date, int totalCount) {
+		public void validationStarted(ValidationSummary summary) {
 		}
 
 		@Override
-		public void productValidated(Integer productId, ProductValidation validation) {
+		public void validationFinished(ValidationSummary summary, List<ValidatingProduct> broken) {
+			final Map<String, Object> context = new HashMap<>(2);
+			context.put("broken", broken);
+			context.put("summary", summary);
+			raiseAlarm("system.validation", context, summary.getStartDate());
 		}
 
 		@Override
-		public void validationFinished(Date date, ValidationSummary summary) {
-			raiseAlarm("system.validation", summary, summary.getStartDate());
+		public void validationProcessed(ValidationChange validation) {
 		}
 	}
 }

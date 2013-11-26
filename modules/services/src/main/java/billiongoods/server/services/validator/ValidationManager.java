@@ -3,10 +3,10 @@ package billiongoods.server.services.validator;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface ProductValidationManager {
-	void addValidationProgressListener(ValidationProgressListener l);
+public interface ValidationManager {
+	void addValidationProgressListener(ValidationListener l);
 
-	void removeValidationProgressListener(ValidationProgressListener l);
+	void removeValidationProgressListener(ValidationListener l);
 
 
 	boolean isInProgress();

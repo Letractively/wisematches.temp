@@ -12,7 +12,11 @@ public interface ValidationSummary {
 	Date getFinishDate();
 
 
+	int getIteration();
+
+
 	int getTotalCount();
+
 
 	int getUpdateProducts();
 
@@ -21,5 +25,5 @@ public interface ValidationSummary {
 	int getProcessedProducts();
 
 
-	Collection<ProductValidation> getProductValidations();
+	Collection<ValidationChange> getValidationChanges();
 }

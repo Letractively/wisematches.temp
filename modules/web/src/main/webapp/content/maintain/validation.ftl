@@ -32,7 +32,8 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
     </tr>
     <tr>
         <td>Завершено:</td>
-        <td><#if context.finishDate??>${context.finishDate?datetime?string}<#else>В процессе</#if></td>
+        <td><#if context.finishDate??>${context.finishDate?datetime?string}<#else>В процессе
+            (итерация ${context.iteration})</#if></td>
     </tr>
     <tr>
         <td>Проверено:</td>
@@ -43,12 +44,16 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
         <td>${context.updateProducts}</td>
     </tr>
     <tr>
+        <td>Без изменений:</td>
+        <td>${context.processedProducts - context.updateProducts - context.brokenProducts}</td>
+    </tr>
+    <tr>
         <td>Ошибок проверки:</td>
         <td>${context.brokenProducts}</td>
     </tr>
 </table>
 
-<#if context.productValidations?has_content>
+<#if context.validationChanges?has_content>
 <div>
     Обновленные товары:
     <table>
@@ -61,7 +66,7 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
             <th>Новое наличие</th>
         </tr>
 
-        <#list context.productValidations as r>
+        <#list context.validationChanges as r>
             <tr>
                 <td valign="top">
                     <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
@@ -115,4 +120,10 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
         </#list>
     </table>
 </div>
+</#if>
+
+<#if !context.finishDate??>
+<script type="application/javascript">
+    window.setTimeout('location.reload()', 5 * 1000); // one minute
+</script>
 </#if>

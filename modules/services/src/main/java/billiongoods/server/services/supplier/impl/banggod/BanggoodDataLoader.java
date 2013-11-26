@@ -51,7 +51,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 
 	private final ScriptEngine javascript = new ScriptEngineManager().getEngineByName("javascript");
 
-	private static final int DEFAULT_TIMEOUT = 3000;
+	private static final int DEFAULT_TIMEOUT = 5000;
 	private static final HttpHost HOST = new HttpHost("www.banggood.com");
 	private static final SimpleDateFormat RESTOCK_DATE_FROMAT = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
@@ -208,8 +208,10 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 				return new StockInfo(0, null);
 			}
 			throw new DataLoadingException("StockInfo incorrect status: " + status);
+		} catch (DataLoadingException ex) {
+			throw ex;
 		} catch (Exception ex) {
-			throw new DataLoadingException("StockInfo can't be loaded", ex);
+			throw new DataLoadingException("StockInfo - " + ex.getMessage(), ex);
 		}
 	}
 
@@ -238,7 +240,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 				return parseProductDetails(s);
 			}
 		} catch (Exception ex) {
-			throw new DataLoadingException("Price can't be loaded", ex);
+			throw new DataLoadingException("PriceInfo - " + ex.getMessage(), ex);
 		}
 	}
 

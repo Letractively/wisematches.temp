@@ -1,4 +1,5 @@
-<#-- @ftlvariable name="context" type="billiongoods.server.services.validator.ValidationSummary" -->
+<#-- @ftlvariable name="context.broken" type="billiongoods.server.services.validator.ValidatingProduct[]" -->
+<#-- @ftlvariable name="context.summary" type="billiongoods.server.services.validator.ValidationSummary" -->
 
 <#macro stockInfo info>
 ${info.stockState.name()}
@@ -16,27 +17,32 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
 <table>
     <tr>
         <td>Запущено:</td>
-        <td><#if context.startDate??>${context.startDate?datetime?string}<#else>Проверка не проводилась</#if></td>
+        <td><#if context.startDate??>${context.summary.startDate?datetime?string}<#else>Проверка не
+            проводилась</#if></td>
     </tr>
     <tr>
         <td>Завершено:</td>
-        <td><#if context.finishDate??>${context.finishDate?datetime?string}<#else>В процессе</#if></td>
+        <td><#if context.finishDate??>${context.summary.finishDate?datetime?string}<#else>В процессе</#if></td>
     </tr>
     <tr>
         <td>Проверено:</td>
-        <td>${context.processedProducts} из ${context.totalCount}</td>
+        <td>${context.summary.processedProducts} из ${context.summary.totalCount}</td>
     </tr>
     <tr>
         <td>Обновлено:</td>
-        <td>${context.updateProducts}</td>
+        <td>${context.summary.updateProducts}</td>
+    </tr>
+    <tr>
+        <td>Без изменений:</td>
+        <td>${context.summary.processedProducts - context.summary.updateProducts - context.summary.brokenProducts}</td>
     </tr>
     <tr>
         <td>Ошибок проверки:</td>
-        <td>${context.brokenProducts}</td>
+        <td>${context.summary.brokenProducts}</td>
     </tr>
 </table>
 
-<#if context.productValidations?has_content>
+<#if context.summary.validationChanges?has_content>
 <div>
     Обновленные товары:
     <table>
@@ -49,7 +55,7 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
             <th>Новое наличие</th>
         </tr>
 
-        <#list context.productValidations as r>
+        <#list context.summary.validationChanges as r>
             <tr>
                 <td valign="top">
                     <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
@@ -99,6 +105,41 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
                         </#if>
                     </td>
                 </#if>
+            </tr>
+        </#list>
+    </table>
+</div>
+</#if>
+
+<#if context.broken?has_content>
+<div>
+    Ошибки при проверки:
+    <table>
+        <tr>
+            <th>Артикул</th>
+            <th>Banggood</th>
+            <th>Текущая цена</th>
+            <th>Цена до скидки</th>
+            <th>Наличие</th>
+        </tr>
+
+        <#list context.broken as b>
+            <tr>
+                <td>
+                    <a href="http://www.billiongoods.ru/maintain/product?id=${b.id}">${messageSource.getProductCode(b.id)}</a>
+                </td>
+                <td>
+                    <a href="${b.supplierInfo.referenceUrl.toString()}">${b.supplierInfo.referenceCode}</a>
+                </td>
+                <td>
+                ${b.price.amount?string("0.00")}
+                </td>
+                <td>
+                    <#if b.price.primordialAmount??>${b.price.primordialAmount?string("0.00")}</#if>
+                </td>
+                <td>
+                    <@stockInfo b.stockInfo/>
+                </td>
             </tr>
         </#list>
     </table>

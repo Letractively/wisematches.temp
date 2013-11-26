@@ -1,6 +1,6 @@
 package billiongoods.server.services.validator.impl;
 
-import billiongoods.server.services.validator.ProductValidation;
+import billiongoods.server.services.validator.ValidationChange;
 import billiongoods.server.services.validator.ValidationSummary;
 
 import java.util.Collection;
@@ -20,7 +20,7 @@ public class ReusableValidationSummary implements ValidationSummary {
 	private volatile int brokenProducts = 0;
 	private volatile int processedProducts = 0;
 
-	private final Collection<ProductValidation> validations = new ConcurrentLinkedQueue<>();
+	private final Collection<ValidationChange> validations = new ConcurrentLinkedQueue<>();
 
 	public ReusableValidationSummary() {
 	}
@@ -63,7 +63,7 @@ public class ReusableValidationSummary implements ValidationSummary {
 		processedProducts++;
 	}
 
-	void registerValidation(ProductValidation validation) {
+	void registerValidation(ValidationChange validation) {
 		validations.add(validation);
 	}
 
@@ -81,11 +81,12 @@ public class ReusableValidationSummary implements ValidationSummary {
 	}
 
 	@Override
-	public Collection<ProductValidation> getProductValidations() {
+	public Collection<ValidationChange> getValidationChanges() {
 		return validations;
 	}
 
-	int getIteration() {
+	@Override
+	public int getIteration() {
 		return iteration;
 	}
 
@@ -100,15 +101,17 @@ public class ReusableValidationSummary implements ValidationSummary {
 		this.finishDate = finish;
 	}
 
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("ReusableValidationSummary{");
 		sb.append("startDate=").append(startDate);
 		sb.append(", finishDate=").append(finishDate);
+		sb.append(", iteration=").append(iteration);
 		sb.append(", totalCount=").append(totalCount);
 		sb.append(", brokenProducts=").append(brokenProducts);
-		sb.append(", updateProducts=").append(validations.size());
 		sb.append(", processedProducts=").append(processedProducts);
+		sb.append(", validations=").append(validations);
 		sb.append('}');
 		return sb.toString();
 	}
