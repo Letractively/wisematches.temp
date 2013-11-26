@@ -1,17 +1,35 @@
 <#-- @ftlvariable name="orders" type="billiongoods.server.services.payment.Order[]" -->
 <#-- @ftlvariable name="orderState" type="billiongoods.server.services.payment.OrderState" -->
+<#-- @ftlvariable name="ordersSummary" type="billiongoods.server.services.payment.OrdersSummary" -->
 
 <#include "/core.ftl"/>
 
+<style type="text/css">
+    .orders .states .selected td {
+        font-weight: bold;
+        background: #808080;
+    }
+</style>
+
 <div class="orders">
     <div class="states">
-    <#list [OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SUSPENDED, OrderState.SHIPPING, OrderState.SHIPPED, OrderState.BILLING] as o>
-        <div class="state">
-            <input id="status${o.name()}" name="status" type="radio" value="${o.name()}"
-                   <#if o==orderState>checked="checked"</#if>>
-            <label for="status${o.name()}"><@message code="order.status.${o.name()?lower_case}.label"/></label>
-        </div>
-    </#list>
+        <table>
+        <#list [OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SUSPENDED, OrderState.SHIPPING, OrderState.SHIPPED, OrderState.BILLING, OrderState.CLOSED] as s>
+            <#assign selected=(s==orderState)/>
+            <tr <#if selected>class="selected"</#if>>
+                <td>
+                    <a href="/maintain/order?state=${s.name()}">
+                        <@message code="order.status.${s.name()?lower_case}.label"/>
+                    </a>
+                </td>
+                <td style="padding-left: 5px">
+                    <a href="/maintain/order?state=${s.name()}">
+                    ${ordersSummary.getOrdersCount(s)}
+                    </a>
+                </td>
+            </tr>
+        </#list>
+        </table>
     </div>
 
     <div class="search">
@@ -46,12 +64,6 @@
 </div>
 
 <script type="application/javascript">
-    var states = $(".orders .state");
-    states.find("input").change(function () {
-        var state = states.find("input:checked").val();
-        bg.util.url.redirect("/maintain/order?state=" + state);
-    });
-
     var search = $(".orders .search");
     search.find("button").click(function () {
         var id = search.find("input").val();

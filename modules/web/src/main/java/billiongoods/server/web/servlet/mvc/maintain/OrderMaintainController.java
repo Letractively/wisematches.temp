@@ -31,6 +31,7 @@ public class OrderMaintainController extends AbstractController {
 	private OrderManager orderManager;
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
+	private static final Orders TIMESTAMP = Orders.of(billiongoods.core.search.Order.desc("timestamp"));
 
 	public OrderMaintainController() {
 	}
@@ -39,9 +40,11 @@ public class OrderMaintainController extends AbstractController {
 	public String viewOrders(@RequestParam(value = "state", defaultValue = "ACCEPTED") String state, Model model) {
 		final OrderState orderState = OrderState.valueOf(state);
 
-		final List<Order> orders = orderManager.searchEntities(new OrderContext(orderState), null, null, Orders.of(billiongoods.core.search.Order.desc("timestamp")));
+		final List<Order> orders = orderManager.searchEntities(new OrderContext(orderState), null, null, TIMESTAMP);
 		model.addAttribute("orders", orders);
 		model.addAttribute("orderState", orderState);
+
+		model.addAttribute("ordersSummary", orderManager.getOrdersSummary());
 
 		return "/content/maintain/orders";
 	}
