@@ -1327,6 +1327,46 @@ button.bg-ui-button.selected {
     color: green;
 }
 
+.order .steps table {
+    margin: 10px 0 15px;
+    padding: 0;
+    height: 20px;
+}
+
+.order .steps td {
+    font-size: 12px;
+    font-weight: bold;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    margin-left: 0;
+    padding: 0 15px 0 0;
+    text-align: center;
+    background: url('../images/sprite-step.png') no-repeat scroll 100% 0 #e5e5e5;
+}
+
+.order .steps td.done {
+    background-color: #ffe8bb;
+    background-position: 100% -40px;
+}
+
+.order .steps td.previous {
+    background-position: 100% -20px !important;
+}
+
+.order .steps td.current {
+    background-color: #f90;
+    color: #fff;
+}
+
+.order .steps td.last {
+    background-position: 100% -200px;
+}
+
+.order .operations div {
+    display: inline-block;
+}
+
 .orders .states div {
     margin: 3px;
     display: inline-block;
@@ -1882,40 +1922,4 @@ button.bg-ui-button.selected {
 
 .social-icon-odnoklassniki {
     background-position: 0 -160px;
-}
-
-.order .steps table {
-    margin: 10px 0 15px;
-    padding: 0;
-    height: 20px;
-}
-
-.order .steps td {
-    font-size: 12px;
-    font-weight: bold;
-    height: 20px;
-    line-height: 20px;
-    overflow: hidden;
-    margin-left: 0;
-    padding: 0 15px 0 0;
-    text-align: center;
-    background: url('../images/sprite-step.png') no-repeat scroll 100% 0 #e5e5e5;
-}
-
-.order .steps td.done {
-    background-color: #ffe8bb;
-    background-position: 100% -40px;
-}
-
-.order .steps td.previous {
-    background-position: 100% -20px !important;
-}
-
-.order .steps td.current {
-    background-color: #f90;
-    color: #fff;
-}
-
-.order .steps td.last {
-    background-position: 100% -200px;
 }

@@ -101,7 +101,6 @@ public class ReusableValidationSummary implements ValidationSummary {
 		this.finishDate = finish;
 	}
 
-
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("ReusableValidationSummary{");

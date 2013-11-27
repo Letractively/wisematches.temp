@@ -2,7 +2,6 @@
 - Privacy: main page
 - Privacy: address book
 - Privacy: view orders
-- Order: ability to confirm delivered
 
 ============= PLAN ====================
 - Order: More info about next order state and times (order's steps line?).
@@ -29,6 +28,10 @@
 - Maintain: Export order
 
 ============= DONE ====================
+27.11
++ Validation: final summary is not correct (no broken if has)
++ Order: ability to confirm delivered
+
 26.11
 + Validation: auto load validation summary
 + Validation: re-implement validation logic: five iterations but for broken only

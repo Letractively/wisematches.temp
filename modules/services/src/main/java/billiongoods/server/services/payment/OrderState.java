@@ -5,28 +5,30 @@ package billiongoods.server.services.payment;
  */
 public enum OrderState {
 	// Initial states
-	NEW, // nothing
-	BILLING, // PayPal token here
+	NEW(false), // nothing
+	BILLING(false), // PayPal token here
 
 	// Working states
-	ACCEPTED, // email here
-	PROCESSING, // BangGood internal number here
-	SHIPPING, // China post tracking number here
-	SHIPPED, // International tracking number here if possible
+	ACCEPTED(false), // email here
+	PROCESSING(false), // BangGood internal number here
+	SHIPPING(false), // China post tracking number here
+	SHIPPED(false), // International tracking number here if possible
 
 	// Something wrong states
-	FAILED, // comment here must be
-	SUSPENDED, // indicates that order was suspended by any reason (must be in comment)
+	FAILED(true), // comment here must be
+	SUSPENDED(false), // indicates that order was suspended by any reason (must be in comment)
 
 	// Final states
-	CANCELLED,  // indicates that order was cancelled by any reason (must be in comment)
-	CLOSED,    // indicates that order was processed, shipped and received by customer.
-	REMOVED; // indicates that order was removed by customer
+	CANCELLED(true),  // indicates that order was cancelled by any reason (must be in comment)
+	CLOSED(true),    // indicates that order was processed, shipped and received by customer.
+	REMOVED(true); // indicates that order was removed by customer
 
 	private final String code;
+	private final boolean finalState;
 
-	OrderState() {
+	OrderState(boolean finalState) {
 		this.code = name().toLowerCase();
+		this.finalState = finalState;
 	}
 
 	public String getCode() {
@@ -71,5 +73,9 @@ public enum OrderState {
 
 	public boolean isClosed() {
 		return this == CLOSED;
+	}
+
+	public boolean isFinalState() {
+		return finalState;
 	}
 }

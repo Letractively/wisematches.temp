@@ -42,6 +42,8 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
     </tr>
 </table>
 
+<br>
+
 <#if context.summary.validationChanges?has_content>
 <div>
     Обновленные товары:
@@ -110,6 +112,8 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
     </table>
 </div>
 </#if>
+
+<br>
 
 <#if context.broken?has_content>
 <div>

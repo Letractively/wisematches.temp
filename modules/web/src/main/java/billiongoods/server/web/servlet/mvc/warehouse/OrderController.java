@@ -4,6 +4,7 @@ import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderManager;
+import billiongoods.server.services.payment.OrderState;
 import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.ExpiredParametersException;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -151,6 +153,27 @@ public class OrderController extends AbstractController {
 			return responseFactory.failure("order.error.invalid", locale);
 		} else {
 			orderManager.setOrderTracking(order, form.isEnable());
+			return responseFactory.success();
+		}
+	}
+
+	@RequestMapping("/confirmReceived.ajax")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse confirmReceivedAjax(@RequestBody OrderViewForm form, Locale locale) {
+		if (form.getOrder() == null) {
+			return responseFactory.failure("order.error.id.empty", locale);
+		}
+		if (form.getEmail() == null || form.getEmail().isEmpty()) {
+			return responseFactory.failure("order.error.email.empty", locale);
+		}
+
+		final Order order = orderManager.getOrder(form.getOrder());
+		if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail())) {
+			return responseFactory.failure("order.error.invalid", locale);
+		} else {
+			if (order.getOrderState() == OrderState.SHIPPED) {
+				orderManager.close(order.getId(), new Date(), null);
+			}
 			return responseFactory.success();
 		}
 	}
