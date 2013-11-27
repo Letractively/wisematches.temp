@@ -78,17 +78,14 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 			final Query countQuery = session.createQuery("select count(*) from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states)");
 			countQuery.setParameterList("states", ProductContext.VISIBLE);
 
-			final int totalProductsCount = ((Number) countQuery.uniqueResult()).intValue();
-
-			validationSummary.initialize(new Date(), totalProductsCount);
+			validationSummary.initialize(new Date(), ((Number) countQuery.uniqueResult()).intValue());
 
 			for (ValidationListener listener : listeners) {
 				listener.validationStarted(validationSummary);
 			}
 
-
 			final List<ValidatingProduct> brokenProducts = new ArrayList<>();
-			while (validationSummary.getIteration() < 1 && !isInterrupted()) {
+			while (validationSummary.getIteration() < 5 && !isInterrupted()) {
 				log.info("Start iteration {}", validationSummary.getIteration());
 
 				final List<HibernateValidationChange> validations = new ArrayList<>();
@@ -120,6 +117,7 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 
 						dataLoader.initialize();
 						Collections.shuffle(brokenProducts);
+						validationSummary.incrementIteration(brokenProducts.size());
 
 						for (Iterator<ValidatingProduct> iterator = brokenProducts.iterator(); iterator.hasNext() && !isInterrupted(); ) {
 							final ValidatingProduct detail = iterator.next();
@@ -156,24 +154,22 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 						session.flush();
 						transactionManager.commit(transaction);
 					} catch (Exception ex) {
-						log.error("Validate products can't be updated", ex);
 						transactionManager.rollback(transaction);
+						log.error("Validate products can't be updated", ex);
 					}
 				}
 
-				if (!brokenProducts.isEmpty()) {
-					validationSummary.incrementIteration(brokenProducts.size());
-				} else {
+				if (brokenProducts.isEmpty()) {
 					break;
 				}
 			}
 
 			validationSummary.finalize(new Date());
+			log.info("Validation has been finished: " + validationSummary);
 
 			for (ValidationListener listener : listeners) {
 				listener.validationFinished(validationSummary, brokenProducts);
 			}
-			log.info("Validation has been finished: " + validationSummary);
 		} catch (Exception ex) {
 			log.error("Validation error found", ex);
 		} finally {

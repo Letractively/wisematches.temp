@@ -218,25 +218,43 @@
         ${address.city}, ${address.region}, ${address.postalCode}
         </td>
     </tr>
+</table>
 
 <@bg.security.unauthorized "moderator">
-    <#if order.payer?has_content>
+    <#if order.payer?has_content && !order.orderState.finalState>
+    <table class="info" style="padding: 0">
         <tr>
             <td colspan="2" align="right">
-                <div class="tracking">
-                    <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
-                        уведомления по e-mail
-                    </button>
-                    <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>Отключить
-                        уведомления по e-mail
-                    </button>
-                    <span class="sample">(${order.payer})</span>
+                <div class="operations">
+                    <#if order.orderState==OrderState.SHIPPED>
+                        <div class="confirm">
+                            <form action="/warehouse/order/status" method="post">
+                                <input type="hidden" name="order" value="${order.id}">
+                                <input type="hidden" name="email" value="${order.payer}">
+
+                                <button id="closeOrder" type="button">
+                                    Подтвердить получения заказа
+                                </button>
+                            </form>
+                        </div>
+                    <#elseif !order.orderState.finalState>
+                        <div class="tracking">
+                            <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
+                                уведомления по e-mail
+                            </button>
+                            <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>
+                                Отключить
+                                уведомления по e-mail
+                            </button>
+                            <span class="sample">(${order.payer})</span>
+                        </div>
+                    </#if>
                 </div>
             </td>
         </tr>
+    </table>
     </#if>
 </@bg.security.unauthorized>
-</table>
 
 <div class="basket">
 <#assign totalCount=0/>
@@ -368,6 +386,13 @@
     $(".tracking button").click(function () {
         order.changeTracking(${order.id}, "${order.payer}", $(this).val() === 'true', function () {
             $(".tracking button").toggle();
+        });
+    });
+
+    $("#closeOrder").click(function () {
+        $(this).attr('disabled', 'disabled');
+        order.confirmReceived(${order.id}, "${order.payer}", function () {
+            $(".confirm form").submit();
         });
     });
     </#if>

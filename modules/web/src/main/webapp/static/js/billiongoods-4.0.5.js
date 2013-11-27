@@ -502,6 +502,23 @@ bg.warehouse.Order = function () {
                             "не исчезла, пожалуйста, свяжитесь с нами.", true);
                 });
     };
+
+    this.confirmReceived = function (order, email, successor) {
+        bg.ui.lock(null, 'Подтверждение заказа. Пожалуйста, подождите...');
+        $.post("/warehouse/order/confirmReceived.ajax", JSON.stringify({"order": order, "email": email}))
+                .done(function (response) {
+                    if (response.success) {
+                        successor();
+                        bg.ui.unlock(null, "Спасибо за подтверждение о доставке.", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "В связи с внутренней ошибкой мы не смогли обработать ваш запрос. Если проблема " +
+                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                });
+    };
 };
 
 bg.warehouse.Maintain = new function () {

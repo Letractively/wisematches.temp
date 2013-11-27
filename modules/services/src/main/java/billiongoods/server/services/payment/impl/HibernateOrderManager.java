@@ -232,7 +232,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 		notifyOrderState(order, state);
 
-		log.info("New state was changed to shipped: {}", orderId);
+		log.info("New state was changed to closed: {}", orderId);
 	}
 
 	@Override

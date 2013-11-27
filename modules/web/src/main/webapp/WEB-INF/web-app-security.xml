@@ -236,8 +236,6 @@
 
         <access-denied-handler ref="accessDeniedHandler"/>
 
-        <http-basic entry-point-ref="authenticationEntryPoint"/>
-
         <form-login login-page="/account/signin"
                     login-processing-url="/account/processing"
                     authentication-success-handler-ref="authenticationSuccessHandler"
