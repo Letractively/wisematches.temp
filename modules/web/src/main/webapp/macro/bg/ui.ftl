@@ -349,3 +349,15 @@
         <#nested/>
     </@bg.ui.field>
 </#macro>
+
+<#macro widget caption class="" style="">
+<div class="widget<#if class?has_content> ${class}</#if>" <#if style?has_content>style="${style}"</#if>>
+    <#if caption?has_content>
+        <div class="title">${caption}</div>
+    </#if>
+
+    <div class="content">
+        <#nested/>
+    </div>
+</div>
+</#macro>

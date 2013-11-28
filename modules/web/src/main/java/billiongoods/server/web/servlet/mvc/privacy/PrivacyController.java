@@ -55,6 +55,16 @@ public class PrivacyController extends AbstractController {
 		return "/content/privacy/wishlist";
 	}
 
+	@RequestMapping("/subscriptions")
+	public String privacySubscriptions(Model model) {
+		return "/content/privacy/subscriptions";
+	}
+
+	@RequestMapping("/coupons")
+	public String privacyCoupons(Model model) {
+		return "/content/privacy/coupons";
+	}
+
 	@RequestMapping("/settings")
 	public String privacySettings(Model model) {
 		return "/content/privacy/settings";

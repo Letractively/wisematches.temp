@@ -74,6 +74,12 @@
 <div style="padding-top: 20px">
     <table>
         <#if group.productPreviews?size != 0>
+            <tr>
+                <td colspan="4">
+                    Продуктов в группе: ${group.productPreviews?size}
+                    <hr>
+                </td>
+            </tr>
             <#list group.productPreviews as a>
                 <#assign active=a.state == ProductState.ACTIVE || a.state == ProductState.PROMOTED/>
                 <tr>
