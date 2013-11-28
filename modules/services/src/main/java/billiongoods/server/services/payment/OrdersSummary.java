@@ -17,11 +17,32 @@ public class OrdersSummary {
 		return ordersCount.keySet();
 	}
 
+	public int getTotalCount() {
+		int res = 0;
+		for (Integer integer : ordersCount.values()) {
+			if (integer != null) {
+				res += integer;
+			}
+		}
+		return 0;
+	}
+
 	public int getOrdersCount(OrderState state) {
 		final Integer integer = ordersCount.get(state);
 		if (integer == null) {
 			return 0;
 		}
 		return integer;
+	}
+
+	public int getOrdersCount(Set<OrderState> states) {
+		int res = 0;
+		for (OrderState state : states) {
+			final Integer integer = ordersCount.get(state);
+			if (integer != null) {
+				res += integer;
+			}
+		}
+		return res;
 	}
 }

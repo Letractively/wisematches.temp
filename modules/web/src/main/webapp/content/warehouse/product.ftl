@@ -1,7 +1,9 @@
 <#-- @ftlvariable name="product" type="billiongoods.server.warehouse.Product" -->
 <#-- @ftlvariable name="mode" type="billiongoods.server.warehouse.ProductPreview[]" -->
+<#-- @ftlvariable name="groups" type="billiongoods.server.warehouse.Group[]" -->
 <#-- @ftlvariable name="similar" type="billiongoods.server.warehouse.ProductPreview[]" -->
 <#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ProductPreview[]" -->
+<#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationship[]" -->
 
 <#include "/core.ftl">
 
@@ -65,6 +67,18 @@
                     </div>
                 </@bg.security.authorized>
                 </div>
+            <@bg.security.authorized "moderator">
+                <div align="right">
+                    <#list groups as g>
+                        <a href="/maintain/group?id=${g.id}">#${g.id} ${g.name} (${g.type})</a>
+                    </#list>
+                    <br>
+                    <#list relationships as r>
+                        <#assign g=r.group/>
+                        <a href="/maintain/group?id=${g.id}">#${g.id} ${g.name} (${r.type})</a>
+                    </#list>
+                </div>
+            </@bg.security.authorized>
 
                 <div class="stock">
                     <div class="ability">

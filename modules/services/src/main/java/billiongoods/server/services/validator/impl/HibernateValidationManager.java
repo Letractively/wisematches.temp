@@ -88,7 +88,6 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 			while (validationSummary.getIteration() < 5 && !isInterrupted()) {
 				log.info("Start iteration {}", validationSummary.getIteration());
 
-				final List<HibernateValidationChange> validations = new ArrayList<>();
 				try {
 					if (validationSummary.getIteration() == 0) { // first iteration - load from DB
 						int position = 0;
@@ -103,8 +102,8 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 									validationSummary.incrementBroken();
 									Thread.sleep(100);
 								} else if (validation.hasChanges()) {
-									validations.add(validation);
 									validationSummary.registerValidation(validation);
+									processValidationChange(validation);
 								}
 								validationSummary.incrementProcessed();
 							}
@@ -127,8 +126,8 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 								iterator.remove();
 
 								if (validation.hasChanges()) {
-									validations.add(validation);
 									validationSummary.registerValidation(validation);
+									processValidationChange(validation);
 								}
 							} else {
 								validationSummary.incrementBroken();
@@ -138,25 +137,6 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 					}
 				} catch (InterruptedException ex) {
 					break;
-				}
-
-				if (!validations.isEmpty()) {
-					final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
-					try {
-						for (HibernateValidationChange validation : validations) {
-							session.save(validation);
-							productManager.validated(validation.getProductId(), validation.getNewPrice(), validation.getNewSupplierPrice(), validation.getNewStockInfo());
-
-							for (ValidationListener listener : listeners) {
-								listener.validationProcessed(validation);
-							}
-						}
-						session.flush();
-						transactionManager.commit(transaction);
-					} catch (Exception ex) {
-						transactionManager.rollback(transaction);
-						log.error("Validate products can't be updated", ex);
-					}
 				}
 
 				if (brokenProducts.isEmpty()) {
@@ -178,6 +158,22 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 
 		synchronized (this) {
 			validationProgress = null;
+		}
+	}
+
+	private void processValidationChange(HibernateValidationChange validation) {
+		final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
+		try {
+			sessionFactory.getCurrentSession().save(validation);
+			productManager.validated(validation.getProductId(), validation.getNewPrice(), validation.getNewSupplierPrice(), validation.getNewStockInfo());
+
+			for (ValidationListener listener : listeners) {
+				listener.validationProcessed(validation);
+			}
+			transactionManager.commit(transaction);
+		} catch (Exception ex) {
+			transactionManager.rollback(transaction);
+			log.error("Validate products can't be updated", ex);
 		}
 	}
 

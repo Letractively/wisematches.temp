@@ -103,6 +103,9 @@ public class ProductController extends AbstractController {
 		model.addAttribute("similar", similar);
 		model.addAttribute("accessories", accessories);
 
+		model.addAttribute("groups", groups);
+		model.addAttribute("relationships", relationships);
+
 		hideNavigation(model);
 
 		return "/content/warehouse/product";

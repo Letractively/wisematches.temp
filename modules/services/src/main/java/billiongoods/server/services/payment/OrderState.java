@@ -5,11 +5,23 @@ package billiongoods.server.services.payment;
  */
 public enum OrderState {
 	// Initial states
-	NEW(false), // nothing
-	BILLING(false), // PayPal token here
+	/**
+	 * New order. Can be only in case of error
+	 */
+	NEW(false),
+	/**
+	 * Paypal token has been created
+	 */
+	BILLING(false),
 
 	// Working states
+	/**
+	 * Was paid and ready to process
+	 */
 	ACCEPTED(false), // email here
+	/**
+	 * In processing state. Appropriate order was created on supplier side.
+	 */
 	PROCESSING(false), // BangGood internal number here
 	SHIPPING(false), // China post tracking number here
 	SHIPPED(false), // International tracking number here if possible
