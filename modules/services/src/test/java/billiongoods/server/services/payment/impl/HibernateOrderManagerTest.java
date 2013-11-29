@@ -100,7 +100,7 @@ public class HibernateOrderManagerTest {
 		assertEquals(23.9d, order.getAmount(), 0.0000001d);
 		assertEquals(70d, shipment.getAmount(), 0.0000001d);
 		assertEquals(ShipmentType.REGISTERED, shipment.getType());
-		assertEquals(123, order.getBuyer().longValue());
+		assertEquals(123, order.getPersonalityId().longValue());
 		assertEquals(OrderState.NEW, order.getOrderState());
 
 		final List<OrderItem> orderItems = order.getOrderItems();

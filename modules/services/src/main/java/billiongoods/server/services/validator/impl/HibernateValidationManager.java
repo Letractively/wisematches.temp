@@ -84,62 +84,61 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 				listener.validationStarted(validationSummary);
 			}
 
+			int position = 0;
+			dataLoader.initialize();
 			final List<ValidatingProduct> brokenProducts = new ArrayList<>();
-			while (validationSummary.getIteration() < 5 && !isInterrupted()) {
-				log.info("Start iteration {}", validationSummary.getIteration());
 
+			log.info("Start iteration {}", validationSummary.getIteration());
+			List<ValidatingProduct> details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
+			while (details != null && !isInterrupted()) {
 				try {
-					if (validationSummary.getIteration() == 0) { // first iteration - load from DB
-						int position = 0;
-						dataLoader.initialize();
-						List<ValidatingProduct> details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
-						while (details != null && !isInterrupted()) {
-							for (Iterator<ValidatingProduct> iterator = details.iterator(); iterator.hasNext() && !isInterrupted(); ) {
-								ValidatingProduct detail = iterator.next();
-								final HibernateValidationChange validation = validateProduct(detail);
-								if (validation == null || !validation.isValidated()) {
-									brokenProducts.add(detail);
-									validationSummary.incrementBroken();
-									Thread.sleep(100);
-								} else if (validation.hasChanges()) {
-									validationSummary.registerValidation(validation);
-									processValidationChange(validation);
-								}
-								validationSummary.incrementProcessed();
-							}
-							position += BULK_PRODUCTS_SIZE;
-							details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
+					for (Iterator<ValidatingProduct> iterator = details.iterator(); iterator.hasNext() && !isInterrupted(); ) {
+						ValidatingProduct detail = iterator.next();
+						final HibernateValidationChange validation = validateProduct(detail);
+						if (validation == null || !validation.isValidated()) {
+							Thread.sleep(100);
+							brokenProducts.add(detail);
+							validationSummary.incrementBroken();
+						} else if (validation.hasChanges()) {
+							validationSummary.registerValidation(validation);
+							processValidationChange(validation);
 						}
-					} else { // next iteration - process only broken
-						log.info("Waiting 30 minutes before next iteration.");
-						Thread.sleep(TimeUnit.MINUTES.toMillis(30)); // Wait 30 minutes
-
-						dataLoader.initialize();
-						Collections.shuffle(brokenProducts);
-						validationSummary.incrementIteration(brokenProducts.size());
-
-						for (Iterator<ValidatingProduct> iterator = brokenProducts.iterator(); iterator.hasNext() && !isInterrupted(); ) {
-							final ValidatingProduct detail = iterator.next();
-
-							final HibernateValidationChange validation = validateProduct(detail);
-							if (validation != null && validation.isValidated()) {
-								iterator.remove();
-
-								if (validation.hasChanges()) {
-									validationSummary.registerValidation(validation);
-									processValidationChange(validation);
-								}
-							} else {
-								validationSummary.incrementBroken();
-							}
-							validationSummary.incrementProcessed();
-						}
+						validationSummary.incrementProcessed();
 					}
-				} catch (InterruptedException ex) {
+					position += BULK_PRODUCTS_SIZE;
+					details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
+				} catch (InterruptedException ignore) {
 					break;
 				}
+			}
 
-				if (brokenProducts.isEmpty()) {
+			while (!brokenProducts.isEmpty() && !isInterrupted() && validationSummary.getIteration() < 4) {
+				try {
+					log.info("Waiting 30 minutes before next iteration: " + validationSummary.getIteration() + 1);
+					Thread.sleep(TimeUnit.MINUTES.toMillis(30)); // Wait 30 minutes
+
+					dataLoader.initialize();
+					Collections.shuffle(brokenProducts);
+					validationSummary.incrementIteration(brokenProducts.size());
+
+					for (Iterator<ValidatingProduct> iterator = brokenProducts.iterator(); iterator.hasNext() && !isInterrupted(); ) {
+						final ValidatingProduct detail = iterator.next();
+
+						final HibernateValidationChange validation = validateProduct(detail);
+						if (validation != null && validation.isValidated()) {
+							iterator.remove();
+
+							if (validation.hasChanges()) {
+								validationSummary.registerValidation(validation);
+								processValidationChange(validation);
+							}
+						} else {
+							Thread.sleep(100);
+							validationSummary.incrementBroken();
+						}
+						validationSummary.incrementProcessed();
+					}
+				} catch (InterruptedException ex) {
 					break;
 				}
 			}

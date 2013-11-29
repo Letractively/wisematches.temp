@@ -1,0 +1,1 @@
+<#include "/content/warehouse/order/view.ftl"/>

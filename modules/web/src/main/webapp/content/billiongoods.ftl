@@ -43,7 +43,9 @@
                             <#if !hideWhereabouts?? || !hideWhereabouts>
                                 <div class="whereabouts"><#include "${department.style}/whereabouts.ftl"/></div>
                             </#if>
-                            <#include "${templateName}"/>
+                                <div class="${department.style}">
+                                <#include "${templateName}"/>
+                                </div>
                             </div>
                         </td>
                     </tr>

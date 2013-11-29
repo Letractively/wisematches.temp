@@ -4,7 +4,7 @@
 
 <#assign itemsPerLine=2/>
 
-<div class="assistance">
+<div class="header">
     <div class="tit">
     <@message code="title.assistance.${staticContentId}"/>
     </div>

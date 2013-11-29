@@ -1,5 +1,6 @@
 package billiongoods.server.services.payment;
 
+import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class OrdersSummary {
 				res += integer;
 			}
 		}
-		return 0;
+		return res;
 	}
 
 	public int getOrdersCount(OrderState state) {
@@ -35,7 +36,11 @@ public class OrdersSummary {
 		return integer;
 	}
 
-	public int getOrdersCount(Set<OrderState> states) {
+	public int getOrdersCount(EnumSet<OrderState> states) {
+		if (states == null) {
+			return getTotalCount();
+		}
+
 		int res = 0;
 		for (OrderState state : states) {
 			final Integer integer = ordersCount.get(state);
