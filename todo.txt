@@ -1,13 +1,19 @@
 ============= CURRENT ====================
-- Privacy: main page
+- Account: recovery
+- Privacy: import orders after registration (update orders by email).
+
+- Privacy: orders
 - Privacy: address book
-- Privacy: view orders
 - Privacy: social profiles
 - Privacy: settings
 - Privacy: wish list
 - Privacy: subscriptions
 
+
+
 ============= PLAN ====================
+- Common: Save price functionality
+
 - Order: More info about next order state and times (order's steps line?).
 - Errors: ERROR-10486: This transaction couldn't be completed. Please redirect your customer to PayPal.
 - Coupons: discount by amount (for example, 5$ if sum > 100$)
@@ -32,6 +38,11 @@
 - Maintain: Export order
 
 ============= DONE ====================
+29.11
++ Privacy: main page
++ Validation: infinitive validation loop issue (iteration is not incremented)
++ Account: rememberme doesn't work anymore
+
 28.11
 + Validation: save one by one
 + Product: show groups in view for moderator

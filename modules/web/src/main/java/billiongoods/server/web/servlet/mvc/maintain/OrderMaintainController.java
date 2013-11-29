@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public class OrderMaintainController extends AbstractController {
 
 	@RequestMapping(value = "")
 	public String viewOrders(@RequestParam(value = "state", defaultValue = "ACCEPTED") String state, Model model) {
-		final OrderState orderState = OrderState.valueOf(state);
+		final EnumSet<OrderState> orderState = EnumSet.of(OrderState.valueOf(state));
 
 		final List<Order> orders = orderManager.searchEntities(new OrderContext(orderState), null, null, TIMESTAMP);
 		model.addAttribute("orders", orders);

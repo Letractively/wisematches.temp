@@ -299,19 +299,19 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	protected void applyRestrictions(Criteria criteria, OrderContext context, Void filter) {
+		if (context != null) {
+			if (context.getOrderStates() != null) {
+				criteria.add(Restrictions.in("orderState", context.getOrderStates()));
+			}
+
+			if (context.getPersonality() != null) {
+				criteria.add(Restrictions.eq("buyer", context.getPersonality().getId()));
+			}
+		}
 	}
 
 	@Override
 	protected void applyProjections(Criteria criteria, OrderContext context, Void filter) {
-		if (context != null) {
-			if (context.getOrderState() != null) {
-				criteria.add(Restrictions.eq("orderState", context.getOrderState()));
-			}
-
-			if (context.getPersonality() != null) {
-				criteria.add(Restrictions.eq("buyer", context.getPersonality()));
-			}
-		}
 	}
 
 	private void notifyOrderState(Order order, OrderState oldState) {

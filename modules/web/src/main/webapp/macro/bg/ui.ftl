@@ -269,7 +269,7 @@
 </li>
 </#macro>
 
-<#macro tableNavigationParams pageableForm name value>page=<#if name="page">${value}<#else>${pageableForm.page}</#if>&count=<#if name="count">${value}<#else>${pageableForm.count}</#if>&sort=<#if name="sort">${value}<#else>${pageableForm.sort}</#if><#if name="query">&query=${value?url}<#elseif pageableForm.query?has_content>&query=${pageableForm.query?url}</#if><#if name="filter">&filter=${value}<#elseif pageableForm.filter?has_content>&filter=${pageableForm.filter?url}</#if><#if pageableForm.category?has_content>&category=${pageableForm.category}</#if></#macro>
+<#macro tableNavigationParams pageableForm name value>page=<#if name="page">${value}<#else>${pageableForm.page}</#if>&count=<#if name="count">${value}<#else>${pageableForm.count}</#if>&sort=<#if name="sort">${value}<#else>${pageableForm.sort!""}</#if><#if name="query">&query=${value?url}<#elseif pageableForm.query?has_content>&query=${pageableForm.query?url}</#if><#if name="filter">&filter=${value}<#elseif pageableForm.filter?has_content>&filter=${pageableForm.filter?url}</#if><#if pageableForm.category?has_content>&category=${pageableForm.category}</#if></#macro>
 
 <#macro whereabouts showDepartment=true>
 <div class="title">

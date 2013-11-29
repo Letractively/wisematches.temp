@@ -1,3 +1,3 @@
 <#include "/core.ftl"/>
 
-<@bg.ui.whereabouts/>
+<@bg.ui.whereabouts true/>

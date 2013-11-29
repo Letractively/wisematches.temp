@@ -5,7 +5,7 @@
 
 <#assign state=order.orderState/>
 <#assign shipment=order.shipment/>
-<#assign stateName=state.name()?lower_case/>
+<#assign stateName=state.code/>
 
 <div class="order ${stateName}">
 <#if confirmation?? && confirmation>

@@ -2,11 +2,16 @@
 
 <#include "/core.ftl"/>
 
-<#macro smartCountLink msg link count>
-    <#if (count>0)>
-    <a href="${link}">${msg} (${count})</a>
+<#macro smartCountLink union>
+    <#if union==OrderStateUnion.ALL>
+        <#assign count=ordersSummary.totalCount/>
     <#else>
-    <span class="sample">${msg} (${count})</span>
+        <#assign count=ordersSummary.getOrdersCount(union.orderStates)/>
+    </#if>
+    <#if (count>0)>
+    <a href="/privacy/orders?state=${union.code}"><@message code="privacy.orders.${union.code}.label"/> (${count})</a>
+    <#else>
+    <span class="sample"><@message code="privacy.orders.${union.code}.label"/> (${count})</span>
     </#if>
 </#macro>
 
@@ -17,25 +22,25 @@
             <table cellpadding="5">
                 <tr>
                     <td>
-                        <@smartCountLink "Ожидающие оплату" "/privacy/orders?=" ordersSummary.getOrdersCount(OrderState.NEW) + ordersSummary.getOrdersCount(OrderState.BILLING)/>
+                        <@smartCountLink OrderStateUnion.PROCESSING/>
                     </td>
                     <td>
-                        <@smartCountLink "Приостановленные заказы" "/privacy/orders?=" ordersSummary.getOrdersCount(OrderState.SUSPENDED)/>
+                        <@smartCountLink OrderStateUnion.SUSPENDED/>
                     </td>
                     <td>
-                        <@smartCountLink "Все заказы" "/privacy/orders?=" ordersSummary.totalCount/>
+                        <@smartCountLink OrderStateUnion.ALL/>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <@smartCountLink "Ожидающие отправку" "/privacy/orders?=" ordersSummary.getOrdersCount(OrderState.PROCESSING) + ordersSummary.getOrdersCount(OrderState.SHIPPING)/>
+                        <@smartCountLink OrderStateUnion.DELIVERING/>
                     </td>
                     <td colspan="2">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <@smartCountLink "Неподтвержденная доставка" "/privacy/orders?=" ordersSummary.getOrdersCount(OrderState.SHIPPED)/>
+                        <@smartCountLink OrderStateUnion.BILLING/>
                     </td>
                     <td colspan="2">
                     </td>

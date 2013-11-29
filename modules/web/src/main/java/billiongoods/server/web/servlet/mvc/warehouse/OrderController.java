@@ -1,5 +1,6 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
+import billiongoods.core.Member;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.Order;
@@ -163,7 +164,7 @@ public class OrderController extends AbstractController {
 		if (form.getOrder() == null) {
 			return responseFactory.failure("order.error.id.empty", locale);
 		}
-		if (form.getEmail() == null || form.getEmail().isEmpty()) {
+		if (!(getPrincipal() instanceof Member) || form.getEmail() == null || form.getEmail().isEmpty()) {
 			return responseFactory.failure("order.error.email.empty", locale);
 		}
 
