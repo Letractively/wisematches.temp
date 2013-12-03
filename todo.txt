@@ -1,13 +1,11 @@
 ============= CURRENT ====================
-- Account: recovery
-- Privacy: import orders after registration (update orders by email).
-
-- Privacy: orders
-- Privacy: address book
 - Privacy: social profiles
+
+- Privacy: address book
 - Privacy: settings
 - Privacy: wish list
 - Privacy: subscriptions
+- Privacy: create private coupon for newbie
 
 ============= PLAN ====================
 - Common: Save price functionality
@@ -40,6 +38,9 @@
 + Account: authentication form email restored incorrect
 + Maintain: remove from group doesn't work
 + Common: visitorId generation makes a lot of problems. Must be deprecated.
++ Privacy: orders
++ Privacy: import orders after registration (update orders by email).
+- Account: recovery
 
 29.11
 + Privacy: main page

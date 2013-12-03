@@ -1,6 +1,7 @@
 package billiongoods.server.services.payment.impl;
 
 import billiongoods.core.Personality;
+import billiongoods.core.account.Account;
 import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
@@ -295,6 +296,19 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 			map.put((OrderState) arr[0], ((Number) arr[1]).intValue());
 		}
 		return new OrdersSummary(map);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void importAccountOrders(Account account) {
+		if (account.getEmail() != null) {
+			final Session session = sessionFactory.getCurrentSession();
+
+			final Query query = session.createQuery("update billiongoods.server.services.payment.impl.HibernateOrder o set o.buyer = :principal where o.payer = :payer");
+			query.setLong("principal", account.getId());
+			query.setString("payer", account.getEmail());
+			query.executeUpdate();
+		}
 	}
 
 	@Override

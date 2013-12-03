@@ -1,6 +1,7 @@
 package billiongoods.server.services.payment;
 
 import billiongoods.core.Personality;
+import billiongoods.core.account.Account;
 import billiongoods.core.search.SearchManager;
 import billiongoods.server.services.basket.Basket;
 
@@ -25,6 +26,9 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	OrdersSummary getOrdersSummary();
 
 	OrdersSummary getOrdersSummary(Personality principal);
+
+
+	void importAccountOrders(Account account);
 
 
 	Order create(Personality person, Basket basket, Address address, ShipmentType shipmentType, boolean track);

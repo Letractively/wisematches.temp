@@ -237,6 +237,15 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public int getItemsCount() {
+		int res = 0;
+		for (OrderItem orderItem : orderItems) {
+			res += orderItem.getQuantity();
+		}
+		return res;
+	}
+
+	@Override
 	public List<OrderItem> getOrderItems() {
 		return orderItems;
 	}

@@ -60,6 +60,18 @@ public class HibernateCouponManager extends EntitySearchManager<Coupon, CouponCo
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
+	public Coupon createCoupon(String code, double amount, CouponAmountType amountType, int count, Date termination) {
+		if (getCoupon(code) != null) {
+			return null;
+		}
+
+		HibernateCoupon hc = new HibernateCoupon(code, amount, amountType, null, CouponReferenceType.EVERYTHING, count, termination);
+		sessionFactory.getCurrentSession().save(hc);
+		return hc;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
 	public Coupon createCoupon(String code, double amount, CouponAmountType amountType, Category category, int count, Date termination) {
 		if (getCoupon(code) != null) {
 			return null;
@@ -85,6 +97,11 @@ public class HibernateCouponManager extends EntitySearchManager<Coupon, CouponCo
 	@Override
 	protected void applyRestrictions(Criteria criteria, CouponContext context, Void filter) {
 		if (context != null) {
+			if (context.getPersonId() != null) {
+				criteria.add(Restrictions.eq("reference", context.getReference()));
+
+			}
+
 			if (context.getReference() != null && context.getReferenceType() != null) {
 				criteria.add(Restrictions.eq("reference", context.getReference()));
 				criteria.add(Restrictions.eq("referenceType", context.getReferenceType()));

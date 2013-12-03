@@ -1,6 +1,7 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Member;
+import billiongoods.core.Personality;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.Order;
@@ -158,25 +159,36 @@ public class OrderController extends AbstractController {
 		}
 	}
 
-	@RequestMapping("/confirmReceived.ajax")
+	@RequestMapping("/close.ajax")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse confirmReceivedAjax(@RequestBody OrderViewForm form, Locale locale) {
 		if (form.getOrder() == null) {
 			return responseFactory.failure("order.error.id.empty", locale);
 		}
-		if (!(getPrincipal() instanceof Member) || form.getEmail() == null || form.getEmail().isEmpty()) {
-			return responseFactory.failure("order.error.email.empty", locale);
-		}
 
 		final Order order = orderManager.getOrder(form.getOrder());
-		if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail())) {
+		if (order == null) {
 			return responseFactory.failure("order.error.invalid", locale);
-		} else {
-			if (order.getOrderState() == OrderState.SHIPPED) {
-				orderManager.close(order.getId(), new Date(), null);
-			}
-			return responseFactory.success();
 		}
+		if (order.getOrderState() != OrderState.SHIPPED) {
+			return responseFactory.failure("order.error.closed", locale);
+		}
+
+		final Personality principal = getPrincipal();
+		if (form.getEmail() != null && !form.getEmail().isEmpty()) { // tracking form only
+			if (!order.getPayer().equalsIgnoreCase(form.getEmail())) {
+				return responseFactory.failure("order.error.access", locale);
+			}
+		} else if (!(principal instanceof Member)) { // not tracking form, but and no member
+			return responseFactory.failure("order.error.access", locale);
+		} else {
+			final Member member = (Member) principal;
+			if (!member.getId().equals(order.getPersonalityId())) { // another owner?
+				return responseFactory.failure("order.error.access", locale);
+			}
+		}
+		orderManager.close(order.getId(), new Date(), null);
+		return responseFactory.success();
 	}
 
 	private String viewOrder(Long orderId, Order order, boolean confirmation, Model model) {
