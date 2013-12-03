@@ -71,7 +71,7 @@
 </table>
 
 <#if group??>
-<div style="padding-top: 20px">
+<div class="items" style="padding-top: 20px">
     <table>
         <#if group.productPreviews?size != 0>
             <tr>
@@ -82,7 +82,7 @@
             </tr>
             <#list group.productPreviews as a>
                 <#assign active=a.state == ProductState.ACTIVE || a.state == ProductState.PROMOTED/>
-                <tr>
+                <tr class="item">
                     <td>
                         <@bg.link.product a>
                             <span <#if !active>style="text-decoration: line-through"</#if>>
@@ -95,7 +95,7 @@
                         <span <#if active>class="sample"</#if>>(${a.state})</span>
                     </td>
                     <td>
-                        <button type="button">Удалить</button>
+                        <button type="button" name="productId" value="${a.id}">Удалить</button>
                     </td>
                 </tr>
             </#list>
@@ -106,4 +106,24 @@
         </#if>
     </table>
 </div>
+
+<script type="text/javascript">
+    $(".items button").click(function () {
+        var btn = $(this);
+        bg.ui.lock(null, 'Обработка запроса. Пожалуйста, подождите...');
+        $.post("/maintain/group/relationship.ajax?action=remove", JSON.stringify({"productId": btn.val(), "groupId": "${group.id}"}))
+                .done(function (response) {
+                    if (response.success) {
+                        $(btn).closest('tr').remove();
+                        bg.ui.unlock(null, "Товар удален", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "В связи с внутренней ошибкой мы не смогли обработать ваш запрос. Если проблема " +
+                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                });
+    });
+</script>
 </#if>

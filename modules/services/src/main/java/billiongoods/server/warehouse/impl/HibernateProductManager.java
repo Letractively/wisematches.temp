@@ -8,7 +8,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.*;
-import org.hibernate.type.StringType;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -349,7 +348,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 	@Override
 	protected void applyOrders(Criteria criteria, ProductContext context, Orders orders) {
 		if (context.getSearch() != null && !context.getSearch().trim().isEmpty() && orders == null) {
-			criteria.addOrder(new SqlOrder("MATCH(name, description) AGAINST(\"" + context.getSearch() + "\")", false));
+			criteria.addOrder(new SqlOrder(getMatchSentence(context), false));
 		} else {
 			super.applyOrders(criteria, context, orders);
 		}
@@ -410,7 +409,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 			}
 
 			if (context.getSearch() != null && !context.getSearch().trim().isEmpty()) {
-				criteria.add(Restrictions.sqlRestriction("MATCH(name, description) AGAINST(?)", context.getSearch(), StringType.INSTANCE));
+				criteria.add(Restrictions.sqlRestriction(getMatchSentence(context)));
 			}
 		}
 
@@ -472,6 +471,10 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 
 	public void setAttributeManager(AttributeManager attributeManager) {
 		this.attributeManager = attributeManager;
+	}
+
+	private String getMatchSentence(ProductContext context) {
+		return "MATCH(name, description) AGAINST(\"" + context.getSearch().replace("\"", "\\\"") + "\")";
 	}
 
 	private static final class SqlOrder extends Order {

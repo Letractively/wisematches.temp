@@ -7,6 +7,7 @@ import billiongoods.server.services.notify.NotificationException;
 import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.Recipient;
 import billiongoods.server.services.notify.Sender;
+import billiongoods.server.web.security.MemberDetails;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.account.form.AccountLoginForm;
 import billiongoods.server.web.servlet.mvc.account.form.AccountRegistrationForm;
@@ -305,10 +306,14 @@ public class AccountController extends AbstractController {
 			} else {
 				authentication = SecurityContextHolder.getContext().getAuthentication();
 			}
-			if (authentication != null &&
-					!(authentication instanceof AnonymousAuthenticationToken) &&
-					!(authentication.getPrincipal() instanceof Visitor)) {
-				form.setJ_username(authentication.getName());
+
+			if (authentication != null) {
+				if (authentication.getPrincipal() instanceof MemberDetails) {
+					final MemberDetails member = (MemberDetails) authentication.getPrincipal();
+					form.setJ_username(member.getEmail());
+				} else if (!(authentication instanceof AnonymousAuthenticationToken) && !(authentication.getPrincipal() instanceof Visitor)) {
+					form.setJ_username(authentication.getName());
+				}
 			}
 		}
 	}

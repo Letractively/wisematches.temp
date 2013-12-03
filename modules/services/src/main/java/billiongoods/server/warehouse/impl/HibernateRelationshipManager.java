@@ -119,19 +119,21 @@ public class HibernateRelationshipManager implements RelationshipManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void addRelationship(Integer productId, Integer groupId, RelationshipType type) {
+	public Relationship addRelationship(Integer productId, Integer groupId, RelationshipType type) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateGroup group = getGroup(groupId);
 		if (group == null) {
 			throw new IllegalArgumentException("Unknown group: " + groupId);
 		}
-		session.save(new HibernateRelationship(productId, group, type));
+		final HibernateRelationship object = new HibernateRelationship(productId, group, type);
+		session.save(object);
+		return object;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void removeRelationship(Integer productId, Integer groupId, RelationshipType type) {
+	public Relationship removeRelationship(Integer productId, Integer groupId, RelationshipType type) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateGroup group = getGroup(groupId);
@@ -143,6 +145,7 @@ public class HibernateRelationshipManager implements RelationshipManager {
 		if (relationship != null) {
 			session.delete(relationship);
 		}
+		return relationship;
 	}
 
 	@Override

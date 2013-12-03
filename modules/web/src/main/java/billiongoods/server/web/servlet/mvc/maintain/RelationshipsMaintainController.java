@@ -4,15 +4,15 @@ import billiongoods.server.warehouse.Group;
 import billiongoods.server.warehouse.RelationshipManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.GroupForm;
+import billiongoods.server.web.servlet.mvc.maintain.form.GroupItemForm;
+import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -26,7 +26,7 @@ public class RelationshipsMaintainController extends AbstractController {
 	}
 
 	@RequestMapping("")
-	public String createGroupView(@ModelAttribute("form") GroupForm form, Model model) {
+	public String viewGroup(@ModelAttribute("form") GroupForm form, Model model) {
 		if (form.getId() != null) {
 			final Group group = relationshipManager.getGroup(form.getId());
 			form.setName(group.getName());
@@ -39,7 +39,7 @@ public class RelationshipsMaintainController extends AbstractController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String createGroupAction(@ModelAttribute("form") GroupForm form, Errors errors, Model model) {
+	public String updateGroup(@ModelAttribute("form") GroupForm form, Errors errors, Model model) {
 		if (form.getName() == null || form.getName().isEmpty()) {
 			errors.rejectValue("name", "group.error.name.empty");
 		}
@@ -60,6 +60,18 @@ public class RelationshipsMaintainController extends AbstractController {
 			}
 		}
 		return "/content/maintain/group";
+	}
+
+	@RequestMapping("relationship.ajax")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse processGroupActionAjax(@RequestParam("action") String action, @RequestBody GroupItemForm form) {
+		Group group = null;
+		if ("remove".equalsIgnoreCase(action)) {
+			group = relationshipManager.removeGroupItem(form.getGroupId(), form.getProductId());
+		} else if ("add".equalsIgnoreCase(action)) {
+			group = relationshipManager.addGroupItem(form.getGroupId(), form.getProductId());
+		}
+		return group == null ? responseFactory.failure("Not updated") : responseFactory.success();
 	}
 
 	@Autowired
