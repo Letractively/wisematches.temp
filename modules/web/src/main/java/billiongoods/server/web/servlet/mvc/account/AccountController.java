@@ -220,7 +220,7 @@ public class AccountController extends AbstractController {
 	}
 
 	@RequestMapping("/social/finish")
-	public String socialAssociationFinish(Model model, NativeWebRequest request) {
+	public String socialAssociationFinish() {
 		return "/content/account/social/finish";
 	}
 
