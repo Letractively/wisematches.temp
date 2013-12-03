@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2010, BillionGoods.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <mvc:annotation-driven validator="beanValidator"/>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <context:property-placeholder properties-ref="applicationProperties"/>
+
+    <context:component-scan base-package="billiongoods.server.web.servlet.mvc"/>
+
+    <mvc:interceptors>
+        <bean class="billiongoods.server.web.i18n.LanguageChangeInterceptor">
+            <property name="paramName" value="language"/>
+        </bean>
+    </mvc:interceptors>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="26843540"/>
+    </bean>
+
+    <bean id="messageSource" class="billiongoods.server.MessageFormatter">
+        <property name="parentMessageSource">
+            <bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+                <property name="defaultEncoding" value="UTF-8"/>
+                <property name="fallbackToSystemLocale" value="false"/>
+                <property name="useCodeAsDefaultMessage" value="true"/>
+
+                <property name="basenames">
+                    <array>
+                        <value>classpath:/i18n/web</value>
+                        <value>classpath:/i18n/exceptions</value>
+                    </array>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- https://jira.springsource.org/browse/SPR-9708: when it will be implemented this code can be removed. -->
+    <bean id="beanValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="messageInterpolator">
+            <bean class="billiongoods.server.web.validation.SpringMessageInterpolator">
+                <property name="messageSource" ref="messageSource"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="staticContentGenerator" class="billiongoods.server.web.servlet.view.StaticContentGenerator">
+        <property name="resourcesPaths">
+            <list>
+                <value>classpath:/i18n/account/</value>
+                <value>classpath:/i18n/assistance/</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="billiongoods.server.web.servlet.view.freemarker.WMFreeMarkerViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="exposeRedirectModelAttributes" value="false"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="exposeEnums">
+            <list>
+                <value>billiongoods.core.Language</value>
+                <value>billiongoods.server.warehouse.StockState</value>
+                <value>billiongoods.server.warehouse.ProductState</value>
+                <value>billiongoods.server.warehouse.AttributeType</value>
+                <value>billiongoods.server.warehouse.GroupType</value>
+                <value>billiongoods.server.warehouse.RelationshipType</value>
+                <value>billiongoods.server.services.image.ImageSize</value>
+                <value>billiongoods.server.services.payment.ShipmentType</value>
+                <value>billiongoods.server.services.payment.OrderState</value>
+                <value>billiongoods.server.web.servlet.mvc.warehouse.form.SortingType</value>
+                <value>billiongoods.server.web.servlet.mvc.privacy.form.OrderStateUnion</value>
+            </list>
+        </property>
+
+        <property name="configuration">
+            <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+                <property name="templateLoaderPath" value=""/>
+                <property name="defaultEncoding" value="UTF-8"/>
+                <property name="freemarkerVariables">
+                    <map merge="true">
+                        <entry key="analyticsGoogleCode" value="${analytics.google.code}"/>
+                        <entry key="analyticsYandexCode" value="${analytics.yandex.code}"/>
+
+                        <entry key="messageSource" value-ref="messageSource"/>
+
+                        <entry key="imageResolver" value-ref="imageResolver"/>
+                        <entry key="exchangeManager" value-ref="exchangeManager"/>
+
+                        <entry key="imageResourcesDomain" value="${server.image.domain}"/>
+                        <entry key="staticResourcesDomain" value="${server.static.domain}"/>
+
+                        <entry key="springSecurityContext">
+                            <bean class="billiongoods.server.web.servlet.view.freemarker.SpringSecurityContext"/>
+                        </entry>
+                    </map>
+                </property>
+                <property name="freemarkerSettings">
+                    <props>
+                        <prop key="number_format">computer</prop>
+                        <prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
+                        <prop key="template_exception_handler">rethrow</prop>
+                    </props>
+                </property>
+            </bean>
+        </property>
+        <property name="viewClass" value="billiongoods.server.web.servlet.view.freemarker.WMFreeMarkerView"/>
+    </bean>
+</beans>
