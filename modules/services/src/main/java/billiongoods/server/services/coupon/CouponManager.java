@@ -35,6 +35,18 @@ public interface CouponManager extends SearchManager<Coupon, CouponContext, Void
 	Coupon redeemCoupon(String code);
 
 
+	/**
+	 * Creates discount coupon for all products in all categories.
+	 *
+	 * @param code        the coupon code.
+	 * @param amount      the coupon amount
+	 * @param amountType  the coupon type
+	 * @param count       the number of times
+	 * @param termination the termination date
+	 * @return created coupon
+	 */
+	Coupon createCoupon(String code, double amount, CouponAmountType amountType, int count, Date termination);
+
 	Coupon createCoupon(String code, double amount, CouponAmountType amountType, Category category, int count, Date termination);
 
 	Coupon createCoupon(String code, double amount, CouponAmountType amountType, ProductPreview product, int count, Date termination);

@@ -1,3 +1,9 @@
+#12.03
+ALTER TABLE `billiongoods`.`store_coupon`
+CHANGE COLUMN `reference` `reference` INT(11) NULL DEFAULT NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1203');
+
 #11.26
 ALTER TABLE `billiongoods`.`store_order`
 ADD COLUMN `shipped` DATETIME NULL

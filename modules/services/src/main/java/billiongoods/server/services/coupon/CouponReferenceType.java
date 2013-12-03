@@ -8,7 +8,8 @@ package billiongoods.server.services.coupon;
  */
 public enum CouponReferenceType {
 	PRODUCT,
-	CATEGORY;
+	CATEGORY,
+	EVERYTHING;
 
 	public boolean isProduct() {
 		return this == PRODUCT;
@@ -16,5 +17,9 @@ public enum CouponReferenceType {
 
 	public boolean isCategory() {
 		return this == CATEGORY;
+	}
+
+	public boolean isEverything() {
+		return this == EVERYTHING;
 	}
 }

@@ -244,7 +244,15 @@
         <property name="cacheManager" ref="cacheManager"/>
         <property name="stateManager" ref="playerStateManager"/>
     </bean>
+    <!--
 
+        <bean class="billiongoods.server.services.account.NewcomerProcessingCenter">
+            <property name="orderManager" ref="orderManager"/>
+            <property name="couponManager" ref="couponManager"/>
+            <property name="accountManager" ref="accountManager"/>
+        </bean>
+
+    -->
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>

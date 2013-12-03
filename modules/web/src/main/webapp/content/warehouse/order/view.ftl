@@ -220,41 +220,39 @@
     </tr>
 </table>
 
-<@bg.security.unauthorized "moderator">
-    <#if order.payer?has_content && !order.orderState.finalState>
-    <table class="info" style="padding: 0">
-        <tr>
-            <td colspan="2" align="right">
-                <div class="operations">
-                    <#if order.orderState==OrderState.SHIPPED>
-                        <div class="confirm">
-                            <form action="/warehouse/order/status" method="post">
-                                <input type="hidden" name="order" value="${order.id}">
-                                <input type="hidden" name="email" value="${order.payer}">
+<#if order.payer?has_content && !order.orderState.finalState>
+<table class="info" style="padding: 0">
+    <tr>
+        <td colspan="2" align="right">
+            <div class="operations">
+                <#if order.orderState==OrderState.SHIPPED>
+                    <div class="confirm">
+                        <form action="/warehouse/order/status" method="post">
+                            <input type="hidden" name="order" value="${order.id}">
+                            <input type="hidden" name="email" value="${order.payer}">
 
-                                <button id="closeOrder" type="button">
-                                    Подтвердить получения заказа
-                                </button>
-                            </form>
-                        </div>
-                    <#elseif !order.orderState.finalState>
-                        <div class="tracking">
-                            <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
-                                уведомления по e-mail
+                            <button id="closeOrder" type="button">
+                                Подтвердить получения заказа
                             </button>
-                            <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>
-                                Отключить
-                                уведомления по e-mail
-                            </button>
-                            <span class="sample">(${order.payer})</span>
-                        </div>
-                    </#if>
-                </div>
-            </td>
-        </tr>
-    </table>
-    </#if>
-</@bg.security.unauthorized>
+                        </form>
+                    </div>
+                <#elseif !order.orderState.finalState>
+                    <div class="tracking">
+                        <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
+                            уведомления по e-mail
+                        </button>
+                        <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>
+                            Отключить
+                            уведомления по e-mail
+                        </button>
+                        <span class="sample">(${order.payer})</span>
+                    </div>
+                </#if>
+            </div>
+        </td>
+    </tr>
+</table>
+</#if>
 
 <div class="basket">
 <#assign totalCount=0/>

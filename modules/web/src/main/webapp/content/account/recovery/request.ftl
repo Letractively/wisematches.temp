@@ -8,11 +8,11 @@
     </div>
 
     <div id="info-recovery-form">
-        <form id="recoveryForm" action="request" method="post">
+        <form id="recoveryForm" action="/account/recovery/request" method="post">
             <div>
             <#--@declare id="email"-->
                 <label class="label" for="email"><@message code="account.register.email.label"/>:</label>
-            <@wm.ui.input path="recovery.email"/>
+            <@bg.ui.input path="recovery.email"/>
                 <span class="sample"><@message code="account.recovery.email.description"/></span>
             </div>
             <div>

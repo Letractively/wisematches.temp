@@ -10,7 +10,7 @@
     </div>
 
     <div id="info-recovery-form">
-        <form id="recoveryForm" action="confirmation" method="post">
+        <form id="recoveryForm" action="/account/recovery/confirmation" method="post">
             <table class="x-panel" style="padding-left: 10px; padding-right: 10px;">
                 <tr>
                     <td colspan="2">
@@ -34,7 +34,7 @@
                         <label for="token"><@message code="account.recovery.check.token.label"/>:</label>
                     </td>
                     <td>
-                    <@wm.ui.input path="recovery.token"/>
+                    <@bg.ui.input path="recovery.token"/>
                     </td>
                 </tr>
 
@@ -55,7 +55,7 @@
                         <label for="password"><@message code="account.register.pwd.label"/>:</label>
                     </td>
                     <td>
-                    <@wm.ui.input path="recovery.password" fieldType="password"/>
+                    <@bg.ui.input path="recovery.password" fieldType="password"/>
                     </td>
                 </tr>
                 <tr>
@@ -64,17 +64,17 @@
                         <label for="confirm"><@message code="account.register.pwd-cfr.label"/>:</label>
                     </td>
                     <td>
-                    <@wm.ui.input path="recovery.confirm" fieldType="password"/>
+                    <@bg.ui.input path="recovery.confirm" fieldType="password"/>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                    <@wm.ui.field path="recovery.rememberMe">
+                    <@bg.ui.field path="recovery.rememberMe">
                         <input type="checkbox" id="rememberMe" name="rememberMe"
-                               <#if wm.ui.statusValue=="true">checked="checked"</#if>/>
+                               <#if bg.ui.statusValue=="true">checked="checked"</#if>/>
                         <label for="rememberMe"><@message code="account.login.remember.label"/></label>
-                    </@wm.ui.field>
+                    </@bg.ui.field>
                     </td>
                 </tr>
 

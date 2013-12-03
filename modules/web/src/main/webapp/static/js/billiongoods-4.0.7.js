@@ -505,7 +505,7 @@ bg.warehouse.Order = function () {
 
     this.confirmReceived = function (order, email, successor) {
         bg.ui.lock(null, 'Подтверждение заказа. Пожалуйста, подождите...');
-        $.post("/warehouse/order/confirmReceived.ajax", JSON.stringify({"order": order, "email": email}))
+        $.post("/warehouse/order/close.ajax", JSON.stringify({"order": order, "email": email}))
                 .done(function (response) {
                     if (response.success) {
                         successor();

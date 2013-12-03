@@ -146,7 +146,7 @@
 <script type="text/javascript">
     $("#recoveryLink").click(function (event) {
         event.preventDefault();
-        wm.util.url.redirect(wm.util.url.extend($(this).attr('href'), "email", $("#j_username").val(), true));
+        bg.util.url.redirect(bg.util.url.extend($(this).attr('href'), "email", $("#j_username").val(), true));
         return false;
     });
 
