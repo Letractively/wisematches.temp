@@ -31,7 +31,7 @@ public interface RelationshipManager {
 
 	List<Relationship> getRelationships(Integer productId);
 
-	void addRelationship(Integer productId, Integer groupId, RelationshipType type);
+	Relationship addRelationship(Integer productId, Integer groupId, RelationshipType type);
 
-	void removeRelationship(Integer productId, Integer groupId, RelationshipType type);
+	Relationship removeRelationship(Integer productId, Integer groupId, RelationshipType type);
 }

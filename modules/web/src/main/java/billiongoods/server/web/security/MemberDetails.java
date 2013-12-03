@@ -47,6 +47,10 @@ public class MemberDetails implements SocialUserDetails, PersonalityContainer {
 		return authorities;
 	}
 
+	public String getEmail() {
+		return member.getEmail();
+	}
+
 	@Override
 	public String getUsername() {
 		return member.getUsername();

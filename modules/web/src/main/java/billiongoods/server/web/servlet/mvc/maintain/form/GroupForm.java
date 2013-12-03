@@ -15,6 +15,10 @@ public class GroupForm {
 	public GroupForm() {
 	}
 
+	public GroupForm(Integer id) {
+		this.id = id;
+	}
+
 	public Integer getId() {
 		return id;
 	}

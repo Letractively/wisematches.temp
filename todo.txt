@@ -1,6 +1,4 @@
 ============= CURRENT ====================
-- Common: visitorId generation makes a lot of problems. Must be deprecated.
-
 - Account: recovery
 - Privacy: import orders after registration (update orders by email).
 
@@ -27,7 +25,6 @@
 - Common: Orders for filter values/items
 - Common: Add full product name for URL in translite
 - Common: Forums
-- Common: Wish list
 - Common: Own ads on main page
 - Common: remove dependency on jQuery UI (if possible).
 
@@ -38,6 +35,12 @@
 - Maintain: Export order
 
 ============= DONE ====================
+03.12
++ Common: double quotes in search don't work.
++ Account: authentication form email restored incorrect
++ Maintain: remove from group doesn't work
++ Common: visitorId generation makes a lot of problems. Must be deprecated.
+
 29.11
 + Privacy: main page
 + Validation: infinitive validation loop issue (iteration is not incremented)
