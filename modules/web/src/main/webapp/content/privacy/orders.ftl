@@ -62,15 +62,18 @@
                 <tbody>
                 <#list orders as o>
                 <tr class="order ${o.orderState.code}">
-                    <td valign="top" colspan="2">
-                        Заказ №: <a href="/privacy/order?id=${o.id}">#${o.id}</a>
+                    <td valign="top">
+                        Заказ: <a href="/privacy/order?id=${o.id}">#${o.id}</a>
                         <span class="sample">
                             от ${messageSource.formatDate(o.created, locale)}
                         </span>
-                        <#if o.internationalTracking??>
+                        <#if o.internationalTracking?has_content>
                             <br>
-                            Отслеживания №: <@bg.link.tracking o.internationalTracking/>
+                            Номер отслеживания: <@bg.link.tracking o.internationalTracking/>
                         </#if>
+                    </td>
+                    <td valign="top">
+                    ${o.itemsCount}
                     </td>
                     <td valign="top">
                         <@bg.ui.price o.amount + o.shipment.amount - o.discount "b"/>

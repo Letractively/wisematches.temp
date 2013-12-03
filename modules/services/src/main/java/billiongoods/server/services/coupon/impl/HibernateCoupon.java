@@ -170,7 +170,9 @@ public class HibernateCoupon implements Coupon {
 			return false;
 		}
 
-		if (referenceType == CouponReferenceType.PRODUCT) {
+		if (referenceType == CouponReferenceType.EVERYTHING) {
+			return true;
+		} else if (referenceType == CouponReferenceType.PRODUCT) {
 			return product.getId().equals(reference);
 		} else if (referenceType == CouponReferenceType.CATEGORY) {
 			return catalog.getCategory(reference).isRealKinship(catalog.getCategory(product.getCategoryId()));

@@ -32,6 +32,9 @@ public interface Order {
 
 	OrderState getOrderState();
 
+
+	int getItemsCount();
+
 	List<OrderItem> getOrderItems();
 
 

@@ -220,7 +220,7 @@ public class AccountController extends AbstractController {
 	}
 
 	@RequestMapping("/social/finish")
-	public String socialAssociationFinish(Model model, NativeWebRequest request) {
+	public String socialAssociationFinish() {
 		return "/content/account/social/finish";
 	}
 
@@ -269,7 +269,7 @@ public class AccountController extends AbstractController {
 		}
 	}
 
-	private String forwardToAuthorization(final NativeWebRequest request, final Account account, final boolean rememberMe, final boolean redirectToFinish) {
+	protected static String forwardToAuthorization(final NativeWebRequest request, final Account account, final boolean rememberMe, final boolean redirectToFinish) {
 		request.removeAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 
 		request.setAttribute("rememberMe", rememberMe, RequestAttributes.SCOPE_REQUEST);
