@@ -1,6 +1,10 @@
 package billiongoods.server.web.servlet.mvc;
 
+import billiongoods.core.security.PersonalityContext;
+import billiongoods.server.MessageFormatter;
 import billiongoods.server.services.paypal.PayPalException;
+import billiongoods.server.warehouse.CategoryManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.authentication.rememberme.CookieTheftException;
 import org.springframework.stereotype.Controller;
@@ -19,7 +23,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @ControllerAdvice
-public class CentralController extends AbstractController {
+public class CentralController {
+	private CategoryManager categoryManager;
+	private MessageFormatter messageFormatter;
+
 	public CentralController() {
 	}
 
@@ -62,21 +69,31 @@ public class CentralController extends AbstractController {
 		final Model model = new ExtendedModelMap();
 		final ModelAndView res = new ModelAndView("/content/assistance/errors");
 
-		model.addAttribute("title", messageSource.getMessage("error." + errorCode + ".label", request.getLocale()));
-
-		model.addAttribute("catalog", getCatalog());
-		model.addAttribute("principal", getPrincipal());
-		model.addAttribute("department", getDepartment(request));
-
 		model.addAttribute("errorCode", errorCode);
 		model.addAttribute("errorTemplate", template);
 		model.addAttribute("errorArguments", arguments);
 
-		hideWhereabouts(model);
-		hideNavigation(model);
+		model.addAttribute("catalog", categoryManager.getCatalog());
+		model.addAttribute("principal", PersonalityContext.getPrincipal());
+		model.addAttribute("department", Department.ASSISTANCE);
+
+		model.addAttribute("hideWhereabouts", Boolean.TRUE);
+		model.addAttribute("hideNavigation", Boolean.TRUE);
+
+		model.addAttribute("title", messageFormatter.getMessage("error." + errorCode + ".label", request.getLocale()));
 
 		res.addAllObjects(model.asMap());
 
 		return res;
+	}
+
+	@Autowired
+	public void setMessageSource(MessageFormatter messageSource) {
+		this.messageFormatter = messageSource;
+	}
+
+	@Autowired
+	public void setCategoryManager(CategoryManager categoryManager) {
+		this.categoryManager = categoryManager;
 	}
 }
