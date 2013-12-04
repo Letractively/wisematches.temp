@@ -1,13 +1,13 @@
 <#include "/core.ftl">
 
-<div id="recovery">
-    <div id="info-recovery-header" class="info-header">
-        <div class="info-label"><@message code="account.recovery.request.label"/></div>
+<div id="recovery" class="assistance">
+    <div id="info-recovery-header">
+        <div class="tit"><@message code="account.recovery.request.label"/></div>
 
-        <div class="info-description"><@message code="account.recovery.request.description"/></div>
+        <div class="toc"><@message code="account.recovery.request.description"/></div>
     </div>
 
-    <div id="info-recovery-form">
+    <div id="info-recovery-form" class="cnt">
         <form id="recoveryForm" action="/account/recovery/request" method="post">
             <div>
             <#--@declare id="email"-->
@@ -17,6 +17,7 @@
             </div>
             <div>
                 <button id="recoveryAccount"
+                        class="bg-ui-button"
                         name="recoveryAccount"
                         type="submit"
                         value="true"><@message code='account.recovery.submit.label'/></button>
@@ -24,7 +25,7 @@
         </form>
     </div>
 
-    <div id="info-recovery-footer">
-        <div class="info-description"><@message code="account.recovery.request.info.description"/></div>
+    <div id="info-recovery-footer" style="padding: 10px">
+    <@message code="account.recovery.request.info.description"/>
     </div>
 </div>

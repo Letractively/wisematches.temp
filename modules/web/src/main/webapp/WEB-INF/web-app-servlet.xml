@@ -15,7 +15,7 @@
 
     <mvc:annotation-driven validator="beanValidator"/>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false"/>
 
     <context:property-placeholder properties-ref="applicationProperties"/>
 

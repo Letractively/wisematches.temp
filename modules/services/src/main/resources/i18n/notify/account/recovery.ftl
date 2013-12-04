@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="context.recipient" type="billiongoods.server.services.notify.Recipient" -->
+<#-- @ftlvariable name="context.recipient" type="billiongoods.server.services.notify.Recipient.Person" -->
 <#-- @ftlvariable name="context.recoveryToken" type="java.lang.String" -->
 <#import "../utils.ftl" as util>
 

@@ -52,14 +52,15 @@ public class RecoveryController extends AbstractController {
 			try {
 				final Account account = accountManager.findByEmail(form.getEmail());
 				if (account != null) {
+					final Recipient recipient = Recipient.get(account);
 					final RecoveryToken token = recoveryTokenManager.generateToken(account);
 					log.info("Recovery token generated: {}", token);
 
 					final Map<String, Object> mailModel = new HashMap<>();
-					mailModel.put("principal", account);
+					mailModel.put("recipient", recipient);
 					mailModel.put("recoveryToken", token.getToken());
 
-					notificationService.raiseNotification(Recipient.get(account), Sender.ACCOUNTS, "account.recovery", mailModel);
+					notificationService.raiseNotification(recipient, Sender.ACCOUNTS, "account.recovery", mailModel);
 					session.setAttribute(RECOVERING_PLAYER_EMAIL, account.getEmail());
 					return "redirect:/account/recovery/confirmation";
 				} else {
