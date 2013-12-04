@@ -2,14 +2,14 @@
 <#-- @ftlvariable name="notificationWasSent" type="java.lang.Boolean" -->
 <#include "/core.ftl">
 
-<div id="recovery">
-    <div id="info-recovery-header" class="info-header">
-        <div class="info-label"><@message code="account.recovery.check.label"/></div>
+<div id="recovery" class="assistance">
+    <div id="info-recovery-header">
+        <div class="tit"><@message code="account.recovery.check.label"/></div>
 
-        <div class="info-description"><@message code="account.recovery.check.description"/></div>
+        <div class="toc"><@message code="account.recovery.check.description"/></div>
     </div>
 
-    <div id="info-recovery-form">
+    <div id="info-recovery-form" class="cnt">
         <form id="recoveryForm" action="/account/recovery/confirmation" method="post">
             <table class="x-panel" style="padding-left: 10px; padding-right: 10px;">
                 <tr>
@@ -73,7 +73,7 @@
                     <@bg.ui.field path="recovery.rememberMe">
                         <input type="checkbox" id="rememberMe" name="rememberMe"
                                <#if bg.ui.statusValue=="true">checked="checked"</#if>/>
-                        <label for="rememberMe"><@message code="account.login.remember.label"/></label>
+                        <label for="rememberMe"><@message code="account.signin.remember.label"/></label>
                     </@bg.ui.field>
                     </td>
                 </tr>
@@ -88,6 +88,7 @@
                     <td></td>
                     <td>
                         <button id="recoveryAccount"
+                                class="bg-ui-button"
                                 name="recoveryAccount"
                                 type="submit"
                                 value="true"><@message code='account.recovery.submit.label'/></button>
