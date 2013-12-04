@@ -210,12 +210,11 @@
     <http pattern="/image/**" security="none"/>
     <http pattern="/static/**" security="none"/>
 
-    <!--<http pattern="/account/social/*" security="none"/>-->
     <http pattern="/warehouse/paypal/*" security="none"/>
 
     <http use-expressions="true">
         <intercept-url pattern="/privacy/**" access="isAuthenticated()"/>
-        <intercept-url pattern="/privacy/settings" access="isFullyAuthenticated()"/>
+        <intercept-url pattern="/account/settings/**" access="isFullyAuthenticated()"/>
 
         <intercept-url pattern="/maintain/**" access="hasRole('admin') and isFullyAuthenticated()"/>
 
