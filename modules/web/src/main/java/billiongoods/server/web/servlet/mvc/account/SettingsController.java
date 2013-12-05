@@ -1,8 +1,10 @@
 package billiongoods.server.web.servlet.mvc.account;
 
+import billiongoods.core.Language;
 import billiongoods.core.Member;
 import billiongoods.core.Personality;
 import billiongoods.core.account.AccountManager;
+import billiongoods.server.services.timezone.TimeZoneManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.Department;
 import billiongoods.server.web.servlet.mvc.account.form.SettingsForm;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -28,14 +31,17 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/account/settings")
 public class SettingsController extends AbstractController {
 	private AccountManager accountManager;
+	private TimeZoneManager timeZoneManager;
 
 	private UsersConnectionRepository usersConnectionRepository;
 	private SocialAuthenticationServiceLocator socialAuthenticationServiceLocator;
 
 	private static final Logger log = LoggerFactory.getLogger("wisematches.web.mvc.SettingsController");
 
-	public SettingsController() {
+	public SettingsController() throws IOException {
 		super(false, true);
+
+
 	}
 
 	@Override
@@ -53,9 +59,10 @@ public class SettingsController extends AbstractController {
 		return "/content/account/settings/personal";
 	}
 
-	@RequestMapping(value = "/notifications")
-	public String notificationSettings(Model model) {
-		return "/content/account/settings/notifications";
+	@RequestMapping(value = "/modify")
+	public String modifySettings(Model model) {
+		model.addAttribute("timeZones", timeZoneManager.getTimeZoneEntries(Language.RU));
+		return "/content/account/settings/modify";
 	}
 
 	@RequestMapping(value = "/social")
@@ -76,6 +83,11 @@ public class SettingsController extends AbstractController {
 	@Autowired
 	public void setAccountManager(AccountManager accountManager) {
 		this.accountManager = accountManager;
+	}
+
+	@Autowired
+	public void setTimeZoneManager(TimeZoneManager timeZoneManager) {
+		this.timeZoneManager = timeZoneManager;
 	}
 
 	@Autowired

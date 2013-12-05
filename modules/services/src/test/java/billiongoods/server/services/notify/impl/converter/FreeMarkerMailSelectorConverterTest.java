@@ -7,8 +7,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class FreeMarkerNotificationConverterTest {
-	public FreeMarkerNotificationConverterTest() {
+public class FreeMarkerMailSelectorConverterTest {
+	public FreeMarkerMailSelectorConverterTest() {
 	}
 
 	@Test

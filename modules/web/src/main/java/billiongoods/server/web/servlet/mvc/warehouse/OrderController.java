@@ -183,7 +183,7 @@ public class OrderController extends AbstractController {
 			return responseFactory.failure("order.error.access", locale);
 		} else {
 			final Member member = (Member) principal;
-			if (!member.getId().equals(order.getPersonalityId())) { // another owner?
+			if (!member.getId().equals(order.getPersonId())) { // another owner?
 				return responseFactory.failure("order.error.access", locale);
 			}
 		}

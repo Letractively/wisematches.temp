@@ -1,3 +1,29 @@
+#12.05
+CREATE TABLE `billiongoods`.`account_settings` (
+  `id`                BIGINT(20)   NOT NULL,
+  `timeZone`          VARCHAR(245) NULL,
+  `orderNotification` TINYINT      NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `account`
+  FOREIGN KEY (`id`)
+  REFERENCES `billiongoods`.`account_personality` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+
+ALTER TABLE `billiongoods`.`account_settings`
+ADD COLUMN `language` TINYINT(4) NULL
+AFTER `id`;
+
+ALTER TABLE `billiongoods`.`account_settings`
+CHANGE COLUMN `language` `language` TINYINT(4) NOT NULL,
+CHANGE COLUMN `timeZone` `timeZone` VARCHAR(245) NOT NULL,
+CHANGE COLUMN `orderNotification` `orderNotification` TINYINT(4) NOT NULL;
+
+ALTER TABLE `billiongoods`.`account_settings`
+CHANGE COLUMN `orderNotification` `ordersGate` TINYINT(4) NOT NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1205');
+
 #12.03
 ALTER TABLE `billiongoods`.`store_coupon`
 CHANGE COLUMN `reference` `reference` INT(11) NULL DEFAULT NULL;

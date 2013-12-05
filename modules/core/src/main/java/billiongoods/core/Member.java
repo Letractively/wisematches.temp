@@ -6,13 +6,15 @@ package billiongoods.core;
 public final class Member extends Personality {
 	private String email;
 	private String username;
+	private Settings settings;
 
 	private static final long serialVersionUID = -3657252453631101842L;
 
-	public Member(Long id, String username, String email) {
+	public Member(Long id, String email, String username, Settings settings) {
 		super(id);
 		this.email = email;
 		this.username = username;
+		this.settings = settings;
 	}
 
 	public String getEmail() {
@@ -23,8 +25,8 @@ public final class Member extends Personality {
 		return username;
 	}
 
-	public Language getLanguage() {
-		return Language.RU;
+	public Settings getSettings() {
+		return settings;
 	}
 
 	@Override

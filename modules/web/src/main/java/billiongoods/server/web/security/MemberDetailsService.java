@@ -6,6 +6,8 @@ import billiongoods.core.account.AccountLockManager;
 import billiongoods.core.account.AccountManager;
 import billiongoods.core.account.AccountRecoveryManager;
 import billiongoods.core.security.PersonalityContext;
+import billiongoods.server.services.settings.MemberSettings;
+import billiongoods.server.services.settings.MemberSettingsManager;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +20,7 @@ import org.springframework.social.security.SocialUserDetailsService;
 public class MemberDetailsService implements UserDetailsService, SocialUserDetailsService, UserIdSource {
 	private AccountManager accountManager;
 	private AccountLockManager accountLockManager;
+	private MemberSettingsManager memberSettingsManager;
 	private AccountRecoveryManager accountRecoveryManager;
 
 	public MemberDetailsService() {
@@ -52,7 +55,9 @@ public class MemberDetailsService implements UserDetailsService, SocialUserDetai
 		}
 		final boolean locked = accountLockManager.isAccountLocked(account);
 		final boolean expired = (accountRecoveryManager.getToken(account) != null);
-		return new MemberDetails(account, locked, expired);
+		final MemberSettings settings = memberSettingsManager.getMemberSettings(account);
+
+		return new MemberDetails(account, settings, locked, expired);
 	}
 
 	public void setAccountManager(AccountManager accountManager) {
@@ -61,6 +66,10 @@ public class MemberDetailsService implements UserDetailsService, SocialUserDetai
 
 	public void setAccountLockManager(AccountLockManager accountLockManager) {
 		this.accountLockManager = accountLockManager;
+	}
+
+	public void setMemberSettingsManager(MemberSettingsManager memberSettingsManager) {
+		this.memberSettingsManager = memberSettingsManager;
 	}
 
 	public void setAccountRecoveryManager(AccountRecoveryManager accountRecoveryManager) {

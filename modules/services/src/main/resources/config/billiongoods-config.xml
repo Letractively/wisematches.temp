@@ -128,6 +128,10 @@
         <property name="categoryManager" ref="catalogManager"/>
     </bean>
 
+    <bean id="memberSettingsManager" class="billiongoods.server.services.settings.impl.HibernateMemberSettingsManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="orderManager" class="billiongoods.server.services.payment.impl.HibernateOrderManager">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="couponManager" ref="couponManager"/>
@@ -230,6 +234,7 @@
 
     <bean class="billiongoods.server.services.notify.impl.center.NotificationOriginCenter">
         <property name="orderManager" ref="orderManager"/>
+        <property name="accountManager" ref="accountManager"/>
         <property name="productManager" ref="productManager"/>
         <property name="trackingManager" ref="trackingManager"/>
 
@@ -238,6 +243,9 @@
 
     <bean id="playerStateManager" class="billiongoods.server.services.state.impl.HibernatePersonalityStateManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="timeZoneManager" class="billiongoods.server.services.timezone.TimeZoneManager">
     </bean>
 
     <bean class="billiongoods.server.services.cleaner.PersonalityCacheCleaner">
