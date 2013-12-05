@@ -9,7 +9,7 @@ import java.util.List;
 public interface Order {
 	Long getId();
 
-	Long getPersonalityId();
+	Long getPersonId();
 
 
 	String getToken();

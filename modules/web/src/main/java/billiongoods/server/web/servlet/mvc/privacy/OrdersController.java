@@ -38,7 +38,7 @@ public class OrdersController extends AbstractController {
 			throw new UnknownEntityException(orderId, "order");
 		}
 
-		if (!getPrincipal().getId().equals(order.getPersonalityId())) {
+		if (!getPrincipal().getId().equals(order.getPersonId())) {
 			throw new UnknownEntityException(orderId, "order");
 		}
 		model.addAttribute("order", order);

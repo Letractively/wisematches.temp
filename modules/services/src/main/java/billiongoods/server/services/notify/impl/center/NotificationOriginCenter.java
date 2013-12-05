@@ -1,6 +1,8 @@
 package billiongoods.server.services.notify.impl.center;
 
 
+import billiongoods.core.account.Account;
+import billiongoods.core.account.AccountManager;
 import billiongoods.core.task.BreakingDayListener;
 import billiongoods.server.services.notify.NotificationException;
 import billiongoods.server.services.notify.NotificationService;
@@ -28,6 +30,7 @@ import java.util.List;
 public class NotificationOriginCenter implements BreakingDayListener {
 	private OrderManager orderManager;
 	private ProductManager productManager;
+	private AccountManager accountManager;
 	private ProductTrackingManager trackingManager;
 
 	private NotificationService notificationService;
@@ -44,30 +47,33 @@ public class NotificationOriginCenter implements BreakingDayListener {
 	}
 
 	private void processOrderState(Order order) {
-		if (order.isTracking() && order.getPayer() != null) {
-			fireNotification("order.state", Recipient.get(order.getPayer()), order, order.getId());
+		Account account;
+		Recipient recipient = null;
+		if (order.getPersonId() != null && (account = accountManager.getAccount(order.getPersonId())) != null) {
+			recipient = Recipient.get(account);
+		} else if (order.isTracking() && order.getPayer() != null) {
+			recipient = Recipient.get(order.getPayer());
+		}
+
+		if (recipient != null) {
+			fireNotification("order.state", recipient, order, order.getId());
 		}
 	}
 
-	private void processProductStock(ProductPreview preview, StockInfo newStock) {
-		if (newStock.getStockState() == StockState.IN_STOCK) {
-			final TrackingContext c = new TrackingContext(preview.getId(), TrackingType.AVAILABILITY);
-
-			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
-			for (ProductTracking tracking : tracks) {
-				fireNotification("product.availability", Recipient.get(tracking.getPersonEmail()), preview, preview.getId());
-				trackingManager.removeTracking(tracking.getId());
+	private void processTrackingNotifications(ProductPreview preview, TrackingType type) {
+		final TrackingContext c = new TrackingContext(preview.getId(), type);
+		final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
+		for (ProductTracking tracking : tracks) {
+			Account account;
+			Recipient recipient;
+			if (tracking.getPersonId() != null && (account = accountManager.getAccount(tracking.getPersonId())) != null) {
+				recipient = Recipient.get(account);
+			} else {
+				recipient = Recipient.get(tracking.getPersonEmail());
 			}
-		}
-	}
 
-	private void processProductState(ProductPreview preview, ProductState newState) {
-		if (newState == ProductState.ACTIVE) {
-			final TrackingContext c = new TrackingContext(preview.getId(), TrackingType.DESCRIPTION);
-
-			final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
-			for (ProductTracking tracking : tracks) {
-				fireNotification("product.preview", Recipient.get(tracking.getPersonEmail()), preview, preview.getId());
+			if (recipient != null) {
+				fireNotification("product." + type.name().toLowerCase(), recipient, preview, preview.getId());
 				trackingManager.removeTracking(tracking.getId());
 			}
 		}
@@ -96,6 +102,10 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		if (this.orderManager != null) {
 			this.orderManager.addOrderListener(orderListener);
 		}
+	}
+
+	public void setAccountManager(AccountManager accountManager) {
+		this.accountManager = accountManager;
 	}
 
 	public void setProductManager(ProductManager productManager) {
@@ -143,12 +153,16 @@ public class NotificationOriginCenter implements BreakingDayListener {
 
 		@Override
 		public void productStockChanged(ProductPreview preview, StockInfo oldStock, StockInfo newStock) {
-			processProductStock(preview, newStock);
+			if (newStock.getStockState() == StockState.IN_STOCK) {
+				processTrackingNotifications(preview, TrackingType.AVAILABILITY);
+			}
 		}
 
 		@Override
 		public void productStateChanged(ProductPreview preview, ProductState oldState, ProductState newState) {
-			processProductState(preview, newState);
+			if (newState == ProductState.ACTIVE && oldState != ProductState.ACTIVE) {
+				processTrackingNotifications(preview, TrackingType.DESCRIPTION);
+			}
 		}
 	}
 }

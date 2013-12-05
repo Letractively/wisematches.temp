@@ -129,7 +129,7 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public Long getPersonalityId() {
+	public Long getPersonId() {
 		return buyer;
 	}
 

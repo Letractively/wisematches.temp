@@ -37,7 +37,7 @@ import static org.junit.Assert.fail;
 		"classpath:/config/personality-config.xml",
 		"classpath:/config/billiongoods-config.xml",
 })
-public class NotificationOriginCenterTest {
+public class MailSelectorOriginCenterTest {
 	private final Capture<Notification> publishedNotifications = new Capture<>(CaptureType.ALL);
 	@Autowired
 	private NotificationService notificationService;
@@ -48,7 +48,7 @@ public class NotificationOriginCenterTest {
 	@Autowired
 	private PlatformTransactionManager transactionManager;
 
-	public NotificationOriginCenterTest() {
+	public MailSelectorOriginCenterTest() {
 	}
 
 	@Before

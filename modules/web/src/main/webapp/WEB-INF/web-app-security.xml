@@ -25,6 +25,7 @@
                 class="billiongoods.server.web.security.MemberDetailsService">
         <beans:property name="accountManager" ref="accountManager"/>
         <beans:property name="accountLockManager" ref="accountLockManager"/>
+        <beans:property name="memberSettingsManager" ref="memberSettingsManager"/>
         <beans:property name="accountRecoveryManager" ref="accountRecoveryManager"/>
     </beans:bean>
 
