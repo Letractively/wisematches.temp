@@ -15,8 +15,9 @@ public class TimeZoneManagerTest {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws Exception {
 		final TimeZoneManager tz = new TimeZoneManager();
+		tz.afterPropertiesSet();
 
 		final Collection<TimeZoneEntry> timeZoneEntries = tz.getTimeZoneEntries(Language.RU);
 		assertEquals(78, timeZoneEntries.size());

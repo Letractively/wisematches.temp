@@ -1,3 +1,6 @@
+<#-- @ftlvariable name="timeZones" type="billiongoods.server.services.timezone.TimeZoneEntry[]" -->
+<#-- @ftlvariable name="form" type="billiongoods.server.web.servlet.mvc.account.form.SettingsForm" -->
+
 <#include "/core.ftl">
 
 <div class="settings">
@@ -14,7 +17,7 @@
                                 Имя и фамилия:
                             </td>
                             <td>
-                            ${principal.username!""}
+                            ${form.username!""}
                             </td>
                         </tr>
                         <tr>
@@ -22,15 +25,18 @@
                                 Часовой пояс:
                             </td>
                             <td>
+                            <#assign timeZoneEntry=""/>
+                            <#list timeZones as tz>
+                                <#if tz.id==form.timeZone>
+                                    <#assign timeZoneEntry=tz/>
+                                </#if>
+                            </#list>
+
+                            <#if timeZoneEntry?has_content>
+                            ${timeZoneEntry.displayName}
+                            <#else>
                                 (GMT+00:00) Время по Гринвичу: Дублин, Лондон, Лиссабон, Эдинбург
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" nowrap="nowrap">
-                                Уведомления:
-                            </td>
-                            <td>
-                                Отправлять на адрес аккаунта
+                            </#if>
                             </td>
                         </tr>
                     </table>
