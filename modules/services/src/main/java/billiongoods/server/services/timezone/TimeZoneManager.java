@@ -2,42 +2,50 @@ package billiongoods.server.services.timezone;
 
 import au.com.bytecode.opencsv.CSVReader;
 import billiongoods.core.Language;
+import org.springframework.beans.factory.InitializingBean;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class TimeZoneManager {
+public class TimeZoneManager implements InitializingBean {
 	private Map<Language, Collection<TimeZoneEntry>> timeZones = new HashMap<>();
 
 	public TimeZoneManager() {
 	}
 
-	public Collection<TimeZoneEntry> getTimeZoneEntries(Language language) {
-		Collection<TimeZoneEntry> collections = timeZones.get(language);
-		if (collections != null) {
-			return collections;
-		}
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		for (Language language : Language.values()) {
+			final Collection<TimeZoneEntry> collections = new ArrayList<>();
+			timeZones.put(language, collections);
 
-		collections = new ArrayList<>();
-		timeZones.put(language, collections);
-
-		try {
-			final CSVReader reader = new CSVReader(new InputStreamReader(getClass().getResourceAsStream("/i18n/tz/timezones_" + language.getCode() + ".csv"), "UTF-8"));
-			String[] strings1 = reader.readNext();
-			while (strings1 != null) {
-				collections.add(new TimeZoneEntry(strings1[0], strings1[1]));
-				strings1 = reader.readNext();
+			final InputStream resourceAsStream = getClass().getResourceAsStream("/i18n/tz/timezones_" + language.getCode() + ".csv");
+			if (resourceAsStream != null) {
+				final CSVReader reader = new CSVReader(new InputStreamReader(resourceAsStream, "UTF-8"));
+				String[] strings1 = reader.readNext();
+				while (strings1 != null) {
+					collections.add(new TimeZoneEntry(strings1[0], strings1[1]));
+					strings1 = reader.readNext();
+				}
 			}
-			return collections;
-		} catch (IOException ex) {
-			return null;
 		}
+	}
+
+	public Collection<TimeZoneEntry> getTimeZoneEntries(Language language) {
+		return timeZones.get(language);
+	}
+
+	public TimeZoneEntry getTimeZoneEntry(TimeZone timeZone, Language language) {
+		final Collection<TimeZoneEntry> timeZoneEntries = timeZones.get(language);
+		for (TimeZoneEntry timeZoneEntry : timeZoneEntries) {
+			if (timeZoneEntry.getTimeZone().equals(timeZone)) {
+				return timeZoneEntry;
+			}
+		}
+		return null;
 	}
 }
