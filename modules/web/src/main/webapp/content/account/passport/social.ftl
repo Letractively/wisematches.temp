@@ -9,8 +9,7 @@
         <thead>
         <tr>
             <th>Сервис</th>
-            <th>Имя</th>
-            <th>Имя</th>
+            <th width="100%">Имя</th>
             <th>Действия</th>
         </tr>
         </thead>
