@@ -15,7 +15,7 @@ public class Passport {
 	private String username;
 
 	@Column(name = "language")
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private Language language;
 
 	@Column(name = "timezone")

@@ -25,6 +25,10 @@ table {
     border-spacing: 0;
 }
 
+table td {
+    vertical-align: top;
+}
+
 form {
     margin: 0;
     padding: 0;
@@ -1973,6 +1977,7 @@ button.bg-ui-button.selected {
 
 .settings {
     margin-top: -7px;
+    margin-bottom: 200px;
 }
 
 .settings .tit {

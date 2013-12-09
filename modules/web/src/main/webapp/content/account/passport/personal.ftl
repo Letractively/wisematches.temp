@@ -1,74 +1,34 @@
 <#-- @ftlvariable name="timeZones" type="billiongoods.server.services.timezone.TimeZoneEntry[]" -->
-<#-- @ftlvariable name="form" type="billiongoods.server.web.servlet.mvc.account.form.SettingsForm" -->
-
 <#include "/core.ftl">
+<#include "tools.ftl">
 
-<div class="settings">
-    <div class="tit">
-        Персональные данные
-    </div>
-    <table>
-        <tr>
-            <td width="100%" valign="top">
-                <div class="cnt">
-                    <table>
-                        <tr>
-                            <td valign="top" width="30%" nowrap="nowrap">
-                                Имя и фамилия:
-                            </td>
-                            <td>
-                            ${form.username!""}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td valign="top" nowrap="nowrap">
-                                Часовой пояс:
-                            </td>
-                            <td>
-                            <#assign timeZoneEntry=""/>
-                            <#list timeZones as tz>
-                                <#if tz.id==form.timeZone>
-                                    <#assign timeZoneEntry=tz/>
-                                </#if>
-                            </#list>
-
-                            <#if timeZoneEntry?has_content>
-                            ${timeZoneEntry.displayName}
-                            <#else>
-                                (GMT+00:00) Время по Гринвичу: Дублин, Лондон, Лиссабон, Эдинбург
-                            </#if>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="cnt">
-                    <a href="/account/passport/modify"><strong>Изменить персональные данные</strong></a>
-                </div>
-            </td>
-
-            <td valign="top" nowrap="nowrap">
-                <div class="cnt">
-                <#if principal.email?has_content>
-                    <a href="/account/passport/email">Именить адрес электронной почты</a>
-                <#else>
-                    <a href="/account/passport/email">Добавить адрес электронной почты</a>
-                </#if>
-                    <br>
-                    <span class="sample">Адрес электронной почты для получения статуса заказов</span>
-                </div>
-
-                <div class="cnt">
-                    <a href="/account/passport/password">Сменить пароль</a>
-                    <br>
-                    <span class="sample">Храните в тайне ваш пароль на BillionGoods</span>
-                </div>
-
-                <div class="cnt">
-                    <a href="/account/passport/remove">Удалить аккаунт</a>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-</div>
+<@form "/account/passport/personal" "title.account.passport.personal">
+    <@bg.ui.input path="form.language" fieldType="hidden"/>
+<table>
+    <tr>
+        <td>
+            <label for="username">
+                Имя и фамилия:
+            </label>
+        </td>
+        <td>
+            <@bg.ui.input path="form.username"/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="timeZone">Часовой пояс:</label>
+        </td>
+        <td>
+            <@bg.ui.field "form.timeZone">
+                <select id="timeZone" name="timeZone">
+                    <#list timeZones as z>
+                        <option <#if z.id==bg.ui.status.value>selected="selected"</#if>
+                                value="${z.id}">${z.displayName}</option>
+                    </#list>
+                </select>
+            </@bg.ui.field>
+        </td>
+    </tr>
+</table>
+</@form>

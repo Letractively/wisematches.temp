@@ -19,10 +19,10 @@
     <div class="privacy">
         <ul class="container">
         <#--<#list ["orders", "addresses", "coupons", "wishlist", "subscriptions", "settings", "social"] as i>-->
-        <#list ["personal", "social"] as i>
+        <#list ["view", "social"] as i>
             <li class="ct-item">
                 <a href="/account/passport/${i}">
-                    <@message code="title.account.settings.${i}"/>
+                    <@message code="title.account.passport.${i}"/>
                 </a>
             </li>
         </#list>

@@ -9,6 +9,17 @@ AFTER `username`,
 ADD COLUMN `timezone` VARCHAR(245) NULL
 AFTER `language`;
 
+ALTER TABLE `billiongoods`.`account_personality`
+CHANGE COLUMN `language` `language` CHAR(2) NULL DEFAULT 'RU',
+CHANGE COLUMN `timezone` `timezone` VARCHAR(245) NULL DEFAULT 'GMT+00:00';
+
+UPDATE account_personality
+SET language = 'RU', timezone = 'GMT+00:00';
+
+ALTER TABLE `billiongoods`.`account_personality`
+CHANGE COLUMN `language` `language` CHAR(2) NOT NULL DEFAULT 'RU',
+CHANGE COLUMN `timezone` `timezone` VARCHAR(245) NOT NULL DEFAULT 'GMT+00:00';
+
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1209');
 
 #12.03

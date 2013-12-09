@@ -3,12 +3,12 @@ package billiongoods.server.web.servlet.mvc.account.form;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class SettingsForm {
+public class PassportForm {
 	private String username;
 	private String timeZone;
 	private String language;
 
-	public SettingsForm() {
+	public PassportForm() {
 	}
 
 	public String getUsername() {
