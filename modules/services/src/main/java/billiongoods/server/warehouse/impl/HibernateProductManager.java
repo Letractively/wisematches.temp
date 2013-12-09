@@ -347,7 +347,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 
 	@Override
 	protected void applyOrders(Criteria criteria, ProductContext context, Orders orders) {
-		if (context.getSearch() != null && !context.getSearch().trim().isEmpty() && orders == null) {
+		if (context != null && context.getSearch() != null && !context.getSearch().trim().isEmpty() && orders == null) {
 			criteria.addOrder(new SqlOrder(getMatchSentence(context), false));
 		} else {
 			super.applyOrders(criteria, context, orders);

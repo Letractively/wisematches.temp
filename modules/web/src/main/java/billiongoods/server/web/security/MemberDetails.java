@@ -1,7 +1,6 @@
 package billiongoods.server.web.security;
 
 import billiongoods.core.Member;
-import billiongoods.core.Settings;
 import billiongoods.core.account.Account;
 import billiongoods.core.security.PersonalityContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,10 +21,10 @@ public class MemberDetails implements SocialUserDetails, PersonalityContainer {
 	private static final Map<String, SimpleGrantedAuthority> cache = new HashMap<>();
 	private static final Set<GrantedAuthority> GRANTED_AUTHORITY_SET = Collections.<GrantedAuthority>singleton(new SimpleGrantedAuthority("member"));
 
-	public MemberDetails(Account account, Settings settings, boolean locked, boolean expired) {
+	public MemberDetails(Account account, boolean locked, boolean expired) {
 		this.locked = locked;
 		this.expired = expired;
-		this.member = new Member(account.getId(), account.getEmail(), account.getUsername(), settings);
+		this.member = new Member(account.getId(), account.getEmail(), account.getPassport());
 		this.authorities = createAuthorities(account.getRoles());
 	}
 
@@ -54,7 +53,7 @@ public class MemberDetails implements SocialUserDetails, PersonalityContainer {
 
 	@Override
 	public String getUsername() {
-		return member.getUsername();
+		return member.getPassport().getUsername();
 	}
 
 	@Override

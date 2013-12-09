@@ -8,8 +8,8 @@ package billiongoods.core.account;
 public class InadmissibleUsernameException extends AccountException {
 	private final String reason;
 
-	public InadmissibleUsernameException(Account account, String reason) {
-		super("InadmissibleUsername: " + account.getUsername(), account);
+	public InadmissibleUsernameException(String username, String reason) {
+		super("InadmissibleUsername: " + username);
 		this.reason = reason;
 	}
 

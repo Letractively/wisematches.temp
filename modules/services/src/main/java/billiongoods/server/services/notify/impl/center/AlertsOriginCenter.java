@@ -16,6 +16,7 @@ import billiongoods.server.services.tracking.ProductTrackingListener;
 import billiongoods.server.services.tracking.ProductTrackingManager;
 import billiongoods.server.services.validator.*;
 import billiongoods.server.warehouse.ProductManager;
+import billiongoods.server.warehouse.ProductPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,7 +129,7 @@ public class AlertsOriginCenter {
 
 		@Override
 		public void accountCreated(Account account) {
-			raiseAlarm("system.account", account, account.getUsername());
+//			raiseAlarm("system.account", account, account.getPassport().getUsername());
 		}
 
 		@Override
@@ -167,7 +168,8 @@ public class AlertsOriginCenter {
 
 		@Override
 		public void trackingAdded(ProductTracking tracking) {
-			raiseAlarm("system." + tracking.getTrackingType().name().toLowerCase(), productManager.getPreview(tracking.getProductId()));
+			final ProductPreview preview = productManager.getPreview(tracking.getProductId());
+			raiseAlarm("system." + tracking.getTrackingType().name().toLowerCase(), preview, preview.getId() + ": " + preview.getName());
 		}
 
 		@Override

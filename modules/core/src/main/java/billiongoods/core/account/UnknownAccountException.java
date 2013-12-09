@@ -7,10 +7,10 @@ package billiongoods.core.account;
  */
 public class UnknownAccountException extends AccountException {
 	public UnknownAccountException(Account account) {
-		super("UnknownAccountException: " + account, account);
+		super("UnknownAccountException: " + account);
 	}
 
 	public UnknownAccountException(Throwable cause, Account player) {
-		super("UnknownAccountException: " + player, cause, player);
+		super("UnknownAccountException: " + player, cause);
 	}
 }

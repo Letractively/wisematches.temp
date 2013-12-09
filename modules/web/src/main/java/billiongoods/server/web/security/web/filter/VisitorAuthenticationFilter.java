@@ -24,59 +24,46 @@ import java.util.Set;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class VisitorAuthenticationFilter extends GenericFilterBean {
-    private long lastGeneratedVisitorId;
+	private long lastGeneratedVisitorId;
 
-    private AuthenticationManager authenticationManager;
-    private VisitorServices visitorServices = new SessionVisitorServices();
+	private AuthenticationManager authenticationManager;
+	private VisitorServices visitorServices = new SessionVisitorServices();
 
-    private static final Set<SimpleGrantedAuthority> DEFAULT_AUTHORITIES = Collections.singleton(new SimpleGrantedAuthority("visitor"));
+	private static final Set<SimpleGrantedAuthority> DEFAULT_AUTHORITIES = Collections.singleton(new SimpleGrantedAuthority("visitor"));
 
-    public VisitorAuthenticationFilter() {
-    }
+	public VisitorAuthenticationFilter() {
+	}
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            final HttpServletRequest req = (HttpServletRequest) request;
-            final HttpServletResponse res = (HttpServletResponse) response;
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		if (SecurityContextHolder.getContext().getAuthentication() == null) {
+			final HttpServletRequest req = (HttpServletRequest) request;
+			final HttpServletResponse res = (HttpServletResponse) response;
 
-            Long visitorId = visitorServices.loadVisitorId(req, res);
-            if (visitorId == null) {
-                visitorId = createVisitorId();
-                visitorServices.saveVisitorId(visitorId, req, res);
-            }
-
-            final AnonymousAuthenticationToken authentication = new AnonymousAuthenticationToken("visitor", new Visitor(visitorId), DEFAULT_AUTHORITIES);
-            final Authentication authenticate = authenticationManager.authenticate(authentication);
-
-            SecurityContextHolder.getContext().setAuthentication(authenticate);
-        }
-
-        chain.doFilter(request, response);
-    }
-
-    @Deprecated
-    private Long createVisitorId() {
-        // TODO:
-        return System.nanoTime();
-/*
-        final long l = System.currentTimeMillis();
-		while (lastGeneratedVisitorId >= l) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException ignore) {
+			Long visitorId = visitorServices.loadVisitorId(req, res);
+			if (visitorId == null) {
+				visitorId = createVisitorId();
+				visitorServices.saveVisitorId(visitorId, req, res);
 			}
+
+			final AnonymousAuthenticationToken authentication = new AnonymousAuthenticationToken("visitor", new Visitor(visitorId), DEFAULT_AUTHORITIES);
+			final Authentication authenticate = authenticationManager.authenticate(authentication);
+
+			SecurityContextHolder.getContext().setAuthentication(authenticate);
 		}
-		lastGeneratedVisitorId = l;
-		return lastGeneratedVisitorId;
-*/
-    }
 
-    public void setVisitorServices(VisitorServices visitorServices) {
-        this.visitorServices = visitorServices;
-    }
+		chain.doFilter(request, response);
+	}
 
-    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-    }
+	private Long createVisitorId() {
+		return System.nanoTime();
+	}
+
+	public void setVisitorServices(VisitorServices visitorServices) {
+		this.visitorServices = visitorServices;
+	}
+
+	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+		this.authenticationManager = authenticationManager;
+	}
 }

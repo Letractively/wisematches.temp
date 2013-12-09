@@ -50,7 +50,7 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 			throw new BadCredentialsException("No password provided");
 		}
 		final MemberDetails details = memberDetailsService.loadUserByUsername(username);
-		if (!accountManager.checkAccountCredentials(details.getId(), password)) {
+		if (!accountManager.validateCredentials(details.getId(), password)) {
 			throw new BadCredentialsException("Passwords mismatch");
 		}
 		return details;

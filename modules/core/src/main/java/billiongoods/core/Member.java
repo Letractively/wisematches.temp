@@ -5,28 +5,22 @@ package billiongoods.core;
  */
 public final class Member extends Personality {
 	private String email;
-	private String username;
-	private Settings settings;
+	private Passport passport;
 
 	private static final long serialVersionUID = -3657252453631101842L;
 
-	public Member(Long id, String email, String username, Settings settings) {
+	public Member(Long id, String email, Passport passport) {
 		super(id);
 		this.email = email;
-		this.username = username;
-		this.settings = settings;
+		this.passport = passport;
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public Settings getSettings() {
-		return settings;
+	public Passport getPassport() {
+		return passport;
 	}
 
 	@Override

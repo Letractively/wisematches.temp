@@ -2,6 +2,7 @@ package billiongoods.server.services.notify.impl.publisher;
 
 
 import billiongoods.core.Language;
+import billiongoods.core.Passport;
 import billiongoods.server.services.ServerDescriptor;
 import billiongoods.server.services.notify.Notification;
 import billiongoods.server.services.notify.PublicationException;
@@ -69,8 +70,10 @@ public class MailNotificationPublisher implements NotificationPublisher {
 					final StringBuilder m = new StringBuilder();
 					final Locale locale = language.getLocale();
 					m.append(messageSource.getMessage("notify.mail.header", null, locale));
-					if (person.getUsername() != null) {
-						m.append(" <b>").append(person.getUsername()).append("</b>.");
+
+					final Passport passport = person.getPassport();
+					if (passport != null) {
+						m.append(" <b>").append(passport.getUsername()).append("</b>.");
 					} else {
 						m.append(" <b>").append(messageSource.getMessage("notify.mail.customer", null, locale)).append("</b>.");
 					}
@@ -96,7 +99,8 @@ public class MailNotificationPublisher implements NotificationPublisher {
 	protected InternetAddress getInternetAddress(Recipient recipient, Language language) throws UnsupportedEncodingException {
 		if (recipient instanceof Recipient.Person) {
 			final Recipient.Person person = (Recipient.Person) recipient;
-			return new InternetAddress(person.getEmail(), person.getUsername(), "UTF-8");
+			final Passport passport = person.getPassport();
+			return new InternetAddress(person.getEmail(), passport != null ? passport.getUsername() : "", "UTF-8");
 		} else if (recipient instanceof Recipient.Application) {
 			final Recipient.Application application = (Recipient.Application) recipient;
 			return recipientCache.get(new RecipientKey(application.getMailBox(), language));

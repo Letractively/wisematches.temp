@@ -1,5 +1,6 @@
 package billiongoods.server.web.servlet.mvc.assistance;
 
+import billiongoods.core.Passport;
 import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.Recipient;
 import billiongoods.server.services.notify.Sender;
@@ -65,7 +66,7 @@ public class AssistanceController extends AbstractController {
 		final String id = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
 
 		try {
-			final Recipient returnAddress = Recipient.get(form.getEmail(), form.getName());
+			final Recipient returnAddress = Recipient.get(form.getEmail(), new Passport(form.getName()));
 			final Recipient recipient = Recipient.get(Recipient.MailBox.SUPPORT, returnAddress);
 
 			notificationService.raiseNotification(recipient, Sender.SERVER, "system.support", form, id);

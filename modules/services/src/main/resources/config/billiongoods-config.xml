@@ -128,10 +128,6 @@
         <property name="categoryManager" ref="catalogManager"/>
     </bean>
 
-    <bean id="memberSettingsManager" class="billiongoods.server.services.settings.impl.HibernateMemberSettingsManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
     <bean id="orderManager" class="billiongoods.server.services.payment.impl.HibernateOrderManager">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="couponManager" ref="couponManager"/>

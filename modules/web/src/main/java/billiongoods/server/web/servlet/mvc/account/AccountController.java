@@ -1,5 +1,7 @@
 package billiongoods.server.web.servlet.mvc.account;
 
+import billiongoods.core.Language;
+import billiongoods.core.Passport;
 import billiongoods.core.Visitor;
 import billiongoods.core.account.*;
 import billiongoods.server.services.ServerDescriptor;
@@ -116,7 +118,7 @@ public class AccountController extends AbstractController {
 											 Errors result, Locale locale) {
 		log.debug("Check account validation for: {} ('{}')", email, nickname);
 
-		final AccountAvailability a = accountManager.checkAccountAvailable(nickname, email);
+		final AccountAvailability a = accountManager.validateAvailability(nickname, email);
 		if (a.isAvailable()) {
 			return responseFactory.success();
 		} else {
@@ -159,7 +161,7 @@ public class AccountController extends AbstractController {
 			final Account account = accountManager.findByEmail(email);
 			if (account != null) {
 				addAccountAssociation(account, connection);
-				return forwardToAuthorization(request, account, true, true);
+				return forwardToAuthorization(request, account, true, "/account/social/finish");
 			}
 		}
 
@@ -189,7 +191,7 @@ public class AccountController extends AbstractController {
 		if (form.getUserId() != null) { // selection
 			final Account account = accountManager.getAccount(form.getUserId());
 			if (account != null) {
-				return forwardToAuthorization(request, account, true, true);
+				return forwardToAuthorization(request, account, true, "/account/social/finish");
 			} else {
 				log.error("Very strange. No account after selection. Start again?");
 				errors.reject("Inadmissible username");
@@ -200,14 +202,10 @@ public class AccountController extends AbstractController {
 			final String email = profile.getEmail();
 			final String username = profile.getName() == null ? profile.getUsername() : profile.getName();
 
-			final AccountEditor editor = new AccountEditor();
-			editor.setEmail(email);
-			editor.setUsername(username);
-
 			try {
-				final Account account = accountManager.createAccount(editor.createAccount(), UUID.randomUUID().toString());
+				final Account account = accountManager.createAccount(email, UUID.randomUUID().toString(), new Passport(username, Language.RU, TimeZone.getTimeZone("GMT+00:00")));
 				addAccountAssociation(account, connection);
-				return forwardToAuthorization(request, account, true, true);
+				return forwardToAuthorization(request, account, true, "/account/social/finish");
 			} catch (DuplicateAccountException e) {
 				log.error("Very strange. DuplicateAccountException shouldn't be here.", e);
 				errors.reject("Account with the same email already registered");
@@ -236,7 +234,7 @@ public class AccountController extends AbstractController {
 		Account account = null;
 		if (!result.hasErrors()) {
 			try {
-				account = createAccount(form);
+				account = accountManager.createAccount(form.getEmail(), form.getPassword(), new Passport(form.getUsername()));
 			} catch (DuplicateAccountException ex) {
 				final Set<String> fieldNames = ex.getFieldNames();
 				if (fieldNames.contains("email")) {
@@ -249,7 +247,7 @@ public class AccountController extends AbstractController {
 				result.rejectValue("nickname", "account.register.nickname.err.incorrect");
 			} catch (Exception ex) {
 				log.error("Account can't be created", ex);
-				result.reject("billiongoods.error.internal");
+				result.reject("error.internal");
 			}
 		}
 
@@ -261,20 +259,20 @@ public class AccountController extends AbstractController {
 
 			status.setComplete();
 			try {
-				notificationService.raiseNotification(Recipient.get(account), Sender.ACCOUNTS, "account.created", account, account.getUsername());
+				notificationService.raiseNotification(Recipient.get(account), Sender.ACCOUNTS, "account.created", account, account.getPassport().getUsername());
 			} catch (NotificationException e) {
 				log.error("Notification about new account can't be sent", e);
 			}
-			return forwardToAuthorization(request, account, form.isRememberMe(), false);
+			return forwardToAuthorization(request, account, form.isRememberMe(), null);
 		}
 	}
 
-	protected static String forwardToAuthorization(final NativeWebRequest request, final Account account, final boolean rememberMe, final boolean redirectToFinish) {
+	protected static String forwardToAuthorization(final NativeWebRequest request, final Account account, final boolean rememberMe, final String continueUrl) {
 		request.removeAttribute(ProviderSignInAttempt.SESSION_ATTRIBUTE, RequestAttributes.SCOPE_SESSION);
 
 		request.setAttribute("rememberMe", rememberMe, RequestAttributes.SCOPE_REQUEST);
 		request.setAttribute("PRE_AUTHENTICATED_ACCOUNT", account, RequestAttributes.SCOPE_REQUEST);
-		return "forward:/account/authorization" + (redirectToFinish ? "?continue=/account/social/finish" : "");
+		return "forward:/account/authorization" + (continueUrl != null ? "?continue=" + continueUrl : "");
 	}
 
 	private void addAccountAssociation(Account account, Connection<?> connection) {
@@ -287,13 +285,6 @@ public class AccountController extends AbstractController {
 			errors.rejectValue("confirm", "account.register.pwd-cfr.err.mismatch");
 		}
 		checkAvailability(form.getEmail(), form.getUsername(), errors, locale);
-	}
-
-	private Account createAccount(AccountRegistrationForm registration) throws AccountException {
-		final AccountEditor editor = new AccountEditor();
-		editor.setEmail(registration.getEmail());
-		editor.setUsername(registration.getUsername());
-		return accountManager.createAccount(editor.createAccount(), registration.getPassword());
 	}
 
 	@SuppressWarnings("deprecation")

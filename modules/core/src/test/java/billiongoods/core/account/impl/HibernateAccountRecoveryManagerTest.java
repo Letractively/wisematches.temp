@@ -1,5 +1,6 @@
 package billiongoods.core.account.impl;
 
+import billiongoods.core.Passport;
 import billiongoods.core.account.*;
 import org.hibernate.SessionFactory;
 import org.junit.Before;
@@ -44,11 +45,7 @@ public class HibernateAccountRecoveryManagerTest {
 
 	@Test
 	public void testManager() throws InterruptedException, InadmissibleUsernameException, DuplicateAccountException, UnknownAccountException {
-		final AccountEditor editor = new AccountEditor();
-		editor.setUsername("mock");
-		editor.setEmail("mock@wm.net");
-
-		final Account p = accountManager.createAccount(editor.createAccount(), "mock");
+		final Account p = accountManager.createAccount("mock@mock.bg", "mock", new Passport("mock"));
 
 		final RecoveryToken token = recoveryTokenManager.generateToken(p);
 		assertNotNull(token);

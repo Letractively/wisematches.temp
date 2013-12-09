@@ -1,7 +1,10 @@
 package billiongoods.core.account.impl;
 
+import billiongoods.core.Language;
+import billiongoods.core.Passport;
 import billiongoods.core.account.*;
 import org.easymock.EasyMock;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.TimeZone;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -38,7 +42,8 @@ public class HibernateAccountManagerTest {
 
 		accountManager.addAccountListener(l);
 		try {
-			createAccount("pwd");
+			final String email = generateEmail();
+			accountManager.createAccount(email, "pwd", new Passport(email));
 			EasyMock.verify(l);
 		} finally {
 			accountManager.removeAccountListener(l);
@@ -51,7 +56,8 @@ public class HibernateAccountManagerTest {
 		l.accountRemove(EasyMock.isA(HibernateAccount.class));
 		EasyMock.replay(l);
 
-		final Account player1 = createAccount("pwd");
+		final String email = generateEmail();
+		final Account player1 = accountManager.createAccount(email, "pwd", new Passport(email));
 		final Account player2 = accountManager.getAccount(player1.getId());
 
 		assertEquals(player1, player2);
@@ -68,23 +74,23 @@ public class HibernateAccountManagerTest {
 	}
 
 	@Test
+	@Ignore("This functionality is disabled")
 	public void testDuplicateUsername() throws Exception {
-		final Account account = createAccount("pwd");
+		final String username = "mock_username";
+		accountManager.createAccount(generateEmail(), "pwd", new Passport(username));
 
-		final AccountEditor editor = createMockEditor();
-		editor.setUsername(account.getUsername());
 		try {
-			accountManager.createAccount(editor.createAccount(), "pwd");
+			final String s = generateEmail();
+			accountManager.createAccount(s, "pwd", new Passport(username));
 			fail("DuplicateAccountException must be here");
 		} catch (DuplicateAccountException ex) {
 			assertEquals(1, ex.getFieldNames().size());
 			assertTrue(ex.getFieldNames().contains("username"));
 		}
 
-		final AccountEditor editor2 = createMockEditor();
-		editor2.setUsername(account.getUsername().toUpperCase());
 		try {
-			accountManager.createAccount(editor2.createAccount(), "pwd");
+			final String s = generateEmail();
+			accountManager.createAccount(s, "pwd", new Passport(username));
 			fail("DuplicateAccountException must be here");
 		} catch (DuplicateAccountException ex) {
 			assertEquals(1, ex.getFieldNames().size());
@@ -94,22 +100,19 @@ public class HibernateAccountManagerTest {
 
 	@Test
 	public void testDuplicateEMail() throws Exception {
-		final Account account = createAccount("pwd");
+		final String email = generateEmail();
+		accountManager.createAccount(email, "pwd", new Passport(email));
 
-		final AccountEditor editor = createMockEditor();
-		editor.setEmail(account.getEmail());
 		try {
-			accountManager.createAccount(editor.createAccount(), "pwd");
+			accountManager.createAccount(email, "pwd", new Passport(generateEmail()));
 			fail("DuplicateAccountException must be here");
 		} catch (DuplicateAccountException ex) {
 			assertEquals(1, ex.getFieldNames().size());
 			assertTrue(ex.getFieldNames().contains("email"));
 		}
 
-		final AccountEditor editor2 = createMockEditor();
-		editor2.setEmail(account.getEmail().toUpperCase());
 		try {
-			accountManager.createAccount(editor2.createAccount(), "pwd");
+			accountManager.createAccount(email, "pwd", new Passport(generateEmail()));
 			fail("DuplicateAccountException must be here");
 		} catch (DuplicateAccountException ex) {
 			assertEquals(1, ex.getFieldNames().size());
@@ -118,86 +121,70 @@ public class HibernateAccountManagerTest {
 	}
 
 	@Test
-	public void testDuplicateBoth() throws Exception {
-		final Account account = createAccount("pwd");
-
-		final AccountEditor editor = createMockEditor();
-		editor.setUsername(account.getUsername());
-		editor.setEmail(account.getEmail());
-		try {
-			accountManager.createAccount(editor.createAccount(), "pwd");
-			fail("DuplicateAccountException must be here");
-		} catch (DuplicateAccountException ex) {
-			assertEquals(2, ex.getFieldNames().size());
-			assertTrue(ex.getFieldNames().contains("username"));
-			assertTrue(ex.getFieldNames().contains("email"));
-		}
-
-		final AccountEditor editor2 = createMockEditor();
-		editor2.setUsername(account.getUsername().toUpperCase());
-		editor2.setEmail(account.getEmail().toUpperCase());
-		try {
-			accountManager.createAccount(editor2.createAccount(), "pwd");
-			fail("DuplicateAccountException must be here");
-		} catch (DuplicateAccountException ex) {
-			assertEquals(2, ex.getFieldNames().size());
-			assertTrue(ex.getFieldNames().contains("username"));
-			assertTrue(ex.getFieldNames().contains("email"));
-		}
-	}
-
-	@Test
-	public void testUpdateAccount() throws Exception {
+	public void testUpdateEmail() throws Exception {
 		final AccountListener l = EasyMock.createStrictMock(AccountListener.class);
 		l.accountUpdated(EasyMock.isA(Account.class), EasyMock.isA(HibernateAccount.class));
 		EasyMock.replay(l);
 
-		final Account p = createAccount("pwd");
-
-		final AccountEditor e = new AccountEditor(p);
-		e.setEmail("modified_" + e.getEmail());
+		final String email = generateEmail();
+		final Account p = accountManager.createAccount(email, "pwd", new Passport(email));
 
 		accountManager.addAccountListener(l);
 		try {
-			accountManager.updateAccount(e.createAccount(), "pwd2");
+			accountManager.updateEmail(p, "modified_" + email);
 			EasyMock.verify(l);
 		} finally {
 			accountManager.removeAccountListener(l);
 		}
 
 		final Account player = accountManager.getAccount(p.getId());
-		assertEquals(e.getEmail(), player.getEmail());
-		assertEquals(e.getUsername(), player.getUsername());
+		assertEquals("modified_" + email, player.getEmail());
+		assertEquals(email, player.getPassport().getUsername());
 	}
 
 	@Test
-	public void testValidatePassword() throws DuplicateAccountException, InadmissibleUsernameException, UnknownAccountException {
-		final Account op = createMockEditor().createAccount();
+	public void testUpdatePassport() throws Exception {
+		final AccountListener l = EasyMock.createStrictMock(AccountListener.class);
+		l.accountUpdated(EasyMock.isA(Account.class), EasyMock.isA(HibernateAccount.class));
+		EasyMock.replay(l);
 
-		final Account mock = accountManager.createAccount(op, "mockPwd");
-		assertTrue(accountManager.checkAccountCredentials(mock.getId(), "mockPwd"));
-		assertFalse(accountManager.checkAccountCredentials(mock.getId(), "mockPwd2"));
+		final String email = generateEmail();
+		final Account p = accountManager.createAccount(email, "pwd", new Passport(email));
 
-		final Account account = accountManager.updateAccount(mock, "mockPwd3");
-		assertTrue(accountManager.checkAccountCredentials(account.getId(), "mockPwd3"));
-		assertFalse(accountManager.checkAccountCredentials(account.getId(), "mockPwd"));
+		final Language lang = Language.EN;
+		final TimeZone timeZone = TimeZone.getTimeZone("GMT-8:10");
+
+		accountManager.addAccountListener(l);
+		try {
+			accountManager.updatePassport(p, new Passport("modified_" + p.getPassport().getUsername(), lang, timeZone));
+			EasyMock.verify(l);
+		} finally {
+			accountManager.removeAccountListener(l);
+		}
+
+		final Account player = accountManager.getAccount(p.getId());
+		assertEquals(email, player.getEmail());
+		assertEquals("modified_" + email, player.getPassport().getUsername());
+		assertEquals(lang, player.getPassport().getLanguage());
+		assertEquals(timeZone, player.getPassport().getTimeZone());
+	}
+
+	@Test
+	public void testValidateUpdatePassword() throws DuplicateAccountException, InadmissibleUsernameException, UnknownAccountException {
+		final String email = generateEmail();
+
+		final Account mock = accountManager.createAccount(email, "mockPwd", new Passport(email));
+		assertTrue(accountManager.validateCredentials(mock.getId(), "mockPwd"));
+		assertFalse(accountManager.validateCredentials(mock.getId(), "mockPwd2"));
+
+		final Account account = accountManager.updatePassword(mock, "mockPwd3");
+		assertTrue(accountManager.validateCredentials(account.getId(), "mockPwd3"));
+		assertFalse(accountManager.validateCredentials(account.getId(), "mockPwd"));
 
 		accountManager.removeAccount(account);
 	}
 
-	private Account createAccount(final String pwd) throws Exception {
-		final Account op = createMockEditor().createAccount();
-		final Account mock = accountManager.createAccount(op, pwd);
-
-		assertNotNull(mock);
-		assertFalse(0 == mock.getId());
-		assertEquals(op.getEmail(), mock.getEmail());
-		assertEquals(op.getUsername(), mock.getUsername());
-		return mock;
-	}
-
-	private AccountEditor createMockEditor() {
-		final String id = UUID.randomUUID().toString();
-		return new AccountEditor(id + "@wm.net", id);
+	private String generateEmail() {
+		return UUID.randomUUID().toString() + "@mock.bg";
 	}
 }

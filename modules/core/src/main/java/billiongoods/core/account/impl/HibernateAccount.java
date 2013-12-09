@@ -1,5 +1,6 @@
 package billiongoods.core.account.impl;
 
+import billiongoods.core.Passport;
 import billiongoods.core.account.Account;
 
 import javax.persistence.*;
@@ -19,17 +20,20 @@ import java.util.Set;
 @Table(name = "account_personality")
 @Cacheable(true)
 public class HibernateAccount extends Account {
+//	@Basic
+//	@Column(name = "username", nullable = false, length = 100, updatable = false)
+//	private String username;
+
 	@Basic
-	@Column(name = "username", nullable = false, length = 100, updatable = false)
-	private String username;
+	@Column(name = "email", nullable = false, length = 150)
+	private String email;
 
 	@Basic
 	@Column(name = "password", nullable = false, length = 100)
 	private String password;
 
-	@Basic
-	@Column(name = "email", nullable = false, length = 150)
-	private String email;
+	@Embedded
+	private Passport passport;
 
 	@Column(name = "role")
 	@ElementCollection(fetch = FetchType.EAGER)
@@ -42,11 +46,10 @@ public class HibernateAccount extends Account {
 	HibernateAccount() {
 	}
 
-	public HibernateAccount(Account account, String password) {
-		super(account.getId());
-		this.username = account.getUsername();
+	public HibernateAccount(String email, String password, Passport passport) {
+		this.email = email;
 		this.password = password;
-		updateAccountInfo(account, password);
+		this.passport = passport;
 	}
 
 	@Override
@@ -54,18 +57,30 @@ public class HibernateAccount extends Account {
 		return email;
 	}
 
-	@Override
-	public String getUsername() {
-		return username;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 
 	@Override
+	public Passport getPassport() {
+		return passport;
+	}
+
+	@Override
 	public Set<String> getRoles() {
 		return roles;
+	}
+
+	void setEmail(String email) {
+		this.email = email;
+	}
+
+	void setPassword(String password) {
+		this.password = password;
+	}
+
+	void setPassport(Passport passport) {
+		this.passport = passport;
 	}
 
 	@Override
@@ -75,21 +90,5 @@ public class HibernateAccount extends Account {
 		sb.append("{id=").append(getId());
 		sb.append('}');
 		return sb.toString();
-	}
-
-	/**
-	 * Private method. Allows update player info without creation new object.
-	 *
-	 * @param account the player with exist
-	 */
-	final void updateAccountInfo(Account account, String password) {
-		if (!this.equals(account)) {
-			throw new IllegalArgumentException("Player ids are not equals.");
-		}
-		if (password != null) {
-			this.password = password;
-		}
-		this.email = account.getEmail();
-		this.username = account.getUsername();
 	}
 }

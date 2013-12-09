@@ -1,6 +1,7 @@
 package billiongoods.server.services.notify;
 
 import billiongoods.core.Member;
+import billiongoods.core.Passport;
 import billiongoods.core.account.Account;
 
 /**
@@ -14,16 +15,16 @@ public abstract class Recipient {
 		return new Person(email, null);
 	}
 
-	public static Recipient get(String email, String username) {
-		return new Person(email, username);
+	public static Recipient get(String email, Passport passport) {
+		return new Person(email, passport);
 	}
 
 	public static Recipient get(Member member) {
-		return new Person(member.getEmail(), member.getUsername());
+		return new Person(member.getEmail(), member.getPassport());
 	}
 
 	public static Recipient get(Account account) {
-		return new Person(account.getEmail(), account.getUsername());
+		return new Person(account.getEmail(), account.getPassport());
 	}
 
 	public static Recipient get(MailBox mailBox) {
@@ -51,19 +52,19 @@ public abstract class Recipient {
 
 	public static final class Person extends Recipient {
 		private final String email;
-		private final String username;
+		private final Passport passport;
 
-		private Person(String email, String username) {
+		private Person(String email, Passport passport) {
 			this.email = email;
-			this.username = username;
+			this.passport = passport;
 		}
 
 		public String getEmail() {
 			return email;
 		}
 
-		public String getUsername() {
-			return username;
+		public Passport getPassport() {
+			return passport;
 		}
 	}
 
