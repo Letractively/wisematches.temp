@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<#include "/content/head.ftl"/>
+<#include "/content/meta.ftl"/>
 </head>
 <body>
 <table style="height: 28px; padding: 3px">

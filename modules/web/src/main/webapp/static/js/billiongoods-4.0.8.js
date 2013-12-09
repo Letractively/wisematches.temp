@@ -951,4 +951,10 @@ $(document).ready(function () {
     }, function () {
         globalCatalog.hide();
     });
+
+    $(".social-signin-link").click(function (event) {
+        event.preventDefault();
+        bg.ui.popupwindow($(this).attr("href"), "BillionGoods: Авторизация", 500, 300).focus();
+        return false;
+    });
 });

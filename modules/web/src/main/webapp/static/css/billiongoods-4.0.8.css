@@ -1914,6 +1914,14 @@ button.bg-ui-button.selected {
     background: url("../images/social/icons16.png");
 }
 
+.social-logo {
+    width: 89px;
+    height: 30px;
+    overflow: hidden;
+    display: inline-block !important;
+    background: url("../images/social/logo.png");
+}
+
 .social-icon-24 {
     width: 24px;
     height: 24px;
@@ -1989,4 +1997,15 @@ button.bg-ui-button.selected {
 
 .settings .cnt {
     padding-top: 10px;
+}
+
+.settings .social th {
+    color: #808080;
+    padding: 5px;
+    text-align: left;
+}
+
+.settings .social td {
+    padding: 5px;
+    border-top: 1px solid #ebebeb;
 }

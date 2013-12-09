@@ -149,10 +149,4 @@
         bg.util.url.redirect(bg.util.url.extend($(this).attr('href'), "email", $("#j_username").val(), true));
         return false;
     });
-
-    $(".social-signin-link").click(function (event) {
-        event.preventDefault();
-        bg.ui.popupwindow($(this).attr("href"), "BillionGoods: Авторизация", 500, 300).focus();
-        return false;
-    });
 </script>

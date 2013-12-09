@@ -145,7 +145,7 @@
     </beans:bean>
 
     <beans:bean id="socialAuthenticationFilter"
-                class="org.springframework.social.security.SocialAuthenticationFilter">
+                class="billiongoods.server.web.security.social.SocialAuthenticationFilter">
         <beans:property name="filterProcessesUrl" value="/account/social"/>
 
         <beans:constructor-arg name="authManager" ref="authenticationManager"/>
@@ -157,7 +157,8 @@
 
         <beans:property name="signupUrl" value="/account/social/association"/>
         <beans:property name="defaultFailureUrl" value="/account/social/finish"/>
-        <beans:property name="connectionAddedRedirectUrl" value="/account/social/finish"/>
+        <beans:property name="connectionAddedRedirectUrl"
+                        value="/account/social/finish?continue=/account/passport/social"/>
 
         <beans:property name="rememberMeServices" ref="rememberMeServices"/>
 
