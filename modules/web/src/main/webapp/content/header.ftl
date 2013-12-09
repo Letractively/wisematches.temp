@@ -22,7 +22,7 @@
             <@bg.security.permitted "member";member>
                 <#if member>
                     Добро Пожаловать,
-                    <a class="highlight" href="/privacy/view">${principal.username}</a>
+                    <a class="highlight" href="/privacy/view">${principal.passport.username}</a>
                 <#else>
                 <#-- TODO: account management is not fully ready -->
                 <#--Добро Пожаловать!-->

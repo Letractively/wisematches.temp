@@ -34,7 +34,7 @@
         <table>
             <#list accounts as c>
                 <tr>
-                    <td>${c.username}</td>
+                    <td>${c.passport.username}</td>
                 </tr>
             </#list>
         </table>
