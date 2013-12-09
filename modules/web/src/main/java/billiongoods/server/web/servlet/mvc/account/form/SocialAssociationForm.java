@@ -7,6 +7,7 @@ public class SocialAssociationForm {
 	private Long userId;
 	private String email;
 	private String action;
+	private String finish = "/account/social/finish";
 
 	public SocialAssociationForm() {
 	}
@@ -33,5 +34,13 @@ public class SocialAssociationForm {
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+	public String getFinish() {
+		return finish;
+	}
+
+	public void setFinish(String finish) {
+		this.finish = finish;
 	}
 }

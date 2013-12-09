@@ -161,7 +161,7 @@ public class AccountController extends AbstractController {
 			final Account account = accountManager.findByEmail(email);
 			if (account != null) {
 				addAccountAssociation(account, connection);
-				return forwardToAuthorization(request, account, true, "/account/social/finish");
+				return forwardToAuthorization(request, account, true, form.getFinish());
 			}
 		}
 
@@ -191,7 +191,7 @@ public class AccountController extends AbstractController {
 		if (form.getUserId() != null) { // selection
 			final Account account = accountManager.getAccount(form.getUserId());
 			if (account != null) {
-				return forwardToAuthorization(request, account, true, "/account/social/finish");
+				return forwardToAuthorization(request, account, true, form.getFinish());
 			} else {
 				log.error("Very strange. No account after selection. Start again?");
 				errors.reject("Inadmissible username");
@@ -205,7 +205,7 @@ public class AccountController extends AbstractController {
 			try {
 				final Account account = accountManager.createAccount(email, UUID.randomUUID().toString(), new Passport(username, Language.RU, TimeZone.getTimeZone("GMT+00:00")));
 				addAccountAssociation(account, connection);
-				return forwardToAuthorization(request, account, true, "/account/social/finish");
+				return forwardToAuthorization(request, account, true, form.getFinish());
 			} catch (DuplicateAccountException e) {
 				log.error("Very strange. DuplicateAccountException shouldn't be here.", e);
 				errors.reject("Account with the same email already registered");
@@ -218,7 +218,8 @@ public class AccountController extends AbstractController {
 	}
 
 	@RequestMapping("/social/finish")
-	public String socialAssociationFinish() {
+	public String socialAssociationFinish(@RequestParam(value = "continue", defaultValue = "/privacy/view") String continueUrl, Model model) {
+		model.addAttribute("continue", continueUrl);
 		return "/content/account/social/finish";
 	}
 

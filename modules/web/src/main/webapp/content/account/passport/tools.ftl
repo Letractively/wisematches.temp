@@ -1,6 +1,6 @@
 <#include "/core.ftl">
 
-<#macro form action title>
+<#macro form action title buttons=true>
 <form action="${action}" method="post">
     <div class="settings">
         <div class="tit">
@@ -9,10 +9,12 @@
         <div class="cnt">
             <#nested/>
         </div>
-        <div class="question" style="padding-top: 20px">
-            <button>Сохранить</button>
-            <button type="button" onclick="location.href='/account/passport/view'">Отмена</button>
-        </div>
+        <#if buttons>
+            <div class="question" style="padding-top: 20px">
+                <button>Сохранить</button>
+                <button type="button" onclick="location.href='/account/passport/view'">Отмена</button>
+            </div>
+        </#if>
     </div>
 </form>
 </#macro>

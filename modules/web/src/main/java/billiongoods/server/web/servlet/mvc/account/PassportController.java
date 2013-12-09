@@ -19,8 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.security.SocialAuthenticationServiceLocator;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +32,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +49,7 @@ public class PassportController extends AbstractController {
 	private TimeZoneManager timeZoneManager;
 
 	private UsersConnectionRepository usersConnectionRepository;
+	private SocialAuthenticationServiceLocator authenticationServiceLocator;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.web.mvc.SettingsController");
 
@@ -170,20 +174,32 @@ public class PassportController extends AbstractController {
 		return passwordView(form, model);
 	}
 
-
-	@RequestMapping(value = "/social")
-	public String socialSettings(Model model) {
+	@RequestMapping(value = "/social", method = RequestMethod.GET)
+	public String socialView(Model model) {
 		final Personality principal = getPrincipal();
 
 		final String userId = String.valueOf(principal.getId());
 		final ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(userId);
-
 		final MultiValueMap<String, Connection<?>> allConnections = connectionRepository.findAllConnections();
 
-		model.addAttribute("providers", allConnections.keySet());
 		model.addAttribute("connections", allConnections);
+		model.addAttribute("socialProviders", authenticationServiceLocator.registeredAuthenticationProviderIds());
 
 		return "/content/account/passport/social";
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "/social", method = RequestMethod.POST)
+	public String socialAction(@RequestParam("connectionKey") String action, Model model) {
+		final String[] split = action.split("\\|");
+
+		final Personality principal = getPrincipal();
+		final String userId = String.valueOf(principal.getId());
+
+		final ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(userId);
+		connectionRepository.removeConnection(new ConnectionKey(split[0], split[1]));
+
+		return socialView(model);
 	}
 
 	@Autowired
@@ -199,5 +215,10 @@ public class PassportController extends AbstractController {
 	@Autowired
 	public void setUsersConnectionRepository(UsersConnectionRepository usersConnectionRepository) {
 		this.usersConnectionRepository = usersConnectionRepository;
+	}
+
+	@Autowired
+	public void setAuthenticationServiceLocator(SocialAuthenticationServiceLocator authenticationServiceLocator) {
+		this.authenticationServiceLocator = authenticationServiceLocator;
 	}
 }
