@@ -1,7 +1,7 @@
 <#include "/core.ftl">
 
 <div class="settings">
-    <form action="/account/settings/notifications" method="post">
+    <form action="/account/passport/notifications" method="post">
         <div class="tit">
             Настройка уведомлений
         </div>

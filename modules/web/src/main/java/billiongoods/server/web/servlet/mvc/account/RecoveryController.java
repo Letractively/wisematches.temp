@@ -1,7 +1,10 @@
 package billiongoods.server.web.servlet.mvc.account;
 
 
-import billiongoods.core.account.*;
+import billiongoods.core.account.Account;
+import billiongoods.core.account.AccountManager;
+import billiongoods.core.account.AccountRecoveryManager;
+import billiongoods.core.account.RecoveryToken;
 import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.Recipient;
 import billiongoods.server.services.notify.Sender;
@@ -45,7 +48,7 @@ public class RecoveryController extends AbstractController {
 
 	@RequestMapping(value = "request")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String recoveryRequestPage(HttpSession session, Model model, @Valid @ModelAttribute("recovery") RecoveryRequestForm form, BindingResult result) {
+	public String recoveryRequestPage(HttpSession session, @Valid @ModelAttribute("recovery") RecoveryRequestForm form, BindingResult result) {
 		log.info("Recovery password for {}", form);
 
 		if (form.isRecoveryAccount()) {
@@ -97,13 +100,12 @@ public class RecoveryController extends AbstractController {
 		if (form.isRecoveryAccount()) {
 			final Account account = checkRecoveryForm(form, result);
 			if (!result.hasErrors()) {
-				final AccountEditor e = new AccountEditor(account);
 				try {
 					recoveryTokenManager.clearToken(account); // remove token. Mandatory operation or expired exception will be thrown
-					accountManager.updateAccount(e.createAccount(), form.getPassword());
+					accountManager.updatePassword(account, form.getPassword());
 
 					notificationService.raiseNotification(Recipient.get(account), Sender.ACCOUNTS, "account.updated", account);
-					return AccountController.forwardToAuthorization(request, account, form.isRememberMe(), false);
+					return AccountController.forwardToAuthorization(request, account, form.isRememberMe(), null);
 				} catch (Exception e1) {
 					result.rejectValue("email", "account.recovery.err.system");
 				}

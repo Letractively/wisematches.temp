@@ -1,5 +1,7 @@
 package billiongoods.core.account;
 
+import billiongoods.core.Passport;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -29,6 +31,7 @@ public abstract class Account implements Serializable {
 		this.id = id;
 	}
 
+
 	public Long getId() {
 		return id;
 	}
@@ -43,13 +46,11 @@ public abstract class Account implements Serializable {
 	public abstract String getEmail();
 
 	/**
-	 * Returns a username of the player.
-	 * <p/>
-	 * This value can't be null.
+	 * Returns passport for this account.
 	 *
-	 * @return not null username of the player.
+	 * @return the passport for this account.
 	 */
-	public abstract String getUsername();
+	public abstract Passport getPassport();
 
 	/**
 	 * Returns all account roles.
@@ -59,16 +60,16 @@ public abstract class Account implements Serializable {
 	public abstract Set<String> getRoles();
 
 	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Account)) return false;
 
 		Account account = (Account) o;
 		return id.equals(account.id);
-	}
-
-	@Override
-	public int hashCode() {
-		return id.hashCode();
 	}
 }

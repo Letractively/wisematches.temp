@@ -76,13 +76,13 @@ public class HibernateAccountLockManager implements AccountLockManager {
 	}
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isAccountLocked(final Account player) {
+	public boolean isAccountLocked(final Account account) {
 		final Session session = sessionFactory.getCurrentSession();
 		final Query query = session.createQuery("" +
 				"select lock.unlockDate " +
 				"from HibernateAccountLockInfo lock " +
 				"where lock.accountId = :pid");
-		query.setParameter("pid", player.getId());
+		query.setParameter("pid", account.getId());
 		final Date unlockDate = (Date) query.uniqueResult();
 
 		if (unlockDate != null) {
@@ -90,11 +90,11 @@ public class HibernateAccountLockManager implements AccountLockManager {
 			if (!res) {
 				final Query q = session.createQuery("delete from HibernateAccountLockInfo " +
 						"lock where lock.accountId = :pid");
-				q.setParameter("pid", player.getId());
+				q.setParameter("pid", account.getId());
 				q.executeUpdate();
 
 				for (AccountLockListener accountLockListener : accountLockListeners) {
-					accountLockListener.accountUnlocked(player);
+					accountLockListener.accountUnlocked(account);
 				}
 			}
 			return res;

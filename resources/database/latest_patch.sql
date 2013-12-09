@@ -1,28 +1,15 @@
-#12.05
-CREATE TABLE `billiongoods`.`account_settings` (
-  `id`                BIGINT(20)   NOT NULL,
-  `timeZone`          VARCHAR(245) NULL,
-  `orderNotification` TINYINT      NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `account`
-  FOREIGN KEY (`id`)
-  REFERENCES `billiongoods`.`account_personality` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION);
+#12.09
+ALTER TABLE `billiongoods`.`account_personality`
+CHANGE COLUMN `email` `email` VARCHAR(150) NULL
+AFTER `id`,
+CHANGE COLUMN `password` `password` VARCHAR(100) NULL DEFAULT NULL
+AFTER `email`,
+ADD COLUMN `language` TINYINT NULL
+AFTER `username`,
+ADD COLUMN `timezone` VARCHAR(245) NULL
+AFTER `language`;
 
-ALTER TABLE `billiongoods`.`account_settings`
-ADD COLUMN `language` TINYINT(4) NULL
-AFTER `id`;
-
-ALTER TABLE `billiongoods`.`account_settings`
-CHANGE COLUMN `language` `language` TINYINT(4) NOT NULL,
-CHANGE COLUMN `timeZone` `timeZone` VARCHAR(245) NOT NULL,
-CHANGE COLUMN `orderNotification` `orderNotification` TINYINT(4) NOT NULL;
-
-ALTER TABLE `billiongoods`.`account_settings`
-CHANGE COLUMN `orderNotification` `ordersGate` TINYINT(4) NOT NULL;
-
-INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1205');
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1209');
 
 #12.03
 ALTER TABLE `billiongoods`.`store_coupon`

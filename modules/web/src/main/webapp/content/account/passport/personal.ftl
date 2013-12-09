@@ -43,29 +43,29 @@
                 </div>
 
                 <div class="cnt">
-                    <a href="/account/settings/modify"><strong>Изменить персональные данные</strong></a>
+                    <a href="/account/passport/modify"><strong>Изменить персональные данные</strong></a>
                 </div>
             </td>
 
             <td valign="top" nowrap="nowrap">
                 <div class="cnt">
                 <#if principal.email?has_content>
-                    <a href="/account/settings/email">Именить адрес электронной почты</a>
+                    <a href="/account/passport/email">Именить адрес электронной почты</a>
                 <#else>
-                    <a href="/account/settings/email">Добавить адрес электронной почты</a>
+                    <a href="/account/passport/email">Добавить адрес электронной почты</a>
                 </#if>
                     <br>
                     <span class="sample">Адрес электронной почты для получения статуса заказов</span>
                 </div>
 
                 <div class="cnt">
-                    <a href="/account/settings/password">Сменить пароль</a>
+                    <a href="/account/passport/password">Сменить пароль</a>
                     <br>
                     <span class="sample">Храните в тайне ваш пароль на BillionGoods</span>
                 </div>
 
                 <div class="cnt">
-                    <a href="/account/settings/remove">Удалить аккаунт</a>
+                    <a href="/account/passport/remove">Удалить аккаунт</a>
                 </div>
             </td>
         </tr>

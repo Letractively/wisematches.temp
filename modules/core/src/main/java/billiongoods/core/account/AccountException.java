@@ -8,24 +8,11 @@ package billiongoods.core.account;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class AccountException extends Exception {
-	private final Account account;
-
-	public AccountException(String message, Account account) {
+	public AccountException(String message) {
 		super(message);
-		this.account = account;
 	}
 
-	public AccountException(String message, Throwable cause, Account account) {
+	public AccountException(String message, Throwable cause) {
 		super(message, cause);
-		this.account = account;
-	}
-
-	/**
-	 * Returns original player object that caused this exception.
-	 *
-	 * @return the player object.
-	 */
-	public Account getAccount() {
-		return account;
 	}
 }

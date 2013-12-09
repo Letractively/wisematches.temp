@@ -1,5 +1,7 @@
 package billiongoods.core.account;
 
+import billiongoods.core.Passport;
+
 /**
  * <code>AccountManager</code> allows create and authentificate players or does search by some criteria.
  * <p/>
@@ -35,35 +37,22 @@ public interface AccountManager {
 	 * Creates new player based on information in specified player object. This method does not
 	 * modify original object and returns new object instead.
 	 *
-	 * @param account  the player to be created.
-	 * @param password the password for specified account.
+	 * @param email    the email address for the account
+	 * @param password the password for the account.
+	 * @param passport the passport of the account
 	 * @return created player object possible the same but can be new one so returned object must be
 	 * used after this method was called.
 	 * @throws DuplicateAccountException     if account with specified username or email already exist.
 	 * @throws InadmissibleUsernameException if select username can't be used by User Naming Policy
 	 */
-	Account createAccount(Account account, String password) throws DuplicateAccountException, InadmissibleUsernameException;
+	Account createAccount(String email, String password, Passport passport) throws DuplicateAccountException, InadmissibleUsernameException;
 
-	/**
-	 * Updates specified player. The player must be
-	 *
-	 * @param account  the player with new information.
-	 * @param password new password for specified account or {@code null} if password mustn't be changed.
-	 * @return returns updated account
-	 * @throws UnknownAccountException       if an account for specified player is unknown.
-	 * @throws DuplicateAccountException     if account with specified username or email already exist.
-	 * @throws InadmissibleUsernameException if username is not correct and can't be used
-	 */
-	Account updateAccount(Account account, String password) throws UnknownAccountException, DuplicateAccountException, InadmissibleUsernameException;
 
-	/**
-	 * Removes specified player.
-	 *
-	 * @param account the player to be removed.
-	 * @return removed account.
-	 * @throws UnknownAccountException if an account for specified player is unknown.
-	 */
-	Account removeAccount(Account account) throws UnknownAccountException;
+	Account updateEmail(Account account, String email) throws UnknownAccountException, DuplicateAccountException;
+
+	Account updatePassword(Account account, String password) throws UnknownAccountException;
+
+	Account updatePassport(Account account, Passport password) throws UnknownAccountException, DuplicateAccountException, InadmissibleUsernameException;
 
 
 	/**
@@ -74,7 +63,7 @@ public interface AccountManager {
 	 * @param password original raw password for comparation
 	 * @return valid account if password is valid for specified account or {@code null} if not.
 	 */
-	boolean checkAccountCredentials(Long id, String password);
+	boolean validateCredentials(Long id, String password);
 
 	/**
 	 * Checks is account with specified username and email can be created or not.
@@ -83,5 +72,15 @@ public interface AccountManager {
 	 * @param email    the email to be checked.
 	 * @return the {@code AccountAvailability} object that contains information about availability.
 	 */
-	AccountAvailability checkAccountAvailable(String username, String email);
+	AccountAvailability validateAvailability(String username, String email);
+
+
+	/**
+	 * Removes specified player.
+	 *
+	 * @param account the player to be removed.
+	 * @return removed account.
+	 * @throws UnknownAccountException if an account for specified player is unknown.
+	 */
+	Account removeAccount(Account account) throws UnknownAccountException;
 }

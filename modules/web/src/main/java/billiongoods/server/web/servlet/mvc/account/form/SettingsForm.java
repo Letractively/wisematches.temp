@@ -6,6 +6,7 @@ package billiongoods.server.web.servlet.mvc.account.form;
 public class SettingsForm {
 	private String username;
 	private String timeZone;
+	private String language;
 
 	public SettingsForm() {
 	}
@@ -24,5 +25,13 @@ public class SettingsForm {
 
 	public void setTimeZone(String timeZone) {
 		this.timeZone = timeZone;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 }

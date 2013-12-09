@@ -14,10 +14,10 @@ import java.util.Set;
 public class DuplicateAccountException extends AccountException {
 	private final Set<String> fieldNames;
 
-	public DuplicateAccountException(Account account, String... fieldNames) {
-		super("DuplicateAccount: " + Arrays.toString(fieldNames), account);
+	public DuplicateAccountException(String... fieldNames) {
+		super("DuplicateAccount: " + Arrays.toString(fieldNames));
 		if (fieldNames != null) {
-			this.fieldNames = new HashSet<String>(Arrays.asList(fieldNames));
+			this.fieldNames = new HashSet<>(Arrays.asList(fieldNames));
 		} else {
 			this.fieldNames = null;
 		}

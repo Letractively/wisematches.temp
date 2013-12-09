@@ -25,7 +25,6 @@
                 class="billiongoods.server.web.security.MemberDetailsService">
         <beans:property name="accountManager" ref="accountManager"/>
         <beans:property name="accountLockManager" ref="accountLockManager"/>
-        <beans:property name="memberSettingsManager" ref="memberSettingsManager"/>
         <beans:property name="accountRecoveryManager" ref="accountRecoveryManager"/>
     </beans:bean>
 
@@ -215,7 +214,7 @@
 
     <http use-expressions="true">
         <intercept-url pattern="/privacy/**" access="isAuthenticated()"/>
-        <intercept-url pattern="/account/settings/**" access="isFullyAuthenticated()"/>
+        <intercept-url pattern="/account/passport/**" access="isFullyAuthenticated()"/>
 
         <intercept-url pattern="/maintain/**" access="hasRole('admin') and isFullyAuthenticated()"/>
 

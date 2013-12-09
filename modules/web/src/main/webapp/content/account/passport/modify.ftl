@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="timeZones" type="billiongoods.server.services.timezone.TimeZoneEntry[]" -->
 <#include "/core.ftl">
 
-<form action="/account/settings/modify" method="post">
+<form action="/account/passport/modify" method="post">
     <div class="settings">
         <div class="tit">
             Изменение персональных данных

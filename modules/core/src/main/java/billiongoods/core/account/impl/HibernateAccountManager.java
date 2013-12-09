@@ -1,5 +1,6 @@
 package billiongoods.core.account.impl;
 
+import billiongoods.core.Passport;
 import billiongoods.core.account.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -27,9 +28,9 @@ public class HibernateAccountManager implements AccountManager {
 	private final Collection<AccountListener> accountListeners = new CopyOnWriteArraySet<>();
 
 	private static final String CHECK_ACCOUNT_AVAILABILITY = "" +
-			"select account.username, account.email " +
+			"select account.passport.username, account.email " +
 			"from HibernateAccount as account " +
-			"where account.username like :nick or account.email like :email";
+			"where account.passport.username like :nick or account.email like :email";
 
 	private final Lock lock = new ReentrantLock();
 
@@ -81,13 +82,13 @@ public class HibernateAccountManager implements AccountManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.READ_UNCOMMITTED)
-	public Account createAccount(Account account, String password) throws DuplicateAccountException, InadmissibleUsernameException {
+	public Account createAccount(String email, String password, Passport passport) throws DuplicateAccountException, InadmissibleUsernameException {
 		lock.lock();
 		try {
-			checkAccount(account);
+			checkAccount(email, passport);
 
 			final Session session = sessionFactory.getCurrentSession();
-			final HibernateAccount hp = new HibernateAccount(account, passwordEncoder.encode(password));
+			final HibernateAccount hp = new HibernateAccount(email, passwordEncoder.encode(password), passport);
 			session.save(hp);
 			for (AccountListener accountListener : accountListeners) {
 				accountListener.accountCreated(hp);
@@ -100,37 +101,75 @@ public class HibernateAccountManager implements AccountManager {
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.READ_UNCOMMITTED)
-	public Account updateAccount(Account account, String password) throws UnknownAccountException, DuplicateAccountException, InadmissibleUsernameException {
+	public Account updateEmail(Account account, String email) throws UnknownAccountException, DuplicateAccountException {
 		lock.lock();
 		try {
-			HibernateAccount oldAccount = (HibernateAccount) getAccount(account.getId());
-			if (oldAccount == null) {
+			HibernateAccount acc = (HibernateAccount) getAccount(account.getId());
+			if (acc == null) {
 				throw new UnknownAccountException(account);
 			}
 
-			if (!oldAccount.getEmail().equalsIgnoreCase(account.getEmail())) {
-				if (!checkAccountAvailable(account.getUsername(), account.getEmail()).isEmailAvailable()) {
-					throw new DuplicateAccountException(account, "email");
+			final String oldEmail = acc.getEmail();
+			if (!oldEmail.equalsIgnoreCase(email)) {
+				if (!validateAvailability(account.getPassport().getUsername(), email).isEmailAvailable()) {
+					throw new DuplicateAccountException("email");
 				}
 			}
 
-			// Copy previous state
-			final Account prev = new AccountEditor(oldAccount).createAccount();
+			acc.setEmail(email);
 
-			String pwd = password;
-			if (pwd != null) {
-				pwd = passwordEncoder.encode(password);
-			}
-
-			// merge and update
-			final Session session = sessionFactory.getCurrentSession();
-			oldAccount.updateAccountInfo(account, pwd);
-			session.save(oldAccount);
+			sessionFactory.getCurrentSession().update(acc);
 
 			for (AccountListener playerListener : accountListeners) {
-				playerListener.accountUpdated(prev, oldAccount);
+				playerListener.accountUpdated(acc, acc);
 			}
-			return oldAccount;
+			return acc;
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.READ_UNCOMMITTED)
+	public Account updatePassword(Account account, String password) throws UnknownAccountException {
+		lock.lock();
+		try {
+			HibernateAccount acc = (HibernateAccount) getAccount(account.getId());
+			if (acc == null) {
+				throw new UnknownAccountException(account);
+			}
+
+			acc.setPassword(password != null ? passwordEncoder.encode(password) : null);
+
+			sessionFactory.getCurrentSession().update(acc);
+
+			for (AccountListener playerListener : accountListeners) {
+				playerListener.accountUpdated(acc, acc);
+			}
+			return acc;
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY, isolation = Isolation.READ_UNCOMMITTED)
+	public Account updatePassport(Account account, Passport passport) throws UnknownAccountException, DuplicateAccountException, InadmissibleUsernameException {
+		lock.lock();
+		try {
+			HibernateAccount acc = (HibernateAccount) getAccount(account.getId());
+			if (acc == null) {
+				throw new UnknownAccountException(account);
+			}
+
+			acc.setPassport(passport);
+
+			sessionFactory.getCurrentSession().update(acc);
+
+			for (AccountListener playerListener : accountListeners) {
+				playerListener.accountUpdated(acc, acc);
+			}
+			return acc;
 		} finally {
 			lock.unlock();
 		}
@@ -158,15 +197,15 @@ public class HibernateAccountManager implements AccountManager {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_UNCOMMITTED)
-	public boolean checkAccountCredentials(Long id, String password) {
+	public boolean validateCredentials(Long id, String password) {
 		lock.lock();
 		try {
 			final Session session = sessionFactory.getCurrentSession();
-			final Query query = session.createQuery("select password, username from HibernateAccount where id=:pid");
+			final Query query = session.createQuery("select password from HibernateAccount where id=:pid");
 			query.setParameter("pid", id);
 
-			final Object[] o = (Object[]) query.uniqueResult();
-			return o != null && passwordEncoder.matches(password, (String) o[0]);
+			final Object o = query.uniqueResult();
+			return o != null && passwordEncoder.matches(password, (String) o);
 		} finally {
 			lock.unlock();
 		}
@@ -174,7 +213,7 @@ public class HibernateAccountManager implements AccountManager {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_UNCOMMITTED)
-	public AccountAvailability checkAccountAvailable(final String username, final String email) {
+	public AccountAvailability validateAvailability(String username, String email) {
 		lock.lock();
 		try {
 			final Session session = sessionFactory.getCurrentSession();
@@ -201,20 +240,20 @@ public class HibernateAccountManager implements AccountManager {
 		}
 	}
 
-	private void checkAccount(final Account account) throws InadmissibleUsernameException, DuplicateAccountException {
-		final String reason = accountLockManager.isNicknameLocked(account.getUsername());
+	private void checkAccount(final String email, Passport passport) throws InadmissibleUsernameException, DuplicateAccountException {
+		final String reason = accountLockManager.isNicknameLocked(passport.getUsername());
 		if (reason != null) {
-			throw new InadmissibleUsernameException(account, reason);
+			throw new InadmissibleUsernameException(passport.getUsername(), reason);
 		}
 
-		final AccountAvailability a = checkAccountAvailable(account.getUsername(), account.getEmail());
+		final AccountAvailability a = validateAvailability(passport.getUsername(), email);
 		if (!a.isAvailable()) {
 			if (!a.isEmailAvailable() && a.isUsernameAvailable()) {
-				throw new DuplicateAccountException(account, "email");
+				throw new DuplicateAccountException("email");
 			} else if (a.isEmailAvailable() && !a.isUsernameAvailable()) {
-				throw new DuplicateAccountException(account, "username");
+				throw new DuplicateAccountException("username");
 			} else {
-				throw new DuplicateAccountException(account, "username", "email");
+				throw new DuplicateAccountException("username", "email");
 			}
 		}
 	}
