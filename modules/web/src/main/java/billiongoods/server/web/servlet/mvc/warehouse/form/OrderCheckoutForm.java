@@ -1,116 +1,38 @@
 package billiongoods.server.web.servlet.mvc.warehouse.form;
 
-import billiongoods.server.services.payment.Address;
+import billiongoods.server.services.address.Address;
+import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.payment.ShipmentType;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class OrderCheckoutForm implements Address {
-	private int[] itemQuantities;
-	private Integer[] itemNumbers;
+public class OrderCheckoutForm {
+	private Basket basket;
+	private Address address;
+	private ShipmentType shipmentType;
+	private boolean enabledTracking;
 
-	private String name;
-	private String region;
-	private String city;
-	private String postalCode;
-	private String streetAddress;
-
-	private String action = null;
-
-	private String coupon = null;
-	private boolean notifications = true;
-
-	private ShipmentType shipment = ShipmentType.FREE;
-
-	public OrderCheckoutForm() {
+	public OrderCheckoutForm(Basket basket, Address address, ShipmentType shipmentType, boolean enabledTracking) {
+		this.basket = basket;
+		this.address = address;
+		this.shipmentType = shipmentType;
+		this.enabledTracking = enabledTracking;
 	}
 
-	public Integer[] getItemNumbers() {
-		return itemNumbers;
+	public Basket getBasket() {
+		return basket;
 	}
 
-	public void setItemNumbers(Integer[] itemNumbers) {
-		this.itemNumbers = itemNumbers;
+	public Address getAddress() {
+		return address;
 	}
 
-	public int[] getItemQuantities() {
-		return itemQuantities;
+	public ShipmentType getShipmentType() {
+		return shipmentType;
 	}
 
-	public void setItemQuantities(int[] itemQuantities) {
-		this.itemQuantities = itemQuantities;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-
-	public String getStreetAddress() {
-		return streetAddress;
-	}
-
-	public void setStreetAddress(String streetAddress) {
-		this.streetAddress = streetAddress;
-	}
-
-	public ShipmentType getShipment() {
-		return shipment;
-	}
-
-	public void setShipment(ShipmentType shipment) {
-		this.shipment = shipment;
-	}
-
-	public boolean isNotifications() {
-		return notifications;
-	}
-
-	public void setNotifications(boolean notifications) {
-		this.notifications = notifications;
-	}
-
-	public String getCoupon() {
-		return coupon;
-	}
-
-	public void setCoupon(String coupon) {
-		this.coupon = coupon;
-	}
-
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
+	public boolean isEnabledTracking() {
+		return enabledTracking;
 	}
 }

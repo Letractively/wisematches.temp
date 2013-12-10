@@ -1,6 +1,8 @@
+<#-- @ftlvariable name="addressBook" type="billiongoods.server.services.address.AddressBook" -->
 <#-- @ftlvariable name="coupon" type="billiongoods.server.services.coupon.Coupon" -->
 <#-- @ftlvariable name="basket" type="billiongoods.server.services.basket.Basket" -->
 <#-- @ftlvariable name="shipmentRates" type="billiongoods.server.services.payment.ShipmentRates" -->
+<#-- @ftlvariable name="order" type="billiongoods.server.web.servlet.mvc.warehouse.form.BasketCheckoutForm" -->
 
 <#include "/core.ftl"/>
 
@@ -9,8 +11,7 @@
 <#if rollback??>
 <div class="ui-state-error" style="margin-bottom: 10px; padding: 10px">
     К сожалению у нас сейчас возникла внутренняя ошибка при работе с системой PayPal. В даннай момент мы не
-    можем
-    обработать ваш заказ. Пожалуйста, попробуйте еще раз.
+    можем обработать ваш заказ. Пожалуйста, попробуйте еще раз.
 </div>
 </#if>
 
@@ -28,13 +29,13 @@
     <#list basket.basketItems as i>
         <#assign product=i.product/>
         <tr class="item">
-            <td valign="top" style="margin-right: 10px">
+            <td style="margin-right: 10px">
                 <@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/>
             </td>
-            <td valign="top" align="left">
+            <td align="left">
                 <@bg.link.product product>${messageSource.getProductCode(product)}</@bg.link.product>
             </td>
-            <td valign="top" width="100%" align="left">
+            <td width="100%" align="left">
                 <@bg.link.product product>${product.name}</@bg.link.product>
             </td>
             <td valign="middle" nowrap="nowrap">
@@ -88,70 +89,115 @@
 <div class="order">
 <table>
 <tr>
-<td valign="top" style="padding-right: 10px" width="50%">
+<td style="padding-right: 10px" width="50%">
     <div class="address">
-        <table style="width: auto">
-            <tr>
-                <td valign="top" colspan="2" style="padding-bottom: 10px">
-                    <span class="tit">Адрес доставки</span>
+        <#assign hasAddressBook=(addressBook?? &&addressBook.addresses?has_content)/>
 
-                    <div class="desc">
-                        Пожалуйста, введите ваше имя фамилия и адрес латинскими
-                        буквами.
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <label for="name">Ваше имя и фамилия: </label>
-                </td>
-                <td valign="top" style="padding-bottom: 20px">
-                    <@bg.ui.input "order.name"/>
-                    <div class="sample">Например: Ivanov Ivan</div>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <label for="postalCode">Индекс: </label>
-                </td>
-                <td valign="top">
-                    <@bg.ui.input "order.postalCode"/>
-                    <div class="sample">Например: 123321</div>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <label for="region">Область/Регион: </label>
-                </td>
-                <td valign="top">
-                    <@bg.ui.input "order.region"/>
-                    <div class="sample">Например: Leningradskaya oblast, Gatchinskii raion</div>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <label for="city">Населенный пункт: </label>
-                </td>
-                <td valign="top">
-                    <@bg.ui.input "order.city"/>
-                    <div class="sample">Например: Gadchinskoye</div>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <label for="streetAddress">Адрес: </label>
-                </td>
-                <td valign="top">
-                    <@bg.ui.input "order.streetAddress"/>
-                    <div class="sample">Например: ul. Tretiya sleva, d. 321/98, korp. 7, kv. 654
-                    </div>
-                </td>
-            </tr>
-        </table>
+        <div>
+            <span class="tit">Адрес доставки</span>
+            <@bg.ui.input path="order.selectionTab" fieldType="hidden"/>
+        </div>
+
+        <#if hasAddressBook>
+            <div class="selection" <#if !order.selectionTab>style="display: none" </#if>>
+                <div class="desc">
+                    Выберите один из ваших адресов.
+                </div>
+                <table>
+                    <#list addressBook.addresses as a>
+                        <tr>
+                            <td width="20px">
+                                <input id="address${a.id}" type="radio" name="id" value="${a.id}"
+                                       <#if a.id=order.id>checked="checked"</#if>
+                                       style="margin-top: 4px">
+                            </td>
+                            <td>
+                                <label for="address${a.id}" style="font-weight: normal; white-space: normal">
+                                ${a.lastName} ${a.lastName}, ${a.postcode}, ${a.region}, ${a.city}, ${a.location}
+                                </label>
+                            </td>
+                        </tr>
+                    </#list>
+                </table>
+
+                <button id="createNewAddress" type="button" onclick="">Другой адрес доставки</button>
+            </div>
+        </#if>
+
+        <div class="form" <#if hasAddressBook && order.selectionTab>style="display: none" </#if>>
+            <div class="desc">
+                Пожалуйста, введите ваше имя фамилия и адрес латинскими
+                буквами.
+            </div>
+            <table style="width: auto">
+                <tr>
+                    <td>
+                        <label for="firstName">Ваше фамилия и имя: </label>
+                    </td>
+                    <td style="padding-bottom: 20px">
+                        <div class="name layout-line">
+                            <@bg.ui.input path="order.lastName"/>
+                        <@bg.ui.input path="order.firstName"/>
+                        </div>
+                        <div class="sample">Например: Ivanov Ivan</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="postcode">Индекс: </label>
+                    </td>
+                    <td>
+                        <@bg.ui.input "order.postcode"/>
+                        <div class="sample">Например: 123321</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="region">Область/Регион: </label>
+                    </td>
+                    <td>
+                        <@bg.ui.input "order.region"/>
+                        <div class="sample">Например: Leningradskaya oblast, Gatchinskii raion</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="city">Населенный пункт: </label>
+                    </td>
+                    <td>
+                        <@bg.ui.input "order.city"/>
+                        <div class="sample">Например: Gadchinskoye</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="location">Адрес: </label>
+                    </td>
+                    <td>
+                        <@bg.ui.input "order.location"/>
+                        <div class="sample">Например: ul. Tretiya sleva, d. 321/98, korp. 7, kv. 654</div>
+                    </td>
+                </tr>
+
+                <#if addressBook??>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <@bg.ui.input path="order.remember" fieldType="checkbox" attributes="style='width: auto; vertical-align: middle'">
+                                <label for="remember">сохранить в адресной книге</label>
+                            </@bg.ui.input>
+                        </td>
+                    </tr>
+                </#if>
+            </table>
+
+            <#if hasAddressBook>
+                <button id="selectAddress" type="button" onclick="">Выбрать адрес</button>
+            </#if>
+        </div>
     </div>
-
 </td>
-<td valign="top" style="padding-left: 10px; position: relative" width="50%">
+<td style="padding-left: 10px; position: relative" width="50%">
     <div class="shipment">
         <@bg.ui.bind path="order.shipment"/>
         <#assign shipmentType=bg.ui.actualValue/>
@@ -163,18 +209,18 @@
         <#assign shipmentCost=shipmentRates.getShipmentCost(shipmentType)/>
         <table style="width: auto">
             <tr>
-                <td valign="top" colspan="2">
+                <td colspan="2">
                     <span class="tit">Способ доставки</span>
                 </td>
             </tr>
             <tr>
-                <td valign="top" style="padding-top: 3px">
+                <td style="padding-top: 3px">
                     <input id="shipmentFree" type="radio" name="shipment"
                            <#if freeRegisteredShipment>disabled="disabled"</#if>
                            value="${ShipmentType.FREE}"
                            <#if shipmentType==ShipmentType.FREE>checked="checked"</#if>/>
                 </td>
-                <td valign="top">
+                <td>
                     <label for="shipmentFree">Обычная посылка (<span class="price"><span
                             class="usd">Бесплатная доставка</span></span>
                         за 30-40 рабочих
@@ -182,12 +228,12 @@
                 </td>
             </tr>
             <tr>
-                <td valign="top" style="padding-top: 3px">
+                <td style="padding-top: 3px">
                     <input id="shipmentRegistered" type="radio" name="shipment"
                            value="${ShipmentType.REGISTERED}"
                            <#if shipmentType==ShipmentType.REGISTERED>checked="checked"</#if>/>
                 </td>
-                <td valign="top">
+                <td>
                     <label for="shipmentRegistered">Зарегистрированная посылка
                         (<span id="freeRegisteredShipment"
                                <#if !freeRegisteredShipment>style="display: none"</#if>><span
@@ -208,12 +254,12 @@
         </#if>
         <table style="width: auto">
             <tr>
-                <td valign="top" style="padding-top: 10px">
+                <td style="padding-top: 10px">
                     <span class="tit">Купон</span>
                 </td>
             </tr>
             <tr>
-                <td valign="top">
+                <td>
                     <@bg.ui.input path="order.coupon">
                         <button type="submit" name="action" value="update">Применить</button>
                     </@bg.ui.input>
@@ -223,34 +269,36 @@
         </table>
     </div>
 
-    <div class="notification">
-        <table style="width: auto">
-            <tr>
-                <td valign="top" style="padding-top: 10px">
-                    <span class="tit">Извещения о заказе</span>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <@bg.ui.input path="order.notifications" fieldType="checkbox">
-                        <label for="notifications">Получать извещения о статусе заказа по электронной
-                            почте,
-                            связанной с PayPal аккаунтом.</label>
+    <#if !addressBook??>
+        <div class="notification">
+            <table style="width: auto">
+                <tr>
+                    <td style="padding-top: 10px">
+                        <span class="tit">Извещения о заказе</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <@bg.ui.input path="order.notifications" fieldType="checkbox">
+                            <label for="notifications">Получать извещения о статусе заказа по электронной
+                                почте,
+                                связанной с PayPal аккаунтом.</label>
 
-                        <div class="sample">(мы оставляем за собой право связаться с вами по электронной почте
-                            в случае если у нас возникнут вопросы по заказу либо какие-либо сложности с его
-                            оформлением)
-                        </div>
-                    </@bg.ui.input>
-                </td>
-            </tr>
-        </table>
-    </div>
+                            <div class="sample">(мы оставляем за собой право связаться с вами по электронной почте
+                                в случае если у нас возникнут вопросы по заказу либо какие-либо сложности с его
+                                оформлением)
+                            </div>
+                        </@bg.ui.input>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </#if>
 
     <div class="total">
         <table class="payment">
             <tr class="payment-order">
-                <td valign="top" align="right">
+                <td align="right">
                     <span>Стоимость заказа:</span>
                 </td>
                 <td>
@@ -258,7 +306,7 @@
                 </td>
             </tr>
             <tr class="payment-shipment">
-                <td valign="top" align="right">
+                <td align="right">
                     <span>Стоимость доставки:</span>
                 </td>
                 <td>
@@ -267,7 +315,7 @@
             </tr>
             <#if coupon??>
                 <tr class="payment-discount">
-                    <td valign="top" align="right">
+                    <td align="right">
                         <span>Скидка по купону:</span>
                     </td>
                     <td>
@@ -276,7 +324,7 @@
                 </tr>
             </#if>
             <tr class="payment-total">
-                <td valign="top" align="right">
+                <td align="right">
                     <span>Общая стоимость:</span>
                 </td>
                 <td>
@@ -311,9 +359,21 @@
 </table>
 </div>
 </form>
-
 </div>
 
 <script type="application/javascript">
     new bg.warehouse.Basket();
+
+    var address = $(".basket .address");
+    $("#createNewAddress").click(function () {
+        address.find(".selection").slideUp();
+        address.find(".form").slideDown();
+        address.find("#selectionTab").val('false');
+    });
+
+    $("#selectAddress").click(function () {
+        address.find(".selection").slideDown();
+        address.find(".form").slideUp();
+        address.find("#selectionTab").val('true');
+    });
 </script>

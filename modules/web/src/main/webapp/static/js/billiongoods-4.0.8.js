@@ -718,6 +718,110 @@ bg.warehouse.ProductController = function () {
     });
 };
 
+bg.privacy = {};
+
+bg.privacy.AddressBook = function () {
+    var form = $("#addressForm");
+    var fields = ["firstName", "lastName", "postcode", "region", "city", "location"];
+
+    this.registerNew = function () {
+        clearErrors();
+        clearAddressForm();
+        showAddressDialog('create');
+    };
+
+    this.editAddress = function (id) {
+        fillAddressForm(id);
+        showAddressDialog('update');
+    };
+
+    this.removeAddress = function (id) {
+        fillAddressForm(id);
+        bg.ui.confirm("Удаление адреса", "Вы уверены, что хотите удалить данный адрес?", function (approved) {
+            if (approved) {
+                fillAddressForm(id);
+                submitAddressForm('remove', function (ignore) {
+                });
+            }
+        });
+    };
+
+    var clearErrors = function () {
+        form.find(".error-msg").remove();
+    };
+
+    var clearAddressForm = function () {
+        form.find("#id").val("");
+        $.each(fields, function (i, v) {
+            form.find("#" + v).val("");
+        });
+    };
+
+    var fillAddressForm = function (id) {
+        var tr = $("#addressRecord" + id);
+
+        form.find("#id").val(id);
+        $.each(fields, function (i, v) {
+            form.find("#" + v).val(tr.find("." + v).text());
+        });
+    };
+
+    var submitAddressForm = function (action, callback) {
+        clearErrors();
+        var serializeObject = form.serializeObject();
+        bg.ui.lock(null, 'Изменение адреса. Пожалуйста, подождите...');
+        $.post("/privacy/address/" + action + ".ajax", JSON.stringify(serializeObject))
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, "Адрес успешно изменен", false);
+                        bg.util.url.reload();
+                    } else {
+                        if (response.data != null) {
+                            $.each(response.data, function (key, v) {
+                                form.find("#" + key).closest("td").append("<div class=\"ui-state-error-text error-msg\">" + v + "</div>");
+                            });
+                            bg.ui.unlock(null, null, true);
+                        } else {
+                            bg.ui.unlock(null, response.message, true);
+                        }
+                    }
+                    callback(response.success);
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                    callback(false);
+                });
+    };
+
+    var showAddressDialog = function (action) {
+        form.dialog({
+            title: 'Редактирование адреса',
+            draggable: true,
+            modal: true,
+            resizable: false,
+            width: 500,
+            buttons: [
+                {
+                    text: 'Сохранить',
+                    click: function () {
+                        submitAddressForm(action, function (close) {
+                            if (close) {
+                                $(this).dialog("close");
+                            }
+                        });
+                    }
+                },
+                {
+                    text: 'Отменить',
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ]
+        });
+    }
+};
 
 $(document).ready(function () {
     jQuery.fn.extend({

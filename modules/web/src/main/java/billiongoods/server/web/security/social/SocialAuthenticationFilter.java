@@ -174,7 +174,6 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 		if (!authService.getConnectionCardinality().isMultiProviderUserId()) {
 			List<Connection<?>> connections = repo.findConnections(data.getProviderId());
 			if (!connections.isEmpty()) {
-				// TODO maybe throw an exception to allow UI feedback?
 				return null;
 			}
 		}

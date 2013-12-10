@@ -1,6 +1,7 @@
 package billiongoods.server.services.payment.impl;
 
 import billiongoods.core.Visitor;
+import billiongoods.server.services.address.Address;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.coupon.CouponManager;
@@ -86,13 +87,7 @@ public class HibernateOrderManagerTest {
 		expect(basket.getCoupon()).andReturn(null);
 		replay(basket);
 
-		final HibernateAddress address = new HibernateAddress();
-		address.setName("MockName");
-		address.setPostalCode("123456");
-		address.setCity("MockCity");
-		address.setRegion("MockRegion");
-		address.setStreetAddress("MockStreet, d.344/2 k.1, kv. 9881");
-
+		final Address address = new Address("Mock", "Name", "123456", "MockRegion", "MockCity", "MockStreet, d.344/2 k.1, kv. 9881");
 		Order order = orderManager.create(new Visitor(123L), basket, address, ShipmentType.REGISTERED, true);
 
 		final Shipment shipment = order.getShipment();
@@ -107,11 +102,12 @@ public class HibernateOrderManagerTest {
 		assertEquals(2, orderItems.size());
 
 		final Address address1 = shipment.getAddress();
-		assertEquals("MockName", address1.getName());
-		assertEquals("123456", address1.getPostalCode());
+		assertEquals("Mock", address1.getFirstName());
+		assertEquals("Name", address1.getLastName());
+		assertEquals("123456", address1.getPostcode());
 		assertEquals("MockCity", address1.getCity());
 		assertEquals("MockRegion", address1.getRegion());
-		assertEquals("MockStreet, d.344/2 k.1, kv. 9881", address1.getStreetAddress());
+		assertEquals("MockStreet, d.344/2 k.1, kv. 9881", address1.getLocation());
 
 		final OrderItem oi0 = orderItems.get(0);
 		assertNotNull(oi0.getProduct());

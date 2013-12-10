@@ -1,5 +1,6 @@
 package billiongoods.server.services.payment.impl;
 
+import billiongoods.server.services.address.Address;
 import billiongoods.server.services.payment.*;
 
 import javax.persistence.*;
@@ -41,7 +42,7 @@ public class HibernateOrder implements Order {
 	private String coupon;
 
 	@Embedded
-	private HibernateAddress shipmentAddress;
+	private Address shipmentAddress;
 
 	@Column(name = "created", updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -105,7 +106,6 @@ public class HibernateOrder implements Order {
 	@Transient
 	private Shipment shipment = null;
 
-	@Deprecated
 	HibernateOrder() {
 	}
 
@@ -116,7 +116,7 @@ public class HibernateOrder implements Order {
 		this.discount = discount;
 		this.shipmentAmount = shipment.getAmount();
 		this.shipmentType = shipment.getType();
-		this.shipmentAddress = new HibernateAddress(shipment.getAddress());
+		this.shipmentAddress = new Address(shipment.getAddress());
 		this.tracking = tracking;
 		this.orderState = OrderState.NEW;
 		timestamp = new Date();

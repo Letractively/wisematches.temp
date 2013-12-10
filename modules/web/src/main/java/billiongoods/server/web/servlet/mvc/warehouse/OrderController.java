@@ -2,7 +2,6 @@ package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Member;
 import billiongoods.core.Personality;
-import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderManager;
@@ -44,6 +43,7 @@ public class OrderController extends AbstractController {
 	private CouponManager couponManager;
 
 	public static final String ORDER_ID_PARAM = "ORDER_ID";
+	public static final String ORDER_CHECKOUT_FORM_NAME = OrderCheckoutForm.class.getName();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderController");
 
@@ -54,10 +54,8 @@ public class OrderController extends AbstractController {
 	@RequestMapping("/checkout")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String checkoutOrder(WebRequest request) {
-		final Basket basket = (Basket) request.getAttribute(BasketController.BASKET_PARAM, RequestAttributes.SCOPE_REQUEST);
-		final OrderCheckoutForm form = (OrderCheckoutForm) request.getAttribute(BasketController.ORDER_CHECKOUT_FORM_PARAM, RequestAttributes.SCOPE_REQUEST);
-
-		final Order order = orderManager.create(getPrincipal(), basket, form, form.getShipment(), form.isNotifications());
+		final OrderCheckoutForm form = (OrderCheckoutForm) request.getAttribute(ORDER_CHECKOUT_FORM_NAME, RequestAttributes.SCOPE_REQUEST);
+		final Order order = orderManager.create(getPrincipal(), form.getBasket(), form.getAddress(), form.getShipmentType(), form.isEnabledTracking());
 		request.setAttribute(ORDER_ID_PARAM, order.getId(), RequestAttributes.SCOPE_REQUEST);
 		return "forward:/warehouse/paypal/checkout";
 	}
