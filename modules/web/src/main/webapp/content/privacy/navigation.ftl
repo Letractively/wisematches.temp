@@ -3,8 +3,8 @@
 <div class="navigation">
     <div class="privacy">
         <ul class="container">
-        <#--<#list ["orders", "addresses", "coupons", "wishlist", "subscriptions", "settings", "social"] as i>-->
-        <#list ["orders"] as i>
+        <#--<#list ["orders", "coupons", "wishlist", "subscriptions", "settings", "social"] as i>-->
+        <#list ["orders", "address"] as i>
             <li class="ct-item">
                 <a href="/privacy/${i}">
                     <@message code="title.privacy.${i}"/>

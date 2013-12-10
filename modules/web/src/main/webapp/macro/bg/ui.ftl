@@ -325,6 +325,9 @@
         <#if fieldType=='checkbox'><#if status.value?has_content && status.value=='true'>checked="checked"</#if>
            value="true"<#else>
            value="<#if fieldType!="password"><#if status.value?has_content>${status.value}<#else><@message code=value/></#if></#if>"</#if> ${attributes}/>
+        <#if fieldType=='checkbox'>
+        <input id="${bg.ui.status.expression}Hidden" type="hidden" name="${status.expression}" value="false"/>
+        </#if>
         <#nested>
     </@bg.ui.field>
 </#macro>

@@ -60,6 +60,10 @@
         <property name="categoryManager" ref="catalogManager"/>
     </bean>
 
+    <bean id="addressBookManager" class="billiongoods.server.services.address.impl.HibernateAddressBookManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="couponManager" class="billiongoods.server.services.coupon.impl.HibernateCouponManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

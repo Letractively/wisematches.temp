@@ -1206,6 +1206,15 @@ button.bg-ui-button.selected {
     width: 100%;
 }
 
+.basket .address .name > div:first-child {
+    width: 60%;
+}
+
+.basket .address .name > div:last-child {
+    width: 38%;
+    float: right;
+}
+
 .basket .tit {
     font-size: 16px;
     font-weight: bold;
@@ -1999,13 +2008,21 @@ button.bg-ui-button.selected {
     padding-top: 10px;
 }
 
-.settings .social th {
+.settings .social th, .privacy .addresses th {
     color: #808080;
     padding: 5px;
     text-align: left;
 }
 
-.settings .social td {
+.settings .social td, .privacy .addresses td {
     padding: 5px;
     border-top: 1px solid #ebebeb;
+}
+
+#addressForm td {
+    padding: 5px;
+}
+
+#addressForm input {
+    width: 100%;
 }

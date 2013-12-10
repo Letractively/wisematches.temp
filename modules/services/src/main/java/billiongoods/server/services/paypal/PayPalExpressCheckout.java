@@ -1,7 +1,7 @@
 package billiongoods.server.services.paypal;
 
 import billiongoods.server.MessageFormatter;
-import billiongoods.server.services.payment.Address;
+import billiongoods.server.services.address.Address;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderItem;
 import billiongoods.server.services.payment.Shipment;
@@ -127,12 +127,12 @@ public class PayPalExpressCheckout implements InitializingBean {
 		final Address address = shipment.getAddress();
 
 		final AddressType addressType = new AddressType();
-		addressType.setName(address.getName());
-		addressType.setPostalCode(address.getPostalCode());
+		addressType.setName(address.getFirstName() + " " + address.getLastName());
+		addressType.setPostalCode(address.getPostcode());
 		addressType.setCountry(CountryCodeType.RU);
 		addressType.setCityName(address.getCity());
 		addressType.setStateOrProvince(address.getRegion());
-		addressType.setStreet1(address.getStreetAddress());
+		addressType.setStreet1(address.getLocation());
 
 		final List<PaymentDetailsItemType> paymentDetailsItem = new ArrayList<>();
 

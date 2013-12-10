@@ -1,6 +1,10 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
+import billiongoods.core.Member;
 import billiongoods.core.Personality;
+import billiongoods.server.services.address.AddressBook;
+import billiongoods.server.services.address.AddressBookManager;
+import billiongoods.server.services.address.AddressRecord;
 import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.coupon.Coupon;
@@ -13,6 +17,7 @@ import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Property;
 import billiongoods.server.web.servlet.mvc.AbstractController;
+import billiongoods.server.web.servlet.mvc.warehouse.form.BasketCheckoutForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.BasketItemForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderCheckoutForm;
 import billiongoods.server.web.servlet.sdo.ServiceResponse;
@@ -29,8 +34,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 import java.util.*;
 
 /**
@@ -42,25 +45,21 @@ public class BasketController extends AbstractController {
 	private CouponManager couponManager;
 	private ProductManager productManager;
 	private ShipmentManager shipmentManager;
-
-	public static final String BASKET_PARAM = "BASKET";
-	public static final String ORDER_CHECKOUT_FORM_PARAM = "ORDER_CHECKOUT_FORM";
-
-	private static final CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
+	private AddressBookManager addressBookManager;
 
 	public BasketController() {
 		super(true, false);
 	}
 
 	@RequestMapping(value = {""}, method = RequestMethod.GET)
-	public String viewBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+	public String viewBasket(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
 		final Basket basket = basketManager.getBasket(getPrincipal());
 		return prepareBasketView(basket, form, model);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=clear")
-	public String processBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+	public String processBasket(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
 		final Personality principal = getPrincipal();
 		basketManager.closeBasket(principal);
 
@@ -70,7 +69,7 @@ public class BasketController extends AbstractController {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=update")
-	public String validateBasket(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model) {
+	public String validateBasket(@ModelAttribute("order") BasketCheckoutForm form, Errors errors, Model model) {
 		final Personality principal = getPrincipal();
 		final Basket basket = validateBasket(principal, form, errors);
 		return prepareBasketView(basket, form, model);
@@ -78,39 +77,53 @@ public class BasketController extends AbstractController {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=rollback")
-	public String rollbackBasket(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+	public String rollbackBasket(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
 		return viewBasket(form, model);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=checkout")
-	public String checkoutBasket(@ModelAttribute("order") OrderCheckoutForm form, Errors errors, Model model, WebRequest request) {
+	public String checkoutBasket(@ModelAttribute("order") BasketCheckoutForm form, Errors errors, Model model, WebRequest request) {
 		final Personality principal = getPrincipal();
 		final Basket basket = validateBasket(principal, form, errors);
 		if (basket == null) {
 			return prepareBasketView(null, form, model);
 		}
 
-		checkAddressField("name", form.getName(), errors);
-		checkAddressField("city", form.getCity(), errors);
-		checkAddressField("region", form.getRegion(), errors);
-		checkAddressField("postalCode", form.getPostalCode(), errors);
-		checkAddressField("streetAddress", form.getStreetAddress(), errors);
+		AddressRecord address = null;
+		if (form.isSelectionTab()) {
+			address = addressBookManager.getAddressBook(getPrincipal()).getAddressRecord(form.getId());
+		}
 
-		if (!form.getPostalCode().matches("\\d{6}+")) {
-			errors.rejectValue("postalCode", "basket.error.postalCode.format");
+		if (address == null) {
+			address = form.toAddressRecord();
+
+			form.setSelectionTab(false);
+
+			final Map<String, String> validate = form.validate();
+			for (Map.Entry<String, String> entry : validate.entrySet()) {
+				errors.rejectValue(entry.getKey(), entry.getValue());
+			}
 		}
 
 		if (!errors.hasErrors()) {
-			request.setAttribute(ORDER_CHECKOUT_FORM_PARAM, form, RequestAttributes.SCOPE_REQUEST);
-			request.setAttribute(BASKET_PARAM, basket, RequestAttributes.SCOPE_REQUEST);
+			if (form.isRemember() && getPrincipal() instanceof Member) {
+				final AddressRecord addressRecord = addressBookManager.addAddress(getPrincipal(), new AddressRecord(address));
+				if (addressRecord != null) {
+					form.setSelectionTab(true);
+					form.setId(addressRecord.getId());
+				}
+			}
+
+			OrderCheckoutForm checkout = new OrderCheckoutForm(basket, address, form.getShipment(), form.isNotifications());
+			request.setAttribute(OrderController.ORDER_CHECKOUT_FORM_NAME, checkout, RequestAttributes.SCOPE_REQUEST);
 			return "forward:/warehouse/order/checkout";
 		}
 		return prepareBasketView(basket, form, model);
 	}
 
 	@RequestMapping("rollback")
-	public String rollbackOrder(@ModelAttribute("order") OrderCheckoutForm form, Model model) {
+	public String rollbackOrder(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
 		model.addAttribute("rollback", Boolean.TRUE);
 		return viewBasket(form, model);
 	}
@@ -166,13 +179,7 @@ public class BasketController extends AbstractController {
 		}
 	}
 
-	private void checkAddressField(String name, String value, Errors errors) {
-		if (value == null || value.trim().isEmpty() || !asciiEncoder.canEncode(value)) {
-			errors.rejectValue(name, "basket.error." + name + ".empty");
-		}
-	}
-
-	private Basket validateBasket(Personality principal, OrderCheckoutForm form, Errors errors) {
+	private Basket validateBasket(Personality principal, BasketCheckoutForm form, Errors errors) {
 		Basket basket = basketManager.getBasket(principal);
 		if (basket == null || basket.getBasketItems() == null) {
 			return null;
@@ -229,7 +236,7 @@ public class BasketController extends AbstractController {
 		return basketManager.getBasket(principal);
 	}
 
-	private String prepareBasketView(Basket basket, OrderCheckoutForm form, Model model) {
+	private String prepareBasketView(Basket basket, BasketCheckoutForm form, Model model) {
 		model.addAttribute("basket", basket);
 
 		if (basket != null) {
@@ -240,6 +247,19 @@ public class BasketController extends AbstractController {
 
 			model.addAttribute("coupon", coupon);
 			model.addAttribute("shipmentRates", shipmentRates);
+
+			final Personality principal = getPrincipal();
+			if (principal instanceof Member) {
+				final AddressBook addressBook = addressBookManager.getAddressBook(principal);
+				model.addAttribute("addressBook", addressBook);
+
+				if (form.getId() == null) {
+					final AddressRecord primary = addressBook.getPrimary();
+					if (primary != null) {
+						form.setId(primary.getId());
+					}
+				}
+			}
 		}
 		return "/content/warehouse/basket/view";
 	}
@@ -257,5 +277,10 @@ public class BasketController extends AbstractController {
 	@Autowired
 	public void setShipmentManager(ShipmentManager shipmentManager) {
 		this.shipmentManager = shipmentManager;
+	}
+
+	@Autowired
+	public void setAddressBookManager(AddressBookManager addressBookManager) {
+		this.addressBookManager = addressBookManager;
 	}
 }

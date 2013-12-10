@@ -211,11 +211,11 @@
         </td>
         <td>
         <#assign address=shipment.address/>
-        ${address.name}
+        ${address.lastName} ${address.firstName}
             <br>
-        ${address.streetAddress},
-            <br>
-        ${address.city}, ${address.region}, ${address.postalCode}
+        ${address.postcode}, ${address.region}, ${address.city}
+            <br> k
+        ${address.location}
         </td>
     </tr>
 </table>

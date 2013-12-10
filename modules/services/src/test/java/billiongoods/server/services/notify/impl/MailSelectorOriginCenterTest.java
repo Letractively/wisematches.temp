@@ -1,11 +1,11 @@
 package billiongoods.server.services.notify.impl;
 
 import billiongoods.core.task.executor.TransactionAwareExecutor;
+import billiongoods.server.services.address.Address;
 import billiongoods.server.services.notify.Notification;
 import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.impl.center.NotificationOriginCenter;
 import billiongoods.server.services.payment.*;
-import billiongoods.server.services.payment.impl.HibernateAddress;
 import billiongoods.server.services.payment.impl.HibernateOrder;
 import org.easymock.Capture;
 import org.easymock.CaptureType;
@@ -89,7 +89,7 @@ public class MailSelectorOriginCenterTest {
 
 		publisherCenter.setOrderManager(orderManager);
 
-		final HibernateAddress address = new HibernateAddress();
+		final Address address = new Address("asd", "bsdf", "124434", "asd", "wqe", "asd");
 
 		final Order order = new HibernateOrder(123L, 10d, 1d, null, new Shipment(12d, address, ShipmentType.REGISTERED), true);
 

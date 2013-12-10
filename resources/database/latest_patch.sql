@@ -1,3 +1,65 @@
+#12.10
+ALTER TABLE `billiongoods`.`store_order`
+CHANGE COLUMN `addressName` `firstName` VARCHAR(120) NULL DEFAULT NULL,
+CHANGE COLUMN `addressRegion` `region` VARCHAR(120) NULL DEFAULT NULL,
+CHANGE COLUMN `addressCity` `city` VARCHAR(120) NULL DEFAULT NULL,
+CHANGE COLUMN `addressPostal` `postcode` VARCHAR(10) NULL DEFAULT NULL,
+CHANGE COLUMN `addressStreet` `location` VARCHAR(250) NULL DEFAULT NULL,
+ADD COLUMN `lastName` VARCHAR(245) NULL
+AFTER `firstName`;
+
+CREATE TABLE `billiongoods`.`privacy_address_book` (
+  `id`      BIGINT(20) NOT NULL,
+  `primary` INT        NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `asdf`
+  FOREIGN KEY (`id`)
+  REFERENCES `billiongoods`.`account_personality` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+
+ALTER TABLE `billiongoods`.`privacy_address_book`
+DROP FOREIGN KEY `asdf`;
+ALTER TABLE `billiongoods`.`privacy_address_book`
+ADD CONSTRAINT `personality`
+FOREIGN KEY (`id`)
+REFERENCES `billiongoods`.`account_personality` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION;
+
+CREATE TABLE `privacy_address_record` (
+  `id`          INT(11)      NOT NULL,
+  `addressBook` BIGINT(20)   NOT NULL,
+  `firstName`   VARCHAR(145) NOT NULL,
+  `lastName`    VARCHAR(245) NOT NULL,
+  `postcode`    VARCHAR(10)  NOT NULL,
+  `region`      VARCHAR(145) NOT NULL,
+  `city`        VARCHAR(145) NOT NULL,
+  `location`    VARCHAR(250) NOT NULL,
+  `primary`     TINYINT(1)   NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `addressBook_idx` (`addressBook`),
+  CONSTRAINT `addressBook` FOREIGN KEY (`addressBook`) REFERENCES `privacy_address_book` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+  ENGINE =InnoDB
+  DEFAULT CHARSET =utf8;
+
+ALTER TABLE `billiongoods`.`privacy_address_record`
+DROP COLUMN `primary`;
+
+ALTER TABLE `billiongoods`.`privacy_address_record`
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `billiongoods`.`privacy_address_book`
+CHANGE COLUMN `primary` `primaryAddress` INT(11) NULL;
+
+ALTER TABLE `billiongoods`.`privacy_address_record`
+CHANGE COLUMN `street` `location` VARCHAR(250) NOT NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1210');
+
 #12.09
 ALTER TABLE `billiongoods`.`account_personality`
 CHANGE COLUMN `email` `email` VARCHAR(150) NULL
