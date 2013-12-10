@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="title" type="java.lang.String" -->
 <#-- @ftlvariable name="titleExtension" type="java.lang.Object" -->
 
-<#assign libsVersion="4.0.8"/>
+<#assign libsVersion="4.1.0"/>
 
 <#include "/core.ftl">
 
