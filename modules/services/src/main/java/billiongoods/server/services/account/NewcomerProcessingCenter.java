@@ -5,6 +5,7 @@ import billiongoods.core.account.AccountListener;
 import billiongoods.core.account.AccountManager;
 import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.OrderManager;
+import billiongoods.server.services.tracking.ProductTrackingManager;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -13,6 +14,7 @@ public class NewcomerProcessingCenter {
 	private OrderManager orderManager;
 	private CouponManager couponManager;
 	private AccountManager accountManager;
+	private ProductTrackingManager trackingManager;
 
 	private static final long EXPIRATION_DATE = 2592000000L; // 30 days
 
@@ -21,8 +23,9 @@ public class NewcomerProcessingCenter {
 	public NewcomerProcessingCenter() {
 	}
 
-	public void importAccountOrders(Account account) {
+	public void importAccountData(Account account) {
 		orderManager.importAccountOrders(account);
+		trackingManager.importAccountTracking(account);
 
 //		couponManager.createCoupon("nb" + account.getId(), 3d, CouponAmountType.PERCENT, 1, new Date(System.currentTimeMillis() + EXPIRATION_DATE));
 	}
@@ -33,6 +36,10 @@ public class NewcomerProcessingCenter {
 
 	public void setCouponManager(CouponManager couponManager) {
 		this.couponManager = couponManager;
+	}
+
+	public void setTrackingManager(ProductTrackingManager trackingManager) {
+		this.trackingManager = trackingManager;
 	}
 
 	public void setAccountManager(AccountManager accountManager) {
@@ -53,16 +60,16 @@ public class NewcomerProcessingCenter {
 
 		@Override
 		public void accountCreated(Account account) {
-			importAccountOrders(account);
-		}
-
-		@Override
-		public void accountRemove(Account account) {
+			importAccountData(account);
 		}
 
 		@Override
 		public void accountUpdated(Account oldAccount, Account newAccount) {
-			importAccountOrders(newAccount);
+			importAccountData(newAccount);
+		}
+
+		@Override
+		public void accountRemove(Account account) {
 		}
 	}
 }

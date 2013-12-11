@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PrivacyController extends AbstractController {
 	private OrderManager orderManager;
 
-
 	public PrivacyController() {
 	}
 
@@ -24,7 +23,6 @@ public class PrivacyController extends AbstractController {
 	public String privacy(Model model) {
 		return "redirect:/privacy/view";
 	}
-
 
 	@RequestMapping("/view")
 	public String privacyView(Model model) {
@@ -34,29 +32,14 @@ public class PrivacyController extends AbstractController {
 		return "/content/privacy/view";
 	}
 
-	@RequestMapping("/addresses")
-	public String privacyAddresses(Model model) {
-		return "/content/privacy/addresses";
-	}
-
 	@RequestMapping("/wishlist")
 	public String privacyWishList(Model model) {
 		return "/content/privacy/wishlist";
 	}
 
-	@RequestMapping("/subscriptions")
-	public String privacySubscriptions(Model model) {
-		return "/content/privacy/subscriptions";
-	}
-
 	@RequestMapping("/coupons")
 	public String privacyCoupons(Model model) {
 		return "/content/privacy/coupons";
-	}
-
-	@RequestMapping("/social")
-	public String privacySocial(Model model) {
-		return "/content/privacy/social";
 	}
 
 	@Autowired

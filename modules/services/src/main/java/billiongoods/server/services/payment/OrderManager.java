@@ -29,7 +29,7 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	OrdersSummary getOrdersSummary(Personality principal);
 
 
-	void importAccountOrders(Account account);
+	int importAccountOrders(Account account);
 
 
 	Order create(Personality person, Basket basket, Address address, ShipmentType shipmentType, boolean track);

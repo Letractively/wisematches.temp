@@ -876,6 +876,7 @@ button.bg-ui-button.selected {
 .product .shipment {
     float: right;
     color: green;
+    text-align: right;
 }
 
 .product .panel {
@@ -2008,13 +2009,13 @@ button.bg-ui-button.selected {
     padding-top: 10px;
 }
 
-.settings .social th, .privacy .addresses th {
+.settings .social th, .privacy .addresses th, .privacy .tracking th {
     color: #808080;
     padding: 5px;
     text-align: left;
 }
 
-.settings .social td, .privacy .addresses td {
+.settings .social td, .privacy .addresses td, .privacy .tracking td {
     padding: 5px;
     border-top: 1px solid #ebebeb;
 }

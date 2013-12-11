@@ -1,5 +1,6 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
+import billiongoods.core.Member;
 import billiongoods.core.Personality;
 import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingManager;
@@ -99,6 +100,12 @@ public class ProductController extends AbstractController {
 		similar.removeAll(mode); // remove all modes
 		accessories.remove(product);
 
+		final Personality principal = getPrincipal();
+		final StockState stockState = product.getStockInfo().getStockState();
+		if (principal instanceof Member && (stockState != StockState.IN_STOCK && stockState != StockState.LIMITED_NUMBER)) {
+			model.addAttribute("tracking", trackingManager.getTracking(product.getId(), principal));
+		}
+
 		model.addAttribute("mode", mode);
 		model.addAttribute("similar", similar);
 		model.addAttribute("accessories", accessories);
@@ -125,19 +132,19 @@ public class ProductController extends AbstractController {
 			return responseFactory.failure("product.subscribe.error.unknown", locale);
 		}
 
-		if (form.getEmail() != null && !form.getEmail().isEmpty()) {
-			return processSubscription(form, locale, principal);
-		}
-		return responseFactory.success();
+		return processSubscription(form, locale, principal);
 	}
 
 	private ServiceResponse processSubscription(ProductTrackingForm form, Locale locale, Personality principal) {
 		TrackingContext context;
-//		if (principal instanceof Member) {
-//			context = new TrackingContext(form.getProductId(), principal.getId(), form.getType());
-//		} else {
-		context = new TrackingContext(form.getProductId(), form.getEmail(), form.getType());
-//		}
+		if (principal instanceof Member) {
+			context = new TrackingContext(form.getProductId(), principal.getId(), form.getType());
+		} else {
+			if (form.getEmail() == null || form.getEmail().isEmpty()) {
+				return responseFactory.failure("product.subscribe.error.email", locale);
+			}
+			context = new TrackingContext(form.getProductId(), form.getEmail(), form.getType());
+		}
 
 		final List<ProductTracking> trackers = trackingManager.searchEntities(context, null, null, null);
 		if (form.getChangeType() == TrackingChangeType.UNSUBSCRIBE) {
@@ -150,11 +157,11 @@ public class ProductController extends AbstractController {
 			}
 
 			ProductTracking tracking;
-//			if (principal instanceof Member) {
-//				tracking = trackingManager.createTracking(form.getProductId(), principal, form.getType());
-//			} else {
-			tracking = trackingManager.createTracking(form.getProductId(), form.getEmail(), form.getType());
-//			}
+			if (principal instanceof Member) {
+				tracking = trackingManager.createTracking(form.getProductId(), principal, form.getType());
+			} else {
+				tracking = trackingManager.createTracking(form.getProductId(), form.getEmail(), form.getType());
+			}
 			return responseFactory.success(tracking);
 		}
 		return responseFactory.failure("product.subscribe.error.incorrect", locale);

@@ -22,17 +22,17 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/privacy/address")
-public class AddressBookController extends AbstractController {
+public class AddressController extends AbstractController {
 	private AddressBookManager addressBookManager;
 
-	public AddressBookController() {
+	public AddressController() {
 	}
 
 	@RequestMapping("")
 	public String viewAddressBook(Model model) {
 		final AddressBook addressBook = addressBookManager.getAddressBook(getPrincipal());
 		model.addAttribute("addressBook", addressBook);
-		return "/content/privacy/addresses";
+		return "/content/privacy/address";
 	}
 
 	@RequestMapping("/create.ajax")

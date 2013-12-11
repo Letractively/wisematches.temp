@@ -4,6 +4,7 @@
 <#-- @ftlvariable name="similar" type="billiongoods.server.warehouse.ProductPreview[]" -->
 <#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ProductPreview[]" -->
 <#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationship[]" -->
+<#-- @ftlvariable name="tracking" type="billiongoods.server.services.tracking.ProductTracking" -->
 
 <#include "/core.ftl">
 
@@ -22,200 +23,217 @@
 <link itemprop="itemCondition" href="http://schema.org/NewCondition"/>
 
 <table>
-    <tr>
-        <td valign="top" width="176px">
-            <div class="view">
-                <div class="preview">
-                <@bg.ui.productImage product product.previewImageId!"" ImageSize.MEDIUM {"itemprop":"image"}/>
+<tr>
+<td valign="top" width="176px">
+    <div class="view">
+        <div class="preview">
+        <@bg.ui.productImage product product.previewImageId!"" ImageSize.MEDIUM {"itemprop":"image"}/>
                 <@bg.ui.discountDiv product/>
-                </div>
+        </div>
 
-                <div class="thumb">
-                <#list product.imageIds as i>
-                    <#if (i==product.previewImageId)><#assign class="selected"/><#else><#assign class=""/></#if>
-                    <#assign viewURL><@bg.ui.productImageUrl product i ImageSize.LARGE/></#assign>
-                    <div>
-                        <@bg.ui.productImage product i ImageSize.TINY {"class":"${class}", "page":"${i_index}", "view":"${viewURL}"}/>
-                    </div>
-                </#list>
-                </div>
+        <div class="thumb">
+        <#list product.imageIds as i>
+            <#if (i==product.previewImageId)><#assign class="selected"/><#else><#assign class=""/></#if>
+            <#assign viewURL><@bg.ui.productImageUrl product i ImageSize.LARGE/></#assign>
+            <div>
+                <@bg.ui.productImage product i ImageSize.TINY {"class":"${class}", "page":"${i_index}", "view":"${viewURL}"}/>
             </div>
-        </td>
-        <td valign="top" width="100%">
-            <div class="info">
-                <div class="name" itemprop="name">
-                ${product.name}
-                </div>
+        </#list>
+        </div>
+    </div>
+</td>
+<td valign="top" width="100%">
+    <div class="info">
+        <div class="name" itemprop="name">
+        ${product.name}
+        </div>
 
-                <div class="articular">
-                    Артикул: <span class="sku" itemprop="sku">${sku}</span>
-                <@bg.security.authorized "moderator">
-                    (<a href="${product.supplierInfo.referenceUrl.toExternalForm()}"
-                        target="_blank">${product.supplierInfo.referenceCode}</a>)
-                </@bg.security.authorized>
-                <#if (product.soldCount>0)>
-                    Продано: <span class="sold">${product.soldCount}</span>
-                </#if>
-                <@bg.security.authorized "moderator">
-                    <div style="float: right">
-                        <button type="button"
-                                onclick="bg.warehouse.Maintain.recommend(${product.id}, ${(!product.recommended)?string})">
-                            <#if product.recommended>Не рекомендовать<#else>Рекомендовать</#if>
-                        </button>
-                        <button type="button" onclick="bg.warehouse.Maintain.editProduct(${product.id})">Изменить
-                        </button>
-                    </div>
-                </@bg.security.authorized>
-                </div>
-            <@bg.security.authorized "moderator">
-                <div align="right">
-                    <#list groups as g>
-                        <a href="/maintain/group?id=${g.id}">#${g.id} ${g.name} (${g.type})</a>
-                    </#list>
-                    <br>
-                    <#list relationships as r>
-                        <#assign g=r.group/>
-                        <a href="/maintain/group?id=${g.id}">#${g.id} ${g.name} (${r.type})</a>
-                    </#list>
-                </div>
-            </@bg.security.authorized>
+        <div class="articular">
+            Артикул: <span class="sku" itemprop="sku">${sku}</span>
+        <@bg.security.authorized "moderator">
+            (<a href="${product.supplierInfo.referenceUrl.toExternalForm()}"
+                target="_blank">${product.supplierInfo.referenceCode}</a>)
+        </@bg.security.authorized>
+        <#if (product.soldCount>0)>
+            Продано: <span class="sold">${product.soldCount}</span>
+        </#if>
+        <@bg.security.authorized "moderator">
+            <div style="float: right">
+                <button type="button"
+                        onclick="bg.warehouse.Maintain.recommend(${product.id}, ${(!product.recommended)?string})">
+                    <#if product.recommended>Не рекомендовать<#else>Рекомендовать</#if>
+                </button>
+                <button type="button" onclick="bg.warehouse.Maintain.editProduct(${product.id})">Изменить
+                </button>
+            </div>
+        </@bg.security.authorized>
+        </div>
+    <@bg.security.authorized "moderator">
+        <div align="right">
+            <#list groups as g>
+                <a href="/maintain/group?id=${g.id}">#${g.id} ${g.name} (${g.type})</a>
+            </#list>
+            <br>
+            <#list relationships as r>
+                <#assign g=r.group/>
+                <a href="/maintain/group?id=${g.id}">#${g.id} ${g.name} (${r.type})</a>
+            </#list>
+        </div>
+    </@bg.security.authorized>
 
-                <div class="stock">
-                    <div class="ability">
-                    <#switch stockInfo.stockState>
-                        <#case StockState.IN_STOCK>
-                            В наличии, обычно отправлается в течении 2-3 рабочих дней
-                            <#break/>
-                        <#case StockState.LIMITED_NUMBER>
-                            Торопитесь, осталось всего ${stockInfo.leftovers} штук!
-                            <#break/>
-                        <#case StockState.SOLD_OUT>
-                            Товар распродан
-                            <#break/>
-                        <#case StockState.OUT_STOCK>
-                            Нет на складе. Поступление
-                            ожидается ${messageSource.formatDate(stockInfo.restockDate, locale)}
-                            <#break/>
-                    </#switch>
-                    </div>
-                    <div class="shipment">Бесплатная доставка за 30-40 дней</div>
-                </div>
+        <div class="stock">
+            <div class="ability">
+            <#switch stockInfo.stockState>
+                <#case StockState.IN_STOCK>
+                    В наличии, обычно отправлается в течении 2-3 рабочих дней
+                    <#break/>
+                <#case StockState.LIMITED_NUMBER>
+                    Торопитесь, осталось всего ${stockInfo.leftovers} штук!
+                    <#break/>
+                <#case StockState.SOLD_OUT>
+                    Товар распродан
+                    <#break/>
+                <#case StockState.OUT_STOCK>
+                    Нет на складе. Поступление
+                    ожидается ${messageSource.formatDate(stockInfo.restockDate, locale)}
+                    <#break/>
+            </#switch>
+            </div>
+            <div class="shipment">
+                Бесплатная доставка за 30-40 дней<br>
+                <i>в новогодние праздники 40-60 дней</i>
+            </div>
+        </div>
 
-                <div class="props">
-                    <table>
+        <div class="props">
+            <table>
+                <tr>
+                    <td>Вес</td>
+                    <td>${product.weight?string("0.00")} кг</td>
+                </tr>
+            <#if product.properties?has_content>
+                <#list product.properties as p>
+                    <#if p.value?has_content>
                         <tr>
-                            <td>Вес</td>
-                            <td>${product.weight?string("0.00")} кг</td>
+                            <td>${p.attribute.name}</td>
+                            <td>${messageSource.formatPropertyValue(p.value, locale)} ${p.attribute.unit}</td>
                         </tr>
-                    <#if product.properties?has_content>
-                        <#list product.properties as p>
-                            <#if p.value?has_content>
-                                <tr>
-                                    <td>${p.attribute.name}</td>
-                                    <td>${messageSource.formatPropertyValue(p.value, locale)} ${p.attribute.unit}</td>
-                                </tr>
-                            </#if>
-                        </#list>
                     </#if>
-                    </table>
+                </#list>
+            </#if>
+            </table>
+        </div>
+
+        <div style="text-align: right; width: 100%">
+            <a href="#description">Описание</a>
+        <#if accessories?has_content>| <a href="#accessories">Запасные части</a></#if>
+        <#if mode?has_content>| <a href="#mode">Модификации</a></#if>
+        <#if similar?has_content>| <a href="#similar">Похожие продукты</a></#if>
+        </div>
+
+        <form id="shoppingForm" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="deliveryLeadTime" content="30 days"/>
+            <input type="hidden" name="product" value="${product.id}"/>
+
+            <div class="panel">
+                <div class="cost">
+                    <span><strong>Стоимость:</strong></span>
+
+                <@bg.ui.price product.price.amount/>
+                <#if product.price.primordialAmount??><span
+                        class="primordial">(<@bg.ui.price product.price.primordialAmount "g"/>)</span></#if>
                 </div>
 
-                <div style="text-align: right; width: 100%">
-                    <a href="#description">Описание</a>
-                <#if accessories?has_content>| <a href="#accessories">Запасные части</a></#if>
-                <#if mode?has_content>| <a href="#mode">Модификации</a></#if>
-                <#if similar?has_content>| <a href="#similar">Похожие продукты</a></#if>
-                </div>
+            <#if product.options?has_content>
+                <div class="ops">
+                    <#list product.options as o>
+                        <div><strong>${o.attribute.name}:</strong></div>
+                        <div class="options">
+                            <input type="hidden" name="optionIds" value="${o.attribute.id}"/>
 
-                <form id="shoppingForm" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                    <meta itemprop="deliveryLeadTime" content="30 days"/>
-                    <input type="hidden" name="product" value="${product.id}"/>
-
-                    <div class="panel">
-                        <div class="cost">
-                            <span><strong>Стоимость:</strong></span>
-
-                        <@bg.ui.price product.price.amount/>
-                        <#if product.price.primordialAmount??><span
-                                class="primordial">(<@bg.ui.price product.price.primordialAmount "g"/>)</span></#if>
-                        </div>
-
-                    <#if product.options?has_content>
-                        <div class="ops">
-                            <#list product.options as o>
-                                <div><strong>${o.attribute.name}:</strong></div>
-                                <div class="options">
-                                    <input type="hidden" name="optionIds" value="${o.attribute.id}"/>
-
-                                    <#list o.values as v>
-                                        <div class="option">
-                                            <input type="radio" id="option${o.attribute.id}_${v_index}"
-                                                   name="optionValues"
-                                                   value="${v}" <#if v_index==0>checked="checked"</#if>>
-                                            <label for="option${o.attribute.id}_${v_index}">${v}</label>
-                                        </div>
-                                    </#list>
+                            <#list o.values as v>
+                                <div class="option">
+                                    <input type="radio" id="option${o.attribute.id}_${v_index}"
+                                           name="optionValues"
+                                           value="${v}" <#if v_index==0>checked="checked"</#if>>
+                                    <label for="option${o.attribute.id}_${v_index}">${v}</label>
                                 </div>
                             </#list>
                         </div>
-                    </#if>
+                    </#list>
+                </div>
+            </#if>
 
-                        <div class="action">
-                        <#if stockInfo.stockState == StockState.IN_STOCK || stockInfo.stockState == StockState.LIMITED_NUMBER>
-                            <link itemprop="availability" href="http://schema.org/InStock"/>
+                <div class="action">
+                <#if stockInfo.stockState == StockState.IN_STOCK || stockInfo.stockState == StockState.LIMITED_NUMBER>
+                    <link itemprop="availability" href="http://schema.org/InStock"/>
 
-                            <div class="quantity">
-                                <span>Количество: </span>
-                                <button class="q_down bg-ui-button" disabled="disabled" type="button"> -</button>
-                                <input class="q_input" name="quantity" value="1">
-                                <button class="q_up bg-ui-button" type="button"> +</button>
-                            </div>
+                    <div class="quantity">
+                        <span>Количество: </span>
+                        <button class="q_down bg-ui-button" disabled="disabled" type="button"> -</button>
+                        <input class="q_input" name="quantity" value="1">
+                        <button class="q_up bg-ui-button" type="button"> +</button>
+                    </div>
 
-                            <div class="controls">
-                                <button id="add" class="bg-ui-button" type="button">
-                                    Добавить в Корзину
-                                </button>
-                                <button id="buy" class="bg-ui-button" type="button">
-                                    Купить Сейчас
-                                </button>
-                            </div>
+                    <div class="controls">
+                        <button id="add" class="bg-ui-button" type="button">
+                            Добавить в Корзину
+                        </button>
+                        <button id="buy" class="bg-ui-button" type="button">
+                            Купить Сейчас
+                        </button>
+                    </div>
+                <#else>
+                    <div>
+                        <link itemprop="availability" href="http://schema.org/OutOfStock"/>
+                        <#if stockInfo.restockDate??>
+                            <meta itemprop="availabilityStarts"
+                                  content="${stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
+                        </#if>
+
+                        <#if tracking??>
+                            <p>
+                                Товара нет в наличии и вы уже подписаны на получение извещения при сотуплении товара.
+                                Вы можете проверить список ваших подписок в <a href="/privacy/tracking">личном
+                                кабинете</a>.
+                            </p>
                         <#else>
-                            <div>
-                                <link itemprop="availability" href="http://schema.org/OutOfStock"/>
-                                <#if stockInfo.restockDate??>
-                                    <meta itemprop="availabilityStarts"
-                                          content="${stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
-                                </#if>
-                                <p>
-                                    Товара нет в наличии в данный момент, но вы можете подписаться на обновления
-                                    и мы вышлим вам письмо, когда товар снова будет в наличии.
-                                </p>
+                            <p>
+                                Товара нет в наличии в данный момент, но вы можете подписаться на обновления
+                                и мы вышлим вам письмо, когда товар снова будет в наличии.
+                            </p>
 
+                            <@bg.security.permitted "member";allowed>
                                 <div id="requestProductAvailabilityForm">
                                     <input name="productId" type="hidden" value="${product.id}"/>
                                     <input name="type" type="hidden" value="AVAILABILITY"/>
+
                                     <input name="changeType" type="hidden" value="SUBSCRIBE"/>
 
-                                    <label for="subscribeDescriptionEmail">Адрес эл. почты: </label>
-                                    <input id="subscribeDescriptionEmail" name="email" type="text"
-                                           style="width: 300px">
+                                    <#if !allowed>
+                                        <label for="subscribeDescriptionEmail">Адрес эл. почты: </label>
+                                        <input id="subscribeDescriptionEmail" name="email" type="text"
+                                               style="width: 300px">
+                                    </#if>
                                     <button id="requestProductAvailability" type="button">
-                                        Подписаться на поступления
+                                        Подписаться на поступление
                                     </button>
                                 </div>
-                            </div>
+                            </@bg.security.permitted>
                         </#if>
-                        </div>
                     </div>
-                </form>
+                </#if>
+                </div>
             </div>
-        </td>
-    </tr>
+        </form>
+    </div>
+</td>
+</tr>
 
-    <tr>
-        <td colspan="2">
-        </td>
-    </tr>
+<tr>
+    <td colspan="2">
+    </td>
+</tr>
 </table>
 
 <#if product.description?has_content>
