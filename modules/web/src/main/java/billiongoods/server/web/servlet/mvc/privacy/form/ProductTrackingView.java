@@ -1,0 +1,39 @@
+package billiongoods.server.web.servlet.mvc.privacy.form;
+
+import billiongoods.server.services.tracking.TrackingType;
+import billiongoods.server.warehouse.ProductPreview;
+
+import java.util.Date;
+
+/**
+ * @author Sergey Klimenko (smklimenko@gmail.com)
+ */
+public class ProductTrackingView {
+	private final Integer id;
+	private final Date registered;
+	private final ProductPreview product;
+	private final TrackingType trackingType;
+
+	public ProductTrackingView(Integer id, Date registered, ProductPreview product, TrackingType trackingType) {
+		this.id = id;
+		this.registered = registered;
+		this.product = product;
+		this.trackingType = trackingType;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public Date getRegistered() {
+		return registered;
+	}
+
+	public ProductPreview getProduct() {
+		return product;
+	}
+
+	public TrackingType getTrackingType() {
+		return trackingType;
+	}
+}

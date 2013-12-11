@@ -1,15 +1,18 @@
 package billiongoods.server.services.tracking.impl;
 
 import billiongoods.core.Personality;
+import billiongoods.core.account.Account;
 import billiongoods.core.search.entity.EntitySearchManager;
 import billiongoods.server.services.tracking.*;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -72,6 +75,20 @@ public class HibernateProductTrackingManager extends EntitySearchManager<Product
 	}
 
 	@Override
+	public ProductTracking getTracking(Integer productId, Personality person) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("from billiongoods.server.services.tracking.impl.HibernateProductTracking where productId=:prid and personId=:pid");
+		query.setInteger("prid", productId);
+		query.setLong("pid", person.getId());
+
+		final List list = query.list();
+		if (list.isEmpty()) {
+			return null;
+		}
+		return (ProductTracking) list.get(0);
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public ProductTracking removeTracking(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -83,6 +100,20 @@ public class HibernateProductTrackingManager extends EntitySearchManager<Product
 			}
 		}
 		return pt;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public int importAccountTracking(Account account) {
+		if (account.getEmail() != null) {
+			final Session session = sessionFactory.getCurrentSession();
+
+			final Query query = session.createQuery("update billiongoods.server.services.tracking.impl.HibernateProductTracking t set t.personId = :pid where t.personEmail = :email");
+			query.setLong("pid", account.getId());
+			query.setString("email", account.getEmail());
+			return query.executeUpdate();
+		}
+		return 0;
 	}
 
 	@Override

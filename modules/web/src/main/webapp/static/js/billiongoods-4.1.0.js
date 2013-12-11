@@ -720,6 +720,25 @@ bg.warehouse.ProductController = function () {
 
 bg.privacy = {};
 
+bg.privacy.Tracking = function () {
+    this.remove = function (id) {
+        bg.ui.lock(null, 'Удаление подписки. Пожалуйста, подождите...');
+        $.post("/privacy/tracking/remove.ajax?id=" + id)
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, "Подписка успешно удалена", false);
+                        $("#trackingItem" + id).remove();
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                });
+    };
+};
+
 bg.privacy.AddressBook = function () {
     var form = $("#addressForm");
     var fields = ["firstName", "lastName", "postcode", "region", "city", "location"];

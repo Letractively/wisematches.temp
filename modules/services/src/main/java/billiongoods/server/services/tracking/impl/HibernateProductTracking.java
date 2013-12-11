@@ -21,11 +21,11 @@ public class HibernateProductTracking implements ProductTracking {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registration;
 
-	@Column(name = "productId")
-	private Integer productId;
-
 	@Column(name = "personId")
 	private Long personId;
+
+	@Column(name = "productId")
+	private Integer productId;
 
 	@Column(name = "personEmail")
 	private String personEmail;

@@ -301,15 +301,16 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void importAccountOrders(Account account) {
+	public int importAccountOrders(Account account) {
 		if (account.getEmail() != null) {
 			final Session session = sessionFactory.getCurrentSession();
 
 			final Query query = session.createQuery("update billiongoods.server.services.payment.impl.HibernateOrder o set o.buyer = :principal where o.payer = :payer");
 			query.setLong("principal", account.getId());
 			query.setString("payer", account.getEmail());
-			query.executeUpdate();
+			return query.executeUpdate();
 		}
+		return 0;
 	}
 
 	@Override
