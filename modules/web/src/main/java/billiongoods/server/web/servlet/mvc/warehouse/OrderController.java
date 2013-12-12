@@ -1,7 +1,6 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Member;
-import billiongoods.core.Personality;
 import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderManager;
@@ -55,7 +54,7 @@ public class OrderController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String checkoutOrder(WebRequest request) {
 		final OrderCheckoutForm form = (OrderCheckoutForm) request.getAttribute(ORDER_CHECKOUT_FORM_NAME, RequestAttributes.SCOPE_REQUEST);
-		final Order order = orderManager.create(getPrincipal(), form.getBasket(), form.getAddress(), form.getShipmentType(), form.isEnabledTracking());
+		final Order order = orderManager.create(getPersonality(), form.getBasket(), form.getAddress(), form.getShipmentType(), form.isEnabledTracking());
 		request.setAttribute(ORDER_ID_PARAM, order.getId(), RequestAttributes.SCOPE_REQUEST);
 		return "forward:/warehouse/paypal/checkout";
 	}
@@ -67,7 +66,7 @@ public class OrderController extends AbstractController {
 
 		final Order order = orderManager.getOrder(orderId);
 		try {
-			basketManager.closeBasket(getPrincipal());
+			basketManager.closeBasket(getPersonality());
 		} catch (Exception ex) {
 			log.error("Basket can't be closed for order " + order.getId(), ex);
 		}
@@ -172,18 +171,13 @@ public class OrderController extends AbstractController {
 			return responseFactory.failure("order.error.closed", locale);
 		}
 
-		final Personality principal = getPrincipal();
+		final Member member = getMember();
 		if (form.getEmail() != null && !form.getEmail().isEmpty()) { // tracking form only
 			if (!order.getPayer().equalsIgnoreCase(form.getEmail())) {
 				return responseFactory.failure("order.error.access", locale);
 			}
-		} else if (!(principal instanceof Member)) { // not tracking form, but and no member
+		} else if (member == null || !member.idem(order.getPersonId())) { // another owner?
 			return responseFactory.failure("order.error.access", locale);
-		} else {
-			final Member member = (Member) principal;
-			if (!member.getId().equals(order.getPersonId())) { // another owner?
-				return responseFactory.failure("order.error.access", locale);
-			}
 		}
 		orderManager.close(order.getId(), new Date(), null);
 		return responseFactory.success();

@@ -149,7 +149,7 @@
         <beans:property name="filterProcessesUrl" value="/account/social"/>
 
         <beans:constructor-arg name="authManager" ref="authenticationManager"/>
-        <beans:constructor-arg name="userIdSource" ref="memberDetailsService"/>
+        <beans:constructor-arg name="userIdSource" ref="personalityContext"/>
         <beans:constructor-arg name="authServiceLocator" ref="connectionFactoryLocator"/>
         <beans:constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>
 

@@ -26,7 +26,7 @@ public class PrivacyController extends AbstractController {
 
 	@RequestMapping("/view")
 	public String privacyView(Model model) {
-		final OrdersSummary summary = orderManager.getOrdersSummary(getPrincipal());
+		final OrdersSummary summary = orderManager.getOrdersSummary(getMember());
 		model.addAttribute("ordersSummary", summary);
 
 		return "/content/privacy/view";

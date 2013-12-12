@@ -1,12 +1,13 @@
 package billiongoods.server.web.servlet.mvc;
 
+import billiongoods.core.Member;
 import billiongoods.core.Personality;
-import billiongoods.core.security.PersonalityContext;
 import billiongoods.server.MessageFormatter;
 import billiongoods.server.services.basket.BasketManager;
 import billiongoods.server.warehouse.AttributeManager;
 import billiongoods.server.warehouse.Catalog;
 import billiongoods.server.warehouse.CategoryManager;
+import billiongoods.server.web.security.context.PersonalityContext;
 import billiongoods.server.web.servlet.sdo.ServiceResponseFactory;
 import billiongoods.server.web.servlet.view.StaticContentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public abstract class AbstractController {
 	protected MessageFormatter messageSource;
 	protected ServiceResponseFactory responseFactory;
 	protected StaticContentGenerator staticContentGenerator;
+
+	private PersonalityContext personalityContext;
 
 	private final boolean hideNavigation;
 	private final boolean hideWhereabouts;
@@ -71,9 +74,13 @@ public abstract class AbstractController {
 		model.addAttribute("titleExtension", value);
 	}
 
-	@ModelAttribute("principal")
-	public Personality getPrincipal() {
-		return PersonalityContext.getPrincipal();
+	@ModelAttribute("member")
+	public Member getMember() {
+		final Personality principal = personalityContext.getPrincipal();
+		if (principal instanceof Member) {
+			return (Member) principal;
+		}
+		return null;
 	}
 
 	@ModelAttribute("catalog")
@@ -103,11 +110,15 @@ public abstract class AbstractController {
 
 	@ModelAttribute("basketQuantity")
 	public Integer getBasketQuantity() {
-		final Personality principal = getPrincipal();
-		if (principal != null) {
-			return basketManager.getBasketSize(getPrincipal());
-		}
-		return null;
+		return basketManager.getBasketSize(personalityContext.getPrincipal());
+	}
+
+	protected Personality getPersonality() {
+		return personalityContext.getPrincipal();
+	}
+
+	protected boolean hasRole(String role) {
+		return personalityContext.hasRole(role);
 	}
 
 	protected void hideWhereabouts(Model model) {
@@ -118,8 +129,9 @@ public abstract class AbstractController {
 		model.addAttribute("hideNavigation", Boolean.TRUE);
 	}
 
-	protected boolean hasRole(String role) {
-		return PersonalityContext.hasRole(role);
+	@Autowired
+	public void setPersonalityContext(PersonalityContext personalityContext) {
+		this.personalityContext = personalityContext;
 	}
 
 	@Autowired

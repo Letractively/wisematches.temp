@@ -30,7 +30,7 @@ public class AddressController extends AbstractController {
 
 	@RequestMapping("")
 	public String viewAddressBook(Model model) {
-		final AddressBook addressBook = addressBookManager.getAddressBook(getPrincipal());
+		final AddressBook addressBook = addressBookManager.getAddressBook(getMember());
 		model.addAttribute("addressBook", addressBook);
 		return "/content/privacy/address";
 	}
@@ -42,7 +42,7 @@ public class AddressController extends AbstractController {
 		if (!validate.isEmpty()) {
 			return responseFactory.failure(validate);
 		}
-		addressBookManager.addAddress(getPrincipal(), form.toAddressRecord());
+		addressBookManager.addAddress(getMember(), form.toAddressRecord());
 		return responseFactory.success();
 	}
 
@@ -57,13 +57,13 @@ public class AddressController extends AbstractController {
 	@RequestMapping("/remove.ajax")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse removeAddressAjax(@RequestBody AddressForm form, Locale locale) {
-		final AddressBook addressBook = addressBookManager.getAddressBook(getPrincipal());
+		final AddressBook addressBook = addressBookManager.getAddressBook(getMember());
 		final AddressRecord addressRecord = addressBook.getAddressRecord(form.getId());
 		if (addressRecord == null) {
 			return responseFactory.failure("privacy.address.err.unknown", locale);
 		}
 
-		addressBookManager.removeAddress(getPrincipal(), addressRecord);
+		addressBookManager.removeAddress(getMember(), addressRecord);
 		return responseFactory.success();
 	}
 
@@ -75,14 +75,14 @@ public class AddressController extends AbstractController {
 			return responseFactory.failure(validate);
 		}
 
-		final AddressBook addressBook = addressBookManager.getAddressBook(getPrincipal());
+		final AddressBook addressBook = addressBookManager.getAddressBook(getMember());
 
 		final AddressRecord addressRecord = addressBook.getAddressRecord(form.getId());
 		if (addressRecord == null) {
 			return responseFactory.failure("privacy.address.err.unknown", locale);
 		}
 
-		addressBookManager.updateAddress(getPrincipal(), addressRecord, form.toAddressRecord());
+		addressBookManager.updateAddress(getMember(), addressRecord, form.toAddressRecord());
 		return responseFactory.success();
 	}
 

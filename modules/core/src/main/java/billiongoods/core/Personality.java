@@ -48,6 +48,10 @@ public abstract class Personality implements Serializable {
 	 */
 	public abstract PersonalityType getType();
 
+	public final boolean idem(Long id) {
+		return this.id.equals(id);
+	}
+
 	/**
 	 * Returns hash code of the personality calculated by formula:
 	 * {@code (int) (id ^ (id >>> 32))}

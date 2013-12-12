@@ -53,14 +53,14 @@ public class BasketController extends AbstractController {
 
 	@RequestMapping(value = {""}, method = RequestMethod.GET)
 	public String viewBasket(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
-		final Basket basket = basketManager.getBasket(getPrincipal());
+		final Basket basket = basketManager.getBasket(getPersonality());
 		return prepareBasketView(basket, form, model);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=clear")
 	public String processBasket(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
-		final Personality principal = getPrincipal();
+		final Personality principal = getPersonality();
 		basketManager.closeBasket(principal);
 
 		final Basket basket = basketManager.getBasket(principal);
@@ -70,7 +70,7 @@ public class BasketController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=update")
 	public String validateBasket(@ModelAttribute("order") BasketCheckoutForm form, Errors errors, Model model) {
-		final Personality principal = getPrincipal();
+		final Personality principal = getPersonality();
 		final Basket basket = validateBasket(principal, form, errors);
 		return prepareBasketView(basket, form, model);
 	}
@@ -84,7 +84,7 @@ public class BasketController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=checkout")
 	public String checkoutBasket(@ModelAttribute("order") BasketCheckoutForm form, Errors errors, Model model, WebRequest request) {
-		final Personality principal = getPrincipal();
+		final Personality principal = getPersonality();
 		final Basket basket = validateBasket(principal, form, errors);
 		if (basket == null) {
 			return prepareBasketView(null, form, model);
@@ -92,7 +92,7 @@ public class BasketController extends AbstractController {
 
 		AddressRecord address = null;
 		if (form.isSelectionTab()) {
-			address = addressBookManager.getAddressBook(getPrincipal()).getAddressRecord(form.getId());
+			address = addressBookManager.getAddressBook(getPersonality()).getAddressRecord(form.getId());
 		}
 
 		if (address == null) {
@@ -107,8 +107,9 @@ public class BasketController extends AbstractController {
 		}
 
 		if (!errors.hasErrors()) {
-			if (form.isRemember() && getPrincipal() instanceof Member) {
-				final AddressRecord addressRecord = addressBookManager.addAddress(getPrincipal(), new AddressRecord(address));
+			final Member member = getMember();
+			if (form.isRemember() && member != null) {
+				final AddressRecord addressRecord = addressBookManager.addAddress(member, new AddressRecord(address));
 				if (addressRecord != null) {
 					form.setSelectionTab(true);
 					form.setId(addressRecord.getId());
@@ -159,8 +160,7 @@ public class BasketController extends AbstractController {
 				return responseFactory.failure("unknown.product", new Object[]{form.getProduct()}, locale);
 			}
 
-			final Personality principal = getPrincipal();
-
+			final Personality principal = getPersonality();
 			final Basket basket = basketManager.getBasket(principal);
 			if (basket != null) {
 				final List<BasketItem> basketItems = basket.getBasketItems();
@@ -248,9 +248,9 @@ public class BasketController extends AbstractController {
 			model.addAttribute("coupon", coupon);
 			model.addAttribute("shipmentRates", shipmentRates);
 
-			final Personality principal = getPrincipal();
-			if (principal instanceof Member) {
-				final AddressBook addressBook = addressBookManager.getAddressBook(principal);
+			final Member member = getMember();
+			if (member != null) {
+				final AddressBook addressBook = addressBookManager.getAddressBook(member);
 				model.addAttribute("addressBook", addressBook);
 
 				if (form.getId() == null) {

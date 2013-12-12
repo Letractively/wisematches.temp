@@ -27,6 +27,9 @@
         </bean>
     </mvc:interceptors>
 
+    <bean id="personalityContext" class="billiongoods.server.web.security.context.PersonalityContext">
+    </bean>
+
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="26843540"/>
     </bean>
@@ -102,13 +105,10 @@
 
                         <entry key="imageResolver" value-ref="imageResolver"/>
                         <entry key="exchangeManager" value-ref="exchangeManager"/>
+                        <entry key="personalityContext" value-ref="personalityContext"/>
 
                         <entry key="imageResourcesDomain" value="${server.image.domain}"/>
                         <entry key="staticResourcesDomain" value="${server.static.domain}"/>
-
-                        <entry key="springSecurityContext">
-                            <bean class="billiongoods.server.web.servlet.view.freemarker.SpringSecurityContext"/>
-                        </entry>
                     </map>
                 </property>
                 <property name="freemarkerSettings">

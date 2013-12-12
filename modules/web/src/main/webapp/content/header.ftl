@@ -1,5 +1,3 @@
-<#-- @ftlvariable name="principal" type="billiongoods.core.Member" -->
-
 <#include "/core.ftl">
 
 <table style="height: 40px">
@@ -20,9 +18,9 @@
         <td align="right" valign="middle">
             <div class="table-cell header-welcome">
             <@bg.security.permitted "member";member>
-                <#if member>
+                <#if member??>
                     Добро Пожаловать,
-                    <a class="highlight" href="/privacy/view">${principal.passport.username}</a>
+                    <a class="highlight" href="/privacy/view">${member.passport.username}</a>
                 <#else>
                     Добро Пожаловать!
                     <a class="highlight" href="/account/signin">Войти</a>

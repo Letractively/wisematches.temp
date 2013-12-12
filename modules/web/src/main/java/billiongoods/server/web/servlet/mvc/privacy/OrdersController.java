@@ -38,7 +38,7 @@ public class OrdersController extends AbstractController {
 			throw new UnknownEntityException(orderId, "order");
 		}
 
-		if (!getPrincipal().getId().equals(order.getPersonId())) {
+		if (!getMember().idem(order.getPersonId())) {
 			throw new UnknownEntityException(orderId, "order");
 		}
 		model.addAttribute("order", order);
@@ -49,7 +49,7 @@ public class OrdersController extends AbstractController {
 	public String privacyOrders(@ModelAttribute("filter") OrderFilterForm filter, @ModelAttribute("pageableForm") PageableForm pageableForm, Model model) {
 		final OrderStateUnion state = OrderStateUnion.byCode(filter.getState());
 
-		final OrderContext context = new OrderContext(getPrincipal(), state != null ? state.getOrderStates() : null);
+		final OrderContext context = new OrderContext(getMember(), state != null ? state.getOrderStates() : null);
 		final int totalCount = orderManager.getTotalCount(context);
 		pageableForm.initialize(totalCount, totalCount);
 

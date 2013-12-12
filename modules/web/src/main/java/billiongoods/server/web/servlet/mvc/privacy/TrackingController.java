@@ -33,7 +33,7 @@ public class TrackingController extends AbstractController {
 
 	@RequestMapping("")
 	public String privacy(Model model) {
-		final TrackingContext ctx = new TrackingContext(null, getPrincipal().getId(), null);
+		final TrackingContext ctx = new TrackingContext(null, getMember(), null);
 
 		final List<ProductTracking> tracking = trackingManager.searchEntities(ctx, null, null, null);
 
@@ -42,7 +42,6 @@ public class TrackingController extends AbstractController {
 			views.add(new ProductTrackingView(t.getId(), t.getRegistration(), productManager.getPreview(t.getProductId()), t.getTrackingType()));
 		}
 		model.addAttribute("tracking", views);
-
 		return "/content/privacy/tracking";
 	}
 
@@ -51,7 +50,7 @@ public class TrackingController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse changeTrackingState(@RequestParam("id") Integer id, Locale locale) {
 		final ProductTracking tracking = trackingManager.getTracking(id);
-		if (!getPrincipal().getId().equals(tracking.getPersonId())) {
+		if (!getMember().idem(tracking.getPersonId())) {
 			return responseFactory.failure("security");
 		}
 		trackingManager.removeTracking(id);

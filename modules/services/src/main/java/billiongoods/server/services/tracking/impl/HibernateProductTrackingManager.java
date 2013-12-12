@@ -131,8 +131,8 @@ public class HibernateProductTrackingManager extends EntitySearchManager<Product
 				criteria.add(Restrictions.eq("personEmail", context.getEmail()));
 			}
 
-			if (context.getPersonId() != null) {
-				criteria.add(Restrictions.eq("personId", context.getPersonId()));
+			if (context.getPersonality() != null) {
+				criteria.add(Restrictions.eq("personId", context.getPersonality().getId()));
 			}
 
 			if (context.getTrackingType() != null) {
