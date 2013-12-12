@@ -17,7 +17,7 @@ public class MemberAuthenticationToken extends AbstractAuthenticationToken {
 
 	@Override
 	public String getName() {
-		return memberDetails.getPersonality().getEmail();
+		return memberDetails.getMember().getEmail();
 	}
 
 	@Override

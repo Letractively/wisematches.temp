@@ -1,9 +1,11 @@
 package billiongoods.server.web.servlet.mvc;
 
-import billiongoods.core.security.PersonalityContext;
+import billiongoods.core.Member;
+import billiongoods.core.Personality;
 import billiongoods.server.MessageFormatter;
 import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.warehouse.CategoryManager;
+import billiongoods.server.web.security.context.PersonalityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.authentication.rememberme.CookieTheftException;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CentralController {
 	private CategoryManager categoryManager;
 	private MessageFormatter messageFormatter;
+	private PersonalityContext personalityContext;
 
 	public CentralController() {
 	}
@@ -74,7 +77,6 @@ public class CentralController {
 		model.addAttribute("errorArguments", arguments);
 
 		model.addAttribute("catalog", categoryManager.getCatalog());
-		model.addAttribute("principal", PersonalityContext.getPrincipal());
 		model.addAttribute("department", Department.ASSISTANCE);
 
 		model.addAttribute("hideWhereabouts", Boolean.TRUE);
@@ -82,9 +84,19 @@ public class CentralController {
 
 		model.addAttribute("title", messageFormatter.getMessage("error." + errorCode + ".label", request.getLocale()));
 
+		final Personality principal = personalityContext.getPrincipal();
+		if (principal instanceof Member) {
+			model.addAttribute("member", principal);
+		}
+
 		res.addAllObjects(model.asMap());
 
 		return res;
+	}
+
+	@Autowired
+	public void setPersonalityContext(PersonalityContext personalityContext) {
+		this.personalityContext = personalityContext;
 	}
 
 	@Autowired

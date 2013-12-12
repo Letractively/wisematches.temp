@@ -1,35 +1,23 @@
 package billiongoods.server.web.security;
 
-import billiongoods.core.Personality;
 import billiongoods.core.account.Account;
 import billiongoods.core.account.AccountLockManager;
 import billiongoods.core.account.AccountManager;
 import billiongoods.core.account.AccountRecoveryManager;
-import billiongoods.core.security.PersonalityContext;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.social.UserIdSource;
 import org.springframework.social.security.SocialUserDetailsService;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class MemberDetailsService implements UserDetailsService, SocialUserDetailsService, UserIdSource {
+public class MemberDetailsService implements UserDetailsService, SocialUserDetailsService {
 	private AccountManager accountManager;
 	private AccountLockManager accountLockManager;
 	private AccountRecoveryManager accountRecoveryManager;
 
 	public MemberDetailsService() {
-	}
-
-	@Override
-	public String getUserId() {
-		final Personality principal = PersonalityContext.getPrincipal();
-		if (principal == null) {
-			return null;
-		}
-		return String.valueOf(principal.getId());
 	}
 
 	@Override

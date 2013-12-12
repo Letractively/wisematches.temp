@@ -1,7 +1,7 @@
 [#ftl]
 [#-- @implicitly included --]
 [#-- @ftlvariable name="locale" type="java.util.Locale" --]
-[#-- @ftlvariable name="principal" type="billiongoods.core.Personality" --]
+[#-- @ftlvariable name="member" type="billiongoods.core.Member" --]
 
 [#-- @ftlvariable name="messageSource" type="billiongoods.server.MessageFormatter" --]
 
@@ -10,6 +10,7 @@
 [#-- @ftlvariable name="department" type="billiongoods.server.web.servlet.mvc.Department" --]
 
 [#-- @ftlvariable name="imageResolver" type="billiongoods.server.services.image.ImageResolver" --]
+[#-- @ftlvariable name="personalityContext" type="billiongoods.server.web.security.context.PersonalityContext" --]
 
 [#-- @ftlvariable name="StockState" type="billiongoods.server.warehouse.StockState.static" --]
 [#-- @ftlvariable name="ImageSize" type="billiongoods.server.services.image.ImageSize.static" --]

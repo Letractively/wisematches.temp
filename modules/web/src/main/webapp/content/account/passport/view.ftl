@@ -49,7 +49,7 @@
 
             <td valign="top" nowrap="nowrap">
                 <div class="cnt">
-                <#if principal.email?has_content>
+                <#if member.email?has_content>
                     <a href="/account/passport/email">Именить адрес электронной почты</a>
                 <#else>
                     <a href="/account/passport/email">Добавить адрес электронной почты</a>

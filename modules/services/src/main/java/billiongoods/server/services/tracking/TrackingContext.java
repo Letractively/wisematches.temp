@@ -1,12 +1,14 @@
 package billiongoods.server.services.tracking;
 
+import billiongoods.core.Personality;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class TrackingContext {
 	private String email;
-	private Long personId;
 	private Integer productId;
+	private Personality personality;
 	private TrackingType trackingType;
 
 	public TrackingContext(Integer productId, TrackingType trackingType) {
@@ -20,9 +22,9 @@ public class TrackingContext {
 		this.trackingType = trackingType;
 	}
 
-	public TrackingContext(Integer productId, Long personId, TrackingType trackingType) {
-		this.personId = personId;
+	public TrackingContext(Integer productId, Personality personality, TrackingType trackingType) {
 		this.productId = productId;
+		this.personality = personality;
 		this.trackingType = trackingType;
 	}
 
@@ -30,8 +32,8 @@ public class TrackingContext {
 		return email;
 	}
 
-	public Long getPersonId() {
-		return personId;
+	public Personality getPersonality() {
+		return personality;
 	}
 
 	public Integer getProductId() {
@@ -46,7 +48,7 @@ public class TrackingContext {
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("TrackingContext{");
 		sb.append("productId=").append(productId);
-		sb.append(", personId=").append(personId);
+		sb.append(", personality=").append(personality);
 		sb.append(", email='").append(email).append('\'');
 		sb.append('}');
 		return sb.toString();

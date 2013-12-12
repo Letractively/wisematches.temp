@@ -1,7 +1,6 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Member;
-import billiongoods.core.Personality;
 import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingManager;
 import billiongoods.server.services.tracking.TrackingContext;
@@ -100,10 +99,10 @@ public class ProductController extends AbstractController {
 		similar.removeAll(mode); // remove all modes
 		accessories.remove(product);
 
-		final Personality principal = getPrincipal();
+		final Member member = getMember();
 		final StockState stockState = product.getStockInfo().getStockState();
-		if (principal instanceof Member && (stockState != StockState.IN_STOCK && stockState != StockState.LIMITED_NUMBER)) {
-			model.addAttribute("tracking", trackingManager.getTracking(product.getId(), principal));
+		if (member != null && (stockState != StockState.IN_STOCK && stockState != StockState.LIMITED_NUMBER)) {
+			model.addAttribute("tracking", trackingManager.getTracking(product.getId(), member));
 		}
 
 		model.addAttribute("mode", mode);
@@ -121,8 +120,6 @@ public class ProductController extends AbstractController {
 	@RequestMapping("/tracking.ajax")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse changeTrackingState(@RequestBody ProductTrackingForm form, Locale locale) {
-		final Personality principal = getPrincipal();
-
 		if (form.getProductId() == null) {
 			return responseFactory.failure("product.subscribe.error.unknown", locale);
 		}
@@ -132,13 +129,14 @@ public class ProductController extends AbstractController {
 			return responseFactory.failure("product.subscribe.error.unknown", locale);
 		}
 
-		return processSubscription(form, locale, principal);
+		return processSubscription(form, locale);
 	}
 
-	private ServiceResponse processSubscription(ProductTrackingForm form, Locale locale, Personality principal) {
+	private ServiceResponse processSubscription(ProductTrackingForm form, Locale locale) {
 		TrackingContext context;
-		if (principal instanceof Member) {
-			context = new TrackingContext(form.getProductId(), principal.getId(), form.getType());
+		final Member member = getMember();
+		if (member != null) {
+			context = new TrackingContext(form.getProductId(), member, form.getType());
 		} else {
 			if (form.getEmail() == null || form.getEmail().isEmpty()) {
 				return responseFactory.failure("product.subscribe.error.email", locale);
@@ -157,8 +155,8 @@ public class ProductController extends AbstractController {
 			}
 
 			ProductTracking tracking;
-			if (principal instanceof Member) {
-				tracking = trackingManager.createTracking(form.getProductId(), principal, form.getType());
+			if (member != null) {
+				tracking = trackingManager.createTracking(form.getProductId(), member, form.getType());
 			} else {
 				tracking = trackingManager.createTracking(form.getProductId(), form.getEmail(), form.getType());
 			}
