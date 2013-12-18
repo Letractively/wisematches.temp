@@ -32,7 +32,7 @@
     </#if>
 
     <#if analyticsGoogleCode?has_content>
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             ga('require', 'ecommerce', 'ecommerce.js');
 
@@ -40,7 +40,7 @@
 
             ga('ecommerce:addTransaction', {
                 'id': '${order.id}',
-                'affiliation': '${order.shipment.address.name}',
+                'affiliation': '${order.shipment.address.lastName} ${order.shipment.address.firstName}',
                 'revenue': '${(order.amount + order.shipment.amount)?string("0.00")}',
                 'shipping': '${(order.shipment.amount)?string("0.00")}',
                 'currency': 'RUB'
