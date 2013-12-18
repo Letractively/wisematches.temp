@@ -237,6 +237,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
 	public Product removeProduct(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
 
@@ -250,6 +251,18 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 			listener.productRemoved(product);
 		}
 		return product;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public int updateDescriptions(String from, String to) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct p set p.description=replace(p.description, :from, :to)");
+		query.setString("to", to);
+		query.setString("from", from);
+
+		return query.executeUpdate();
 	}
 
 	private void updateProduct(HibernateProduct product, ProductEditor editor) {

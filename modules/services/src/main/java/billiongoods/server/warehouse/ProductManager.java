@@ -38,6 +38,9 @@ public interface ProductManager extends SearchManager<ProductPreview, ProductCon
 	Product removeProduct(Integer id);
 
 
+	int updateDescriptions(String from, String to);
+
+
 	void updateSold(Integer id, int quantity);
 
 	void updateRecommendation(Integer id, boolean b);

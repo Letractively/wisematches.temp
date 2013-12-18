@@ -23,7 +23,7 @@
         </div>
 
         <div>
-            <a href="/maintain/product/replace">Редактирование описания</a>
+            <a href="/maintain/product/replace">Редактирование описаний</a>
         </div>
 
         <div>&nbsp;</div>

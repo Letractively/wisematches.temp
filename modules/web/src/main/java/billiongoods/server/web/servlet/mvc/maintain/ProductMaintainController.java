@@ -11,6 +11,7 @@ import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.ImportProductsForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.ProductForm;
+import billiongoods.server.web.servlet.mvc.maintain.form.ReplaceForm;
 import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -351,10 +352,25 @@ public class ProductMaintainController extends AbstractController {
 		return "/content/maintain/product";
 	}
 
-	@RequestMapping("")
+	@RequestMapping(value = "/replace")
+	public String descriptionReplace(@ModelAttribute("form") ReplaceForm form) {
+		return "/content/maintain/replace";
+	}
+
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public String asd() {
-		return "";
+	@RequestMapping(value = "/replace", method = RequestMethod.POST)
+	public String descriptionReplaceAction(@ModelAttribute("form") ReplaceForm form, Model model, Errors errors) {
+		if (form.getFrom() == null || form.getFrom().trim().isEmpty()) {
+			errors.rejectValue("from", "maintain.replace.from.empty");
+		}
+		if (form.getTo() == null || form.getTo().trim().isEmpty()) {
+			errors.rejectValue("to", "maintain.replace.to.empty");
+		}
+
+		if (!errors.hasErrors()) {
+			model.addAttribute("updatedCount", productManager.updateDescriptions(form.getFrom(), form.getTo()));
+		}
+		return "/content/maintain/replace";
 	}
 
 	@RequestMapping(value = "/addimg", method = RequestMethod.POST)
