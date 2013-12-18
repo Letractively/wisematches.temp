@@ -22,6 +22,10 @@
             <a href="/maintain/product/import">Загрузить Товары</a>
         </div>
 
+        <div>
+            <a href="/maintain/product/replace">Редактирование описания</a>
+        </div>
+
         <div>&nbsp;</div>
         <div>
             <a href="/maintain/coupon/search">Найти купон</a>

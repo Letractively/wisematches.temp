@@ -1,39 +1,22 @@
 package billiongoods.server.services.tracking;
 
-import billiongoods.core.Personality;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class TrackingContext {
-	private String email;
 	private Integer productId;
-	private Personality personality;
 	private TrackingType trackingType;
+	private TrackingPerson trackingPerson;
 
 	public TrackingContext(Integer productId, TrackingType trackingType) {
 		this.productId = productId;
 		this.trackingType = trackingType;
 	}
 
-	public TrackingContext(Integer productId, String email, TrackingType trackingType) {
-		this.email = email;
+	public TrackingContext(Integer productId, TrackingType trackingType, TrackingPerson trackingPerson) {
 		this.productId = productId;
 		this.trackingType = trackingType;
-	}
-
-	public TrackingContext(Integer productId, Personality personality, TrackingType trackingType) {
-		this.productId = productId;
-		this.personality = personality;
-		this.trackingType = trackingType;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public Personality getPersonality() {
-		return personality;
+		this.trackingPerson = trackingPerson;
 	}
 
 	public Integer getProductId() {
@@ -44,12 +27,16 @@ public class TrackingContext {
 		return trackingType;
 	}
 
+	public TrackingPerson getTrackingPerson() {
+		return trackingPerson;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("TrackingContext{");
 		sb.append("productId=").append(productId);
-		sb.append(", personality=").append(personality);
-		sb.append(", email='").append(email).append('\'');
+		sb.append(", trackingType=").append(trackingType);
+		sb.append(", trackingPerson=").append(trackingPerson);
 		sb.append('}');
 		return sb.toString();
 	}

@@ -7,4 +7,6 @@ public interface ProductTrackingListener {
 	void trackingAdded(ProductTracking tracking);
 
 	void trackingRemoved(ProductTracking tracking);
+
+	void trackingInvalidated(ProductTracking tracking);
 }

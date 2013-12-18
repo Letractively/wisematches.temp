@@ -113,7 +113,7 @@
                             </td>
                             <td>
                                 <label for="address${a.id}" style="font-weight: normal; white-space: normal">
-                                ${a.lastName} ${a.lastName}, ${a.postcode}, ${a.region}, ${a.city}, ${a.location}
+                                ${a.lastName} ${a.firstName}, ${a.postcode}, ${a.region}, ${a.city}, ${a.location}
                                 </label>
                             </td>
                         </tr>

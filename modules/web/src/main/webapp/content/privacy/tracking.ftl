@@ -17,7 +17,7 @@
         <tbody>
         <#list tracking as t>
             <#assign product=t.product/>
-        <tr id="trackingItem${t.id}" class="item">
+        <tr class="item">
             <td style="margin-right: 10px">
                 <@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/>
             </td>
@@ -54,7 +54,9 @@
             </td>
 
             <td align="right" nowrap="nowrap">
-                <button type="button" onclick="tracking.remove(${t.id});">Удалить</button>
+                <button type="button" onclick="tracking.remove(this, '${t.product.id}', '${t.trackingType.name()}');">
+                    Удалить
+                </button>
             </td>
         </tr>
         </#list>

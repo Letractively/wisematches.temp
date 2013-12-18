@@ -41,6 +41,7 @@
 
     <bean id="trackingManager" class="billiongoods.server.services.tracking.impl.HibernateProductTrackingManager">
         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="productManager" ref="productManager"/>
     </bean>
 
     <bean id="relationshipManager" class="billiongoods.server.warehouse.impl.HibernateRelationshipManager">

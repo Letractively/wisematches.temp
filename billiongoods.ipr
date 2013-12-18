@@ -190,19 +190,21 @@
       <option name="fileTypeOverride" value="3" />
     </LanguageOptions>
   </component>
-  <component name="DataSourceManagerImpl" format="xml" hash="2599634256">
-    <data-source source="LOCAL" name="Data Source [2]" uuid="506079ea-5c7c-40ee-b36f-fd6b348bd416">
+  <component name="DataSourceManagerImpl" format="xml" hash="1088073240">
+    <data-source source="LOCAL" name="MySQL - billiongoods@localhost" uuid="d0de4310-bb7a-4923-a7c0-0dab1074a893">
       <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://billiongoods.c6pay0pjz5gn.us-east-1.rds.amazonaws.com:3306/billiongoods</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/billiongoods</jdbc-url>
       <user-name>billiongoods</user-name>
-      <user-password>dfdedfcfdfdddfd8dfdedfd9dfcedfcddfccdfcfdfd8df92dfc3dfd3dfdfdf9ddf9adf9edf98df99dfc6dfccdfd9dfcedfcc</user-password>
-      <schema-pattern>billiongoods.*</schema-pattern>
-      <libraries>
-        <library>
-          <url>jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.22/mysql-connector-java-5.1.22.jar!/</url>
-        </library>
-      </libraries>
+      <user-password>dfdedfcfdfd9dfde</user-password>
+      <default-schemas>billiongoods.*</default-schemas>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="noAccessToProcedureBodies" value="true" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
     </data-source>
   </component>
   <component name="DependenciesAnalyzeManager">
@@ -572,6 +574,7 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/resources/database/database.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/resources/database/latest_patch.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/resources/database/translate.sql" dialect="MySQL" />
   </component>
   <component name="StarteamConfiguration">
     <option name="SERVER" value="" />

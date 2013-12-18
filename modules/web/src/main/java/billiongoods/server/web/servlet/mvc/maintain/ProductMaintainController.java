@@ -351,6 +351,12 @@ public class ProductMaintainController extends AbstractController {
 		return "/content/maintain/product";
 	}
 
+	@RequestMapping("")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public String asd() {
+		return "";
+	}
+
 	@RequestMapping(value = "/addimg", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse upload(@RequestParam("id") Integer id, MultipartHttpServletRequest request) throws IOException {

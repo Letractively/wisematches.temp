@@ -21,4 +21,5 @@
 [#-- @ftlvariable name="AttributeType" type="billiongoods.server.warehouse.AttributeType.static" --]
 [#-- @ftlvariable name="GroupType" type="billiongoods.server.warehouse.GroupType.static" --]
 [#-- @ftlvariable name="RelationshipType" type="billiongoods.server.warehouse.RelationshipType.static" --]
+[#-- @ftlvariable name="TrackingType" type="billiongoods.server.services.tracking.TrackingType.static" --]
 [#-- @ftlvariable name="OrderStateUnion" type="billiongoods.server.web.servlet.mvc.privacy.form.OrderStateUnion.static" --]

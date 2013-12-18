@@ -9,20 +9,14 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ProductTrackingView {
-	private final Integer id;
 	private final Date registered;
 	private final ProductPreview product;
 	private final TrackingType trackingType;
 
-	public ProductTrackingView(Integer id, Date registered, ProductPreview product, TrackingType trackingType) {
-		this.id = id;
+	public ProductTrackingView(Date registered, ProductPreview product, TrackingType trackingType) {
 		this.registered = registered;
 		this.product = product;
 		this.trackingType = trackingType;
-	}
-
-	public Integer getId() {
-		return id;
 	}
 
 	public Date getRegistered() {

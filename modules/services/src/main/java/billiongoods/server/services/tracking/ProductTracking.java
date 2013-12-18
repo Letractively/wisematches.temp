@@ -6,17 +6,14 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ProductTracking {
-	Integer getId();
-
-
-	Date getRegistration();
-
-	Integer getProductId();
-
-
 	Long getPersonId();
 
 	String getPersonEmail();
+
+
+	Integer getProductId();
+
+	Date getRegistration();
 
 
 	TrackingType getTrackingType();

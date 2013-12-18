@@ -591,61 +591,6 @@ bg.warehouse.ProductController = function () {
         return false;
     });
 
-    $("#requestProductDescription").click(function (event) {
-        $('#subscribeDescriptionForm').dialog({
-            title: 'Запрос на описание товара',
-            draggable: true,
-            modal: true,
-            resizable: false,
-            width: 500,
-            buttons: [
-                {
-                    text: 'Отправить заявку',
-                    click: function () {
-                        bg.ui.lock(null, 'Отправки заявки. Пожалуйста, подождите...');
-                        var serializeObject = $('#subscribeDescriptionForm').find('form').serializeObject();
-                        $.post("/warehouse/product/tracking.ajax", JSON.stringify(serializeObject))
-                                .done(function (response) {
-                                    if (response.success) {
-                                        bg.ui.unlock(null, "Ваша заявка на добавление описание успешно отправлена", false);
-                                    } else {
-                                        bg.ui.unlock(null, response.message, true);
-                                    }
-                                })
-                                .fail(function (jqXHR, textStatus, errorThrown) {
-                                    bg.ui.unlock(null, "Подписка не может быть изменения в связи с внутренней ошибкой. Если проблема " +
-                                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
-                                });
-                        $(this).dialog("close");
-                    }
-                },
-                {
-                    text: 'Отмена',
-                    click: function () {
-                        $(this).dialog("close");
-                    }
-                }
-            ]
-        });
-    });
-
-    $("#requestProductAvailability").click(function (event) {
-        bg.ui.lock(null, 'Отправки заявки. Пожалуйста, подождите...');
-        var serializeObject = $('#requestProductAvailabilityForm').find('input').serializeObject();
-        $.post("/warehouse/product/tracking.ajax", JSON.stringify(serializeObject))
-                .done(function (response) {
-                    if (response.success) {
-                        bg.ui.unlock(null, "Ваша заявка успешно отправлена", false);
-                    } else {
-                        bg.ui.unlock(null, response.message, true);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
-                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
-                });
-    });
-
     function selectThumb(img) {
         $(".thumb img").removeClass("selected");
         var src = img.addClass("selected").attr('src');
@@ -721,23 +666,112 @@ bg.warehouse.ProductController = function () {
 bg.privacy = {};
 
 bg.privacy.Tracking = function () {
-    this.remove = function (id) {
-        bg.ui.lock(null, 'Удаление подписки. Пожалуйста, подождите...');
-        $.post("/privacy/tracking/remove.ajax?id=" + id)
+    var processUIElements = function (trackingType) {
+        if (trackingType == 'AVAILABILITY') {
+            $(".availabilityTracking").toggle();
+        } else {
+            $(".descriptionTracking").toggle();
+        }
+    };
+
+    this.remove = function (el, productId, trackingType) {
+        var block = $(el).closest(".privacy .item");
+        bg.ui.lock(block, 'Удаление подписки. Пожалуйста, подождите...');
+        $.post("/privacy/tracking/remove.ajax", JSON.stringify({productId: productId, type: trackingType}))
                 .done(function (response) {
                     if (response.success) {
-                        bg.ui.unlock(null, "Подписка успешно удалена", false);
-                        $("#trackingItem" + id).remove();
+                        bg.ui.unlock(block, "Подписка успешно удалена", false);
+                        block.remove();
+                        processUIElements(trackingType);
                     } else {
-                        bg.ui.unlock(null, response.message, true);
+                        bg.ui.unlock(block, response.message, true);
                     }
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                    bg.ui.unlock(block, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
                             "Пожалуйста, попробуйте отправить сообщение позже.", true);
                 });
     };
+
+    this.add = function (el, productId, trackingType, member) {
+        var block = $(el);
+
+        var letsDo = function (lemail, callback) {
+            bg.ui.lock(block, 'Отправки заявки. Пожалуйста, подождите...');
+            $.post("/privacy/tracking/add.ajax", JSON.stringify({productId: productId, type: trackingType, email: lemail}))
+                    .done(function (response) {
+                        if (response.success) {
+                            bg.ui.unlock(block, "Ваша заявка успешно отправлена", false);
+                            if (member) {
+                                processUIElements(trackingType);
+                            }
+                            callback(true);
+                        } else {
+                            bg.ui.unlock(block, response.message, true);
+                            callback(false);
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        bg.ui.unlock(block, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
+                                "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                        callback(false);
+                    });
+        };
+
+        if (member) {
+            letsDo(null, function () {
+            });
+        } else {
+            $('#trackingEmailForm').dialog({
+                title: 'Запрос на описание товара',
+                draggable: true,
+                modal: true,
+                resizable: false,
+                width: 500,
+                buttons: [
+                    {
+                        text: 'Отправить заявку',
+                        click: function () {
+                            var d = $(this);
+                            letsDo($('#subscribeDescriptionEmail').val(), function (r) {
+                                if (r) {
+                                    d.dialog("close");
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: 'Отмена',
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                ]
+            });
+        }
+    };
 };
+/*
+ $("#requestProductDescription").click(function (event) {
+ var letsDo = function (callback) {
+ bg.ui.lock(null, 'Отправки заявки. Пожалуйста, подождите...');
+ var serializeObject = $('#subscribeDescriptionForm').find('form').serializeObject();
+ $.post("/privacy/tracking/add.ajax", JSON.stringify(serializeObject))
+ .done(function (response) {
+ if (response.success) {
+ bg.ui.unlock(null, "Ваша заявка на добавление описание успешно отправлена", false);
+ } else {
+ bg.ui.unlock(null, response.message, true);
+ }
+ })
+ .fail(function (jqXHR, textStatus, errorThrown) {
+ bg.ui.unlock(null, "Подписка не может быть изменения в связи с внутренней ошибкой. Если проблема " +
+ "не исчезла, пожалуйста, свяжитесь с нами.", true);
+ });
+ };
+
+ */
+
 
 bg.privacy.AddressBook = function () {
     var form = $("#addressForm");

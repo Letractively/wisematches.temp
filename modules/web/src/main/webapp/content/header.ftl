@@ -17,15 +17,13 @@
 
         <td align="right" valign="middle">
             <div class="table-cell header-welcome">
-            <@bg.security.permitted "member";member>
-                <#if member??>
-                    Добро Пожаловать,
-                    <a class="highlight" href="/privacy/view">${member.passport.username}</a>
-                <#else>
-                    Добро Пожаловать!
-                    <a class="highlight" href="/account/signin">Войти</a>
-                </#if>
-            </@bg.security.permitted>
+            <#if member??>
+                Добро Пожаловать,
+                <a class="highlight" href="/privacy/view">${member.passport.username}</a>
+            <#else>
+                Добро Пожаловать!
+                <a class="highlight" href="/account/signin">Войти</a>
+            </#if>
             </div>
 
             <div class="table-cell header-links">

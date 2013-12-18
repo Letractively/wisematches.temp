@@ -4,7 +4,7 @@
 <#-- @ftlvariable name="similar" type="billiongoods.server.warehouse.ProductPreview[]" -->
 <#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ProductPreview[]" -->
 <#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationship[]" -->
-<#-- @ftlvariable name="tracking" type="billiongoods.server.services.tracking.ProductTracking" -->
+<#-- @ftlvariable name="registeredTracking" type="java.util.EnumSet<billiongoods.server.services.tracking.TrackingType>" -->
 
 <#include "/core.ftl">
 
@@ -191,36 +191,36 @@
                                   content="${stockInfo.restockDate?date?string("yyyy-DD-mm")}"/>
                         </#if>
 
-                        <#if tracking??>
+                        <#assign subscribed=registeredTracking?? && registeredTracking?seq_contains(TrackingType.AVAILABILITY)/>
+                        <div class="availabilityTracking" <#if !subscribed>style="display: none"</#if>>
                             <p>
-                                Товара нет в наличии и вы уже подписаны на получение извещения при сотуплении товара.
+                                Товара нет в наличии и вы уже подписаны на получение извещения при сотуплении
+                                товара.
                                 Вы можете проверить список ваших подписок в <a href="/privacy/tracking">личном
                                 кабинете</a>.
                             </p>
-                        <#else>
+
+                            <p align="right">
+                                <button type="button"
+                                        onclick="tracking.remove(this, '${product.id}', '${TrackingType.AVAILABILITY.name()}')">
+                                    Отписаться от получения уведомления
+                                </button>
+                            </p>
+                        </div>
+
+                        <div class="availabilityTracking" <#if subscribed>style="display: none"</#if>>
                             <p>
                                 Товара нет в наличии в данный момент, но вы можете подписаться на обновления
                                 и мы вышлим вам письмо, когда товар снова будет в наличии.
                             </p>
 
-                            <@bg.security.permitted "member";allowed>
-                                <div id="requestProductAvailabilityForm">
-                                    <input name="productId" type="hidden" value="${product.id}"/>
-                                    <input name="type" type="hidden" value="AVAILABILITY"/>
-
-                                    <input name="changeType" type="hidden" value="SUBSCRIBE"/>
-
-                                    <#if !allowed>
-                                        <label for="subscribeDescriptionEmail">Адрес эл. почты: </label>
-                                        <input id="subscribeDescriptionEmail" name="email" type="text"
-                                               style="width: 300px">
-                                    </#if>
-                                    <button id="requestProductAvailability" type="button">
-                                        Подписаться на поступление
-                                    </button>
-                                </div>
-                            </@bg.security.permitted>
-                        </#if>
+                            <p align="right">
+                                <button type="button"
+                                        onclick="tracking.add(this, '${product.id}', '${TrackingType.AVAILABILITY.name()}', ${member?has_content?string})">
+                                    Подписаться на поступление
+                                </button>
+                            </p>
+                        </div>
                     </div>
                 </#if>
                 </div>
@@ -239,14 +239,35 @@
 <#if product.description?has_content>
     <@bg.ui.panel caption="Описание" id="description">
         <#if product.state.promoted>
-        <p>
-            Мы еще не подготовили описание этого товара. Если же вы хотели бы получить его описание, пожалуйста,
-            дайте нам знать об этом и мы добавим описание в самое ближайшее время.
-        </p>
+            <#assign subscribed=registeredTracking?? && registeredTracking?seq_contains(TrackingType.DESCRIPTION)/>
+        <div class="descriptionTracking" <#if !subscribed>style="display: none"</#if>>
+            <p>
+                Мы еще не подготовили описание этого товара, но вы уже подписаны на получение уведомления, как только
+                описание будет добавлено. Вы можете проверить список ваших подписок в <a href="/privacy/tracking">личном
+                кабинете</a>.
+            </p>
 
-        <p align="right">
-            <button id="requestProductDescription" type="button">Заказать описание товара</button>
-        </p>
+            <p align="right">
+                <button type="button"
+                        onclick="tracking.remove(this, '${product.id}', '${TrackingType.DESCRIPTION.name()}')">
+                    Отписаться от получения уведомления
+                </button>
+            </p>
+        </div>
+
+        <div class="descriptionTracking" <#if subscribed>style="display: none"</#if>>
+            <p>
+                Мы еще не подготовили описание этого товара. Если же вы хотели бы получить его описание, пожалуйста,
+                дайте нам знать об этом и мы добавим описание в самое ближайшее время.
+            </p>
+
+            <p align="right">
+                <button type="button"
+                        onclick="tracking.add(this, '${product.id}', '${TrackingType.DESCRIPTION.name()}', ${member?has_content?string})">
+                    Заказать описание товара
+                </button>
+            </p>
+        </div>
         <#else>
         <p itemprop="description">
         ${product.description!""}
@@ -318,23 +339,19 @@
 </#if>
 </div>
 
-<div id="subscribeDescriptionForm" style="display: none">
+<div id="trackingEmailForm" style="display: none">
     <p>
-        Если вы хотите незамедлительно получить извещение о добавленном описание, вы можете
-        оставить нам ваш адрес электронной почты и мы вышлем вам соответствующее письмо, как только
-        описание будет добавлено.
+        Пожалуйста, оставьте ваш адрес электронной почты или <a href="/account/signin">войдите в личный кабинет</a>,
+        что бы получить уведомление по почте.
     </p>
 
     <form name="subscribeDescriptionForm">
-        <input name="productId" type="hidden" value="${product.id}"/>
-        <input name="type" type="hidden" value="DESCRIPTION"/>
-        <input name="changeType" type="hidden" value="SUBSCRIBE"/>
-
         <label for="subscribeDescriptionEmail">Адрес эл. почты: </label>
         <input id="subscribeDescriptionEmail" name="email" type="text" style="width: 100%">
     </form>
 </div>
 
 <script type="text/javascript">
-    new bg.warehouse.ProductController();
+    var tracking = new bg.privacy.Tracking();
+    var productController = new bg.warehouse.ProductController();
 </script>

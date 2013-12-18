@@ -110,7 +110,11 @@ public abstract class AbstractController {
 
 	@ModelAttribute("basketQuantity")
 	public Integer getBasketQuantity() {
-		return basketManager.getBasketSize(personalityContext.getPrincipal());
+		final Personality principal = personalityContext.getPrincipal();
+		if (principal == null) { // it's very important. Can cause Null key returned for cache operation
+			return 0;
+		}
+		return basketManager.getBasketSize(principal);
 	}
 
 	protected Personality getPersonality() {
