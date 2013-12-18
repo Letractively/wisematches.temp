@@ -21,6 +21,11 @@
                 class="org.springframework.security.authentication.AccountStatusUserDetailsChecker">
     </beans:bean>
 
+
+    <beans:bean id="personalityContext"
+                class="billiongoods.server.web.security.context.PersonalityContext">
+    </beans:bean>
+
     <beans:bean id="memberDetailsService"
                 class="billiongoods.server.web.security.MemberDetailsService">
         <beans:property name="accountManager" ref="accountManager"/>
@@ -214,6 +219,9 @@
     <http pattern="/warehouse/paypal/*" security="none"/>
 
     <http use-expressions="true">
+        <intercept-url pattern="/privacy/tracking/add.ajax" access="permitAll"/>
+        <intercept-url pattern="/privacy/tracking/remove.ajax" access="permitAll"/>
+
         <intercept-url pattern="/privacy/**" access="isAuthenticated()"/>
         <intercept-url pattern="/account/passport/**" access="isFullyAuthenticated()"/>
 

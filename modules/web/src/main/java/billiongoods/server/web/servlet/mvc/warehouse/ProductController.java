@@ -1,29 +1,21 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Member;
-import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingManager;
-import billiongoods.server.services.tracking.TrackingContext;
+import billiongoods.server.services.tracking.TrackingPerson;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
-import billiongoods.server.web.servlet.mvc.warehouse.form.ProductTrackingForm;
-import billiongoods.server.web.servlet.mvc.warehouse.form.TrackingChangeType;
-import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -33,8 +25,8 @@ import java.util.Set;
 @RequestMapping("/warehouse/product")
 public class ProductController extends AbstractController {
 	private ProductManager productManager;
-	private ProductTrackingManager trackingManager;
 	private RelationshipManager relationshipManager;
+	private ProductTrackingManager trackingManager;
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.ProductController");
 
@@ -102,7 +94,7 @@ public class ProductController extends AbstractController {
 		final Member member = getMember();
 		final StockState stockState = product.getStockInfo().getStockState();
 		if (member != null && (stockState != StockState.IN_STOCK && stockState != StockState.LIMITED_NUMBER)) {
-			model.addAttribute("tracking", trackingManager.getTracking(product.getId(), member));
+			model.addAttribute("registeredTracking", trackingManager.containsTracking(product.getId(), TrackingPerson.of(member)));
 		}
 
 		model.addAttribute("mode", mode);
@@ -115,54 +107,6 @@ public class ProductController extends AbstractController {
 		hideNavigation(model);
 
 		return "/content/warehouse/product";
-	}
-
-	@RequestMapping("/tracking.ajax")
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ServiceResponse changeTrackingState(@RequestBody ProductTrackingForm form, Locale locale) {
-		if (form.getProductId() == null) {
-			return responseFactory.failure("product.subscribe.error.unknown", locale);
-		}
-
-		final ProductPreview preview = productManager.getPreview(form.getProductId());
-		if (preview == null) {
-			return responseFactory.failure("product.subscribe.error.unknown", locale);
-		}
-
-		return processSubscription(form, locale);
-	}
-
-	private ServiceResponse processSubscription(ProductTrackingForm form, Locale locale) {
-		TrackingContext context;
-		final Member member = getMember();
-		if (member != null) {
-			context = new TrackingContext(form.getProductId(), member, form.getType());
-		} else {
-			if (form.getEmail() == null || form.getEmail().isEmpty()) {
-				return responseFactory.failure("product.subscribe.error.email", locale);
-			}
-			context = new TrackingContext(form.getProductId(), form.getEmail(), form.getType());
-		}
-
-		final List<ProductTracking> trackers = trackingManager.searchEntities(context, null, null, null);
-		if (form.getChangeType() == TrackingChangeType.UNSUBSCRIBE) {
-			for (ProductTracking tracker : trackers) {
-				trackingManager.removeTracking(tracker.getId());
-			}
-		} else if (form.getChangeType() == TrackingChangeType.SUBSCRIBE) {
-			if (!trackers.isEmpty()) {
-				return responseFactory.failure("product.subscribe.error.subscribed", locale);
-			}
-
-			ProductTracking tracking;
-			if (member != null) {
-				tracking = trackingManager.createTracking(form.getProductId(), member, form.getType());
-			} else {
-				tracking = trackingManager.createTracking(form.getProductId(), form.getEmail(), form.getType());
-			}
-			return responseFactory.success(tracking);
-		}
-		return responseFactory.failure("product.subscribe.error.incorrect", locale);
 	}
 
 	private String getProductPostfix(Product product) {

@@ -31,8 +31,7 @@ public class HibernateProductTrackingManagerTest {
 		final HibernateProductTrackingManager manager = new HibernateProductTrackingManager();
 		manager.setSessionFactory(sessionFactory);
 
-		final TrackingContext context = new TrackingContext(null, TrackingType.AVAILABILITY);
-
+		final TrackingContext context = new TrackingContext(null, TrackingType.AVAILABILITY, null);
 		int tc1 = manager.getTotalCount(context);
 	}
 }

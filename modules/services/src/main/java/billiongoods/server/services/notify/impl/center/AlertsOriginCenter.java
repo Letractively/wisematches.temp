@@ -175,5 +175,9 @@ public class AlertsOriginCenter {
 		@Override
 		public void trackingRemoved(ProductTracking tracking) {
 		}
+
+		@Override
+		public void trackingInvalidated(ProductTracking tracking) {
+		}
 	}
 }

@@ -13,16 +13,15 @@ import billiongoods.server.services.payment.OrderListener;
 import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.payment.OrderState;
 import billiongoods.server.services.tracking.ProductTracking;
+import billiongoods.server.services.tracking.ProductTrackingListener;
 import billiongoods.server.services.tracking.ProductTrackingManager;
-import billiongoods.server.services.tracking.TrackingContext;
-import billiongoods.server.services.tracking.TrackingType;
-import billiongoods.server.warehouse.*;
+import billiongoods.server.warehouse.ProductManager;
+import billiongoods.server.warehouse.ProductPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.EnumSet;
-import java.util.List;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -36,7 +35,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 	private NotificationService notificationService;
 
 	private final OrderListener orderListener = new TheOrderListener();
-	private final ProductStateListener productStateListener = new TheStateProductListener();
+	private final ProductTrackingListener trackingListener = new TheProductTrackingListener();
 
 	private static final EnumSet<OrderState> ORDER_STATES =
 			EnumSet.of(OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SHIPPED, OrderState.SUSPENDED, OrderState.CANCELLED);
@@ -60,21 +59,19 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 	}
 
-	private void processTrackingNotifications(ProductPreview preview, TrackingType type) {
-		final TrackingContext c = new TrackingContext(preview.getId(), type);
-		final List<ProductTracking> tracks = trackingManager.searchEntities(c, null, null, null);
-		for (ProductTracking tracking : tracks) {
-			Account account;
-			Recipient recipient;
-			if (tracking.getPersonId() != null && (account = accountManager.getAccount(tracking.getPersonId())) != null) {
-				recipient = Recipient.get(account);
-			} else {
-				recipient = Recipient.get(tracking.getPersonEmail());
-			}
+	private void processTrackingInvalidated(ProductTracking tracking) {
+		Account account;
+		Recipient recipient = null;
+		if (tracking.getPersonId() != null && (account = accountManager.getAccount(tracking.getPersonId())) != null) {
+			recipient = Recipient.get(account);
+		} else if (tracking.getPersonEmail() != null) {
+			recipient = Recipient.get(tracking.getPersonEmail());
+		}
 
-			if (recipient != null) {
-				fireNotification("product." + type.name().toLowerCase(), recipient, preview, preview.getId());
-				trackingManager.removeTracking(tracking.getId());
+		if (recipient != null) {
+			final ProductPreview preview = productManager.getPreview(tracking.getProductId());
+			if (preview != null) {
+				fireNotification("product." + tracking.getTrackingType().name().toLowerCase(), recipient, preview, preview.getId());
 			}
 		}
 	}
@@ -104,30 +101,29 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 	}
 
+	public void setProductManager(ProductManager productManager) {
+		this.productManager = productManager;
+	}
+
 	public void setAccountManager(AccountManager accountManager) {
 		this.accountManager = accountManager;
 	}
 
-	public void setProductManager(ProductManager productManager) {
-		if (this.productManager != null) {
-			this.productManager.removeProductStateListener(productStateListener);
-		}
-
-		this.productManager = productManager;
-
-		if (this.productManager != null) {
-			this.productManager.addProductStateListener(productStateListener);
-		}
-	}
-
 	public void setTrackingManager(ProductTrackingManager trackingManager) {
+		if (this.trackingManager != null) {
+			this.trackingManager.removeProductTrackingListener(trackingListener);
+		}
+
 		this.trackingManager = trackingManager;
+
+		if (this.trackingManager != null) {
+			this.trackingManager.addProductTrackingListener(trackingListener);
+		}
 	}
 
 	public void setNotificationService(NotificationService notificationDistributor) {
 		this.notificationService = notificationDistributor;
 	}
-
 
 	private class TheOrderListener implements OrderListener {
 		private TheOrderListener() {
@@ -143,26 +139,21 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 	}
 
-	private class TheStateProductListener implements ProductStateListener {
-		private TheStateProductListener() {
+	private class TheProductTrackingListener implements ProductTrackingListener {
+		private TheProductTrackingListener() {
 		}
 
 		@Override
-		public void productPriceChanged(ProductPreview preview, Price oldPrice, Price newPrice) {
+		public void trackingAdded(ProductTracking tracking) {
 		}
 
 		@Override
-		public void productStockChanged(ProductPreview preview, StockInfo oldStock, StockInfo newStock) {
-			if (newStock.getStockState() == StockState.IN_STOCK) {
-				processTrackingNotifications(preview, TrackingType.AVAILABILITY);
-			}
+		public void trackingRemoved(ProductTracking tracking) {
 		}
 
 		@Override
-		public void productStateChanged(ProductPreview preview, ProductState oldState, ProductState newState) {
-			if (newState == ProductState.ACTIVE && oldState != ProductState.ACTIVE) {
-				processTrackingNotifications(preview, TrackingType.DESCRIPTION);
-			}
+		public void trackingInvalidated(ProductTracking tracking) {
+			processTrackingInvalidated(tracking);
 		}
 	}
 }

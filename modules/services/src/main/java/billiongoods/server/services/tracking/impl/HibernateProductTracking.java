@@ -1,6 +1,7 @@
 package billiongoods.server.services.tracking.impl;
 
 import billiongoods.server.services.tracking.ProductTracking;
+import billiongoods.server.services.tracking.TrackingPerson;
 import billiongoods.server.services.tracking.TrackingType;
 
 import javax.persistence.*;
@@ -38,22 +39,22 @@ public class HibernateProductTracking implements ProductTracking {
 	HibernateProductTracking() {
 	}
 
-	public HibernateProductTracking(Integer productId, Long personId, TrackingType trackingType) {
+	public HibernateProductTracking(Integer productId, TrackingPerson tracker, TrackingType trackingType) {
 		this.productId = productId;
-		this.personId = personId;
+		if (tracker instanceof TrackingPerson.Member) {
+			final TrackingPerson.Member member = (TrackingPerson.Member) tracker;
+			this.personId = member.getPersonId();
+		} else if (tracker instanceof TrackingPerson.Visitor) {
+			final TrackingPerson.Visitor member = (TrackingPerson.Visitor) tracker;
+			this.personEmail = member.getPersonEmail();
+		} else {
+			throw new IllegalArgumentException("Incorrect tracker type: " + tracker);
+		}
 		this.trackingType = trackingType;
 		this.registration = new Date();
 	}
 
-	public HibernateProductTracking(Integer productId, String personEmail, TrackingType trackingType) {
-		this.productId = productId;
-		this.personEmail = personEmail;
-		this.trackingType = trackingType;
-		this.registration = new Date();
-	}
-
-	@Override
-	public Integer getId() {
+	Integer getId() {
 		return id;
 	}
 

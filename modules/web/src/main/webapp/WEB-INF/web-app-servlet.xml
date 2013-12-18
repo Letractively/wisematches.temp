@@ -27,9 +27,6 @@
         </bean>
     </mvc:interceptors>
 
-    <bean id="personalityContext" class="billiongoods.server.web.security.context.PersonalityContext">
-    </bean>
-
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="26843540"/>
     </bean>
@@ -87,6 +84,7 @@
                 <value>billiongoods.server.services.image.ImageSize</value>
                 <value>billiongoods.server.services.payment.ShipmentType</value>
                 <value>billiongoods.server.services.payment.OrderState</value>
+                <value>billiongoods.server.services.tracking.TrackingType</value>
                 <value>billiongoods.server.web.servlet.mvc.warehouse.form.SortingType</value>
                 <value>billiongoods.server.web.servlet.mvc.privacy.form.OrderStateUnion</value>
             </list>

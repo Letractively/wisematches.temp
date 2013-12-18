@@ -50,6 +50,12 @@ public class OrderController extends AbstractController {
 		super(true, false);
 	}
 
+	@RequestMapping("")
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public String viewOrderStatus() {
+		return "redirect:/warehouse/order/status";
+	}
+
 	@RequestMapping("/checkout")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String checkoutOrder(WebRequest request) {
