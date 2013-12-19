@@ -63,6 +63,9 @@ public class HibernateOrder implements Order {
 	@Column(name = "payer")
 	private String payer;
 
+	@Column(name = "payerName")
+	private String payerName;
+
 	@Column(name = "payerNote")
 	private String payerNote;
 
@@ -192,6 +195,11 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public String getPayerName() {
+		return payerName;
+	}
+
+	@Override
 	public String getPayerNote() {
 		return payerNote;
 	}
@@ -261,9 +269,10 @@ public class HibernateOrder implements Order {
 		updateOrderState(OrderState.BILLING, null, token);
 	}
 
-	void accept(String payer, String paymentId, String note) {
+	void accept(String payer, String payerName, String payerNote, String paymentId) {
 		this.payer = payer;
-		this.payerNote = note;
+		this.payerName = payerName;
+		this.payerNote = payerNote;
 		this.paymentId = paymentId;
 
 		updateOrderState(OrderState.ACCEPTED, null, paymentId);
