@@ -163,8 +163,14 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 		userIdSet.add(data.getProviderUserId());
 		Set<String> connectedUserIds = usersConnectionRepository.findUserIdsConnectedTo(data.getProviderId(), userIdSet);
 		if (connectedUserIds.contains(userId)) {
-			// already connected
-			return null;
+			// my own code
+			final ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(userId);
+
+			final Connection<?> connection = authService.getConnectionFactory().createConnection(data);
+			connection.sync();
+
+			connectionRepository.updateConnection(connection);
+			return connection;
 		} else if (!authService.getConnectionCardinality().isMultiUserId() && !connectedUserIds.isEmpty()) {
 			return null;
 		}
