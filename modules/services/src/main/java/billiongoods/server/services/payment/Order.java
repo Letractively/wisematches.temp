@@ -40,6 +40,8 @@ public interface Order {
 
 	String getPayer();
 
+	String getPayerName();
+
 	String getPayerNote();
 
 	String getPaymentId();

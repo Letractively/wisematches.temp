@@ -48,6 +48,15 @@ public abstract class Recipient {
 		public String getCode() {
 			return code;
 		}
+
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("MailBox{");
+			sb.append("code='").append(code).append('\'');
+			sb.append('}');
+			return sb.toString();
+		}
 	}
 
 	public static final class Person extends Recipient {
@@ -66,6 +75,15 @@ public abstract class Recipient {
 		public Passport getPassport() {
 			return passport;
 		}
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("Person{");
+			sb.append("email='").append(email).append('\'');
+			sb.append(", passport=").append(passport);
+			sb.append('}');
+			return sb.toString();
+		}
 	}
 
 	public static final class Application extends Recipient {
@@ -83,6 +101,16 @@ public abstract class Recipient {
 
 		public Recipient getReturnAddress() {
 			return returnAddress;
+		}
+
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("Application{");
+			sb.append("mailBox=").append(mailBox);
+			sb.append(", returnAddress=").append(returnAddress);
+			sb.append('}');
+			return sb.toString();
 		}
 	}
 }

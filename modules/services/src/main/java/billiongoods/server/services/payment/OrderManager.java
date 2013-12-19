@@ -42,7 +42,7 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	void failed(String token, String reason);
 
 
-	void accept(Long orderId, String person, String paymentId, String note);
+	void accept(Long orderId, String payer, String payerName, String payerNote, String paymentId);
 
 	void reject(Long orderId, String person, String paymentId, String note);
 

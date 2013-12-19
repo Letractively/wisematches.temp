@@ -1,6 +1,7 @@
 package billiongoods.server.services.notify.impl.center;
 
 
+import billiongoods.core.Passport;
 import billiongoods.core.account.Account;
 import billiongoods.core.account.AccountListener;
 import billiongoods.core.account.AccountManager;
@@ -53,6 +54,30 @@ public class AlertsOriginCenter {
 			log.error("Alerts can't be sent: code=[{}], msg=[{}]", code, context);
 		}
 	}
+
+	private void processOrderAccepted(Order order) {
+		try {
+			Recipient owner = null;
+
+			Long personId = order.getPersonId();
+			if (personId != null) {
+				final Account account = accountManager.getAccount(personId);
+				if (account != null) {
+					owner = Recipient.get(account);
+				}
+			}
+
+			if (owner == null) {
+				owner = Recipient.get(order.getPayer(), new Passport(order.getPayerName()));
+			}
+			final Recipient recipient = Recipient.get(Recipient.MailBox.MONITORING, owner);
+
+			notificationService.raiseNotification(recipient, Sender.SERVER, "system.order", order, order.getId());
+		} catch (Exception ex) {
+			log.error("Order accepted alert can't be sent", ex);
+		}
+	}
+
 
 	public void setNotificationService(NotificationService notificationService) {
 		this.notificationService = notificationService;
@@ -112,15 +137,17 @@ public class AlertsOriginCenter {
 	}
 
 	private class TheOrderListener implements OrderListener {
+
 		private TheOrderListener() {
 		}
 
 		@Override
 		public void orderStateChanged(Order order, OrderState oldState, OrderState newState) {
 			if (newState == OrderState.ACCEPTED) {
-				raiseAlarm("system.order", order, order.getId());
+				processOrderAccepted(order);
 			}
 		}
+
 	}
 
 	private class TheAccountListener implements AccountListener {
@@ -129,7 +156,7 @@ public class AlertsOriginCenter {
 
 		@Override
 		public void accountCreated(Account account) {
-//			raiseAlarm("system.account", account, account.getPassport().getUsername());
+			raiseAlarm("system.account", account, account.getPassport().getUsername());
 		}
 
 		@Override

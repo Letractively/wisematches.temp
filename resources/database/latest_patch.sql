@@ -1,3 +1,8 @@
+#12.19
+ALTER TABLE `billiongoods`.`store_order`
+ADD COLUMN `payerName` VARCHAR(255) NULL DEFAULT NULL
+AFTER `payer`;
+
 #12.10
 ALTER TABLE `billiongoods`.`store_order`
 CHANGE COLUMN `addressName` `firstName` VARCHAR(120) NULL DEFAULT NULL,

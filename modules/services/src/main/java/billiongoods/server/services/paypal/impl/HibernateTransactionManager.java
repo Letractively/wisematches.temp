@@ -109,12 +109,11 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 				transaction.setPayer(payerInfo.getPayer());
 				transaction.setPayerId(payerInfo.getPayerID());
 				transaction.setPayerPhone(payerInfo.getContactPhone());
-				if (payerInfo.getPayerName() != null) {
-					transaction.setPayerLastName(payerInfo.getPayerName().getLastName());
-				}
 
-				if (payerInfo.getPayerName() != null) {
-					transaction.setPayerFirstName(payerInfo.getPayerName().getFirstName());
+				final PersonNameType payerName = payerInfo.getPayerName();
+				if (payerName != null) {
+					transaction.setPayerLastName(payerName.getLastName());
+					transaction.setPayerFirstName(payerName.getFirstName());
 				}
 
 				if (payerInfo.getPayerCountry() != null) {
