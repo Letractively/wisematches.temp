@@ -214,7 +214,7 @@
         ${address.lastName} ${address.firstName}
             <br>
         ${address.postcode}, ${address.region}, ${address.city}
-            <br> k
+            <br>
         ${address.location}
         </td>
     </tr>
