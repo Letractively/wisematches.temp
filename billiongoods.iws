@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="+">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/history.txt" afterPath="$PROJECT_DIR$/history.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,7 +92,16 @@
       <file leaf-file-name="history.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/history.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6392">
+            <state line="6" column="26" selection-start="267" selection-end="267" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6409">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.properties" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="28" selection-start="681" selection-end="681" vertical-scroll-proportion="0.12991656" vertical-offset="146" max-vertical-offset="4318">
               <folding />
             </state>
           </provider>
@@ -106,10 +116,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view.ftl" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="view.ftl" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="210" column="32" selection-start="9001" selection-end="9001" vertical-scroll-proportion="0.26199263" vertical-offset="3357" max-vertical-offset="6834">
+            <state line="228" column="92" selection-start="9555" selection-end="9555" vertical-scroll-proportion="-19.961538" vertical-offset="3357" max-vertical-offset="6834">
               <folding />
             </state>
           </provider>
@@ -181,10 +191,10 @@
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/payment/impl/HibernateOrderManagerTest.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/Recipient.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/center/AlertsOriginCenter.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
         <option value="$PROJECT_DIR$/todo.txt" />
-        <option value="$PROJECT_DIR$/history.txt" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl" />
+        <option value="$PROJECT_DIR$/history.txt" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties" />
       </list>
     </option>
   </component>
@@ -2138,7 +2148,7 @@
       <workItem from="1387269743904" duration="20713000" />
       <workItem from="1387434554862" duration="290000" />
       <workItem from="1387435051018" duration="700000" />
-      <workItem from="1387437841318" duration="8761000" />
+      <workItem from="1387437841318" duration="9021000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -2732,11 +2742,15 @@
       <created>1387449766705</created>
       <updated>1387449766706</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="+">
+      <created>1387451610596</created>
+      <updated>1387451610596</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="768834000" />
+    <option name="totallyTimeSpent" value="769094000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -3330,13 +3344,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="46" selection-start="1152" selection-end="1152" vertical-scroll-proportion="0.33253872" vertical-offset="146" max-vertical-offset="4301">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/order.ftl">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="98" selection-start="174" selection-end="174" vertical-scroll-proportion="0.12639405" vertical-offset="0" max-vertical-offset="799">
@@ -3344,9 +3351,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="228" column="92" selection-start="9555" selection-end="9555" vertical-scroll-proportion="-19.961538" vertical-offset="3357" max-vertical-offset="6834">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/history.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6392">
+        <state line="6" column="26" selection-start="267" selection-end="267" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6409">
           <folding />
         </state>
       </provider>
@@ -3358,9 +3372,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="210" column="32" selection-start="9001" selection-end="9001" vertical-scroll-proportion="0.26199263" vertical-offset="3357" max-vertical-offset="6834">
+        <state line="15" column="28" selection-start="681" selection-end="681" vertical-scroll-proportion="0.12991656" vertical-offset="146" max-vertical-offset="4318">
           <folding />
         </state>
       </provider>
