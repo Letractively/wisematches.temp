@@ -18,7 +18,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -114,7 +114,7 @@ public class HibernateBasketManager implements BasketManager {
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	@CacheEvict(value = {"basket", "basketSize"}, key = "#principal")
-	public BasketItem addBasketItem(Personality principal, ProductPreview preview, List<Property> options, int quantity) {
+	public BasketItem addBasketItem(Personality principal, ProductPreview preview, Collection<Property> options, int quantity) {
 		final HibernateBasketItem item = new HibernateBasketItem(preview, options, quantity);
 
 		final HibernateBasket basket = getBasketOrCreate(principal, true);

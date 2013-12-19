@@ -45,7 +45,7 @@ public class HibernateBasketItem implements BasketItem {
 	HibernateBasketItem() {
 	}
 
-	public HibernateBasketItem(ProductPreview product, List<Property> options, int quantity) {
+	public HibernateBasketItem(ProductPreview product, Collection<Property> options, int quantity) {
 		this.product = product;
 		this.productId = product.getId();
 

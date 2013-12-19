@@ -2,6 +2,7 @@ package billiongoods.server.web.security;
 
 import billiongoods.core.Member;
 import billiongoods.core.account.Account;
+import billiongoods.core.secure.MemberContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.social.security.SocialUserDetails;
@@ -11,7 +12,7 @@ import java.util.*;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class MemberDetails implements SocialUserDetails {
+public class MemberDetails implements MemberContainer, SocialUserDetails {
 	private final Member member;
 	private final boolean locked;
 	private final boolean expired;
@@ -36,6 +37,7 @@ public class MemberDetails implements SocialUserDetails {
 		return String.valueOf(member.getId());
 	}
 
+	@Override
 	public Member getMember() {
 		return member;
 	}

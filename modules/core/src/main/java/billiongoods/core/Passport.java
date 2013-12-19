@@ -4,13 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.io.Serializable;
 import java.util.TimeZone;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Embeddable
-public class Passport {
+public class Passport implements Serializable {
 	@Column(name = "username")
 	private String username;
 

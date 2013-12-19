@@ -1,6 +1,7 @@
 package billiongoods.server.services.state.impl;
 
 import billiongoods.core.Personality;
+import billiongoods.core.secure.MemberContainer;
 import billiongoods.server.services.state.PersonalityStateListener;
 import billiongoods.server.services.state.PersonalityStateManager;
 import org.springframework.security.core.session.SessionInformation;
@@ -90,6 +91,9 @@ public class SessionRegistryStateManager extends SessionRegistryImpl implements 
 	}
 
 	private Object personality(Object info) {
+		if (info instanceof MemberContainer) {
+			return ((MemberContainer) info).getMember();
+		}
 		return info;
 	}
 

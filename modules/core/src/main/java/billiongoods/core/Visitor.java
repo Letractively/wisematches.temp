@@ -7,9 +7,4 @@ public final class Visitor extends Personality {
 	public Visitor(Long id) {
 		super(id);
 	}
-
-	@Override
-	public final PersonalityType getType() {
-		return PersonalityType.VISITOR;
-	}
 }
