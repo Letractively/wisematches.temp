@@ -3,6 +3,8 @@ ALTER TABLE `billiongoods`.`store_order`
 ADD COLUMN `payerName` VARCHAR(255) NULL DEFAULT NULL
 AFTER `payer`;
 
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1219');
+
 #12.10
 ALTER TABLE `billiongoods`.`store_order`
 CHANGE COLUMN `addressName` `firstName` VARCHAR(120) NULL DEFAULT NULL,
