@@ -22,9 +22,4 @@ public final class Member extends Personality {
 	public Passport getPassport() {
 		return passport;
 	}
-
-	@Override
-	public final PersonalityType getType() {
-		return PersonalityType.MEMBER;
-	}
 }

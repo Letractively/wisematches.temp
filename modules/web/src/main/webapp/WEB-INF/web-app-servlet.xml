@@ -66,6 +66,12 @@
         </property>
     </bean>
 
+    <bean class="billiongoods.server.web.services.BasketMigrationService">
+        <property name="stateManager" ref="playerStateManager"/>
+        <property name="basketManager" ref="basketManager"/>
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
     <bean id="viewResolver" class="billiongoods.server.web.servlet.view.freemarker.WMFreeMarkerViewResolver">
         <property name="cache" value="true"/>
         <property name="prefix" value=""/>

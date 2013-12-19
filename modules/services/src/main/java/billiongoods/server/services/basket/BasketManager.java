@@ -5,7 +5,7 @@ import billiongoods.server.services.coupon.Coupon;
 import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.Property;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -19,7 +19,7 @@ public interface BasketManager {
 	Basket applyCoupon(Personality principal, Coupon coupon);
 
 
-	BasketItem addBasketItem(Personality principal, ProductPreview preview, List<Property> options, int quantity);
+	BasketItem addBasketItem(Personality principal, ProductPreview preview, Collection<Property> options, int quantity);
 
 	BasketItem removeBasketItem(Personality principal, int number);
 
