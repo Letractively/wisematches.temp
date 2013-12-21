@@ -35,6 +35,7 @@
       <exported-key name="fk_account_lock_account_personality1" table="account_lock" schema="" catalog="billiongoods" columns="account"/>
       <exported-key name="fk_account_recovery_account_personality1" table="account_recovery" schema="" catalog="billiongoods" columns="account"/>
       <exported-key name="fk_account_role_account_personality" table="account_role" schema="" catalog="billiongoods" columns="account"/>
+      <exported-key name="personality" table="privacy_address_book" schema="" catalog="billiongoods" columns="id"/>
       <exported-key name="person_foreign" table="store_product_tracking" schema="" catalog="billiongoods" columns="personId"/>
       <index name="email_UNIQUE" unique="true" columns="email"/>
       <index name="email_INDEX" unique="false" columns="email"/>
@@ -145,6 +146,7 @@
       <column name="id" sqlType="BIGINT" length="19" precision="0" nullable="false" jdbcType="-5"/>
       <column name="primaryAddress" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="personality" columns="id" ref-table="account_personality" ref-schema="" ref-catalog="billiongoods" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="addressBook" table="privacy_address_record" schema="" catalog="billiongoods" columns="addressBook"/>
     </table>
     <table name="privacy_address_record" schema="" catalog="billiongoods" type="TABLE">
@@ -325,6 +327,7 @@
       <column name="shipped" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
       <column name="closed" sqlType="DATETIME" length="19" precision="0" nullable="true" jdbcType="93"/>
       <column name="payer" sqlType="VARCHAR" length="127" precision="0" nullable="true" jdbcType="12"/>
+      <column name="payerName" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
       <column name="payerNote" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
       <column name="paymentId" sqlType="VARCHAR" length="20" precision="0" nullable="true" jdbcType="12"/>
       <column name="tracking" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
@@ -465,8 +468,8 @@
       <column name="personId" sqlType="BIGINT" length="19" precision="0" nullable="true" jdbcType="-5"/>
       <column name="personEmail" sqlType="VARCHAR" length="145" precision="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="product_foreign" columns="productId" ref-table="store_product" ref-schema="" ref-catalog="billiongoods" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="person_foreign" columns="personId" ref-table="account_personality" ref-schema="" ref-catalog="billiongoods" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="product_foreign" columns="productId" ref-table="store_product" ref-schema="" ref-catalog="billiongoods" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="email_index" unique="false" columns="personEmail"/>
       <index name="person_foreign_idx" unique="false" columns="personId"/>
       <index name="product_foreign_idx" unique="false" columns="productId"/>
