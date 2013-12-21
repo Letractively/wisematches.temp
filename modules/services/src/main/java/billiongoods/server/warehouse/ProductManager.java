@@ -6,44 +6,45 @@ import billiongoods.core.search.SearchManager;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ProductManager extends SearchManager<ProductPreview, ProductContext, ProductFilter> {
-	void addProductListener(ProductListener l);
+    void addProductListener(ProductListener l);
 
-	void removeProductListener(ProductListener l);
-
-
-	void addProductStateListener(ProductStateListener l);
-
-	void removeProductStateListener(ProductStateListener l);
+    void removeProductListener(ProductListener l);
 
 
-	Product getProduct(Integer id);
+    void addProductStateListener(ProductStateListener l);
 
-	Product getProduct(String sku);
-
-	boolean hasProduct(Integer productId);
+    void removeProductStateListener(ProductStateListener l);
 
 
-	ProductPreview getPreview(Integer id);
+    Product getProduct(Integer id);
 
 
-	SupplierInfo getSupplierInfo(Integer id);
+    Integer searchById(Integer id);
 
-	Filtering getFilteringAbility(ProductContext context, ProductFilter filter);
-
-
-	Product createProduct(ProductEditor editor);
-
-	Product updateProduct(Integer id, ProductEditor editor);
-
-	Product removeProduct(Integer id);
+    Integer searchBySku(String sku);
 
 
-	int updateDescriptions(String from, String to);
+    ProductPreview getPreview(Integer id);
 
 
-	void updateSold(Integer id, int quantity);
+    SupplierInfo getSupplierInfo(Integer id);
 
-	void updateRecommendation(Integer id, boolean b);
+    Filtering getFilteringAbility(ProductContext context, ProductFilter filter);
 
-	void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo);
+
+    Product createProduct(ProductEditor editor);
+
+    Product updateProduct(Integer id, ProductEditor editor);
+
+    Product removeProduct(Integer id);
+
+
+    int updateDescriptions(String from, String to);
+
+
+    void updateSold(Integer id, int quantity);
+
+    void updateRecommendation(Integer id, boolean b);
+
+    void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo);
 }
