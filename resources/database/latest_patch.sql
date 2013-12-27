@@ -1,3 +1,23 @@
+#12.27
+CREATE TABLE `billiongoods`.`report_mistake` (
+  `id`          INT  NOT NULL AUTO_INCREMENT,
+  `productId`   INT  NOT NULL,
+  `description` TEXT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `product_idx` (`productId` ASC),
+  CONSTRAINT `product`
+  FOREIGN KEY (`productId`)
+  REFERENCES `billiongoods`.`store_product` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+
+ALTER TABLE `billiongoods`.`report_mistake`
+CHANGE COLUMN `description` `description` TEXT NOT NULL,
+ADD COLUMN `scope` TINYINT NOT NULL
+AFTER `description`;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1227');
+
 #12.19
 ALTER TABLE `billiongoods`.`store_order`
 ADD COLUMN `payerName` VARCHAR(255) NULL DEFAULT NULL

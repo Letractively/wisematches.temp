@@ -25,6 +25,10 @@
         <property name="imageResolver" ref="imageResolver"/>
     </bean>
 
+    <bean id="mistakeManager" class="billiongoods.server.services.mistake.impl.HibernateMistakeManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="attributeManager" class="billiongoods.server.warehouse.impl.HibernateAttributeManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
