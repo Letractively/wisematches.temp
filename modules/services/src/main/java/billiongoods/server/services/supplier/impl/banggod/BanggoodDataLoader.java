@@ -38,6 +38,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.Closeable;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -131,7 +132,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 		changeCountryCode();
 	}
 
-	private void changeCountryCode() {
+	protected void changeCountryCode() {
 		final HttpPost post = new HttpPost("/ajax_module.php");
 		final List<NameValuePair> nvps = new ArrayList<>();
 		nvps.add(new BasicNameValuePair("action", "setDefaltCountry"));
@@ -156,7 +157,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 		return new DefaultSupplierDescription(details.getPrice(), stockInfo, details.getParameters());
 	}
 
-	private StockInfo loadStockInfo(SupplierInfo supplier) throws DataLoadingException {
+	protected StockInfo loadStockInfo(SupplierInfo supplier) throws DataLoadingException {
 		try {
 			final HttpPost request = new HttpPost("/ajax_module.php");
 			request.addHeader("Origin", supplier.getWholesaler().getSite());
@@ -177,35 +178,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 
 			final String status = split[0];
 			if ("\"success\"".equals(status)) {
-				final String msg = split[1].replace("\"", "").toLowerCase();
-				if (msg.contains("in stock") ||
-						msg.contains("usually dispatched in 1-3") ||
-						msg.contains("usually dispatched in 2-4") ||
-						msg.contains("usually dispatched in 3-6")) {
-					return new StockInfo(null, null);
-				} else if (msg.contains("out of stock, expected restock in 15")) {
-					return new StockInfo(null, new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000));
-				} else if (msg.contains("expect restock on")) {
-					final Date parse = RESTOCK_DATE_FROMAT.parse(msg.substring(18).replaceAll("st|nd|rd|th", ""));
-					return new StockInfo(null, parse);
-				} else if (msg.contains("units available") || msg.contains("units left")) {
-					int fi = msg.indexOf(" units");
-					int bi = msg.lastIndexOf(" ", fi - 1);
-					if (bi < 0) {
-						bi = 0;
-					}
-					return new StockInfo(Integer.parseInt(msg.substring(bi, fi).trim()), null);
-				} else if (msg.contains("out of stock") || msg.contains("sold out currently!")) {
-					return new StockInfo(0, null);
-				} else if (msg.contains("coming soon")) {
-					return new StockInfo(0, null);
-				} else if (msg.contains("in transit")) {
-					return new StockInfo(0, null);
-				} else if (msg.contains("factory product")) {
-					return new StockInfo(null, new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000));
-				}
-				log.error("Unparseable stock info: {}", msg);
-				return new StockInfo(0, null);
+				return parseStockInfo(split[1]);
 			}
 			throw new DataLoadingException("StockInfo incorrect status: " + status);
 		} catch (DataLoadingException ex) {
@@ -215,11 +188,43 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 		}
 	}
 
-	private ProductDetails loadProductDetails(SupplierInfo supplier) throws DataLoadingException {
+	protected StockInfo parseStockInfo(String s) throws ParseException {
+		final String msg = s.replace("\"", "").toLowerCase();
+		if (msg.contains("in stock") ||
+				msg.contains("usually dispatched in 1-3") ||
+				msg.contains("usually dispatched in 2-4") ||
+				msg.contains("usually dispatched in 3-6")) {
+			return new StockInfo(null, null);
+		} else if (msg.contains("out of stock, expected restock in 15")) {
+			return new StockInfo(null, new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000));
+		} else if (msg.contains("restock on")) {
+			final Date parse = RESTOCK_DATE_FROMAT.parse(msg.substring(msg.lastIndexOf("restock on") + 10).replaceAll("st|nd|rd|th", ""));
+			return new StockInfo(null, parse);
+		} else if (msg.contains("units available") || msg.contains("units left")) {
+			int fi = msg.indexOf(" units");
+			int bi = msg.lastIndexOf(" ", fi - 1);
+			if (bi < 0) {
+				bi = 0;
+			}
+			return new StockInfo(Integer.parseInt(msg.substring(bi, fi).trim()), null);
+		} else if (msg.contains("out of stock") || msg.contains("sold out currently!")) {
+			return new StockInfo(0, null);
+		} else if (msg.contains("coming soon")) {
+			return new StockInfo(0, null);
+		} else if (msg.contains("in transit")) {
+			return new StockInfo(0, null);
+		} else if (msg.contains("factory product")) {
+			return new StockInfo(null, new Date(System.currentTimeMillis() + 15 * 24 * 60 * 60 * 1000));
+		}
+		log.error("Unparseable stock info: {}", msg);
+		return new StockInfo(0, null);
+	}
+
+	protected ProductDetails loadProductDetails(SupplierInfo supplier) throws DataLoadingException {
 		return loadProductDetails(supplier, 0);
 	}
 
-	private ProductDetails loadProductDetails(SupplierInfo supplier, int iteration) throws DataLoadingException {
+	protected ProductDetails loadProductDetails(SupplierInfo supplier, int iteration) throws DataLoadingException {
 		try {
 			final String uri = supplier.getReferenceUri();
 			final HttpGet request = new HttpGet(uri.startsWith("/") ? uri : "/" + uri);
@@ -244,7 +249,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 		}
 	}
 
-	private ProductDetails parseProductDetails(String data) throws IOException, DataLoadingException {
+	protected ProductDetails parseProductDetails(String data) throws IOException, DataLoadingException {
 		final Document doc = Jsoup.parse(data);
 
 		final Elements priceEl = doc.select("#price_sub");
