@@ -142,6 +142,12 @@
                 <@bg.ui.price product.price.amount/>
                 <#if product.price.primordialAmount??><span
                         class="primordial">(<@bg.ui.price product.price.primordialAmount "g"/>)</span></#if>
+
+                    <span class="protection product-sprite">
+                        <a href="#" onclick="productController.showPriceProtection(); return false">
+                            <div class="image"></div><span>Ценовая
+                            защита</span></a>
+                    </span>
                 </div>
 
             <#if product.options?has_content>

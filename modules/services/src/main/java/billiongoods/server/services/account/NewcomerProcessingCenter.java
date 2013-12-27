@@ -24,8 +24,9 @@ public class NewcomerProcessingCenter {
 	}
 
 	public void importAccountData(Account account) {
-		orderManager.importAccountOrders(account);
-		trackingManager.importAccountTracking(account);
+		final int ordersCount = orderManager.importAccountOrders(account);
+
+		final int trackingCount = trackingManager.importAccountTracking(account);
 
 //		couponManager.createCoupon("nb" + account.getId(), 3d, CouponAmountType.PERCENT, 1, new Date(System.currentTimeMillis() + EXPIRATION_DATE));
 	}

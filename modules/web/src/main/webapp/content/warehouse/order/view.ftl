@@ -388,9 +388,14 @@
     });
 
     $("#closeOrder").click(function () {
-        $(this).attr('disabled', 'disabled');
-        order.confirmReceived(${order.id}, "${order.payer}", function () {
-            $(".confirm form").submit();
+        var btn = $(this);
+        btn.attr('disabled', 'disabled');
+        order.confirmReceived(${order.id}, "${order.payer}", function (approved) {
+            if (approved) {
+                $(".confirm form").submit();
+            } else {
+                btn.removeAttr('disabled');
+            }
         });
     });
     </#if>

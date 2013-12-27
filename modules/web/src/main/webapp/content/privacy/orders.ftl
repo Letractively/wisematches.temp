@@ -140,8 +140,10 @@
 <script type="application/javascript">
     function closeOrder(id) {
         var order = new bg.warehouse.Order();
-        order.confirmReceived(id, null, function () {
-            window.location.reload();
+        order.confirmReceived(id, null, function (approved) {
+            if (approved) {
+                window.location.reload();
+            }
         });
     }
 </script>
