@@ -110,7 +110,13 @@ bg.ui = new function () {
     };
 
     var messageTemplate = function (title, message) {
-        return '<div style="padding: 10px 24px; padding-bottom: 10px">' + message + '</div><div class="closeButton"><a href="#"><div class="wm-icon-close"/></a></div>';
+        if (title == null || title == undefined) {
+            return '<div style="padding: 10px 24px;">' + message + '</div><div class="closeButton"><a href="#"><div class="wm-icon-close"/></a></div>';
+        } else {
+            var e;
+            e = ['<div>', '<div class="content">', '<h2>' + title + '</h2>', '<p>' + message + '</p>', '</div>', '<span class="icon"></span>', '<span class="close"></span>', '</div>'].join("");
+            return e;
+        }
     };
 
     var statusTemplate = function (title, message) {
@@ -176,9 +182,9 @@ bg.ui = new function () {
         }
     };
 
-    this.message = function (element, message, error) {
+    this.message = function (element, title, message, error) {
         var v = {
-            message: messageTemplate(null, message),
+            message: messageTemplate(title, message),
             blockMsgClass: 'ui-corner-all shadow' + (error ? ' ui-state-error' : ' ui-state-default'),
             draggable: false
         };
@@ -316,18 +322,18 @@ bg.assistance.SupportForm = function () {
             bg.ui.lock(null, 'Отправка вашего сообщения. Пожалуйста, подождите...');
             var serializeObject = form.serializeObject();
             $.post("/assistance/question.ajax", JSON.stringify(serializeObject))
-                .done(function (response) {
-                    if (response.success) {
-                        form.find("input[type=text], textarea").val("");
-                        bg.ui.unlock(null, "Сообщение успешно отправлено. Вашему вопросу присвоен номер: " + response.data, false);
-                    } else {
-                        bg.ui.unlock(null, response.message, true);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                        "Пожалуйста, попробуйте отправить сообщение позже.", true);
-                });
+                    .done(function (response) {
+                        if (response.success) {
+                            form.find("input[type=text], textarea").val("");
+                            bg.ui.unlock(null, "Сообщение успешно отправлено. Вашему вопросу присвоен номер: " + response.data, false);
+                        } else {
+                            bg.ui.unlock(null, response.message, true);
+                        }
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                                "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                    });
         });
     }
 };
@@ -489,35 +495,44 @@ bg.warehouse.Order = function () {
     this.changeTracking = function (order, email, tracking, successor) {
         bg.ui.lock(null, 'Изменение подписки. Пожалуйста, подождите...');
         $.post("/warehouse/order/tracking.ajax", JSON.stringify({"order": order, "email": email, "enable": tracking}))
-            .done(function (response) {
-                if (response.success) {
-                    successor();
-                    bg.ui.unlock(null, tracking ? "Вы успешно подписаны на обновления." : "Вы успешно отписаны от обновлений.", false);
-                } else {
-                    bg.ui.unlock(null, response.message, true);
-                }
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                bg.ui.unlock(null, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
-                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
-            });
+                .done(function (response) {
+                    if (response.success) {
+                        successor();
+                        bg.ui.unlock(null, tracking ? "Вы успешно подписаны на обновления." : "Вы успешно отписаны от обновлений.", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
+                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                });
     };
 
     this.confirmReceived = function (order, email, successor) {
-        bg.ui.lock(null, 'Подтверждение заказа. Пожалуйста, подождите...');
-        $.post("/warehouse/order/close.ajax", JSON.stringify({"order": order, "email": email}))
-            .done(function (response) {
-                if (response.success) {
-                    successor();
-                    bg.ui.unlock(null, "Спасибо за подтверждение о доставке.", false);
-                } else {
-                    bg.ui.unlock(null, response.message, true);
-                }
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                bg.ui.unlock(null, "В связи с внутренней ошибкой мы не смогли обработать ваш запрос. Если проблема " +
-                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
-            });
+        bg.ui.confirm("Вы уверены, что хотите закрыть заказ?", "При нажатии кнопки \"Да\", вы подтверждаете получение вами " +
+                "заказа в полном объеме и в хорошем состоянии.", function (approved) {
+            if (approved) {
+                bg.ui.lock(null, 'Подтверждение заказа. Пожалуйста, подождите...');
+                $.post("/warehouse/order/close.ajax", JSON.stringify({"order": order, "email": email}))
+                        .done(function (response) {
+                            if (response.success) {
+                                successor(true);
+                                bg.ui.unlock(null, "Спасибо за подтверждение о доставке.", false);
+                            } else {
+                                successor(false);
+                                bg.ui.unlock(null, response.message, true);
+                            }
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            successor(false);
+                            bg.ui.unlock(null, "В связи с внутренней ошибкой мы не смогли обработать ваш запрос. Если проблема " +
+                                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                        });
+            } else {
+                successor(false);
+            }
+        });
     };
 };
 
@@ -529,17 +544,17 @@ bg.warehouse.Maintain = new function () {
     this.recommend = function (pid, recommend) {
         bg.ui.lock(null, 'Изменение рекомендации продукта...');
         $.post("/maintain/recommends/" + (recommend ? "add.ajax" : "remove.ajax") + "?id=" + pid)
-            .done(function (response) {
-                if (response.success) {
-                    bg.ui.unlock(null, recommend ? "Продукт добавлен в рекомендации" : "Продукт удален из рекомендаций", false);
-                    bg.util.url.reload();
-                } else {
-                    bg.ui.unlock(null, response.message, true);
-                }
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                bg.ui.unlock(null, "Возникли системные проблемы. Состояние продукта не может быть обновлено в данный момент.", true);
-            });
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, recommend ? "Продукт добавлен в рекомендации" : "Продукт удален из рекомендаций", false);
+                        bg.util.url.reload();
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "Возникли системные проблемы. Состояние продукта не может быть обновлено в данный момент.", true);
+                });
     };
 };
 
@@ -554,25 +569,25 @@ bg.warehouse.ProductController = function () {
             serializeObject['optionValues'] = [serializeObject['optionValues']];
         }
         $.post("/warehouse/basket/add.ajax", JSON.stringify(serializeObject))
-            .done(function (response) {
-                if (response.success) {
-                    var bq = $("#basketQuantity");
-                    var qi = $("#shoppingForm").find("[name='quantity']");
-                    bq.text(parseInt(bq.text()) + parseInt(qi.val()));
+                .done(function (response) {
+                    if (response.success) {
+                        var bq = $("#basketQuantity");
+                        var qi = $("#shoppingForm").find("[name='quantity']");
+                        bq.text(parseInt(bq.text()) + parseInt(qi.val()));
 
-                    bg.ui.unlock(null, "Товар добавлен в корзину", false);
-                } else {
+                        bg.ui.unlock(null, "Товар добавлен в корзину", false);
+                    } else {
+                        bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
+                                "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                    }
+                    if (callback != null && callback != undefined) {
+                        callback(response.success);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
                     bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
-                        "не исчезла, пожалуйста, свяжитесь с нами.", true);
-                }
-                if (callback != null && callback != undefined) {
-                    callback(response.success);
-                }
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
-                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
-            });
+                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                });
     };
 
     $("#add").click(function (event) {
@@ -601,13 +616,13 @@ bg.warehouse.ProductController = function () {
     var previewImage = $(".preview img");
 
     $(".thumb img")
-        .each(function (i, v) {
-            var img = $(v);
-            images[img.attr('page')] = img.attr('view');
-        })
-        .click(function () {
-            selectThumb($(this));
-        });
+            .each(function (i, v) {
+                var img = $(v);
+                images[img.attr('page')] = img.attr('view');
+            })
+            .click(function () {
+                selectThumb($(this));
+            });
 
     $.fn.prettyPhoto({
         animation_speed: 'fast',
@@ -661,6 +676,18 @@ bg.warehouse.ProductController = function () {
         dynamicHandle: 1,
         clickBar: 1
     });
+
+    this.showPriceProtection = function () {
+        $('<div></div>').html("Мы заботимся о возможности предоставить нашим покупателям лучшие товары по наименьшим ценам. Если вы купили " +
+                        "продукт и в течение 48 часов обнаружили, что его стоимость снизилась, мы вернем вам разницу. " +
+                        "<br>Просто напищите нам письмо на наш адрес поддержки: <a href='mailto:support@billiongoods.ru'>support@billiongoods.ru</a>").dialog({
+                    title: "Ценовая защита 48 часов",
+                    draggable: false,
+                    modal: true,
+                    resizable: false,
+                    width: 400
+                });
+    };
 };
 
 bg.privacy = {};
@@ -678,19 +705,19 @@ bg.privacy.Tracking = function () {
         var block = $(el).closest(".privacy .item");
         bg.ui.lock(block, 'Удаление подписки. Пожалуйста, подождите...');
         $.post("/privacy/tracking/remove.ajax", JSON.stringify({productId: productId, type: trackingType}))
-            .done(function (response) {
-                if (response.success) {
-                    bg.ui.unlock(block, "Подписка успешно удалена", false);
-                    block.remove();
-                    processUIElements(trackingType);
-                } else {
-                    bg.ui.unlock(block, response.message, true);
-                }
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                bg.ui.unlock(block, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                    "Пожалуйста, попробуйте отправить сообщение позже.", true);
-            });
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(block, "Подписка успешно удалена", false);
+                        block.remove();
+                        processUIElements(trackingType);
+                    } else {
+                        bg.ui.unlock(block, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(block, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                });
     };
 
     this.add = function (el, productId, trackingType, member) {
@@ -699,23 +726,23 @@ bg.privacy.Tracking = function () {
         var letsDo = function (lemail, callback) {
             bg.ui.lock(block, 'Отправки заявки. Пожалуйста, подождите...');
             $.post("/privacy/tracking/add.ajax", JSON.stringify({productId: productId, type: trackingType, email: lemail}))
-                .done(function (response) {
-                    if (response.success) {
-                        bg.ui.unlock(block, "Ваша заявка успешно отправлена", false);
-                        if (member) {
-                            processUIElements(trackingType);
+                    .done(function (response) {
+                        if (response.success) {
+                            bg.ui.unlock(block, "Ваша заявка успешно отправлена", false);
+                            if (member) {
+                                processUIElements(trackingType);
+                            }
+                            callback(true);
+                        } else {
+                            bg.ui.unlock(block, response.message, true);
+                            callback(false);
                         }
-                        callback(true);
-                    } else {
-                        bg.ui.unlock(block, response.message, true);
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        bg.ui.unlock(block, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
+                                "не исчезла, пожалуйста, свяжитесь с нами.", true);
                         callback(false);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(block, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
-                        "не исчезла, пожалуйста, свяжитесь с нами.", true);
-                    callback(false);
-                });
+                    });
         };
 
         if (member) {
@@ -824,27 +851,27 @@ bg.privacy.AddressBook = function () {
         var serializeObject = form.serializeObject();
         bg.ui.lock(null, 'Изменение адреса. Пожалуйста, подождите...');
         $.post("/privacy/address/" + action + ".ajax", JSON.stringify(serializeObject))
-            .done(function (response) {
-                if (response.success) {
-                    bg.ui.unlock(null, "Адрес успешно изменен", false);
-                    bg.util.url.reload();
-                } else {
-                    if (response.data != null) {
-                        $.each(response.data, function (key, v) {
-                            form.find("#" + key).closest("td").append("<div class=\"ui-state-error-text error-msg\">" + v + "</div>");
-                        });
-                        bg.ui.unlock(null, null, true);
+                .done(function (response) {
+                    if (response.success) {
+                        bg.ui.unlock(null, "Адрес успешно изменен", false);
+                        bg.util.url.reload();
                     } else {
-                        bg.ui.unlock(null, response.message, true);
+                        if (response.data != null) {
+                            $.each(response.data, function (key, v) {
+                                form.find("#" + key).closest("td").append("<div class=\"ui-state-error-text error-msg\">" + v + "</div>");
+                            });
+                            bg.ui.unlock(null, null, true);
+                        } else {
+                            bg.ui.unlock(null, response.message, true);
+                        }
                     }
-                }
-                callback(response.success);
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                    "Пожалуйста, попробуйте отправить сообщение позже.", true);
-                callback(false);
-            });
+                    callback(response.success);
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                    callback(false);
+                });
     };
 
     var showAddressDialog = function (action) {
@@ -910,16 +937,16 @@ $(document).ready(function () {
     $('[title]').cluetip({ showTitle: false, activation: 'hover', local: true});
 
     $(".quickInfo").addClass('ui-state-default').hover(
-        function () {
-            if (!$(this).hasClass('ui-state-active')) {
-                $(this).attr('class', 'quickInfo ui-state-hover');
-            }
-        },
-        function () {
-            if (!$(this).hasClass('ui-state-active')) {
-                $(this).attr('class', 'quickInfo ui-state-default');
-            }
-        });
+            function () {
+                if (!$(this).hasClass('ui-state-active')) {
+                    $(this).attr('class', 'quickInfo ui-state-hover');
+                }
+            },
+            function () {
+                if (!$(this).hasClass('ui-state-active')) {
+                    $(this).attr('class', 'quickInfo ui-state-default');
+                }
+            });
 
     var activeQuickInfo = undefined;
     $(".quickInfo.ajax a").cluetip({
@@ -1061,46 +1088,46 @@ $(document).ready(function () {
     });
 
     $('.dropdown')
-        .mouseenter(function () {
-            var submenu = $('.sublinks').stop(false, true).hide();
-            window.clearTimeout(timeoutID);
-
-            submenu.css({
-                width: $(this).width() + 20 + 'px',
-                top: $(this).offset().top + $(this).height() + 7 + 'px',
-                left: $(this).offset().left + 'px'
-            });
-
-            submenu.stop().slideDown(300);
-
-            submenu.mouseleave(function () {
-                $(this).slideUp(300);
-            });
-
-            submenu.mouseenter(function () {
+            .mouseenter(function () {
+                var submenu = $('.sublinks').stop(false, true).hide();
                 window.clearTimeout(timeoutID);
-            });
 
-        })
-        .mouseleave(function () {
-            timeoutID = window.setTimeout(function () {
-                $('.sublinks').stop(false, true).slideUp(300);
-            }, 250);
-        });
+                submenu.css({
+                    width: $(this).width() + 20 + 'px',
+                    top: $(this).offset().top + $(this).height() + 7 + 'px',
+                    left: $(this).offset().left + 'px'
+                });
+
+                submenu.stop().slideDown(300);
+
+                submenu.mouseleave(function () {
+                    $(this).slideUp(300);
+                });
+
+                submenu.mouseenter(function () {
+                    window.clearTimeout(timeoutID);
+                });
+
+            })
+            .mouseleave(function () {
+                timeoutID = window.setTimeout(function () {
+                    $('.sublinks').stop(false, true).slideUp(300);
+                }, 250);
+            });
 
     $(".catalog").find(".ct-item")
-        .hover(function () {
-            var $2 = $(this);
-            $2.find(".ct-toc").addClass("hover");
-            $2.find(".ct-list").show();
-        }, function () {
-            var $2 = $(this);
-            $2.find(".ct-toc").removeClass("hover");
-            $2.find(".ct-list").hide();
-        })
-        .click(function () {
-            bg.util.url.redirect($(this).find("a").attr("href"));
-        });
+            .hover(function () {
+                var $2 = $(this);
+                $2.find(".ct-toc").addClass("hover");
+                $2.find(".ct-list").show();
+            }, function () {
+                var $2 = $(this);
+                $2.find(".ct-toc").removeClass("hover");
+                $2.find(".ct-list").hide();
+            })
+            .click(function () {
+                bg.util.url.redirect($(this).find("a").attr("href"));
+            });
 
     var globalCatalog = $("#globalCatalog");
     $(".tb-item-catalog").hover(function () {

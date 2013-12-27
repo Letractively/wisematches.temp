@@ -405,7 +405,7 @@ button.bg-ui-button.selected {
     width: 36px;
     height: 36px;
     position: absolute;
-    background: url("../images/sprites.png") -9px 0 no-repeat;
+    background: url("../images/sprite-catalog.png") -9px 0 no-repeat;
 }
 
 .tb-item-catalog {
@@ -462,7 +462,7 @@ button.bg-ui-button.selected {
     width: 5px;
     height: 7px;
     display: inline-block;
-    background: url("../images/sprites.png") 0 0 no-repeat;
+    background: url("../images/sprite-catalog.png") 0 0 no-repeat;
 }
 
 .category .item.selected, .category .item.selected a {
@@ -473,7 +473,7 @@ button.bg-ui-button.selected {
     width: 7px;
     height: 5px;
     display: inline-block;
-    background: url("../images/sprites.png") 0 -7px no-repeat;
+    background: url("../images/sprite-catalog.png") 0 -7px no-repeat;
 }
 
 .category .item .image.empty {
@@ -570,7 +570,7 @@ button.bg-ui-button.selected {
 }
 
 .catalog .ct-plain .image {
-    background: url("../images/sprites.png") 0 0 no-repeat;
+    background: url("../images/sprite-catalog.png") 0 0 no-repeat;
 }
 
 .catalog .ct-plain .image.empty {
@@ -578,7 +578,7 @@ button.bg-ui-button.selected {
 }
 
 .catalog .ct-plain .root .image {
-    background: url("../images/sprites.png") 0 -12px no-repeat;
+    background: url("../images/sprite-catalog.png") 0 -12px no-repeat;
 }
 
 .catalog .ct-plain .item.selected > .ct-name a {
@@ -610,7 +610,7 @@ button.bg-ui-button.selected {
     height: 7px;
     padding-right: 5px;
     display: inline-block;
-    background: url("../images/sprites.png") 0 -12px no-repeat;
+    background: url("../images/sprite-catalog.png") 0 -12px no-repeat;
 }
 
 .catalog .ct-list-cnt {
@@ -629,7 +629,7 @@ button.bg-ui-button.selected {
     height: 7px;
     padding-right: 5px;
     display: inline-block;
-    background: url("../images/sprites.png") 0 0 no-repeat;
+    background: url("../images/sprite-catalog.png") 0 0 no-repeat;
 }
 
 #globalCatalog {
@@ -2026,4 +2026,33 @@ button.bg-ui-button.selected {
 
 #addressForm input {
     width: 100%;
+}
+
+.product-sprite a {
+    text-decoration: none !important;
+}
+
+.product-sprite a span {
+    font-weight: bold;
+    border-bottom: 1px dashed;
+}
+
+.product-sprite .image {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: bottom;
+    background: url("../images/sprite-product.png") no-repeat;
+}
+
+.protection {
+    margin-left: 30px;
+}
+
+.protection .image {
+    background-position: 0 0;
+}
+
+.protection:hover .image {
+    background-position: 0 -20px;
 }
