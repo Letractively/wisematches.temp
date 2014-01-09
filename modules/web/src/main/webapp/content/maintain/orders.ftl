@@ -54,9 +54,9 @@
                 <td><a href="/maintain/order/view?id=${o.id}&type=id">${o.id}</a></td>
                 <td>${messageSource.formatDate(o.timestamp, locale)} ${messageSource.formatTime(o.timestamp, locale)}</td>
                 <td>${o.shipment.type!""}</td>
-                <td><@bg.tracking.system o/></td>
-                <td><@bg.tracking.china o/></td>
-                <td><@bg.tracking.international o/></td>
+                <td><@bg.tracking.system o.referenceTracking/></td>
+                <td><@bg.tracking.china o.chinaMailTracking/></td>
+                <td><@bg.tracking.international o.internationalTracking/></td>
             </tr>
         </#list>
         </table>

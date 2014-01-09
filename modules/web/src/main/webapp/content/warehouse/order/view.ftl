@@ -30,7 +30,7 @@
         Заказ #${order.id} от ${messageSource.formatDate(order.created, locale)}
     </div>
     <div style="display: inline-block; float: right">
-    <@bg.tracking.international order/>
+    <@bg.tracking.international order.internationalTracking/>
     </div>
 </div>
 
@@ -114,18 +114,12 @@
                                         Номер комплектации:<br>${l.parameter}
                                     </#if>
                                 <#elseif state.shipping>
-                                    Код почты Китая:<br>
                                     <#if l.parameter?has_content>
-                                        <a href="http://www.flytexpress.com/ShowTraceInfo.aspx?orderid=${l.parameter}">${l.parameter}</a>
-                                    <#else>
-                                        не предоставляется
+                                        Код почты Китая:<br><@bg.tracking.china l.parameter/>
                                     </#if>
                                 <#elseif state.shipped>
-                                    Международный код:<br>
                                     <#if l.parameter?has_content>
-                                        <a href="http://gdeposylka.ru/${l.parameter}?tos=accept&apikey=418832.b3a52a082d&country=RU">${l.parameter}</a>
-                                    <#else>
-                                        не предоставляется
+                                        Международный код:<br><@bg.tracking.international l.parameter/>
                                     </#if>
                                 <#elseif  state.suspended>
                                     <#if order.expectedResume??>
@@ -195,7 +189,7 @@
             <#elseif shipment.type==ShipmentType.REGISTERED>
                 Отслеживаемое отправление:
                 <#if order.internationalTracking?has_content>
-                    <strong><@bg.tracking.international order/></strong>
+                    <strong><@bg.tracking.international order.internationalTracking/></strong>
                 <#else>
                     номер отслеживания еще не назначен
                 </#if>
@@ -290,7 +284,7 @@
             </td>
             <@bg.security.authorized "moderator">
                 <td valign="middle" nowrap="nowrap">
-                ${product.supplierInfo.referenceCode}
+                    <a href="${product.supplierInfo.referenceUrl.toString()}">${product.supplierInfo.referenceCode}</a>
                 </td>
             </@bg.security.authorized>
             <td valign="middle" nowrap="nowrap" align="center">
