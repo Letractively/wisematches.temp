@@ -36,15 +36,15 @@
         <table>
             <tr>
                 <td>
-                    <label for="firstName">Ваше фамилия и имя:</label>
+                    <label for="firstName">Ваше имя и фамилия:</label>
                 </td>
                 <td style="padding-bottom: 20px">
                     <div>
-                        <input id="lastName" name="lastName" style="width: 60%;">
-                        <input id="firstName" name="firstName" style="width: 38%; float: right">
+                        <input id="firstName" name="firstName" style="width: 38%;">
+                        <input id="lastName" name="lastName" style="width: 60%; float: right">
                     </div>
 
-                    <div class="sample">Например: Ivanov Ivan</div>
+                    <div class="sample">Например: Ivan Ivanov</div>
                 </td>
             </tr>
             <tr>

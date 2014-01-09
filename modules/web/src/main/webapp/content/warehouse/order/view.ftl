@@ -204,7 +204,7 @@
         </td>
         <td>
         <#assign address=shipment.address/>
-        ${address.lastName} ${address.firstName}
+        ${address.firstName} ${address.lastName}
             <br>
         ${address.postcode}, ${address.region}, ${address.city}
             <br>
@@ -284,7 +284,7 @@
             </td>
             <@bg.security.authorized "moderator">
                 <td valign="middle" nowrap="nowrap">
-                    <a href="${product.supplierInfo.referenceUrl.toString()}">${product.supplierInfo.referenceCode}</a>
+                ${product.supplierInfo.referenceCode}
                 </td>
             </@bg.security.authorized>
             <td valign="middle" nowrap="nowrap" align="center">
