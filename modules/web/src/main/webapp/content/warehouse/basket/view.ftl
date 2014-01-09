@@ -113,7 +113,7 @@
                             </td>
                             <td>
                                 <label for="address${a.id}" style="font-weight: normal; white-space: normal">
-                                ${a.lastName} ${a.firstName}, ${a.postcode}, ${a.region}, ${a.city}, ${a.location}
+                                ${a.firstName} ${a.lastName}, ${a.postcode}, ${a.region}, ${a.city}, ${a.location}
                                 </label>
                             </td>
                         </tr>
@@ -132,14 +132,14 @@
             <table style="width: auto">
                 <tr>
                     <td>
-                        <label for="firstName">Ваше фамилия и имя: </label>
+                        <label for="firstName">Ваше имя и фамилия: </label>
                     </td>
                     <td style="padding-bottom: 20px">
                         <div class="name layout-line">
+                            <@bg.ui.input path="order.firstName"/>
                             <@bg.ui.input path="order.lastName"/>
-                        <@bg.ui.input path="order.firstName"/>
                         </div>
-                        <div class="sample">Например: Ivanov Ivan</div>
+                        <div class="sample">Например: Ivan Ivanov</div>
                     </td>
                 </tr>
                 <tr>
