@@ -7,9 +7,9 @@
 <div class="title">
     <a href="/">Домашняя страница</a> >
     <#list category.genealogy.parents as g>
-        <@bg.link.categoryLink g/> >
+        <@bg.link.category g/> >
     </#list>
-    <@bg.link.categoryLink category/>
+    <@bg.link.category category/>
 
     <@bg.security.authorized "moderator">
         <div style="display: inline-block; float: right">

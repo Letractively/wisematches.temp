@@ -81,7 +81,7 @@
                     href="/warehouse/product/${coupon.reference}">${messageSource.getProductCode(coupon.reference)}</a>.
             <#elseif coupon.referenceType.category>
                 <#assign category=catalog.getCategory(coupon.reference)/>
-            товары категории <@bg.link.categoryLink category>${category.name}</@bg.link.categoryLink>.
+            товары категории <@bg.link.category category>${category.name}</@bg.link.category>.
             </#if>
         <#else>
         не активен и не может быть использован.
@@ -105,7 +105,7 @@
     <div <#if outStock>class="outstock"</#if> itemprop="offers" itemscope
          itemtype="http://schema.org/Offer"><@bg.ui.price product.price.amount color/></div>
     <#if ops["showCategory"]?? && ops["showCategory"]>
-        <div class="category">раздел <@bg.link.categoryLink catalog.getCategory(product.categoryId)/></div>
+        <div class="category">раздел <@bg.link.category catalog.getCategory(product.categoryId)/></div>
     </#if>
     <#nested>
 </div>
