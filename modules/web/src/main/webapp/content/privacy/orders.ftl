@@ -70,7 +70,7 @@
                         </span>
                             <#if o.internationalTracking?has_content>
                                 <br>
-                                Номер отслеживания: <@bg.link.tracking o.internationalTracking/>
+                                Номер отслеживания: <@bg.tracking.international o/>
                             </#if>
                         </td>
                         <td valign="top">

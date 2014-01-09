@@ -21,7 +21,7 @@
         <td valign="top" width="100%">
             <@bg.link.product p>${p.name}</@bg.link.product>
             <br>
-            <@bg.link.categoryLink category>${category.name}</@bg.link.categoryLink>
+            <@bg.link.category category>${category.name}</@bg.link.category>
         </td>
         <td valign="top" nowrap="nowrap">
             <button type="button"

@@ -7,7 +7,7 @@
 <#macro item cat root selected>
 <div class="item<#if root> root</#if><#if selected> selected</#if>">
     <span class="image <#if !cat.final> expanded<#else> empty</#if>"></span>
-    <@bg.link.categoryLink cat/>
+    <@bg.link.category cat/>
 </div>
 </#macro>
 
@@ -15,7 +15,7 @@
 <div class="item<#if !cat.parent??> root</#if><#if category?? && cat=category> selected</#if>">
     <div class="ct-name">
         <span class="image <#if !cat.final> expanded<#else> empty</#if>"></span>
-        <@bg.link.categoryLink cat/>
+        <@bg.link.category cat/>
     </div>
 
     <#assign level=level+1/>

@@ -30,9 +30,7 @@
         Заказ #${order.id} от ${messageSource.formatDate(order.created, locale)}
     </div>
     <div style="display: inline-block; float: right">
-    <#if order.internationalTracking?has_content>
-            <@bg.link.tracking order.internationalTracking/>
-        </#if>
+    <@bg.tracking.international order/>
     </div>
 </div>
 
@@ -195,10 +193,11 @@
             <#if shipment.type==ShipmentType.FREE>
                 Бесплатная доставка без номера отслеживания
             <#elseif shipment.type==ShipmentType.REGISTERED>
+                Отслеживаемое отправление:
                 <#if order.internationalTracking?has_content>
-                    Отслеживаемое отправление: <strong><@bg.link.tracking order.internationalTracking/></strong>
+                    <strong><@bg.tracking.international order/></strong>
                 <#else>
-                    Отслеживаемое отправление: номер отслеживания еще не назначен
+                    номер отслеживания еще не назначен
                 </#if>
             </#if>
             </div>

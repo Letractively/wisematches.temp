@@ -49,7 +49,7 @@
                     href="/warehouse/product/${coupon.reference}">${messageSource.getProductCode(coupon.reference)}</a>
             <#elseif coupon.referenceType.category>
                 <#assign category=catalog.getCategory(coupon.reference)/>
-                Категорию <@bg.link.categoryLink category>#${category.id} ${category.name}</@bg.link.categoryLink>
+                Категорию <@bg.link.category category>#${category.id} ${category.name}</@bg.link.category>
             <#elseif coupon.referenceType.everything>
                 Все товары
             <#else>
