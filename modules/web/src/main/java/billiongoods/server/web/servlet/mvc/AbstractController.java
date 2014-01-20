@@ -121,6 +121,11 @@ public abstract class AbstractController {
 		return personalityContext.getPrincipal();
 	}
 
+	protected boolean checkPersonality(Long personId) {
+		final Personality personality = getPersonality();
+		return personality != null && personality.getId().equals(personId);
+	}
+
 	protected boolean hasRole(String role) {
 		return personalityContext.hasRole(role);
 	}

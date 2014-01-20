@@ -239,6 +239,18 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
+	public void remove(Long orderId) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+		if (order != null) {
+			session.delete(order);
+		}
+		log.info("Order has been removed: {}", orderId);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
 	public void setOrderTracking(Order order, boolean enable) {
 		final HibernateOrder ho = (HibernateOrder) order;
 		ho.setTracking(enable);

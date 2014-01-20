@@ -40,7 +40,7 @@
 <#assign alignedState=state/>
 <#if alignedState == OrderState.SHIPPING || alignedState == OrderState.SUSPENDED>
     <#assign alignedState=OrderState.PROCESSING/>
-<#elseif alignedState == OrderState.FAILED || alignedState == OrderState.CANCELLED || alignedState == OrderState.REMOVED>
+<#elseif alignedState == OrderState.FAILED || alignedState == OrderState.CANCELLED>
     <#assign alignedState=OrderState.CLOSED/>
 </#if>
 
@@ -213,38 +213,59 @@
     </tr>
 </table>
 
-<#if order.payer?has_content && !order.orderState.finalState>
-<table class="info" style="padding: 0">
-    <tr>
-        <td colspan="2" align="right">
-            <div class="operations">
-                <#if order.orderState==OrderState.SHIPPED>
-                    <div class="confirm">
-                        <form action="/warehouse/order/status" method="post">
-                            <input type="hidden" name="order" value="${order.id}">
-                            <input type="hidden" name="email" value="${order.payer}">
+<#if order.payer?has_content>
+    <#if !order.orderState.finalState>
+    <div class="info" style="padding: 5px; text-align: right">
+        <div class="operations">
+            <#if order.orderState==OrderState.SHIPPED>
+                <div class="confirm">
+                    <form action="/warehouse/order/status" method="post">
+                        <input type="hidden" name="order" value="${order.id}">
+                        <input type="hidden" name="email" value="${order.payer}">
 
-                            <button id="closeOrder" type="button">
-                                Подтвердить получения заказа
-                            </button>
-                        </form>
-                    </div>
-                <#elseif !order.orderState.finalState>
-                    <div class="tracking">
-                        <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
-                            уведомления по e-mail
+                        <button id="closeOrder" type="button">
+                            Подтвердить получения заказа
                         </button>
-                        <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>
-                            Отключить
-                            уведомления по e-mail
+                    </form>
+                </div>
+                <div class="confirm">
+                    <form action="/privacy/order" method="post">
+                        <input type="hidden" name="orderId" value="${order.id}"/>
+
+                        <button name="action" value="resume">Оплатить</button>
+                        <button name="action" value="remove"
+                                onclick="return confirm('Вы уверены что хотите удалить данный заказ?')">Удалить
                         </button>
-                        <span class="sample">(${order.payer})</span>
-                    </div>
-                </#if>
-            </div>
-        </td>
-    </tr>
-</table>
+                    </form>
+                </div>
+            <#elseif !order.orderState.finalState>
+                <div class="tracking">
+                    <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
+                        уведомления по e-mail
+                    </button>
+                    <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>
+                        Отключить
+                        уведомления по e-mail
+                    </button>
+                    <span class="sample">(${order.payer})</span>
+                </div>
+            </#if>
+        </div>
+    </div>
+    </#if>
+<#else>
+    <#if order.orderState==OrderState.BILLING && personalityContext.hasRole("member")>
+    <div class="info" style="padding: 5px; text-align: right">
+        <div class="operations">
+            <form action="/privacy/order" method="post">
+                <input type="hidden" name="orderId" value="${order.id}"/>
+
+                <button name="action" value="resume">Оплатить</button>
+                <button name="action" value="remove">Удалить</button>
+            </form>
+        </div>
+    </div>
+    </#if>
 </#if>
 
 <div class="basket">
