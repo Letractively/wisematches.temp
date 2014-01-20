@@ -61,6 +61,8 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 
 	void close(Long orderId, Date deliveryDate, String commentary);
 
+	void remove(Long orderId);
+
 
 	void setOrderTracking(Order order, boolean enable);
 }

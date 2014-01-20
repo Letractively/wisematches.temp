@@ -23,8 +23,6 @@ import org.springframework.web.context.request.WebRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
-import static billiongoods.server.web.servlet.mvc.warehouse.OrderController.ORDER_ID_PARAM;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -34,6 +32,8 @@ public class PayPalController extends AbstractController {
 	private OrderManager orderManager;
 	private ServerDescriptor serverDescriptor;
 	private PayPalExpressCheckout expressCheckout;
+
+	private static final String ORDER_ID_PARAM = "ORDER_ID";
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.PayPalController");
 
@@ -114,6 +114,11 @@ public class PayPalController extends AbstractController {
 		}
 
 		return responseFactory.success();
+	}
+
+	public static String forwardCheckout(WebRequest request, Order order) {
+		request.setAttribute(ORDER_ID_PARAM, order.getId(), RequestAttributes.SCOPE_REQUEST);
+		return "forward:/warehouse/paypal/checkout";
 	}
 
 	@Autowired

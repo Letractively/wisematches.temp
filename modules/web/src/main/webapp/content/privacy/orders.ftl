@@ -54,7 +54,6 @@
                     <th>Товар</th>
                     <th>Количество</th>
                     <th>Стоимость</th>
-                    <th>Статус</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -68,9 +67,11 @@
                         <span class="sample">
                             от ${messageSource.formatDate(o.created, locale)}
                         </span>
-                            <#if o.internationalTracking?has_content>
-                                <br>
-                                Номер отслеживания: <@bg.tracking.international o.internationalTracking/>
+                            <br>
+                            Состояние: <span
+                                class="status"><@message code="order.status.${o.orderState.code}.label"/></span>
+                            <#if !o.orderState.finalState && o.internationalTracking?has_content>
+                                <@bg.tracking.international o.internationalTracking/>
                             </#if>
                         </td>
                         <td valign="top">
@@ -79,13 +80,24 @@
                         <td valign="top">
                             <@bg.ui.price o.amount + o.shipment.amount - o.discount "b"/>
                         </td>
-                        <td valign="top" class="status">
-                            <@message code="order.status.${o.orderState.code}.label"/>
-                        </td>
                         <td valign="top" nowrap="nowrap">
-                            <#if (o.orderState==OrderState.SHIPPED)>
-                                <button type="button" onclick="closeOrder('${o.id}');">Подтвердить получение</button>
-                            </#if>
+                            <#switch o.orderState>
+                                <#case OrderState.SHIPPED>
+                                    <button type="button" onclick="closeOrder('${o.id}');">Подтвердить получение
+                                    </button>
+                                    <#break>
+                                <#case OrderState.BILLING>
+                                    <form action="/privacy/order" method="post">
+                                        <input type="hidden" name="orderId" value="${o.id}"/>
+
+                                        <button name="action" value="resume">Оплатить</button>
+                                        <button name="action" value="remove"
+                                                onclick="return confirm('Вы уверены что хотите удалить данный заказ?')">
+                                            Удалить
+                                        </button>
+                                    </form>
+                                    <#break>
+                            </#switch>
                         </td>
                     </tr>
                         <#list o.orderItems as i>
@@ -104,8 +116,6 @@
                             </td>
                             <td valign="top" nowrap="nowrap">
                                 <@bg.ui.price i.amount "b"/>
-                            </td>
-                            <td nowrap="nowrap">
                             </td>
                             <td valign="top" nowrap="nowrap" style="padding: 5px">
                             <#--<button type="button">Добавить в корзину</button>-->

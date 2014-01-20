@@ -32,8 +32,7 @@ public enum OrderState {
 
 	// Final states
 	CANCELLED(true),  // indicates that order was cancelled by any reason (must be in comment)
-	CLOSED(true),    // indicates that order was processed, shipped and received by customer.
-	REMOVED(true); // indicates that order was removed by customer
+	CLOSED(true);    // indicates that order was processed, shipped and received by customer.
 
 	private final String code;
 	private final boolean finalState;

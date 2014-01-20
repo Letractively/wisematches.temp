@@ -319,10 +319,6 @@ public class HibernateOrder implements Order {
 		updateOrderState(OrderState.CLOSED, commentary, deliveryDate != null ? String.valueOf(deliveryDate.getTime()) : null);
 	}
 
-	void remove(String commentary) {
-		updateOrderState(OrderState.REMOVED, commentary, null);
-	}
-
 	void setTracking(boolean tracking) {
 		this.tracking = tracking;
 	}

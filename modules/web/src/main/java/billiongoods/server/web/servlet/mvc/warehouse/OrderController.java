@@ -41,7 +41,7 @@ public class OrderController extends AbstractController {
 	private OrderManager orderManager;
 	private CouponManager couponManager;
 
-	public static final String ORDER_ID_PARAM = "ORDER_ID";
+	private static final String ORDER_ID_PARAM = "ORDER_ID";
 	public static final String ORDER_CHECKOUT_FORM_NAME = OrderCheckoutForm.class.getName();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderController");
@@ -61,8 +61,7 @@ public class OrderController extends AbstractController {
 	public String checkoutOrder(WebRequest request) {
 		final OrderCheckoutForm form = (OrderCheckoutForm) request.getAttribute(ORDER_CHECKOUT_FORM_NAME, RequestAttributes.SCOPE_REQUEST);
 		final Order order = orderManager.create(getPersonality(), form.getBasket(), form.getAddress(), form.getShipmentType(), form.isEnabledTracking());
-		request.setAttribute(ORDER_ID_PARAM, order.getId(), RequestAttributes.SCOPE_REQUEST);
-		return "forward:/warehouse/paypal/checkout";
+		return PayPalController.forwardCheckout(request, order);
 	}
 
 	@RequestMapping("/accepted")
@@ -134,7 +133,7 @@ public class OrderController extends AbstractController {
 
 		if (!errors.hasErrors()) {
 			final Order order = orderManager.getOrder(form.getOrder());
-			if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail().trim())) {
+			if (order == null || order.getPayer() == null || !order.getPayer().equalsIgnoreCase(form.getEmail().trim())) {
 				errors.reject("order.error.invalid");
 			} else {
 				return viewOrder(form.getOrder(), order, false, model);
