@@ -53,7 +53,7 @@ public class OrdersController extends AbstractController {
 
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@RequestMapping(value = "/order", method = RequestMethod.POST, params = "action=resume")
+	@RequestMapping(value = "/order", method = RequestMethod.POST, params = "action=checkout")
 	public String resumeOrder(@RequestParam("orderId") Long orderId, WebRequest request) {
 		final Order order = orderManager.getOrder(orderId);
 		if (order == null) {

@@ -228,16 +228,6 @@
                         </button>
                     </form>
                 </div>
-                <div class="confirm">
-                    <form action="/privacy/order" method="post">
-                        <input type="hidden" name="orderId" value="${order.id}"/>
-
-                        <button name="action" value="resume">Оплатить</button>
-                        <button name="action" value="remove"
-                                onclick="return confirm('Вы уверены что хотите удалить данный заказ?')">Удалить
-                        </button>
-                    </form>
-                </div>
             <#elseif !order.orderState.finalState>
                 <div class="tracking">
                     <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
@@ -253,19 +243,19 @@
         </div>
     </div>
     </#if>
-<#else>
-    <#if order.orderState==OrderState.BILLING && personalityContext.hasRole("member")>
-    <div class="info" style="padding: 5px; text-align: right">
-        <div class="operations">
-            <form action="/privacy/order" method="post">
-                <input type="hidden" name="orderId" value="${order.id}"/>
+<#elseif order.orderState==OrderState.BILLING && personalityContext.hasRole("member")>
+<div class="info" style="padding: 5px; text-align: right">
+    <div class="confirm">
+        <form action="/privacy/order" method="post">
+            <input type="hidden" name="orderId" value="${order.id}"/>
 
-                <button name="action" value="resume">Оплатить</button>
-                <button name="action" value="remove">Удалить</button>
-            </form>
-        </div>
+            <button name="action" value="remove"
+                    onclick="return confirm('Вы уверены что хотите удалить данный заказ?')">
+                Удалить заказ
+            </button>
+        </form>
     </div>
-    </#if>
+</div>
 </#if>
 
 <div class="basket">
@@ -386,6 +376,19 @@
         </tr>
     </table>
 </div>
+
+<#if order.orderState==OrderState.BILLING && personalityContext.hasRole("member")>
+<div class="paypal" style="text-align: right; padding-top: 20px">
+    <form action="/privacy/order" method="post">
+        <input type="hidden" name="orderId" value="${order.id}"/>
+        <button type="submit" name="action" value="checkout"
+                style="background: transparent; border: none">
+            <img src="https://www.paypal.com/ru_RU/i/btn/btn_xpressCheckout.gif"
+                 align="left">
+        </button>
+    </form>
+</div>
+</#if>
 </div>
 
 <script type="application/javascript">

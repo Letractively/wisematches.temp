@@ -1255,13 +1255,13 @@ button.bg-ui-button.selected {
     color: #F00 !important;
 }
 
+.paypal img {
+    cursor: pointer;
+}
+
 .basket .paypal {
     padding-left: 20px;
     display: inline-block;
-}
-
-.basket .paypal img {
-    cursor: pointer;
 }
 
 .basket .total {

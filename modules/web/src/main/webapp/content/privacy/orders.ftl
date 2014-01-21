@@ -90,7 +90,7 @@
                                     <form action="/privacy/order" method="post">
                                         <input type="hidden" name="orderId" value="${o.id}"/>
 
-                                        <button name="action" value="resume">Оплатить</button>
+                                        <button name="action" value="checkout">Оплатить</button>
                                         <button name="action" value="remove"
                                                 onclick="return confirm('Вы уверены что хотите удалить данный заказ?')">
                                             Удалить
