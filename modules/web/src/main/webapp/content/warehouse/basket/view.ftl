@@ -15,6 +15,11 @@
 </div>
 </#if>
 
+<div class="shipment"
+     style="color: red; padding-bottom: 10px;font-style: italic; text-align: center; width: 100%; font-size: 18px">
+    Внимание: отправка приостановлена до 7го Февраля 2014 в связи с Китайским Новым Годом.
+</div>
+
 <table class="cnt">
     <tr>
         <th></th>
@@ -79,6 +84,11 @@
         </th>
     </tr>
 </table>
+
+<div class="shipment"
+     style="color: red; padding-bottom: 10px;font-style: italic; text-align: center; width: 100%; font-size: 18px">
+    Внимание: отправка приостановлена до 7го Февраля 2014 в связи с Китайским Новым Годом.
+</div>
 
 <div class="unregistered" <#if shipmentRates.isFreeShipment(ShipmentType.REGISTERED)>style="display: none"</#if>>
     Вы можете получить бесплатный номер для отслеживания (зарегистрированное отправление) добавив еще товара на
