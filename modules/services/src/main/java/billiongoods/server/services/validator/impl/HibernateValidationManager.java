@@ -2,7 +2,6 @@ package billiongoods.server.services.validator.impl;
 
 import billiongoods.core.search.Range;
 import billiongoods.core.task.CleaningDayListener;
-import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.services.price.MarkupType;
 import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.services.supplier.DataLoadingException;
@@ -22,6 +21,8 @@ import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
 import java.util.*;
@@ -40,7 +41,6 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 	private AsyncTaskExecutor taskExecutor;
 
 	private PriceConverter priceConverter;
-	private ExchangeManager exchangeManager;
 
 	private SupplierDataLoader dataLoader;
 
@@ -59,17 +59,65 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 	}
 
 	@Override
-	public void addValidationProgressListener(ValidationListener l) {
+	public void addValidationListener(ValidationListener l) {
 		if (l != null) {
 			listeners.add(l);
 		}
 	}
 
 	@Override
-	public void removeValidationProgressListener(ValidationListener l) {
+	public void removeValidationListener(ValidationListener l) {
 		if (l != null) {
 			listeners.remove(l);
 		}
+	}
+
+	@Override
+	public synchronized void startValidation() {
+		if (isInProgress()) {
+			return;
+		}
+		log.info("Validation progress was interrupted");
+
+		validationProgress = taskExecutor.submit(new Runnable() {
+			@Override
+			public void run() {
+				doValidation();
+			}
+		});
+	}
+
+	@Override
+	public synchronized void cancelValidation() {
+		if (validationProgress != null) {
+			validationProgress.cancel(true);
+			validationProgress = null;
+		}
+	}
+
+	@Override
+	public synchronized boolean isInProgress() {
+		return validationProgress != null;
+	}
+
+	@Override
+	public synchronized ValidationSummary getValidationSummary() {
+		return validationSummary;
+	}
+
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void validateExchangeRate() {
+		final Session session = sessionFactory.openSession();
+
+		final String buyPriceF = priceConverter.formula("p.supplierInfo.price.amount", "ROUND", MarkupType.REGULAR);
+		final String buyPrimordialPriceF = priceConverter.formula("p.supplierInfo.price.primordialAmount", "ROUND", MarkupType.REGULAR);
+
+		final Query query = session.createQuery("update from billiongoods.server.warehouse.impl.HibernateProduct p set " +
+				"p.price.amount = " + buyPriceF + ", " +
+				"p.price.primordialAmount = " + buyPrimordialPriceF);
+		query.executeUpdate();
 	}
 
 	private void doValidation() {
@@ -176,42 +224,10 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 		}
 	}
 
-	@Override
-	public synchronized void startPriceValidation() {
-		if (isInProgress()) {
-			return;
-		}
-		log.info("Validation progress was interrupted");
-
-		validationProgress = taskExecutor.submit(new Runnable() {
-			@Override
-			public void run() {
-				doValidation();
-			}
-		});
-	}
-
-	@Override
-	public synchronized void stopPriceValidation() {
-		if (validationProgress != null) {
-			validationProgress.cancel(true);
-			validationProgress = null;
-		}
-	}
-
-	@Override
-	public synchronized boolean isInProgress() {
-		return validationProgress != null;
-	}
-
-	@Override
-	public synchronized ValidationSummary getValidationSummary() {
-		return validationSummary;
-	}
 
 	@Override
 	public void cleanup(Date today) {
-		startPriceValidation();
+		startValidation();
 	}
 
 	private synchronized boolean isInterrupted() {
@@ -250,7 +266,7 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 				final Price supplierPrice = description.getPrice();
 				final StockInfo stockInfo = description.getStockInfo();
 				if (supplierPrice != null && stockInfo != null) {
-					final Price price = priceConverter.convert(supplierPrice, exchangeManager.getExchangeRate(), MarkupType.REGULAR);
+					final Price price = priceConverter.convert(supplierPrice, MarkupType.REGULAR);
 					validation.validated(price, supplierPrice, stockInfo);
 				}
 				return validation;
@@ -280,10 +296,6 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 
 	public void setPriceConverter(PriceConverter priceConverter) {
 		this.priceConverter = priceConverter;
-	}
-
-	public void setExchangeManager(ExchangeManager exchangeManager) {
-		this.exchangeManager = exchangeManager;
 	}
 
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {

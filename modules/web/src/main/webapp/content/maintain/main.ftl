@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="ordersSummary" type="billiongoods.server.services.payment.OrdersSummary" -->
 <#-- @ftlvariable name="trackingSummary" type="billiongoods.server.web.servlet.mvc.maintain.form.TrackingSummary" -->
-<#-- @ftlvariable name="exchangeManager" type="billiongoods.server.services.price.ExchangeManager" -->
+<#-- @ftlvariable name="priceConverter" type="billiongoods.server.services.price.PriceConverter" -->
 
 <#include "/core.ftl"/>
 
@@ -12,7 +12,7 @@
                     <strong>Курс обмена</strong>
                 </div>
                 <form action="/maintain/exchange/update" method="post">
-                    <input name="rate" value="${exchangeManager.exchangeRate?string("0.00")}">
+                    <input name="rate" value="${priceConverter.exchangeRate?string("0.00")}">
                     <button>Обновить</button>
                 </form>
             </div>

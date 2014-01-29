@@ -1,13 +1,21 @@
 package billiongoods.server.services.supplier.impl.banggod;
 
-import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.services.price.PriceConverter;
-import billiongoods.server.services.price.impl.DefaultPriceConverter;
+import billiongoods.server.services.price.impl.HibernatePriceConverter;
 import billiongoods.server.warehouse.*;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Map;
+import java.util.Set;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertEquals;
@@ -29,11 +37,7 @@ public class BanggoodProductImporterTest {
 
 	@Test
 	public void test() throws IOException {
-		final PriceConverter priceConverter = new DefaultPriceConverter();
-
-		final ExchangeManager exchangeManager = createMock(ExchangeManager.class);
-		expect(exchangeManager.getExchangeRate()).andReturn(34.2d);
-		replay(exchangeManager);
+		final PriceConverter priceConverter = new HibernatePriceConverter(34.2d);
 
 		final Category category = createMock(Category.class);
 		replay(category);
@@ -58,12 +62,43 @@ public class BanggoodProductImporterTest {
 		replay(productManager);
 
 		final BanggoodProductImporter importer = new BanggoodProductImporter();
-		importer.setExchangeManager(exchangeManager);
 		importer.setProductManager(productManager);
 		importer.setPriceConverter(priceConverter);
 
 //		importer.importProducts(category, getClass().getResourceAsStream("/banggood_packer.csv"));
 
 		verify(productManager);
+	}
+
+	@Test
+	@Ignore
+	public void importImages() throws IOException {
+		final BanggoodProductImporter importer = new BanggoodProductImporter();
+
+		final InputStream in = new FileInputStream("C:\\Users\\klimese\\Downloads\\120854_product_image.csv");
+
+		final Path out = Paths.get("C:\\Temp\\qwe");
+
+		final Map<String, Set<String>> stringSetMap = importer.parseImages(in);
+		for (Map.Entry<String, Set<String>> entry : stringSetMap.entrySet()) {
+			final String sku = entry.getKey();
+			final Set<String> urls = entry.getValue();
+
+			final Path directory = Files.createDirectories(out.resolve(sku));
+
+			int i = 0;
+			for (String url : urls) {
+				final URL u = new URL(url);
+				final InputStream in1 = u.openStream();
+
+				final String ext = url.substring(url.lastIndexOf("."));
+
+				final Path file = Files.createFile(directory.resolve(String.valueOf(i++) + ext));
+				Files.copy(in1, file, StandardCopyOption.REPLACE_EXISTING);
+				in1.close();
+			}
+		}
+
+		in.close();
 	}
 }

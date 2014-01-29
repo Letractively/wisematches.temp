@@ -1,5 +1,6 @@
 <#-- @ftlvariable name="form" type="billiongoods.server.web.servlet.mvc.maintain.form.ProductForm" -->
 <#-- @ftlvariable name="attributes" type="billiongoods.server.warehouse.Attribute[]" -->
+<#-- @ftlvariable name="priceConverter" type="billiongoods.server.services.price.PriceConverter" -->
 
 <#-- @ftlvariable name="imageResourcesDomain" type="java.lang.String" -->
 
@@ -601,7 +602,7 @@ var removeRelationship = function () {
 
 var recalculatePrice = function (val) {
     var v = parseFloat(val);
-    return (v + v * 0.2) * 35 + 10;
+    return ${priceConverter.formula("v", "Math.round", MarkupType.REGULAR)};
 };
 
 $("#supplierPrice").change(function () {
