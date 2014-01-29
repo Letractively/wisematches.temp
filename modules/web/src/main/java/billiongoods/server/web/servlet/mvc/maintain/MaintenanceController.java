@@ -2,6 +2,7 @@ package billiongoods.server.web.servlet.mvc.maintain;
 
 import billiongoods.server.services.payment.OrderManager;
 import billiongoods.server.services.payment.OrdersSummary;
+import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingManager;
 import billiongoods.server.warehouse.ProductManager;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class MaintenanceController extends AbstractController {
 	private OrderManager orderManager;
 	private ProductManager productManager;
+	private PriceConverter priceConverter;
 	private ProductTrackingManager trackingManager;
 
 	public MaintenanceController() {
@@ -33,6 +35,8 @@ public class MaintenanceController extends AbstractController {
 
 	@RequestMapping("/main")
 	public String mainPage(Model model) {
+		model.addAttribute("priceConverter", priceConverter);
+
 		final OrdersSummary ordersSummary = orderManager.getOrdersSummary();
 		model.addAttribute("ordersSummary", ordersSummary);
 
@@ -55,6 +59,11 @@ public class MaintenanceController extends AbstractController {
 	@Autowired
 	public void setOrderManager(OrderManager orderManager) {
 		this.orderManager = orderManager;
+	}
+
+	@Autowired
+	public void setPriceConverter(PriceConverter priceConverter) {
+		this.priceConverter = priceConverter;
 	}
 
 	@Autowired

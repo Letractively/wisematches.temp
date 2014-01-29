@@ -8,6 +8,7 @@
 <#else>
     Проверка не выполняется:
     <button name="action" value="start" type="submit">Запустить проверку</button>
+    <button name="action" value="exchange" type="submit">Обновить цены по курсу</button>
 </#if>
 </form>
 
@@ -120,10 +121,4 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
         </#list>
     </table>
 </div>
-</#if>
-
-<#if !context.finishDate??>
-<script type="application/javascript">
-    window.setTimeout('location.reload()', 5 * 1000); // one minute
-</script>
 </#if>

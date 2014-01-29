@@ -22,7 +22,7 @@ public class HibernateValidationManagerTest {
 
 	@Test
 	public void asd() throws Exception {
-		PriceConverter priceConverter = new DefaultPriceConverter();
+		PriceConverter priceConverter = new HibernatePriceConverter(34.2d);
 		BanggoodDataLoader priceLoader = new BanggoodDataLoader();
 
 		final CSVReader reader = new CSVReader(new FileReader("C:\\Temp\\banggood\\store_product.csv"));
@@ -41,7 +41,7 @@ public class HibernateValidationManagerTest {
 			final Price loadedPrice = priceLoader.loadDescription(new HibernateSupplierInfo(uri, null, Supplier.BANGGOOD, null)).getPrice();
 
 			if (!currentPrice.equals(loadedPrice)) {
-				final Price price1 = priceConverter.convert(loadedPrice, 34.2d, MarkupType.REGULAR);
+				final Price price1 = priceConverter.convert(loadedPrice, MarkupType.REGULAR);
 
 				StringBuilder sb = new StringBuilder("update store_product ");
 				sb.append(" set price=" + price1.getAmount());

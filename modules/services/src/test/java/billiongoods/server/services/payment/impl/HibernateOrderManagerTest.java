@@ -6,7 +6,6 @@ import billiongoods.server.services.basket.Basket;
 import billiongoods.server.services.basket.BasketItem;
 import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.*;
-import billiongoods.server.services.price.ExchangeManager;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.warehouse.impl.HibernateAttribute;
 import org.hibernate.SessionFactory;
@@ -48,10 +47,6 @@ public class HibernateOrderManagerTest {
 		final CouponManager couponManager = createMock(CouponManager.class);
 		expect(couponManager.getCoupon(null)).andReturn(null);
 		replay(couponManager);
-
-		final ExchangeManager exchangeManager = createMock(ExchangeManager.class);
-		expect(exchangeManager.getExchangeRate()).andReturn(33.3d);
-		replay(exchangeManager);
 
 		final HibernateOrderManager orderManager = new HibernateOrderManager();
 		orderManager.setSessionFactory(sessionFactory);

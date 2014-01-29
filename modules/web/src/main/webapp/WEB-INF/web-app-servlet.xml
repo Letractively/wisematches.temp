@@ -91,6 +91,7 @@
                 <value>billiongoods.server.services.payment.ShipmentType</value>
                 <value>billiongoods.server.services.payment.OrderState</value>
                 <value>billiongoods.server.services.tracking.TrackingType</value>
+                <value>billiongoods.server.services.price.MarkupType</value>
                 <value>billiongoods.server.web.servlet.mvc.warehouse.form.SortingType</value>
                 <value>billiongoods.server.web.servlet.mvc.privacy.form.OrderStateUnion</value>
             </list>
@@ -108,7 +109,6 @@
                         <entry key="messageSource" value-ref="messageSource"/>
 
                         <entry key="imageResolver" value-ref="imageResolver"/>
-                        <entry key="exchangeManager" value-ref="exchangeManager"/>
                         <entry key="personalityContext" value-ref="personalityContext"/>
 
                         <entry key="imageResourcesDomain" value="${server.image.domain}"/>

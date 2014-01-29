@@ -10,10 +10,7 @@
         <constructor-arg name="mailHostName" value="${server.mail.host}"/>
     </bean>
 
-    <bean id="priceConverter" class="billiongoods.server.services.price.impl.DefaultPriceConverter">
-    </bean>
-
-    <bean id="exchangeManager" class="billiongoods.server.services.price.impl.HibernateExchangeManager">
+    <bean id="priceConverter" class="billiongoods.server.services.price.impl.HibernatePriceConverter">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -80,7 +77,6 @@
         <property name="productManager" ref="productManager"/>
 
         <property name="priceConverter" ref="priceConverter"/>
-        <property name="exchangeManager" ref="exchangeManager"/>
 
         <property name="transactionManager" ref="transactionManager"/>
 
@@ -100,7 +96,6 @@
         <property name="productManager" ref="productManager"/>
         <property name="priceLoader" ref="banggoodDataLoader"/>
         <property name="priceConverter" ref="priceConverter"/>
-        <property name="exchangeManager" ref="exchangeManager"/>
         <property name="relationshipManager" ref="relationshipManager"/>
         <property name="transactionManager" ref="transactionManager"/>
 

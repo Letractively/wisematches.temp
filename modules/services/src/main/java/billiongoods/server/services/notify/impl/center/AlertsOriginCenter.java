@@ -126,13 +126,13 @@ public class AlertsOriginCenter {
 
 	public void setValidationManager(ValidationManager productValidator) {
 		if (this.productValidator != null) {
-			this.productValidator.removeValidationProgressListener(validatorListener);
+			this.productValidator.removeValidationListener(validatorListener);
 		}
 
 		this.productValidator = productValidator;
 
 		if (this.productValidator != null) {
-			this.productValidator.addValidationProgressListener(validatorListener);
+			this.productValidator.addValidationListener(validatorListener);
 		}
 	}
 

@@ -8,6 +8,8 @@ import billiongoods.server.services.validator.ValidationManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -82,14 +84,19 @@ public class ServiceController extends AbstractController {
 	}
 
 	@RequestMapping(value = "validation", method = RequestMethod.POST)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String validatePricesAction(@RequestParam("action") String action) {
 		if ("start".equalsIgnoreCase(action)) {
 			if (!validationManager.isInProgress()) {
-				validationManager.startPriceValidation();
+				validationManager.startValidation();
 			}
 		} else if ("stop".equalsIgnoreCase(action)) {
 			if (validationManager.isInProgress()) {
-				validationManager.stopPriceValidation();
+				validationManager.cancelValidation();
+			}
+		} else if ("exchange".equalsIgnoreCase(action)) {
+			if (!validationManager.isInProgress()) {
+				validationManager.validateExchangeRate();
 			}
 		}
 		return "redirect:/maintain/service/validation";

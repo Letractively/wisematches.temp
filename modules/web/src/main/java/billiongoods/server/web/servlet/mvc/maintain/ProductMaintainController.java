@@ -3,6 +3,7 @@ package billiongoods.server.web.servlet.mvc.maintain;
 import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.image.ImageSize;
+import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.services.supplier.DataLoadingException;
 import billiongoods.server.services.supplier.ImportingSummary;
 import billiongoods.server.services.supplier.ProductImporter;
@@ -40,6 +41,7 @@ import java.util.*;
 public class ProductMaintainController extends AbstractController {
 	private ImageManager imageManager;
 	private ImageResolver imageResolver;
+	private PriceConverter priceConverter;
 	private ProductManager productManager;
 	private ProductImporter productImporter;
 	private SupplierDataLoader supplierDataLoader;
@@ -209,6 +211,7 @@ public class ProductMaintainController extends AbstractController {
 		}
 
 		model.addAttribute("attributes", attributeManager.getAttributes());
+		model.addAttribute("priceConverter", priceConverter);
 		return "/content/maintain/product";
 	}
 
@@ -349,6 +352,7 @@ public class ProductMaintainController extends AbstractController {
 		}
 
 		model.addAttribute("attributes", attributeManager.getAttributes());
+		model.addAttribute("priceConverter", priceConverter);
 		return "/content/maintain/product";
 	}
 
@@ -446,6 +450,11 @@ public class ProductMaintainController extends AbstractController {
 	@Autowired
 	public void setImageResolver(ImageResolver imageResolver) {
 		this.imageResolver = imageResolver;
+	}
+
+	@Autowired
+	public void setPriceConverter(PriceConverter priceConverter) {
+		this.priceConverter = priceConverter;
 	}
 
 	@Autowired
