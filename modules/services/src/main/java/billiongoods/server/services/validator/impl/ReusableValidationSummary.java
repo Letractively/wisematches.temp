@@ -1,10 +1,13 @@
 package billiongoods.server.services.validator.impl;
 
+import billiongoods.server.services.validator.ValidatingProduct;
 import billiongoods.server.services.validator.ValidationChange;
 import billiongoods.server.services.validator.ValidationSummary;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -17,10 +20,10 @@ public class ReusableValidationSummary implements ValidationSummary {
 	private volatile int iteration = 0;
 
 	private volatile int totalCount = 0;
-	private volatile int brokenProducts = 0;
 	private volatile int processedProducts = 0;
 
-	private final Collection<ValidationChange> validations = new ConcurrentLinkedQueue<>();
+	private Collection<ValidatingProduct> brokenProducts = new ConcurrentLinkedQueue<>();
+	private final Collection<ValidationChange> updatedProducts = new ConcurrentLinkedQueue<>();
 
 	public ReusableValidationSummary() {
 	}
@@ -41,30 +44,20 @@ public class ReusableValidationSummary implements ValidationSummary {
 	}
 
 	@Override
-	public int getBrokenProducts() {
-		return brokenProducts;
-	}
-
-	@Override
-	public int getUpdateProducts() {
-		return validations.size();
-	}
-
-	@Override
 	public int getProcessedProducts() {
 		return processedProducts;
-	}
-
-	void incrementBroken() {
-		brokenProducts++;
 	}
 
 	void incrementProcessed() {
 		processedProducts++;
 	}
 
+	void registerBroken(ValidatingProduct product) {
+		brokenProducts.add(product);
+	}
+
 	void registerValidation(ValidationChange validation) {
-		validations.add(validation);
+		updatedProducts.add(validation);
 	}
 
 	void initialize(Date date, int totalCount) {
@@ -74,15 +67,20 @@ public class ReusableValidationSummary implements ValidationSummary {
 		this.iteration = 0;
 
 		this.totalCount = totalCount;
-		this.brokenProducts = 0;
 		this.processedProducts = 0;
 
-		validations.clear();
+		brokenProducts.clear();
+		updatedProducts.clear();
 	}
 
 	@Override
-	public Collection<ValidationChange> getValidationChanges() {
-		return validations;
+	public Collection<ValidationChange> getUpdatedProducts() {
+		return updatedProducts;
+	}
+
+	@Override
+	public Collection<ValidatingProduct> getBrokenProducts() {
+		return brokenProducts;
 	}
 
 	@Override
@@ -90,11 +88,13 @@ public class ReusableValidationSummary implements ValidationSummary {
 		return iteration;
 	}
 
-	void incrementIteration(int broken) {
+	List<ValidatingProduct> startNextIteration() {
 		iteration++;
 
-		brokenProducts -= broken;
-		processedProducts -= broken;
+		List<ValidatingProduct> res = new ArrayList<>(brokenProducts);
+		brokenProducts.clear();
+		processedProducts -= res.size();
+		return res;
 	}
 
 	void finalize(Date finish) {
@@ -110,7 +110,6 @@ public class ReusableValidationSummary implements ValidationSummary {
 		sb.append(", totalCount=").append(totalCount);
 		sb.append(", brokenProducts=").append(brokenProducts);
 		sb.append(", processedProducts=").append(processedProducts);
-		sb.append(", validations=").append(validations);
 		sb.append('}');
 		return sb.toString();
 	}

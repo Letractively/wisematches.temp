@@ -17,13 +17,10 @@ public interface ValidationSummary {
 
 	int getTotalCount();
 
-
-	int getUpdateProducts();
-
-	int getBrokenProducts();
-
 	int getProcessedProducts();
 
 
-	Collection<ValidationChange> getValidationChanges();
+	Collection<ValidationChange> getUpdatedProducts();
+
+	Collection<ValidatingProduct> getBrokenProducts();
 }

@@ -1,5 +1,6 @@
 package billiongoods.server.services.validator.impl;
 
+import billiongoods.server.services.validator.ValidatingProduct;
 import billiongoods.server.services.validator.ValidationChange;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.StockInfo;
@@ -20,6 +21,9 @@ public class HibernateValidationChange implements ValidationChange {
 
 	@Column(name = "productId")
 	private Integer productId;
+
+	@Transient
+	private ValidatingProduct product;
 
 	@Column(name = "timestamp")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -71,16 +75,17 @@ public class HibernateValidationChange implements ValidationChange {
 	HibernateValidationChange() {
 	}
 
-	public HibernateValidationChange(Integer productId, Price oldPrice, Price oldSupplierPrice, StockInfo oldStockInfo) {
-		this.productId = productId;
+	public HibernateValidationChange(ValidatingProduct product, Price oldPrice, Price oldSupplierPrice, StockInfo oldStockInfo) {
+		this.product = product;
+		this.productId = product.getId();
 		this.oldPrice = oldPrice;
 		this.oldSupplierPrice = oldSupplierPrice;
 		this.oldStockInfo = oldStockInfo;
 	}
 
 	@Override
-	public Integer getProductId() {
-		return productId;
+	public ValidatingProduct getProduct() {
+		return product;
 	}
 
 	@Override

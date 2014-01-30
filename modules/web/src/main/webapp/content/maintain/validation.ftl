@@ -8,6 +8,10 @@
 <#else>
     Проверка не выполняется:
     <button name="action" value="start" type="submit">Запустить проверку</button>
+    <#if ((summary.brokenProducts?size)>0)>
+        <button name="action" value="broken" type="submit">Проверить ошибочные</button>
+    </#if>
+    <div style="width: 60px; display: inline-block">&nbsp;</div>
     <button name="action" value="exchange" type="submit">Обновить цены по курсу</button>
 </#if>
 </form>
@@ -38,23 +42,23 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
     </tr>
     <tr>
         <td>Проверено:</td>
-        <td>${context.processedProducts} из ${context.totalCount}</td>
+        <td>${context.processedProducts} из ${context.totalCount} (итерация ${context.iteration})</td>
     </tr>
     <tr>
         <td>Обновлено:</td>
-        <td>${context.updateProducts}</td>
+        <td>${context.updatedProducts?size}</td>
     </tr>
     <tr>
         <td>Без изменений:</td>
-        <td>${context.processedProducts - context.updateProducts - context.brokenProducts}</td>
+        <td>${context.processedProducts - context.updatedProducts?size - context.brokenProducts?size}</td>
     </tr>
     <tr>
         <td>Ошибок проверки:</td>
-        <td>${context.brokenProducts}</td>
+        <td>${context.brokenProducts?size}</td>
     </tr>
 </table>
 
-<#if context.validationChanges?has_content>
+<#if context.updatedProducts?has_content>
 <div>
     Обновленные товары:
     <table>
@@ -67,10 +71,10 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
             <th>Новое наличие</th>
         </tr>
 
-        <#list context.validationChanges as r>
+        <#list context.updatedProducts as r>
             <tr>
                 <td valign="top">
-                    <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
+                    <a href="http://www.billiongoods.ru/warehouse/product/${r.product.id}">${messageSource.getProductCode(r.product.id)}</a>
                 </td>
                 <#if r.oldPrice.equals(r.newPrice)>
                     <td colspan="3">
@@ -117,6 +121,43 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
                         </#if>
                     </td>
                 </#if>
+            </tr>
+        </#list>
+    </table>
+</div>
+</#if>
+
+<br>
+
+<#if context.brokenProducts?has_content>
+<div>
+    Ошибки при проверки:
+    <table>
+        <tr>
+            <th>Артикул</th>
+            <th>Banggood</th>
+            <th>Текущая цена</th>
+            <th>Цена до скидки</th>
+            <th>Наличие</th>
+        </tr>
+
+        <#list context.brokenProducts as b>
+            <tr>
+                <td>
+                    <a href="http://www.billiongoods.ru/maintain/product?id=${b.id}">${messageSource.getProductCode(b.id)}</a>
+                </td>
+                <td>
+                    <a href="${b.supplierInfo.referenceUrl.toString()}">${b.supplierInfo.referenceCode}</a>
+                </td>
+                <td>
+                ${b.price.amount?string("0.00")}
+                </td>
+                <td>
+                    <#if b.price.primordialAmount??>${b.price.primordialAmount?string("0.00")}</#if>
+                </td>
+                <td>
+                    <@stockInfo b.stockInfo/>
+                </td>
             </tr>
         </#list>
     </table>

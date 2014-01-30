@@ -15,15 +15,14 @@ import billiongoods.server.services.payment.OrderState;
 import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingListener;
 import billiongoods.server.services.tracking.ProductTrackingManager;
-import billiongoods.server.services.validator.*;
+import billiongoods.server.services.validator.ValidationChange;
+import billiongoods.server.services.validator.ValidationListener;
+import billiongoods.server.services.validator.ValidationManager;
+import billiongoods.server.services.validator.ValidationSummary;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.ProductPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -177,11 +176,8 @@ public class AlertsOriginCenter {
 		}
 
 		@Override
-		public void validationFinished(ValidationSummary summary, List<ValidatingProduct> broken) {
-			final Map<String, Object> context = new HashMap<>(2);
-			context.put("broken", broken);
-			context.put("summary", summary);
-			raiseAlarm("system.validation", context, summary.getStartDate());
+		public void validationFinished(ValidationSummary summary) {
+			raiseAlarm("system.validation", summary, summary.getStartDate());
 		}
 
 		@Override
