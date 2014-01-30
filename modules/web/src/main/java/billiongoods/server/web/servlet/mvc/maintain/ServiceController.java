@@ -98,6 +98,10 @@ public class ServiceController extends AbstractController {
 			if (!validationManager.isInProgress()) {
 				validationManager.validateExchangeRate();
 			}
+		} else if ("broken".equalsIgnoreCase(action)) {
+			if (!validationManager.isInProgress()) {
+				validationManager.validateBroken();
+			}
 		}
 		return "redirect:/maintain/service/validation";
 	}

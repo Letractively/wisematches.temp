@@ -14,6 +14,8 @@ public interface ValidationManager {
 	void cancelValidation();
 
 
+	void validateBroken();
+
 	void validateExchangeRate();
 
 

@@ -9,10 +9,10 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ValidationChange {
+	ValidatingProduct getProduct();
+
+
 	Date getTimestamp();
-
-	Integer getProductId();
-
 
 	boolean hasChanges();
 

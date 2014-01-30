@@ -4566,8 +4566,8 @@
             return a.replace(/<\!--\{cke_protected\}([\s\S]+?)--\>/g,function (a, b) {
                 return decodeURIComponent(b)
             }).replace(/\{cke_protected_(\d+)\}/g, function (a, b) {
-                        return c && c[b] || ""
-                    })
+                return c && c[b] || ""
+            })
         }
 
         function m(a, b) {
@@ -6776,8 +6776,8 @@
             l(a.getOuterHtml(), /(\S\s*)\n(?:\s|(<span[^>]+data-cke-bookmark.*?\/span>))*\n(?!$)/gi,function (a, b, c) {
                 return b + "</pre>" + c + "<pre>"
             }).replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi, function (a, c) {
-                        b.push(c)
-                    });
+                b.push(c)
+            });
             return b
         }
 
@@ -7924,7 +7924,7 @@
             c && (a ? c.removeAttribute("aria-invalid") : c.setAttribute("aria-invalid", !0));
             a || (this.select ? this.select() : this.focus());
             b && alert(b);
-            this.fire("validated", {valid: a, msg: b})
+            this.fire("updateProductInformation", {valid: a, msg: b})
         }
 
         function Q() {

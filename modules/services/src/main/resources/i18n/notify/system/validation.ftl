@@ -1,5 +1,4 @@
-<#-- @ftlvariable name="context.broken" type="billiongoods.server.services.validator.ValidatingProduct[]" -->
-<#-- @ftlvariable name="context.summary" type="billiongoods.server.services.validator.ValidationSummary" -->
+<#-- @ftlvariable name="context" type="billiongoods.server.services.validator.ValidationSummary" -->
 
 <#macro stockInfo info>
 ${info.stockState.name()}
@@ -17,34 +16,34 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
 <table>
     <tr>
         <td>Запущено:</td>
-        <td><#if context.startDate??>${context.summary.startDate?datetime?string}<#else>Проверка не
+        <td><#if context.startDate??>${context.startDate?datetime?string}<#else>Проверка не
             проводилась</#if></td>
     </tr>
     <tr>
         <td>Завершено:</td>
-        <td><#if context.finishDate??>${context.summary.finishDate?datetime?string}<#else>В процессе</#if></td>
+        <td><#if context.finishDate??>${context.finishDate?datetime?string}<#else>В процессе</#if></td>
     </tr>
     <tr>
         <td>Проверено:</td>
-        <td>${context.summary.processedProducts} из ${context.summary.totalCount}</td>
+        <td>${context.processedProducts} из ${context.totalCount}</td>
     </tr>
     <tr>
         <td>Обновлено:</td>
-        <td>${context.summary.updateProducts}</td>
+        <td>${context.updatedProducts?size}</td>
     </tr>
     <tr>
         <td>Без изменений:</td>
-        <td>${context.summary.processedProducts - context.summary.updateProducts - context.summary.brokenProducts}</td>
+        <td>${context.processedProducts - context.updatedProducts?size - context.brokenProducts?size}</td>
     </tr>
     <tr>
         <td>Ошибок проверки:</td>
-        <td>${context.summary.brokenProducts}</td>
+        <td>${context.brokenProducts?size}</td>
     </tr>
 </table>
 
 <br>
 
-<#if context.summary.validationChanges?has_content>
+<#if context.updatedProducts?has_content>
 <div>
     Обновленные товары:
     <table>
@@ -57,51 +56,51 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
             <th>Новое наличие</th>
         </tr>
 
-        <#list context.summary.validationChanges as r>
+        <#list context.updatedProducts as v>
             <tr>
                 <td valign="top">
-                    <a href="http://www.billiongoods.ru/warehouse/product/${r.productId}">${messageSource.getProductCode(r.productId)}</a>
+                    <a href="http://www.billiongoods.ru/warehouse/product/${v.product.id}">${messageSource.getProductCode(v.product.id)}</a>
                 </td>
-                <#if r.oldPrice.equals(r.newPrice)>
+                <#if v.oldPrice.equals(v.newPrice)>
                     <td colspan="3">
-                        <@priceInfo r.oldPrice/>
+                        <@priceInfo v.oldPrice/>
                     </td>
                 <#else>
                     <td>
-                        <@priceInfo r.oldPrice/>
+                        <@priceInfo v.oldPrice/>
                     </td>
                     <td>
-                        <#if r.newPrice??>
-                            <@priceInfo r.newPrice/>
+                        <#if v.newPrice??>
+                            <@priceInfo v.newPrice/>
                         <#else>
                             не загрузилась
                         </#if>
                     </td>
                     <td>
-                    ${(r.newPrice.amount - r.oldPrice.amount)?string("0.00")}
-                        (<#if !r.oldPrice.primordialAmount?? && !r.newPrice.primordialAmount??>
+                    ${(v.newPrice.amount - v.oldPrice.amount)?string("0.00")}
+                        (<#if !v.oldPrice.primordialAmount?? && !v.newPrice.primordialAmount??>
                         -
-                    <#elseif !r.oldPrice.primordialAmount??>
-                        +${r.newPrice.primordialAmount?string("0.00")}
-                    <#elseif !r.newPrice.primordialAmount??>
-                    ${r.oldPrice.primordialAmount?string("0.00")}
+                    <#elseif !v.oldPrice.primordialAmount??>
+                        +${v.newPrice.primordialAmount?string("0.00")}
+                    <#elseif !v.newPrice.primordialAmount??>
+                    ${v.oldPrice.primordialAmount?string("0.00")}
                     <#else>
-                    ${(r.newPrice.primordialAmount - r.oldPrice.primordialAmount)?string("0.00")}
+                    ${(v.newPrice.primordialAmount - v.oldPrice.primordialAmount)?string("0.00")}
                     </#if>)
                     </td>
                 </#if>
 
-                <#if r.oldStockInfo.equals(r.newStockInfo)>
+                <#if v.oldStockInfo.equals(v.newStockInfo)>
                     <td colspan="2">
-                        <@stockInfo r.oldStockInfo/>
+                        <@stockInfo v.oldStockInfo/>
                     </td>
                 <#else>
                     <td>
-                        <@stockInfo r.oldStockInfo/>
+                        <@stockInfo v.oldStockInfo/>
                     </td>
                     <td>
-                        <#if r.newStockInfo??>
-                            <@stockInfo r.newStockInfo/>
+                        <#if v.newStockInfo??>
+                            <@stockInfo v.newStockInfo/>
                         <#else>
                             не загрузилась
                         </#if>
@@ -115,7 +114,7 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
 
 <br>
 
-<#if context.broken?has_content>
+<#if context.brokenProducts?has_content>
 <div>
     Ошибки при проверки:
     <table>
@@ -127,7 +126,7 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
             <th>Наличие</th>
         </tr>
 
-        <#list context.broken as b>
+        <#list context.brokenProducts as b>
             <tr>
                 <td>
                     <a href="http://www.billiongoods.ru/maintain/product?id=${b.id}">${messageSource.getProductCode(b.id)}</a>

@@ -6,45 +6,43 @@ import billiongoods.core.search.SearchManager;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface ProductManager extends SearchManager<ProductPreview, ProductContext, ProductFilter> {
-    void addProductListener(ProductListener l);
+	void addProductListener(ProductListener l);
 
-    void removeProductListener(ProductListener l);
-
-
-    void addProductStateListener(ProductStateListener l);
-
-    void removeProductStateListener(ProductStateListener l);
+	void removeProductListener(ProductListener l);
 
 
-    Product getProduct(Integer id);
+	void addProductStateListener(ProductStateListener l);
+
+	void removeProductStateListener(ProductStateListener l);
 
 
-    Integer searchById(Integer id);
-
-    Integer searchBySku(String sku);
+	Product getProduct(Integer id);
 
 
-    ProductPreview getPreview(Integer id);
+	Integer searchBySku(String sku);
 
 
-    SupplierInfo getSupplierInfo(Integer id);
-
-    Filtering getFilteringAbility(ProductContext context, ProductFilter filter);
+	ProductPreview getPreview(Integer id);
 
 
-    Product createProduct(ProductEditor editor);
+	SupplierInfo getSupplierInfo(Integer id);
 
-    Product updateProduct(Integer id, ProductEditor editor);
-
-    Product removeProduct(Integer id);
+	Filtering getFilteringAbility(ProductContext context, ProductFilter filter);
 
 
-    int updateDescriptions(String from, String to);
+	Product createProduct(ProductEditor editor);
+
+	Product updateProduct(Integer id, ProductEditor editor);
+
+	Product removeProduct(Integer id);
 
 
-    void updateSold(Integer id, int quantity);
+	int updateDescriptions(String from, String to);
 
-    void updateRecommendation(Integer id, boolean b);
 
-    void validated(Integer id, Price price, Price supplierPrice, StockInfo stockInfo);
+	void updateSold(Integer id, int quantity);
+
+	void updateRecommendation(Integer id, boolean recommended);
+
+	void updateProductInformation(Integer id, Price price, Price supplierPrice, StockInfo stockInfo);
 }
