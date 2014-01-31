@@ -1,0 +1,256 @@
+<!--
+  ~ Copyright (c) 2010, BillionGoods.
+  -->
+
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security-3.2.xsd"
+             default-destroy-method="destroy">
+
+    <global-method-security jsr250-annotations="enabled" secured-annotations="enabled"/>
+
+    <beans:alias alias="sessionRegistry" name="playerStateManager"/>
+
+    <beans:bean id="localeResolver" class="billiongoods.server.web.i18n.PersonalityLocaleResolver"/>
+
+    <beans:bean id="userDetailsChecker"
+                class="org.springframework.security.authentication.AccountStatusUserDetailsChecker">
+    </beans:bean>
+
+
+    <beans:bean id="personalityContext"
+                class="billiongoods.server.web.security.context.PersonalityContext">
+    </beans:bean>
+
+    <beans:bean id="memberDetailsService"
+                class="billiongoods.server.web.security.MemberDetailsService">
+        <beans:property name="accountManager" ref="accountManager"/>
+        <beans:property name="accountLockManager" ref="accountLockManager"/>
+        <beans:property name="accountRecoveryManager" ref="accountRecoveryManager"/>
+    </beans:bean>
+
+    <beans:bean id="visitorAuthenticationProvider"
+                class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+        <beans:constructor-arg name="key" value="visitor"/>
+    </beans:bean>
+
+    <beans:bean id="socialAuthenticationProvider"
+                class="org.springframework.social.security.SocialAuthenticationProvider">
+        <beans:constructor-arg name="userDetailsService" ref="memberDetailsService"/>
+        <beans:constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>
+    </beans:bean>
+
+    <beans:bean id="memberAuthenticationProvider"
+                class="billiongoods.server.web.security.authentication.MemberAuthenticationProvider">
+        <beans:property name="accountManager" ref="accountManager"/>
+        <beans:property name="userDetailsChecker" ref="userDetailsChecker"/>
+        <beans:property name="memberDetailsService" ref="memberDetailsService"/>
+    </beans:bean>
+
+    <beans:bean id="rememberMeAuthenticationProvider"
+                class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <beans:constructor-arg name="key" value="${security.remember.token}"/>
+    </beans:bean>
+
+    <beans:bean id="rememberMeServices"
+                class="billiongoods.server.web.security.web.rememberme.WMRememberMeServices">
+        <beans:constructor-arg name="key" value="${security.remember.token}"/>
+        <beans:constructor-arg name="userDetailsService" ref="memberDetailsService"/>
+        <beans:constructor-arg name="tokenRepository">
+
+            <beans:bean class="billiongoods.server.web.security.web.rememberme.WMPersistentTokenRepository">
+                <beans:property name="dataSource" ref="dataSource"/>
+                <beans:property name="createTableOnStartup" value="false"/>
+            </beans:bean>
+        </beans:constructor-arg>
+
+        <beans:property name="parameter" value="rememberMe"/>
+        <beans:property name="cookieName" value="BGRM"/>
+    </beans:bean>
+
+    <beans:bean id="redirectStrategy" class="billiongoods.server.web.security.web.WMRedirectStrategy">
+        <beans:property name="redirectParameters">
+            <beans:set>
+                <beans:value>rememberMe</beans:value>
+            </beans:set>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="sessionRegistryFilter"
+                class="billiongoods.server.web.security.web.filter.SessionRegistryFilter">
+        <beans:property name="sessionRegistry" ref="sessionRegistry"/>
+    </beans:bean>
+
+    <beans:bean id="authenticationSuccessHandler"
+                class="billiongoods.server.web.security.web.WMAuthenticationSuccessHandler">
+        <beans:property name="defaultTargetUrl" value="/privacy/view"/>
+        <beans:property name="targetUrlParameter" value="continue"/>
+    </beans:bean>
+
+    <beans:bean id="authenticationFailureHandler"
+                class="billiongoods.server.web.security.web.WMAuthenticationFailureHandler">
+        <beans:property name="redirectStrategy" ref="redirectStrategy"/>
+        <beans:property name="failureUrl" value="/account/signin?error="/>
+        <beans:property name="defaultCode" value="system"/>
+        <beans:property name="allowSessionCreation" value="true"/>
+        <beans:property name="exceptionCodes">
+            <beans:map>
+                <beans:entry
+                        key="org.springframework.security.authentication.BadCredentialsException"
+                        value="credential"/>
+                <beans:entry
+                        key="org.springframework.security.core.userdetails.UsernameNotFoundException"
+                        value="credential"/>
+
+                <beans:entry
+                        key="org.springframework.security.web.authentication.session.SessionAuthenticationException"
+                        value="session"/>
+                <beans:entry
+                        key="org.springframework.security.web.authentication.www.NonceExpiredException"
+                        value="session"/>
+                <beans:entry
+                        key="org.springframework.security.authentication.AuthenticationCredentialsNotFoundException"
+                        value="session"/>
+                <beans:entry
+                        key="org.springframework.security.authentication.InsufficientAuthenticationException"
+                        value="session"/>
+
+                <beans:entry
+                        key="org.springframework.security.authentication.AccountStatusException"
+                        value="status"/>
+
+                <beans:entry
+                        key="org.springframework.security.authentication.InsufficientAuthenticationException"
+                        value="insufficient"/>
+                <beans:entry
+                        key="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException"
+                        value="insufficient"/>
+                <beans:entry
+                        key="org.springframework.security.web.authentication.rememberme.CookieTheftException"
+                        value="insufficient"/>
+                <beans:entry
+                        key="org.springframework.security.web.authentication.rememberme.InvalidCookieException"
+                        value="insufficient"/>
+            </beans:map>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="accessDeniedHandler" class="billiongoods.server.web.security.web.access.WMAccessDeniedHandler">
+        <beans:property name="restrictedErrorPage" value="/account/signin"/>
+        <beans:property name="insufficientErrorPage" value="/account/signin?error=insufficient"/>
+    </beans:bean>
+
+    <beans:bean id="authenticationEntryPoint"
+                class="billiongoods.server.web.security.web.WMAuthenticationEntryPoint">
+        <beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+    </beans:bean>
+
+    <beans:bean id="socialAuthenticationFilter"
+                class="billiongoods.server.web.security.social.SocialAuthenticationFilter">
+        <beans:property name="filterProcessesUrl" value="/account/social"/>
+
+        <beans:constructor-arg name="authManager" ref="authenticationManager"/>
+        <beans:constructor-arg name="userIdSource" ref="personalityContext"/>
+        <beans:constructor-arg name="authServiceLocator" ref="connectionFactoryLocator"/>
+        <beans:constructor-arg name="usersConnectionRepository" ref="usersConnectionRepository"/>
+
+        <beans:property name="updateConnections" value="true"/>
+
+        <beans:property name="signupUrl" value="/account/social/association"/>
+        <beans:property name="defaultFailureUrl" value="/account/social/finish"/>
+        <beans:property name="connectionAddedRedirectUrl"
+                        value="/account/social/finish?continue=/account/passport/social"/>
+
+        <beans:property name="rememberMeServices" ref="rememberMeServices"/>
+
+        <beans:property name="authenticationSuccessHandler">
+            <beans:bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+                <beans:constructor-arg value="/account/social/finish"/>
+            </beans:bean>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="accountAuthenticationFilter"
+                class="billiongoods.server.web.security.web.filter.AccountAuthenticationFilter">
+        <beans:property name="filterProcessesUrl" value="/account/authorization"/>
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+
+        <beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+        <beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler"/>
+
+        <beans:property name="rememberMeServices" ref="rememberMeServices"/>
+    </beans:bean>
+
+    <beans:bean id="visitorAuthenticationFilter"
+                class="billiongoods.server.web.security.web.filter.VisitorAuthenticationFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+
+        <beans:property name="visitorServices">
+            <beans:bean class="billiongoods.server.web.security.web.filter.visitor.CookiesVisitorServices"/>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="concurrentSessionFilter"
+                class="org.springframework.security.web.session.ConcurrentSessionFilter">
+        <beans:property name="sessionRegistry" ref="sessionRegistry"/>
+        <beans:property name="expiredUrl" value="/account/signin?error=session"/>
+    </beans:bean>
+
+    <beans:bean id="sessionControlStrategy"
+                class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+        <beans:constructor-arg name="sessionRegistry" ref="sessionRegistry"/>
+        <beans:property name="maximumSessions" value="-1"/>
+    </beans:bean>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider ref="memberAuthenticationProvider"/>
+        <authentication-provider ref="socialAuthenticationProvider"/>
+        <authentication-provider ref="visitorAuthenticationProvider"/>
+        <authentication-provider ref="rememberMeAuthenticationProvider"/>
+    </authentication-manager>
+
+    <http pattern="/image/**" security="none"/>
+    <http pattern="/static/**" security="none"/>
+
+    <http pattern="/warehouse/paypal/*" security="none"/>
+
+    <http use-expressions="true">
+        <intercept-url pattern="/privacy/tracking/add.ajax" access="permitAll"/>
+        <intercept-url pattern="/privacy/tracking/remove.ajax" access="permitAll"/>
+
+        <intercept-url pattern="/privacy/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/account/passport/**" access="isFullyAuthenticated()"/>
+
+        <intercept-url pattern="/maintain/**" access="hasRole('admin') and isFullyAuthenticated()"/>
+
+        <intercept-url pattern="/**" access="permitAll"/>
+
+        <custom-filter before="PRE_AUTH_FILTER" ref="accountAuthenticationFilter"/>
+        <custom-filter position="PRE_AUTH_FILTER" ref="socialAuthenticationFilter"/>
+
+        <custom-filter before="ANONYMOUS_FILTER" ref="visitorAuthenticationFilter"/>
+        <custom-filter after="SESSION_MANAGEMENT_FILTER" ref="sessionRegistryFilter"/>
+        <custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrentSessionFilter"/>
+
+        <session-management session-authentication-strategy-ref="sessionControlStrategy"/>
+
+        <anonymous enabled="true"/>
+
+        <remember-me services-ref="rememberMeServices" key="${security.remember.token}"/>
+
+        <access-denied-handler ref="accessDeniedHandler"/>
+
+        <form-login login-page="/account/signin"
+                    login-processing-url="/account/processing"
+                    authentication-success-handler-ref="authenticationSuccessHandler"
+                    authentication-failure-handler-ref="authenticationFailureHandler"/>
+
+        <logout logout-url="/account/signout"
+                logout-success-url="/"
+                invalidate-session="false"/>
+    </http>
+</beans:beans>

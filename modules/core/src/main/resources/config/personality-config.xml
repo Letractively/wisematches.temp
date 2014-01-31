@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder">
+        <constructor-arg value="${server.secret}"/>
+    </bean>
+
+    <bean id="accountManager" class="billiongoods.core.account.impl.HibernateAccountManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="passwordEncoder" ref="passwordEncoder"/>
+        <property name="accountLockManager" ref="accountLockManager"/>
+    </bean>
+
+    <bean id="accountLockManager" class="billiongoods.core.account.impl.HibernateAccountLockManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="accountRecoveryManager"
+          class="billiongoods.core.account.impl.HibernateAccountRecoveryManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>

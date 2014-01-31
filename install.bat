@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=C:\Temp\social\spring-social-odnoklassniki-master\target\spring-social-odnoklassniki-1.0-SNAPSHOT.jar -Dsources=C:\Temp\social\spring-social-odnoklassniki-master\target\asd.jar -DgroupId=org.springframework.social -DartifactId=spring-social-odnoklassniki -Dversion=1.0.0.FIX -Dpackaging=jar -DlocalRepositoryPath=C:\Source\bg\repository

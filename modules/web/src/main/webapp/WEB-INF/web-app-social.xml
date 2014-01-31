@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="connectionFactoryLocator"
+          class="billiongoods.server.web.security.social.SocialAuthenticationServiceRegistry">
+        <property name="connectionFactories">
+            <list>
+                <bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+                    <constructor-arg value="${social.facebook.clientId:no}"/>
+                    <constructor-arg value="${social.facebook.clientSecret:no}"/>
+
+                    <property name="scope" value="email"/>
+                </bean>
+
+                <bean class="org.springframework.social.vkontakte.connect.VKontakteConnectionFactory">
+                    <constructor-arg value="${social.vkontakte.clientId:no}"/>
+                    <constructor-arg value="${social.vkontakte.clientSecret:no}"/>
+                </bean>
+
+                <bean class="org.springframework.social.twitter.connect.TwitterConnectionFactory">
+                    <constructor-arg value="${social.twitter.clientId:no}"/>
+                    <constructor-arg value="${social.twitter.clientSecret:no}"/>
+                </bean>
+
+                <bean class="org.springframework.social.odnoklassniki.connect.OdnoklassnikiConnectionFactory">
+                    <constructor-arg value="${social.odnoklassniki.clientId:no}"/>
+                    <constructor-arg value="${social.odnoklassniki.clientSecret:no}"/>
+                    <constructor-arg value="${social.odnoklassniki.applicationKey:no}"/>
+                </bean>
+
+                <bean class="org.springframework.social.google.connect.GoogleConnectionFactory">
+                    <constructor-arg value="${social.google.clientId:no}"/>
+                    <constructor-arg value="${social.google.clientSecret:no}"/>
+
+                    <property name="scope"
+                              value="https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText"/>
+
+    <bean id="usersConnectionRepository" class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
+        <constructor-arg name="dataSource" ref="dataSource"/>
+        <constructor-arg name="connectionFactoryLocator" ref="connectionFactoryLocator"/>
+        <constructor-arg name="textEncryptor" ref="textEncryptor"/>
+
+        <property name="tablePrefix" value="account_"/>
+    </bean>
+</beans>

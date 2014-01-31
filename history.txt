@@ -1,0 +1,398 @@
+30.01.14
+Maintain: show invalid daily checks on web page
+Maintain: ability to check only broken products
+
+29.01.14
+Maintain: ExchangeManager -> PriceConverter
+Maintain: ability to change price
+
+21.01.14
+Order: ability to pay or cancel waiting order
+
+09.01.14
+Maintain: links in orders list
+DEV: one common way for all tracking links
+Order: many tracking numbers (splitting?)
+Order: Product ID in order view
+Order: fields order: firstName, lastName
+
+27.12
+Issue with "expected restock on" status is fixed
+Warehouse: Save price functionality
+Order: close confirm message
+
+21.12
+Search: search by SKU for a moderator
+
+19.12
+Privacy: if the same account exist, page is redirect to /privacy/view instead of /privacy/social?
+Maintain: new order email is not very good. Should be updated for fast replay.
+Warehouse: remove "k " char before address
+Privacy: merge basket after login/registration
+
+18.12 (4.3.0)
+Privacy: Tracking is not the best
+Maintain: simple text replace functionality
+
+11.12 (4.2.0)
+Admin: not all products can be updated (DB inconsistency)
+Privacy: tracking functionality
+Privacy: import orders after registration
+Privacy: import tracking after registration
+
+10.12 (4.1.0)
+Privacy: address book
+
+09.12
+Privacy: settings
+Privacy: social profiles
+
+04.12
+Account: recovery
+
+03.12
+Common: double quotes in search don't work.
+Account: authentication form email restored incorrect
+Maintain: remove from group doesn't work
+Common: visitorId generation makes a lot of problems. Must be deprecated.
+Privacy: orders
+
+29.11
+Privacy: main page
+Validation: infinitive validation loop issue (iteration is not incremented)
+Account: rememberme doesn't work anymore
+
+28.11
+Validation: save one by one
+Product: show groups in view for moderator
+Maintain: show products in group
+
+27.11
+Validation: final summary is not correct (no broken if has)
+Order: ability to confirm delivered
+
+26.11
+Validation: auto load validation summary
+Validation: re-implement validation logic: five iterations but for broken only
+Validation: Improve errors description for validations.
+Maintain: orders summary on orders maintain page (like for main page).
+Subscription: check that email already subscribed
+Order: tracking dates - shipped date, closed date
+Order: add expected resume date for suspended state.
+Order: product preview image
+Order: compact view for options
+Order: visible tracking state
+
+25.11
+Account: integration with Social networks
+Validation: exclude errors from main page / email
+
+19.11
+Enable RememberMe service
+
+18.11
+Account: redesign main signin page
+Account: social signin/register
+
+12.11
+Add youtube plugin to ckeditor: http://ckeditor.com/addon/youtube
+Remove 'code' from OrderLog (DB change is required)
+
+11.11
+No transaction for ApplicationEventMulticaster
+Ability to move to shipped state without shipping
+Show only significant order states on main page
+Keep commentary till it's not cleared (but not in logs?)
+
+10.11
+Cancel/suspend order in ACCEPTED state
+DataLoader statuses updated
+
+08.11
+No errors if validation has been interrupted
+
+07.11
+Remove modes from list of similar items
+In search mode order by relevance by default (add this item to combobox for search results)
+Don't update validationTime when change state from Active|Promotion->Active
+Order: date when it was delivered for close state
+
+06.11
+Calendar in product edit mode for availablity
+Unavailable Available button after availability count (fast change)
+Exclude inactive products from groups/suggestions
+Maintain: Highlight inactive group products
+
+01.11
+Add group type
+Discount picture for small images hides everything
+Disable boolean search (V911-2)?
+Ability to search not only in root categories
+
+31.10
+Coupons
+
+28.10
+Our recommendations view on the left of main page: L959 & V911 & v912
+Tomcat monitoring: http://askubuntu.com/questions/251577/how-to-supervise-and-automatically-restart-a-process
+Products importing doesn't work anymore
+New availability response: Coming soon (Preorder button?)
+New availability response: In transit, shipping in 1-3 business days
+Primordial prices are not shown on main maintain panel
+Page can't be opened: /maintain/order/view?id=10&type=id
+Price validation doesn't work (each product is checked only once. Probably host is blocked by DDoS layer).
+
+24.10
+Maintain: orders summary
+Maintain: list of subscriptions
+Maintain: There are no notifications after validation
+ProductDescription is not good. Replace to ProductPreview.
+Maintain: Show waiting image while product info is loading
+Maintain: Load stock info
+
+22.10
+Order: new state closed
+Disable order's notification for shipping and closed
+Remove OrderState#REJECTED. There is no use case.
+Order's admin page: not clear
+Don't resize images in full view
+Our recomendations view on the left of main page: L959 & V911 & v912
+
+18.10
+Order: expected date for suspended state
+Order: money back ID for cancelled operation
+Notifications schema is not clear. Recipient is very complex and not localized.
+Catalog doesn't track click on button (only text)
+Exclude unavailable products from showcase. Refresh showcase after validation.
+
+17.10
+Incorrect filtering count for boolean 'no'
+Add new attribute changes values in all inputs
+Ability to track targets for Google
+Collapse filters with to many values (more than 5)
+Adaptive collapse: if count > 8, show only first 5 otherwise show all.
+More intelligent subject
+Redesign main catalog view. Idea is in my head.
+
+14.10
+Reset filter ability
+Filters work incorrect
+last_activity column not found
+
+11.10
+Binominal filters (filtering principles were redesigned)
+
+10.10
+Grey price for unavailable products in categories view
+Track product changes are not very good. Must be changed.
+Disable ability to change category for a product (can cause many issues).
+Attribute modification works bad: changes are not applied.
+Duplicate products in accessories and references if there are more than one group with the same product
+Associate groups with category
+
+9.10
+Split total and filtered count in FilteringAbility
+Information about availability is not shown in progress page and final email
+During update total count and progress should be shown
+
+8.10
+Auto tracking product ability
+Check products that should be in stock every night and send notification
+Clear person's cache if it's offline (restore PersonalityStateManager functionality).
+
+4.10
+test- prefix is added to InvoiceID for PayPal.
+Order confirm works incorrect: issue with Yandex Metrica
+If there is no one property category can't be loaded
+Ability to subscribe to availability
+Ability to request description without email and track status
+
+3.10
+New product can't be created
+Change search to IN BOOLEAN MODE
+Price slider works incorrect (also was redesigned)
+Query with quotes are lost in search input
+Move 'unknown' to the end of list
+Search by product ID is not correct. If number is entered it thing that is product.
+Null return value from advice does not match primitive return type for: public abstract int billiongoods.server.services.basket.BasketManager.getBasketSize(billiongoods.core.Personality)
+
+1.10
+Not all products can be checked
+Filter by price
+
+30.09
+Add info about PayPal
+Add PayPal logo at the bottom
+Redefine shipment address in PayPal order
+Click on image to make it primary in maintain
+More order states: CANCELLED, SUSPENDED
+Show SKU in order view for managers
+Show original USD amount for order for managers
+
+27.09
+Closed product can't be shown: Expression catalog is undefined on line 28, column 32 in content/toolbar.ftl.
+Exclude items which are not in the filter
+Change main catalog to simple and add main catalog in toolbar. Don't change main catalog.
+DefaultHttpClient is deprecated
+Load main info from site by request as plain text (or formatted by internal rules).
+Auto convert colors.
+
+25.09
+Filter by items: only for enums at this moment
+Support mails is not simple for tracking. Format must be changed.
+Replace category Attributes to Parameters in maintain and other things.
+
+23.09
+Redesign search form
+Redesign product maintain page: a) add state buttons instead of combo b) more lines for name
+
+20.09
+Global search ability (text, articul and so on)
+Not black total amount in order: all totals have the same style (bold orange)
+
+19.09
+Move all prices to rubs
+
+13.09
+Review SQL schema
+Basket size is not cleared
+
+11.09
+Note text is not stored
+
+10.09
+top align for order logs
+Validate order page and provide more info if available.
+Add commentary to order and to each state change.
+Show weigh in parameters by default
+Import PNG images (but store as JPG)
+
+06.09
+Add items meta desc
+Migrate Artifact to Product
+
+05.09
+Show hi resolution images by click in view
+
+04.09
+Hide add to basket if it's not possible to buy
+Ability to show product without description. Add more statuses.
+Ability to show quantity and sold out message
+Ability to add system comments to an product
+Remove external formatting during merge (remove all <span> elements). Ability to clean exist formatting.
+
+03.09
+Price updating doesn't work if URL start with /
+Redesign catalog for small number of products
+Catalog manager works very bad
+Ability to search groups by name
+
+02.09
+07:42:29.550 [http-bio-8080-exec-18] ERROR billiongoods.web.Servlet - Page can't                                                                                         be opened: /warehouse/product/4232?null
+java.lang.NullPointerException: null
+        at billiongoods.server.warehouse.impl.HibernateProduct.initialize(Hibernateproduct.java:128) ~[services-2.2.0.jar:na]                                                                                        ateproduct.java:128) ~[services-2.2.0.jar:na]
+        at billiongoods.server.warehouse.impl.HibernateProductManager.getproduct(HibernateproductManager.java:52) ~[services-2.2.0.jar:na]                                                                                        (HibernateproductManager.java:52) ~[services-2.2.0.jar:na]
+
+
+30.08
+Main page redesign
+HTML editor removes unknown tags
+Price for product 3364 can't be updated: Price can't be loaded: For input string: "US$29.00"
+Remove product. Not save and usually not used. Must be done in DB.
+
+29.08
+Move PriceLoaded to Apache HC library instead. It should increase stability, I believe.
+products importing takes all SQL connections: executed in separate thread and uses transaction manager
+Disable /warehouse/order/confirm in robots.txt
+Add Yandex tracking to the site
+Define new targets. Split /order/state (check state) and /order/confirm
+Add Yandex.Order to the site for order and basket
+
+28.08
+Price still can't be loaded
+
+27.08
+Additional parameters during import: attributes, groups
+Ability to stop price validation, decrease bulk size to 10 and show current state in page
+Issue with price status email fixed.
+
+26.08
+Price can't be loaded (cache version is returned)
+
+23.08
+Exclude the same product from modifications group
+Link to SKU in edit mode
+
+22.08
+Dispatch in 2-3 days
+Show discount label for a product
+Add 'related' tab for an product that will show items from the same group/groups.
+Logo to image (font loading takes to many time. No way to use in other pages).
+Error reading included file system/price.ftl
+Line scroll for related products:
+Add modifications/accessories links on the top of the product page
+
+21.08
+Import images as part of import products process
+Scale is not correct for not square images
+Price validator: special thread, more functions - email, store to DB, view and so on.
+Incorrect items count in pages view
+If view has 4 pages - controls looks incorrect: 1 2 3 ... 4. Must be: 1 2 3 4
+link for accessories groin in product edit mode
+no way to save product if there is only one parameter and it's empty
+Sold count is never updated: update by query
+trim parameter value before store
+registrationDate and validationDate are not updated
+Remove Category from product
+
+20.08
+Price tracker
+Sort main view items by date // type was date instead of datetime
+Category update makes catalog broken
+Attribute name can't be updated
+Extended relationships between products
+Assign accessory to an product (don't have to open all products) // assign to a group now
+
+19.08
+In edit mode show product ID
+In edit mode show category ID
+Basket is loaded every time for each request: cache abstraction added to basket
+In view mode search must be done by enter as well
+In view show inactive items somehow (red background)
+add new role: moderator - no trackers for this user.
+For moderator all products must be shown by default.
+Remove SKU from product description
+In view mode products sorted incorrect. The same product can be shown more when once.
+product creating works bad
+
+First steps
+Accessories view is not correct
+Only one parameter is show that is not correct
+Arrivals must be selected by enable date
+Update quantity in basket instead of new position
+Show number basket's items in header
+product sold could is not updating
+Notifications about order: no template
+Callback form must be added
+Hibernate PriceConverter->ExchangeManager
+Set PriceConverter value in admin
+Add user note to an order
+Parse product weight in importer
+Orders admin page
+Show only enabled products
+Show link to BangGood in product for admins
+Ability to show inactive products
+Enable/disable product
+Change product weight
+Clear basket after success payment
+Add currency rate to order (can be used in history)
+Check transaction ID before accept order (add transactionID to order)
+Incorrect address in PayPal
+Order accepted/rejected page
+Orders tracking
+Notifications about order state
+Remove items from basket
+Save basket changes or rollback them
+Restore notification service
+
+~ Send notifications about broken transactions
