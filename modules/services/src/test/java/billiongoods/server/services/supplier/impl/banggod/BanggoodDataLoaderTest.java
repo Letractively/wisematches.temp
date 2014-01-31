@@ -34,7 +34,10 @@ public class BanggoodDataLoaderTest {
 
 		// expected restock
 		assertEquals(1356897600000L, dataLoader.parseStockInfo("expected restock on 31st december 2012").getRestockDate().getTime());
-	}
+
+        // expected restock
+        assertEquals(1392840000000L, dataLoader.parseStockInfo("Out of stock , expect restock on 20th February").getRestockDate().getTime());
+    }
 
 	@Test
 	public void testSupplierDescription() throws Exception {
