@@ -245,6 +245,10 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean id="wishlistManager" class="billiongoods.server.services.wishlist.impl.HibernateWishlistManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="timeZoneManager" class="billiongoods.server.services.timezone.TimeZoneManager">
     </bean>
 
