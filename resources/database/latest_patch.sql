@@ -1,3 +1,14 @@
+#14.01.30
+CREATE TABLE `billiongoods`.`privacy_wishlist` (
+  `person`  INT(20) NOT NULL,
+  `product` INT     NOT NULL,
+  PRIMARY KEY (`person`, `product`));
+
+ALTER TABLE `billiongoods`.`privacy_wishlist`
+CHANGE COLUMN `person` `person` BIGINT(20) NOT NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('140130');
+
 #12.27
 CREATE TABLE `billiongoods`.`report_mistake` (
   `id`          INT  NOT NULL AUTO_INCREMENT,

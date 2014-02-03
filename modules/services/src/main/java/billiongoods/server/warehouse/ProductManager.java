@@ -2,6 +2,8 @@ package billiongoods.server.warehouse;
 
 import billiongoods.core.search.SearchManager;
 
+import java.util.List;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -18,11 +20,12 @@ public interface ProductManager extends SearchManager<ProductPreview, ProductCon
 
 	Product getProduct(Integer id);
 
-
 	Integer searchBySku(String sku);
 
 
 	ProductPreview getPreview(Integer id);
+
+	List<ProductPreview> getPreviews(Integer... id);
 
 
 	SupplierInfo getSupplierInfo(Integer id);

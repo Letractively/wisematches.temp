@@ -92,6 +92,16 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
+	public List<ProductPreview> getPreviews(Integer... id) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final Criteria criteria = session.createCriteria(HibernateProductPreview.class);
+		criteria.add(Restrictions.in("id", id));
+		return criteria.list();
+	}
+
+	@Override
 	public SupplierInfo getSupplierInfo(Integer id) {
 		final Session session = sessionFactory.getCurrentSession();
 		final Query query = session.createQuery("select p.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct p where p.id=:id");

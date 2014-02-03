@@ -5,9 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="+">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/center/AlertsOriginCenter.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/center/AlertsOriginCenter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/HibernateProductManagerTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/HibernateProductManagerTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationChange.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationChange.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ReusableValidationSummary.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ReusableValidationSummary.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ServiceController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ServiceController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ValidatingProductImpl.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ValidatingProductImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationChange.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationChange.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationListener.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationSummary.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationSummary.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoaderTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoaderTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/static/ckeditor/ckeditor.js" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/ckeditor/ckeditor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/history.txt" afterPath="$PROJECT_DIR$/history.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/validation.ftl" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/validation.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/validation.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/validation.ftl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/core.iml" afterPath="$PROJECT_DIR$/modules/core/core.iml" />
     </list>
     <ignored path="application.iws" />
@@ -64,6 +82,8 @@
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" line="253" class="billiongoods.server.warehouse.impl.HibernateProductManager" package="billiongoods.server.warehouse.impl">
+      <breakpoint url="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" line="263" class="billiongoods.server.warehouse.impl.HibernateProductManager" package="billiongoods.server.warehouse.impl">
       <breakpoint url="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java" line="197" class="billiongoods.server.services.supplier.impl.banggod.BanggoodProductImporter" package="billiongoods.server.services.supplier.impl.banggod">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
@@ -138,6 +158,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="todo.txt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/todo.txt">
+      <file leaf-file-name="product.ftl" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/product.ftl">
       <file leaf-file-name="HibernateValidationManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -150,7 +174,18 @@
       <file leaf-file-name="SupplierDataLoader.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/SupplierDataLoader.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="0" selection-start="43" selection-end="43" vertical-scroll-proportion="0.019953052" vertical-offset="0" max-vertical-offset="918">
+            <state line="45" column="33" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.6273063" vertical-offset="255" max-vertical-offset="6307">
             <state line="7" column="17" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="history.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/history.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6868">
               <folding />
             </state>
           </provider>
@@ -199,6 +234,14 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductPreview.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/product.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-4.3.8.js" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/PayPalController.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderState.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrder.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProductDescription.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/macro/bg/ui.ftl" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/SortingType.java" />
@@ -220,15 +263,88 @@
         <option value="$PROJECT_DIR$/resources/config/integration.properties" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/metrics.ftl" />
         <option value="$PROJECT_DIR$/resources/database/latest_patch.sql" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/OrderController.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket/view.ftl" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/MessageFormatter.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/payment/impl/HibernateOrderManagerTest.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/price/impl/HibernateValidationManagerTest.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporterTest.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/PriceConverterController.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ProductMaintainController.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/product.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/main.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/MaintenanceController.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/price/impl/HibernatePriceConverterTest.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/PriceConverter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/ExchangeRateListener.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/HibernatePriceConverter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationCenter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ValidatingProductImpl.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationChange.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationSummary.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationChange.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationListener.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/center/AlertsOriginCenter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ReusableValidationSummary.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/validation.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/validation.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ServiceController.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/payment/impl/HibernateOrderManagerTest.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/price/impl/HibernateValidationManagerTest.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporterTest.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/PriceConverterController.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ProductMaintainController.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/product.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/main.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/MaintenanceController.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/price/impl/HibernatePriceConverterTest.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/PriceConverter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/ExchangeRateListener.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/HibernatePriceConverter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationCenter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ValidatingProductImpl.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationChange.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationSummary.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationChange.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationListener.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/center/AlertsOriginCenter.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ReusableValidationSummary.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/validation.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/validation.ftl" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ServiceController.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java" />
+        <option value="$PROJECT_DIR$/history.txt" />
         <option value="db-console:/billiongoods727d4834/d0de4310-bb7a-4923-a7c0-0dab1074a893/" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/CategoryController.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java" />
         <option value="$PROJECT_DIR$/todo.txt" />
+        <option value="$PROJECT_DIR$/history.txt" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishItem.java" />
+        <option value="$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/WishProduct.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishProduct.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/WishlistManager.java" />
+        <option value="$PROJECT_DIR$/resources/database/latest_patch.sql" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishlistManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/wishlist/impl/HibernateWishlistManagerTest.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/form/WishlistForm.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/WishlistController.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl" />
         <option value="$PROJECT_DIR$/history.txt" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-4.3.3.css" />
@@ -323,6 +439,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
@@ -458,6 +575,8 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="static" />
+              <option name="myItemId" value="maintain" />
+              <option name="myItemId" value="privacy" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -487,11 +606,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemId" value="webapp" />
               <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
               <option name="myItemId" value="content" />
+              <option name="myItemId" value="content" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+              <option name="myItemId" value="maintain" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -637,10 +782,180 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
               <option name="myItemId" value="web" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -711,28 +1026,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemId" value="web" />
               <option name="myItemId" value="billiongoods" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
@@ -741,75 +1036,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
+              <option name="myItemId" value="servlet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="billiongoods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
+              <option name="myItemId" value="mvc" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -829,7 +1060,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -847,7 +1082,73 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="warehouse" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemId" value="mvc" />
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="privacy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -863,25 +1164,86 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="services" />
+              <option name="myItemId" value="servlet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemId" value="mvc" />
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="privacy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="form" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="servlet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="price" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+              <option name="myItemId" value="mvc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
               <option name="myItemId" value="validator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
               <option name="myItemId" value="billiongoods" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
+              <option name="myItemId" value="bg" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -890,6 +1252,7 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="services" />
+              <option name="myItemId" value="maintain" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -913,7 +1276,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="validator" />
+              <option name="myItemId" value="price" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -993,6 +1360,15 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
+      <recent name="billiongoods.server.services.price.impl" />
+      <recent name="billiongoods.server.services.addresses.impl" />
+      <recent name="billiongoods.server.services.timezone" />
+      <recent name="billiongoods.server.web.servlet.mvc.account" />
+      <recent name="billiongoods.server.services.wishlist.impl" />
+      <recent name="billiongoods.server.services.price.impl" />
+      <recent name="billiongoods.server.services.addresses.impl" />
+      <recent name="billiongoods.server.services.timezone" />
+      <recent name="billiongoods.server.web.servlet.mvc.account" />
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="billiongoods.core" />
     </key>
@@ -1003,12 +1379,26 @@
       <recent name="C:\Source\bg\modules\web\src\main\webapp\content\warehouse" />
       <recent name="C:\Users\sergey\wisematches\source\resources\maintain" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="billiongoods.server.services.state" />
+      <recent name="billiongoods.core" />
+      <recent name="billiongoods.server.warehouse" />
+      <recent name="billiongoods.server.services.price.impl.loader" />
+      <recent name="billiongoods.server.warehouse.impl.loader" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Source\bg\modules\web\src\main\webapp\content\warehouse\basket" />
       <recent name="C:\Source\bg\modules\services\src\main\resources\config" />
       <recent name="C:\Source\bg\modules\web\src\main\webapp\static\js" />
       <recent name="C:\Source\bg\modules\web\src\main\webapp\content\assistance\widget" />
       <recent name="C:\Source\bg\modules\web\src\main\webapp\content" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="billiongoods.server.services.state" />
+      <recent name="billiongoods.core" />
+      <recent name="billiongoods.server.warehouse" />
+      <recent name="billiongoods.server.services.price.impl.loader" />
+      <recent name="billiongoods.server.warehouse.impl.loader" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="billiongoods.server.services.price.impl.loader" />
@@ -1018,6 +1408,24 @@
       <recent name="billiongoods.server.services" />
     </key>
   </component>
+  <component name="RunManager" selected="Tomcat Server.Tomcat 7">
+    <configuration default="false" name="HibernateOrderManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="billiongoods.server.services.payment.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="services" />
+  <component name="RunManager" selected="JUnit.HibernateWishlistManagerTest.testGlobal">
+    <configuration default="false" name="HibernateOrderManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="billiongoods.server.services.payment.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="services" />
   <component name="RunManager" selected="JUnit.BanggoodDataLoaderTest.test_parseStockInfo">
     <configuration default="false" name="ColorDecoderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -1042,13 +1450,18 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="HibernateAccountLockManagerTest.testGetLockAccountInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="BanggoodDataLoaderTest.test_parseStockInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
     <configuration default="false" name="BanggoodDataLoaderTest.asd" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+          <option name="PATTERN" value="billiongoods.server.services.supplier.impl.banggod.*" />
       <module name="services" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="PACKAGE_NAME" value="billiongoods.server.services.supplier.impl.banggod" />
       <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoaderTest" />
+      <option name="METHOD_NAME" value="testGetLockAccountInfo" />
+      <option name="METHOD_NAME" value="test_parseStockInfo" />
       <option name="METHOD_NAME" value="asd" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea -Dbilliongoods.configuration=file:resources\config\integration.properties" />
@@ -1065,12 +1478,34 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="BanggoodDataLoaderTest.test_parseStockInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="billiongoods.server.services.supplier.impl.banggod.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    <configuration default="false" name="BanggoodProductImporterTest.importImages" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="billiongoods.server.services.supplier.impl.banggod.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
     <configuration default="false" name="BanggoodDataLoaderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="services" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="PACKAGE_NAME" value="billiongoods.server.services.supplier.impl.banggod" />
+      <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoaderTest" />
+      <option name="METHOD_NAME" value="test_parseStockInfo" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea -Dbilliongoods.configuration=file:resources\config\integration.properties -Dhttp.proxyHost=surf-proxy.intranet.db.com -Dhttp.proxyPort=8080" />
+      <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.supplier.impl.banggod.BanggoodProductImporterTest" />
+      <option name="METHOD_NAME" value="importImages" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea -Dbilliongoods.configuration=file:resources\config\integration.properties -Dhttp.proxyHost=surf-proxy.intranet.db.com -Dhttp.proxyPort=8080" />
       <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoaderTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
@@ -1084,15 +1519,41 @@
       </option>
       <envs />
       <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="BanggoodProductImporterTest.importImages" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="billiongoods.server.services.supplier.impl.banggod.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    <configuration default="false" name="HibernatePriceConverterTest.testFormula" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="billiongoods.server.services.price.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
     <configuration default="false" name="MessageFormatterTest.asd" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="services" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="billiongoods.server.services.supplier.impl.banggod" />
+      <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.supplier.impl.banggod.BanggoodProductImporterTest" />
+      <option name="METHOD_NAME" value="importImages" />
+      <option name="PACKAGE_NAME" value="billiongoods.server.services.price.impl" />
+      <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.price.impl.HibernatePriceConverterTest" />
+      <option name="METHOD_NAME" value="testFormula" />
       <option name="PACKAGE_NAME" value="billiongoods.server" />
       <option name="MAIN_CLASS_NAME" value="billiongoods.server.MessageFormatterTest" />
       <option name="METHOD_NAME" value="asd" />
@@ -1111,11 +1572,31 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="HibernatePriceConverterTest.testFormula" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="billiongoods.server.services.price.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    <configuration default="false" name="HibernateWishlistManagerTest.testGlobal" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="billiongoods.server.services.wishlist.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
     <configuration default="false" name="BanggoodDataLoaderTest.test_parseStockInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="services" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="PACKAGE_NAME" value="billiongoods.server.services.price.impl" />
+      <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.price.impl.HibernatePriceConverterTest" />
+      <option name="METHOD_NAME" value="testFormula" />
+      <option name="PACKAGE_NAME" value="billiongoods.server.services.wishlist.impl" />
+      <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.wishlist.impl.HibernateWishlistManagerTest" />
+      <option name="METHOD_NAME" value="testGlobal" />
       <option name="PACKAGE_NAME" value="billiongoods.server.services.supplier.impl.banggod" />
       <option name="MAIN_CLASS_NAME" value="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoaderTest" />
       <option name="METHOD_NAME" value="test_parseStockInfo" />
@@ -1382,6 +1863,16 @@
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="JUnit.All Tests" />
       <item index="1" class="java.lang.String" itemvalue="Tomcat Server.Tomcat 7" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.HibernateOrderManagerTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.HibernateAccountLockManagerTest.testGetLockAccountInfo" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest.test_parseStockInfo" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.BanggoodProductImporterTest.importImages" />
+      <item index="6" class="java.lang.String" itemvalue="JUnit.HibernatePriceConverterTest.testFormula" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.HibernateOrderManagerTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest.test_parseStockInfo" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.BanggoodProductImporterTest.importImages" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.HibernatePriceConverterTest.testFormula" />
+      <item index="6" class="java.lang.String" itemvalue="JUnit.HibernateWishlistManagerTest.testGlobal" />
       <item index="2" class="java.lang.String" itemvalue="JUnit.ColorDecoderTest" />
       <item index="3" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest.asd" />
       <item index="4" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest" />
@@ -1390,6 +1881,16 @@
     </list>
     <recent_temporary>
       <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.HibernatePriceConverterTest.testFormula" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.BanggoodProductImporterTest.importImages" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest.test_parseStockInfo" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.HibernateOrderManagerTest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.HibernateAccountLockManagerTest.testGetLockAccountInfo" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.HibernateWishlistManagerTest.testGlobal" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.HibernatePriceConverterTest.testFormula" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.BanggoodProductImporterTest.importImages" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest.test_parseStockInfo" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.HibernateOrderManagerTest" />
         <item index="0" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest.test_parseStockInfo" />
         <item index="1" class="java.lang.String" itemvalue="JUnit.MessageFormatterTest.asd" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.BanggoodDataLoaderTest" />
@@ -1498,6 +1999,252 @@
       <workItem from="1380905281863" duration="809000" />
       <workItem from="1380909025242" duration="2422000" />
       <workItem from="1380913760119" duration="2057000" />
+      <workItem from="1381056778539" duration="3124000" />
+      <workItem from="1381228686510" duration="1261000" />
+      <workItem from="1381230158036" duration="9431000" />
+      <workItem from="1381315221527" duration="2251000" />
+      <workItem from="1381320063058" duration="1884000" />
+      <workItem from="1381321976182" duration="2714000" />
+      <workItem from="1381324726616" duration="3356000" />
+      <workItem from="1381387095933" duration="22104000" />
+      <workItem from="1381474311361" duration="31000" />
+      <workItem from="1381474412353" duration="18047000" />
+      <workItem from="1381738976923" duration="9181000" />
+      <workItem from="1381753802281" duration="6135000" />
+      <workItem from="1381992883590" duration="147000" />
+      <workItem from="1381993263748" duration="165000" />
+      <workItem from="1381993511513" duration="125000" />
+      <workItem from="1381993659146" duration="19917000" />
+      <workItem from="1382080443791" duration="6575000" />
+      <workItem from="1382088123704" duration="12903000" />
+      <workItem from="1382427500346" duration="1433000" />
+      <workItem from="1382428965685" duration="10375000" />
+      <workItem from="1382440656725" duration="43000" />
+      <workItem from="1382440726943" duration="10906000" />
+      <workItem from="1382513801248" duration="18538000" />
+      <workItem from="1382600287102" duration="16764000" />
+      <workItem from="1383033829527" duration="664000" />
+      <workItem from="1383035213378" duration="16520000" />
+      <workItem from="1383119069900" duration="313000" />
+      <workItem from="1383119464637" duration="11042000" />
+      <workItem from="1383139194014" duration="2403000" />
+      <workItem from="1383206242117" duration="18550000" />
+      <workItem from="1383289475355" duration="8000" />
+      <workItem from="1383289510583" duration="11199000" />
+      <workItem from="1383742459602" duration="4632000" />
+      <workItem from="1383808667953" duration="3226000" />
+      <workItem from="1383811983418" duration="461000" />
+      <workItem from="1383822372426" duration="1360000" />
+      <workItem from="1383897374212" duration="8151000" />
+      <workItem from="1384151473779" duration="603000" />
+      <workItem from="1384152632308" duration="11769000" />
+      <workItem from="1384172307266" duration="5865000" />
+      <workItem from="1384238421564" duration="425000" />
+      <workItem from="1384252459241" duration="13529000" />
+      <workItem from="1384339582011" duration="596000" />
+      <workItem from="1384341268491" duration="1689000" />
+      <workItem from="1384343036939" duration="6714000" />
+      <workItem from="1384419565312" duration="11953000" />
+      <workItem from="1384431977053" duration="6372000" />
+      <workItem from="1384502056726" duration="5535000" />
+      <workItem from="1384513607230" duration="3075000" />
+      <workItem from="1384516735739" duration="3666000" />
+      <workItem from="1384758299937" duration="1248000" />
+      <workItem from="1384759592207" duration="9888000" />
+      <workItem from="1384777998024" duration="2684000" />
+      <workItem from="1384842653605" duration="22113000" />
+      <workItem from="1384940570272" duration="11766000" />
+      <workItem from="1385029830639" duration="11226000" />
+      <workItem from="1385109348626" duration="18359000" />
+      <workItem from="1385360911378" duration="21624000" />
+      <workItem from="1385453849683" duration="572000" />
+      <workItem from="1385454438143" duration="3564000" />
+      <workItem from="1385458047692" duration="15314000" />
+      <workItem from="1385492996001" duration="2408000" />
+      <workItem from="1385531681925" duration="10170000" />
+      <workItem from="1385640581976" duration="3151000" />
+      <workItem from="1385644293023" duration="3441000" />
+      <workItem from="1385709850790" duration="4000" />
+      <workItem from="1385710755828" duration="15184000" />
+      <workItem from="1385729483359" duration="917000" />
+      <workItem from="1386058321044" duration="5448000" />
+      <workItem from="1386067287185" duration="82000" />
+      <workItem from="1386067388671" duration="4291000" />
+      <workItem from="1386100707787" duration="1375000" />
+      <workItem from="1386102593321" duration="161000" />
+      <workItem from="1386150483868" duration="2178000" />
+      <workItem from="1386156549168" duration="3536000" />
+      <workItem from="1386160121810" duration="4228000" />
+      <workItem from="1386230446224" duration="534000" />
+      <workItem from="1386231002743" duration="13342000" />
+      <workItem from="1386330536914" duration="4613000" />
+      <workItem from="1386573359888" duration="21450000" />
+      <workItem from="1386649018010" duration="218000" />
+      <workItem from="1386649253739" duration="24712000" />
+      <workItem from="1386745225593" duration="5543000" />
+      <workItem from="1386760769789" duration="406000" />
+      <workItem from="1386761281664" duration="7446000" />
+      <workItem from="1386768776521" duration="529000" />
+      <workItem from="1386849158690" duration="6120000" />
+      <workItem from="1387179028006" duration="78000" />
+      <workItem from="1387179173776" duration="8953000" />
+      <workItem from="1387269743904" duration="20713000" />
+      <workItem from="1387434554862" duration="290000" />
+      <workItem from="1387435051018" duration="700000" />
+      <workItem from="1387437841318" duration="11088000" />
+      <workItem from="1387456615967" duration="6512000" />
+      <workItem from="1387541826417" duration="342000" />
+      <workItem from="1387542193664" duration="1819000" />
+      <workItem from="1387781866923" duration="738000" />
+      <workItem from="1387784159317" duration="2705000" />
+      <workItem from="1387961400353" duration="2803000" />
+      <workItem from="1387965285877" duration="5094000" />
+      <workItem from="1388130585775" duration="14042000" />
+      <workItem from="1389252991116" duration="9000" />
+      <workItem from="1389253027679" duration="534000" />
+      <workItem from="1389253715934" duration="4536000" />
+      <workItem from="1389266312320" duration="21000" />
+      <workItem from="1389266683491" duration="4375000" />
+      <workItem from="1389605047876" duration="597000" />
+      <workItem from="1389613951102" duration="1248000" />
+      <workItem from="1389777407085" duration="2925000" />
+      <workItem from="1389867714519" duration="325000" />
+      <workItem from="1389868110120" duration="58000" />
+      <workItem from="1389879847684" duration="12000" />
+      <workItem from="1389879959550" duration="3819000" />
+      <workItem from="1390215526130" duration="10062000" />
+      <workItem from="1390282142024" duration="5993000" />
+      <workItem from="1390376678898" duration="1885000" />
+      <workItem from="1390477791674" duration="51000" />
+      <workItem from="1390477859602" duration="1153000" />
+      <workItem from="1390986106096" duration="17000" />
+      <workItem from="1390986135553" duration="4869000" />
+      <workItem from="1390995867408" duration="5393000" />
+      <workItem from="1391071364386" duration="7383000" />
+      <workItem from="1381056778539" duration="3124000" />
+      <workItem from="1381228686510" duration="1261000" />
+      <workItem from="1381230158036" duration="9431000" />
+      <workItem from="1381315221527" duration="2251000" />
+      <workItem from="1381320063058" duration="1884000" />
+      <workItem from="1381321976182" duration="2714000" />
+      <workItem from="1381324726616" duration="3356000" />
+      <workItem from="1381387095933" duration="22104000" />
+      <workItem from="1381474311361" duration="31000" />
+      <workItem from="1381474412353" duration="18047000" />
+      <workItem from="1381738976923" duration="9181000" />
+      <workItem from="1381753802281" duration="6135000" />
+      <workItem from="1381992883590" duration="147000" />
+      <workItem from="1381993263748" duration="165000" />
+      <workItem from="1381993511513" duration="125000" />
+      <workItem from="1381993659146" duration="19917000" />
+      <workItem from="1382080443791" duration="6575000" />
+      <workItem from="1382088123704" duration="12903000" />
+      <workItem from="1382427500346" duration="1433000" />
+      <workItem from="1382428965685" duration="10375000" />
+      <workItem from="1382440656725" duration="43000" />
+      <workItem from="1382440726943" duration="10906000" />
+      <workItem from="1382513801248" duration="18538000" />
+      <workItem from="1382600287102" duration="16764000" />
+      <workItem from="1383033829527" duration="664000" />
+      <workItem from="1383035213378" duration="16520000" />
+      <workItem from="1383119069900" duration="313000" />
+      <workItem from="1383119464637" duration="11042000" />
+      <workItem from="1383139194014" duration="2403000" />
+      <workItem from="1383206242117" duration="18550000" />
+      <workItem from="1383289475355" duration="8000" />
+      <workItem from="1383289510583" duration="11199000" />
+      <workItem from="1383742459602" duration="4632000" />
+      <workItem from="1383808667953" duration="3226000" />
+      <workItem from="1383811983418" duration="461000" />
+      <workItem from="1383822372426" duration="1360000" />
+      <workItem from="1383897374212" duration="8151000" />
+      <workItem from="1384151473779" duration="603000" />
+      <workItem from="1384152632308" duration="11769000" />
+      <workItem from="1384172307266" duration="5865000" />
+      <workItem from="1384238421564" duration="425000" />
+      <workItem from="1384252459241" duration="13529000" />
+      <workItem from="1384339582011" duration="596000" />
+      <workItem from="1384341268491" duration="1689000" />
+      <workItem from="1384343036939" duration="6714000" />
+      <workItem from="1384419565312" duration="11953000" />
+      <workItem from="1384431977053" duration="6372000" />
+      <workItem from="1384502056726" duration="5535000" />
+      <workItem from="1384513607230" duration="3075000" />
+      <workItem from="1384516735739" duration="3666000" />
+      <workItem from="1384758299937" duration="1248000" />
+      <workItem from="1384759592207" duration="9888000" />
+      <workItem from="1384777998024" duration="2684000" />
+      <workItem from="1384842653605" duration="22113000" />
+      <workItem from="1384940570272" duration="11766000" />
+      <workItem from="1385029830639" duration="11226000" />
+      <workItem from="1385109348626" duration="18359000" />
+      <workItem from="1385360911378" duration="21624000" />
+      <workItem from="1385453849683" duration="572000" />
+      <workItem from="1385454438143" duration="3564000" />
+      <workItem from="1385458047692" duration="15314000" />
+      <workItem from="1385492996001" duration="2408000" />
+      <workItem from="1385531681925" duration="10170000" />
+      <workItem from="1385640581976" duration="3151000" />
+      <workItem from="1385644293023" duration="3441000" />
+      <workItem from="1385709850790" duration="4000" />
+      <workItem from="1385710755828" duration="15184000" />
+      <workItem from="1385729483359" duration="917000" />
+      <workItem from="1386058321044" duration="5448000" />
+      <workItem from="1386067287185" duration="82000" />
+      <workItem from="1386067388671" duration="4291000" />
+      <workItem from="1386100707787" duration="1375000" />
+      <workItem from="1386102593321" duration="161000" />
+      <workItem from="1386150483868" duration="2178000" />
+      <workItem from="1386156549168" duration="3536000" />
+      <workItem from="1386160121810" duration="4228000" />
+      <workItem from="1386230446224" duration="534000" />
+      <workItem from="1386231002743" duration="13342000" />
+      <workItem from="1386330536914" duration="4613000" />
+      <workItem from="1386573359888" duration="21450000" />
+      <workItem from="1386649018010" duration="218000" />
+      <workItem from="1386649253739" duration="24712000" />
+      <workItem from="1386745225593" duration="5543000" />
+      <workItem from="1386760769789" duration="406000" />
+      <workItem from="1386761281664" duration="7446000" />
+      <workItem from="1386768776521" duration="529000" />
+      <workItem from="1386849158690" duration="6120000" />
+      <workItem from="1387179028006" duration="78000" />
+      <workItem from="1387179173776" duration="8953000" />
+      <workItem from="1387269743904" duration="20713000" />
+      <workItem from="1387434554862" duration="290000" />
+      <workItem from="1387435051018" duration="700000" />
+      <workItem from="1387437841318" duration="11088000" />
+      <workItem from="1387456615967" duration="6512000" />
+      <workItem from="1387541826417" duration="342000" />
+      <workItem from="1387542193664" duration="1819000" />
+      <workItem from="1387781866923" duration="738000" />
+      <workItem from="1387784159317" duration="2705000" />
+      <workItem from="1387961400353" duration="2803000" />
+      <workItem from="1387965285877" duration="5094000" />
+      <workItem from="1388130585775" duration="14042000" />
+      <workItem from="1389252991116" duration="9000" />
+      <workItem from="1389253027679" duration="534000" />
+      <workItem from="1389253715934" duration="4536000" />
+      <workItem from="1389266312320" duration="21000" />
+      <workItem from="1389266683491" duration="4375000" />
+      <workItem from="1389605047876" duration="597000" />
+      <workItem from="1389613951102" duration="1248000" />
+      <workItem from="1389777407085" duration="2925000" />
+      <workItem from="1389867714519" duration="325000" />
+      <workItem from="1389868110120" duration="58000" />
+      <workItem from="1389879847684" duration="12000" />
+      <workItem from="1389879959550" duration="3819000" />
+      <workItem from="1390215526130" duration="10062000" />
+      <workItem from="1390282142024" duration="5993000" />
+      <workItem from="1390376678898" duration="1885000" />
+      <workItem from="1390477791674" duration="51000" />
+      <workItem from="1390477859602" duration="1153000" />
+      <workItem from="1390986106096" duration="17000" />
+      <workItem from="1390986135553" duration="4869000" />
+      <workItem from="1390995867408" duration="5393000" />
+      <workItem from="1391071364386" duration="7705000" />
+      <workItem from="1391087907765" duration="4758000" />
+      <workItem from="1391429897496" duration="207000" />
       <workItem from="1381056778539" duration="3156000" />
       <workItem from="1381249790424" duration="37000" />
       <workItem from="1381249907294" duration="1911000" />
@@ -1979,10 +2726,518 @@
       <created>1390633612470</created>
       <updated>1390633612470</updated>
     </task>
+    <task id="LOCAL-00099" summary="+">
+      <created>1382621540324</created>
+      <updated>1382621540324</updated>
+    </task>
+    <task id="LOCAL-00100" summary="+">
+      <created>1382621900361</created>
+      <updated>1382621900361</updated>
+    </task>
+    <task id="LOCAL-00101" summary="+">
+      <created>1383040884868</created>
+      <updated>1383040884868</updated>
+    </task>
+    <task id="LOCAL-00102" summary="+">
+      <created>1383047059118</created>
+      <updated>1383047059118</updated>
+    </task>
+    <task id="LOCAL-00103" summary="+">
+      <created>1383057303524</created>
+      <updated>1383057303524</updated>
+    </task>
+    <task id="LOCAL-00104" summary="+">
+      <created>1383129886405</created>
+      <updated>1383129886406</updated>
+    </task>
+    <task id="LOCAL-00105" summary="+">
+      <created>1383221793182</created>
+      <updated>1383221793182</updated>
+    </task>
+    <task id="LOCAL-00106" summary="+">
+      <created>1383226962379</created>
+      <updated>1383226962379</updated>
+    </task>
+    <task id="LOCAL-00107" summary="+">
+      <created>1383310380294</created>
+      <updated>1383310380294</updated>
+    </task>
+    <task id="LOCAL-00108" summary="+">
+      <created>1383747085606</created>
+      <updated>1383747085607</updated>
+    </task>
+    <task id="LOCAL-00109" summary="+">
+      <created>1383811739123</created>
+      <updated>1383811739123</updated>
+    </task>
+    <task id="LOCAL-00110" summary="+">
+      <created>1383823670960</created>
+      <updated>1383823670960</updated>
+    </task>
+    <task id="LOCAL-00111" summary="+">
+      <created>1383914052551</created>
+      <updated>1383914052552</updated>
+    </task>
+    <task id="LOCAL-00112" summary="+">
+      <created>1384176171831</created>
+      <updated>1384176171831</updated>
+    </task>
+    <task id="LOCAL-00113" summary="+">
+      <created>1384255482491</created>
+      <updated>1384255482491</updated>
+    </task>
+    <task id="LOCAL-00114" summary="+">
+      <created>1384351161941</created>
+      <updated>1384351161941</updated>
+    </task>
+    <task id="LOCAL-00115" summary="+">
+      <created>1384438341849</created>
+      <updated>1384438341849</updated>
+    </task>
+    <task id="LOCAL-00116" summary="+">
+      <created>1384520344513</created>
+      <updated>1384520344513</updated>
+    </task>
+    <task id="LOCAL-00117" summary="+">
+      <created>1384769941297</created>
+      <updated>1384769941297</updated>
+    </task>
+    <task id="LOCAL-00118" summary="+">
+      <created>1384871683118</created>
+      <updated>1384871683119</updated>
+    </task>
+    <task id="LOCAL-00119" summary="+">
+      <created>1385041098808</created>
+      <updated>1385041098808</updated>
+    </task>
+    <task id="LOCAL-00120" summary="+">
+      <created>1385043162765</created>
+      <updated>1385043162765</updated>
+    </task>
+    <task id="LOCAL-00121" summary="+">
+      <created>1385129914905</created>
+      <updated>1385129914905</updated>
+    </task>
+    <task id="LOCAL-00122" summary="+">
+      <created>1385376257407</created>
+      <updated>1385376257407</updated>
+    </task>
+    <task id="LOCAL-00123" summary="+">
+      <created>1385376460209</created>
+      <updated>1385376460209</updated>
+    </task>
+    <task id="LOCAL-00124" summary="+">
+      <created>1385385865669</created>
+      <updated>1385385865669</updated>
+    </task>
+    <task id="LOCAL-00125" summary="+">
+      <created>1385460779128</created>
+      <updated>1385460779128</updated>
+    </task>
+    <task id="LOCAL-00126" summary="+">
+      <created>1385461688114</created>
+      <updated>1385461688114</updated>
+    </task>
+    <task id="LOCAL-00127" summary="+">
+      <created>1385462814678</created>
+      <updated>1385462814678</updated>
+    </task>
+    <task id="LOCAL-00128" summary="+">
+      <created>1385474489671</created>
+      <updated>1385474489671</updated>
+    </task>
+    <task id="LOCAL-00129" summary="+">
+      <created>1385495387280</created>
+      <updated>1385495387281</updated>
+    </task>
+    <task id="LOCAL-00130" summary="+">
+      <created>1385543890367</created>
+      <updated>1385543890367</updated>
+    </task>
+    <task id="LOCAL-00131" summary="+">
+      <created>1385647716241</created>
+      <updated>1385647716241</updated>
+    </task>
+    <task id="LOCAL-00132" summary="+">
+      <created>1385730065439</created>
+      <updated>1385730065440</updated>
+    </task>
+    <task id="LOCAL-00133" summary="+">
+      <created>1386102634414</created>
+      <updated>1386102634414</updated>
+    </task>
+    <task id="LOCAL-00134" summary="+">
+      <created>1386155035920</created>
+      <updated>1386155035920</updated>
+    </task>
+    <task id="LOCAL-00135" summary="+">
+      <created>1386164230783</created>
+      <updated>1386164230783</updated>
+    </task>
+    <task id="LOCAL-00136" summary="+">
+      <created>1386251175117</created>
+      <updated>1386251175117</updated>
+    </task>
+    <task id="LOCAL-00137" summary="+">
+      <created>1386335483559</created>
+      <updated>1386335483559</updated>
+    </task>
+    <task id="LOCAL-00138" summary="+">
+      <created>1386580483755</created>
+      <updated>1386580483755</updated>
+    </task>
+    <task id="LOCAL-00139" summary="+">
+      <created>1386587055698</created>
+      <updated>1386587055699</updated>
+    </task>
+    <task id="LOCAL-00140" summary="+">
+      <created>1386598154941</created>
+      <updated>1386598154941</updated>
+    </task>
+    <task id="LOCAL-00141" summary="+">
+      <created>1386682879585</created>
+      <updated>1386682879585</updated>
+    </task>
+    <task id="LOCAL-00142" summary="+">
+      <created>1386682976276</created>
+      <updated>1386682976276</updated>
+    </task>
+    <task id="LOCAL-00143" summary="+">
+      <created>1386859044983</created>
+      <updated>1386859044984</updated>
+    </task>
+    <task id="LOCAL-00144" summary="+">
+      <created>1387354865369</created>
+      <updated>1387354865370</updated>
+    </task>
+    <task id="LOCAL-00145" summary="+">
+      <created>1387357066379</created>
+      <updated>1387357066379</updated>
+    </task>
+    <task id="LOCAL-00146" summary="+">
+      <created>1387358079957</created>
+      <updated>1387358079958</updated>
+    </task>
+    <task id="LOCAL-00147" summary="+">
+      <created>1387440269350</created>
+      <updated>1387440269350</updated>
+    </task>
+    <task id="LOCAL-00148" summary="+">
+      <created>1387449766705</created>
+      <updated>1387449766706</updated>
+    </task>
+    <task id="LOCAL-00149" summary="+">
+      <created>1387451610596</created>
+      <updated>1387451610596</updated>
+    </task>
+    <task id="LOCAL-00150" summary="+">
+      <created>1387451877577</created>
+      <updated>1387451877577</updated>
+    </task>
+    <task id="LOCAL-00151" summary="+">
+      <created>1387463132538</created>
+      <updated>1387463132538</updated>
+    </task>
+    <task id="LOCAL-00152" summary="+">
+      <created>1388131687546</created>
+      <updated>1388131687546</updated>
+    </task>
+    <task id="LOCAL-00153" summary="+">
+      <created>1388142419095</created>
+      <updated>1388142419095</updated>
+    </task>
+    <task id="LOCAL-00154" summary="+">
+      <created>1388148149551</created>
+      <updated>1388148149551</updated>
+    </task>
+    <task id="LOCAL-00155" summary="+">
+      <created>1388148194704</created>
+      <updated>1388148194704</updated>
+    </task>
+    <task id="LOCAL-00156" summary="+">
+      <created>1389255721670</created>
+      <updated>1389255721670</updated>
+    </task>
+    <task id="LOCAL-00157" summary="+">
+      <created>1389258956337</created>
+      <updated>1389258956337</updated>
+    </task>
+    <task id="LOCAL-00158" summary="+">
+      <created>1390229210400</created>
+      <updated>1390229210400</updated>
+    </task>
+    <task id="LOCAL-00159" summary="+">
+      <created>1390288436053</created>
+      <updated>1390288436053</updated>
+    </task>
+    <task id="LOCAL-00160" summary="+">
+      <created>1391000667822</created>
+      <updated>1391000667822</updated>
+    </task>
+    <option name="localTasksCounter" value="161" />
+    <task id="LOCAL-00099" summary="+">
+      <created>1382621540324</created>
+      <updated>1382621540324</updated>
+    </task>
+    <task id="LOCAL-00100" summary="+">
+      <created>1382621900361</created>
+      <updated>1382621900361</updated>
+    </task>
+    <task id="LOCAL-00101" summary="+">
+      <created>1383040884868</created>
+      <updated>1383040884868</updated>
+    </task>
+    <task id="LOCAL-00102" summary="+">
+      <created>1383047059118</created>
+      <updated>1383047059118</updated>
+    </task>
+    <task id="LOCAL-00103" summary="+">
+      <created>1383057303524</created>
+      <updated>1383057303524</updated>
+    </task>
+    <task id="LOCAL-00104" summary="+">
+      <created>1383129886405</created>
+      <updated>1383129886406</updated>
+    </task>
+    <task id="LOCAL-00105" summary="+">
+      <created>1383221793182</created>
+      <updated>1383221793182</updated>
+    </task>
+    <task id="LOCAL-00106" summary="+">
+      <created>1383226962379</created>
+      <updated>1383226962379</updated>
+    </task>
+    <task id="LOCAL-00107" summary="+">
+      <created>1383310380294</created>
+      <updated>1383310380294</updated>
+    </task>
+    <task id="LOCAL-00108" summary="+">
+      <created>1383747085606</created>
+      <updated>1383747085607</updated>
+    </task>
+    <task id="LOCAL-00109" summary="+">
+      <created>1383811739123</created>
+      <updated>1383811739123</updated>
+    </task>
+    <task id="LOCAL-00110" summary="+">
+      <created>1383823670960</created>
+      <updated>1383823670960</updated>
+    </task>
+    <task id="LOCAL-00111" summary="+">
+      <created>1383914052551</created>
+      <updated>1383914052552</updated>
+    </task>
+    <task id="LOCAL-00112" summary="+">
+      <created>1384176171831</created>
+      <updated>1384176171831</updated>
+    </task>
+    <task id="LOCAL-00113" summary="+">
+      <created>1384255482491</created>
+      <updated>1384255482491</updated>
+    </task>
+    <task id="LOCAL-00114" summary="+">
+      <created>1384351161941</created>
+      <updated>1384351161941</updated>
+    </task>
+    <task id="LOCAL-00115" summary="+">
+      <created>1384438341849</created>
+      <updated>1384438341849</updated>
+    </task>
+    <task id="LOCAL-00116" summary="+">
+      <created>1384520344513</created>
+      <updated>1384520344513</updated>
+    </task>
+    <task id="LOCAL-00117" summary="+">
+      <created>1384769941297</created>
+      <updated>1384769941297</updated>
+    </task>
+    <task id="LOCAL-00118" summary="+">
+      <created>1384871683118</created>
+      <updated>1384871683119</updated>
+    </task>
+    <task id="LOCAL-00119" summary="+">
+      <created>1385041098808</created>
+      <updated>1385041098808</updated>
+    </task>
+    <task id="LOCAL-00120" summary="+">
+      <created>1385043162765</created>
+      <updated>1385043162765</updated>
+    </task>
+    <task id="LOCAL-00121" summary="+">
+      <created>1385129914905</created>
+      <updated>1385129914905</updated>
+    </task>
+    <task id="LOCAL-00122" summary="+">
+      <created>1385376257407</created>
+      <updated>1385376257407</updated>
+    </task>
+    <task id="LOCAL-00123" summary="+">
+      <created>1385376460209</created>
+      <updated>1385376460209</updated>
+    </task>
+    <task id="LOCAL-00124" summary="+">
+      <created>1385385865669</created>
+      <updated>1385385865669</updated>
+    </task>
+    <task id="LOCAL-00125" summary="+">
+      <created>1385460779128</created>
+      <updated>1385460779128</updated>
+    </task>
+    <task id="LOCAL-00126" summary="+">
+      <created>1385461688114</created>
+      <updated>1385461688114</updated>
+    </task>
+    <task id="LOCAL-00127" summary="+">
+      <created>1385462814678</created>
+      <updated>1385462814678</updated>
+    </task>
+    <task id="LOCAL-00128" summary="+">
+      <created>1385474489671</created>
+      <updated>1385474489671</updated>
+    </task>
+    <task id="LOCAL-00129" summary="+">
+      <created>1385495387280</created>
+      <updated>1385495387281</updated>
+    </task>
+    <task id="LOCAL-00130" summary="+">
+      <created>1385543890367</created>
+      <updated>1385543890367</updated>
+    </task>
+    <task id="LOCAL-00131" summary="+">
+      <created>1385647716241</created>
+      <updated>1385647716241</updated>
+    </task>
+    <task id="LOCAL-00132" summary="+">
+      <created>1385730065439</created>
+      <updated>1385730065440</updated>
+    </task>
+    <task id="LOCAL-00133" summary="+">
+      <created>1386102634414</created>
+      <updated>1386102634414</updated>
+    </task>
+    <task id="LOCAL-00134" summary="+">
+      <created>1386155035920</created>
+      <updated>1386155035920</updated>
+    </task>
+    <task id="LOCAL-00135" summary="+">
+      <created>1386164230783</created>
+      <updated>1386164230783</updated>
+    </task>
+    <task id="LOCAL-00136" summary="+">
+      <created>1386251175117</created>
+      <updated>1386251175117</updated>
+    </task>
+    <task id="LOCAL-00137" summary="+">
+      <created>1386335483559</created>
+      <updated>1386335483559</updated>
+    </task>
+    <task id="LOCAL-00138" summary="+">
+      <created>1386580483755</created>
+      <updated>1386580483755</updated>
+    </task>
+    <task id="LOCAL-00139" summary="+">
+      <created>1386587055698</created>
+      <updated>1386587055699</updated>
+    </task>
+    <task id="LOCAL-00140" summary="+">
+      <created>1386598154941</created>
+      <updated>1386598154941</updated>
+    </task>
+    <task id="LOCAL-00141" summary="+">
+      <created>1386682879585</created>
+      <updated>1386682879585</updated>
+    </task>
+    <task id="LOCAL-00142" summary="+">
+      <created>1386682976276</created>
+      <updated>1386682976276</updated>
+    </task>
+    <task id="LOCAL-00143" summary="+">
+      <created>1386859044983</created>
+      <updated>1386859044984</updated>
+    </task>
+    <task id="LOCAL-00144" summary="+">
+      <created>1387354865369</created>
+      <updated>1387354865370</updated>
+    </task>
+    <task id="LOCAL-00145" summary="+">
+      <created>1387357066379</created>
+      <updated>1387357066379</updated>
+    </task>
+    <task id="LOCAL-00146" summary="+">
+      <created>1387358079957</created>
+      <updated>1387358079958</updated>
+    </task>
+    <task id="LOCAL-00147" summary="+">
+      <created>1387440269350</created>
+      <updated>1387440269350</updated>
+    </task>
+    <task id="LOCAL-00148" summary="+">
+      <created>1387449766705</created>
+      <updated>1387449766706</updated>
+    </task>
+    <task id="LOCAL-00149" summary="+">
+      <created>1387451610596</created>
+      <updated>1387451610596</updated>
+    </task>
+    <task id="LOCAL-00150" summary="+">
+      <created>1387451877577</created>
+      <updated>1387451877577</updated>
+    </task>
+    <task id="LOCAL-00151" summary="+">
+      <created>1387463132538</created>
+      <updated>1387463132538</updated>
+    </task>
+    <task id="LOCAL-00152" summary="+">
+      <created>1388131687546</created>
+      <updated>1388131687546</updated>
+    </task>
+    <task id="LOCAL-00153" summary="+">
+      <created>1388142419095</created>
+      <updated>1388142419095</updated>
+    </task>
+    <task id="LOCAL-00154" summary="+">
+      <created>1388148149551</created>
+      <updated>1388148149551</updated>
+    </task>
+    <task id="LOCAL-00155" summary="+">
+      <created>1388148194704</created>
+      <updated>1388148194704</updated>
+    </task>
+    <task id="LOCAL-00156" summary="+">
+      <created>1389255721670</created>
+      <updated>1389255721670</updated>
+    </task>
+    <task id="LOCAL-00157" summary="+">
+      <created>1389258956337</created>
+      <updated>1389258956337</updated>
+    </task>
+    <task id="LOCAL-00158" summary="+">
+      <created>1390229210400</created>
+      <updated>1390229210400</updated>
+    </task>
+    <task id="LOCAL-00159" summary="+">
+      <created>1390288436053</created>
+      <updated>1390288436053</updated>
+    </task>
+    <task id="LOCAL-00160" summary="+">
+      <created>1391000667822</created>
+      <updated>1391000667822</updated>
+    </task>
+    <task id="LOCAL-00161" summary="+">
+      <created>1391079940176</created>
+      <updated>1391079940176</updated>
+    </task>
+    <task id="LOCAL-00162" summary="+">
+      <created>1391092459407</created>
+      <updated>1391092459407</updated>
+    </task>
+    <option name="localTasksCounter" value="163" />
     <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="860481000" />
+    <option name="totallyTimeSpent" value="865768000" />
     <option name="totallyTimeSpent" value="223868000" />
   </component>
   <component name="TodoView" selected-index="0">
@@ -2012,6 +3267,23 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4742765" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.6879271" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4191344" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30751708" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.67903227" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750583" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32687926" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32118452" sideWeight="0.88045233" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.6879271" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4191344" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.67903227" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750583" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32687926" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32118452" sideWeight="0.88045233" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20151515" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.6879271" order="5" side_tool="false" content_ui="tabs" />
@@ -2023,6 +3295,30 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44051448" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4340836" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25530303" sideWeight="0.2652733" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36560366" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31776765" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24373576" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24878837" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30775446" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266745" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20840065" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31093395" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36560366" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31776765" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24373576" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801822" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24878837" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30775446" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266745" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1825525" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28018224" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31993568" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3022508" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2034,6 +3330,15 @@
       <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3697749" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40145397" sideWeight="0.49839228" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40145397" sideWeight="0.49839228" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30751708" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3242424" sideWeight="0.49839228" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
@@ -2123,274 +3428,610 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/Order.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/OrderState.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="14" selection-start="461" selection-end="461" vertical-scroll-proportion="0.2734742" vertical-offset="379" max-vertical-offset="1275" />
+        <state line="96" column="31" selection-start="3669" selection-end="3669" vertical-scroll-proportion="0.22249389" vertical-offset="940" max-vertical-offset="4505" />
         <state line="11" column="31" selection-start="241" selection-end="241" vertical-scroll-proportion="0.30369127" vertical-offset="6" max-vertical-offset="1207" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductImager.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="25" selection-start="4319" selection-end="4319" vertical-scroll-proportion="-7.6" vertical-offset="1306" max-vertical-offset="5032">
+          <folding />
+        </state>
+        <state line="5" column="17" selection-start="115" selection-end="115" vertical-scroll-proportion="0.099765256" vertical-offset="0" max-vertical-offset="852" />
         <state line="56" column="67" selection-start="2841" selection-end="2841" vertical-scroll-proportion="0.49298245" vertical-offset="671" max-vertical-offset="1411" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/HibernateExchangeRate.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProduct.java">
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountRecoveryManager.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="61" selection-start="201" selection-end="201" vertical-scroll-proportion="0.15962441" vertical-offset="0" max-vertical-offset="918">
+          <folding />
+        </state>
+        <state line="15" column="13" selection-start="324" selection-end="324" vertical-scroll-proportion="0.17957747" vertical-offset="0" max-vertical-offset="1768" />
         <state line="78" column="12" selection-start="2664" selection-end="2664" vertical-scroll-proportion="0.31543624" vertical-offset="917" max-vertical-offset="1513" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/payment/impl/HibernateOrderManagerTest.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidatingProduct.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-social.xml">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="106" selection-start="1297" selection-end="1350" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="2482" />
+        <state line="9" column="34" selection-start="268" selection-end="285" vertical-scroll-proportion="0.14320096" vertical-offset="0" max-vertical-offset="831" />
         <state line="44" column="100" selection-start="2418" selection-end="2418" vertical-scroll-proportion="0.68476355" vertical-offset="357" max-vertical-offset="969" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/price/impl/HibernateValidationManagerTest.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationChange.java">
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/util/concurrent/TimeUnit.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="73" selection-start="1586" selection-end="1586" vertical-scroll-proportion="0.48122066" vertical-offset="151" max-vertical-offset="1003">
+          <folding />
+        </state>
+        <state line="74" column="4" selection-start="2136" selection-end="2136" vertical-scroll-proportion="0.33333334" vertical-offset="872" max-vertical-offset="2550" />
         <state line="164" column="16" selection-start="6544" selection-end="6544" vertical-scroll-proportion="0.33221477" vertical-offset="2029" max-vertical-offset="5729" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporterTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="39" selection-start="3134" selection-end="3134" vertical-scroll-proportion="0.0" vertical-offset="725" max-vertical-offset="1564">
+          <folding />
+        </state>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ValidatingProductImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="68" selection-start="656" selection-end="656" vertical-scroll-proportion="0.29929578" vertical-offset="0" max-vertical-offset="852" />
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/images/sprite-step.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ProductMaintainController.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationChange.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/security/web/filter/VisitorAuthenticationFilter.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="213" column="59" selection-start="8610" selection-end="8610" vertical-scroll-proportion="0.0" vertical-offset="3337" max-vertical-offset="8041">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#17682#17683#0" expanded="true" />
+            <element signature="e#17727#17728#0" expanded="true" />
+          </folding>
+        </state>
+        <state line="24" column="4" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="646" />
         <state line="28" column="65" selection-start="1205" selection-end="1205" vertical-scroll-proportion="0.29259896" vertical-offset="0" max-vertical-offset="901" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/MarkupType.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationSummary.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/MessageFormatterTest.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="50" selection-start="162" selection-end="162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <folding />
+        </state>
+        <state line="22" column="27" selection-start="346" selection-end="346" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527" />
         <state line="15" column="17" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="646" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/freemarker_implicit.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/center/AlertsOriginCenter.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/account/PassportController.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="34" selection-start="1036" selection-end="1036" vertical-scroll-proportion="0.35900623" vertical-offset="0" max-vertical-offset="805">
+          <folding />
+        </state>
+        <state line="175" column="20" selection-start="5483" selection-end="5483" vertical-scroll-proportion="0.2734742" vertical-offset="2317" max-vertical-offset="3179" />
         <state line="190" column="28" selection-start="8940" selection-end="8940" vertical-scroll-proportion="0.0" vertical-offset="3210" max-vertical-offset="3910" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductState.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationListener.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="111" selection-end="111" vertical-scroll-proportion="0.1022864" vertical-offset="0" max-vertical-offset="1003">
+          <folding />
+        </state>
+        <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306" />
         <state line="11" column="42" selection-start="511" selection-end="511" vertical-scroll-proportion="0.32185885" vertical-offset="0" max-vertical-offset="4216" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ReusableValidationSummary.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/account/passport/social.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="36" selection-start="5730" selection-end="5730" vertical-scroll-proportion="0.0" vertical-offset="1649" max-vertical-offset="2278">
+          <folding />
+        </state>
+        <state line="98" column="48" selection-start="2174" selection-end="2174" vertical-scroll-proportion="0.52112675" vertical-offset="848" max-vertical-offset="1700" />
         <state line="11" column="27" selection-start="430" selection-end="430" vertical-scroll-proportion="0.32922536" vertical-offset="0" max-vertical-offset="1071" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/MaintenanceController.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/lang/String.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/assistance/layout.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="45" selection-start="1349" selection-end="1349" vertical-scroll-proportion="0.0" vertical-offset="49" max-vertical-offset="1037">
+          <folding />
+        </state>
+        <state line="112" column="39" selection-start="3841" selection-end="3841" vertical-scroll-proportion="0.49429658" vertical-offset="1083" max-vertical-offset="52292" />
         <state line="3" column="17" selection-start="177" selection-end="177" vertical-scroll-proportion="0.089788735" vertical-offset="0" max-vertical-offset="1513" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/main.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/validation.ftl">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/customs.properties">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="44" selection-start="549" selection-end="549" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="2227" />
+        <state line="116" column="25" selection-start="3815" selection-end="3815" vertical-scroll-proportion="-5.769231" vertical-offset="1822" max-vertical-offset="2635" />
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/product.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/validation.ftl">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/paypal.properties">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="616" column="47" selection-start="22070" selection-end="22070" vertical-scroll-proportion="0.0" vertical-offset="9976" max-vertical-offset="12155" />
+        <state line="11" column="43" selection-start="532" selection-end="538" vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="2890" />
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/price/impl/HibernatePriceConverterTest.java">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ServiceController.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/contacts.properties">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="124" selection-start="48" selection-end="48" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+        <state line="102" column="41" selection-start="3681" selection-end="3681" vertical-scroll-proportion="0.0" vertical-offset="848" max-vertical-offset="1700">
+          <folding />
+        </state>
         <state line="5" column="113" selection-start="647" selection-end="647" vertical-scroll-proportion="0.14629948" vertical-offset="0" max-vertical-offset="581" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/PriceConverter.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/history.txt">
     <entry file="file://$PROJECT_DIR$/resources/config/integration.properties">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="43" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <folding />
+        </state>
+        <state line="3" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6868" />
         <state line="30" column="73" selection-start="806" selection-end="806" vertical-scroll-proportion="0.82828283" vertical-offset="18" max-vertical-offset="612" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/ExchangeRateListener.java">
+    <entry file="file://$PROJECT_DIR$/todo.txt">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/metrics.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="27" selection-start="204" selection-end="204" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
+          <folding />
+        </state>
+        <state line="37" column="26" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833" />
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="9.807693" vertical-offset="255" max-vertical-offset="1054" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/price/impl/HibernatePriceConverter.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductPreview.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/metrics.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="38" selection-start="2635" selection-end="2635" vertical-scroll-proportion="0.0" vertical-offset="759" max-vertical-offset="1649">
+          <folding />
+        </state>
+        <state line="6" column="3" selection-start="121" selection-end="121" vertical-scroll-proportion="0.11971831" vertical-offset="0" max-vertical-offset="1717" />
         <state line="34" column="33" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.31161973" vertical-offset="401" max-vertical-offset="1173" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/ProductTrackerCenter.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java">
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/SearchManager.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="49" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="986">
+          <folding />
+        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4573">
+          <folding />
+        </state>
         <state line="18" column="17" selection-start="781" selection-end="781" vertical-scroll-proportion="0.33333334" vertical-offset="108" max-vertical-offset="935" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/SupplierDescription.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/CatalogController.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="17" selection-start="268" selection-end="268" vertical-scroll-proportion="0.14320096" vertical-offset="0" max-vertical-offset="831" />
+        <state line="247" column="88" selection-start="12328" selection-end="12328" vertical-scroll-proportion="0.8906634" vertical-offset="3474" max-vertical-offset="5100">
+          <folding />
+        </state>
         <state line="27" column="26" selection-start="1033" selection-end="1033" vertical-scroll-proportion="0.28619528" vertical-offset="0" max-vertical-offset="2023" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoader.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountManager.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="153" column="31" selection-start="5214" selection-end="5214" vertical-scroll-proportion="0.33333334" vertical-offset="1644" max-vertical-offset="4692">
+          <folding />
+        </state>
+        <state line="12" column="17" selection-start="400" selection-end="400" vertical-scroll-proportion="0.24938875" vertical-offset="0" max-vertical-offset="1547" />
         <state line="123" column="24" selection-start="3663" selection-end="3663" vertical-scroll-proportion="0.3321859" vertical-offset="1660" max-vertical-offset="2499">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/SupplierDataLoader.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/SearchManager.java">
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="24" selection-start="238" selection-end="238" vertical-scroll-proportion="0.2045728" vertical-offset="0" max-vertical-offset="831">
+          <folding />
+        </state>
+        <state line="18" column="17" selection-start="781" selection-end="781" vertical-scroll-proportion="0.33333334" vertical-offset="29" max-vertical-offset="935" />
         <state line="2062" column="30" selection-start="81368" selection-end="81368" vertical-scroll-proportion="0.36144578" vertical-offset="34283" max-vertical-offset="52292" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/StockInfo.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccount.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProduct.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="13" selection-start="334" selection-end="334" vertical-scroll-proportion="0.15962441" vertical-offset="0" max-vertical-offset="1428">
+          <folding />
+        </state>
+        <state line="18" column="0" selection-start="602" selection-end="602" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1377" />
         <state line="91" column="9" selection-start="2211" selection-end="2211" vertical-scroll-proportion="0.32154882" vertical-offset="1050" max-vertical-offset="1768" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/AbstractProduct.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountLockInfo.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="46" selection-start="1346" selection-end="1358" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="2839">
+          <folding />
+        </state>
+        <state line="11" column="0" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1547" />
         <state line="21" column="31" selection-start="542" selection-end="542" vertical-scroll-proportion="0.0" vertical-offset="115" max-vertical-offset="952" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateSupplierInfo.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateRecoveryToken.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/ProductController.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="15" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1581">
+          <folding />
+        </state>
+        <state line="8" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748" />
         <state line="111" column="35" selection-start="3885" selection-end="3885" vertical-scroll-proportion="0.0" vertical-offset="1616" max-vertical-offset="2210" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/Price.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountNicknameLockInfo.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/MessageFormatter.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="35" selection-start="305" selection-end="321" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1411">
+          <folding />
+        </state>
+        <state line="12" column="0" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748" />
         <state line="37" column="0" selection-start="1382" selection-end="1382" vertical-scroll-proportion="0.7154882" vertical-offset="204" max-vertical-offset="3281" />
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/3.2.5.RELEASE/spring-aop-3.2.5.RELEASE.jar!/org/springframework/aop/framework/JdkDynamicAopProxy.class">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/coupon/impl/HibernateCoupon.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="67" selection-start="505" selection-end="505" vertical-scroll-proportion="-4.44" vertical-offset="25" max-vertical-offset="527" />
+        <state line="18" column="0" selection-start="610" selection-end="610" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2839" />
         <state line="95" column="15" selection-start="3169" selection-end="3169" vertical-scroll-proportion="0.0" vertical-offset="1397" max-vertical-offset="9010" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/PriceConverterController.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasket.java">
     <entry file="dbDummy://db-console:/billiongoods727d4834/d0de4310-bb7a-4923-a7c0-0dab1074a893/">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="40" selection-start="1032" selection-end="1032" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+          <folding />
+        </state>
+        <state line="16" column="0" selection-start="506" selection-end="506" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2992" />
         <state line="4" column="16" selection-start="127" selection-end="127" vertical-scroll-proportion="0.18836565" vertical-offset="0" max-vertical-offset="361" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/WishlistManager.java">
     <entry file="file://$PROJECT_DIR$/resources/database/latest_patch.sql">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="0" selection-start="2794" selection-end="2794" vertical-scroll-proportion="0.4779951" vertical-offset="850" max-vertical-offset="8500">
+          <folding />
+        </state>
+        <state line="11" column="48" selection-start="388" selection-end="388" vertical-scroll-proportion="0.21948357" vertical-offset="0" max-vertical-offset="852" />
         <state line="1" column="0" selection-start="7" selection-end="190" vertical-scroll-proportion="0.04509284" vertical-offset="0" max-vertical-offset="5712" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/CategoryController.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishProduct.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/form/BasketCheckoutForm.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="46" selection-start="4207" selection-end="4207" vertical-scroll-proportion="0.22249389" vertical-offset="1042" max-vertical-offset="3621">
+          <folding />
+        </state>
+        <state line="0" column="50" selection-start="8" selection-end="50" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493" />
         <state line="81" column="27" selection-start="1660" selection-end="1672" vertical-scroll-proportion="0.7147651" vertical-offset="441" max-vertical-offset="1037" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketItem.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/BasketController.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="96" column="31" selection-start="3669" selection-end="3669" vertical-scroll-proportion="0.22249389" vertical-offset="940" max-vertical-offset="4505">
+          <folding />
+        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2431" />
         <state line="101" column="56" selection-start="4524" selection-end="4524" vertical-scroll-proportion="0.4362416" vertical-offset="879" max-vertical-offset="4250">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/tracking/impl/HibernateProductTrackingManagerTest.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/CategoryController.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="69" selection-start="91" selection-end="91" vertical-scroll-proportion="0.0" vertical-offset="70" max-vertical-offset="918">
+          <folding />
+        </state>
+        <state line="24" column="0" selection-start="820" selection-end="872" vertical-scroll-proportion="0.3273165" vertical-offset="0" max-vertical-offset="831" />
         <state line="116" column="32" selection-start="5083" selection-end="5083" vertical-scroll-proportion="2.6526845" vertical-offset="0" max-vertical-offset="3621">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductImager.java">
+    <entry file="file://$PROJECT_DIR$/resources/database/latest_patch.sql">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ProductMaintainController.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="17" selection-start="115" selection-end="115" vertical-scroll-proportion="0.099765256" vertical-offset="0" max-vertical-offset="852">
+          <folding />
+        </state>
+        <state line="7" column="53" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="6239" />
         <state line="115" column="48" selection-start="4639" selection-end="4639" vertical-scroll-proportion="0.0" vertical-offset="1219" max-vertical-offset="7378" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProduct.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/coupon/impl/HibernateCouponManager.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="13" selection-start="324" selection-end="324" vertical-scroll-proportion="0.17957747" vertical-offset="0" max-vertical-offset="1768">
+          <folding />
+        </state>
+        <state line="112" column="19" selection-start="3465" selection-end="3465" vertical-scroll-proportion="0.0" vertical-offset="1321" max-vertical-offset="1887" />
         <state line="294" column="55" selection-start="12011" selection-end="12011" vertical-scroll-proportion="0.0" vertical-offset="3859" max-vertical-offset="4556">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidatingProduct.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/tracking/impl/HibernateProductTrackingManager.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/order/view.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="34" selection-start="268" selection-end="285" vertical-scroll-proportion="0.14320096" vertical-offset="0" max-vertical-offset="831">
+          <folding />
+        </state>
+        <state line="153" column="49" selection-start="5722" selection-end="5722" vertical-scroll-proportion="0.6752294" vertical-offset="1995" max-vertical-offset="3791" />
         <state line="201" column="42" selection-start="8457" selection-end="8457" vertical-scroll-proportion="0.023339318" vertical-offset="3404" max-vertical-offset="6800" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationChange.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishlistManager.java">
     <entry file="file://$PROJECT_DIR$/todo.txt">
       <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="4" selection-start="2136" selection-end="2136" vertical-scroll-proportion="0.33333334" vertical-offset="872" max-vertical-offset="2550">
+          <folding />
+        </state>
+        <state line="35" column="31" selection-start="1255" selection-end="1255" vertical-scroll-proportion="0.0" vertical-offset="236" max-vertical-offset="1054" />
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="816" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ValidatingProductImpl.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/wishlist/impl/HibernateWishlistManagerTest.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/form/AddressForm.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="68" selection-start="656" selection-end="656" vertical-scroll-proportion="0.29929578" vertical-offset="0" max-vertical-offset="852">
+          <folding />
+        </state>
+        <state line="41" column="62" selection-start="1304" selection-end="1304" vertical-scroll-proportion="0.3814554" vertical-offset="372" max-vertical-offset="1224">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
         <state line="83" column="30" selection-start="1534" selection-end="1534" vertical-scroll-proportion="0.0" vertical-offset="747" max-vertical-offset="1411" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductPreview.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductPreview.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/address/AddressRecord.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="51" selection-start="173" selection-end="173" vertical-scroll-proportion="0.13967136" vertical-offset="0" max-vertical-offset="1717">
+          <folding />
+        </state>
+        <state line="0" column="42" selection-start="8" selection-end="42" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852" />
         <state line="23" column="11" selection-start="587" selection-end="587" vertical-scroll-proportion="0.0" vertical-offset="176" max-vertical-offset="816" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationChange.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.5.Final/hibernate-core-4.2.5.Final-sources.jar!/org/hibernate/SharedSessionContract.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/address/Address.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="4" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="646">
+          <folding />
+        </state>
+        <state line="90" column="52" selection-start="3082" selection-end="3082" vertical-scroll-proportion="0.2734742" vertical-offset="923" max-vertical-offset="1853" />
         <state line="14" column="0" selection-start="360" selection-end="360" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="1275" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationSummary.java">
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/entity/EntitySearchManager.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/address.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="27" selection-start="346" selection-end="346" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
+          <folding />
+        </state>
+        <state line="55" column="28" selection-start="1715" selection-end="1715" vertical-scroll-proportion="0.0" vertical-offset="389" max-vertical-offset="1241" />
         <state line="50" column="82" selection-start="1844" selection-end="1844" vertical-scroll-proportion="0.80969477" vertical-offset="399" max-vertical-offset="1887" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/center/AlertsOriginCenter.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/css/billiongoods-4.3.9.css">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="175" column="20" selection-start="5483" selection-end="5483" vertical-scroll-proportion="0.2734742" vertical-offset="2317" max-vertical-offset="3179">
+          <folding />
+        </state>
+        <state line="331" column="22" selection-start="10677" selection-end="10677" vertical-scroll-proportion="0.3933254" vertical-offset="4923" max-vertical-offset="5814" />
         <state line="1215" column="17" selection-start="19604" selection-end="19604" vertical-scroll-proportion="0.0" vertical-offset="20340" max-vertical-offset="35071" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationListener.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-4.3.9.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+          <folding />
+        </state>
+        <state line="82" column="24" selection-start="2493" selection-end="2493" vertical-scroll-proportion="0.47437426" vertical-offset="775" max-vertical-offset="8670">
+          <folding>
+            <element signature="e#2754#2784#0" expanded="true" />
+            <element signature="e#3450#3480#0" expanded="true" />
+          </folding>
+        </state>
         <state line="4" column="0" selection-start="53" selection-end="53" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="19499" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ReusableValidationSummary.java">
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java">
     <entry file="file://$PROJECT_DIR$/history.txt">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="48" selection-start="2174" selection-end="2174" vertical-scroll-proportion="0.52112675" vertical-offset="848" max-vertical-offset="1700">
+          <folding />
+        </state>
+        <state line="20" column="22" selection-start="504" selection-end="504" vertical-scroll-proportion="0.28169015" vertical-offset="100" max-vertical-offset="969" />
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6732" />
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/lang/String.java">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/meta.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="112" column="39" selection-start="3841" selection-end="3841" vertical-scroll-proportion="0.49429658" vertical-offset="1083" max-vertical-offset="52292">
+          <folding />
+        </state>
+        <state line="21" column="4" selection-start="1128" selection-end="1209" vertical-scroll-proportion="0.33253872" vertical-offset="78" max-vertical-offset="2278">
+          <folding />
+        </state>
         <state line="4" column="25" selection-start="159" selection-end="159" vertical-scroll-proportion="0.12208258" vertical-offset="0" max-vertical-offset="578" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/validation.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/form/ProductTrackingView.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/product.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="116" column="25" selection-start="3815" selection-end="3815" vertical-scroll-proportion="-5.769231" vertical-offset="1822" max-vertical-offset="2635">
+        <state line="10" column="13" selection-start="267" selection-end="267" vertical-scroll-proportion="0.13967136" vertical-offset="0" max-vertical-offset="852">
         <state line="106" column="0" selection-start="4909" selection-end="4909" vertical-scroll-proportion="-0.0" vertical-offset="1802" max-vertical-offset="6307">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/validation.ftl">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/form/WishlistForm.java">
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/basket/view.ftl">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="43" selection-start="532" selection-end="538" vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="2890">
+          <folding>
+            <element signature="e#603#645#0" expanded="true" />
+          </folding>
+        <state line="5" column="25" selection-start="130" selection-end="142" vertical-scroll-proportion="0.099765256" vertical-offset="0" max-vertical-offset="852">
+          <folding>
+            <element signature="e#230#231#0" expanded="true" />
+            <element signature="e#251#252#0" expanded="true" />
+            <element signature="e#295#296#0" expanded="true" />
+            <element signature="e#324#325#0" expanded="true" />
+          </folding>
         <state line="87" column="0" selection-start="3925" selection-end="3925" vertical-scroll-proportion="0.0" vertical-offset="1479" max-vertical-offset="6698">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/ServiceController.java">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/TrackingController.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidatingProduct.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="41" selection-start="3681" selection-end="3681" vertical-scroll-proportion="0.0" vertical-offset="848" max-vertical-offset="1700">
+        <state line="46" column="28" selection-start="1841" selection-end="1879" vertical-scroll-proportion="0.45411205" vertical-offset="78" max-vertical-offset="1649">
         <state line="9" column="17" selection-start="268" selection-end="268" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationManager.java">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/wishlist.ftl">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
+          <folding />
+        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852" />
         <state line="44" column="21" selection-start="1872" selection-end="1872" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4573">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/WishlistController.java">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/SupplierDataLoader.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="62" selection-start="4313" selection-end="4313" vertical-scroll-proportion="0.42550656" vertical-offset="1394" max-vertical-offset="4658">
+          <folding>
+            <element signature="e#2929#3010#0" expanded="true" />
+            <element signature="e#3005#3006#0" expanded="true" />
+          </folding>
+        <state line="9" column="61" selection-start="509" selection-end="509" vertical-scroll-proportion="0.18235995" vertical-offset="0" max-vertical-offset="1343">
+          <folding>
+            <element signature="e#2448#2449#0" expanded="true" />
+            <element signature="e#2491#2492#0" expanded="true" />
+            <element signature="e#2571#2572#0" expanded="true" />
+            <element signature="e#2616#2617#0" expanded="true" />
+          </folding>
         <state line="7" column="17" selection-start="175" selection-end="175" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/history.txt">
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/product.ftl">
     <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggod/BanggoodDataLoaderTest.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6868">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="43" selection-end="43" vertical-scroll-proportion="0.019953052" vertical-offset="0" max-vertical-offset="918">
+          <folding />
+        <state line="45" column="33" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.6273063" vertical-offset="255" max-vertical-offset="6307">
+          <folding />
         <state line="38" column="0" selection-start="2084" selection-end="2084" vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="1037">
           <folding />
         </state>
