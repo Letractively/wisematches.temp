@@ -5,19 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="+">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishProduct.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishlistManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/wishlist/impl/HibernateWishlistManagerTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/WishlistController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/form/WishlistForm.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/WishlistManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.ipr" afterPath="$PROJECT_DIR$/billiongoods.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/database/latest_patch.sql" afterPath="$PROJECT_DIR$/resources/database/latest_patch.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -117,7 +105,7 @@
       <file leaf-file-name="product.ftl" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/product.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="38" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.33456334" vertical-offset="255" max-vertical-offset="6307">
+            <state line="40" column="46" selection-start="2204" selection-end="2204" vertical-scroll-proportion="0.5227552" vertical-offset="255" max-vertical-offset="6307">
               <folding />
             </state>
           </provider>
@@ -314,8 +302,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1078,26 +1066,6 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -1118,6 +1086,26 @@
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -1180,23 +1168,6 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
-      <method />
-    </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
-      <deployment />
-      <server-settings />
-      <predefined_log_file id="Tomcat" enabled="true" />
-      <predefined_log_file id="Tomcat Catalina" enabled="true" />
-      <predefined_log_file id="Tomcat Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
-      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <method />
-    </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -1214,6 +1185,23 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment />
+      <server-settings />
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="All Tests" type="JUnit" factoryName="JUnit">
@@ -1558,7 +1546,8 @@
       <workItem from="1390986135553" duration="4869000" />
       <workItem from="1390995867408" duration="5393000" />
       <workItem from="1391071364386" duration="7705000" />
-      <workItem from="1391087907765" duration="4538000" />
+      <workItem from="1391087907765" duration="4758000" />
+      <workItem from="1391429897496" duration="113000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -2204,11 +2193,15 @@
       <created>1391079940176</created>
       <updated>1391079940176</updated>
     </task>
-    <option name="localTasksCounter" value="162" />
+    <task id="LOCAL-00162" summary="+">
+      <created>1391092459407</created>
+      <updated>1391092459407</updated>
+    </task>
+    <option name="localTasksCounter" value="163" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="865341000" />
+    <option name="totallyTimeSpent" value="865674000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -2241,7 +2234,6 @@
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.6879271" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4191344" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30751708" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.67903227" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750583" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32687926" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -2256,7 +2248,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24878837" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30775446" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266745" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27625203" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1825525" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28018224" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2264,6 +2256,7 @@
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30751708" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41799545" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2274,8 +2267,8 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3644647" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.67903227" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.67903227" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750583" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32687926" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36560366" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
@@ -2299,11 +2292,11 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24373576" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24878837" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30775446" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30775446" sideWeight="0.5659164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32903227" sideWeight="0.5" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41799545" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
+      <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41799545" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2355,86 +2348,62 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggod/BanggoodProductImporter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="31" selection-start="3669" selection-end="3669" vertical-scroll-proportion="0.22249389" vertical-offset="940" max-vertical-offset="4505">
-          <folding />
-        </state>
+        <state line="96" column="31" selection-start="3669" selection-end="3669" vertical-scroll-proportion="0.22249389" vertical-offset="940" max-vertical-offset="4505" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductImager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="17" selection-start="115" selection-end="115" vertical-scroll-proportion="0.099765256" vertical-offset="0" max-vertical-offset="852">
-          <folding />
-        </state>
+        <state line="5" column="17" selection-start="115" selection-end="115" vertical-scroll-proportion="0.099765256" vertical-offset="0" max-vertical-offset="852" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProduct.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="324" selection-end="324" vertical-scroll-proportion="0.17957747" vertical-offset="0" max-vertical-offset="1768">
-          <folding />
-        </state>
+        <state line="15" column="13" selection-start="324" selection-end="324" vertical-scroll-proportion="0.17957747" vertical-offset="0" max-vertical-offset="1768" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidatingProduct.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="34" selection-start="268" selection-end="285" vertical-scroll-proportion="0.14320096" vertical-offset="0" max-vertical-offset="831">
-          <folding />
-        </state>
+        <state line="9" column="34" selection-start="268" selection-end="285" vertical-scroll-proportion="0.14320096" vertical-offset="0" max-vertical-offset="831" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationChange.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="4" selection-start="2136" selection-end="2136" vertical-scroll-proportion="0.33333334" vertical-offset="872" max-vertical-offset="2550">
-          <folding />
-        </state>
+        <state line="74" column="4" selection-start="2136" selection-end="2136" vertical-scroll-proportion="0.33333334" vertical-offset="872" max-vertical-offset="2550" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ValidatingProductImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="68" selection-start="656" selection-end="656" vertical-scroll-proportion="0.29929578" vertical-offset="0" max-vertical-offset="852">
-          <folding />
-        </state>
+        <state line="18" column="68" selection-start="656" selection-end="656" vertical-scroll-proportion="0.29929578" vertical-offset="0" max-vertical-offset="852" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationChange.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="4" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="646">
-          <folding />
-        </state>
+        <state line="24" column="4" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="646" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationSummary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="27" selection-start="346" selection-end="346" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
-          <folding />
-        </state>
+        <state line="22" column="27" selection-start="346" selection-end="346" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/notify/impl/center/AlertsOriginCenter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="20" selection-start="5483" selection-end="5483" vertical-scroll-proportion="0.2734742" vertical-offset="2317" max-vertical-offset="3179">
-          <folding />
-        </state>
+        <state line="175" column="20" selection-start="5483" selection-end="5483" vertical-scroll-proportion="0.2734742" vertical-offset="2317" max-vertical-offset="3179" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-          <folding />
-        </state>
+        <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/ReusableValidationSummary.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="48" selection-start="2174" selection-end="2174" vertical-scroll-proportion="0.52112675" vertical-offset="848" max-vertical-offset="1700">
-          <folding />
-        </state>
+        <state line="98" column="48" selection-start="2174" selection-end="2174" vertical-scroll-proportion="0.52112675" vertical-offset="848" max-vertical-offset="1700" />
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.7.0_09/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="39" selection-start="3841" selection-end="3841" vertical-scroll-proportion="0.49429658" vertical-offset="1083" max-vertical-offset="52292">
-          <folding />
-        </state>
+        <state line="112" column="39" selection-start="3841" selection-end="3841" vertical-scroll-proportion="0.49429658" vertical-offset="1083" max-vertical-offset="52292" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/i18n/notify/system/validation.ftl">
@@ -2456,30 +2425,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/ValidationManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
-          <folding />
-        </state>
+        <state line="16" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/history.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6868">
-          <folding />
-        </state>
+        <state line="3" column="0" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6868" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/todo.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="26" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833">
-          <folding />
-        </state>
+        <state line="37" column="26" selection-start="1173" selection-end="1173" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="833" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductPreview.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="3" selection-start="121" selection-end="121" vertical-scroll-proportion="0.11971831" vertical-offset="0" max-vertical-offset="1717">
-          <folding />
-        </state>
+        <state line="6" column="3" selection-start="121" selection-end="121" vertical-scroll-proportion="0.11971831" vertical-offset="0" max-vertical-offset="1717" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/validator/impl/HibernateValidationManager.java">
@@ -2498,126 +2459,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/AccountManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="17" selection-start="400" selection-end="400" vertical-scroll-proportion="0.24938875" vertical-offset="0" max-vertical-offset="1547">
-          <folding />
-        </state>
+        <state line="12" column="17" selection-start="400" selection-end="400" vertical-scroll-proportion="0.24938875" vertical-offset="0" max-vertical-offset="1547" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/SearchManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="17" selection-start="781" selection-end="781" vertical-scroll-proportion="0.33333334" vertical-offset="29" max-vertical-offset="935">
-          <folding />
-        </state>
+        <state line="18" column="17" selection-start="781" selection-end="781" vertical-scroll-proportion="0.33333334" vertical-offset="29" max-vertical-offset="935" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccount.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="602" selection-end="602" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1377">
-          <folding />
-        </state>
+        <state line="18" column="0" selection-start="602" selection-end="602" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1377" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountLockInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1547">
-          <folding />
-        </state>
+        <state line="11" column="0" selection-start="263" selection-end="263" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1547" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateRecoveryToken.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
-          <folding />
-        </state>
+        <state line="8" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountNicknameLockInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
-          <folding />
-        </state>
+        <state line="12" column="0" selection-start="305" selection-end="305" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/coupon/impl/HibernateCoupon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="610" selection-end="610" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2839">
-          <folding />
-        </state>
+        <state line="18" column="0" selection-start="610" selection-end="610" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2839" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasket.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="506" selection-end="506" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2992">
-          <folding />
-        </state>
+        <state line="16" column="0" selection-start="506" selection-end="506" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2992" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/WishlistManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="48" selection-start="388" selection-end="388" vertical-scroll-proportion="0.21948357" vertical-offset="0" max-vertical-offset="852">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="11" column="48" selection-start="388" selection-end="388" vertical-scroll-proportion="0.21948357" vertical-offset="0" max-vertical-offset="852" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishProduct.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="50" selection-start="8" selection-end="50" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
-          <folding>
-            <element signature="docComment;class#HibernateWishProduct#0" expanded="false" />
-            <element signature="e#169#176#0" expanded="false" />
-            <element signature="method#HibernateWishProduct#1;class#HibernateWishProduct#0" expanded="false" />
-            <element signature="class#Pk#0;class#HibernateWishProduct#0" expanded="false" />
-            <element signature="method#Pk#1;class#Pk#0;class#HibernateWishProduct#0" expanded="false" />
-            <element signature="method#equals#0;class#Pk#0;class#HibernateWishProduct#0" expanded="false" />
-            <element signature="method#hashCode#0;class#Pk#0;class#HibernateWishProduct#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="0" column="50" selection-start="8" selection-end="50" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasketItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2431">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2431" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/tracking/impl/HibernateProductTrackingManagerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="820" selection-end="872" vertical-scroll-proportion="0.3273165" vertical-offset="0" max-vertical-offset="831">
-          <folding />
-        </state>
+        <state line="24" column="0" selection-start="820" selection-end="872" vertical-scroll-proportion="0.3273165" vertical-offset="0" max-vertical-offset="831" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/database/latest_patch.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="53" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="6239">
-          <folding />
-        </state>
+        <state line="7" column="53" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="6239" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/coupon/impl/HibernateCouponManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="19" selection-start="3465" selection-end="3465" vertical-scroll-proportion="0.0" vertical-offset="1321" max-vertical-offset="1887">
-          <folding />
-        </state>
+        <state line="112" column="19" selection-start="3465" selection-end="3465" vertical-scroll-proportion="0.0" vertical-offset="1321" max-vertical-offset="1887" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/tracking/impl/HibernateProductTrackingManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="153" column="49" selection-start="5722" selection-end="5722" vertical-scroll-proportion="0.6752294" vertical-offset="1995" max-vertical-offset="3791">
-          <folding />
-        </state>
+        <state line="153" column="49" selection-start="5722" selection-end="5722" vertical-scroll-proportion="0.6752294" vertical-offset="1995" max-vertical-offset="3791" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/wishlist/impl/HibernateWishlistManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="31" selection-start="1255" selection-end="1255" vertical-scroll-proportion="0.0" vertical-offset="236" max-vertical-offset="1054">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="35" column="31" selection-start="1255" selection-end="1255" vertical-scroll-proportion="0.0" vertical-offset="236" max-vertical-offset="1054" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/wishlist/impl/HibernateWishlistManagerTest.java">
@@ -2631,30 +2548,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductPreview.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="42" selection-start="8" selection-end="42" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852">
-          <folding />
-        </state>
+        <state line="0" column="42" selection-start="8" selection-end="42" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852" />
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.5.Final/hibernate-core-4.2.5.Final-sources.jar!/org/hibernate/SharedSessionContract.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="52" selection-start="3082" selection-end="3082" vertical-scroll-proportion="0.2734742" vertical-offset="923" max-vertical-offset="1853">
-          <folding />
-        </state>
+        <state line="90" column="52" selection-start="3082" selection-end="3082" vertical-scroll-proportion="0.2734742" vertical-offset="923" max-vertical-offset="1853" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/search/entity/EntitySearchManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="28" selection-start="1715" selection-end="1715" vertical-scroll-proportion="0.0" vertical-offset="389" max-vertical-offset="1241">
-          <folding />
-        </state>
+        <state line="55" column="28" selection-start="1715" selection-end="1715" vertical-scroll-proportion="0.0" vertical-offset="389" max-vertical-offset="1241" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/HibernateOrderManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="331" column="22" selection-start="10677" selection-end="10677" vertical-scroll-proportion="0.3933254" vertical-offset="4923" max-vertical-offset="5814">
-          <folding />
-        </state>
+        <state line="331" column="22" selection-start="10677" selection-end="10677" vertical-scroll-proportion="0.3933254" vertical-offset="4923" max-vertical-offset="5814" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/impl/HibernateProductManager.java">
@@ -2669,11 +2578,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/warehouse/ProductManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="22" selection-start="504" selection-end="504" vertical-scroll-proportion="0.28169015" vertical-offset="100" max-vertical-offset="969">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="20" column="22" selection-start="504" selection-end="504" vertical-scroll-proportion="0.28169015" vertical-offset="100" max-vertical-offset="969" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/WEB-INF/web-app-servlet.xml">
@@ -2711,9 +2616,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/privacy/wishlist.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="852" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/privacy/WishlistController.java">
@@ -2730,7 +2633,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/content/warehouse/product.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="38" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.33456334" vertical-offset="255" max-vertical-offset="6307">
+        <state line="40" column="46" selection-start="2204" selection-end="2204" vertical-scroll-proportion="0.5227552" vertical-offset="255" max-vertical-offset="6307">
           <folding />
         </state>
       </provider>
