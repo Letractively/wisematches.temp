@@ -41,6 +41,7 @@
         </#list>
         </div>
     </div>
+    bang
 </td>
 <td valign="top" width="100%">
     <div class="info">
@@ -101,9 +102,6 @@
             </div>
             <div class="shipment">
                 Бесплатная доставка за 30-40 дней
-            </div>
-            <div class="shipment" style="color: red; padding-bottom: 10px;font-style: italic;">
-                отправка приостановлена до 7го Февраля 2014 в связи с Китайским Новым Годом.
             </div>
         </div>
 
@@ -232,6 +230,14 @@
                     </div>
                 </#if>
                 </div>
+            <#--
+
+                            <div class="action-ext">
+                                <a id="addWishListButton" href="#wishItem" onclick="return false;"
+                                   title="Получить извещение, когда данный продукт снова станет доступным.">Добавить в список
+                                    желаний</a>
+                            </div>
+            -->
             </div>
         </form>
     </div>

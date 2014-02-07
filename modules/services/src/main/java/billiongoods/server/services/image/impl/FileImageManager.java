@@ -70,7 +70,7 @@ public class FileImageManager implements ImageManager {
 			return Collections.emptySet();
 		}
 
-		final Pattern p = Pattern.compile("[^_]*_([^_]*)\\.jpg");
+		final Pattern p = Pattern.compile("([^_]*)\\.jpg");
 
 		final Set<String> res = new HashSet<>(path.getNameCount());
 		DirectoryStream<Path> ds = Files.newDirectoryStream(path, "*.jpg");

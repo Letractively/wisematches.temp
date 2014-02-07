@@ -4,8 +4,11 @@ package billiongoods.server.web.servlet.mvc.maintain;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 
+import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.validator.ValidationManager;
+import billiongoods.server.warehouse.ProductImager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
+import billiongoods.server.web.servlet.mvc.maintain.form.ImagesPathForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,11 +24,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.StringTokenizer;
 
 @Controller
 @RequestMapping("/maintain/service")
 public class ServiceController extends AbstractController {
+	private ImageResolver imageResolver;
 	private ValidationManager validationManager;
 
 	public ServiceController() {
@@ -104,6 +110,58 @@ public class ServiceController extends AbstractController {
 			}
 		}
 		return "redirect:/maintain/service/validation";
+	}
+
+	@RequestMapping(value = "convert")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public String validateImages(ImagesPathForm form) throws Exception {
+		if (form.getOldPath() == null) {
+			throw new IllegalArgumentException("No oldPath");
+		}
+		if (form.getNewPath() == null) {
+			throw new IllegalArgumentException("No newPath");
+		}
+
+		final Path oldFolder = Paths.get(form.getOldPath());
+		class TheProductImager implements ProductImager {
+			private Integer id;
+
+			TheProductImager(Integer id) {
+				this.id = id;
+			}
+
+			@Override
+			public Integer getId() {
+				return id;
+			}
+		}
+
+		for (Path categories : Files.newDirectoryStream(oldFolder)) {
+			if (Files.isDirectory(categories)) {
+				for (Path product : Files.newDirectoryStream(categories)) {
+					final Integer pid = Integer.parseInt(product.getFileName().toString());
+
+					final Path path = imageResolver.resolvePath(new TheProductImager(pid));
+					Files.createDirectories(path);
+
+					Files.walkFileTree(product, new SimpleFileVisitor<Path>() {
+						@Override
+						public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+							String fileName = file.getFileName().toString();
+							fileName = fileName.substring(fileName.indexOf('_') + 1);
+							Files.copy(file, path.resolve(fileName));
+							return FileVisitResult.CONTINUE;
+						}
+					});
+				}
+			}
+		}
+		return "/content/maintain/main";
+	}
+
+	@Autowired
+	public void setImageResolver(ImageResolver imageResolver) {
+		this.imageResolver = imageResolver;
 	}
 
 	@Autowired

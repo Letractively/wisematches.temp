@@ -30,13 +30,11 @@ public interface ProductPreview extends ProductImager {
 	 */
 	double getWeight();
 
-
 	/**
 	 * Returns category id for this product.
 	 *
 	 * @return the category id for this product.
 	 */
-	@Override
 	Integer getCategoryId();
 
 	/**

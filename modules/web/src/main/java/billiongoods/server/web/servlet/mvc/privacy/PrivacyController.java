@@ -20,7 +20,7 @@ public class PrivacyController extends AbstractController {
 	}
 
 	@RequestMapping("")
-	public String privacy(Model model) {
+	public String privacy() {
 		return "redirect:/privacy/view";
 	}
 
@@ -30,11 +30,6 @@ public class PrivacyController extends AbstractController {
 		model.addAttribute("ordersSummary", summary);
 
 		return "/content/privacy/view";
-	}
-
-	@RequestMapping("/wishlist")
-	public String privacyWishList(Model model) {
-		return "/content/privacy/wishlist";
 	}
 
 	@RequestMapping("/coupons")

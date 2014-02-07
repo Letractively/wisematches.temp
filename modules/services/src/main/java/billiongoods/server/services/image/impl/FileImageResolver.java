@@ -21,12 +21,17 @@ public class FileImageResolver implements ImageResolver {
 
 	@Override
 	public String resolveURI(ProductImager imager, String code, ImageSize size) {
-		return imager.getCategoryId() + File.separator + imager.getId() + File.separator + imager.getId() + "_" + code + (size != null ? "_" + size.getCode() : "") + ".jpg";
+		return getProductImagesPath(imager) + File.separator + (code + (size != null ? "_" + size.getCode() : "") + ".jpg");
 	}
 
 	@Override
 	public Path resolvePath(ProductImager imager) {
-		return imagesFolder.resolve(imager.getCategoryId() + File.separator + imager.getId());
+		return imagesFolder.resolve(getProductImagesPath(imager));
+	}
+
+	protected String getProductImagesPath(ProductImager imager) {
+		final int id = imager.getId();
+		return (id / 10000) + File.separator + ((id % 10000) / 100) + File.separator + (id % 100);
 	}
 
 	@Override

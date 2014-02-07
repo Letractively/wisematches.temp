@@ -81,7 +81,6 @@ public class ProductForm implements ProductImager {
 		this.id = id;
 	}
 
-	@Override
 	public Integer getCategoryId() {
 		return categoryId;
 	}

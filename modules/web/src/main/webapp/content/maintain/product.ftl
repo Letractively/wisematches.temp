@@ -35,20 +35,26 @@
 <tr>
     <td valign="top"><label for="categoryId">Категория: </label></td>
     <td>
-    <#if form.id??>
-        <@bg.ui.input "form.categoryId" "" "hidden">
-            <#assign category=catalog.getCategory(bg.ui.actualValue)/>
-            <#list category.genealogy.parents as c>
-                <a href="/maintain/category?id=${c.id}" target="_blank">${c.name}</a> ->
-            </#list>
-            <a href="/maintain/category?id=${category.id}" target="_blank">${category.name}</a>
-        </@bg.ui.input>
-    <#else>
-        <@bg.ui.selectCategory "form.categoryId" catalog false>
-            <#if bg.ui.statusValue?has_content>(<a href="/maintain/category?id=${bg.ui.statusValue}"
-                                                   target="_blank">открыть в новом</a>)</#if>
-        </@bg.ui.selectCategory>
-    </#if>
+        <div id="categoryDiv">
+        <#if form.id??>
+            <div>
+                <#assign category=catalog.getCategory(form.categoryId)/>
+                <#list category.genealogy.parents as c>
+                    <a href="/maintain/category?id=${c.id}" target="_blank">${c.name}</a> ->
+                </#list>
+                <a href="/maintain/category?id=${category.id}" target="_blank">${category.name}</a>
+
+                <a href="#" onclick="showCategoryEditor(); return false;">(изменить)</a>
+            </div>
+        </#if>
+
+            <div <#if form.id??>style="display: none"</#if>>
+            <@bg.ui.selectCategory "form.categoryId" catalog false>
+                <#if bg.ui.statusValue?has_content>(<a href="/maintain/category?id=${bg.ui.statusValue}"
+                                                       target="_blank">открыть в новом</a>)</#if>
+            </@bg.ui.selectCategory>
+            </div>
+        </div>
     </td>
 </tr>
 <tr>
@@ -468,6 +474,10 @@ var attributes = {
 };
 
 <#if form.id?has_content>
+var showCategoryEditor = function () {
+    $("#categoryDiv>div").toggle();
+};
+
 var loadSupplierDescription = function () {
     var siEl = $("#supplierInfo");
     var dataEl = siEl.find(".data");
