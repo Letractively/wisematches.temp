@@ -94,6 +94,9 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ProductPreview> getPreviews(Integer... id) {
+		if (id == null || id.length == 0) {
+			return null;
+		}
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Criteria criteria = session.createCriteria(HibernateProductPreview.class);

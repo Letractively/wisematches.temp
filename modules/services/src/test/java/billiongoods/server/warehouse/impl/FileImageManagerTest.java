@@ -26,8 +26,8 @@ import static org.junit.Assert.*;
  */
 public class FileImageManagerTest {
 	private Path workingFolder;
-	private FileImageResolver imageResolver;
 	private FileImageManager manager;
+	private FileImageResolver imageResolver;
 
 	private ProductPreview description;
 

@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/maintain/exchange")
-public class PriceConverterController extends AbstractController {
+public class PriceMaintainController extends AbstractController {
 	private PriceConverter priceConverter;
 
-	public PriceConverterController() {
+	public PriceMaintainController() {
 	}
 
 	@RequestMapping(value = "update")

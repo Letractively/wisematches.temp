@@ -5,6 +5,4 @@ package billiongoods.server.warehouse;
  */
 public interface ProductImager {
 	Integer getId();
-
-	Integer getCategoryId();
 }
