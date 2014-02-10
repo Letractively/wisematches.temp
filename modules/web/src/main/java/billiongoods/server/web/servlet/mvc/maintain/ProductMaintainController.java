@@ -9,6 +9,7 @@ import billiongoods.server.services.supplier.ImportingSummary;
 import billiongoods.server.services.supplier.ProductImporter;
 import billiongoods.server.services.supplier.SupplierDataLoader;
 import billiongoods.server.warehouse.*;
+import billiongoods.server.web.services.ProductSymbolicService;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.ImportProductsForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.ProductForm;
@@ -46,6 +47,8 @@ public class ProductMaintainController extends AbstractController {
 	private ProductImporter productImporter;
 	private SupplierDataLoader supplierDataLoader;
 	private RelationshipManager relationshipManager;
+
+	private ProductSymbolicService symbolicConverter;
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
@@ -129,6 +132,12 @@ public class ProductMaintainController extends AbstractController {
 			final Category category = categoryManager.getCategory(product.getCategoryId());
 
 			form.setName(product.getName());
+
+			if (product.getSymbolic() == null || product.getSymbolic().isEmpty()) {
+				form.setSymbolic(symbolicConverter.generateSymbolic(product.getName()));
+			} else {
+				form.setSymbolic(product.getSymbolic());
+			}
 			form.setDescription(product.getDescription());
 			form.setCategoryId(category.getId());
 			form.setPrice(product.getPrice().getAmount());
@@ -322,6 +331,7 @@ public class ProductMaintainController extends AbstractController {
 			if (!errors.hasErrors()) {
 				final ProductEditor editor = new ProductEditor();
 				editor.setName(form.getName().trim());
+				editor.setSymbolic(form.getSymbolic() != null ? form.getSymbolic().trim() : null);
 				editor.setDescription(form.getDescription().trim());
 				editor.setCategoryId(category.getId());
 				editor.setPrice(form.createPrice());
@@ -405,6 +415,11 @@ public class ProductMaintainController extends AbstractController {
 		return responseFactory.success(res);
 	}
 
+	@RequestMapping(value = "/symbolic.ajax")
+	public ServiceResponse generateSymbolic(@RequestParam("name") String name, Locale locale) {
+		return responseFactory.success(symbolicConverter.generateSymbolic(name));
+	}
+
 	@RequestMapping(value = "/loadSupplierInfo.ajax")
 	public ServiceResponse changeState(@RequestParam("id") Integer pid, Locale locale) {
 		final SupplierInfo supplier = productManager.getSupplierInfo(pid);
@@ -465,6 +480,11 @@ public class ProductMaintainController extends AbstractController {
 	@Autowired
 	public void setProductImporter(ProductImporter productImporter) {
 		this.productImporter = productImporter;
+	}
+
+	@Autowired
+	public void setSymbolicConverter(ProductSymbolicService symbolicConverter) {
+		this.symbolicConverter = symbolicConverter;
 	}
 
 	@Autowired

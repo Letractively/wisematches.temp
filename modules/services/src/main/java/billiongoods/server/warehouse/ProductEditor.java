@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class ProductEditor {
 	String name;
+	String symbolic;
 	String description;
 	Integer categoryId;
 	Price price;
@@ -34,6 +35,14 @@ public class ProductEditor {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSymbolic() {
+		return symbolic;
+	}
+
+	public void setSymbolic(String symbolic) {
+		this.symbolic = symbolic;
 	}
 
 	public String getDescription() {

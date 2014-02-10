@@ -6,8 +6,6 @@ import billiongoods.server.services.tracking.TrackingPerson;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,15 +26,19 @@ public class ProductController extends AbstractController {
 	private RelationshipManager relationshipManager;
 	private ProductTrackingManager trackingManager;
 
-	private static final Logger log = LoggerFactory.getLogger("billiongoods.warehouse.ProductController");
-
 	public ProductController() {
 	}
 
-	@RequestMapping("/{pid:\\d+}{name:.*}")
-	public String showProduct(@PathVariable("pid") String productId,
-							  @PathVariable("name") String name,
-							  Model model) {
+	@RequestMapping("/{product}")
+	public String showProduct(@PathVariable("product") String productUri, Model model) {
+		final String productId;
+		final int i = productUri.lastIndexOf("-");
+		if (i < 0) {
+			productId = productUri;
+		} else {
+			productId = productUri.substring(i + 1);
+		}
+
 		final Product product;
 		try {
 			product = productManager.getProduct(Integer.decode(productId));
@@ -52,9 +54,14 @@ public class ProductController extends AbstractController {
 			throw new UnknownEntityException(productId, "product");
 		}
 
+		final String symbolicUri = product.getSymbolicUri();
+		if (symbolicUri != null && !symbolicUri.isEmpty() && !symbolicUri.equals(productUri)) {
+			return "redirect:/warehouse/product/" + productUri;
+		}
+
 		final Category category = categoryManager.getCategory(product.getCategoryId());
 
-		setTitle(model, product.getName() + " - " + category.getName());
+		setTitle(model, product.getName() + " - " + category.getName() + " - " + Price.string(product.getPrice().getAmount()) + "руб");
 
 		model.addAttribute("product", product);
 		model.addAttribute("category", category);
@@ -107,10 +114,6 @@ public class ProductController extends AbstractController {
 		hideNavigation(model);
 
 		return "/content/warehouse/product";
-	}
-
-	private String getProductPostfix(Product product) {
-		return "-" + product.getName().trim().replaceAll(" ", "-").toLowerCase();
 	}
 
 	@Autowired

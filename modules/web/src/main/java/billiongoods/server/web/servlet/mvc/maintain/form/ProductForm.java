@@ -20,6 +20,8 @@ public class ProductForm implements ProductImager {
 	@Length(max = 100, message = "maintain.product.name.err.max")
 	private String name;
 
+	private String symbolic;
+
 	@NotEmpty(message = "maintain.product.desc.err.blank")
 	private String description;
 
@@ -95,6 +97,14 @@ public class ProductForm implements ProductImager {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSymbolic() {
+		return symbolic;
+	}
+
+	public void setSymbolic(String symbolic) {
+		this.symbolic = symbolic;
 	}
 
 	public String getDescription() {

@@ -17,6 +17,20 @@ public interface ProductPreview extends ProductImager {
 	String getName();
 
 	/**
+	 * Returns encoded name of the product in ASCII only
+	 *
+	 * @return the encoded name of the product in ASCII only
+	 */
+	String getSymbolic();
+
+	/**
+	 * Returns encoded name of the product in ASCII only plus product ID
+	 *
+	 * @return the encoded name of the product in ASCII only plus product ID
+	 */
+	String getSymbolicUri();
+
+	/**
 	 * Returns price for the product.
 	 *
 	 * @return the price for the product.

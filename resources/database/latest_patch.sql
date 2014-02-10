@@ -1,3 +1,19 @@
+#14.02.10
+ALTER TABLE `billiongoods`.`store_product`
+ADD COLUMN `encodedName` VARCHAR(155) NOT NULL DEFAULT ''
+AFTER `name`;
+
+ALTER TABLE `billiongoods`.`store_product`
+CHANGE COLUMN `encodedName` `symbolicName` VARCHAR(155) NOT NULL DEFAULT '';
+
+ALTER TABLE `billiongoods`.`store_product`
+CHANGE COLUMN `symbolicName` `symbolicName` VARCHAR(155) NULL DEFAULT NULL;
+
+ALTER TABLE `billiongoods`.`store_product`
+CHANGE COLUMN `symbolicName` `symbolic` VARCHAR(155) NULL DEFAULT NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('140210');
+
 #14.01.30
 CREATE TABLE `billiongoods`.`privacy_wishlist` (
   `person`  INT(20) NOT NULL,

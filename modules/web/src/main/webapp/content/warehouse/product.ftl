@@ -17,7 +17,7 @@
 <#assign stockInfo=product.stockInfo/>
 
 <div class="product ${product.state.name()?lower_case}" itemscope itemtype="http://schema.org/Product">
-<meta itemprop="url" content="http://www.billiongoods.ru/warehouse/product/${product.id}"/>
+<meta itemprop="url" content="http://www.billiongoods.ru/warehouse/product/${product.symbolicUri}"/>
 <meta itemprop="productID" content="${product.id}"/>
 <meta itemprop="releaseDate" content="${product.registrationDate?date?string("yyyy-MM-dd")}"/>
 <link itemprop="itemCondition" href="http://schema.org/NewCondition"/>
