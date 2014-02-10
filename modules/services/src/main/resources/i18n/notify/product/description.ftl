@@ -4,10 +4,10 @@
 
 <p>
     Как вы и просили, мы добавили описание для
-    товара <@util.link href="/warehouse/product/${context.id}">${context.name}</@util.link>.
+    товара <@util.link href="/warehouse/product/${context.symbolicUri}">${context.name}</@util.link>.
 </p>
 
 <p>
     Вы можете ознакомиться с полным описание товара на нашем сайте по
-    ссылке <@util.link href="/warehouse/product/${context.id}"/>.
+    ссылке <@util.link href="/warehouse/product/${context.symbolicUri}"/>.
 </p>

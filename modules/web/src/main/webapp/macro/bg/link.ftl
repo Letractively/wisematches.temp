@@ -5,4 +5,5 @@
 
 <#macro assist page><a href="/assistance/${page}"><@message code="title.assistance.${page}"/></a></#macro>
 
-<#macro product desc><a class="sample" itemprop="url" href="/warehouse/product/${desc.id}"><#nested/></a></#macro>
+<#macro product desc><a class="sample" itemprop="url"
+                        href="/warehouse/product/${desc.symbolicUri}"><#nested/></a></#macro>

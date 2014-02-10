@@ -266,7 +266,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 	}
 
 	private void updateProduct(HibernateProduct product, ProductEditor editor) {
-		product.setName(editor.getName());
+		product.setName(editor.getName(), editor.getSymbolic());
 		product.setDescription(editor.getDescription());
 		product.setCategory(editor.getCategoryId());
 		product.setPrice(editor.getPrice());

@@ -23,6 +23,9 @@ public class AbstractProduct implements ProductPreview {
 	@Column(name = "name")
 	private String name;
 
+	@Column(name = "symbolic")
+	private String symbolic;
+
 	@Column(name = "weight")
 	private double weight;
 
@@ -82,6 +85,16 @@ public class AbstractProduct implements ProductPreview {
 	}
 
 	@Override
+	public String getSymbolic() {
+		return symbolic;
+	}
+
+	@Override
+	public String getSymbolicUri() {
+		return symbolic == null ? String.valueOf(id) : (symbolic + "-" + id);
+	}
+
+	@Override
 	public StockInfo getStockInfo() {
 		return stockInfo;
 	}
@@ -136,8 +149,9 @@ public class AbstractProduct implements ProductPreview {
 		return commentary;
 	}
 
-	void setName(String name) {
+	void setName(String name, String symbolic) {
 		this.name = name;
+		this.symbolic = symbolic;
 	}
 
 	void setState(ProductState state) {

@@ -70,7 +70,7 @@
                 </div>
             </li>
 
-            <li class="bg-ui-button tb-item-arrivals tb-separator-right">
+            <li class="bg-ui-button tb-item-arrivals tb-separator-right" style="margin-left: -4px">
                 <a href="/warehouse/arrivals">Новые поступления</a>
             </li>
         </ul>
