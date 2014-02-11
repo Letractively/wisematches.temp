@@ -15,7 +15,7 @@ public class ProductSymbolicServiceTest {
 	public void test() {
 		final ProductSymbolicService pne = new ProductSymbolicService();
 
-		final String s = pne.generateSymbolic("Это мой продукт: 10% бесплатно, абвгдеёжзийклмнопрстуфхцчшщъыьэюя + titanium");
-		assertEquals("eto-moi-produkt:-10%-besplatno,-abvgdeyozhziiklmnoprstufhtschshshieyuya-+-titanium", s);
-	}
+        final String s = pne.generateSymbolic("Это Мой Продукт: 10% бесплатно, абвгдеёжзийклмнопрстуфхцчшщъыьэюя + АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ + titanium");
+        assertEquals("Eto-Moi-Produkt:-10%-besplatno,-abvgdeyozhziiklmnoprstufhtschshshieyuya-+-ABVGDEYoZhZIIKLMNOPRSTUFHTsChShShIEYuYa-+-titanium", s);
+    }
 }

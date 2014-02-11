@@ -56,8 +56,8 @@ public class ProductController extends AbstractController {
 
 		final String symbolicUri = product.getSymbolicUri();
 		if (symbolicUri != null && !symbolicUri.isEmpty() && !symbolicUri.equals(productUri)) {
-			return "redirect:/warehouse/product/" + productUri;
-		}
+            return "redirect:/warehouse/product/" + symbolicUri;
+        }
 
 		final Category category = categoryManager.getCategory(product.getCategoryId());
 
