@@ -40,15 +40,22 @@ public class ProductSymbolicService {
 			{"я", "ya"}
 	};
 
-	private static final int RUSSIAN_ENCODING_SHIFT = 1072;
-	private static final String[] CHARS_INDEX = new String[34];
+    private static final int RUSSIAN_ENCODING_SHIFT = 1040;
+    private static final String[] CHARS_INDEX = new String[ENCODING.length * 2 + 1];
 
-	static {
+    static {
 		for (String[] strings : ENCODING) {
-			final String string = strings[0];
-			final int index = string.charAt(0);
-			CHARS_INDEX[index - RUSSIAN_ENCODING_SHIFT] = strings[1];
-		}
+            final String s = strings[0];
+            final String r = strings[1];
+            final char chl = s.charAt(0);
+            CHARS_INDEX[chl - RUSSIAN_ENCODING_SHIFT] = r;
+
+            final char chu = Character.toUpperCase(chl);
+            if (chu == 'Ё') {
+                continue;
+            }
+            CHARS_INDEX[chu - RUSSIAN_ENCODING_SHIFT] = r.isEmpty() ? "" : Character.toUpperCase(r.charAt(0)) + r.substring(1);
+        }
 	}
 
 	public ProductSymbolicService() {
@@ -57,7 +64,6 @@ public class ProductSymbolicService {
 	public String generateSymbolic(String name) {
 		String r = name;
 
-		r = r.toLowerCase();
 		r = r.replaceAll("-", "_");
 		r = r.replaceAll("\\.", "_");
 		r = r.replaceAll("/", "-");
@@ -70,7 +76,9 @@ public class ProductSymbolicService {
 			final int index = ((int) ch) - RUSSIAN_ENCODING_SHIFT;
 			if (index >= 0 && index < CHARS_INDEX.length) {
 				b.append(CHARS_INDEX[index]);
-			} else {
+            } else if (ch == 'Ё') {
+                b.append("Yo");
+            } else {
 				b.append(ch);
 			}
 		}
