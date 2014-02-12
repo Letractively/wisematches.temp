@@ -15,6 +15,20 @@ public interface Category {
 	String getDescription();
 
 
+	/**
+	 * Returns encoded name of the product in ASCII only
+	 *
+	 * @return the encoded name of the product in ASCII only
+	 */
+	String getSymbolic();
+
+	/**
+	 * Returns encoded name of the product in ASCII only plus product ID
+	 *
+	 * @return the encoded name of the product in ASCII only plus product ID
+	 */
+	String getSymbolicUri();
+
 	int getPosition();
 
 
@@ -42,18 +56,20 @@ public interface Category {
 	class Editor {
 		private Integer id;
 		private String name;
+		private String symbolic;
 		private String description;
 		private Category parent;
 		private int position;
 		private Set<Integer> attributes;
 
-		public Editor(String name, String description, Category parent, int position, Set<Integer> attributes) {
-			this(null, name, description, parent, position, attributes);
+		public Editor(String name, String symbolic, String description, Category parent, int position, Set<Integer> attributes) {
+			this(null, name, symbolic, description, parent, position, attributes);
 		}
 
-		public Editor(Integer id, String name, String description, Category parent, int position, Set<Integer> attributes) {
+		public Editor(Integer id, String name, String symbolic, String description, Category parent, int position, Set<Integer> attributes) {
 			this.id = id;
 			this.name = name;
+			this.symbolic = symbolic;
 			this.description = description;
 			this.parent = parent;
 			this.position = position;
@@ -74,6 +90,14 @@ public interface Category {
 
 		public void setName(String name) {
 			this.name = name;
+		}
+
+		public String getSymbolic() {
+			return symbolic;
+		}
+
+		public void setSymbolic(String symbolic) {
+			this.symbolic = symbolic;
 		}
 
 		public String getDescription() {

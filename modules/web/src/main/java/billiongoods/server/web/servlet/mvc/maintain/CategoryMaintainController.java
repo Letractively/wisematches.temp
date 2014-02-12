@@ -4,6 +4,7 @@ import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.Parameter;
 import billiongoods.server.warehouse.RelationshipManager;
+import billiongoods.server.web.services.ProductSymbolicService;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.maintain.form.AttributeForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.CategoryForm;
@@ -14,10 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -32,6 +30,7 @@ import java.util.Set;
 @RequestMapping("/maintain/category")
 public class CategoryMaintainController extends AbstractController {
 	private RelationshipManager relationshipManager;
+	private ProductSymbolicService symbolicConverter;
 
 	public CategoryMaintainController() {
 	}
@@ -45,6 +44,12 @@ public class CategoryMaintainController extends AbstractController {
 
 		if (category != null) {
 			form.setName(category.getName());
+			if (category.getSymbolic() == null || category.getSymbolic().isEmpty()) {
+				form.setSymbolic(symbolicConverter.generateSymbolic(category.getName()));
+			} else {
+				form.setSymbolic(category.getSymbolic());
+			}
+			form.setSymbolic(category.getSymbolic());
 			form.setDescription(category.getDescription());
 			form.setPosition(category.getPosition());
 
@@ -77,9 +82,9 @@ public class CategoryMaintainController extends AbstractController {
 
 			final Category category;
 			if (form.getId() == null) {
-				category = categoryManager.createCategory(new Category.Editor(form.getName(), form.getDescription(), parent, form.getPosition(), form.getAttributes()));
+				category = categoryManager.createCategory(new Category.Editor(form.getName(), form.getSymbolic(), form.getDescription(), parent, form.getPosition(), form.getAttributes()));
 			} else {
-				category = categoryManager.updateCategory(new Category.Editor(form.getId(), form.getName(), form.getDescription(), parent, form.getPosition(), form.getAttributes()));
+				category = categoryManager.updateCategory(new Category.Editor(form.getId(), form.getName(), form.getSymbolic(), form.getDescription(), parent, form.getPosition(), form.getAttributes()));
 			}
 			return "redirect:/maintain/category?id=" + category.getId();
 		} catch (Exception ex) {
@@ -109,9 +114,19 @@ public class CategoryMaintainController extends AbstractController {
 		return responseFactory.success();
 	}
 
+	@RequestMapping(value = "/symbolic.ajax")
+	public ServiceResponse generateSymbolic(@RequestParam("name") String name, Locale locale) {
+		return responseFactory.success(symbolicConverter.generateSymbolic(name));
+	}
+
 	private String prepareViewResult(Model model) {
 		model.addAttribute("attributes", attributeManager.getAttributes());
 		return "/content/maintain/category";
+	}
+
+	@Autowired
+	public void setSymbolicConverter(ProductSymbolicService symbolicConverter) {
+		this.symbolicConverter = symbolicConverter;
 	}
 
 	@Autowired

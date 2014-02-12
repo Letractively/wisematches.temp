@@ -1,3 +1,10 @@
+#14.02.12
+ALTER TABLE `billiongoods`.`store_category`
+ADD COLUMN `symbolic` VARCHAR(155) NULL DEFAULT NULL
+AFTER `name`;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('140212');
+
 #14.02.10
 ALTER TABLE `billiongoods`.`store_product`
 ADD COLUMN `encodedName` VARCHAR(155) NOT NULL DEFAULT ''
