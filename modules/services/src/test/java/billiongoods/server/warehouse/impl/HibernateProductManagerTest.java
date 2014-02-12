@@ -44,7 +44,7 @@ public class HibernateProductManagerTest {
 
 		final ProductPreview description = descriptions.get(0);
 
-		final DefaultCategory category = new DefaultCategory(new HibernateCategory("asdf", "test", null, 0), null);
+		final DefaultCategory category = new DefaultCategory(new HibernateCategory("asdf", "asdf_s", "test", null, 0), null);
 
 		final List<ProductPreview> ctxDescriptions1 = productManager.searchEntities(new ProductContext(category), null, Range.FIRST, null);
 		assertEquals(0, ctxDescriptions1.size());

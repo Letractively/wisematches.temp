@@ -433,7 +433,7 @@
 </div>
 </#if>
 
-<script>
+<script type="application/javascript">
 window.onload = function () {
     CKEDITOR.replace('description');
 };

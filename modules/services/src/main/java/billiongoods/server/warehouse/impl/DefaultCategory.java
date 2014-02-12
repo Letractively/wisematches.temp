@@ -16,6 +16,7 @@ public class DefaultCategory implements Category {
 	private int position;
 	private boolean active;
 	private String description;
+	private String symbolic;
 
 	private Collection<Parameter> parameters = new ArrayList<>();
 
@@ -35,6 +36,16 @@ public class DefaultCategory implements Category {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public String getSymbolic() {
+		return symbolic;
+	}
+
+	@Override
+	public String getSymbolicUri() {
+		return symbolic == null ? String.valueOf(id) : (symbolic + "-" + id);
 	}
 
 	@Override
@@ -92,6 +103,7 @@ public class DefaultCategory implements Category {
 	void updateCategoryInfo(HibernateCategory category, AttributeManager manager) {
 		this.id = category.getId();
 		this.name = category.getName();
+		this.symbolic = category.getSymbolic();
 		this.description = category.getDescription();
 		this.position = category.getPosition();
 		this.active = category.isActive();

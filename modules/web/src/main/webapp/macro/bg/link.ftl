@@ -1,7 +1,7 @@
 <#include "/core.ftl"/>
 
 <#macro category cat class="" name=""><a <#if class?has_content>class="${class}"</#if>
-                                         href="/warehouse/category/${cat.id}"><#if name?has_content>${name}<#else>${cat.name}</#if></a></#macro>
+                                         href="/warehouse/category/${cat.symbolicUri}"><#if name?has_content>${name}<#else>${cat.name}</#if></a></#macro>
 
 <#macro assist page><a href="/assistance/${page}"><@message code="title.assistance.${page}"/></a></#macro>
 

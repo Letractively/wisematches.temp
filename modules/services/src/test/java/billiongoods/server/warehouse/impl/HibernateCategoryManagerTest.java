@@ -50,7 +50,7 @@ public class HibernateCategoryManagerTest {
 		final Catalog catalog = manager.getCatalog();
 		assertNotNull(catalog);
 
-		final Category category = manager.createCategory(new Category.Editor("mockC", "mockD", null, 0, Collections.singleton(next.getId())));
+		final Category category = manager.createCategory(new Category.Editor("mockC", "mockS", "mockD", null, 0, Collections.singleton(next.getId())));
 		assertNotNull(category);
 		assertEquals(1, category.getParameters().size());
 

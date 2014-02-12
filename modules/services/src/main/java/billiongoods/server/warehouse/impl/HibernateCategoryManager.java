@@ -49,7 +49,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 	public Category createCategory(Category.Editor editor) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateCategory i = new HibernateCategory(editor.getName(), editor.getDescription(),
+		final HibernateCategory i = new HibernateCategory(editor.getName(), editor.getSymbolic(), editor.getDescription(),
 				editor.getParent() != null ? editor.getParent().getId() : null, editor.getPosition());
 		session.save(i);
 
@@ -74,6 +74,7 @@ public class HibernateCategoryManager implements CategoryManager, InitializingBe
 		}
 
 		hc.setName(editor.getName());
+		hc.setSymbolic(editor.getSymbolic());
 		hc.setDescription(editor.getDescription());
 		hc.setParentId(editor.getParent() != null ? editor.getParent().getId() : null);
 		hc.setPosition(editor.getPosition());

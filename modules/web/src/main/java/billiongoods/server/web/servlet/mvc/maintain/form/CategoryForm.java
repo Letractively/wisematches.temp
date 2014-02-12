@@ -21,6 +21,8 @@ public class CategoryForm {
 	@Length(max = 50, message = "maintain.category.name.err.max")
 	private String name;
 
+	private String symbolic;
+
 	private String description;
 
 	public CategoryForm() {
@@ -40,6 +42,14 @@ public class CategoryForm {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSymbolic() {
+		return symbolic;
+	}
+
+	public void setSymbolic(String symbolic) {
+		this.symbolic = symbolic;
 	}
 
 	public String getDescription() {

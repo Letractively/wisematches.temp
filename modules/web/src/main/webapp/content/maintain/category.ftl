@@ -26,7 +26,16 @@ ${a.name}<#if a.unit?has_content>, <strong>${a.unit}</strong></#if> <span class=
                             <@bg.ui.input path="form.name"/>
                             </td>
                         </tr>
-
+                        <tr>
+                            <td valign="top"><label for="name">URL имя: </label></td>
+                            <td>
+                            <@bg.ui.field path="form.symbolic">
+                                <textarea id="${bg.ui.status.expression}" rows="2" style="width: 100%;"
+                                          readonly="readonly"
+                                          name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
+                            </@bg.ui.field>
+                            </td>
+                        </tr>
                         <tr>
                             <td valign="top"><label for="position">Положение: </label></td>
                             <td>
@@ -92,3 +101,18 @@ ${a.name}<#if a.unit?has_content>, <strong>${a.unit}</strong></#if> <span class=
         </table>
     </form>
 </div>
+
+<script type="application/javascript">
+    $("#name").change(function () {
+        $.post("/maintain/category/symbolic.ajax?name=" + $(this).val())
+                .done(function (response) {
+                    if (response.success) {
+                        $("#symbolic").val(response.data);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                });
+    });
+</script>

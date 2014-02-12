@@ -117,7 +117,7 @@ public class ServiceController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String validateImages() throws Exception {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("select id, name from billiongoods.server.warehouse.impl.HibernateProduct");
+		final Query query = session.createQuery("select id, name from billiongoods.server.warehouse.impl.HibernateCategory");
 		final List list = query.list();
 		for (Object o : list) {
 			final Object[] v = (Object[]) o;
@@ -127,7 +127,7 @@ public class ServiceController extends AbstractController {
 
 			final String s = symbolicConverter.generateSymbolic(name);
 
-			final Query query1 = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct set symbolic=:n where id=:id");
+			final Query query1 = session.createQuery("update billiongoods.server.warehouse.impl.HibernateCategory set symbolic=:n where id=:id");
 			query1.setParameter("id", id);
 			query1.setParameter("n", s);
 			query1.executeUpdate();

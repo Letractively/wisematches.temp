@@ -24,6 +24,9 @@ public class HibernateCategory {
 	@Column(name = "name")
 	private String name;
 
+	@Column(name = "symbolic")
+	private String symbolic;
+
 	@Column(name = "description")
 	private String description;
 
@@ -41,8 +44,9 @@ public class HibernateCategory {
 	protected HibernateCategory() {
 	}
 
-	protected HibernateCategory(String name, String description, Integer parentId, int position) {
+	protected HibernateCategory(String name, String symbolic, String description, Integer parentId, int position) {
 		this.name = name;
+		this.symbolic = symbolic;
 		this.description = description;
 		this.position = position;
 		this.parentId = parentId;
@@ -54,6 +58,10 @@ public class HibernateCategory {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getSymbolic() {
+		return symbolic;
 	}
 
 	public String getDescription() {
@@ -74,6 +82,10 @@ public class HibernateCategory {
 
 	void setName(String name) {
 		this.name = name;
+	}
+
+	public void setSymbolic(String symbolic) {
+		this.symbolic = symbolic;
 	}
 
 	void setDescription(String description) {
