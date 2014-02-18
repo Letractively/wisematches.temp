@@ -125,6 +125,9 @@
     </bean>
 
     <bean id="shipmentManager" class="billiongoods.server.services.payment.impl.DefaultShipmentManager">
+        <constructor-arg name="freeShipmentAmount" value="1000"/>
+        <constructor-arg name="defaultShipmentCost" value="0"/>
+        <constructor-arg name="registeredShipmentCost" value="70"/>
     </bean>
 
     <bean id="showcaseManager" class="billiongoods.server.services.showcase.impl.HibernateShowcaseManager">

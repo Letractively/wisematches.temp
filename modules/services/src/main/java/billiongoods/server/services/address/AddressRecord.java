@@ -20,8 +20,8 @@ public class AddressRecord extends Address {
 		super(address);
 	}
 
-	public AddressRecord(String firstName, String lastName, String postcode, String region, String city, String location) {
-		super(firstName, lastName, postcode, region, city, location);
+	public AddressRecord(String firstName, String lastName, String phone, String postcode, String region, String city, String location) {
+		super(firstName, lastName, phone, postcode, region, city, location);
 	}
 
 	public Integer getId() {

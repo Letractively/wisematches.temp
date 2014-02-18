@@ -9,11 +9,21 @@ import billiongoods.server.services.payment.ShipmentType;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class DefaultShipmentManager implements ShipmentManager {
-	private static final double DEFAULT_MAIL_COST = 0d;
-	private static final double REGISTERED_MAIL_COST = 70d;
-	private static final double REGISTERED_MAIL_AMOUNT = 1000d;
+	private double freeShipmentAmount = FREE_SHIPMENT_AMOUNT;
+	private double defaultShipmentCost = DEFAULT_SHIPMENT_COST;
+	private double registeredShipmentCost = REGISTERED_SHIPMENT_COST;
+
+	private static final double DEFAULT_SHIPMENT_COST = 0d;
+	private static final double FREE_SHIPMENT_AMOUNT = 1000d;
+	private static final double REGISTERED_SHIPMENT_COST = 70d;
 
 	public DefaultShipmentManager() {
+	}
+
+	public DefaultShipmentManager(double freeShipmentAmount, double defaultShipmentCost, double registeredShipmentCost) {
+		this.freeShipmentAmount = freeShipmentAmount;
+		this.defaultShipmentCost = defaultShipmentCost;
+		this.registeredShipmentCost = registeredShipmentCost;
 	}
 
 	@Override
@@ -31,12 +41,27 @@ public class DefaultShipmentManager implements ShipmentManager {
 
 	private double getShipmentCost(double amount, double weight, ShipmentType shipmentType) {
 		if (shipmentType == ShipmentType.FREE) {
-			return DEFAULT_MAIL_COST;
+			return defaultShipmentCost;
 		}
 
 		if (shipmentType == ShipmentType.REGISTERED) {
-			return amount >= REGISTERED_MAIL_AMOUNT ? DEFAULT_MAIL_COST : REGISTERED_MAIL_COST;
+			return amount >= freeShipmentAmount ? defaultShipmentCost : registeredShipmentCost;
 		}
 		throw new IllegalArgumentException("Unsupported shipment type: " + shipmentType);
+	}
+
+	@Override
+	public double getFreeShipmentAmount() {
+		return freeShipmentAmount;
+	}
+
+	@Override
+	public double getDefaultShipmentCost() {
+		return defaultShipmentCost;
+	}
+
+	@Override
+	public double getRegisteredShipmentCost() {
+		return registeredShipmentCost;
 	}
 }

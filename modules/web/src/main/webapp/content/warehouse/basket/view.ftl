@@ -2,6 +2,7 @@
 <#-- @ftlvariable name="coupon" type="billiongoods.server.services.coupon.Coupon" -->
 <#-- @ftlvariable name="basket" type="billiongoods.server.services.basket.Basket" -->
 <#-- @ftlvariable name="shipmentRates" type="billiongoods.server.services.payment.ShipmentRates" -->
+<#-- @ftlvariable name="shipmentManager" type="billiongoods.server.services.payment.ShipmentManager" -->
 <#-- @ftlvariable name="order" type="billiongoods.server.web.servlet.mvc.warehouse.form.BasketCheckoutForm" -->
 
 <#include "/core.ftl"/>
@@ -83,7 +84,7 @@
 <div class="unregistered" <#if shipmentRates.isFreeShipment(ShipmentType.REGISTERED)>style="display: none"</#if>>
     Вы можете получить бесплатный номер для отслеживания (зарегистрированное отправление) добавив еще товара на
     сумму
-    <@bg.ui.price 1000.0-shipmentRates.amount "b"/>
+    <@bg.ui.price shipmentManager.freeShipmentAmount-shipmentRates.amount "b"/>
 </div>
 
 <div class="order">

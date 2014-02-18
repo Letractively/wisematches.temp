@@ -16,6 +16,9 @@ public class Address {
 	@Column(name = "lastName", length = 245, nullable = false)
 	private String lastName;
 
+	@Column(name = "phone", length = 20, nullable = false)
+	private String phone;
+
 	@Column(name = "postcode", length = 10, nullable = false)
 	private String postcode;
 
@@ -32,12 +35,13 @@ public class Address {
 	}
 
 	public Address(Address address) {
-		this(address.firstName, address.lastName, address.postcode, address.region, address.city, address.location);
+		this(address.firstName, address.lastName, address.phone, address.postcode, address.region, address.city, address.location);
 	}
 
-	public Address(String firstName, String lastName, String postcode, String region, String city, String location) {
+	public Address(String firstName, String lastName, String phone, String postcode, String region, String city, String location) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.phone = phone;
 		this.postcode = postcode;
 		this.region = region;
 		this.city = city;
@@ -50,6 +54,10 @@ public class Address {
 
 	public String getLastName() {
 		return lastName;
+	}
+
+	public String getPhone() {
+		return phone;
 	}
 
 	public String getPostcode() {
