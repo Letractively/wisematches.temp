@@ -81,6 +81,6 @@ public class HibernateAddressBookManagerTest {
 	}
 
 	private AddressRecord createMock(int number) {
-		return new AddressRecord("firstName_" + number, "lastName_" + number, "post_" + number, "region_" + number, "city_" + number, "street_" + number);
+		return new AddressRecord("firstName_" + number, "lastName_" + number, "phone_" + number, "post_" + number, "region_" + number, "city_" + number, "street_" + number);
 	}
 }

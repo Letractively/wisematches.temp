@@ -82,7 +82,7 @@ public class HibernateOrderManagerTest {
 		expect(basket.getCoupon()).andReturn(null);
 		replay(basket);
 
-		final Address address = new Address("Mock", "Name", "123456", "MockRegion", "MockCity", "MockStreet, d.344/2 k.1, kv. 9881");
+		final Address address = new Address("Mock", "Name", "+7-912-232-12-45", "123456", "MockRegion", "MockCity", "MockStreet, d.344/2 k.1, kv. 9881");
 		Order order = orderManager.create(new Visitor(123L), basket, address, ShipmentType.REGISTERED, true);
 
 		final Shipment shipment = order.getShipment();

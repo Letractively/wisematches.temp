@@ -4,14 +4,9 @@ import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.image.ImageSize;
 import billiongoods.server.services.price.PriceConverter;
-import billiongoods.server.services.supplier.DataLoadingException;
-import billiongoods.server.services.supplier.ImportingSummary;
-import billiongoods.server.services.supplier.ProductImporter;
-import billiongoods.server.services.supplier.SupplierDataLoader;
 import billiongoods.server.warehouse.*;
 import billiongoods.server.web.services.ProductSymbolicService;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import billiongoods.server.web.servlet.mvc.maintain.form.ImportProductsForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.ProductForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.ReplaceForm;
 import billiongoods.server.web.servlet.sdo.ServiceResponse;
@@ -44,8 +39,6 @@ public class ProductMaintainController extends AbstractController {
 	private ImageResolver imageResolver;
 	private PriceConverter priceConverter;
 	private ProductManager productManager;
-	private ProductImporter productImporter;
-	private SupplierDataLoader supplierDataLoader;
 	private RelationshipManager relationshipManager;
 
 	private ProductSymbolicService symbolicConverter;
@@ -54,72 +47,6 @@ public class ProductMaintainController extends AbstractController {
 
 	public ProductMaintainController() {
 	}
-
-	@RequestMapping(value = "/import", method = RequestMethod.GET)
-	public String importProductsView(@RequestParam(value = "c", required = false) Integer categoryId,
-									 @ModelAttribute("form") ImportProductsForm form, Model model) {
-
-		final ImportingSummary summary = productImporter.getImportingSummary();
-		if (summary != null) {
-			model.addAttribute("summary", summary);
-		} else {
-			if (categoryId != null) {
-				final Category category = categoryManager.getCategory(categoryId);
-				form.setCategory(categoryId);
-
-				model.addAttribute("category", category);
-				model.addAttribute("attributes", createAttributesMap(category).keySet());
-			}
-		}
-		return "/content/maintain/import";
-	}
-
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@RequestMapping(value = "/import", method = RequestMethod.POST)
-	public String importProductsAction(Model model, @ModelAttribute("form") ImportProductsForm form) {
-		try {
-			List<Property> properties = null;
-			final Integer[] propertyIds = form.getPropertyIds();
-			final String[] propertyValues = form.getPropertyValues();
-
-			if (propertyIds != null && propertyValues != null && propertyIds.length > 0) {
-				properties = new ArrayList<>();
-				for (int i = 0; i < propertyIds.length; i++) {
-					try {
-						final Integer p = propertyIds[i];
-						final String v = propertyValues[i];
-						if (!v.isEmpty()) {
-							final Attribute attribute = attributeManager.getAttribute(p);
-							properties.add(new Property(attribute, v));
-						}
-					} catch (Exception ignore) {
-					}
-				}
-			}
-
-			List<Integer> groups = null;
-			if (form.getParticipatedGroups() != null) {
-				groups = new ArrayList<>();
-				for (Integer integer : form.getParticipatedGroups()) {
-					if (integer != null) {
-						groups.add(integer);
-					}
-				}
-			}
-
-			final Category category = categoryManager.getCategory(form.getCategory());
-			productImporter.importProducts(category, properties, groups, form.getDescription().getInputStream(),
-					form.getImages().getInputStream(), form.isValidatePrice());
-			model.addAttribute("result", true);
-			model.addAttribute("category", category);
-			model.addAttribute("attributes", createAttributesMap(category).keySet());
-		} catch (Exception ex) {
-			model.addAttribute("error", ex.getMessage());
-			model.addAttribute("result", false);
-		}
-		return "/content/maintain/import";
-	}
-
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String viewProduct(Model model, @ModelAttribute("form") ProductForm form) throws IOException {
@@ -420,20 +347,7 @@ public class ProductMaintainController extends AbstractController {
 		return responseFactory.success(symbolicConverter.generateSymbolic(name));
 	}
 
-	@RequestMapping(value = "/loadSupplierInfo.ajax")
-	public ServiceResponse changeState(@RequestParam("id") Integer pid, Locale locale) {
-		final SupplierInfo supplier = productManager.getSupplierInfo(pid);
-		if (supplier == null) {
-			responseFactory.failure("error.unknown.supplier", locale);
-		}
-		try {
-			return responseFactory.success(supplierDataLoader.loadDescription(supplier));
-		} catch (DataLoadingException ex) {
-			return responseFactory.failure("error.bad.supplier", locale);
-		}
-	}
-
-	private Map<Attribute, String> createAttributesMap(Category category) {
+	protected static Map<Attribute, String> createAttributesMap(Category category) {
 		final Map<Attribute, String> values = new HashMap<>();
 		Category ct = category;
 		while (ct != null) {
@@ -478,18 +392,8 @@ public class ProductMaintainController extends AbstractController {
 	}
 
 	@Autowired
-	public void setProductImporter(ProductImporter productImporter) {
-		this.productImporter = productImporter;
-	}
-
-	@Autowired
 	public void setSymbolicConverter(ProductSymbolicService symbolicConverter) {
 		this.symbolicConverter = symbolicConverter;
-	}
-
-	@Autowired
-	public void setSupplierDataLoader(SupplierDataLoader supplierDataLoader) {
-		this.supplierDataLoader = supplierDataLoader;
 	}
 
 	@Autowired

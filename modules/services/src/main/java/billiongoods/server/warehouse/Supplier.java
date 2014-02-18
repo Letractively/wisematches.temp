@@ -27,6 +27,9 @@ public enum Supplier {
 
 	public URL getReferenceUrl(String path) {
 		try {
+			if (path == null) {
+				return new URL(site);
+			}
 			return new URL(site + (path.startsWith("/") ? path : "/" + path));
 		} catch (MalformedURLException ex) {
 			throw new IllegalStateException("Very bad, http is illegal URL: " + site + path);
