@@ -41,7 +41,6 @@
         </#list>
         </div>
     </div>
-    bang
 </td>
 <td valign="top" width="100%">
     <div class="info">
