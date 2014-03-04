@@ -1,9 +1,9 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
-import billiongoods.server.services.coupon.Coupon;
-import billiongoods.server.services.coupon.CouponContext;
-import billiongoods.server.services.coupon.CouponManager;
-import billiongoods.server.services.coupon.CouponReferenceType;
+import billiongoods.core.search.Order;
+import billiongoods.core.search.Orders;
+import billiongoods.core.search.Range;
+import billiongoods.server.services.coupon.*;
 import billiongoods.server.warehouse.Category;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.ProductPreview;
@@ -43,7 +43,8 @@ public class CouponMaintainController extends AbstractController {
 
 	@RequestMapping(value = "/view")
 	public String viewCoupon(@RequestParam(value = "code", required = false) String code, Model model) {
-		model.addAttribute("coupon", couponManager.getCoupon(code));
+		final Coupon coupon = couponManager.getCoupon(code);
+		model.addAttribute("coupon", coupon);
 		return "/content/maintain/coupon/view";
 	}
 
@@ -60,6 +61,13 @@ public class CouponMaintainController extends AbstractController {
 			final CouponContext context = new CouponContext(form.getReference(), form.getReferenceType());
 			final List<Coupon> coupons = couponManager.searchEntities(context, null, null, null);
 			model.addAttribute("coupons", coupons);
+		} else {
+			final List<Coupon> coupons = couponManager.searchEntities(null, null, Range.limit(10), Orders.of(Order.desc("creation")));
+			model.addAttribute("coupons", coupons);
+		}
+
+		if (form.getReferenceType() == null) {
+			form.setReferenceType(CouponReferenceType.EVERYTHING);
 		}
 		return "/content/maintain/coupon/search";
 	}
@@ -69,6 +77,10 @@ public class CouponMaintainController extends AbstractController {
 		if (form.getCode() == null) {
 			form.setCode(generateCode());
 		}
+		form.setAmount(5.);
+		form.setAllocatedCount(1);
+		form.setAmountType(CouponAmountType.PERCENT);
+		form.setReferenceType(CouponReferenceType.EVERYTHING);
 		return "/content/maintain/coupon/create";
 	}
 
@@ -89,7 +101,9 @@ public class CouponMaintainController extends AbstractController {
 			}
 
 			Coupon res = null;
-			if (form.getReference() == null) {
+			if (form.getReferenceType() == CouponReferenceType.EVERYTHING) {
+				res = couponManager.createCoupon(form.getCode(), form.getAmount(), form.getAmountType(), form.getAllocatedCount(), termination);
+			} else if (form.getReference() == null) {
 				errors.rejectValue("reference", "error.coupon.reference.unknown");
 			} else {
 				if (form.getReferenceType() == CouponReferenceType.CATEGORY) {
@@ -116,6 +130,16 @@ public class CouponMaintainController extends AbstractController {
 			}
 		}
 		return "/content/maintain/coupon/create";
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "/close", method = RequestMethod.POST)
+	public String closeCouponAction(@RequestParam("code") String code) {
+		final Coupon coupon = couponManager.getCoupon(code);
+		if (coupon != null) {
+			couponManager.closeCoupon(code);
+		}
+		return "redirect:/maintain/coupon/view?code=" + code;
 	}
 
 	private String generateCode() {

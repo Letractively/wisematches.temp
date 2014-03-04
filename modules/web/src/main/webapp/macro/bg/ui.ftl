@@ -69,19 +69,21 @@
     Купон <em>${coupon.code}</em>
         <#if coupon.active>
             <#if coupon.amountType.fixed>
-            предоставляет право купить за ${coupon.amount?string("0.00")}}руб.
+            предоставляет право купить за ${coupon.amount?string("0.00")}руб.
             <#elseif coupon.amountType.price>
-            снизить стоимость на ${coupon.amount?string("0.00")}}руб. за
+            снизить стоимость на ${coupon.amount?string("0.00")}руб. за
             <#elseif coupon.amountType.percent>
             дает ${coupon.amount?string("0")}% скидку на
             </#if>
 
-            <#if coupon.referenceType.product>
+            <#if coupon.referenceType = CouponReferenceType.PRODUCT>
             товар <a
                     href="/warehouse/product/${coupon.reference}">${messageSource.getProductCode(coupon.reference)}</a>.
-            <#elseif coupon.referenceType.category>
+            <#elseif coupon.referenceType = CouponReferenceType.CATEGORY>
                 <#assign category=catalog.getCategory(coupon.reference)/>
             товары категории <@bg.link.category category>${category.name}</@bg.link.category>.
+            <#elseif coupon.referenceType= CouponReferenceType.EVERYTHING>
+            все товары
             </#if>
         <#else>
         не активен и не может быть использован.

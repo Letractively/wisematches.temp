@@ -17,6 +17,27 @@
         </tr>
         <tr>
             <td>
+                Описание:
+            </td>
+            <td>
+            <@bg.ui.coupon coupon/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Скидка:
+            </td>
+            <td>
+            ${coupon.amount} <@message code="enum.${coupon.amountType.name()?lower_case}.label"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Состояние:
             </td>
             <td>
@@ -25,36 +46,10 @@
         </tr>
         <tr>
             <td>
-                Сумма:
+                Использование:
             </td>
             <td>
-            ${coupon.amount}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Вид скидки:
-            </td>
-            <td>
-            ${coupon.amountType}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Действует на:
-            </td>
-            <td>
-            <#if coupon.referenceType.product>
-                Продукт <a
-                    href="/warehouse/product/${coupon.reference}">${messageSource.getProductCode(coupon.reference)}</a>
-            <#elseif coupon.referenceType.category>
-                <#assign category=catalog.getCategory(coupon.reference)/>
-                Категорию <@bg.link.category category>#${category.id} ${category.name}</@bg.link.category>
-            <#elseif coupon.referenceType.everything>
-                Все товары
-            <#else>
-                Незвестный тип ${coupon.referenceType}
-            </#if>
+            ${coupon.utilizedCount} / ${coupon.allocatedCount}
             </td>
         </tr>
         <tr>
@@ -68,31 +63,26 @@
         </tr>
         <tr>
             <td>
-                Выделенное количество:
-            </td>
-            <td>
-            ${coupon.allocatedCount}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Уже использован раз:
-            </td>
-            <td>
-            ${coupon.utilizedCount}
-            </td>
-        </tr>
-        <tr>
-            <td>
                 Дата последнего использования:
             </td>
             <td>
-            <#if lastUtilization??>
-            ${messageSource.formatDateTime(coupon.lastUtilization, locale)}}
+            <#if coupon.lastUtilization??>
+            ${messageSource.formatDateTime(coupon.lastUtilization, locale)}
             <#else>
                 не использовался
             </#if>
             </td>
         </tr>
+
+    <#if coupon.active>
+        <tr>
+            <td></td>
+            <td>
+                <form action="/maintain/coupon/close" method="post">
+                    <button name="code" value="${coupon.code}">Закрыть купон</button>
+                </form>
+            </td>
+        </tr>
+    </#if>
     </table>
 </div>

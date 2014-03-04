@@ -24,3 +24,5 @@
 [#-- @ftlvariable name="RelationshipType" type="billiongoods.server.warehouse.RelationshipType.static" --]
 [#-- @ftlvariable name="TrackingType" type="billiongoods.server.services.tracking.TrackingType.static" --]
 [#-- @ftlvariable name="OrderStateUnion" type="billiongoods.server.web.servlet.mvc.privacy.form.OrderStateUnion.static" --]
+[#-- @ftlvariable name="CouponReferenceType" type="billiongoods.server.services.coupon.CouponReferenceType.static" --]
+[#-- @ftlvariable name="CouponAmountType" type="billiongoods.server.services.coupon.CouponAmountType.static" --]
