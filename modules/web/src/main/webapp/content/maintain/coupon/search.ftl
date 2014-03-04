@@ -21,12 +21,7 @@
                     <div class="layout-line">
                     <@bg.ui.input "form.reference"/>
 
-                    <@bg.ui.field "form.referenceType">
-                        <select id="referenceType" name="referenceType">
-                            <option value="PRODUCT">Продукт</option>
-                            <option value="CATEGORY">Категория</option>
-                        </select>
-                    </@bg.ui.field>
+                    <@bg.ui.enum "form.referenceType" CouponReferenceType.values()/>
                     </div>
                 </td>
             </tr>

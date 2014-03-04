@@ -98,7 +98,7 @@ public class HibernateCouponManager extends EntitySearchManager<Coupon, CouponCo
 	protected void applyRestrictions(Criteria criteria, CouponContext context, Void filter) {
 		if (context != null) {
 			if (context.getPersonId() != null) {
-				criteria.add(Restrictions.eq("reference", context.getReference()));
+				criteria.add(Restrictions.eq("reference", context.getPersonId()));
 
 			}
 

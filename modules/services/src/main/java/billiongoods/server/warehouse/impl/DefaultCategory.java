@@ -78,8 +78,8 @@ public class DefaultCategory implements Category {
 
 	@Override
 	public boolean isRealKinship(Category category) {
-		Category ct = this;
-		while (ct != null && !ct.equals(category)) {
+		Category ct = category;
+		while (ct != null && !ct.equals(this)) {
 			ct = ct.getParent();
 		}
 		return ct != null;
