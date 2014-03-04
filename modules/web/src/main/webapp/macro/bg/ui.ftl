@@ -68,9 +68,9 @@
     <#else>
     Купон <em>${coupon.code}</em>
         <#if coupon.active>
-            <#if coupon.amountType.fixed>
+            <#if coupon.amountType.price>
             предоставляет право купить за ${coupon.amount?string("0.00")}руб.
-            <#elseif coupon.amountType.price>
+            <#elseif coupon.amountType.fixed>
             снизить стоимость на ${coupon.amount?string("0.00")}руб. за
             <#elseif coupon.amountType.percent>
             дает ${coupon.amount?string("0")}% скидку на
