@@ -61,7 +61,7 @@
         </tr>
         <tr>
             <td align="right">
-                © 2013 BillionGoods
+                © 2013-2014 BillionGoods
             </td>
         </tr>
     </table>

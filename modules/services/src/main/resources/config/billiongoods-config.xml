@@ -108,7 +108,8 @@
         </property>
     </bean>
 
-    <bean id="payPalTransactionManager" class="billiongoods.server.services.paypal.impl.HibernateTransactionManager">
+    <bean id="payPalTransactionManager"
+          class="billiongoods.server.services.paypal.impl.HibernatePayPalTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 

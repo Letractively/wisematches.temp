@@ -15,44 +15,41 @@ import urn.ebay.api.PayPalAPI.SetExpressCheckoutResponseType;
 import urn.ebay.apis.CoreComponentTypes.BasicAmountType;
 import urn.ebay.apis.eBLBaseComponents.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class HibernateTransactionManager implements PayPalTransactionManager {
+public class HibernatePayPalTransactionManager implements PayPalTransactionManager {
 	private SessionFactory sessionFactory;
 
-	private static final ThreadLocal<DateFormat> FORMAT_THREAD_LOCAL = new ThreadLocal<DateFormat>() {
-		@Override
-		protected DateFormat initialValue() {
-			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-		}
-	};
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.paypal.TransactionManager");
 
-	public HibernateTransactionManager() {
+	public HibernatePayPalTransactionManager() {
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public HibernateTransaction getTransaction(Long id) {
-		return (HibernateTransaction) sessionFactory.getCurrentSession().get(HibernateTransaction.class, id);
+	public HibernatePayPalTransaction getTransaction(Long id) {
+		return (HibernatePayPalTransaction) sessionFactory.getCurrentSession().get(HibernatePayPalTransaction.class, id);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public PayPalTransaction getTransaction(String token) {
 		final Session session = sessionFactory.getCurrentSession();
-		final Query query = session.createQuery("from billiongoods.server.services.paypal.impl.HibernateTransaction where token=:token");
+		final Query query = session.createQuery("from billiongoods.server.services.paypal.impl.HibernatePayPalTransaction where token=:token");
 		query.setParameter("token", token);
 		try {
-			return (HibernateTransaction) query.uniqueResult();
+			return (HibernatePayPalTransaction) query.uniqueResult();
 		} catch (Exception ex) {
 			return null;
 		}
@@ -61,7 +58,7 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public PayPalTransaction beginTransaction(Order order) {
-		HibernateTransaction transaction = new HibernateTransaction(order.getId(), order.getAmount(), order.getShipment().getAmount());
+		HibernatePayPalTransaction transaction = new HibernatePayPalTransaction(order.getId(), order.getAmount(), order.getShipment().getAmount());
 		sessionFactory.getCurrentSession().save(transaction);
 		return transaction;
 	}
@@ -72,11 +69,11 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Long tnxId = tnx.getId();
-		final HibernateTransaction transaction = (HibernateTransaction) tnx;
+		final HibernatePayPalTransaction transaction = (HibernatePayPalTransaction) tnx;
 
 		try {
-			transaction.setInvoicingTime(FORMAT_THREAD_LOCAL.get().parse(response.getTimestamp()));
-		} catch (ParseException ex) {
+			transaction.setInvoicingTime(Date.from(LocalDateTime.parse(response.getTimestamp(), FORMATTER).toInstant(ZoneOffset.UTC)));
+		} catch (DateTimeParseException ex) {
 			log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
 		}
 
@@ -91,11 +88,11 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Long tnxId = tnx.getId();
-		final HibernateTransaction transaction = (HibernateTransaction) tnx;
+		final HibernatePayPalTransaction transaction = (HibernatePayPalTransaction) tnx;
 
 		try {
-			transaction.setVerificationTime(FORMAT_THREAD_LOCAL.get().parse(response.getTimestamp()));
-		} catch (ParseException ex) {
+			transaction.setVerificationTime(Date.from(LocalDateTime.parse(response.getTimestamp(), FORMATTER).toInstant(ZoneOffset.UTC)));
+		} catch (DateTimeParseException ex) {
 			log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
 		}
 
@@ -137,11 +134,11 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final Long tnxId = tnx.getId();
-		final HibernateTransaction transaction = (HibernateTransaction) tnx;
+		final HibernatePayPalTransaction transaction = (HibernatePayPalTransaction) tnx;
 
 		try {
-			transaction.setConfirmationTime(FORMAT_THREAD_LOCAL.get().parse(response.getTimestamp()));
-		} catch (ParseException ex) {
+			transaction.setConfirmationTime(Date.from(LocalDateTime.parse(response.getTimestamp(), FORMATTER).toInstant(ZoneOffset.UTC)));
+		} catch (DateTimeParseException ex) {
 			log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
 		}
 
@@ -172,8 +169,8 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 				}
 
 				try {
-					transaction.setPaymentDate(FORMAT_THREAD_LOCAL.get().parse(info.getPaymentDate()));
-				} catch (ParseException ex) {
+					transaction.setPaymentDate(Date.from(LocalDateTime.parse(info.getPaymentDate(), FORMATTER).toInstant(ZoneOffset.UTC)));
+				} catch (DateTimeParseException ex) {
 					log.error("PayPal data can't be parsed [" + tnxId + "]: " + response.getTimestamp());
 				}
 
@@ -219,7 +216,7 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 	public void commitTransaction(PayPalTransaction tnx, boolean approved) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateTransaction transaction = (HibernateTransaction) tnx;
+		final HibernatePayPalTransaction transaction = (HibernatePayPalTransaction) tnx;
 		transaction.setPhase(TransactionPhase.FINISHED);
 		transaction.setResolution(approved ? TransactionResolution.APPROVED : TransactionResolution.REJECTED);
 		session.update(transaction);
@@ -230,7 +227,7 @@ public class HibernateTransactionManager implements PayPalTransactionManager {
 	public void rollbackTransaction(PayPalTransaction tnx, TransactionPhase phase, PayPalException exception) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateTransaction transaction = (HibernateTransaction) tnx;
+		final HibernatePayPalTransaction transaction = (HibernatePayPalTransaction) tnx;
 		transaction.setPhase(phase);
 		transaction.setResolution(TransactionResolution.FAILURE);
 		if (exception instanceof PayPalQueryException) {
