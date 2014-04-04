@@ -7,7 +7,7 @@
 
     <groupId>billiongoods</groupId>
     <artifactId>application</artifactId>
-    <version>4.6.0</version>
+    <version>5.0.0</version>
 
     <modules>
         <module>modules/core</module>
@@ -75,12 +75,12 @@
     </repositories>
 
     <properties>
-        <org.springframework.version>3.2.5.RELEASE</org.springframework.version>
+        <org.springframework.version>4.0.3.RELEASE</org.springframework.version>
 
-        <org.springframework.security.version>3.2.0.RC2</org.springframework.security.version>
-        <org.springframework.security.crypto.version>3.1.4.RELEASE</org.springframework.security.crypto.version>
+        <org.springframework.security.version>3.2.3.RELEASE</org.springframework.security.version>
+        <org.springframework.security.crypto.version>3.2.3.RELEASE</org.springframework.security.crypto.version>
 
-        <org.springframework.social.version>1.1.0.M4</org.springframework.social.version>
+        <org.springframework.social.version>1.1.0.RC1</org.springframework.social.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -299,8 +299,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 

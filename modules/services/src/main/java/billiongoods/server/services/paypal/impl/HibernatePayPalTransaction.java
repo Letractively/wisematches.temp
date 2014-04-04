@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "paypal_transaction")
-public class HibernateTransaction implements PayPalTransaction {
+public class HibernatePayPalTransaction implements PayPalTransaction {
 	@Id
 	@Column(name = "id", nullable = false, updatable = false, unique = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -137,10 +137,10 @@ public class HibernateTransaction implements PayPalTransaction {
 	private PayPalQueryError lastQueryError;
 
 	@Deprecated
-	HibernateTransaction() {
+	HibernatePayPalTransaction() {
 	}
 
-	public HibernateTransaction(Long orderId, double amount, double shipment) {
+	public HibernatePayPalTransaction(Long orderId, double amount, double shipment) {
 		this.orderId = orderId;
 		this.amount = amount;
 		this.shipment = shipment;

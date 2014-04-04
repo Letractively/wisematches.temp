@@ -42,6 +42,15 @@ public class ReferenceMapCache implements Cache {
 	}
 
 	@Override
+	public <T> T get(Object key, Class<T> tClass) {
+		final ValueWrapper valueWrapper = get(key);
+		if (valueWrapper == null) {
+			return null;
+		}
+		return tClass.cast(valueWrapper.get());
+	}
+
+	@Override
 	public void put(Object key, Object value) {
 		clearDeadReferences();
 		cache.put(key, referenceType.createCacheReference(key, value, referenceQueue));

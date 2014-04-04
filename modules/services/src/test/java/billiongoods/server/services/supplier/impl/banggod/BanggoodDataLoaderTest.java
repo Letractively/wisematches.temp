@@ -48,7 +48,7 @@ public class BanggoodDataLoaderTest {
 
 		dataLoader.initialize();
 
-		final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/3D-Skull-Shape-Soft-Silicone-Case-Skin-Cover-For-IPhone-5-5G-p-85268.html", "SKU044199", Supplier.BANGGOOD, null);
+		final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/DJI-Phantom-FC40-RC-Quadcopter-With-Wi-Fi-FPV-FC40-Camera-p-916095.html", "SKU118444", Supplier.BANGGOOD, null);
 		final SupplierDescription desc1 = dataLoader.loadDescription(info1);
 		assertNotNull(desc1);
 		assertNotNull(desc1.getPrice());

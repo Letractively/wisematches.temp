@@ -32,16 +32,16 @@ import static org.junit.Assert.assertNotNull;
 		"classpath:/config/properties-config.xml",
 		"classpath:/config/database-config.xml"
 })
-public class HibernateTransactionManagerTest {
+public class HibernatePayPalTransactionManagerTest {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public HibernateTransactionManagerTest() {
+	public HibernatePayPalTransactionManagerTest() {
 	}
 
 	@Test
 	public void test() throws Exception {
-		final HibernateTransactionManager manager = new HibernateTransactionManager();
+		final HibernatePayPalTransactionManager manager = new HibernatePayPalTransactionManager();
 		manager.setSessionFactory(sessionFactory);
 
 		final Order order = createMock(Order.class);
@@ -134,7 +134,7 @@ public class HibernateTransactionManagerTest {
 
 		manager.rollbackTransaction(tnx, TransactionPhase.CONFIRMATION, new PayPalQueryException("ID" + tnx.getId(), new PayPalQueryError(o)));
 
-		final HibernateTransaction transaction = manager.getTransaction(tnx.getId());
+		final HibernatePayPalTransaction transaction = manager.getTransaction(tnx.getId());
 		assertEquals(tnx.getId(), transaction.getId());
 		assertEquals(12L, transaction.getOrderId().longValue());
 		assertEquals("12345678900987654321", transaction.getToken());
