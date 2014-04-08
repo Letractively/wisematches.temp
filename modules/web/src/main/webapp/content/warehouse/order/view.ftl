@@ -204,7 +204,7 @@
         </td>
         <td>
         <#assign address=shipment.address/>
-        ${address.firstName} ${address.lastName}
+        ${address.fullName}
             <br>
         ${address.postcode}, ${address.region}, ${address.city}
             <br>

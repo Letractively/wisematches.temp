@@ -127,7 +127,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 		final Address address = shipment.getAddress();
 
 		final AddressType addressType = new AddressType();
-		addressType.setName(address.getFirstName() + " " + address.getLastName());
+		addressType.setName(address.getFullName());
 		addressType.setPostalCode(address.getPostcode());
 		addressType.setCountry(CountryCodeType.RU);
 		addressType.setCityName(address.getCity());
