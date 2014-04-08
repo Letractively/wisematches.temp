@@ -1,14 +1,15 @@
 package billiongoods.server.web.servlet.mvc.maintain;
 
 import billiongoods.core.search.Orders;
-import billiongoods.server.services.payment.Order;
-import billiongoods.server.services.payment.OrderContext;
-import billiongoods.server.services.payment.OrderManager;
-import billiongoods.server.services.payment.OrderState;
+import billiongoods.server.services.address.Address;
+import billiongoods.server.services.payment.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.maintain.form.OrderStateForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -127,6 +128,57 @@ public class OrderMaintainController extends AbstractController {
 
 		model.addAttribute("order", orderManager.getOrder(id));
 		return "/content/maintain/order";
+	}
+
+
+	@RequestMapping(value = "export")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public HttpEntity<byte[]> promoteOrder(@ModelAttribute("order") Long orderId, Errors errors, Model model) {
+		final Order o = orderManager.getOrder(orderId);
+		if (o == null) {
+			throw new UnknownEntityException(orderId, "o");
+		}
+
+		final StringBuilder b = new StringBuilder();
+		b.append("Buyer Country," + "Buyer Fullname," + "Product SKU," + "Quantity," + "Buyer Address 1," + "Buyer Address 2," + "Buyer State," + "Buyer City," + "Buyer Zip," + "Buyer Phone Number," + "Remark," + "Sale Record Id");
+		b.append(System.getProperty("line.separator"));
+
+		int recordId = 1;
+		final Shipment s = o.getShipment();
+		final Address a = s.getAddress();
+		for (OrderItem i : o.getOrderItems()) {
+			b.append("\"RUSSIAN FEDERATION");
+			b.append("\",\"");
+			b.append(a.getFullName());
+			b.append("\",\"");
+			b.append(i.getProduct().getSupplierInfo().getReferenceCode());
+			b.append("\",\"");
+			b.append(i.getQuantity());
+			b.append("\",\"");
+			b.append(a.getLocation());
+			b.append("\",\"");
+			b.append(a.getRegion());
+			b.append("\",\"");
+			b.append(a.getCity());
+			b.append("\",\"");
+			b.append(a.getPostcode());
+			b.append("\",\"");
+			b.append("");
+			b.append("\",\"");
+			b.append("");
+			b.append("\",\"");
+			b.append(recordId++);
+			b.append("\"");
+			b.append(System.getProperty("line.separator"));
+		}
+
+		final byte[] bytes = b.toString().getBytes();
+
+		final HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "csv"));
+		header.set("Content-Disposition", "attachment; filename=bgorder_" + orderId + ".csv");
+		header.setContentLength(bytes.length);
+		return new HttpEntity<>(bytes, header);
 	}
 
 	@Autowired
