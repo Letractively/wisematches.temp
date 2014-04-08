@@ -9,6 +9,12 @@
         font-weight: bold;
         background: #808080;
     }
+
+    .orders .cnt th {
+        font-weight: bold;
+        white-space: nowrap;
+        border-bottom: 1px solid #808080;
+    }
 </style>
 
 <div class="orders">
@@ -40,23 +46,35 @@
     </div>
 
     <div class="cnt">
-        <table>
+        <table border="0" cellpadding="5">
             <tr>
                 <th>Номер</th>
-                <th>Последнее изменение</th>
-                <th>Доставка</th>
+                <th>Получатель</th>
+                <th>Товаров</th>
+                <th>Сумма</th>
+                <th>Дата Создания/Изменения</th>
                 <th>BangGood</th>
-                <th>Почта Китая</th>
-                <th>Почта России</th>
+                <th>Номер отслеживания</th>
             </tr>
         <#list orders as o>
             <tr>
                 <td><a href="/maintain/order/view?id=${o.id}&type=id">${o.id}</a></td>
-                <td>${messageSource.formatDate(o.timestamp, locale)} ${messageSource.formatTime(o.timestamp, locale)}</td>
-                <td>${o.shipment.type!""}</td>
+                <td>${o.shipment.address.fullName}</td>
+                <td nowrap="nowrap">${o.itemsCount}</td>
+                <td nowrap="nowrap"><@bg.ui.price o.amount + o.shipment.amount - o.discount "b"/></td>
+                <td nowrap="nowrap">
+                ${messageSource.formatDate(o.created, locale)} ${messageSource.formatTime(o.created, locale)} <br>
+                ${messageSource.formatDate(o.timestamp, locale)} ${messageSource.formatTime(o.timestamp, locale)}
+                </td>
                 <td><@bg.tracking.system o.referenceTracking/></td>
-                <td><@bg.tracking.china o.chinaMailTracking/></td>
-                <td><@bg.tracking.international o.internationalTracking/></td>
+                <td>
+                    <#if o.shipment.type=ShipmentType.FREE>
+                        без номера
+                    <#else>
+                        <#if !o.internationalTracking?has_content>еще не
+                            назначен<#else><@bg.tracking.international o.internationalTracking/></#if>
+                    </#if>
+                </td>
             </tr>
         </#list>
         </table>

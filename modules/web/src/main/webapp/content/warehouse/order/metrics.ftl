@@ -40,7 +40,7 @@
 
             ga('ecommerce:addTransaction', {
                 'id': '${order.id}',
-                'affiliation': '${order.shipment.address.lastName} ${order.shipment.address.firstName}',
+                'affiliation': '${order.shipment.address.fullName}',
                 'revenue': '${(order.amount + order.shipment.amount)?string("0.00")}',
                 'shipping': '${(order.shipment.amount)?string("0.00")}',
                 'currency': 'RUB'

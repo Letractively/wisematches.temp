@@ -56,6 +56,15 @@ public class Address {
 		return lastName;
 	}
 
+	/**
+	 * Returns first name and last name with space between.
+	 *
+	 * @return the first name and the last name with space between.
+	 */
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+
 	public String getPhone() {
 		return phone;
 	}

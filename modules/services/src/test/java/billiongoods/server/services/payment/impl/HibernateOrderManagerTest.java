@@ -99,6 +99,7 @@ public class HibernateOrderManagerTest {
 		final Address address1 = shipment.getAddress();
 		assertEquals("Mock", address1.getFirstName());
 		assertEquals("Name", address1.getLastName());
+		assertEquals("Mock Name", address1.getFullName());
 		assertEquals("123456", address1.getPostcode());
 		assertEquals("MockCity", address1.getCity());
 		assertEquals("MockRegion", address1.getRegion());
