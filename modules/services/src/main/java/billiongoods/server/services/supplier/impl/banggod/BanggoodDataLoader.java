@@ -248,11 +248,16 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 
 	protected StockInfo parseStockInfo(String s) throws ParseException {
 		final String msg = s.replace("\"", "").toLowerCase();
-		if (msg.contains("in stock") ||
-				msg.contains("usually dispatched in 1-3") ||
-				msg.contains("usually dispatched in 2-4") ||
-				msg.contains("usually dispatched in 3-6")) {
-			return new StockInfo(null, null);
+		if (msg.contains("usually dispatched in 1 business")) {
+			return new StockInfo(1);
+		} else if (msg.contains("usually dispatched in 1-3 business")) {
+			return new StockInfo(3);
+		} else if (msg.contains("usually dispatched in 2-4 business")) {
+			return new StockInfo(4);
+		} else if (msg.contains("usually dispatched in 3-6 business")) {
+			return new StockInfo(6);
+		} else if (msg.contains("usually dispatched in 6-9 business")) {
+			return new StockInfo(9);
 		} else if (msg.contains("out of stock, expected restock in 15")) {
 			return new StockInfo(null, new Date(System.currentTimeMillis() + DEFAULT_RESTOCK_TIME));
 		} else if (msg.contains("restock on")) {
