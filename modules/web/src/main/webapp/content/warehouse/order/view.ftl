@@ -229,16 +229,24 @@
                     </form>
                 </div>
             <#elseif !order.orderState.finalState>
-                <div class="tracking">
-                    <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
-                        уведомления по e-mail
-                    </button>
-                    <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>
-                        Отключить
-                        уведомления по e-mail
-                    </button>
-                    <span class="sample">(${order.payer})</span>
-                </div>
+                <@bg.security.permitted "moderator";allowed>
+                    <#if allowed>
+                        <form method="get" action="/maintain/order/export">
+                            <button type="submit" name="order" value="${order.id}">Загрузить CSV для импорта</button>
+                        </form>
+                    <#else>
+                        <div class="tracking">
+                            <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
+                                уведомления по e-mail
+                            </button>
+                            <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>
+                                Отключить
+                                уведомления по e-mail
+                            </button>
+                            <span class="sample">(${order.payer})</span>
+                        </div>
+                    </#if>
+                </@bg.security.permitted>
             </#if>
         </div>
     </div>
@@ -295,7 +303,8 @@
             </td>
             <@bg.security.authorized "moderator">
                 <td valign="middle" nowrap="nowrap">
-                ${product.supplierInfo.referenceCode}
+                    <a href="${product.supplierInfo.referenceUrl.toString()}"
+                       target="_blank">${product.supplierInfo.referenceCode}</a>
                 </td>
             </@bg.security.authorized>
             <td valign="middle" nowrap="nowrap" align="center">
