@@ -16,6 +16,9 @@ public class StockInfo {
 	@Formula("0")
 	private byte dummy; // or stockInfo is null: https://issues.jboss.org/browse/HIBERNATE-50
 
+	@Column(name = "stockDelivery")
+	private int deliveryDays;
+
 	@Column(name = "stockLeftovers")
 	private Integer leftovers;
 
@@ -23,17 +26,34 @@ public class StockInfo {
 	@Temporal(TemporalType.DATE)
 	private Date restockDate;
 
+	private static final int DEFAULT_DELIVERY_DATES = 3;
+
 	public StockInfo() {
+		this(DEFAULT_DELIVERY_DATES);
+	}
+
+	public StockInfo(int deliveryDays) {
+		this(deliveryDays, null, null);
 	}
 
 	public StockInfo(StockInfo stockInfo) {
-		this(stockInfo != null ? stockInfo.getLeftovers() : null,
+		this(stockInfo != null ? stockInfo.getDeliveryDays() : DEFAULT_DELIVERY_DATES,
+				stockInfo != null ? stockInfo.getLeftovers() : null,
 				stockInfo != null ? stockInfo.getRestockDate() : null);
 	}
 
 	public StockInfo(Integer leftovers, Date restockDate) {
+		this(DEFAULT_DELIVERY_DATES, leftovers, restockDate);
+	}
+
+	private StockInfo(int deliveryDays, Integer leftovers, Date restockDate) {
+		this.deliveryDays = deliveryDays;
 		this.leftovers = leftovers;
 		this.restockDate = restockDate;
+	}
+
+	public int getDeliveryDays() {
+		return deliveryDays;
 	}
 
 	public Integer getLeftovers() {
@@ -63,16 +83,20 @@ public class StockInfo {
 		if (this == o) return true;
 		if (!(o instanceof StockInfo)) return false;
 
-		StockInfo that = (StockInfo) o;
+		StockInfo stockInfo = (StockInfo) o;
 
-		if (leftovers != null ? !leftovers.equals(that.leftovers) : that.leftovers != null) return false;
-		if (restockDate != null ? !restockDate.equals(that.restockDate) : that.restockDate != null) return false;
+		if (deliveryDays != stockInfo.deliveryDays) return false;
+		if (leftovers != null ? !leftovers.equals(stockInfo.leftovers) : stockInfo.leftovers != null) return false;
+		if (restockDate != null ? !restockDate.equals(stockInfo.restockDate) : stockInfo.restockDate != null)
+			return false;
+
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = leftovers != null ? leftovers.hashCode() : 0;
+		int result = deliveryDays;
+		result = 31 * result + (leftovers != null ? leftovers.hashCode() : 0);
 		result = 31 * result + (restockDate != null ? restockDate.hashCode() : 0);
 		return result;
 	}

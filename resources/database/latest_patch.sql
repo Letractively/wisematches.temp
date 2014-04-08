@@ -1,3 +1,16 @@
+#08.04.14
+ALTER TABLE `billiongoods`.`store_product`
+ADD COLUMN `stockDelivery` INT NULL DEFAULT 3
+AFTER `soldCount`;
+
+ALTER TABLE `billiongoods`.`service_validation`
+ADD COLUMN `odd` INT NULL DEFAULT 3
+AFTER `ord`,
+ADD COLUMN `ndd` INT NULL DEFAULT 3
+AFTER `nrd`;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('080414');
+
 #14.02.14
 ALTER TABLE `billiongoods`.`store_order`
 ADD COLUMN `phone` VARCHAR(20) NULL DEFAULT NULL
@@ -9,7 +22,6 @@ CHANGE COLUMN `region` `region` VARCHAR(145) NULL DEFAULT NULL,
 CHANGE COLUMN `city` `city` VARCHAR(145) NULL DEFAULT NULL,
 ADD COLUMN `phone` VARCHAR(20) NULL DEFAULT NULL
 AFTER `lastName`;
-
 
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('140214');
 
