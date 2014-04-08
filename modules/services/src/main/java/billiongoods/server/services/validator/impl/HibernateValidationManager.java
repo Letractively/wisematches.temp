@@ -79,12 +79,17 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 		}
 		log.info("Validation progress was interrupted");
 
-		validationProgress = taskExecutor.submit(new Runnable() {
-			@Override
-			public void run() {
-				doValidation();
-			}
-		});
+		validationProgress = taskExecutor.submit(this::doStartValidation);
+	}
+
+	@Override
+	public synchronized void resumeValidation() {
+		if (isInProgress()) {
+			return;
+		}
+		log.info("Validation progress was interrupted");
+
+		validationProgress = taskExecutor.submit(this::doResumeValidation);
 	}
 
 	@Override
@@ -105,50 +110,36 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 		return validationSummary;
 	}
 
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public void validateBroken() {
+	private void doResumeValidation() {
+		final Session session = sessionFactory.openSession();
 		try {
-			final List<ValidatingProduct> brokenProducts = validationSummary.startNextIteration();
-			Collections.shuffle(brokenProducts);
+			validationSummary.finalize(null);
+
+			for (ValidationListener listener : listeners) {
+				listener.validationStarted(validationSummary);
+			}
 
 			dataLoader.initialize();
-			for (Iterator<ValidatingProduct> iterator = brokenProducts.iterator(); iterator.hasNext() && !isInterrupted(); ) {
-				final ValidatingProduct product = iterator.next();
+			validateProducts(validationSummary.startNextIteration());
 
-				final HibernateValidationChange validation = validateProduct(product);
-				if (validation == null || !validation.isValidated()) {
-					validationSummary.registerBroken(product);
-					Thread.sleep(100);
-				} else {
-					iterator.remove();
+			validationSummary.finalize(new Date());
+			log.info("Validation has been finished: " + validationSummary);
 
-					if (validation.hasChanges()) {
-						validationSummary.registerValidation(validation);
-						processValidationChange(validation);
-					}
-				}
-				validationSummary.incrementProcessed();
+			for (ValidationListener listener : listeners) {
+				listener.validationFinished(validationSummary);
 			}
-		} catch (InterruptedException ignore) {
+		} catch (Exception ex) {
+			log.error("Validation error found", ex);
+		} finally {
+			session.close();
+		}
+
+		synchronized (this) {
+			validationProgress = null;
 		}
 	}
 
-	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public void validateExchangeRate() {
-		final Session session = sessionFactory.openSession();
-
-		final String buyPriceF = priceConverter.formula("p.supplierInfo.price.amount", "ROUND", MarkupType.REGULAR);
-		final String buyPrimordialPriceF = priceConverter.formula("p.supplierInfo.price.primordialAmount", "ROUND", MarkupType.REGULAR);
-
-		final Query query = session.createQuery("update from billiongoods.server.warehouse.impl.HibernateProduct p set " +
-				"p.price.amount = " + buyPriceF + ", " +
-				"p.price.primordialAmount = " + buyPrimordialPriceF);
-		query.executeUpdate();
-	}
-
-	private void doValidation() {
+	private void doStartValidation() {
 		final Session session = sessionFactory.openSession();
 		try {
 			final Query countQuery = session.createQuery("select count(*) from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states)");
@@ -165,35 +156,22 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 			log.info("Start iteration {}", validationSummary.getIteration());
 			List<ValidatingProduct> details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
 			while (details != null && !isInterrupted()) {
-				try {
-					for (Iterator<ValidatingProduct> iterator = details.iterator(); iterator.hasNext() && !isInterrupted(); ) {
-						ValidatingProduct product = iterator.next();
-						final HibernateValidationChange validation = validateProduct(product);
-						if (validation == null || !validation.isValidated()) {
-							validationSummary.registerBroken(product);
-							Thread.sleep(100);
-						} else if (validation.hasChanges()) {
-							validationSummary.registerValidation(validation);
-							processValidationChange(validation);
-						}
-						validationSummary.incrementProcessed();
-					}
-					position += BULK_PRODUCTS_SIZE;
-					details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
-				} catch (InterruptedException ignore) {
-					break;
-				}
+				validateProducts(details);
+
+				position += BULK_PRODUCTS_SIZE;
+				details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
 			}
 
 			while (!isInterrupted() && validationSummary.getIteration() < 4) {
 				try {
 					log.info("Waiting 10 minutes before next iteration: {}", validationSummary.getIteration() + 1);
-					Thread.sleep(TimeUnit.MINUTES.toMillis(10)); // Wait 30 minutes
-
-					validateBroken();
+					Thread.sleep(TimeUnit.MINUTES.toMillis(5)); // Wait a few before next iteration
 				} catch (InterruptedException ex) {
 					break;
 				}
+
+				dataLoader.initialize();
+				validateProducts(validationSummary.startNextIteration());
 			}
 
 			validationSummary.finalize(new Date());
@@ -211,6 +189,39 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 		synchronized (this) {
 			validationProgress = null;
 		}
+	}
+
+	private void validateProducts(List<ValidatingProduct> products) {
+		Collections.shuffle(products);
+
+		products.stream().forEach((product) -> {
+			if (!isInterrupted()) {
+				final HibernateValidationChange validation = validateProduct(product);
+				if (validation == null || !validation.isValidated()) {
+					validationSummary.registerBroken(product);
+				} else {
+					if (validation.hasChanges()) {
+						validationSummary.registerValidation(validation);
+						processValidationChange(validation);
+					}
+				}
+				validationSummary.incrementProcessed();
+			}
+		});
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void validateExchangeRate() {
+		final Session session = sessionFactory.openSession();
+
+		final String buyPriceF = priceConverter.formula("p.supplierInfo.price.amount", "ROUND", MarkupType.REGULAR);
+		final String buyPrimordialPriceF = priceConverter.formula("p.supplierInfo.price.primordialAmount", "ROUND", MarkupType.REGULAR);
+
+		final Query query = session.createQuery("update from billiongoods.server.warehouse.impl.HibernateProduct p set " +
+				"p.price.amount = " + buyPriceF + ", " +
+				"p.price.primordialAmount = " + buyPrimordialPriceF);
+		query.executeUpdate();
 	}
 
 	private void processValidationChange(HibernateValidationChange validation) {
