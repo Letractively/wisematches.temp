@@ -13,8 +13,8 @@ public interface ValidationManager {
 
 	void cancelValidation();
 
+	void resumeValidation();
 
-	void validateBroken();
 
 	void validateExchangeRate();
 

@@ -107,7 +107,7 @@ public class ServiceController extends AbstractController {
 			}
 		} else if ("broken".equalsIgnoreCase(action)) {
 			if (!validationManager.isInProgress()) {
-				validationManager.validateBroken();
+				validationManager.resumeValidation();
 			}
 		}
 		return "redirect:/maintain/service/validation";
