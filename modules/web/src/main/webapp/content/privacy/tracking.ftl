@@ -41,7 +41,7 @@
                     <#elseif t.trackingType = "AVAILABILITY">
                         <#assign stockState=product.stockInfo.stockState/>
                         <#if stockState=StockState.IN_STOCK>
-                            доступ для заказа
+                            доступен для заказа
                         <#elseif stockState=StockState.LIMITED_NUMBER>
                             осталось ${product.stockInfo.leftovers}
                         <#else>

@@ -45,6 +45,8 @@ public interface ProductManager extends SearchManager<ProductPreview, ProductCon
 
 	void updateSold(Integer id, int quantity);
 
+	void updateState(Integer id, ProductState state);
+
 	void updateRecommendation(Integer id, boolean recommended);
 
 	void updateProductInformation(Integer id, Price price, Price supplierPrice, StockInfo stockInfo);

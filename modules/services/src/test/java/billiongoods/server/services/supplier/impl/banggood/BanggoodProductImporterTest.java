@@ -1,4 +1,4 @@
-package billiongoods.server.services.supplier.impl.banggod;
+package billiongoods.server.services.supplier.impl.banggood;
 
 import billiongoods.server.services.price.PriceConverter;
 import billiongoods.server.services.price.impl.HibernatePriceConverter;

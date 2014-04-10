@@ -3,7 +3,7 @@ package billiongoods.server.services.price.impl;
 import au.com.bytecode.opencsv.CSVReader;
 import billiongoods.server.services.price.MarkupType;
 import billiongoods.server.services.price.PriceConverter;
-import billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader;
+import billiongoods.server.services.supplier.impl.banggood.BanggoodDataLoader;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.Supplier;
 import billiongoods.server.warehouse.impl.HibernateSupplierInfo;

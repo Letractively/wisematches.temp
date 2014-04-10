@@ -46,7 +46,7 @@ public class StockInfo {
 		this(DEFAULT_DELIVERY_DATES, leftovers, restockDate);
 	}
 
-	private StockInfo(int deliveryDays, Integer leftovers, Date restockDate) {
+	public StockInfo(int deliveryDays, Integer leftovers, Date restockDate) {
 		this.deliveryDays = deliveryDays;
 		this.leftovers = leftovers;
 		this.restockDate = restockDate;
@@ -61,15 +61,15 @@ public class StockInfo {
 	}
 
 	public StockState getStockState() {
-		if (leftovers != null) {
-			if (leftovers == 0) {
+		if (restockDate != null) { // Have restock date? OUT_STOCK
+			return StockState.OUT_STOCK;
+		}
+		if (leftovers != null) { // Have number?
+			if (leftovers <= 0) { // it's less when zero - SOLD_OUT
 				return StockState.SOLD_OUT;
-			} else {
+			} else if (leftovers < 12) { // Less than 12 - limited number
 				return StockState.LIMITED_NUMBER;
 			}
-		}
-		if (restockDate != null) {
-			return StockState.OUT_STOCK;
 		}
 		return StockState.IN_STOCK;
 	}
@@ -104,7 +104,8 @@ public class StockInfo {
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("StockInfo{");
-		sb.append("leftovers=").append(leftovers);
+		sb.append("deliveryDays=").append(deliveryDays);
+		sb.append(", leftovers=").append(leftovers);
 		sb.append(", restockDate=").append(restockDate);
 		sb.append('}');
 		return sb.toString();

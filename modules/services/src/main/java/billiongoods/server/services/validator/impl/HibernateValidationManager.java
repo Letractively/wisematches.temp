@@ -162,10 +162,10 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 				details = loadProductDetails(session, position, BULK_PRODUCTS_SIZE);
 			}
 
-			while (!isInterrupted() && validationSummary.getIteration() < 4) {
+			while (!isInterrupted() && validationSummary.getIteration() < 7) {
 				try {
 					log.info("Waiting 10 minutes before next iteration: {}", validationSummary.getIteration() + 1);
-					Thread.sleep(TimeUnit.MINUTES.toMillis(5)); // Wait a few before next iteration
+					Thread.sleep(TimeUnit.MINUTES.toMillis(1)); // Wait a few before next iteration
 				} catch (InterruptedException ex) {
 					break;
 				}
@@ -196,14 +196,23 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 
 		products.stream().forEach((product) -> {
 			if (!isInterrupted()) {
-				final HibernateValidationChange validation = validateProduct(product);
-				if (validation == null || !validation.isValidated()) {
-					validationSummary.registerBroken(product);
-				} else {
-					if (validation.hasChanges()) {
-						validationSummary.registerValidation(validation);
-						processValidationChange(validation);
+				try {
+					final HibernateValidationChange validation = validateProduct(product);
+					if (validation == null) {
+						validationSummary.registerLost(product);
+						processProductLost(product);
+					} else if (!validation.isValidated()) {
+						validationSummary.registerBroken(product);
+						processProductBroken(validation);
+					} else {
+						if (validation.hasChanges()) {
+							validationSummary.registerValidation(validation);
+							processProductUpdate(validation);
+						}
 					}
+				} catch (DataLoadingException ex) {
+					log.info("Product state can't be loaded: {} - {}", product.getId(), ex.getMessage());
+					validationSummary.registerBroken(product);
 				}
 				validationSummary.incrementProcessed();
 			}
@@ -224,7 +233,22 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 		query.executeUpdate();
 	}
 
-	private void processValidationChange(HibernateValidationChange validation) {
+	private void processProductLost(ValidatingProduct product) {
+		final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
+		try {
+			productManager.updateState(product.getId(), ProductState.DISCONTINUED);
+
+			transactionManager.commit(transaction);
+		} catch (Exception ex) {
+			transactionManager.rollback(transaction);
+			log.error("Product state can't be updated", ex);
+		}
+	}
+
+	private void processProductBroken(HibernateValidationChange validation) {
+	}
+
+	private void processProductUpdate(HibernateValidationChange validation) {
 		final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
 		try {
 			sessionFactory.getCurrentSession().save(validation);
@@ -273,26 +297,21 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 		return res;
 	}
 
-	private HibernateValidationChange validateProduct(ValidatingProduct detail) {
-		try {
-			final SupplierDescription description = dataLoader.loadDescription(detail.getSupplierInfo());
-			if (description != null) {
-				final HibernateValidationChange change = new HibernateValidationChange(detail, detail.getPrice(),
-						detail.getSupplierInfo().getPrice(), detail.getStockInfo());
+	private HibernateValidationChange validateProduct(ValidatingProduct detail) throws DataLoadingException {
+		final SupplierDescription description = dataLoader.loadDescription(detail.getSupplierInfo());
+		if (description != null) {
+			final HibernateValidationChange change = new HibernateValidationChange(detail, detail.getPrice(),
+					detail.getSupplierInfo().getPrice(), detail.getStockInfo());
 
-				final Price supplierPrice = description.getPrice();
-				final StockInfo stockInfo = description.getStockInfo();
-				if (supplierPrice != null && stockInfo != null) {
-					final Price price = priceConverter.convert(supplierPrice, MarkupType.REGULAR);
-					change.validated(price, supplierPrice, stockInfo);
-				}
-				return change;
+			final Price supplierPrice = description.getPrice();
+			final StockInfo stockInfo = description.getStockInfo();
+			if (supplierPrice != null && stockInfo != null) {
+				final Price price = priceConverter.convert(supplierPrice, MarkupType.REGULAR);
+				change.validated(price, supplierPrice, stockInfo);
 			}
-			return null;
-		} catch (DataLoadingException ex) {
-			log.info("Product state can't be loaded: {} - {}", detail.getId(), ex.getMessage());
-			return null;
+			return change;
 		}
+		return null;
 	}
 
 	public void setTaskExecutor(AsyncTaskExecutor taskExecutor) {

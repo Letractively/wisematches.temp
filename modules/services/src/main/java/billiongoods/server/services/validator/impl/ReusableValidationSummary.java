@@ -22,6 +22,7 @@ public class ReusableValidationSummary implements ValidationSummary {
 	private volatile int totalCount = 0;
 	private volatile int processedProducts = 0;
 
+	private Collection<ValidatingProduct> lostProducts = new ConcurrentLinkedQueue<>();
 	private Collection<ValidatingProduct> brokenProducts = new ConcurrentLinkedQueue<>();
 	private final Collection<ValidationChange> updatedProducts = new ConcurrentLinkedQueue<>();
 
@@ -52,6 +53,10 @@ public class ReusableValidationSummary implements ValidationSummary {
 		processedProducts++;
 	}
 
+	void registerLost(ValidatingProduct product) {
+		lostProducts.add(product);
+	}
+
 	void registerBroken(ValidatingProduct product) {
 		brokenProducts.add(product);
 	}
@@ -69,8 +74,14 @@ public class ReusableValidationSummary implements ValidationSummary {
 		this.totalCount = totalCount;
 		this.processedProducts = 0;
 
+		lostProducts.clear();
 		brokenProducts.clear();
 		updatedProducts.clear();
+	}
+
+	@Override
+	public Collection<ValidatingProduct> getLostProducts() {
+		return lostProducts;
 	}
 
 	@Override

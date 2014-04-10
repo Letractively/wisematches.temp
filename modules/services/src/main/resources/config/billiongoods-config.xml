@@ -70,7 +70,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="banggoodDataLoader" class="billiongoods.server.services.supplier.impl.banggod.BanggoodDataLoader"/>
+    <bean id="banggoodDataLoader" class="billiongoods.server.services.supplier.impl.banggood.BanggoodMobileDataLoader"/>
 
     <bean id="validationManager" class="billiongoods.server.services.validator.impl.HibernateValidationManager">
         <property name="sessionFactory" ref="sessionFactory"/>
@@ -91,7 +91,7 @@
         <property name="dataLoader" ref="banggoodDataLoader"/>
     </bean>
 
-    <bean id="productsImporter" class="billiongoods.server.services.supplier.impl.banggod.BanggoodProductImporter">
+    <bean id="productsImporter" class="billiongoods.server.services.supplier.impl.banggood.BanggoodProductImporter">
         <property name="imageManager" ref="imageManager"/>
         <property name="productManager" ref="productManager"/>
         <property name="priceLoader" ref="banggoodDataLoader"/>

@@ -1,4 +1,4 @@
-package billiongoods.server.services.supplier.impl.banggod;
+package billiongoods.server.services.supplier.impl.banggood;
 
 import au.com.bytecode.opencsv.CSVReader;
 import billiongoods.server.services.image.ImageManager;
