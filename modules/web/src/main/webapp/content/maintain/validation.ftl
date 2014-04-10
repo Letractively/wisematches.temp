@@ -23,6 +23,7 @@ ${info.stockState.name()}
     <#elseif info.leftovers??>
     (остаток ${info.leftovers})
     </#if>
+[${info.deliveryDays}]
 </#macro>
 
 <#macro priceInfo price>
@@ -45,18 +46,93 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
         <td>${context.processedProducts} из ${context.totalCount} (итерация ${context.iteration})</td>
     </tr>
     <tr>
+        <td>Ошибок:</td>
+        <td>${context.brokenProducts?size}</td>
+    </tr>
+    <tr>
+        <td>Потеряно:</td>
+        <td>${context.lostProducts?size}</td>
+    </tr>
+    <tr>
         <td>Обновлено:</td>
         <td>${context.updatedProducts?size}</td>
     </tr>
     <tr>
         <td>Без изменений:</td>
-        <td>${context.processedProducts - context.updatedProducts?size - context.brokenProducts?size}</td>
-    </tr>
-    <tr>
-        <td>Ошибок проверки:</td>
-        <td>${context.brokenProducts?size}</td>
+        <td>${context.processedProducts - context.updatedProducts?size - context.brokenProducts?size - context.lostProducts?size}</td>
     </tr>
 </table>
+
+
+<#if context.lostProducts?has_content>
+<div>
+    Удаленные продукты:
+    <table>
+        <tr>
+            <th>Артикул</th>
+            <th>Banggood</th>
+            <th>Текущая цена</th>
+            <th>Цена до скидки</th>
+        </tr>
+
+        <#list context.lostProducts as b>
+            <tr>
+                <td>
+                    <a href="http://www.billiongoods.ru/maintain/product?id=${b.id}">${messageSource.getProductCode(b.id)}</a>
+                </td>
+                <td>
+                    <a href="${b.supplierInfo.referenceUrl.toString()}">${b.supplierInfo.referenceCode}</a>
+                </td>
+                <td>
+                ${b.price.amount?string("0.00")}
+                </td>
+                <td>
+                    <#if b.price.primordialAmount??>${b.price.primordialAmount?string("0.00")}</#if>
+                </td>
+            </tr>
+        </#list>
+    </table>
+</div>
+</#if>
+
+<br>
+
+<#if context.brokenProducts?has_content>
+<div>
+    Ошибки при проверки:
+    <table>
+        <tr>
+            <th>Артикул</th>
+            <th>Banggood</th>
+            <th>Текущая цена</th>
+            <th>Цена до скидки</th>
+            <th>Наличие</th>
+        </tr>
+
+        <#list context.brokenProducts as b>
+            <tr>
+                <td>
+                    <a href="http://www.billiongoods.ru/maintain/product?id=${b.id}">${messageSource.getProductCode(b.id)}</a>
+                </td>
+                <td>
+                    <a href="${b.supplierInfo.referenceUrl.toString()}">${b.supplierInfo.referenceCode}</a>
+                </td>
+                <td>
+                ${b.price.amount?string("0.00")}
+                </td>
+                <td>
+                    <#if b.price.primordialAmount??>${b.price.primordialAmount?string("0.00")}</#if>
+                </td>
+                <td>
+                    <@stockInfo b.stockInfo/>
+                </td>
+            </tr>
+        </#list>
+    </table>
+</div>
+</#if>
+
+<br>
 
 <#if context.updatedProducts?has_content>
 <div>
@@ -121,43 +197,6 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
                         </#if>
                     </td>
                 </#if>
-            </tr>
-        </#list>
-    </table>
-</div>
-</#if>
-
-<br>
-
-<#if context.brokenProducts?has_content>
-<div>
-    Ошибки при проверки:
-    <table>
-        <tr>
-            <th>Артикул</th>
-            <th>Banggood</th>
-            <th>Текущая цена</th>
-            <th>Цена до скидки</th>
-            <th>Наличие</th>
-        </tr>
-
-        <#list context.brokenProducts as b>
-            <tr>
-                <td>
-                    <a href="http://www.billiongoods.ru/maintain/product?id=${b.id}">${messageSource.getProductCode(b.id)}</a>
-                </td>
-                <td>
-                    <a href="${b.supplierInfo.referenceUrl.toString()}">${b.supplierInfo.referenceCode}</a>
-                </td>
-                <td>
-                ${b.price.amount?string("0.00")}
-                </td>
-                <td>
-                    <#if b.price.primordialAmount??>${b.price.primordialAmount?string("0.00")}</#if>
-                </td>
-                <td>
-                    <@stockInfo b.stockInfo/>
-                </td>
             </tr>
         </#list>
     </table>

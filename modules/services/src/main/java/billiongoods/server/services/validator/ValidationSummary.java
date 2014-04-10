@@ -22,5 +22,8 @@ public interface ValidationSummary {
 
 	Collection<ValidationChange> getUpdatedProducts();
 
+
+	Collection<ValidatingProduct> getLostProducts();
+
 	Collection<ValidatingProduct> getBrokenProducts();
 }

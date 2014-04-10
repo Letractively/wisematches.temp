@@ -296,6 +296,26 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 	}
 
 	@Override
+	public void updateState(Integer id, ProductState state) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final ProductPreview product = getPreview(id);
+		if (product != null) {
+			final ProductState oldState = product.getState();
+			if (!oldState.equals(state)) {
+				final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct a set a.state=:state where a.id=:id");
+				query.setParameter("id", id);
+				query.setParameter("state", state);
+				query.executeUpdate();
+
+				for (ProductStateListener validationListener : stateListeners) {
+					validationListener.productStateChanged(product, oldState, state);
+				}
+			}
+		}
+	}
+
+	@Override
 	public void updateRecommendation(Integer id, boolean recommended) {
 		final Session session = sessionFactory.getCurrentSession();
 		final Query query = session.createQuery("update billiongoods.server.warehouse.impl.HibernateProduct a set a.recommended=:recommended where a.id=:id");

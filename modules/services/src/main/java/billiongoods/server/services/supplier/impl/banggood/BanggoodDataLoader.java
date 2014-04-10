@@ -1,4 +1,4 @@
-package billiongoods.server.services.supplier.impl.banggod;
+package billiongoods.server.services.supplier.impl.banggood;
 
 import billiongoods.server.services.supplier.DataLoadingException;
 import billiongoods.server.services.supplier.SupplierDataLoader;
@@ -43,6 +43,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
+ * TODO: refactor for Java8 time library
+ *
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean, DisposableBean {
@@ -55,6 +57,7 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 	private static final int DEFAULT_TIMEOUT = 5000;
 	private static final int DEFAULT_RESTOCK_TIME = 15 * 24 * 60 * 60 * 1000;
 	private static final Calendar CALENDAR = Calendar.getInstance();
+
 	private static final HttpHost HOST = new HttpHost("www.banggood.com");
 
 	private static final SimpleDateFormat FULL_RESTOCK_DATE_FROMAT = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
@@ -158,11 +161,20 @@ public class BanggoodDataLoader implements SupplierDataLoader, InitializingBean,
 
 	@Override
 	public SupplierDescription loadDescription(SupplierInfo supplierInfo) throws DataLoadingException {
+		if (true) {
+			return loadV2(supplierInfo);
+		}
+
+
 //		final Price price = loadStockPrice(supplierInfo);
 		final StockInfo stockInfo = loadStockInfo(supplierInfo);
 		final ProductDetails details = loadProductDetails(supplierInfo);
 //		return new DefaultSupplierDescription(price, stockInfo, null);
 		return new DefaultSupplierDescription(details.getPrice(), stockInfo, details.getParameters());
+	}
+
+	protected SupplierDescription loadV2(SupplierInfo info) {
+		return null;
 	}
 
 	protected Price loadStockPrice(SupplierInfo supplier) throws DataLoadingException {
