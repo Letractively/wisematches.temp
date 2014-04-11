@@ -856,6 +856,10 @@ button.bg-ui-button.selected {
     border-top: 1px dashed #ebebeb;
 }
 
+.product .stock .out_stock, .product .stock .sold_out {
+    color: darkred;
+}
+
 .product .props {
     padding-top: 10px;
 }

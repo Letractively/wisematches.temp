@@ -1,11 +1,25 @@
 <#-- @ftlvariable name="context" type="billiongoods.server.services.validator.ValidationSummary" -->
 
+<style type="text/css">
+    table.info th {
+        vertical-align: bottom;
+        font-weight: bold;
+        border: 1px solid #808080;
+        border-collapse: collapse;
+    }
+
+    table.info td {
+        vertical-align: top;
+        border-bottom: 1px dotted #d3d3d3;
+        border-collapse: collapse;
+    }
+</style>
+
 <#macro stockInfo info>
-${info.stockState.name()}
-    <#if info.restockDate??>
-    (${messageSource.formatDate(info.restockDate, locale)})
-    <#elseif info.leftovers??>
-    (остаток ${info.leftovers})
+${info.stockState.name()} / ${info.shipDays} (${info.count})
+    <#if info.arrivalDate??>
+    <br>
+    (${messageSource.formatDate(info.arrivalDate, locale)})
     </#if>
 </#macro>
 
@@ -45,10 +59,12 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
     </tr>
 </table>
 
+<br><br>
+
 <#if context.lostProducts?has_content>
 <div>
     Удаленные продукты:
-    <table>
+    <table class="info">
         <tr>
             <th>Артикул</th>
             <th>Banggood</th>
@@ -81,7 +97,7 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
 <#if context.brokenProducts?has_content>
 <div>
     Ошибки при проверки:
-    <table>
+    <table class="info">
         <tr>
             <th>Артикул</th>
             <th>Banggood</th>
@@ -118,14 +134,19 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
 <#if context.updatedProducts?has_content>
 <div>
     Обновленные товары:
-    <table>
+    <table class="info">
         <tr>
-            <th>Артикул</th>
-            <th>Старая цена (до скидки)</th>
-            <th>Новая цена (до скидки)</th>
-            <th>Изменение (до скидки)</th>
-            <th>Старое наличие</th>
-            <th>Новое наличие</th>
+            <th rowspan="2">Артикул</th>
+            <th colspan="3">Цена (до скидки)</th>
+            <th colspan="2">Наличие</th>
+        </tr>
+
+        <tr>
+            <th>Старая</th>
+            <th>Новая</th>
+            <th>Изменение</th>
+            <th>Старое</th>
+            <th>Новое</th>
         </tr>
 
         <#list context.updatedProducts as v>

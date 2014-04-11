@@ -21,7 +21,7 @@ public enum ProductState {
 
 	/**
 	 * Indicates that product is discontinued. Depends on settings we can show or hide such products.
-	 * <p/>
+	 * <p>
 	 * Usually it's pre-removed state.
 	 */
 	DISCONTINUED,
@@ -29,25 +29,5 @@ public enum ProductState {
 	/**
 	 * Product has been removed
 	 */
-	REMOVED;
-
-	public boolean isDisabled() {
-		return this == DISABLED;
-	}
-
-	public boolean isPromoted() {
-		return this == PROMOTED;
-	}
-
-	public boolean isActive() {
-		return this == ACTIVE;
-	}
-
-	public boolean isDiscontinued() {
-		return this == DISCONTINUED;
-	}
-
-	public boolean isRemoved() {
-		return this == REMOVED;
-	}
+	REMOVED
 }

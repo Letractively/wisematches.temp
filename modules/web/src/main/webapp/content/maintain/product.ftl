@@ -15,7 +15,7 @@
 <form action="/maintain/product" method="post">
 <table style="width: 100%">
 <#if form.id?has_content>
-    <#if !form.productState.active>
+    <#if form.productState != ProductState.ACTIVE>
     <tr id="inactiveWarning">
         <td colspan="2" align="center" class="${form.productState.name()?lower_case}">
             Внимание! Товар не в активном состоянии: ${form.productState.name()}
@@ -132,14 +132,18 @@
     </td>
 </tr>
 <tr>
-    <td><label for="restockDate">Дата поставки: </label></td>
-    <td><@bg.ui.input path="form.restockDate"/></td>
-</tr>
-<tr>
-    <td><label for="storeAvailable">Количество на складе: </label></td>
-    <td><@bg.ui.input path="form.storeAvailable">
+    <td><label for="stockCount">Количество: </label></td>
+    <td><@bg.ui.input path="form.stockCount" value=0>
         <button id="notAvailable" type="button">Нет в наличии</button>
         <button id="available" type="button">В наличии</button></@bg.ui.input></td>
+</tr>
+<tr>
+    <td><label for="stockArrivalDate">Дата поставки: </label></td>
+    <td><@bg.ui.input path="form.stockArrivalDate"/></td>
+</tr>
+<tr>
+    <td><label for="stockShipDays">Доставка, дней: </label></td>
+    <td><@bg.ui.input path="form.stockShipDays" value=3/></td>
 </tr>
 
 <tr>
@@ -511,8 +515,8 @@ var loadSupplierDescription = function () {
 
                         if (data.stockInfo.leftovers != null) {
                             info += "осталось " + data.stockInfo.leftovers;
-                        } else if (data.stockInfo.restockDate != null) {
-                            info += "дата поставки " + data.stockInfo.restockDate;
+                        } else if (data.stockInfo.stockArrivalDate != null) {
+                            info += "дата поставки " + data.stockInfo.stockArrivalDate;
                         } else {
                             info += "доступен";
                         }
@@ -718,7 +722,7 @@ $(".image img").click(function () {
     $(this).parent().find("input[name=previewImage]").prop('checked', 'checked');
 });
 
-$("#restockDate").datepicker({ "dateFormat": "yy.mm.dd"});
+$("#stockArrivalDate").datepicker({ "dateFormat": "yy-mm-dd"}); // ISO 8601
 
 $("#name").change(function () {
     $.post("/maintain/product/symbolic.ajax?name=" + $(this).val())
@@ -734,10 +738,10 @@ $("#name").change(function () {
 });
 
 $("#notAvailable").click(function () {
-    $("#storeAvailable").val("0");
+    $("#stockCount").val("0");
 });
 
 $("#available").click(function () {
-    $("#storeAvailable").val("");
+    $("#stockCount").val("");
 });
 </script>

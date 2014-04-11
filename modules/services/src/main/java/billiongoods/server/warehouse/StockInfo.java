@@ -1,81 +1,58 @@
 package billiongoods.server.warehouse;
 
-import org.hibernate.annotations.Formula;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Embeddable
 public class StockInfo {
-	@Formula("0")
-	private byte dummy; // or stockInfo is null: https://issues.jboss.org/browse/HIBERNATE-50
+	@Column(name = "stockCount")
+	private int count;
 
-	@Column(name = "stockDelivery")
-	private int deliveryDays;
+	@Column(name = "stockShipDays")
+	private int shipDays;
 
-	@Column(name = "stockLeftovers")
-	private Integer leftovers;
+	@Column(name = "stockArrivalDate")
+	private LocalDate arrivalDate;
 
-	@Column(name = "stockRestockDate")
-	@Temporal(TemporalType.DATE)
-	private Date restockDate;
-
-	private static final int DEFAULT_DELIVERY_DATES = 3;
+	private static final int DEFAULT_SHIP_DAYS = 3;
 
 	public StockInfo() {
-		this(DEFAULT_DELIVERY_DATES);
+		this(0, DEFAULT_SHIP_DAYS);
 	}
 
-	public StockInfo(int deliveryDays) {
-		this(deliveryDays, null, null);
+	public StockInfo(int count, int shipDays) {
+		this(count, shipDays, null);
 	}
 
-	public StockInfo(StockInfo stockInfo) {
-		this(stockInfo != null ? stockInfo.getDeliveryDays() : DEFAULT_DELIVERY_DATES,
-				stockInfo != null ? stockInfo.getLeftovers() : null,
-				stockInfo != null ? stockInfo.getRestockDate() : null);
+	public StockInfo(int count, int shipDays, LocalDate arrivalDate) {
+		this.count = count;
+		this.shipDays = shipDays;
+		this.arrivalDate = arrivalDate;
 	}
 
-	public StockInfo(Integer leftovers, Date restockDate) {
-		this(DEFAULT_DELIVERY_DATES, leftovers, restockDate);
+
+	public int getCount() {
+		return count;
 	}
 
-	public StockInfo(int deliveryDays, Integer leftovers, Date restockDate) {
-		this.deliveryDays = deliveryDays;
-		this.leftovers = leftovers;
-		this.restockDate = restockDate;
+	public int getShipDays() {
+		return shipDays;
 	}
 
-	public int getDeliveryDays() {
-		return deliveryDays;
+	public LocalDate getArrivalDate() {
+		return arrivalDate;
 	}
 
-	public Integer getLeftovers() {
-		return leftovers;
-	}
 
 	public StockState getStockState() {
-		if (restockDate != null) { // Have restock date? OUT_STOCK
-			return StockState.OUT_STOCK;
+		if (count > 0) {
+			return StockState.IN_STOCK;
 		}
-		if (leftovers != null) { // Have number?
-			if (leftovers <= 0) { // it's less when zero - SOLD_OUT
-				return StockState.SOLD_OUT;
-			} else if (leftovers < 12) { // Less than 12 - limited number
-				return StockState.LIMITED_NUMBER;
-			}
-		}
-		return StockState.IN_STOCK;
-	}
-
-	public Date getRestockDate() {
-		return restockDate;
+		return arrivalDate != null ? StockState.OUT_STOCK : StockState.SOLD_OUT;
 	}
 
 	@Override
@@ -85,9 +62,9 @@ public class StockInfo {
 
 		StockInfo stockInfo = (StockInfo) o;
 
-		if (deliveryDays != stockInfo.deliveryDays) return false;
-		if (leftovers != null ? !leftovers.equals(stockInfo.leftovers) : stockInfo.leftovers != null) return false;
-		if (restockDate != null ? !restockDate.equals(stockInfo.restockDate) : stockInfo.restockDate != null)
+		if (count != stockInfo.count) return false;
+		if (shipDays != stockInfo.shipDays) return false;
+		if (arrivalDate != null ? !arrivalDate.equals(stockInfo.arrivalDate) : stockInfo.arrivalDate != null)
 			return false;
 
 		return true;
@@ -95,18 +72,18 @@ public class StockInfo {
 
 	@Override
 	public int hashCode() {
-		int result = deliveryDays;
-		result = 31 * result + (leftovers != null ? leftovers.hashCode() : 0);
-		result = 31 * result + (restockDate != null ? restockDate.hashCode() : 0);
+		int result = count;
+		result = 31 * result + shipDays;
+		result = 31 * result + (arrivalDate != null ? arrivalDate.hashCode() : 0);
 		return result;
 	}
 
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("StockInfo{");
-		sb.append("deliveryDays=").append(deliveryDays);
-		sb.append(", leftovers=").append(leftovers);
-		sb.append(", restockDate=").append(restockDate);
+		sb.append("count=").append(count);
+		sb.append(", shipDays=").append(shipDays);
+		sb.append(", arrivalDate=").append(arrivalDate);
 		sb.append('}');
 		return sb.toString();
 	}

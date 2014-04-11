@@ -3,7 +3,7 @@ package billiongoods.server.services.price.impl;
 import au.com.bytecode.opencsv.CSVReader;
 import billiongoods.server.services.price.MarkupType;
 import billiongoods.server.services.price.PriceConverter;
-import billiongoods.server.services.supplier.impl.banggood.BanggoodDataLoader;
+import billiongoods.server.services.supplier.impl.banggood.BanggoodMobileDataLoader;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.Supplier;
 import billiongoods.server.warehouse.impl.HibernateSupplierInfo;
@@ -23,7 +23,7 @@ public class HibernateValidationManagerTest {
 	@Test
 	public void asd() throws Exception {
 		PriceConverter priceConverter = new HibernatePriceConverter(34.2d);
-		BanggoodDataLoader priceLoader = new BanggoodDataLoader();
+		BanggoodMobileDataLoader priceLoader = new BanggoodMobileDataLoader();
 
 		final CSVReader reader = new CSVReader(new FileReader("C:\\Temp\\banggood\\store_product.csv"));
 		String[] nextLine;

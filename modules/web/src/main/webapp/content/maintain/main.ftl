@@ -35,10 +35,10 @@
                         <td valign="top" nowrap="nowrap">
                             <strong>
                                 <#assign stockInfo=p.stockInfo/>
-                                <#if stockInfo.restockDate??>
-                                ${messageSource.formatDate(stockInfo.restockDate, locale)}
-                                <#elseif (stockInfo.leftovers??)>
-                                    осталось ${stockInfo.leftovers}
+                                <#if stockInfo.arrivalDate??>
+                                ${messageSource.formatDate(stockInfo.arrivalDate, locale)}
+                                <#elseif (stockInfo.count??)>
+                                    осталось ${stockInfo.count}
                                 <#else>
                                     <strong>в наличии</strong>
                                 </#if>

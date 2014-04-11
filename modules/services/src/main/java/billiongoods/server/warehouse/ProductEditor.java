@@ -1,6 +1,5 @@
 package billiongoods.server.warehouse;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,8 +12,7 @@ public class ProductEditor {
 	Integer categoryId;
 	Price price;
 	double weight;
-	Integer storeAvailable;
-	Date restockDate;
+	StockInfo stockInfo;
 	String previewImage;
 	List<String> imageIds;
 	List<Option> options;
@@ -77,20 +75,12 @@ public class ProductEditor {
 		this.weight = weight;
 	}
 
-	public Integer getStoreAvailable() {
-		return storeAvailable;
+	public StockInfo getStockInfo() {
+		return stockInfo;
 	}
 
-	public void setStoreAvailable(Integer storeAvailable) {
-		this.storeAvailable = storeAvailable;
-	}
-
-	public Date getRestockDate() {
-		return restockDate;
-	}
-
-	public void setRestockDate(Date restockDate) {
-		this.restockDate = restockDate;
+	public void setStockInfo(StockInfo stockInfo) {
+		this.stockInfo = stockInfo;
 	}
 
 	public String getPreviewImage() {

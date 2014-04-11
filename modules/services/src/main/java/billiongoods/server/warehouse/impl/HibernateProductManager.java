@@ -271,7 +271,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 		product.setCategory(editor.getCategoryId());
 		product.setPrice(editor.getPrice());
 		product.setWeight(editor.getWeight());
-		product.setStockInfo(new StockInfo(editor.getStoreAvailable(), editor.getRestockDate()));
+		product.setStockInfo(editor.getStockInfo());
 		product.setPreviewImageId(editor.getPreviewImage());
 		product.setImageIds(editor.getImageIds());
 		product.setOptions(editor.getOptions());
@@ -418,17 +418,15 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 			if (context.getStockState() != null) {
 				switch (context.getStockState()) {
 					case IN_STOCK:
-						criteria.add(Restrictions.isNull("stockInfo.leftovers"));
-						criteria.add(Restrictions.isNull("stockInfo.restockDate"));
-						break;
-					case LIMITED_NUMBER:
-						criteria.add(Restrictions.gt("stockInfo.leftovers", 0));
+						criteria.add(Restrictions.gt("stockInfo.count", 0));
 						break;
 					case OUT_STOCK:
-						criteria.add(Restrictions.isNotNull("stockInfo.restockDate"));
+						criteria.add(Restrictions.le("stockInfo.count", 0));
+						criteria.add(Restrictions.isNotNull("stockInfo.arrivalDate"));
 						break;
 					case SOLD_OUT:
-						criteria.add(Restrictions.eq("stockInfo.leftovers", 0));
+						criteria.add(Restrictions.le("stockInfo.count", 0));
+						criteria.add(Restrictions.isNull("stockInfo.arrivalDate"));
 						break;
 				}
 			}
