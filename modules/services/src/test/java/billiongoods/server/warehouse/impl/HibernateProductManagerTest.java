@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -61,8 +61,8 @@ public class HibernateProductManagerTest {
 
 		productManager.updateSold(product.getId(), 10);
 
-		productManager.updateProductInformation(product.getId(), new Price(2.3d, null), new Price(3.d, null), new StockInfo(0, null));
-		productManager.updateProductInformation(product.getId(), new Price(12.3d, 54.d), new Price(43.d, 765.d), new StockInfo(null, new Date()));
+		productManager.updateProductInformation(product.getId(), new Price(2.3d, null), new Price(3.d, null), new StockInfo(0, 3, null));
+		productManager.updateProductInformation(product.getId(), new Price(12.3d, 54.d), new Price(43.d, 765.d), new StockInfo(0, 2, LocalDate.now()));
 
 		final SupplierInfo supplierInfo = productManager.getSupplierInfo(description.getId());
 		assertNotNull(supplierInfo);

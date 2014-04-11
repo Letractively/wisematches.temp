@@ -25,8 +25,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 /**
@@ -42,8 +43,6 @@ public class ProductMaintainController extends AbstractController {
 	private RelationshipManager relationshipManager;
 
 	private ProductSymbolicService symbolicConverter;
-
-	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 
 	public ProductMaintainController() {
 	}
@@ -72,11 +71,13 @@ public class ProductMaintainController extends AbstractController {
 			form.setWeight(product.getWeight());
 			form.setCommentary(product.getCommentary());
 			form.setProductState(product.getState());
-			form.setStoreAvailable(product.getStockInfo().getLeftovers());
 
-			if (product.getStockInfo().getRestockDate() != null) {
-				form.setRestockDate(SIMPLE_DATE_FORMAT.format(product.getStockInfo().getRestockDate()));
+			final StockInfo stockInfo = product.getStockInfo();
+			if (stockInfo.getArrivalDate() != null) {
+				form.setStockArrivalDate(stockInfo.getArrivalDate().format(DateTimeFormatter.ISO_DATE));
 			}
+			form.setStockCount(stockInfo.getCount());
+			form.setStockShipDays(stockInfo.getShipDays());
 
 			final SupplierInfo supplierInfo = product.getSupplierInfo();
 			form.setSupplierPrice(supplierInfo.getPrice().getAmount());
@@ -159,12 +160,12 @@ public class ProductMaintainController extends AbstractController {
 			errors.rejectValue("category", "maintain.product.category.err.unknown");
 		}
 
-		Date restockDate = null;
-		if (form.getRestockDate() != null && !form.getRestockDate().trim().isEmpty()) {
+		LocalDate stockArrivalDate = null;
+		if (form.getStockArrivalDate() != null && !form.getStockArrivalDate().trim().isEmpty()) {
 			try {
-				restockDate = SIMPLE_DATE_FORMAT.parse(form.getRestockDate().trim());
-			} catch (ParseException ex) {
-				errors.rejectValue("restockDate", "maintain.product.date.err.format");
+				stockArrivalDate = LocalDate.parse(form.getStockArrivalDate().trim(), DateTimeFormatter.ISO_DATE);
+			} catch (DateTimeParseException ex) {
+				errors.rejectValue("stockArrivalDate", "maintain.product.date.err.format");
 			}
 		}
 
@@ -263,8 +264,7 @@ public class ProductMaintainController extends AbstractController {
 				editor.setCategoryId(category.getId());
 				editor.setPrice(form.createPrice());
 				editor.setWeight(form.getWeight());
-				editor.setRestockDate(restockDate);
-				editor.setStoreAvailable(form.getStoreAvailable());
+				editor.setStockInfo(new StockInfo(form.getStockCount(), form.getStockShipDays(), stockArrivalDate));
 				editor.setPreviewImage(form.getPreviewImage());
 				editor.setImageIds(form.getEnabledImages());
 				editor.setOptions(options);

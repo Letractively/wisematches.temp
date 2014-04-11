@@ -42,8 +42,6 @@
                         <#assign stockState=product.stockInfo.stockState/>
                         <#if stockState=StockState.IN_STOCK>
                             доступен для заказа
-                        <#elseif stockState=StockState.LIMITED_NUMBER>
-                            осталось ${product.stockInfo.leftovers}
                         <#else>
                             нет в наличии
                         </#if>

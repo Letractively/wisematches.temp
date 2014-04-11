@@ -37,8 +37,6 @@ public class ProductForm implements ProductImager {
 
 	private double weight;
 
-	private String restockDate;
-
 	private Integer[] participatedGroups;
 
 	private String[] participatedNames;
@@ -65,7 +63,11 @@ public class ProductForm implements ProductImager {
 
 	private String supplierReferenceCode;
 
-	private Integer storeAvailable;
+	private int stockCount;
+
+	private int stockShipDays;
+
+	private String stockArrivalDate;
 
 	private String commentary;
 
@@ -155,13 +157,6 @@ public class ProductForm implements ProductImager {
 		this.weight = weight;
 	}
 
-	public String getRestockDate() {
-		return restockDate;
-	}
-
-	public void setRestockDate(String restockDate) {
-		this.restockDate = restockDate;
-	}
 
 	public Integer[] getParticipatedGroups() {
 		return participatedGroups;
@@ -287,12 +282,28 @@ public class ProductForm implements ProductImager {
 		return new Price(supplierPrice, supplierPrimordialPrice);
 	}
 
-	public Integer getStoreAvailable() {
-		return storeAvailable;
+	public int getStockShipDays() {
+		return stockShipDays;
 	}
 
-	public void setStoreAvailable(Integer storeAvailable) {
-		this.storeAvailable = storeAvailable;
+	public void setStockShipDays(int stockShipDays) {
+		this.stockShipDays = stockShipDays;
+	}
+
+	public String getStockArrivalDate() {
+		return stockArrivalDate;
+	}
+
+	public void setStockArrivalDate(String stockArrivalDate) {
+		this.stockArrivalDate = stockArrivalDate;
+	}
+
+	public int getStockCount() {
+		return stockCount;
+	}
+
+	public void setStockCount(int stockCount) {
+		this.stockCount = stockCount;
 	}
 
 	public String getCommentary() {
@@ -329,16 +340,20 @@ public class ProductForm implements ProductImager {
 		sb.append("id=").append(id);
 		sb.append(", categoryId=").append(categoryId);
 		sb.append(", name='").append(name).append('\'');
+		sb.append(", symbolic='").append(symbolic).append('\'');
 		sb.append(", description='").append(description).append('\'');
 		sb.append(", previewImage='").append(previewImage).append('\'');
 		sb.append(", viewImages=").append(viewImages);
+		sb.append(", enabledImages=").append(enabledImages);
 		sb.append(", price=").append(price);
 		sb.append(", primordialPrice=").append(primordialPrice);
-		sb.append(", restockDate='").append(restockDate).append('\'');
+		sb.append(", weight=").append(weight);
 		sb.append(", participatedGroups=").append(Arrays.toString(participatedGroups));
+		sb.append(", participatedNames=").append(Arrays.toString(participatedNames));
+		sb.append(", relationshipNames=").append(Arrays.toString(relationshipNames));
 		sb.append(", relationshipGroups=").append(Arrays.toString(relationshipGroups));
 		sb.append(", relationshipTypes=").append(Arrays.toString(relationshipTypes));
-		sb.append(", properties=").append(Arrays.toString(propertyIds));
+		sb.append(", propertyIds=").append(Arrays.toString(propertyIds));
 		sb.append(", propertyValues=").append(Arrays.toString(propertyValues));
 		sb.append(", optionIds=").append(Arrays.toString(optionIds));
 		sb.append(", optionValues=").append(Arrays.toString(optionValues));
@@ -346,6 +361,11 @@ public class ProductForm implements ProductImager {
 		sb.append(", supplierPrimordialPrice=").append(supplierPrimordialPrice);
 		sb.append(", supplierReferenceId='").append(supplierReferenceId).append('\'');
 		sb.append(", supplierReferenceCode='").append(supplierReferenceCode).append('\'');
+		sb.append(", stockCount=").append(stockCount);
+		sb.append(", stockShipDays=").append(stockShipDays);
+		sb.append(", stockArrivalDate='").append(stockArrivalDate).append('\'');
+		sb.append(", commentary='").append(commentary).append('\'');
+		sb.append(", productState=").append(productState);
 		sb.append('}');
 		return sb.toString();
 	}

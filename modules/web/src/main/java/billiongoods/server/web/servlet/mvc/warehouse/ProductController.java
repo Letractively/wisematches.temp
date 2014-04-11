@@ -56,8 +56,8 @@ public class ProductController extends AbstractController {
 
 		final String symbolicUri = product.getSymbolicUri();
 		if (symbolicUri != null && !symbolicUri.isEmpty() && !symbolicUri.equals(productUri)) {
-            return "redirect:/warehouse/product/" + symbolicUri;
-        }
+			return "redirect:/warehouse/product/" + symbolicUri;
+		}
 
 		final Category category = categoryManager.getCategory(product.getCategoryId());
 
@@ -100,7 +100,7 @@ public class ProductController extends AbstractController {
 
 		final Member member = getMember();
 		final StockState stockState = product.getStockInfo().getStockState();
-		if (member != null && (stockState != StockState.IN_STOCK && stockState != StockState.LIMITED_NUMBER)) {
+		if (member != null && (stockState != StockState.IN_STOCK)) {
 			model.addAttribute("registeredTracking", trackingManager.containsTracking(product.getId(), TrackingPerson.of(member)));
 		}
 

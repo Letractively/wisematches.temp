@@ -59,17 +59,17 @@ public class HibernateValidationChange implements ValidationChange {
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "leftovers", column = @Column(name = "oa")),
-			@AttributeOverride(name = "restockDate", column = @Column(name = "ord")),
-			@AttributeOverride(name = "deliveryDays", column = @Column(name = "odd"))
+			@AttributeOverride(name = "count", column = @Column(name = "oa")),
+			@AttributeOverride(name = "arrivalDate", column = @Column(name = "ord")),
+			@AttributeOverride(name = "shipDays", column = @Column(name = "odd"))
 	})
 	private StockInfo oldStockInfo;
 
 	@Embedded
 	@AttributeOverrides({
-			@AttributeOverride(name = "leftovers", column = @Column(name = "na")),
+			@AttributeOverride(name = "count", column = @Column(name = "na")),
 			@AttributeOverride(name = "restockDate", column = @Column(name = "nrd")),
-			@AttributeOverride(name = "deliveryDays", column = @Column(name = "ndd"))
+			@AttributeOverride(name = "shipDays", column = @Column(name = "ndd"))
 	})
 	private StockInfo newStockInfo;
 

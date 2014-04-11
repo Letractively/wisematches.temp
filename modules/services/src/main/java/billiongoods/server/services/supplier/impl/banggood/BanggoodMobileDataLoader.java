@@ -39,7 +39,6 @@ import org.springframework.beans.factory.InitializingBean;
 import java.io.Closeable;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -187,20 +186,15 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 			final HttpResponse execute = client.execute(HOST, request);
 			final Map<String, String> values = parseStockMsg(EntityUtils.toString(execute.getEntity()).trim());
 
-			System.out.println(values);
+			final int count = Integer.parseInt(values.get("stocks"));
+			final int shipDays = Integer.parseInt(values.get("shipDays"));
 
-			final int deliveryDays = Integer.parseInt(values.get("shipDays"));
-			int leftovers = Integer.parseInt(values.get("stocks"));
-			if (leftovers < 0) { // have no ideas how it can be less
-				leftovers = 0;
-			}
-			Date restockDate = null;
+			LocalDate arrivalDate = null;
 			final String arrivaltimes = values.get("expected_arrivaltimes");
 			if (arrivaltimes != null && !"0000-00-00".equals(arrivaltimes)) {
-				final LocalDate ld = LocalDate.parse(arrivaltimes, DateTimeFormatter.ISO_DATE);
-				restockDate = Date.from(ld.atStartOfDay().plusDays(3).atZone(ZoneOffset.UTC).toInstant());
+				arrivalDate = LocalDate.parse(arrivaltimes, DateTimeFormatter.ISO_DATE).plusDays(3);
 			}
-			return new StockInfo(deliveryDays, leftovers, restockDate);
+			return new StockInfo(count, shipDays, arrivalDate);
 		} catch (Exception ex) {
 			throw new DataLoadingException("StockInfo - " + ex.getMessage(), ex);
 		}

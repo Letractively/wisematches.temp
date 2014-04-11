@@ -1,3 +1,16 @@
+#11.04.14
+UPDATE store_product
+SET stockLeftovers = 0
+WHERE stockLeftovers IS NULL;
+
+ALTER TABLE `billiongoods`.`store_product`
+CHANGE COLUMN `stockLeftovers` `stockCount` INT(11) NOT NULL DEFAULT 0
+AFTER `soldCount`,
+CHANGE COLUMN `stockDelivery` `stockShipDays` INT(11) NOT NULL DEFAULT 3,
+CHANGE COLUMN `stockRestockDate` `stockArrivalDate` DATE NULL DEFAULT NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('110414');
+
 #08.04.14
 ALTER TABLE `billiongoods`.`store_product`
 ADD COLUMN `stockDelivery` INT NULL DEFAULT 3
@@ -387,7 +400,7 @@ CHANGE COLUMN `dvalue` `bvalue` INT(1) NULL DEFAULT NULL;
 ALTER TABLE `billiongoods`.`store_product`
 CHANGE COLUMN `stockSold` `soldCount` INT(11) NOT NULL DEFAULT '0',
 CHANGE COLUMN `stockAvailable` `stockLeftovers` INT(11) NULL DEFAULT NULL,
-CHANGE COLUMN `restockDate` `stockRestockDate` DATE NULL DEFAULT NULL;
+CHANGE COLUMN `stockArrivalDate` `stockRestockDate` DATE NULL DEFAULT NULL;
 
 # 8.10
 CREATE TABLE `billiongoods`.`service_validation` (
