@@ -190,7 +190,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 			final int count = getInt("stocks", values);
 			int shipDays = getInt("shipDays", values);
 			if (shipDays == Integer.MIN_VALUE) {
-				shipDays = partStockMessage((String) values.get("msg"));
+				shipDays = partShipDays((String) values.get("msg"));
 			}
 
 			LocalDate arrivalDate = null;
@@ -309,7 +309,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 		}
 	}
 
-	protected int partStockMessage(String s) {
+	protected int partShipDays(String s) {
 		final String msg = s.replace("\"", "").toLowerCase();
 		if (msg.contains("dispatched in 1 business")) {
 			return 1;
