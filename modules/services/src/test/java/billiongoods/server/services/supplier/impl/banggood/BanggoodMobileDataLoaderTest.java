@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-@Ignore
+//@Ignore
 public class BanggoodMobileDataLoaderTest {
 	public BanggoodMobileDataLoaderTest() {
 	}
@@ -23,7 +23,7 @@ public class BanggoodMobileDataLoaderTest {
 	@Test
 	public void test_parseStockMsg() throws DataLoadingException {
 		final BanggoodMobileDataLoader dataLoader = new BanggoodMobileDataLoader();
-		final Map<String, String> stringStringMap = dataLoader.parseStockMsg("{\"sku_or_poa\":\"POA184065\",\"products_id\":\"916095\",\"quantity_status\":\"11\",\"supply_type\":\"0\",\"supply_date\":\"4\",\"stockout_date\":\"2014-04-02\",\"online_date\":\"2014-02-27\",\"stocks\":\"-1\",\"warehouse\":\"CN\",\"add_date\":\"1397117942\",\"msg\":\"Usually dispatched in 6-9 business days\",\"id\":\"450329\",\"supply_id\":\"0\",\"supply_name\":\"\",\"products_url\":\"\",\"products_center_id\":\"7\",\"only_web\":\"1\",\"shipDays\":\"9\",\"chinastocks\":\"-1\",\"expected_arrivaltimes\":\"0000-00-00\",\"is_approved\":\"1\",\"order_type\":\"0\",\"is_unpurchase\":\"0\",\"shelf_area\":\"X\\u533a\",\"shelf_row\":\"N\\u6392\",\"area_number\":\"0\",\"allot_stocks\":\"0\",\"allot_arrival_time\":\"0000-00-00\",\"alreadystocks\":\"1\",\"msg_source\":\"table_expire_0\",\"no_stock_wh_poa\":{\"POA184066\":\"-2\",\"POA184065\":\"-1\"},\"wh_to_countries\":\"\"}");
+		final Map<String, Object> stringStringMap = dataLoader.parseStockMsg("{\"sku_or_poa\":\"POA184065\",\"products_id\":\"916095\",\"quantity_status\":\"11\",\"supply_type\":\"0\",\"supply_date\":\"4\",\"stockout_date\":\"2014-04-02\",\"online_date\":\"2014-02-27\",\"stocks\":\"-1\",\"warehouse\":\"CN\",\"add_date\":\"1397117942\",\"msg\":\"Usually dispatched in 6-9 business days\",\"id\":\"450329\",\"supply_id\":\"0\",\"supply_name\":\"\",\"products_url\":\"\",\"products_center_id\":\"7\",\"only_web\":\"1\",\"shipDays\":\"9\",\"chinastocks\":\"-1\",\"expected_arrivaltimes\":\"0000-00-00\",\"is_approved\":\"1\",\"order_type\":\"0\",\"is_unpurchase\":\"0\",\"shelf_area\":\"X\\u533a\",\"shelf_row\":\"N\\u6392\",\"area_number\":\"0\",\"allot_stocks\":\"0\",\"allot_arrival_time\":\"0000-00-00\",\"alreadystocks\":\"1\",\"msg_source\":\"table_expire_0\",\"no_stock_wh_poa\":{\"POA184066\":\"-2\",\"POA184065\":\"-1\"},\"wh_to_countries\":\"\"}");
 		assertEquals("POA184065", stringStringMap.get("sku_or_poa"));
 		assertEquals("916095", stringStringMap.get("products_id"));
 		assertEquals("11", stringStringMap.get("quantity_status"));
@@ -39,7 +39,7 @@ public class BanggoodMobileDataLoaderTest {
 		final BanggoodMobileDataLoader dataLoader = new BanggoodMobileDataLoader();
 		dataLoader.afterPropertiesSet();
 
-		final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/DJI-Phantom-FC40-RC-Quadcopter-With-Wi-Fi-FPV-FC40-Camera-p-916095.html", "SKU118444", Supplier.BANGGOOD, null);
+		final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/Wholesale-Sports-Outdoor-Bicycle-Rubber-Protecting-Palms-Grips-Gloves-1-Pair-Blue-p-57971.html", "SKU051116", Supplier.BANGGOOD, null);
 		final SupplierDescription desc1 = dataLoader.loadDescription(info1);
 		assertNotNull(desc1);
 		assertNotNull(desc1.getPrice());
@@ -59,6 +59,7 @@ public class BanggoodMobileDataLoaderTest {
 	}
 
 	@Test
+	@Ignore
 	public void testSupplierDescription3() throws Exception {
 		final BanggoodMobileDataLoader dataLoader = new BanggoodMobileDataLoader();
 		dataLoader.afterPropertiesSet();
