@@ -51,6 +51,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 	private HttpClientConnectionManager connectionManager;
 
 	private static final int DEFAULT_TIMEOUT = 5000;
+	private static final int DEFAULT_RESTOCK_TIME = 15 * 24 * 60 * 60 * 1000;
 
 	private static final HttpHost HOST = new HttpHost("m.banggood.com");
 
@@ -184,14 +185,17 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 			request.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
 
 			final HttpResponse execute = client.execute(HOST, request);
-			final Map<String, String> values = parseStockMsg(EntityUtils.toString(execute.getEntity()).trim());
+			final Map<String, Object> values = parseStockMsg(EntityUtils.toString(execute.getEntity()).trim());
 
-			final int count = Integer.parseInt(values.get("stocks"));
-			final int shipDays = Integer.parseInt(values.get("shipDays"));
+			final int count = getInt("stocks", values);
+			int shipDays = getInt("shipDays", values);
+			if (shipDays == Integer.MIN_VALUE) {
+				shipDays = partStockMessage((String) values.get("msg"));
+			}
 
 			LocalDate arrivalDate = null;
-			final String arrivaltimes = values.get("expected_arrivaltimes");
-			if (arrivaltimes != null && !"0000-00-00".equals(arrivaltimes)) {
+			final String arrivaltimes = (String) values.get("expected_arrivaltimes");
+			if (arrivaltimes != null && !arrivaltimes.isEmpty() && !"0000-00-00".equals(arrivaltimes)) {
 				arrivalDate = LocalDate.parse(arrivaltimes, DateTimeFormatter.ISO_DATE).plusDays(3);
 			}
 			return new StockInfo(count, shipDays, arrivalDate);
@@ -200,8 +204,22 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 		}
 	}
 
+	private int getInt(String name, Map<String, Object> values) {
+		final Object o = values.get(name);
+		if (o == null) {
+			return Integer.MIN_VALUE;
+		}
+		if (o instanceof Number) {
+			return ((Number) o).intValue();
+		}
+		if (o instanceof String) {
+			return Integer.parseInt((String) o);
+		}
+		return Integer.MIN_VALUE;
+	}
+
 	@SuppressWarnings("unchecked")
-	protected Map<String, String> parseStockMsg(String msg) throws DataLoadingException {
+	protected Map<String, Object> parseStockMsg(String msg) throws DataLoadingException {
 		try {
 			return new ObjectMapper().readValue(msg, HashMap.class);
 		} catch (IOException e) {
@@ -289,5 +307,25 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 		public Map<String, Collection<String>> getParameters() {
 			return parameters;
 		}
+	}
+
+	protected int partStockMessage(String s) {
+		final String msg = s.replace("\"", "").toLowerCase();
+		if (msg.contains("dispatched in 1 business")) {
+			return 1;
+		} else if (msg.contains("dispatched in 1-3 business")) {
+			return 3;
+		} else if (msg.contains("dispatched in 2-4 business")) {
+			return 4;
+		} else if (msg.contains("dispatched in 3-6 business")) {
+			return 6;
+		} else if (msg.contains("dispatched in 6-9 business")) {
+			return 9;
+		} else if (msg.contains("expected restock on")) {
+			return 0;
+		}
+
+		log.error("Unparseable stock info: {}", msg);
+		return 0;
 	}
 }
