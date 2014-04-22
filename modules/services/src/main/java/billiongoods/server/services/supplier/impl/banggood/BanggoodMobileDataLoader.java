@@ -51,7 +51,6 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 	private HttpClientConnectionManager connectionManager;
 
 	private static final int DEFAULT_TIMEOUT = 5000;
-	private static final int DEFAULT_RESTOCK_TIME = 15 * 24 * 60 * 60 * 1000;
 
 	private static final HttpHost HOST = new HttpHost("m.banggood.com");
 
@@ -322,6 +321,10 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 		} else if (msg.contains("dispatched in 6-9 business")) {
 			return 9;
 		} else if (msg.contains("expected restock on")) {
+			return 0;
+		} else if (msg.contains("sold out")) {
+			return 0;
+		} else if (msg.contains("coming soon")) {
 			return 0;
 		}
 
