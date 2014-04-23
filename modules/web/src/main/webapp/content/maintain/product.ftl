@@ -98,7 +98,27 @@
     <td><@bg.ui.input path="form.supplierPrimordialPrice"/></td>
 </tr>
 <tr>
-    <td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td><label for="stockCount">Количество: </label></td>
+    <td><@bg.ui.input path="form.stockCount" value=0/></td>
+</tr>
+<tr>
+    <td><label for="stockArrivalDate">Дата поставки: </label></td>
+    <td><@bg.ui.input path="form.stockArrivalDate"/></td>
+</tr>
+<tr>
+    <td><label for="stockShipDays">Доставка, дней: </label></td>
+    <td><@bg.ui.input path="form.stockShipDays" value=3/></td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+<td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
     <td><@bg.ui.input path="form.supplierReferenceCode"/></td>
 </tr>
 <tr>
@@ -113,37 +133,23 @@
     </td>
 </tr>
 <tr>
-    <td valign="top">
-        <label for="supplierReferenceId">Информация поставщика: </label>
-    </td>
-    <td>
+    <td valign="top"></td>
+    <td align="right">
         <div id="supplierInfo">
             <span class="action">
-                <span><a href="#" onclick="loadSupplierDescription(); return false;">загрузить информацию</a></span>
+                <span><button type="button" onclick="loadSupplierDescription(); return false;">загрузить информацию
+                </button></span>
                 <span class="progress" style="display: none"></span>
             </span>
             <span class="data"></span>
         </div>
     </td>
 </tr>
+
 <tr>
     <td colspan="2">
         <hr>
     </td>
-</tr>
-<tr>
-    <td><label for="stockCount">Количество: </label></td>
-    <td><@bg.ui.input path="form.stockCount" value=0>
-        <button id="notAvailable" type="button">Нет в наличии</button>
-        <button id="available" type="button">В наличии</button></@bg.ui.input></td>
-</tr>
-<tr>
-    <td><label for="stockArrivalDate">Дата поставки: </label></td>
-    <td><@bg.ui.input path="form.stockArrivalDate"/></td>
-</tr>
-<tr>
-    <td><label for="stockShipDays">Доставка, дней: </label></td>
-    <td><@bg.ui.input path="form.stockShipDays" value=3/></td>
 </tr>
 
 <tr>
@@ -503,26 +509,41 @@ var loadSupplierDescription = function () {
                 if (response.success) {
                     var data = response.data;
 
-                    var info = "";
-
-                    info += "<table>";
                     if (data.price != null) {
-                        info += "  <tr><td><label>Цена:</label></td><td>" + data.price.amount + " (" + data.price.primordialAmount + ")</td></tr>";
+                        if (data.price.amount == null) {
+                            $("#supplierPrice").val("");
+                        } else {
+                            $("#supplierPrice").val(data.price.amount);
+                        }
+
+                        if (data.price.primordialAmount == null) {
+                            $("#supplierPrimordialPrice").val("");
+                        } else {
+                            $("#supplierPrimordialPrice").val(data.price.primordialAmount);
+                        }
                     }
 
                     if (data.stockInfo != null) {
-                        info += "  <tr><td><label>Доступность:</label></td><td>";
-
-                        if (data.stockInfo.leftovers != null) {
-                            info += "осталось " + data.stockInfo.leftovers;
-                        } else if (data.stockInfo.stockArrivalDate != null) {
-                            info += "дата поставки " + data.stockInfo.stockArrivalDate;
+                        if (data.stockInfo.count == null) {
+                            $("#stockCount").val(0);
                         } else {
-                            info += "доступен";
+                            $("#stockCount").val(data.stockInfo.count);
                         }
-                        info += "</td></tr>";
+                        if (data.stockInfo.shipDays == null) {
+                            $("#stockShipDays").val(0);
+                        } else {
+                            $("#stockShipDays").val(data.stockInfo.shipDays);
+                        }
+
+                        var dt = data.stockInfo.arrivalDate;
+                        if (dt == null) {
+                            $("#stockArrivalDate").val(0);
+                        } else {
+                            $("#stockArrivalDate").val(dt.year + "-" + ("0" + dt.monthValue).slice(-2) + "-" + ("0" + dt.dayOfMonth).slice(-2));
+                        }
                     }
 
+                    var info = "<table>";
                     $.each(data.parameters, function (key, value) {
                         info += "  <tr>";
                         info += "    <td><label>" + key + "</label></td>";
