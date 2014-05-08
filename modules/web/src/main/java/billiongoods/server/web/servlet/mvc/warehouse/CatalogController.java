@@ -5,16 +5,14 @@ import billiongoods.core.search.Orders;
 import billiongoods.core.search.Range;
 import billiongoods.server.services.advise.ProductAdviseManager;
 import billiongoods.server.services.showcase.*;
-import billiongoods.server.warehouse.Product;
-import billiongoods.server.warehouse.ProductListener;
-import billiongoods.server.warehouse.ProductManager;
-import billiongoods.server.warehouse.ProductPreview;
+import billiongoods.server.warehouse.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +60,14 @@ public class CatalogController extends AbstractController {
 		if (productManager != null && showcaseManager != null) {
 			showcase = showcaseManager.getShowcase();
 			for (ShowcaseGroup showcaseGroup : showcase.getShowcaseGroups()) {
-				for (ShowcaseItem item : showcaseGroup.getShowcaseItems()) {
-					showcaseCache.put(item, productManager.searchEntities(item.getProductContext(), null, RANGE, ORDERS));
+				for (final ShowcaseItem item : showcaseGroup.getShowcaseItems()) {
+					final Category category = categoryManager.getCategory(item.getCategory());
+					final boolean arrival = item.isArrival();
+					final StockState stockState = StockState.IN_STOCK;
+					final boolean subCategories = item.isSubCategories();
+					final EnumSet<ProductState> productStates = ProductContext.ACTIVE_ONLY;
+					final ProductContext context = new ProductContext(category, subCategories, null, arrival, productStates, stockState);
+					showcaseCache.put(item, productManager.searchEntities(context, null, RANGE, ORDERS));
 				}
 			}
 		}
@@ -104,6 +108,7 @@ public class CatalogController extends AbstractController {
 	public void setAdviseManager(ProductAdviseManager adviseManager) {
 		this.adviseManager = adviseManager;
 	}
+
 
 	private final class TheCatalogRefreshListener implements ProductListener, ShowcaseListener {
 		private TheCatalogRefreshListener() {

@@ -1,6 +1,7 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
 import billiongoods.core.Member;
+import billiongoods.server.services.sales.SalesOperationManager;
 import billiongoods.server.services.tracking.ProductTrackingManager;
 import billiongoods.server.services.tracking.TrackingPerson;
 import billiongoods.server.warehouse.*;
@@ -25,6 +26,7 @@ public class ProductController extends AbstractController {
 	private ProductManager productManager;
 	private RelationshipManager relationshipManager;
 	private ProductTrackingManager trackingManager;
+	private SalesOperationManager salesOperationManager;
 
 	public ProductController() {
 	}
@@ -111,6 +113,8 @@ public class ProductController extends AbstractController {
 		model.addAttribute("groups", groups);
 		model.addAttribute("relationships", relationships);
 
+		model.addAttribute("salesOperation", salesOperationManager.getSalesOperation());
+
 		hideNavigation(model);
 
 		return "/content/warehouse/product";
@@ -129,5 +133,10 @@ public class ProductController extends AbstractController {
 	@Autowired
 	public void setRelationshipManager(RelationshipManager relationshipManager) {
 		this.relationshipManager = relationshipManager;
+	}
+
+	@Autowired
+	public void setSalesOperationManager(SalesOperationManager salesOperationManager) {
+		this.salesOperationManager = salesOperationManager;
 	}
 }

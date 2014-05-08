@@ -1,3 +1,9 @@
+#08.05.14
+ALTER TABLE `billiongoods`.`store_showcase`
+DROP COLUMN `uri`;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('080514');
+
 #11.04.14
 UPDATE store_product
 SET stockLeftovers = 0

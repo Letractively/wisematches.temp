@@ -73,7 +73,9 @@ public class ProductMaintainController extends AbstractController {
 			form.setProductState(product.getState());
 
 			final StockInfo stockInfo = product.getStockInfo();
-			if (stockInfo.getArrivalDate() != null) {
+			if (stockInfo.getArrivalDate() == null) {
+				form.setStockArrivalDate("");
+			} else {
 				form.setStockArrivalDate(stockInfo.getArrivalDate().format(DateTimeFormatter.ISO_DATE));
 			}
 			form.setStockCount(stockInfo.getCount());

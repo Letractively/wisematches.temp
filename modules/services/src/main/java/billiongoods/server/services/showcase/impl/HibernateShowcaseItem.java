@@ -1,9 +1,6 @@
 package billiongoods.server.services.showcase.impl;
 
 import billiongoods.server.services.showcase.ShowcaseItem;
-import billiongoods.server.warehouse.CategoryManager;
-import billiongoods.server.warehouse.ProductContext;
-import billiongoods.server.warehouse.StockState;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,9 +17,6 @@ public class HibernateShowcaseItem implements ShowcaseItem, Comparable<Hibernate
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "uri")
-	private String uri;
-
 	@Column(name = "category")
 	private Integer category;
 
@@ -32,19 +26,16 @@ public class HibernateShowcaseItem implements ShowcaseItem, Comparable<Hibernate
 	@Column(name = "subcategories")
 	private boolean subCategories;
 
-	@Transient
-	private ProductContext context = null;
-
 	@Deprecated
 	HibernateShowcaseItem() {
 	}
 
-	Integer getSection() {
-		return pk.section;
-	}
-
-	Integer getPosition() {
-		return pk.position;
+	public HibernateShowcaseItem(Integer section, Integer position, String name, Integer category, boolean arrival, boolean subCategories) {
+		this.pk = new Pk(section, position);
+		this.name = name;
+		this.category = category;
+		this.arrival = arrival;
+		this.subCategories = subCategories;
 	}
 
 	@Override
@@ -52,18 +43,43 @@ public class HibernateShowcaseItem implements ShowcaseItem, Comparable<Hibernate
 		return name;
 	}
 
-	@Override
-	public String getMoreInfoUri() {
-		return uri;
+	public Integer getSection() {
+		return pk.section;
+	}
+
+	public Integer getPosition() {
+		return pk.position;
 	}
 
 	@Override
-	public ProductContext getProductContext() {
-		return context;
+	public Integer getCategory() {
+		return category;
 	}
 
-	void initialize(CategoryManager manager) {
-		context = new ProductContext(manager.getCategory(category), subCategories, null, arrival, ProductContext.ACTIVE_ONLY, StockState.IN_STOCK);
+	@Override
+	public boolean isArrival() {
+		return arrival;
+	}
+
+	@Override
+	public boolean isSubCategories() {
+		return subCategories;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
+	public void setArrival(boolean arrival) {
+		this.arrival = arrival;
+	}
+
+	public void setSubCategories(boolean subCategories) {
+		this.subCategories = subCategories;
 	}
 
 	@Override
@@ -80,6 +96,11 @@ public class HibernateShowcaseItem implements ShowcaseItem, Comparable<Hibernate
 		private Integer position;
 
 		public Pk() {
+		}
+
+		public Pk(Integer section, Integer position) {
+			this.section = section;
+			this.position = position;
 		}
 
 		@Override

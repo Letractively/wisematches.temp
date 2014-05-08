@@ -4,6 +4,7 @@
 <#-- @ftlvariable name="similar" type="billiongoods.server.warehouse.ProductPreview[]" -->
 <#-- @ftlvariable name="accessories" type="billiongoods.server.warehouse.ProductPreview[]" -->
 <#-- @ftlvariable name="relationships" type="billiongoods.server.warehouse.Relationship[]" -->
+<#-- @ftlvariable name="salesOperation" type="billiongoods.server.services.sales.SalesOperation" -->
 <#-- @ftlvariable name="registeredTracking" type="java.util.EnumSet<billiongoods.server.services.tracking.TrackingType>" -->
 
 <#include "/core.ftl">
@@ -85,7 +86,7 @@
             <div class="ability ${stockInfo.stockState.name()?lower_case}">
             <#switch stockInfo.stockState>
                 <#case StockState.IN_STOCK>
-                    В наличии, обычно отправляется в течение
+                    Обычно отправляется в течение
                     <#if stockInfo.shipDays=1>
                         2 рабочих дней
                     <#elseif stockInfo.shipDays=2>
@@ -98,14 +99,19 @@
                     Товар распродан
                     <#break/>
                 <#case StockState.OUT_STOCK>
-                    Нет на складе. Поступление
-                    ожидается ${messageSource.formatDate(stockInfo.arrivalDate, locale)}
+                    Поступление ожидается ${messageSource.formatDate(stockInfo.arrivalDate, locale)}
                     <#break/>
             </#switch>
             </div>
             <div class="shipment">
                 Бесплатная доставка за 30-40 дней
             </div>
+        <#if salesOperation?? && salesOperation.salesClosed>
+            <div style="color: red; padding-bottom: 10px;font-style: italic; display: block; text-align: right">
+                отправка приостановлена
+                до ${messageSource.formatDate(salesOperation.startSalesDate.toLocalDate(), locale)}
+            </div>
+        </#if>
         </div>
 
         <div>

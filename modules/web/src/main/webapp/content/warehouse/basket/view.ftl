@@ -4,17 +4,30 @@
 <#-- @ftlvariable name="shipmentRates" type="billiongoods.server.services.payment.ShipmentRates" -->
 <#-- @ftlvariable name="shipmentManager" type="billiongoods.server.services.payment.ShipmentManager" -->
 <#-- @ftlvariable name="order" type="billiongoods.server.web.servlet.mvc.warehouse.form.BasketCheckoutForm" -->
+<#-- @ftlvariable name="salesOperation" type="billiongoods.server.services.sales.SalesOperation" -->
 
 <#include "/core.ftl"/>
 
+<#macro salesWarning>
+    <#if salesOperation?? && salesOperation.salesClosed>
+    <div class="shipment"
+         style="color: red; padding-bottom: 10px;font-style: italic; text-align: center; width: 100%; font-size: 18px">
+        Внимание: отправка приостановлена
+        до ${messageSource.formatDate(salesOperation.startSalesDate.toLocalDate(), locale)}
+    </div>
+    </#if>
+</#macro>
+
 <div class="basket">
-<form action="/warehouse/basket" method="post">
+<form id="processBasketForm" action="/warehouse/basket" method="post">
 <#if rollback??>
 <div class="ui-state-error" style="margin-bottom: 10px; padding: 10px">
     К сожалению у нас сейчас возникла внутренняя ошибка при работе с системой PayPal. В даннай момент мы не
     можем обработать ваш заказ. Пожалуйста, попробуйте еще раз.
 </div>
 </#if>
+
+<@salesWarning/>
 
 <table class="cnt">
     <tr>
@@ -80,6 +93,8 @@
         </th>
     </tr>
 </table>
+
+    <@salesWarning/>
 
 <div class="unregistered" <#if shipmentRates.isFreeShipment(ShipmentType.REGISTERED)>style="display: none"</#if>>
     Вы можете получить бесплатный номер для отслеживания (зарегистрированное отправление) добавив еще товара на
@@ -377,4 +392,10 @@
         address.find(".form").slideUp();
         address.find("#selectionTab").val('true');
     });
+
+    <#if salesOperation?? && salesOperation.salesClosed>
+    $("#processBasketForm").submit(function () {
+        return confirm("Внимание! Ваша посылка будет оформлена только после ${messageSource.formatDate(salesOperation.startSalesDate.toLocalDate(), locale)}. Желаете продолжить?");
+    });
+    </#if>
 </script>
