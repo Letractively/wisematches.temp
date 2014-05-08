@@ -9,8 +9,11 @@ public interface ShowcaseManager {
 	void removeShowcaseListener(ShowcaseListener l);
 
 
-	Showcase getShowcase();
+	void createItem(Integer section, Integer position, String name, Integer category, boolean arrival, boolean sub);
 
+	void removeItem(Integer section, Integer position);
+
+	Showcase getShowcase();
 
 	void reloadShowcase();
 }

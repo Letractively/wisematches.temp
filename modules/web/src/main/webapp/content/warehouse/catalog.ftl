@@ -18,7 +18,8 @@
 
                     <div class="more" style="float: right">
                         <#list g.showcaseItems as i>
-                            <a id="sl_${g_index}_${i_index}" href="${i.moreInfoUri}"
+                            <a id="sl_${g_index}_${i_index}"
+                               href="/warehouse/category/${catalog.getCategory(i.category).symbolicUri}"
                                <#if i_index !=0>style="display: none;" </#if>>Показать все</a>
                         </#list>
                     </div>

@@ -49,7 +49,7 @@ public class StockInfo {
 
 
 	public StockState getStockState() {
-		if (count > 0) {
+		if ((count > 0) || (count == 0 && shipDays >= 9)) {
 			return StockState.IN_STOCK;
 		}
 		return arrivalDate != null ? StockState.OUT_STOCK : StockState.SOLD_OUT;

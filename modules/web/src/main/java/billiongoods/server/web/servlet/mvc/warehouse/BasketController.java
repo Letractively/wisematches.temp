@@ -12,6 +12,7 @@ import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.ShipmentManager;
 import billiongoods.server.services.payment.ShipmentRates;
 import billiongoods.server.services.payment.ShipmentType;
+import billiongoods.server.services.sales.SalesOperationManager;
 import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.ProductManager;
 import billiongoods.server.warehouse.ProductPreview;
@@ -46,6 +47,7 @@ public class BasketController extends AbstractController {
 	private ProductManager productManager;
 	private ShipmentManager shipmentManager;
 	private AddressBookManager addressBookManager;
+	private SalesOperationManager salesOperationManager;
 
 	public BasketController() {
 		super(true, false);
@@ -239,6 +241,7 @@ public class BasketController extends AbstractController {
 	private String prepareBasketView(Basket basket, BasketCheckoutForm form, Model model) {
 		model.addAttribute("basket", basket);
 		model.addAttribute("shipmentManager", shipmentManager);
+		model.addAttribute("salesOperation", salesOperationManager.getSalesOperation());
 
 		if (basket != null) {
 			final Coupon coupon = couponManager.getCoupon(basket.getCoupon());
@@ -283,5 +286,10 @@ public class BasketController extends AbstractController {
 	@Autowired
 	public void setAddressBookManager(AddressBookManager addressBookManager) {
 		this.addressBookManager = addressBookManager;
+	}
+
+	@Autowired
+	public void setSalesOperationManager(SalesOperationManager salesOperationManager) {
+		this.salesOperationManager = salesOperationManager;
 	}
 }

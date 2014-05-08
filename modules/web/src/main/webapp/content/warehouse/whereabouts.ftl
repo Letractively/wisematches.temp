@@ -12,13 +12,15 @@
     <@bg.link.category category/>
 
     <@bg.security.authorized "moderator">
-        <div style="display: inline-block; float: right">
-            <a href="/maintain/category?id=${category.id}">Редактировать</a>
+        <div style="display: inline-block; float: right; margin-top: -3px">
+            <button type="button" onclick="bg.util.url.redirect('/maintain/category?id=${category.id}')">
+                Редактировать
+            </button>
         </div>
     </@bg.security.authorized>
 </div>
 
-    <#if category.description?has_content>
+    <#if category.description?has_content && "product"!=section>
     <div class="description">${category.description}</div>
     </#if>
 <#elseif section??>

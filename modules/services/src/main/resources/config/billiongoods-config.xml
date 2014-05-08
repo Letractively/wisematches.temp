@@ -133,7 +133,10 @@
 
     <bean id="showcaseManager" class="billiongoods.server.services.showcase.impl.HibernateShowcaseManager">
         <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="categoryManager" ref="catalogManager"/>
+    </bean>
+
+    <bean id="salesOperationManager" class="billiongoods.server.services.sales.impl.FileSalesOperationManager">
+        <property name="salesOperationFile" value="${server.sales.operation.file}"/>
     </bean>
 
     <bean id="orderManager" class="billiongoods.server.services.payment.impl.HibernateOrderManager">

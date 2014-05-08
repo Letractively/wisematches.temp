@@ -118,7 +118,7 @@
     <td>&nbsp;</td>
 </tr>
 <tr>
-<td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
+    <td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
     <td><@bg.ui.input path="form.supplierReferenceCode"/></td>
 </tr>
 <tr>
@@ -537,7 +537,7 @@ var loadSupplierDescription = function () {
 
                         var dt = data.stockInfo.arrivalDate;
                         if (dt == null) {
-                            $("#stockArrivalDate").val(0);
+                            $("#stockArrivalDate").val();
                         } else {
                             $("#stockArrivalDate").val(dt.year + "-" + ("0" + dt.monthValue).slice(-2) + "-" + ("0" + dt.dayOfMonth).slice(-2));
                         }

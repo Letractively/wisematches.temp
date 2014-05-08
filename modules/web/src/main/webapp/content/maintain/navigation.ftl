@@ -51,6 +51,11 @@
         <div>&nbsp;</div>
 
         <div>
+            <a href="/maintain/sales/operation">Время работы</a>
+        </div>
+        <div>&nbsp;</div>
+
+        <div>
             <a href="/maintain/order">Текущие заказы</a>
         </div>
     </div>
