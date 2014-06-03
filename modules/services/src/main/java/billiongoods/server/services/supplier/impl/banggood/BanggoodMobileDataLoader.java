@@ -38,6 +38,7 @@ import org.springframework.beans.factory.InitializingBean;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -161,7 +162,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 			return null;
 		}
 		final StockInfo stockInfo = loadStockInfo(supplierInfo);
-		return new DefaultSupplierDescription(details.getPrice(), stockInfo, details.getParameters());
+		return new DefaultSupplierDescription(details.getPrice(), stockInfo, details.getImages(), details.getParameters());
 	}
 
 	protected StockInfo loadStockInfo(SupplierInfo supplier) throws DataLoadingException {
@@ -268,6 +269,14 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 			}
 		}
 
+		final Collection<URL> images = new ArrayList<>();
+		final Elements screen = doc.select("div.screen ul li a img");
+		for (Element sc : screen) {
+			final String src = sc.attr("src");
+			final URL e = new URL(src.replace("/thumb/view/", "/images/"));
+			images.add(e);
+		}
+
 		final Map<String, Collection<String>> parameters = new HashMap<>();
 		final Elements divs = doc.select("div.item02");
 		for (Element div : divs) {
@@ -287,20 +296,26 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 				}
 			}
 		}
-		return new ProductDetails(new Price(price, primordial), parameters);
+		return new ProductDetails(new Price(price, primordial), images, parameters);
 	}
 
 	private static final class ProductDetails {
 		private final Price price;
+		private final Collection<URL> images;
 		private final Map<String, Collection<String>> parameters;
 
-		private ProductDetails(Price price, Map<String, Collection<String>> parameters) {
+		private ProductDetails(Price price, Collection<URL> images, Map<String, Collection<String>> parameters) {
 			this.price = price;
+			this.images = images;
 			this.parameters = parameters;
 		}
 
 		public Price getPrice() {
 			return price;
+		}
+
+		public Collection<URL> getImages() {
+			return images;
 		}
 
 		public Map<String, Collection<String>> getParameters() {

@@ -16,15 +16,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -316,7 +314,19 @@ public class ProductMaintainController extends AbstractController {
 		return "/content/maintain/replace";
 	}
 
-	@RequestMapping(value = "/addimg", method = RequestMethod.POST)
+	@RequestMapping(value = "/clearimgs.ajax", method = RequestMethod.POST)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse upload(@RequestParam("id") Integer id) throws IOException {
+		final Product product = productManager.getProduct(id);
+		if (product == null) {
+			throw new IllegalArgumentException("Product is not specified");
+		}
+
+		imageManager.clearImages(product);
+		return responseFactory.success();
+	}
+
+	@RequestMapping(value = "/upploadimg.ajax", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse upload(@RequestParam("id") Integer id, MultipartHttpServletRequest request) throws IOException {
 		final Product product = productManager.getProduct(id);
@@ -329,6 +339,40 @@ public class ProductMaintainController extends AbstractController {
 		String originalFilename = file.getOriginalFilename();
 		originalFilename = originalFilename.substring(0, originalFilename.indexOf("."));
 		imageManager.addImage(product, originalFilename, file.getInputStream());
+
+		final Map<String, String> uri = new HashMap<>();
+		uri.put("original", imageResolver.resolveURI(product, originalFilename, null));
+		uri.put("small", imageResolver.resolveURI(product, originalFilename, ImageSize.SMALL));
+		uri.put("tiny", imageResolver.resolveURI(product, originalFilename, ImageSize.TINY));
+		uri.put("medium", imageResolver.resolveURI(product, originalFilename, ImageSize.MEDIUM));
+		uri.put("large", imageResolver.resolveURI(product, originalFilename, ImageSize.LARGE));
+
+		final Map<String, Object> res = new HashMap<>();
+		res.put("code", originalFilename);
+		res.put("uri", uri);
+
+		return responseFactory.success(res);
+	}
+
+	@RequestMapping(value = "/loadimg.ajax", method = RequestMethod.POST)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse upload(@RequestParam("id") Integer id, @RequestBody String url) throws IOException {
+		final Product product = productManager.getProduct(id);
+		if (product == null) {
+			throw new IllegalArgumentException("Product is not specified");
+		}
+
+		final URL u = new URL(url);
+
+		String originalFilename = u.getFile();
+		originalFilename = originalFilename.substring(originalFilename.lastIndexOf("/") + 1, originalFilename.lastIndexOf("."));
+		imageManager.addImage(product, originalFilename, u.openStream());
+
+/*
+		final MultipartFile file = request.getFile("files[]");
+
+		originalFilename = originalFilename.substring(0, originalFilename.indexOf("."));
+*/
 
 		final Map<String, String> uri = new HashMap<>();
 		uri.put("original", imageResolver.resolveURI(product, originalFilename, null));

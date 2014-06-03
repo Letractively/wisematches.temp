@@ -3,6 +3,7 @@ package billiongoods.server.services.image.impl;
 import billiongoods.server.services.image.ImageManager;
 import billiongoods.server.services.image.ImageResolver;
 import billiongoods.server.services.image.ImageSize;
+import billiongoods.server.warehouse.Product;
 import billiongoods.server.warehouse.ProductPreview;
 
 import java.io.FileInputStream;
@@ -22,7 +23,7 @@ import java.util.regex.Pattern;
 
 /**
  * Realization of {@code ImageManager} that saves images into files.
- * <p/>
+ * <p>
  * A name of the file is composed by following rule: {@code <PlayerID>_<ImageSize>.image} where:
  * {@code <PlayerID>} is player id, {@code <ImageSize>} the image type (see {@code ImageSize}).
  *
@@ -60,6 +61,14 @@ public class FileImageManager implements ImageManager {
 		for (ImageSize size : ImageSize.values()) {
 			final Path path = imageResolver.resolveFile(product, code, size);
 			Files.deleteIfExists(path);
+		}
+	}
+
+	@Override
+	public void clearImages(Product product) throws IOException {
+		final Collection<String> codes = getImageCodes(product);
+		for (String code : codes) {
+			removeImage(product, code);
 		}
 	}
 
