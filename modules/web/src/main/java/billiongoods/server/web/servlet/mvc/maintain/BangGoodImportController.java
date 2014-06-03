@@ -18,9 +18,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -88,8 +99,37 @@ public class BangGoodImportController extends AbstractController {
 			}
 
 			final Category category = categoryManager.getCategory(form.getCategory());
-			productImporter.importProducts(category, properties, groups, form.getDescription().getInputStream(),
-					form.getImages().getInputStream(), form.isValidatePrice());
+
+
+			final String uploadUrl = form.getUploadUrl();
+			if (uploadUrl != null) {
+				final Path tempFile = Files.createTempFile("ProductsImporting", "bg");
+				Files.copy(new URL(uploadUrl).openStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+				InputStream imagesIS = null;
+				InputStream descriptionIS = null;
+
+				final ZipFile zipFile = new ZipFile(tempFile.toFile());
+				final Enumeration<? extends ZipEntry> entries = zipFile.entries();
+				while (entries.hasMoreElements()) {
+					final ZipEntry zipEntry = entries.nextElement();
+					final String name = zipEntry.getName();
+					if (name.endsWith("image.csv")) {
+						imagesIS = readZipEntry(zipFile, zipEntry);
+					} else if (name.endsWith("info.csv")) {
+						descriptionIS = readZipEntry(zipFile, zipEntry);
+					}
+				}
+				zipFile.close();
+				Files.deleteIfExists(tempFile);
+
+				if (descriptionIS != null && imagesIS != null) {
+					productImporter.importProducts(category, properties, groups, descriptionIS, imagesIS, form.isValidatePrice());
+				}
+			} else {
+				productImporter.importProducts(category, properties, groups, form.getDescription().getInputStream(),
+						form.getImages().getInputStream(), form.isValidatePrice());
+			}
 			model.addAttribute("result", true);
 			model.addAttribute("category", category);
 			model.addAttribute("attributes", ProductMaintainController.createAttributesMap(category).keySet());
@@ -98,6 +138,18 @@ public class BangGoodImportController extends AbstractController {
 			model.addAttribute("result", false);
 		}
 		return "/content/maintain/import";
+	}
+
+	private InputStream readZipEntry(ZipFile zipFile, ZipEntry zipEntry) throws IOException {
+		final InputStream in = zipFile.getInputStream(zipEntry);
+
+		final ByteArrayOutputStream bos = new ByteArrayOutputStream((int) zipEntry.getSize());
+		int next = in.read();
+		while (next > -1) {
+			bos.write(next);
+			next = in.read();
+		}
+		return new ByteArrayInputStream(bos.toByteArray());
 	}
 
 	@RequestMapping(value = "/loadSupplierInfo.ajax")
