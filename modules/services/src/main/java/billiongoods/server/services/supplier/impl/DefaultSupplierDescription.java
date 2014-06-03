@@ -4,6 +4,7 @@ import billiongoods.server.services.supplier.SupplierDescription;
 import billiongoods.server.warehouse.Price;
 import billiongoods.server.warehouse.StockInfo;
 
+import java.net.URL;
 import java.util.Collection;
 import java.util.Map;
 
@@ -13,11 +14,13 @@ import java.util.Map;
 public class DefaultSupplierDescription implements SupplierDescription {
 	private final Price price;
 	private final StockInfo stockInfo;
+	private final Collection<URL> images;
 	private final Map<String, Collection<String>> parameters;
 
-	public DefaultSupplierDescription(Price price, StockInfo stockInfo, Map<String, Collection<String>> parameters) {
+	public DefaultSupplierDescription(Price price, StockInfo stockInfo, Collection<URL> images, Map<String, Collection<String>> parameters) {
 		this.price = price;
 		this.stockInfo = stockInfo;
+		this.images = images;
 		this.parameters = parameters;
 	}
 
@@ -32,6 +35,11 @@ public class DefaultSupplierDescription implements SupplierDescription {
 	}
 
 	@Override
+	public Collection<URL> getImages() {
+		return images;
+	}
+
+	@Override
 	public Map<String, Collection<String>> getParameters() {
 		return parameters;
 	}
@@ -41,6 +49,7 @@ public class DefaultSupplierDescription implements SupplierDescription {
 		final StringBuilder sb = new StringBuilder("DefaultSupplierDescription{");
 		sb.append("price=").append(price);
 		sb.append(", stockInfo=").append(stockInfo);
+		sb.append(", images=").append(images);
 		sb.append(", parameters=").append(parameters);
 		sb.append('}');
 		return sb.toString();

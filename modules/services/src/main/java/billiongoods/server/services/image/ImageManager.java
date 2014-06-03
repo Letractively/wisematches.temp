@@ -1,5 +1,6 @@
 package billiongoods.server.services.image;
 
+import billiongoods.server.warehouse.Product;
 import billiongoods.server.warehouse.ProductPreview;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ public interface ImageManager {
 	void addImage(ProductPreview product, String code, InputStream in) throws IOException;
 
 	void removeImage(ProductPreview product, String code) throws IOException;
+
+	void clearImages(Product product) throws IOException;
 
 
 	Collection<String> getImageCodes(ProductPreview product) throws IOException;

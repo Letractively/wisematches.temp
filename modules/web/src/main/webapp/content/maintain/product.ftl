@@ -90,13 +90,29 @@
     </td>
 </tr>
 <tr>
-    <td><label for="supplierPrice">Цена поставщика: </label></td>
-    <td><@bg.ui.input path="form.supplierPrice"/></td>
+    <td><label for="weight">Вес: </label></td>
+    <td><@bg.ui.input path="form.weight"/></td>
 </tr>
 <tr>
-    <td><label for="supplierPrimordialPrice">Цена поставщика до скидки: </label></td>
-    <td><@bg.ui.input path="form.supplierPrimordialPrice"/></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
 </tr>
+
+<tr>
+    <td><label for="supplierPrice">Цена: </label></td>
+    <td>
+    <@bg.ui.input path="form.supplierPrice">USD</@bg.ui.input>
+    <@bg.ui.input path="form.price" attributes="disabled='disabled'">руб</@bg.ui.input>
+    </td>
+</tr>
+<tr>
+    <td><label for="supplierPrimordialPrice">Цена до скидки: </label></td>
+    <td>
+    <@bg.ui.input path="form.supplierPrimordialPrice">USD</@bg.ui.input>
+    <@bg.ui.input path="form.primordialPrice" attributes="disabled='disabled'">руб</@bg.ui.input>
+    </td>
+</tr>
+
 <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -133,6 +149,29 @@
     </td>
 </tr>
 <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td valign="top"></td>
+    <td>
+        <div id="supplierImages" style="display: none">
+            <div class="content"></div>
+            <div class="action">
+                <button id="selectSupplierImages" type="button">Установить выбранные</button>
+            </div>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td valign="top"></td>
+    <td>
+        <div id="supplierParameters" style="display: none">
+            <div class="content"></div>
+        </div>
+    </td>
+</tr>
+<tr>
     <td valign="top"></td>
     <td align="right">
         <div id="supplierInfo">
@@ -141,98 +180,19 @@
                 </button></span>
                 <span class="progress" style="display: none"></span>
             </span>
-            <span class="data"></span>
         </div>
     </td>
-</tr>
-
-<tr>
-    <td colspan="2">
-        <hr>
-    </td>
-</tr>
-
-<tr>
-    <td colspan="2">
-        <hr>
-    </td>
-</tr>
-
-<tr>
-    <td><label for="price">Цена: </label></td>
-    <td><@bg.ui.input path="form.price"/></td>
-</tr>
-<tr>
-    <td><label for="primordialPrice">Цена до скидки: </label></td>
-    <td><@bg.ui.input path="form.primordialPrice"/></td>
-</tr>
-<tr>
-    <td><label for="weight">Вес: </label></td>
-    <td><@bg.ui.input path="form.weight"/></td>
 </tr>
 
 <#if form.categoryId??>
     <#assign category=catalog.getCategory(form.categoryId)/>
+
 <tr>
     <td colspan="2">
         <hr>
     </td>
 </tr>
-<tr>
-    <td valign="top"><label for="properties">Параметры: </label></td>
-    <td>
-        <div id="productParameters">
-            <table>
-                <#list category.parameters as p>
-                    <#assign attr=p.attribute/>
-                    <#assign value=form.getProperty(attr)!""/>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="propertyIds" value="${attr.id}">
-                            <label for="property${attr.id}" class="attribute">
-                                <a href="/maintain/attribute?id=${attr.id}">${attr.name}<#if attr.unit?has_content>,
-                                ${attr.unit}</#if></a>
-                            </label>
-                        </td>
-                        <#if attr.attributeType == AttributeType.STRING>
-                            <td>
-                                <select id="property${attr.id}" name="propertyValues" style="width: 100%">
-                                    <option value="">-- нет значения --</option>
-                                    <#list p.values as v>
-                                        <option value="${v}"<#if v==value> selected="selected"</#if>>${v}</option>
-                                    </#list>
-                                </select>
-                            </td>
-                            <td>
-                                <button type="button">Добавить</button>
-                            </td>
-                        <#elseif attr.attributeType == AttributeType.BOOLEAN>
-                            <td>
-                                <select id="property${attr.id}" name="propertyValues" style="width: 100%">
-                                    <option value="">-- нет значения --</option>
-                                    <option value="false" <#if value="false">selected="selected"</#if>>нет</option>
-                                    <option value="true" <#if value="true">selected="selected"</#if>>да</option>
-                                </select>
-                            </td>
-                            <td></td>
-                        <#else>
-                            <td>
-                                <input id="property${attr.id}" name="propertyValues" value="${value}"
-                                       style="width: 100%">
-                            </td>
-                            <td></td>
-                        </#if>
-                    </tr>
-                </#list>
-            </table>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td colspan="2">
-        <hr>
-    </td>
-</tr>
+
 <tr>
     <td valign="top"><label for="options">Опции: </label></td>
     <td>
@@ -388,12 +348,66 @@
 
         <div>
             <label for="fileupload">Добавить изображение</label>
-            <input id="fileupload" type="file" name="files[]" data-url="/maintain/product/addimg" multiple>
+            <input id="fileupload" type="file" name="files[]" data-url="/maintain/product/upploadimg.ajax" multiple>
         </div>
     </td>
 </tr>
 </#if>
-
+<tr>
+    <td colspan="2">
+        <hr>
+    </td>
+</tr>
+<tr>
+    <td valign="top"><label for="properties">Параметры: </label></td>
+    <td>
+        <div id="productParameters">
+            <table>
+            <#list category.parameters as p>
+                <#assign attr=p.attribute/>
+                <#assign value=form.getProperty(attr)!""/>
+                <tr>
+                    <td>
+                        <input type="hidden" name="propertyIds" value="${attr.id}">
+                        <label for="property${attr.id}" class="attribute">
+                            <a href="/maintain/attribute?id=${attr.id}">${attr.name}<#if attr.unit?has_content>,
+                            ${attr.unit}</#if></a>
+                        </label>
+                    </td>
+                    <#if attr.attributeType == AttributeType.STRING>
+                        <td>
+                            <select id="property${attr.id}" name="propertyValues" style="width: 100%">
+                                <option value="">-- нет значения --</option>
+                                <#list p.values as v>
+                                    <option value="${v}"<#if v==value> selected="selected"</#if>>${v}</option>
+                                </#list>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button">Добавить</button>
+                        </td>
+                    <#elseif attr.attributeType == AttributeType.BOOLEAN>
+                        <td>
+                            <select id="property${attr.id}" name="propertyValues" style="width: 100%">
+                                <option value="">-- нет значения --</option>
+                                <option value="false" <#if value="false">selected="selected"</#if>>нет</option>
+                                <option value="true" <#if value="true">selected="selected"</#if>>да</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    <#else>
+                        <td>
+                            <input id="property${attr.id}" name="propertyValues" value="${value}"
+                                   style="width: 100%">
+                        </td>
+                        <td></td>
+                    </#if>
+                </tr>
+            </#list>
+            </table>
+        </div>
+    </td>
+</tr>
 <tr>
     <td colspan="2">
         <hr>
@@ -499,54 +513,81 @@ var showCategoryEditor = function () {
 
 var loadSupplierDescription = function () {
     var siEl = $("#supplierInfo");
-    var dataEl = siEl.find(".data");
+    var supplierImagesEl = $("#supplierImages");
+    var supplierParametersEl = $("#supplierParameters");
     var actionEl = siEl.find(".action span");
 
-    dataEl.html('');
     actionEl.toggle();
+    supplierImagesEl.hide();
+    supplierParametersEl.hide();
     $.post("/maintain/product/loadSupplierInfo.ajax?id=${form.id}")
             .done(function (response) {
                 if (response.success) {
                     var data = response.data;
 
                     if (data.price != null) {
+                        var supplierPrice = $("#supplierPrice");
                         if (data.price.amount == null) {
-                            $("#supplierPrice").val("");
+                            supplierPrice.val("");
                         } else {
-                            $("#supplierPrice").val(data.price.amount);
+                            supplierPrice.val(data.price.amount);
                         }
 
+                        var supplierPrimordialPrice = $("#supplierPrimordialPrice");
                         if (data.price.primordialAmount == null) {
-                            $("#supplierPrimordialPrice").val("");
+                            supplierPrimordialPrice.val("");
                         } else {
-                            $("#supplierPrimordialPrice").val(data.price.primordialAmount);
+                            supplierPrimordialPrice.val(data.price.primordialAmount);
                         }
+
+                        supplierPrice.trigger("change");
+                        supplierPrimordialPrice.trigger("change");
                     }
 
                     if (data.stockInfo != null) {
+                        var stockCount = $("#stockCount");
                         if (data.stockInfo.count == null) {
-                            $("#stockCount").val(0);
+                            stockCount.val(0);
                         } else {
-                            $("#stockCount").val(data.stockInfo.count);
+                            stockCount.val(data.stockInfo.count);
                         }
+
+                        var stockShipDays = $("#stockShipDays");
                         if (data.stockInfo.shipDays == null) {
-                            $("#stockShipDays").val(0);
+                            stockShipDays.val(0);
                         } else {
-                            $("#stockShipDays").val(data.stockInfo.shipDays);
+                            stockShipDays.val(data.stockInfo.shipDays);
                         }
 
                         var dt = data.stockInfo.arrivalDate;
+                        var stockArrivalDate = $("#stockArrivalDate");
                         if (dt == null) {
-                            $("#stockArrivalDate").val();
+                            stockArrivalDate.val();
                         } else {
-                            $("#stockArrivalDate").val(dt.year + "-" + ("0" + dt.monthValue).slice(-2) + "-" + ("0" + dt.dayOfMonth).slice(-2));
+                            stockArrivalDate.val(dt.year + "-" + ("0" + dt.monthValue).slice(-2) + "-" + ("0" + dt.dayOfMonth).slice(-2));
                         }
+
+                        stockCount.trigger("change");
+                        stockShipDays.trigger("change");
+                        stockArrivalDate.trigger("change");
                     }
 
-                    var info = "<table>";
+                    var imgsCnt = "<div id='supplierImagesList' style='text-align: left'>";
+                    $.each(data.images, function (index, value) {
+                        imgsCnt += "    <span style='white-space: nowrap'>";
+                        imgsCnt += "        <input type='checkbox' checked=checked src='" + value + "'/>";
+                        imgsCnt += "        <img src='" + value + "' width=45 height=45/>";
+                        imgsCnt += "    </span>";
+                    });
+
+
+                    imgsCnt += "</div>";
+                    supplierImagesEl.show().find(".content").html(imgsCnt);
+
+                    var paramsCnt = "<table>";
                     $.each(data.parameters, function (key, value) {
-                        info += "  <tr>";
-                        info += "    <td><label>" + key + "</label></td>";
+                        paramsCnt += "  <tr>";
+                        paramsCnt += "    <td><label>" + key + "</label></td>";
 
                         var vals = '';
                         $.each(value, function (i, v) {
@@ -562,11 +603,11 @@ var loadSupplierDescription = function () {
                                 vals += ';';
                             }
                         });
-                        info += "    <td>" + vals + "</td>";
-                        info += "  </tr>";
+                        paramsCnt += "    <td>" + vals + "</td>";
+                        paramsCnt += "  </tr>";
                     });
-                    info += "</table>";
-                    dataEl.html(info);
+                    paramsCnt += "</table>";
+                    supplierParametersEl.show().find(".content").html(paramsCnt);
                     actionEl.toggle();
                     bg.ui.unlock(actionEl);
                 } else {
@@ -677,21 +718,25 @@ $("#supplierReferenceId").change(function () {
     $("#supplierReferenceLink").attr('href', 'http://www.banggood.com' + $(this).val());
 });
 
+var insertProductImage = function (data) {
+    var code = data.code;
+    var uri = data.uri;
+
+    var s = '';
+    s += '<div class="image">';
+    s += '<img src="${imageResourcesDomain}/' + uri.small + '"/>';
+    s += '<input name="enabledImages" type="checkbox" value="' + code + '" checked="checked"/>';
+    s += '<input name="previewImage" type="radio" value="' + code + '"/>';
+    s += '</div>';
+
+    $(".images").append($(s));
+};
+
 $(function () {
     $('#fileupload').fileupload({
         dataType: 'json',
         done: function (e, data) {
-            var code = data.result.data.code;
-            var uri = data.result.data.uri;
-
-            var s = '';
-            s += '<div class="image">';
-            s += '<img src="${imageResourcesDomain}/' + uri.small + '"/>';
-            s += '<input name="enabledImages" type="checkbox" value="' + code + '" checked="checked"/>';
-            s += '<input name="previewImage" type="radio" value="' + code + '"/>';
-            s += '</div>';
-
-            $(".images").append($(s));
+            insertProductImage(data.result.data);
         }
     });
 });
@@ -764,5 +809,41 @@ $("#notAvailable").click(function () {
 
 $("#available").click(function () {
     $("#stockCount").val("");
+});
+
+$("#selectSupplierImages").click(function () {
+    bg.ui.lock(null, "Удаление изображений...");
+    $.post("/maintain/product/clearimgs.ajax?id=" +${form.id})
+            .done(function (response) {
+                if (response.success) {
+                    $(".images").html('');
+                    bg.ui.unlock(null, "Изображения удалены", false);
+                } else {
+                    bg.ui.unlock(null, response.message, true);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                        "Пожалуйста, попробуйте отправить сообщение позже.", true);
+            });
+
+    var find = $("#supplierImagesList").find("input:checked");
+    find.each(function (index, input) {
+        var url = $(input).attr('src');
+        bg.ui.lock(null, "Добавление изображения " + url);
+        $.post("/maintain/product/loadimg.ajax?id=" +${form.id}, url)
+                .done(function (response) {
+                    if (response.success) {
+                        insertProductImage(response.data);
+                        bg.ui.unlock(null, "Изображение добавлено", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                });
+    });
 });
 </script>
