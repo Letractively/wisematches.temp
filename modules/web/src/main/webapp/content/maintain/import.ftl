@@ -71,38 +71,6 @@
                 <@bg.ui.selectCategory path="form.category" catalog=catalog root=false/>
             </td>
         </tr>
-        <tr>
-            <td>
-                <label for="file">Изображения: </label>
-            </td>
-            <td>
-                <input type="file" name="images">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="file">Описание: </label>
-            </td>
-            <td>
-                <input type="file" name="description">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="group">Проверять цены:</label>
-            </td>
-            <td>
-                <@bg.ui.input path="form.validatePrice" fieldType="checkbox"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="group">Состоит в группе:</label>
-            </td>
-            <td>
-                <@bg.ui.input "form.participatedGroups"/>
-            </td>
-        </tr>
         <#if attributes??>
             <tr>
                 <td valign="top">
@@ -125,6 +93,56 @@
                 </td>
             </tr>
         </#if>
+        <tr>
+            <td>
+                <label for="group">Состоит в группе:</label>
+            </td>
+            <td>
+                <@bg.ui.input "form.participatedGroups"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="group">Проверять цены:</label>
+            </td>
+            <td>
+                <@bg.ui.input path="form.validatePrice" fieldType="checkbox"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="uploadUrl">Ссылка на архив: </label>
+            </td>
+            <td>
+                <input type="text" name="uploadUrl" style="width: 100%">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="file">Изображения: </label>
+            </td>
+            <td>
+                <input type="file" name="images">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="file">Описание: </label>
+            </td>
+            <td>
+                <input type="file" name="description">
+            </td>
+        </tr>
         <tr>
             <td colspan="2">
                 <hr>

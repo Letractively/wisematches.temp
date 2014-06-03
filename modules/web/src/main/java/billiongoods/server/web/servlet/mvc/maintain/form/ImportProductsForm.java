@@ -13,6 +13,8 @@ public class ImportProductsForm {
 
 	private Integer[] participatedGroups;
 
+	private String uploadUrl;
+
 	private CommonsMultipartFile images;
 	private CommonsMultipartFile description;
 
@@ -43,6 +45,14 @@ public class ImportProductsForm {
 
 	public void setDescription(CommonsMultipartFile description) {
 		this.description = description;
+	}
+
+	public String getUploadUrl() {
+		return uploadUrl;
+	}
+
+	public void setUploadUrl(String uploadUrl) {
+		this.uploadUrl = uploadUrl;
 	}
 
 	public Integer[] getPropertyIds() {
