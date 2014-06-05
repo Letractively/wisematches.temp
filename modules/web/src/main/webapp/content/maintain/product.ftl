@@ -827,23 +827,29 @@ $("#selectSupplierImages").click(function () {
                         "Пожалуйста, попробуйте отправить сообщение позже.", true);
             });
 
+    bg.ui.lock(null, "Добавление изображений");
+    var urls = [];
     var find = $("#supplierImagesList").find("input:checked");
     find.each(function (index, input) {
-        var url = $(input).attr('src');
-        bg.ui.lock(null, "Добавление изображения " + url);
-        $.post("/maintain/product/loadimg.ajax?id=" +${form.id}, url)
-                .done(function (response) {
-                    if (response.success) {
-                        insertProductImage(response.data);
-                        bg.ui.unlock(null, "Изображение добавлено", false);
-                    } else {
-                        bg.ui.unlock(null, response.message, true);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
-                });
+        urls[index] = $(input).attr('src');
     });
+    $.post("/maintain/product/loadimgs.ajax?id=" +${form.id}, JSON.stringify(urls))
+            .done(function (response) {
+                if (response.success) {
+                    $.each(response.data, function (index, value) {
+                        if (value.body.success) {
+                            insertProductImage(value.body.data);
+                        }
+                    });
+                    bg.ui.unlock(null, "Изображения добавлены", false);
+                } else {
+                    bg.ui.unlock(null, response.message, true);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
+                        "Пожалуйста, попробуйте отправить сообщение позже.", true);
+            });
+
 });
 </script>
