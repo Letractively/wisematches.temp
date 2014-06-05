@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -354,25 +356,30 @@ public class ProductMaintainController extends AbstractController {
 		return responseFactory.success(res);
 	}
 
+	@RequestMapping(value = "/loadimgs.ajax", method = RequestMethod.POST)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ServiceResponse upload(@RequestParam("id") Integer id, @RequestBody String[] urls) throws IOException, URISyntaxException {
+		final ServiceResponse[] res = new ServiceResponse[urls.length];
+		for (int i = 0; i < urls.length; i++) {
+			res[i] = upload(id, urls[i]);
+		}
+		return responseFactory.success(res);
+	}
+
 	@RequestMapping(value = "/loadimg.ajax", method = RequestMethod.POST)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ServiceResponse upload(@RequestParam("id") Integer id, @RequestBody String url) throws IOException {
+	public ServiceResponse upload(@RequestParam("id") Integer id, @RequestBody String url) throws IOException, URISyntaxException {
 		final Product product = productManager.getProduct(id);
 		if (product == null) {
 			throw new IllegalArgumentException("Product is not specified");
 		}
 
-		final URL u = new URL(url);
+		final Collection<String> imageCodes = imageManager.getImageCodes(product);
+		String originalFilename = "SKU" + product.getId() + "v" + (imageCodes.size() + 1);
 
-		String originalFilename = u.getFile();
-		originalFilename = originalFilename.substring(originalFilename.lastIndexOf("/") + 1, originalFilename.lastIndexOf("."));
+		final URL t = new URL(url);
+		final URL u = new URI(t.getProtocol(), t.getHost(), t.getPath(), null).toURL();
 		imageManager.addImage(product, originalFilename, u.openStream());
-
-/*
-		final MultipartFile file = request.getFile("files[]");
-
-		originalFilename = originalFilename.substring(0, originalFilename.indexOf("."));
-*/
 
 		final Map<String, String> uri = new HashMap<>();
 		uri.put("original", imageResolver.resolveURI(product, originalFilename, null));
