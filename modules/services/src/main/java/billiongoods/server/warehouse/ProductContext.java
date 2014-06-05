@@ -11,6 +11,7 @@ public class ProductContext {
 	private final Category category;
 	private final boolean subCategories;
 	private final StockState stockState;
+	private final Restriction restriction;
 	private final boolean onlyRecommended;
 	private final EnumSet<ProductState> productStates;
 
@@ -33,6 +34,10 @@ public class ProductContext {
 	}
 
 	public ProductContext(Category category, boolean subCategories, String search, boolean arrival, boolean onlyRecommended, EnumSet<ProductState> productStates, StockState stockState) {
+		this(category, subCategories, search, arrival, false, productStates, stockState, null);
+	}
+
+	public ProductContext(Category category, boolean subCategories, String search, boolean arrival, boolean onlyRecommended, EnumSet<ProductState> productStates, StockState stockState, Restriction restriction) {
 		this.search = search;
 		this.arrival = arrival;
 		this.category = category;
@@ -40,6 +45,7 @@ public class ProductContext {
 		this.subCategories = subCategories;
 		this.productStates = productStates;
 		this.onlyRecommended = onlyRecommended;
+		this.restriction = restriction;
 	}
 
 	public String getSearch() {
@@ -64,6 +70,10 @@ public class ProductContext {
 
 	public StockState getStockState() {
 		return stockState;
+	}
+
+	public Restriction getRestriction() {
+		return restriction;
 	}
 
 	public EnumSet<ProductState> getProductStates() {

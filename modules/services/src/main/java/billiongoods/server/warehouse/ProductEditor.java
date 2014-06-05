@@ -22,6 +22,7 @@ public class ProductEditor {
 	Supplier wholesaler;
 	Price supplierPrice;
 	String commentary;
+	Restriction restriction;
 	ProductState productState = ProductState.DISABLED;
 
 	public ProductEditor() {
@@ -153,6 +154,14 @@ public class ProductEditor {
 
 	public void setCommentary(String commentary) {
 		this.commentary = commentary;
+	}
+
+	public Restriction getRestriction() {
+		return restriction;
+	}
+
+	public void setRestriction(Restriction restriction) {
+		this.restriction = restriction;
 	}
 
 	public ProductState getProductState() {

@@ -85,6 +85,13 @@ public interface ProductPreview extends ProductImager {
 	ProductState getState();
 
 	/**
+	 * Returns restriction for the product if any or {@code null} if no special restrictions.
+	 *
+	 * @return the restriction for the product if any or {@code null} if no special restrictions.
+	 */
+	Restriction getRestriction();
+
+	/**
 	 * Returns sold count.
 	 *
 	 * @return the sold count.

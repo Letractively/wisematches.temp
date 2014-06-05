@@ -71,6 +71,8 @@ public class ProductForm implements ProductImager {
 
 	private String commentary;
 
+	private Restriction restriction;
+
 	private ProductState productState;
 
 	public ProductForm() {
@@ -314,6 +316,14 @@ public class ProductForm implements ProductImager {
 		this.commentary = commentary;
 	}
 
+	public Restriction getRestriction() {
+		return restriction;
+	}
+
+	public void setRestriction(Restriction restriction) {
+		this.restriction = restriction;
+	}
+
 	public ProductState getProductState() {
 		return productState;
 	}
@@ -365,6 +375,7 @@ public class ProductForm implements ProductImager {
 		sb.append(", stockShipDays=").append(stockShipDays);
 		sb.append(", stockArrivalDate='").append(stockArrivalDate).append('\'');
 		sb.append(", commentary='").append(commentary).append('\'');
+		sb.append(", restriction=").append(restriction);
 		sb.append(", productState=").append(productState);
 		sb.append('}');
 		return sb.toString();

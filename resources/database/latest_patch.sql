@@ -1,3 +1,8 @@
+#05.06.14
+ALTER TABLE `billiongoods`.`store_product`
+ADD COLUMN `restriction` SMALLINT(6) NULL
+AFTER `state`;
+
 #08.05.14
 ALTER TABLE `billiongoods`.`store_showcase`
 DROP COLUMN `uri`;

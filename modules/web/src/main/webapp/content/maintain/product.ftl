@@ -134,7 +134,24 @@
     <td>&nbsp;</td>
 </tr>
 <tr>
-    <td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
+    <td><label for="restriction">Ограничения: </label></td>
+    <td>
+    <@bg.ui.field path="form.restriction">
+        <select id="restriction" name="${bg.ui.status.expression}">
+            <option value="">Без ограничений</option>
+            <#list Restriction.values() as t>
+                <option value="${t.name()}" <#if bg.ui.statusValue=t>selected="selected"</#if>>${t.name()}</option>
+            </#list>
+        </select>
+    </@bg.ui.field>
+    </td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+<td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
     <td><@bg.ui.input path="form.supplierReferenceCode"/></td>
 </tr>
 <tr>

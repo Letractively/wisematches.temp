@@ -277,6 +277,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 		product.setOptions(editor.getOptions());
 		product.setProperties(editor.getProperties());
 		product.setState(editor.getProductState());
+		product.setRestriction(editor.getRestriction());
 		product.setCommentary(editor.getCommentary());
 
 		final HibernateSupplierInfo supplierInfo = product.getSupplierInfo();
@@ -409,6 +410,10 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 				} else {
 					criteria.add(Restrictions.eq("categoryId", category.getId()));
 				}
+			}
+
+			if (context.getRestriction() != null) {
+				criteria.add(Restrictions.eq("restriction", context.getRestriction()));
 			}
 
 			if (context.getProductStates() != null) {
