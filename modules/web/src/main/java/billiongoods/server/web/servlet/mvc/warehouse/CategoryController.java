@@ -44,12 +44,14 @@ public class CategoryController extends AbstractController {
 	@RequestMapping("/category/{categoryUri}")
 	public String showCategory(@PathVariable("categoryUri") String categoryUri,
 							   @ModelAttribute("pageableForm") ProductsPageableForm pageableForm, Model model) {
-		final Integer categoryId;
 		final int i = categoryUri.lastIndexOf("-");
-		if (i < 0) {
-			categoryId = Integer.decode(categoryUri);
-		} else {
-			categoryId = Integer.decode(categoryUri.substring(i + 1));
+		final String catStr = i < 0 ? categoryUri : categoryUri.substring(i + 1);
+
+		final Integer categoryId;
+		try {
+			categoryId = Integer.decode(catStr);
+		} catch (NumberFormatException ex) {
+			throw new UnknownEntityException(catStr, "category");
 		}
 
 		final Category category = categoryManager.getCategory(categoryId);
