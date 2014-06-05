@@ -1,9 +1,6 @@
 package billiongoods.server.warehouse.impl;
 
-import billiongoods.server.warehouse.Price;
-import billiongoods.server.warehouse.ProductPreview;
-import billiongoods.server.warehouse.ProductState;
-import billiongoods.server.warehouse.StockInfo;
+import billiongoods.server.warehouse.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -51,6 +48,10 @@ public class AbstractProduct implements ProductPreview {
 
 	@Column(name = "recommended")
 	private boolean recommended;
+
+
+	@Column(name = "restriction")
+	private Restriction restriction;
 
 	@Embedded
 	private StockInfo stockInfo = new StockInfo();
@@ -107,6 +108,11 @@ public class AbstractProduct implements ProductPreview {
 	@Override
 	public ProductState getState() {
 		return state;
+	}
+
+	@Override
+	public Restriction getRestriction() {
+		return restriction;
 	}
 
 	@Override
@@ -187,6 +193,10 @@ public class AbstractProduct implements ProductPreview {
 
 	void setRecommended(boolean recommended) {
 		this.recommended = recommended;
+	}
+
+	void setRestriction(Restriction restriction) {
+		this.restriction = restriction;
 	}
 
 	void setPreviewImageId(String previewImageId) {

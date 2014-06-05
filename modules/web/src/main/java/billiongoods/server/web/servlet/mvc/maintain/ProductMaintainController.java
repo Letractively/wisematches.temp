@@ -71,6 +71,7 @@ public class ProductMaintainController extends AbstractController {
 			form.setWeight(product.getWeight());
 			form.setCommentary(product.getCommentary());
 			form.setProductState(product.getState());
+			form.setRestriction(product.getRestriction());
 
 			final StockInfo stockInfo = product.getStockInfo();
 			if (stockInfo.getArrivalDate() == null) {
@@ -277,6 +278,7 @@ public class ProductMaintainController extends AbstractController {
 				editor.setSupplierPrice(form.createSupplierPrice());
 				editor.setProductState(form.getProductState());
 				editor.setCommentary(form.getCommentary());
+				editor.setRestriction(form.getRestriction());
 
 				final Product product;
 				if (productId == null) {
