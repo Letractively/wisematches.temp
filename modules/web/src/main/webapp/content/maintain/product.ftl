@@ -102,14 +102,14 @@
     <td><label for="supplierPrice">Цена: </label></td>
     <td>
     <@bg.ui.input path="form.supplierPrice">USD</@bg.ui.input>
-    <@bg.ui.input path="form.price" attributes="disabled='disabled'">руб</@bg.ui.input>
+    <@bg.ui.input path="form.price" attributes="readonly='readonly'">руб</@bg.ui.input>
     </td>
 </tr>
 <tr>
     <td><label for="supplierPrimordialPrice">Цена до скидки: </label></td>
     <td>
     <@bg.ui.input path="form.supplierPrimordialPrice">USD</@bg.ui.input>
-    <@bg.ui.input path="form.primordialPrice" attributes="disabled='disabled'">руб</@bg.ui.input>
+    <@bg.ui.input path="form.primordialPrice" attributes="readonly='readonly'">руб</@bg.ui.input>
     </td>
 </tr>
 
@@ -151,7 +151,7 @@
     <td>&nbsp;</td>
 </tr>
 <tr>
-<td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
+    <td><label for="supplierReferenceCode">Код поставщика (SKU): </label></td>
     <td><@bg.ui.input path="form.supplierReferenceCode"/></td>
 </tr>
 <tr>
@@ -703,6 +703,9 @@ var removeRelationship = function () {
 </#if>
 
 var recalculatePrice = function (val) {
+    if (val == '') {
+        return val;
+    }
     var v = parseFloat(val);
     return ${priceConverter.formula("v", "Math.round", MarkupType.REGULAR)};
 };
