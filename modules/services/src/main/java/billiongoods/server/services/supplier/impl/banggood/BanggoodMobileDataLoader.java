@@ -157,15 +157,17 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 
 	@Override
 	public SupplierDescription loadDescription(SupplierInfo supplierInfo) throws DataLoadingException {
-		final ProductDetails details = loadProductDetails(supplierInfo);
-		if (details == null) {
+		final ContentDetails cd = loadProductDetails(supplierInfo);
+		if (cd == null) {
 			return null;
 		}
-		final StockInfo stockInfo = loadStockInfo(supplierInfo);
-		return new DefaultSupplierDescription(details.getPrice(), stockInfo, details.getImages(), details.getParameters());
+		final AjaxDetails ad = loadStockInfo(supplierInfo);
+
+		final StockInfo stockInfo = new StockInfo(ad.getCount(), cd.getSoldCount(), ad.getShipDays(), ad.getArrivalDate());
+		return new DefaultSupplierDescription(cd.getPrice(), stockInfo, cd.getImages(), cd.getParameters());
 	}
 
-	protected StockInfo loadStockInfo(SupplierInfo supplier) throws DataLoadingException {
+	protected AjaxDetails loadStockInfo(SupplierInfo supplier) throws DataLoadingException {
 		try {
 			final String referenceUri = supplier.getReferenceUri();
 
@@ -190,7 +192,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 			final int count = getInt("stocks", values);
 			int shipDays = getInt("shipDays", values);
 			if (shipDays == Integer.MIN_VALUE) {
-				shipDays = partShipDays((String) values.get("msg"));
+				shipDays = parsShipDays((String) values.get("msg"));
 			}
 
 			LocalDate arrivalDate = null;
@@ -198,7 +200,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 			if (arrivaltimes != null && !arrivaltimes.isEmpty() && !"0000-00-00".equals(arrivaltimes)) {
 				arrivalDate = LocalDate.parse(arrivaltimes, DateTimeFormatter.ISO_DATE).plusDays(3);
 			}
-			return new StockInfo(count, shipDays, arrivalDate);
+			return new AjaxDetails(count, shipDays, arrivalDate);
 		} catch (Exception ex) {
 			throw new DataLoadingException("StockInfo - " + ex.getMessage(), ex);
 		}
@@ -227,7 +229,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 		}
 	}
 
-	protected ProductDetails loadProductDetails(SupplierInfo supplier) throws DataLoadingException {
+	protected ContentDetails loadProductDetails(SupplierInfo supplier) throws DataLoadingException {
 		try {
 			final String uri = supplier.getReferenceUri();
 			final HttpGet request = new HttpGet(uri.startsWith("/") ? uri : "/" + uri);
@@ -246,7 +248,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 		}
 	}
 
-	protected ProductDetails parseProductDetails(String data) throws IOException, DataLoadingException {
+	protected ContentDetails parseProductDetails(String data) throws IOException, DataLoadingException {
 		final Document doc = Jsoup.parse(data);
 
 		if (doc.select("title").text().contains("All Categories")) { // Product not found
@@ -267,6 +269,13 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 			if (text.length() != 0) {
 				primordial = Double.valueOf(text.replace("US$", ""));
 			}
+		}
+
+		final String text = doc.select("div.item01 span.sp1 b").text();
+		int soldCount = -1;
+		try {
+			soldCount = (text != null && !text.isEmpty() ? Integer.parseInt(text) : -1);
+		} catch (NumberFormatException ignore) {
 		}
 
 		final Collection<URL> images = new ArrayList<>();
@@ -296,22 +305,52 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 				}
 			}
 		}
-		return new ProductDetails(new Price(price, primordial), images, parameters);
+		return new ContentDetails(new Price(price, primordial), soldCount, images, parameters);
 	}
 
-	private static final class ProductDetails {
+	private static final class AjaxDetails {
+		private final int count;
+		private final int shipDays;
+		private final LocalDate arrivalDate;
+
+		private AjaxDetails(int count, int shipDays, LocalDate arrivalDate) {
+			this.count = count;
+			this.shipDays = shipDays;
+			this.arrivalDate = arrivalDate;
+		}
+
+		public int getCount() {
+			return count;
+		}
+
+		public int getShipDays() {
+			return shipDays;
+		}
+
+		public LocalDate getArrivalDate() {
+			return arrivalDate;
+		}
+	}
+
+	private static final class ContentDetails {
 		private final Price price;
+		private final int soldCount;
 		private final Collection<URL> images;
 		private final Map<String, Collection<String>> parameters;
 
-		private ProductDetails(Price price, Collection<URL> images, Map<String, Collection<String>> parameters) {
+		private ContentDetails(Price price, int soldCount, Collection<URL> images, Map<String, Collection<String>> parameters) {
 			this.price = price;
 			this.images = images;
+			this.soldCount = soldCount;
 			this.parameters = parameters;
 		}
 
 		public Price getPrice() {
 			return price;
+		}
+
+		public int getSoldCount() {
+			return soldCount;
 		}
 
 		public Collection<URL> getImages() {
@@ -323,7 +362,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 		}
 	}
 
-	protected int partShipDays(String s) {
+	protected int parsShipDays(String s) {
 		final String msg = s.replace("\"", "").toLowerCase();
 		if (msg.contains("dispatched in 1 business")) {
 			return 1;

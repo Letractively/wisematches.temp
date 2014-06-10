@@ -61,6 +61,7 @@ public class HibernateValidationChange implements ValidationChange {
 	@AttributeOverrides({
 			@AttributeOverride(name = "count", column = @Column(name = "oa")),
 			@AttributeOverride(name = "shipDays", column = @Column(name = "odd")),
+			@AttributeOverride(name = "soldCount", column = @Column(name = "osc")),
 			@AttributeOverride(name = "arrivalDate", column = @Column(name = "ord"))
 	})
 	private StockInfo oldStockInfo;
@@ -69,6 +70,7 @@ public class HibernateValidationChange implements ValidationChange {
 	@AttributeOverrides({
 			@AttributeOverride(name = "count", column = @Column(name = "na")),
 			@AttributeOverride(name = "shipDays", column = @Column(name = "ndd")),
+			@AttributeOverride(name = "soldCount", column = @Column(name = "nsc")),
 			@AttributeOverride(name = "arrivalDate", column = @Column(name = "nrd"))
 	})
 	private StockInfo newStockInfo;
