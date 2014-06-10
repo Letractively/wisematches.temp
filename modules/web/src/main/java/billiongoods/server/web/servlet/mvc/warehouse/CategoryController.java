@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -211,8 +210,8 @@ public class CategoryController extends AbstractController {
 								final AttributeType type = attr.getAttributeType();
 								if (type == AttributeType.INTEGER) {
 									final String[] a = (String[]) value;
-									final BigDecimal min = a[0].trim().isEmpty() ? null : new BigDecimal(a[0]);
-									final BigDecimal max = a[1].trim().isEmpty() ? null : new BigDecimal(a[1]);
+									final Integer min = a[0].trim().isEmpty() ? null : Integer.valueOf(a[0]);
+									final Integer max = a[1].trim().isEmpty() ? null : Integer.valueOf(a[1]);
 									filterValue = new FilteringValue.Range(min, max);
 								} else if (type == AttributeType.BOOLEAN) {
 									filterValue = new FilteringValue.Bool(Boolean.valueOf((String) value));

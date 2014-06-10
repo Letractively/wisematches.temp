@@ -1702,21 +1702,21 @@ button.bg-ui-button.selected {
     margin-right: 10px !important;
 }
 
-.ui-slider-price {
+.ui-slider-container {
     position: relative;
 }
 
-.ui-slider-price .ui-slider {
+.ui-slider-container .ui-slider {
     height: 5px;
     margin-top: 20px;
     margin-bottom: 12px;
 }
 
-.ui-slider-price input {
+.ui-slider-container input {
     width: 60px;
 }
 
-.ui-slider-price .ui-slider-handle {
+.ui-slider-container .ui-slider-handle {
     border: none;
     position: absolute;
     display: block;

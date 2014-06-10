@@ -17,17 +17,13 @@ public class ProductFilter {
 		this.filter = filter;
 	}
 
-	/*
-	public ProductFilter(Double minPrice, Double maxPrice, Map<Attribute, List<String>> filter) {
-		this.minPrice = minPrice;
-		this.maxPrice = maxPrice;
-		this.filter = filter;
-	}
-*/
-
 	public boolean isEmpty() {
 		if (filter == null || filter.isEmpty()) {
 			return true;
+		}
+
+		if (minPrice != null || maxPrice != null) {
+			return false;
 		}
 
 		for (FilteringValue filteringValue : filter.values()) {
@@ -58,16 +54,4 @@ public class ProductFilter {
 	public FilteringValue getValue(Attribute attribute) {
 		return filter.get(attribute);
 	}
-
-/*
-
-	public List<String> getValues(Attribute attribute) {
-		return filter.get(attribute);
-	}
-
-	public boolean isAllowed(Attribute attr, String value) {
-		final List<String> strings = filter.get(attr);
-		return strings != null && strings.contains(value);
-	}
-*/
 }

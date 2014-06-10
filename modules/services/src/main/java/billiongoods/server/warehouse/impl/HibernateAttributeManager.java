@@ -76,10 +76,12 @@ public class HibernateAttributeManager implements AttributeManager, Initializing
 	public Attribute updateAttribute(Attribute.Editor editor) {
 		final Session session = sessionFactory.getCurrentSession();
 
-		final HibernateAttribute ha = (HibernateAttribute) attributeMap.get(editor.getId());
-		if (ha == null) {
+		final Attribute attribute = attributeMap.get(editor.getId());
+		if (attribute == null) {
 			throw new IllegalArgumentException("Unknown attribute: " + editor.getId());
 		}
+
+		final HibernateAttribute ha = (HibernateAttribute) attribute;
 
 		ha.setName(editor.getName());
 		ha.setUnit(editor.getUnit());

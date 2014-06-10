@@ -1,7 +1,5 @@
 package billiongoods.server.warehouse;
 
-import java.math.BigDecimal;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -21,8 +19,8 @@ public enum AttributeType {
 	},
 	INTEGER() {
 		@Override
-		public BigDecimal convert(String s) {
-			return new BigDecimal(s);
+		public Integer convert(String s) {
+			return new Integer(s);
 		}
 	},
 	BOOLEAN() {

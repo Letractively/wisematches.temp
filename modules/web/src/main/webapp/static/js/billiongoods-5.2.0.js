@@ -342,27 +342,41 @@ bg.assistance.SupportForm = function () {
 bg.warehouse = {};
 
 bg.warehouse.Filter = function (minTotalPrice, maxTotalPrice, minSelectedPrice, maxSelectedPrice, params) {
-    var resolution = 10;
-
     var form = $('#productsFilterForm');
-    var priceSlide = $("#priceSlide");
 
-    var minPriceInput = $("#minPriceFilter");
-    var maxPriceInput = $("#maxPriceFilter");
+    function getSlideFields(el) {
+        var slider = $(el);
+
+        var minInput = slider.find(".slider_min_input");
+        var totalMin = parseInt(slider.find(".ui-slider-min").text());
+        var maxInput = slider.find(".slider_max_input");
+        var totalMax = parseInt(slider.find(".ui-slider-max").text());
+
+        return {minInput: minInput, maxInput: maxInput, totalMin: totalMin, totalMax: totalMax};
+    }
 
     function applyFilter() {
         var inputs = form.find('input');
-        if (minPriceInput.val() == minTotalPrice) {
-            inputs = inputs.not(minPriceInput);
-        }
-        if (maxPriceInput.val() == maxTotalPrice) {
-            inputs = inputs.not(maxPriceInput);
-        }
+
+        form.find(".ui-slider-container").each(function (index, el) {
+            var slider = getSlideFields(el);
+
+            if (slider.minInput.val() == slider.totalMin && slider.maxInput.val() == slider.totalMax) {
+                inputs = inputs.not(slider.minInput).not(slider.maxInput);
+            }
+        });
         var filterParams = encodeURIComponent(inputs.serialize());
         bg.util.url.redirect(bg.util.url.extend("?" + params, 'filter', filterParams, true));
     }
 
     function resetFilter(el) {
+        el.find(".ui-slider-container").each(function (index, el) {
+            var slider = getSlideFields(el);
+
+            slider.minInput.val(slider.totalMin);
+            slider.maxInput.val(slider.totalMax);
+        });
+
         el.find('input[type=checkbox]').attr('checked', false);
         el.find('input[type=radio].default').attr('checked', true);
         applyFilter();
@@ -389,19 +403,27 @@ bg.warehouse.Filter = function (minTotalPrice, maxTotalPrice, minSelectedPrice, 
         resetFilter(form);
     });
 
-    priceSlide.slider({
-        range: true,
-        min: minTotalPrice,
-        max: maxTotalPrice,
-        step: resolution,
-        values: [minSelectedPrice, maxSelectedPrice],
-        slide: function (event, ui) {
-            var min = ui.values[0];
-            var max = ui.values[1];
-            minPriceInput.val(min).attr('exclude', min == minTotalPrice);
-            maxPriceInput.val(max).attr('exclude', max == maxTotalPrice);
-        },
-        change: applyFilter
+    form.find(".ui-slider-container").each(function (index, el) {
+        var slider = getSlideFields(el);
+
+        var resolution = Math.floor((slider.totalMax - slider.totalMin) / 196);
+        if (resolution <= 0) {
+            resolution = 1;
+        }
+
+        $(el).find(".ui-slider-bar").slider({
+            range: true,
+            min: slider.totalMin,
+            max: slider.totalMax,
+            step: resolution,
+            values: [parseInt(slider.minInput.val()), parseInt(slider.maxInput.val())],
+            slide: function (event, ui) {
+                var min = ui.values[0];
+                var max = ui.values[1];
+                slider.minInput.val(min).attr('exclude', min == slider.totalMin);
+                slider.maxInput.val(max).attr('exclude', max == slider.totalMax);
+            },
+            change: applyFilter});
     });
 };
 

@@ -1,6 +1,5 @@
 package billiongoods.server.warehouse;
 
-import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -56,10 +55,10 @@ public interface FilteringValue {
 	}
 
 	public static class Range implements FilteringValue {
-		private BigDecimal min;
-		private BigDecimal max;
+		private Integer min;
+		private Integer max;
 
-		public Range(BigDecimal min, BigDecimal max) {
+		public Range(Integer min, Integer max) {
 			this.min = min;
 			this.max = max;
 		}
@@ -69,21 +68,21 @@ public interface FilteringValue {
 			return min == null && max == null;
 		}
 
-		public BigDecimal getMin() {
+		public Integer getMin() {
 			return min;
 		}
 
-		public BigDecimal getMax() {
+		public Integer getMax() {
 			return max;
 		}
 
 		@Override
 		public boolean isAllowed(Object value) {
-			if (!(value instanceof BigDecimal)) {
+			if (!(value instanceof Integer)) {
 				return false;
 			}
 
-			final BigDecimal v = (BigDecimal) value;
+			final Integer v = (Integer) value;
 			if (min != null && min.compareTo(v) > 0) {
 				return false;
 			}
@@ -91,7 +90,6 @@ public interface FilteringValue {
 				return false;
 			}
 			return true;
-
 		}
 	}
 }

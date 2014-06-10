@@ -1,3 +1,8 @@
+10.06.14
+Warehouse: Ability to filter by integer properties. To move properties to
+    update billiongoods.store_product_property set ivalue=svalue where attributeId=9;
+    update billiongoods.store_product_property set svalue=null where attributeId=9 and svalue <> '';
+
 09.06.14
 Maintain: Price and primordial price updated incorrect in maintain page
 

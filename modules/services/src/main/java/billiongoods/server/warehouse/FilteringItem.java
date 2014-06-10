@@ -1,6 +1,5 @@
 package billiongoods.server.warehouse;
 
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,10 +46,10 @@ public abstract class FilteringItem {
 	}
 
 	public static class Range extends FilteringItem {
-		private final BigDecimal min;
-		private final BigDecimal max;
+		private final Integer min;
+		private final Integer max;
 
-		public Range(Attribute attribute, BigDecimal min, BigDecimal max) {
+		public Range(Attribute attribute, Integer min, Integer max) {
 			super(attribute);
 			this.min = min;
 			this.max = max;
@@ -61,11 +60,11 @@ public abstract class FilteringItem {
 			return min == null || max == null;
 		}
 
-		public BigDecimal getMin() {
+		public Integer getMin() {
 			return min;
 		}
 
-		public BigDecimal getMax() {
+		public Integer getMax() {
 			return max;
 		}
 	}
