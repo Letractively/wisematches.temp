@@ -19,8 +19,8 @@ public class DefaultSupplierDescription implements SupplierDescription {
 
 	public DefaultSupplierDescription(Price price, StockInfo stockInfo, Collection<URL> images, Map<String, Collection<String>> parameters) {
 		this.price = price;
-		this.stockInfo = stockInfo;
 		this.images = images;
+		this.stockInfo = stockInfo;
 		this.parameters = parameters;
 	}
 

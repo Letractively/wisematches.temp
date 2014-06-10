@@ -1,7 +1,22 @@
+#10.06.14
+ALTER TABLE `billiongoods`.`store_product`
+ADD COLUMN `stockSoldCount` INT(11) NOT NULL DEFAULT '0'
+AFTER `stockArrivalDate`;
+
+ALTER TABLE `billiongoods`.`service_validation`
+ADD COLUMN `osc` INT(11) NULL DEFAULT NULL
+AFTER `ord`,
+ADD COLUMN `nsc` INT(11) NULL DEFAULT NULL
+AFTER `nrd`;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('100614');
+
 #05.06.14
 ALTER TABLE `billiongoods`.`store_product`
 ADD COLUMN `restriction` SMALLINT(6) NULL
 AFTER `state`;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('050614');
 
 #08.05.14
 ALTER TABLE `billiongoods`.`store_showcase`

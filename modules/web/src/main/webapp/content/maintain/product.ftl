@@ -122,6 +122,10 @@
     <td><@bg.ui.input path="form.stockCount" value=0/></td>
 </tr>
 <tr>
+    <td><label for="stockCount">Продано штук: </label></td>
+    <td><@bg.ui.input path="form.stockSoldCount" value=0 attributes="readonly='readonly'"/></td>
+</tr>
+<tr>
     <td><label for="stockArrivalDate">Дата поставки: </label></td>
     <td><@bg.ui.input path="form.stockArrivalDate"/></td>
 </tr>
@@ -567,6 +571,12 @@ var loadSupplierDescription = function () {
                             stockCount.val(0);
                         } else {
                             stockCount.val(data.stockInfo.count);
+                        }
+                        var stockSoldCount = $("#stockSoldCount");
+                        if (data.stockInfo.soldCount == null) {
+                            stockSoldCount.val(-1);
+                        } else {
+                            stockSoldCount.val(data.stockInfo.soldCount);
                         }
 
                         var stockShipDays = $("#stockShipDays");

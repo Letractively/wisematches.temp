@@ -12,6 +12,9 @@ public class StockInfo {
 	@Column(name = "stockCount")
 	private int count;
 
+	@Column(name = "stockSoldCount")
+	private int soldCount;
+
 	@Column(name = "stockShipDays")
 	private int shipDays;
 
@@ -21,15 +24,16 @@ public class StockInfo {
 	private static final int DEFAULT_SHIP_DAYS = 3;
 
 	public StockInfo() {
-		this(0, DEFAULT_SHIP_DAYS);
+		this(0, 0, DEFAULT_SHIP_DAYS);
 	}
 
-	public StockInfo(int count, int shipDays) {
-		this(count, shipDays, null);
+	public StockInfo(int count, int soldCount, int shipDays) {
+		this(count, soldCount, shipDays, null);
 	}
 
-	public StockInfo(int count, int shipDays, LocalDate arrivalDate) {
+	public StockInfo(int count, int soldCount, int shipDays, LocalDate arrivalDate) {
 		this.count = count;
+		this.soldCount = soldCount;
 		this.shipDays = shipDays;
 		this.arrivalDate = arrivalDate;
 	}
@@ -37,6 +41,10 @@ public class StockInfo {
 
 	public int getCount() {
 		return count;
+	}
+
+	public int getSoldCount() {
+		return soldCount;
 	}
 
 	public int getShipDays() {
@@ -64,6 +72,7 @@ public class StockInfo {
 
 		if (count != stockInfo.count) return false;
 		if (shipDays != stockInfo.shipDays) return false;
+		if (soldCount != stockInfo.soldCount) return false;
 		if (arrivalDate != null ? !arrivalDate.equals(stockInfo.arrivalDate) : stockInfo.arrivalDate != null)
 			return false;
 
@@ -73,6 +82,7 @@ public class StockInfo {
 	@Override
 	public int hashCode() {
 		int result = count;
+		result = 31 * result + soldCount;
 		result = 31 * result + shipDays;
 		result = 31 * result + (arrivalDate != null ? arrivalDate.hashCode() : 0);
 		return result;
@@ -82,6 +92,7 @@ public class StockInfo {
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("StockInfo{");
 		sb.append("count=").append(count);
+		sb.append(", soldCount=").append(soldCount);
 		sb.append(", shipDays=").append(shipDays);
 		sb.append(", arrivalDate=").append(arrivalDate);
 		sb.append('}');

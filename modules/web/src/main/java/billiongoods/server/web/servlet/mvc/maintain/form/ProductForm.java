@@ -67,6 +67,8 @@ public class ProductForm implements ProductImager {
 
 	private int stockShipDays;
 
+	private int stockSoldCount;
+
 	private String stockArrivalDate;
 
 	private String commentary;
@@ -290,6 +292,14 @@ public class ProductForm implements ProductImager {
 
 	public void setStockShipDays(int stockShipDays) {
 		this.stockShipDays = stockShipDays;
+	}
+
+	public int getStockSoldCount() {
+		return stockSoldCount;
+	}
+
+	public void setStockSoldCount(int stockSoldCount) {
+		this.stockSoldCount = stockSoldCount;
 	}
 
 	public String getStockArrivalDate() {

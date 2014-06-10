@@ -81,6 +81,7 @@ public class ProductMaintainController extends AbstractController {
 			}
 			form.setStockCount(stockInfo.getCount());
 			form.setStockShipDays(stockInfo.getShipDays());
+			form.setStockSoldCount(stockInfo.getSoldCount());
 
 			final SupplierInfo supplierInfo = product.getSupplierInfo();
 			form.setSupplierPrice(supplierInfo.getPrice().getAmount());
@@ -267,7 +268,7 @@ public class ProductMaintainController extends AbstractController {
 				editor.setCategoryId(category.getId());
 				editor.setPrice(form.createPrice());
 				editor.setWeight(form.getWeight());
-				editor.setStockInfo(new StockInfo(form.getStockCount(), form.getStockShipDays(), stockArrivalDate));
+				editor.setStockInfo(new StockInfo(form.getStockCount(), form.getStockSoldCount(), form.getStockShipDays(), stockArrivalDate));
 				editor.setPreviewImage(form.getPreviewImage());
 				editor.setImageIds(form.getEnabledImages());
 				editor.setOptions(options);
