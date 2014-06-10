@@ -11,7 +11,6 @@ import org.hibernate.criterion.*;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -128,9 +127,10 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 		countCriteria.setProjection(countProjection);
 
 		final Object[] countResult = (Object[]) countCriteria.uniqueResult();
-		int totalCount = ((Number) countResult[0]).intValue();
-		double minPrice = countResult[1] != null ? ((Number) countResult[1]).doubleValue() : 0;
-		double maxPrice = countResult[2] != null ? ((Number) countResult[2]).doubleValue() : 10000;
+
+		final int totalCount = ((Number) countResult[0]).intValue();
+		final double minPrice = countResult[1] != null ? ((Number) countResult[1]).doubleValue() : 0;
+		final double maxPrice = countResult[2] != null ? ((Number) countResult[2]).doubleValue() : 10000;
 
 		final Criteria criteria = session.createCriteria(HibernateProductPreview.class, "product");
 		applyRestrictions(criteria, context, null);
@@ -160,9 +160,7 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 			if (type == AttributeType.INTEGER) {
 				final Integer min = oo[4] != null ? ((Number) oo[4]).intValue() : null;
 				final Integer max = oo[5] != null ? ((Number) oo[5]).intValue() : null;
-				items.add(new FilteringItem.Range(attribute,
-						min != null ? new BigDecimal(min) : null,
-						max != null ? new BigDecimal(max) : null));
+				items.add(new FilteringItem.Range(attribute, min, max));
 			} else if (type == AttributeType.STRING) {
 				final String sValue = (String) oo[1];
 				List<CountedValue> filteringSummaries = attributeListMap.get(attribute);
@@ -482,20 +480,23 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 						}
 					} else if (value instanceof FilteringValue.Range) {
 						final FilteringValue.Range v = (FilteringValue.Range) value;
-						final BigDecimal min = v.getMin();
-						final BigDecimal max = v.getMax();
+						final Integer min = v.getMin();
+						final Integer max = v.getMax();
 						if (min != null && max != null) {
 							props.add(Restrictions.and(
 									Restrictions.eq(alias + ".attributeId", attribute.getId()),
+									Restrictions.isNotNull(alias + ".iValue"),
 									Restrictions.ge(alias + ".iValue", min),
 									Restrictions.le(alias + ".iValue", max)));
 						} else if (min != null) {
 							props.add(Restrictions.and(
 									Restrictions.eq(alias + ".attributeId", attribute.getId()),
+									Restrictions.isNotNull(alias + ".iValue"),
 									Restrictions.ge(alias + ".iValue", min)));
 						} else if (max != null) {
 							props.add(Restrictions.and(
 									Restrictions.eq(alias + ".attributeId", attribute.getId()),
+									Restrictions.isNotNull(alias + ".iValue"),
 									Restrictions.le(alias + ".iValue", max)));
 						}
 					}

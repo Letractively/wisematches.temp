@@ -6,7 +6,7 @@
 <#include "/core.ftl"/>
 
 <#--================ Filtering based on data defined for products ======================-->
-<#macro attributeValueString a v c>
+<#macro enumValueElement a v c>
     <#if v?has_content>
     <li class="item">
         <input id="parameter_${a.id}_${v}" type="checkbox" name="${a.id}" value="${v}"
@@ -25,7 +25,7 @@
     </#if>
 <ul>
     <#list item.values as v>
-        <#if (v_index<splitCount)><@attributeValueString a v item.getValueCount(v)/></#if>
+        <#if (v_index<splitCount)><@enumValueElement a v item.getValueCount(v)/></#if>
     </#list>
 </ul>
     <#if (item.values?size>splitCount)>
@@ -33,13 +33,47 @@
         <ul>
             <#list item.values as v>
                 <#if (v_index>=splitCount)>
-                <@attributeValueString a v item.getValueCount(v)/>
+                <@enumValueElement a v item.getValueCount(v)/>
             </#if>
             </#list>
         </ul>
     </div>
     <span class="pseudolink fulllist">Показать еще</span>
     </#if>
+</#macro>
+
+<#macro categoryAttributeInteger a item>
+    <#assign minTotal=item.min/>
+    <#assign maxTotal=item.max/>
+
+    <#assign min=minTotal>
+    <#assign max=maxTotal>
+    <#if filter?? && filter.hasValue(a)>
+        <#assign v=filter.getValue(a)/>
+        <#assign min=v.min/>
+        <#assign max=v.max/>
+    </#if>
+
+<ul class="ui-slider-container">
+    <li>
+        <label>
+            <input id="parameter_${a.id}_min" name="${a.id}" class="slider_min_input" value="${min}">
+        </label>
+        —
+        <label>
+            <input id="parameter_${a.id}_max" name="${a.id}" class="slider_max_input" value="${max}">
+        </label>
+    ${a.unit!""}
+    </li>
+
+    <li>
+        <div class="ui-slider-bar">
+            <span class="ui-slider-min">${minTotal}</span>
+            <span class="ui-slider-med">${minTotal + (maxTotal-minTotal)/2?round}</span>
+            <span class="ui-slider-max">${maxTotal}</span>
+        </div>
+    </li>
+</ul>
 </#macro>
 
 <#macro categoryAttributeBoolean a item>
@@ -86,60 +120,62 @@
             Цена
         </div>
 
-        <ul class="ui-slider-price prices">
-            <li>
-                <label>
-                    <input id="minPriceFilter" name="minPrice" value="${minPrice}">
-                </label>
-                —
-                <label>
-                    <input id="maxPriceFilter" name="maxPrice" value="${maxPrice}">
-                </label>
-                руб.
-            </li>
+        <div class="items">
+            <ul class="ui-slider-container">
+                <li>
+                    <label>
+                        <input name="minPrice" class="slider_min_input" value="${minPrice}">
+                    </label>
+                    —
+                    <label>
+                        <input name="maxPrice" class="slider_max_input" value="${maxPrice}">
+                    </label>
+                    руб.
+                </li>
 
-            <li>
-                <div id="priceSlide">
-                    <span class="ui-slider-min">${minTotalPrice}</span>
-                    <span class="ui-slider-med">${minTotalPrice + (maxTotalPrice-minTotalPrice)/2?round}</span>
-                    <span class="ui-slider-max">${maxTotalPrice}</span>
-                </div>
-            </li>
-        </ul>
-    </div>
+                <li>
+                    <div class="ui-slider-bar">
+                        <span class="ui-slider-min">${minTotalPrice}</span>
+                        <span class="ui-slider-med">${minTotalPrice + (maxTotalPrice-minTotalPrice)/2?round}</span>
+                        <span class="ui-slider-max">${maxTotalPrice}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-    <#list filtering.filteringItems as i>
-        <#if !i.empty>
-            <#assign a = i.attribute/>
-            <div class="property">
-                <div class="name">
-                ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
-                    <#if filter??>
-                        <span class="clean">
+        <#list filtering.filteringItems as i>
+            <#if !i.empty>
+                <#assign a = i.attribute/>
+                <div class="property">
+                    <div class="name">
+                    ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
+                        <#if filter??>
+                            <span class="clean">
                         <span class="pseudolink reset" <#if !filter.hasValue(a)>style="display: none"</#if>>Сбросить фильтр</span>
                     </span>
-                    </#if>
-                </div>
+                        </#if>
+                    </div>
 
-                <div class="items">
-                    <#switch a.attributeType>
+                    <div class="items">
+                        <#switch a.attributeType>
                         <#case AttributeType.STRING><@categoryAttributeEnum a i/><#break>
-                        <#case AttributeType.BOOLEAN><@categoryAttributeBoolean a i/><#break>
-                    </#switch>
+                            <#case AttributeType.INTEGER><@categoryAttributeInteger a i/><#break>
+                            <#case AttributeType.BOOLEAN><@categoryAttributeBoolean a i/><#break>
+                        </#switch>
+                    </div>
                 </div>
+            </#if>
+        </#list>
+
+        <#if filter?? && !filter.empty>
+            <div style="text-align: right">
+                <button id="resetFilterButton" type="button">Сбросить фильтр</button>
             </div>
         </#if>
-    </#list>
+    </div>
 
-    <#if filter?? && !filter.empty>
-        <div style="text-align: right">
-            <button id="resetFilterButton" type="button">Сбросить фильтр</button>
-        </div>
-    </#if>
-</div>
-
-<script type="text/javascript">
-    new bg.warehouse.Filter(${minTotalPrice}, ${maxTotalPrice}, ${minPrice}, ${maxPrice},
-            '<@bg.ui.tableNavigationParams pageableForm "filter" ""/>');
-</script>
+    <script type="text/javascript">
+        new bg.warehouse.Filter(${minTotalPrice}, ${maxTotalPrice}, ${minPrice}, ${maxPrice},
+                '<@bg.ui.tableNavigationParams pageableForm "filter" ""/>');
+    </script>
 </#if>
