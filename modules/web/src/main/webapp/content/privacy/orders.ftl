@@ -97,6 +97,7 @@
                                         </button>
                                     </form>
                                     <#break>
+                                <#default>&nbsp;
                             </#switch>
                         </td>
                     </tr>

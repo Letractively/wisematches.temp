@@ -254,6 +254,11 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public List<OrderPortion> getOrderPortions() {
+		throw new UnsupportedOperationException("TODO: Not implemented");
+	}
+
+	@Override
 	public List<OrderItem> getOrderItems() {
 		return orderItems;
 	}
