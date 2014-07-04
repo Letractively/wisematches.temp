@@ -84,7 +84,7 @@
                 <td>
                     <input id="location" name="location">
 
-                    <div class="sample">Например: ul. Tretiya sleva, d. 321/98, korp. 7, kv. 654</div>
+                    <div class="sample">Например: ul. Tretiya, d. 321/98, korp. 7, kv. 654</div>
                 </td>
             </tr>
             <tr>

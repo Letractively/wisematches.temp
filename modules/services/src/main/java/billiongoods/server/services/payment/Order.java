@@ -28,15 +28,32 @@ public interface Order {
 	Date getClosed();
 
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	Date getTimestamp();
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	OrderState getOrderState();
 
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	int getItemsCount();
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	List<OrderItem> getOrderItems();
 
+	List<OrderPortion> getOrderPortions();
 
 	String getPayer();
 
@@ -57,14 +74,34 @@ public interface Order {
 	List<OrderLog> getOrderLogs();
 
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	String getReferenceTracking();
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	String getChinaMailTracking();
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	String getInternationalTracking();
 
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	String getRefundToken();
 
+	/**
+	 * @deprecated moved to OrderPortion
+	 */
+	@Deprecated
 	Date getExpectedResume();
 }

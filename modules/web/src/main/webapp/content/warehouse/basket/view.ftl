@@ -142,8 +142,7 @@
 
         <div class="form" <#if hasAddressBook && order.selectionTab>style="display: none" </#if>>
             <div class="desc">
-                Пожалуйста, введите ваше имя фамилия и адрес латинскими
-                буквами.
+                Пожалуйста, все поля латинскими буквами.
             </div>
             <table style="width: auto">
                 <tr>
@@ -191,7 +190,7 @@
                     </td>
                     <td>
                         <@bg.ui.input "order.location"/>
-                        <div class="sample">Например: ul. Tretiya sleva, d. 321/98, korp. 7, kv. 654</div>
+                        <div class="sample">Например: ul. Tretiya, d. 321/98, korp. 7, kv. 654</div>
                     </td>
                 </tr>
 
