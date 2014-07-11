@@ -7,6 +7,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -105,6 +107,10 @@ public class HibernateOrder implements Order {
 	@OrderBy("timestamp desc")
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderId", targetEntity = HibernateOrderLog.class)
 	private List<OrderLog> orderLogs = new ArrayList<>();
+
+	@OrderBy("number")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderId", targetEntity = HibernateOrderParcel.class)
+	private List<OrderParcel> orderParcels = new ArrayList<>();
 
 	@Transient
 	private Shipment shipment = null;
@@ -254,8 +260,13 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public List<OrderPortion> getOrderPortions() {
-		throw new UnsupportedOperationException("TODO: Not implemented");
+	public HibernateOrderParcel getParcel(int number) {
+		for (OrderParcel orderParcel : orderParcels) {
+			if (orderParcel.getNumber() == number) {
+				return (HibernateOrderParcel) orderParcel;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -266,6 +277,16 @@ public class HibernateOrder implements Order {
 	@Override
 	public List<OrderLog> getOrderLogs() {
 		return orderLogs;
+	}
+
+	@Override
+	public List<OrderParcel> getOrderParcels() {
+		return orderParcels;
+	}
+
+	@Override
+	public List<OrderItem> getParcelItems(OrderParcel parcel) {
+		return orderItems.stream().filter(item -> (parcel == null && !item.isRegistered()) || (parcel != null && parcel.contains(item))).collect(Collectors.toList());
 	}
 
 	void bill(String token) {
@@ -283,18 +304,81 @@ public class HibernateOrder implements Order {
 		updateOrderState(OrderState.ACCEPTED, null, paymentId);
 	}
 
+	void addParcel(HibernateOrderParcel parcel) {
+		orderParcels.add(parcel);
+	}
+
+	void removeParcel(HibernateOrderParcel parcel) {
+		orderParcels.remove(parcel);
+	}
+
+	void shipping(int parcel, String tracking, String commentary) {
+		final HibernateOrderParcel parcel1 = getParcel(parcel);
+		if (parcel1 == null) {
+			throw new IllegalArgumentException("Unknown parcel " + parcel);
+		}
+
+		parcel1.shipping(tracking);
+
+		updateOrderState(calculateOrderState(), parcel, tracking, commentary);
+	}
+
+	void shipped(int parcel, String tracking, String commentary) {
+		final HibernateOrderParcel parcel1 = getParcel(parcel);
+		if (parcel1 == null) {
+			throw new IllegalArgumentException("Unknown parcel " + parcel);
+		}
+
+		parcel1.shipped(tracking);
+
+		updateOrderState(calculateOrderState(), parcel, tracking, commentary);
+	}
+
+	void closed(int parcel, String tracking, String commentary) {
+		final HibernateOrderParcel parcel1 = getParcel(parcel);
+		if (parcel1 == null) {
+			throw new IllegalArgumentException("Unknown parcel " + parcel);
+		}
+
+		parcel1.closed();
+
+		updateOrderState(calculateOrderState(), parcel, tracking, commentary);
+	}
+
+	private OrderState calculateOrderState() {
+		final Set<ParcelState> set = orderParcels.stream().map(OrderParcel::getState).collect(Collectors.toSet());
+
+		if (set.contains(ParcelState.PROCESSING) || set.contains(ParcelState.SUSPENDED)) {
+			return OrderState.PROCESSING;
+		}
+		if (set.contains(ParcelState.SHIPPING)) {
+			return OrderState.SHIPPING;
+		}
+		if (set.contains(ParcelState.SHIPPED)) {
+			return OrderState.SHIPPED;
+		}
+		if (set.contains(ParcelState.CLOSED)) {
+			return OrderState.CLOSED;
+		}
+		return OrderState.CANCELLED;
+	}
+
+
+	@Deprecated
 	void processing(String referenceTracking, String commentary) {
 		this.referenceTracking = referenceTracking;
 
 		updateOrderState(OrderState.PROCESSING, commentary, referenceTracking);
 	}
 
+	@Deprecated
 	void shipping(String chinaMailTracking, String commentary) {
 		this.chinaMailTracking = chinaMailTracking;
 
 		updateOrderState(OrderState.SHIPPING, commentary, chinaMailTracking);
 	}
 
+	@Deprecated
 	void shipped(String internationalTracking, String commentary) {
 		this.shipped = new Date();
 		this.internationalTracking = internationalTracking;
@@ -332,6 +416,30 @@ public class HibernateOrder implements Order {
 		this.orderItems = orderItems;
 	}
 
+	private void updateOrderState(OrderState state, int parcel, String parameter, String commentary) {
+		// TODO: add parcel number here
+		this.timestamp = new Date();
+		this.orderState = state;
+
+		if (state != OrderState.SUSPENDED) {
+			exceptedResume = null;
+		}
+
+
+		if (commentary != null && commentary.length() > 254) {
+			commentary = commentary.substring(0, 254);
+		}
+
+		String comment = null;
+		// comment was updated - change it.
+		if (((this.commentary != null || commentary != null)) && ((this.commentary == null || !this.commentary.equals(commentary)))) {
+			this.commentary = comment = commentary;
+		}
+
+		orderLogs.add(new HibernateOrderLog(id, parameter, comment, state));
+	}
+
+	@Deprecated
 	private void updateOrderState(OrderState state, String commentary, String parameter) {
 		this.timestamp = new Date();
 		this.orderState = state;

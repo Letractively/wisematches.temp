@@ -137,9 +137,11 @@ bg.ui = new function () {
             autoHideDelay: 10000
         };
         if (stick) {
-            opts = $.extend(opts, {onClick: function () {
-            }, onHover: function () {
-            }});
+            opts = $.extend(opts, {
+                onClick: function () {
+                }, onHover: function () {
+                }
+            });
         }
         statusWidgetPane.freeow(null, message, opts);
     };
@@ -332,7 +334,7 @@ bg.assistance.SupportForm = function () {
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
                         bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                                "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                        "Пожалуйста, попробуйте отправить сообщение позже.", true);
                     });
         });
     }
@@ -423,7 +425,8 @@ bg.warehouse.Filter = function (minTotalPrice, maxTotalPrice, minSelectedPrice, 
                 slider.minInput.val(min).attr('exclude', min == slider.totalMin);
                 slider.maxInput.val(max).attr('exclude', max == slider.totalMax);
             },
-            change: applyFilter});
+            change: applyFilter
+        });
     });
 };
 
@@ -514,6 +517,22 @@ bg.warehouse.Basket = function () {
 };
 
 bg.warehouse.Order = function () {
+    this.createParcel = function (order, number, items, successor) {
+        bg.ui.lock(null, 'Создание посылки. Пожалуйста, подождите...');
+        $.post("/maintain/order/updateParcel.ajax", JSON.stringify({"order": order, "number": number, "items": items}))
+                .done(function (response) {
+                    if (response.success) {
+                        successor(response.data);
+                        bg.ui.unlock(null, "Посылка успешно создана", false);
+                    } else {
+                        bg.ui.unlock(null, response.message, true);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    bg.ui.unlock(null, "Посылка не создана", true);
+                });
+    };
+
     this.changeTracking = function (order, email, tracking, successor) {
         bg.ui.lock(null, 'Изменение подписки. Пожалуйста, подождите...');
         $.post("/warehouse/order/tracking.ajax", JSON.stringify({"order": order, "email": email, "enable": tracking}))
@@ -527,13 +546,13 @@ bg.warehouse.Order = function () {
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
                     bg.ui.unlock(null, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
-                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
                 });
     };
 
     this.confirmReceived = function (order, email, successor) {
         bg.ui.confirm("Вы уверены, что хотите закрыть заказ?", "При нажатии кнопки \"Да\", вы подтверждаете получение вами " +
-                "заказа в полном объеме и в хорошем состоянии.", function (approved) {
+        "заказа в полном объеме и в хорошем состоянии.", function (approved) {
             if (approved) {
                 bg.ui.lock(null, 'Подтверждение заказа. Пожалуйста, подождите...');
                 $.post("/warehouse/order/close.ajax", JSON.stringify({"order": order, "email": email}))
@@ -549,7 +568,7 @@ bg.warehouse.Order = function () {
                         .fail(function (jqXHR, textStatus, errorThrown) {
                             successor(false);
                             bg.ui.unlock(null, "В связи с внутренней ошибкой мы не смогли обработать ваш запрос. Если проблема " +
-                                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
                         });
             } else {
                 successor(false);
@@ -600,7 +619,7 @@ bg.warehouse.ProductController = function () {
                         bg.ui.unlock(null, "Товар добавлен в корзину", false);
                     } else {
                         bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
-                                "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                        "не исчезла, пожалуйста, свяжитесь с нами.", true);
                     }
                     if (callback != null && callback != undefined) {
                         callback(response.success);
@@ -608,7 +627,7 @@ bg.warehouse.ProductController = function () {
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
                     bg.ui.unlock(null, "Товар не может быть добавлен в связи с внутренней ошибкой. Если проблема " +
-                            "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
                 });
     };
 
@@ -701,8 +720,8 @@ bg.warehouse.ProductController = function () {
 
     this.showPriceProtection = function () {
         $('<div></div>').html("Мы заботимся о возможности предоставить нашим покупателям лучшие товары по наименьшим ценам. Если вы купили " +
-                "продукт и в течение 48 часов обнаружили, что его стоимость снизилась, мы вернем вам разницу. " +
-                "<br>Просто напищите нам письмо на наш адрес поддержки: <a href='mailto:support@billiongoods.ru'>support@billiongoods.ru</a>").dialog({
+        "продукт и в течение 48 часов обнаружили, что его стоимость снизилась, мы вернем вам разницу. " +
+        "<br>Просто напищите нам письмо на наш адрес поддержки: <a href='mailto:support@billiongoods.ru'>support@billiongoods.ru</a>").dialog({
             title: "Ценовая защита 48 часов",
             draggable: false,
             modal: true,
@@ -738,7 +757,7 @@ bg.privacy.Tracking = function () {
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
                     bg.ui.unlock(block, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                    "Пожалуйста, попробуйте отправить сообщение позже.", true);
                 });
     };
 
@@ -747,7 +766,11 @@ bg.privacy.Tracking = function () {
 
         var letsDo = function (lemail, callback) {
             bg.ui.lock(block, 'Отправки заявки. Пожалуйста, подождите...');
-            $.post("/privacy/tracking/add.ajax", JSON.stringify({productId: productId, type: trackingType, email: lemail}))
+            $.post("/privacy/tracking/add.ajax", JSON.stringify({
+                productId: productId,
+                type: trackingType,
+                email: lemail
+            }))
                     .done(function (response) {
                         if (response.success) {
                             bg.ui.unlock(block, "Ваша заявка успешно отправлена", false);
@@ -762,7 +785,7 @@ bg.privacy.Tracking = function () {
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
                         bg.ui.unlock(block, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
-                                "не исчезла, пожалуйста, свяжитесь с нами.", true);
+                        "не исчезла, пожалуйста, свяжитесь с нами.", true);
                         callback(false);
                     });
         };
@@ -891,7 +914,7 @@ bg.privacy.AddressBook = function () {
                 })
                 .fail(function (jqXHR, textStatus, errorThrown) {
                     bg.ui.unlock(null, "По техническим причинам сообщение не может быть отправлено в данный момент. " +
-                            "Пожалуйста, попробуйте отправить сообщение позже.", true);
+                    "Пожалуйста, попробуйте отправить сообщение позже.", true);
                     callback(false);
                 });
     };
@@ -956,7 +979,7 @@ $(document).ready(function () {
         }
     });
 
-    $('[title]').cluetip({ showTitle: false, activation: 'hover', local: true});
+    $('[title]').cluetip({showTitle: false, activation: 'hover', local: true});
 
     $(".quickInfo").addClass('ui-state-default').hover(
             function () {

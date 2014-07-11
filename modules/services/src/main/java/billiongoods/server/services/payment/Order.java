@@ -28,32 +28,10 @@ public interface Order {
 	Date getClosed();
 
 
-	/**
-	 * @deprecated moved to OrderPortion
-	 */
-	@Deprecated
 	Date getTimestamp();
 
-	/**
-	 * @deprecated moved to OrderPortion
-	 */
-	@Deprecated
 	OrderState getOrderState();
 
-
-	/**
-	 * @deprecated moved to OrderPortion
-	 */
-	@Deprecated
-	int getItemsCount();
-
-	/**
-	 * @deprecated moved to OrderPortion
-	 */
-	@Deprecated
-	List<OrderItem> getOrderItems();
-
-	List<OrderPortion> getOrderPortions();
 
 	String getPayer();
 
@@ -71,7 +49,39 @@ public interface Order {
 	String getCommentary();
 
 
+	/**
+	 * Returns order items count.
+	 *
+	 * @return the items count.
+	 */
+	int getItemsCount();
+
+	/**
+	 * Returns all log messages for this order.
+	 *
+	 * @return the log messages for this ord
+	 */
 	List<OrderLog> getOrderLogs();
+
+	/**
+	 * Returns list of all items in this order.
+	 *
+	 * @return the list of all items in this order.
+	 */
+	List<OrderItem> getOrderItems();
+
+
+	OrderParcel getParcel(int number);
+
+	/**
+	 * Returns list of order parcels. Can be empty if there is no any parcel yet. Can't be null.
+	 *
+	 * @return list of order parcels.
+	 */
+	List<OrderParcel> getOrderParcels();
+
+
+	List<OrderItem> getParcelItems(OrderParcel parcel);
 
 
 	/**

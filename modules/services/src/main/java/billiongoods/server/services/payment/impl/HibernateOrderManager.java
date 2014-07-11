@@ -86,7 +86,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void bill(Long orderId, String token) {
+	public Order bill(Long orderId, String token) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
@@ -96,22 +96,24 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
+		return order;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void reject(Long orderId, String payer, String paymentId, String note) {
+	public Order reject(Long orderId, String payer, String paymentId, String note) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
 		session.delete(order);
 
 		log.info("Order has been rejected and removed from system: {}", orderId);
+		return order;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void accept(Long orderId, String payer, String payerName, String payerNote, String paymentId) {
+	public Order accept(Long orderId, String payer, String payerName, String payerNote, String paymentId) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
@@ -120,6 +122,102 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
+		return order;
+	}
+
+
+	@Override
+	public HibernateOrderParcel split(Long orderId, int number, Integer... items) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+
+		final HibernateOrderParcel parcel = new HibernateOrderParcel(order, number);
+		final Long parcelId = (Long) session.save(parcel);
+
+		for (OrderItem orderItem : order.getOrderItems()) {
+			for (Integer item : items) {
+				if (orderItem.getProduct().getId().equals(item)) {
+					((HibernateOrderItem) orderItem).moveToParcel(parcelId);
+				}
+			}
+		}
+
+		order.addParcel(parcel);
+		session.update(order);
+
+		return parcel;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.MANDATORY)
+	public Order shipping(Long orderId, int parcel, String tracking, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState oldState = order.getOrderState();
+		order.shipping(parcel, tracking, commentary);
+		final OrderState newState = order.getOrderState();
+		session.update(order);
+
+		if (oldState != newState) {
+			notifyOrderState(order, newState);
+		}
+		return order;
+	}
+
+	@Override
+	public Order shipped(Long orderId, int parcel, String tracking, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState oldState = order.getOrderState();
+		order.shipped(parcel, tracking, commentary);
+		final OrderState newState = order.getOrderState();
+		session.update(order);
+
+		if (oldState != newState) {
+			notifyOrderState(order, newState);
+		}
+		return order;
+	}
+
+	@Override
+	public Order closed(Long orderId, int parcel, String tracking, String commentary) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+		final OrderState oldState = order.getOrderState();
+		order.closed(parcel, tracking, commentary);
+		final OrderState newState = order.getOrderState();
+		session.update(order);
+
+		if (oldState != newState) {
+			notifyOrderState(order, newState);
+		}
+		return order;
+	}
+
+	@Override
+	public OrderParcel updateParcel(Long orderId, int number, Integer... items) {
+		final Session session = sessionFactory.getCurrentSession();
+
+		final HibernateOrder order = getOrder(orderId);
+
+		final HibernateOrderParcel parcel = (HibernateOrderParcel) order.getParcel(number);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel with number " + number);
+		}
+
+		for (OrderItem orderItem : order.getOrderItems()) {
+			for (Integer item : items) {
+				if (orderItem.getProduct().getId().equals(item)) {
+					((HibernateOrderItem) orderItem).moveToParcel(parcel.getId());
+				}
+			}
+		}
+		session.update(order);
+		return parcel;
 	}
 
 	@Override
@@ -189,7 +287,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void failed(Long orderId, String reason) {
+	public Order failed(Long orderId, String reason) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
@@ -198,11 +296,12 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		session.update(order);
 
 		notifyOrderState(order, state);
+		return order;
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public void failed(String token, String reason) {
+	public Order failed(String token, String reason) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		try {
@@ -213,13 +312,14 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 				session.update(order);
 
 				notifyOrderState(order, state);
-
+				return order;
 			} else {
 				log.warn("Where is no order for token: {}", token);
 			}
 		} catch (Exception ex) {
 			log.warn("Where is no order for token: {}", token);
 		}
+		return null;
 	}
 
 	@Override
