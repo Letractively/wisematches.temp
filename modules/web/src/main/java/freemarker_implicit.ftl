@@ -15,6 +15,7 @@
 [#-- @ftlvariable name="StockState" type="billiongoods.server.warehouse.StockState.static" --]
 [#-- @ftlvariable name="ImageSize" type="billiongoods.server.services.image.ImageSize.static" --]
 [#-- @ftlvariable name="OrderState" type="billiongoods.server.services.payment.OrderState.static" --]
+[#-- @ftlvariable name="ParcelState" type="billiongoods.server.services.payment.ParcelState.static" --]
 [#-- @ftlvariable name="MarkupType" type="billiongoods.server.services.price.MarkupType.static" --]
 [#-- @ftlvariable name="Restriction" type="billiongoods.server.warehouse.Restriction.static" --]
 [#-- @ftlvariable name="ProductState" type="billiongoods.server.warehouse.ProductState.static" --]

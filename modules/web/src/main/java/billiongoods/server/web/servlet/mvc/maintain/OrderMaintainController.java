@@ -6,6 +6,9 @@ import billiongoods.server.services.payment.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.maintain.form.OrderStateForm;
+import billiongoods.server.web.servlet.mvc.maintain.form.ParcelForm;
+import billiongoods.server.web.servlet.mvc.maintain.form.ParcelStateForm;
+import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,10 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.EnumSet;
@@ -130,13 +130,54 @@ public class OrderMaintainController extends AbstractController {
 		return "/content/maintain/order";
 	}
 
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "promoteParcel", method = RequestMethod.POST)
+	public String promoteParcel(@ModelAttribute("form") ParcelStateForm form, Errors errors, Model model) {
+		final Long id = form.getOrder();
+		final String value = form.getValue();
+		final String comment = form.getCommentary();
+		final ParcelState state = form.getState();
+
+		Order order;
+		switch (state) {
+			case SHIPPING:
+				order = orderManager.shipping(id, form.getNumber(), value, comment);
+				break;
+			default:
+				order = orderManager.getOrder(id);
+		}
+
+		model.addAttribute("order", order);
+		return "/content/maintain/order";
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "updateParcel.ajax", method = RequestMethod.POST)
+	public ServiceResponse createParcel(@RequestBody ParcelForm form) {
+		final Long orderId = form.getOrder();
+		final Order order = orderManager.getOrder(orderId);
+		if (order == null) {
+			throw new UnknownEntityException(orderId, "order");
+		}
+
+		final int number = form.getNumber();
+
+		OrderParcel parcel = order.getParcel(number);
+		if (parcel == null) {
+			parcel = orderManager.split(orderId, number, form.getItems());
+		} else {
+			parcel = orderManager.updateParcel(orderId, number, form.getItems());
+		}
+
+		return responseFactory.success(parcel);
+	}
 
 	@RequestMapping(value = "export")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public HttpEntity<byte[]> promoteOrder(@ModelAttribute("order") Long orderId, Errors errors, Model model) {
 		final Order o = orderManager.getOrder(orderId);
 		if (o == null) {
-			throw new UnknownEntityException(orderId, "o");
+			throw new UnknownEntityException(orderId, "order");
 		}
 
 		final StringBuilder b = new StringBuilder();

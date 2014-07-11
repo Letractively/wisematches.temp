@@ -1,3 +1,29 @@
+#07.07.14
+CREATE TABLE `billiongoods`.`store_order_parcel` (
+  `id`                    BIGINT       NOT NULL AUTO_INCREMENT,
+  `orderId`               BIGINT       NOT NULL,
+  `number`                INT          NOT NULL,
+  `state`                 INT          NOT NULL,
+  `exceptedResume`        DATETIME     NULL,
+  `commentary`            VARCHAR(255) NULL,
+  `refundToken`           VARCHAR(45)  NULL,
+  `chinaMailTracking`     VARCHAR(45)  NULL,
+  `internationalTracking` VARCHAR(45)  NULL,
+  `timestamp`             DATETIME     NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `billiongoods`.`store_order_parcel`
+ADD INDEX `order_idx` (`orderId` ASC);
+ALTER TABLE `billiongoods`.`store_order_parcel`
+ADD CONSTRAINT `order`
+FOREIGN KEY (`orderId`)
+REFERENCES `billiongoods`.`store_order` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('070714');
+
 #10.06.14
 ALTER TABLE `billiongoods`.`store_product`
 ADD COLUMN `stockSoldCount` INT(11) NOT NULL DEFAULT '0'
@@ -91,7 +117,8 @@ INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('140210');
 CREATE TABLE `billiongoods`.`privacy_wishlist` (
   `person`  INT(20) NOT NULL,
   `product` INT     NOT NULL,
-  PRIMARY KEY (`person`, `product`));
+  PRIMARY KEY (`person`, `product`)
+);
 
 ALTER TABLE `billiongoods`.`privacy_wishlist`
 CHANGE COLUMN `person` `person` BIGINT(20) NOT NULL;
@@ -109,7 +136,8 @@ CREATE TABLE `billiongoods`.`report_mistake` (
   FOREIGN KEY (`productId`)
   REFERENCES `billiongoods`.`store_product` (`id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION
+);
 
 ALTER TABLE `billiongoods`.`report_mistake`
 CHANGE COLUMN `description` `description` TEXT NOT NULL,
@@ -143,7 +171,8 @@ CREATE TABLE `billiongoods`.`privacy_address_book` (
   FOREIGN KEY (`id`)
   REFERENCES `billiongoods`.`account_personality` (`id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION
+);
 
 ALTER TABLE `billiongoods`.`privacy_address_book`
 DROP FOREIGN KEY `asdf`;
@@ -234,18 +263,20 @@ ALTER TABLE `billiongoods`.`account_personality`
 CHANGE COLUMN `password` `password` VARCHAR(100) NULL,
 CHANGE COLUMN `email` `email` VARCHAR(150) NULL;
 
-CREATE TABLE account_UserConnection (userId         VARCHAR(255) NOT NULL,
-                                     providerId     VARCHAR(255) NOT NULL,
-                                     providerUserId VARCHAR(255),
-                                     rank           INT          NOT NULL,
-                                     displayName    VARCHAR(255),
-                                     profileUrl     VARCHAR(512),
-                                     imageUrl       VARCHAR(512),
-                                     accessToken    VARCHAR(255) NOT NULL,
-                                     secret         VARCHAR(255),
-                                     refreshToken   VARCHAR(255),
-                                     expireTime     BIGINT,
-  PRIMARY KEY (userId, providerId, providerUserId));
+CREATE TABLE account_UserConnection (
+  userId         VARCHAR(255) NOT NULL,
+  providerId     VARCHAR(255) NOT NULL,
+  providerUserId VARCHAR(255),
+  rank           INT          NOT NULL,
+  displayName    VARCHAR(255),
+  profileUrl     VARCHAR(512),
+  imageUrl       VARCHAR(512),
+  accessToken    VARCHAR(255) NOT NULL,
+  secret         VARCHAR(255),
+  refreshToken   VARCHAR(255),
+  expireTime     BIGINT,
+  PRIMARY KEY (userId, providerId, providerUserId)
+);
 CREATE UNIQUE INDEX UserConnectionRank ON account_UserConnection (userId, providerId, rank);
 
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('1125');
@@ -320,7 +351,8 @@ CHANGE COLUMN `termination` `termination` DATETIME NULL;
 
 CREATE TABLE `billiongoods`.`system_version` (
   `version`      INT      NOT NULL,
-  `modification` DATETIME NOT NULL);
+  `modification` DATETIME NOT NULL
+);
 
 ALTER TABLE `billiongoods`.`system_version`
 ADD PRIMARY KEY (`version`);
@@ -356,7 +388,8 @@ CREATE TABLE `billiongoods`.`store_coupon` (
   `remainingCount` SMALLINT    NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC),
-  INDEX `code_INDEX` (`code` ASC));
+  INDEX `code_INDEX` (`code` ASC)
+);
 
 ALTER TABLE `billiongoods`.`store_coupon`
 ADD COLUMN `closure` INT(1) NULL DEFAULT 0
@@ -446,5 +479,6 @@ CREATE TABLE `billiongoods`.`service_validation` (
   `na`        INT            NULL,
   `nrd`       DATE           NULL,
   `errMsg`    VARCHAR(255)   NULL,
-  PRIMARY KEY (`id`));
+  PRIMARY KEY (`id`)
+);
 

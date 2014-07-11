@@ -10,10 +10,11 @@ public interface OrderItem {
 
 	double getAmount();
 
-
 	double getWeight();
 
 	String getOptions();
+
+	boolean isRegistered();
 
 	ProductPreview getProduct();
 }

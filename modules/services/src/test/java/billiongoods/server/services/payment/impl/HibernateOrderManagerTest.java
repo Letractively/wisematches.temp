@@ -128,6 +128,12 @@ public class HibernateOrderManagerTest {
 		assertEquals("Mock Chmock", order.getPayerName());
 		assertEquals(OrderState.ACCEPTED, order.getOrderState());
 
+		final HibernateOrderParcel parcel = orderManager.split(order.getId(), 12);
+		assertNotNull(parcel);
+		assertNotNull(order.getId());
+		assertEquals(12, parcel.getNumber());
+		assertEquals(ParcelState.PROCESSING, parcel.getState());
+
 		order = orderManager.getOrder(order.getId());
 		orderManager.processing(order.getId(), "124343", "Comment1");
 		assertEquals("124343", order.getReferenceTracking());

@@ -1308,20 +1308,12 @@ button.bg-ui-button.selected {
     font-size: x-large;
 }
 
-.order .info {
-    border: 1px solid #e9e9e9;
-}
-
 .order label {
     font-weight: bold;
 }
 
 .order td, .order-status td {
     padding: 5px;
-}
-
-.order .basket {
-    padding-top: 20px;
 }
 
 .order .basket .options {
@@ -1341,9 +1333,9 @@ button.bg-ui-button.selected {
 }
 
 .order .info {
+    border: 1px solid #e9e9e9;
     background: #f6f6f6;
     padding: 20px;
-    margin-bottom: 20px;
 }
 
 .order .status {

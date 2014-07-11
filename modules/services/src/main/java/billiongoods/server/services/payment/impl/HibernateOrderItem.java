@@ -35,6 +35,9 @@ public class HibernateOrderItem implements OrderItem {
 	@Column(name = "options")
 	private String options;
 
+	@Column(name = "parcelId")
+	private Long parcelId;
+
 	@Deprecated
 	HibernateOrderItem() {
 	}
@@ -93,6 +96,33 @@ public class HibernateOrderItem implements OrderItem {
 		return options;
 	}
 
+	@Override
+	public boolean isRegistered() {
+		return parcelId != null;
+	}
+
+	Long getParcelId() {
+		return parcelId;
+	}
+
+	void moveToParcel(Long parcelId) {
+		this.parcelId = parcelId;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("HibernateOrderItem{");
+		sb.append("pk=").append(pk);
+		sb.append(", product=").append(product);
+		sb.append(", quantity=").append(quantity);
+		sb.append(", amount=").append(amount);
+		sb.append(", weight=").append(weight);
+		sb.append(", options='").append(options).append('\'');
+		sb.append(", parcelId=").append(parcelId);
+		sb.append('}');
+		return sb.toString();
+	}
+
 	@Embeddable
 	public static class Pk implements Serializable {
 		@Column(name = "orderId")
@@ -127,6 +157,15 @@ public class HibernateOrderItem implements OrderItem {
 			int result = orderId != null ? orderId.hashCode() : 0;
 			result = 31 * result + (number != null ? number.hashCode() : 0);
 			return result;
+		}
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("Pk{");
+			sb.append("orderId=").append(orderId);
+			sb.append(", number=").append(number);
+			sb.append('}');
+			return sb.toString();
 		}
 	}
 }
