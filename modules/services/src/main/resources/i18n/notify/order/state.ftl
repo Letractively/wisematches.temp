@@ -2,24 +2,23 @@
 
 <#import "../utils.ftl" as util>
 
-<#if context.orderState.new>
+<#if context.state.new>
 <p>
     Мы сформировали новый заказ по вашему запросу #${context.id} и ожадием его оплаты.
 </p>
-<#elseif context.orderState.billing>
+<#elseif context.state.billing>
 <p>
     По вашему заказу #${context.id} вам выставлен счет #${context.token}. Пожалуйста, оплатите счет в течение 30 минут
-    до
-    истечения срока действия.
+    до истечения срока действия.
 </p>
 <p>
     После подтверждения факта оплаты мы перейдем к формированию заказа.
 </p>
-<#elseif context.orderState.accepted>
+<#elseif context.state.accepted>
 <p>
     Мы получили подтверждения оплаты заказа #${context.id}. В ближайщее время мы отправим заказ на формирования.
 </p>
-<#elseif context.orderState.failed>
+<#elseif context.state.failed>
 <p>
     Мы не смогли обработать счет #${context.id} из-за внутренней ошибки при работе с PayPal.
 </p>
@@ -27,11 +26,11 @@
     Мы постараемся исправить данную ошибку как можно быстрее. Пожалуйста, свяжитесь с нами по адресу
     <@util.mailto "support"/> если вам необходима дополнительная информация.
 </p>
-<#elseif context.orderState.processing>
+<#elseif context.state.processing>
 <p>
     Ваш заказ #${context.id} отправлен в службу доставки. Упаковка и отправка товара займет 2-3 рабочих дня.
 </p>
-<#elseif context.orderState.shipping>
+<#elseif context.state.shipping>
 <p>
     Ваш заказ был передан отправлена на почту Китая.
     <#if context.internationalTracking?has_content>
@@ -41,7 +40,7 @@
         К сожалению, ваш заказ не предусматривает получение номера для отслеживания.
     </#if>
 </p>
-<#elseif context.orderState.shipped>
+<#elseif context.state.shipped>
 <p>
     Ваш заказ был отправлен.
     <#if context.internationalTracking?has_content>
@@ -55,17 +54,18 @@
         К сожалению, ваш заказ не предусматривает получение международного номера для отслеживания.
     </#if>
 </p>
-<#elseif context.orderState.suspended>
+<#elseif context.state.suspended>
 <p>
-    Обработка вашего заказа была приостановлена в связи с: ${context.commentary}. Мы продолжим обработку вашего заказа
+    Обработка вашего заказа была приостановлена в связи с: ${context.suspendMessage}. Мы продолжим обработку вашего
+    заказа
     как только выясним всю необходимую информацию для оформления заказа.
 </p>
-<#elseif context.orderState.cancelled>
+<#elseif context.state.cancelled>
 <p>
-    Ваш заказ был отменен в связи с: ${context.commentary}. Пожалуйста, оформите новый заказ, если данный товар всё
+    Ваш заказ был отменен в связи с: ${context.suspendMessage}. Пожалуйста, оформите новый заказ, если данный товар всё
     еще интересен для вас, пожалуйста сформируйте новый счет для оплаты.
 </p>
-<#elseif context.orderState.closed>
+<#elseif context.state.closed>
 <p>
     Ваш заказ был закрыт в связи с окончанием его обработки. Мы надеемся, что вы остались довольны оказанными нами
     услугами
@@ -79,7 +79,7 @@
 <p>
     Мы помним о вашем заказе и работаем над его доставкой. В данный момент заказ #${context.id} изменил свое состояние
     на
-${context.orderState.name()}.
+${context.state.name()}.
 </p>
 <p>
     Пожалуйста, обратитесь в службу поддержки <@util.mailto "support"/> для получения более подробной информации.

@@ -61,7 +61,7 @@
                 <tbody>
                 <#if orders?has_content>
                     <#list orders as o>
-                    <tr class="order ${o.orderState.code}">
+                    <tr class="order ${o.state.code}">
                         <td valign="top">
                             Заказ: <a href="/privacy/order?id=${o.id}">#${o.id}</a>
                         <span class="sample">
@@ -69,19 +69,19 @@
                         </span>
                             <br>
                             Состояние: <span
-                                class="status"><@message code="order.status.${o.orderState.code}.label"/></span>
-                            <#if !o.orderState.finalState && o.internationalTracking?has_content>
+                                class="status"><@message code="order.status.${o.state.code}.label"/></span>
+                            <#if !o.state.finalState && o.internationalTracking?has_content>
                                 <@bg.tracking.international o.internationalTracking/>
                             </#if>
                         </td>
                         <td valign="top">
-                        ${o.itemsCount}
+                        ${o.productsCount}
                         </td>
                         <td valign="top">
                             <@bg.ui.price o.amount + o.shipment.amount - o.discount "b"/>
                         </td>
                         <td valign="top" nowrap="nowrap">
-                            <#switch o.orderState>
+                            <#switch o.state>
                                 <#case OrderState.SHIPPED>
                                     <button type="button" onclick="closeOrder('${o.id}');">Подтвердить получение
                                     </button>
@@ -101,7 +101,7 @@
                             </#switch>
                         </td>
                     </tr>
-                        <#list o.orderItems as i>
+                        <#list o.items as i>
                             <#assign p=i.product/>
                         <tr>
                             <td>

@@ -191,8 +191,8 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public OrderState getOrderState() {
-		return orderState;
+    public OrderState getState() {
+        return orderState;
 	}
 
 	@Override
@@ -221,8 +221,8 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public String getCommentary() {
-		return commentary;
+    public String getSuspendMessage() {
+        return commentary;
 	}
 
 	@Override
@@ -251,8 +251,8 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public int getItemsCount() {
-		int res = 0;
+    public int getProductsCount() {
+        int res = 0;
 		for (OrderItem orderItem : orderItems) {
 			res += orderItem.getQuantity();
 		}
@@ -270,23 +270,23 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
+    public List<OrderItem> getItems() {
+        return orderItems;
 	}
 
 	@Override
-	public List<OrderLog> getOrderLogs() {
-		return orderLogs;
+    public List<OrderLog> getLogs() {
+        return orderLogs;
 	}
 
 	@Override
-	public List<OrderParcel> getOrderParcels() {
-		return orderParcels;
+    public List<OrderParcel> getParcels() {
+        return orderParcels;
 	}
 
 	@Override
-	public List<OrderItem> getParcelItems(OrderParcel parcel) {
-		return orderItems.stream().filter(item -> (parcel == null && !item.isRegistered()) || (parcel != null && parcel.contains(item))).collect(Collectors.toList());
+    public List<OrderItem> getItems(OrderParcel parcel) {
+        return orderItems.stream().filter(item -> (parcel == null && !item.isRegistered()) || (parcel != null && parcel.contains(item))).collect(Collectors.toList());
 	}
 
 	void bill(String token) {
@@ -418,29 +418,6 @@ public class HibernateOrder implements Order {
 
 	private void updateOrderState(OrderState state, int parcel, String parameter, String commentary) {
 		// TODO: add parcel number here
-		this.timestamp = new Date();
-		this.orderState = state;
-
-		if (state != OrderState.SUSPENDED) {
-			exceptedResume = null;
-		}
-
-
-		if (commentary != null && commentary.length() > 254) {
-			commentary = commentary.substring(0, 254);
-		}
-
-		String comment = null;
-		// comment was updated - change it.
-		if (((this.commentary != null || commentary != null)) && ((this.commentary == null || !this.commentary.equals(commentary)))) {
-			this.commentary = comment = commentary;
-		}
-
-		orderLogs.add(new HibernateOrderLog(id, parameter, comment, state));
-	}
-
-	@Deprecated
-	private void updateOrderState(OrderState state, String commentary, String parameter) {
 		this.timestamp = new Date();
 		this.orderState = state;
 

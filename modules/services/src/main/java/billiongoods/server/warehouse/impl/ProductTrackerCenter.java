@@ -50,8 +50,8 @@ public class ProductTrackerCenter {
 		@Override
 		public void orderStateChanged(Order order, OrderState oldState, OrderState newState) {
 			if (newState == OrderState.PROCESSING) {
-				updateSoldQuantity(order.getOrderItems());
-			}
+                updateSoldQuantity(order.getItems());
+            }
 		}
 	}
 }

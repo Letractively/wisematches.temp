@@ -7,7 +7,7 @@
 
 <@bg.security.unauthorized "moderator">
 
-    <#if order.orderState.accepted && analyticsYandexCode?has_content>
+    <#if order.state.accepted && analyticsYandexCode?has_content>
     <script type="application/javascript">
         $(document).ready(function () {
             var orderParams = {
@@ -16,7 +16,7 @@
                 currency: "RUR",
                 exchange_rate: 1,
                 goods: [
-                    <#list order.orderItems as i>
+                    <#list order.items as i>
                         {
                             id: "${i.product.id}",
                             name: "${i.product.name}",
@@ -36,7 +36,7 @@
         $(document).ready(function () {
             ga('require', 'ecommerce', 'ecommerce.js');
 
-            ga('send', 'event', 'order', '${order.orderState.name()?lower_case}', '${order.id}', '${order.amount}');
+            ga('send', 'event', 'order', '${order.state.name()?lower_case}', '${order.id}', '${order.amount}');
 
             ga('ecommerce:addTransaction', {
                 'id': '${order.id}',
@@ -46,7 +46,7 @@
                 'currency': 'RUB'
             });
 
-            <#list order.orderItems as i>
+            <#list order.items as i>
                 ga('ecommerce:addItem', {
                     'id': '${i.product.id}',                     // Transaction ID. Required.
                     'name': '${i.product.name}',    // Product name. Required.

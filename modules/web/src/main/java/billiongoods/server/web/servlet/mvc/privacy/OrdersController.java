@@ -59,8 +59,8 @@ public class OrdersController extends AbstractController {
 		if (order == null) {
 			throw new UnknownEntityException(orderId, "order");
 		}
-		if (order.getOrderState() == OrderState.BILLING && checkPersonality(order.getPersonId())) {
-			return PayPalController.forwardCheckout(request, order);
+        if (order.getState() == OrderState.BILLING && checkPersonality(order.getPersonId())) {
+            return PayPalController.forwardCheckout(request, order);
 		}
 		return "redirect:/privacy/orders";
 	}
@@ -72,8 +72,8 @@ public class OrdersController extends AbstractController {
 		if (order == null) {
 			throw new UnknownEntityException(orderId, "order");
 		}
-		if (order.getOrderState() == OrderState.BILLING && checkPersonality(order.getPersonId())) {
-			orderManager.remove(orderId);
+        if (order.getState() == OrderState.BILLING && checkPersonality(order.getPersonId())) {
+            orderManager.remove(orderId);
 		}
 		return "redirect:/privacy/orders";
 	}

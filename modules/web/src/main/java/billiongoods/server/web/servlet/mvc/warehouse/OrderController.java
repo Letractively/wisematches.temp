@@ -172,8 +172,8 @@ public class OrderController extends AbstractController {
 		if (order == null) {
 			return responseFactory.failure("order.error.invalid", locale);
 		}
-		if (order.getOrderState() != OrderState.SHIPPED) {
-			return responseFactory.failure("order.error.closed", locale);
+        if (order.getState() != OrderState.SHIPPED) {
+            return responseFactory.failure("order.error.closed", locale);
 		}
 
 		final Member member = getMember();

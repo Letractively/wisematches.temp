@@ -67,8 +67,8 @@ public class OrderMaintainController extends AbstractController {
 		}
 
 		form.setId(order.getId());
-		form.setState(order.getOrderState());
-		form.setCommentary(order.getCommentary());
+        form.setState(order.getState());
+        form.setCommentary(order.getSuspendMessage());
 
 		model.addAttribute("order", order);
 		return "/content/maintain/order";
@@ -187,8 +187,8 @@ public class OrderMaintainController extends AbstractController {
 		int recordId = 1;
 		final Shipment s = o.getShipment();
 		final Address a = s.getAddress();
-		for (OrderItem i : o.getOrderItems()) {
-			b.append("\"RUSSIAN FEDERATION");
+        for (OrderItem i : o.getItems()) {
+            b.append("\"RUSSIAN FEDERATION");
 			b.append("\",\"");
 			b.append(a.getFullName());
 			b.append("\",\"");

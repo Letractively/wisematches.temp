@@ -5,7 +5,7 @@
 <div class="steps">
 <#assign steps=[OrderState.BILLING, OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SHIPPED, OrderState.CLOSED]/>
 
-<#assign alignedState=order.orderState/>
+<#assign alignedState=order.state/>
 <#if alignedState == OrderState.SHIPPING || alignedState == OrderState.SUSPENDED>
     <#assign alignedState=OrderState.PROCESSING/>
 <#elseif alignedState == OrderState.FAILED || alignedState == OrderState.CANCELLED>

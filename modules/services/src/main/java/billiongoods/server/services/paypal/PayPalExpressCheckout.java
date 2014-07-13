@@ -136,8 +136,8 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		final List<PaymentDetailsItemType> paymentDetailsItem = new ArrayList<>();
 
-		final List<OrderItem> orderItems = order.getOrderItems();
-		for (OrderItem orderItem : orderItems) {
+        final List<OrderItem> orderItems = order.getItems();
+        for (OrderItem orderItem : orderItems) {
 			final PaymentDetailsItemType item = new PaymentDetailsItemType();
 			item.setName(orderItem.getProduct().getName());
 			item.setNumber(MessageFormatter.getProductCode(orderItem.getProduct()));

@@ -10,7 +10,7 @@
         <th><strong>Количество</strong></th>
         <th><strong>Стоимость</strong></th>
     </tr>
-<#list context.orderItems as i>
+<#list context.items as i>
     <#assign product=i.product/>
     <tr>
         <td>${messageSource.getProductCode(product)}</td>

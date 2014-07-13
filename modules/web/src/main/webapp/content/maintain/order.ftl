@@ -12,9 +12,9 @@
 
 <#macro parcelTable parcel number>
     <#if parcel?has_content>
-        <#assign items=order.getParcelItems(parcel)/>
+        <#assign items=order.getItems(parcel)/>
     <#else>
-        <#assign items=order.getParcelItems(nullParcel)/>
+        <#assign items=order.getItems(nullParcel)/>
     </#if>
 
     <#if !items?has_content>
@@ -38,7 +38,7 @@
             <div class="" style="float: right">
                 <span class="status">
                 <@message code="order.status.${stateName}.label"/>
-                    <#if order.orderState==ParcelState.SUSPENDED && parcel.expectedResume??>
+                    <#if order.state==ParcelState.SUSPENDED && parcel.expectedResume??>
                         до ${messageSource.formatDate(parcel.expectedResume, locale)}
                     <#else>
                     ${messageSource.formatDate(parcel.timestamp, locale)}
@@ -122,13 +122,13 @@
 </#macro>
 
 
-<div class="order ${order.orderState.code}">
+<div class="order ${order.state.code}">
 <#include "/content/warehouse/order/widget/title.ftl"/>
 <#include "/content/warehouse/order/widget/progress.ftl"/>
 <#include "/content/warehouse/order/widget/details.ftl"/>
 
     <div class="info" style="padding: 5px; text-align: right; margin-top: 20px; margin-bottom: 20px">
-    <#if order.orderState == OrderState.ACCEPTED>
+    <#if order.state == OrderState.ACCEPTED>
         <div style="float: left">
             <button id="suspendOrder" type="button">Приостановить</button>
             <button id="cancelOrder" type="button">Отменить</button>
@@ -145,7 +145,7 @@
         <table class="cnt">
         <@parcelTable parcel="" number=0/>
 
-        <#list order.orderParcels as parcel>
+        <#list order.parcels as parcel>
             <@parcelTable parcel=parcel number=parcel_index+1/>
         </#list>
 
