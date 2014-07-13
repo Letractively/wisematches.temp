@@ -2,7 +2,7 @@
 
 <#include "/core.ftl"/>
 
-<#assign state=order.orderState/>
+<#assign state=order.state/>
 
 <table class="info">
     <tr>
@@ -13,7 +13,7 @@
             <div style="display: inline-block">
                 <span class="status">
                 <@message code="order.status.${state.code}.label"/>
-                <#if order.orderState==OrderState.SUSPENDED && order.expectedResume??>
+                <#if order.state==OrderState.SUSPENDED && order.expectedResume??>
                     до ${messageSource.formatDate(order.expectedResume, locale)}
                 <#else>
                 ${messageSource.formatDate(order.timestamp, locale)}
@@ -29,7 +29,7 @@
 
                 <div id="orderLogs" style="display: none">
                     <table>
-                    <#list order.orderLogs as l>
+                    <#list order.logs as l>
                         <#assign state=l.orderState/>
                         <#assign stateName=state.name()?lower_case/>
                         <tr class="order-log">
@@ -93,13 +93,13 @@
         </td>
     </tr>
 
-<#if order.commentary?has_content>
+<#if order.suspendMessage?has_content>
     <tr>
         <td valign="top" nowrap="nowrap">
             <label for="">Комментарий:</label>
         </td>
         <td>
-        ${order.commentary}
+        ${order.suspendMessage}
         </td>
     </tr>
 </#if>

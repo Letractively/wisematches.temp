@@ -60,7 +60,7 @@
             <tr>
                 <td><a href="/maintain/order/view?id=${o.id}&type=id">${o.id}</a></td>
                 <td>${o.shipment.address.fullName}</td>
-                <td nowrap="nowrap">${o.itemsCount}</td>
+                <td nowrap="nowrap">${o.productsCount}</td>
                 <td nowrap="nowrap"><@bg.ui.price o.amount + o.shipment.amount - o.discount "b"/></td>
                 <td nowrap="nowrap">
                 ${messageSource.formatDate(o.created, locale)} ${messageSource.formatTime(o.created, locale)} <br>

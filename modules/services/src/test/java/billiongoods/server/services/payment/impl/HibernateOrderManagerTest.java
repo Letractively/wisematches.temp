@@ -91,10 +91,10 @@ public class HibernateOrderManagerTest {
 		assertEquals(70d, shipment.getAmount(), 0.0000001d);
 		assertEquals(ShipmentType.REGISTERED, shipment.getType());
 		assertEquals(123, order.getPersonId().longValue());
-		assertEquals(OrderState.NEW, order.getOrderState());
+        assertEquals(OrderState.NEW, order.getState());
 
-		final List<OrderItem> orderItems = order.getOrderItems();
-		assertEquals(2, orderItems.size());
+        final List<OrderItem> orderItems = order.getItems();
+        assertEquals(2, orderItems.size());
 
 		final Address address1 = shipment.getAddress();
 		assertEquals("Mock", address1.getFirstName());
@@ -120,13 +120,13 @@ public class HibernateOrderManagerTest {
 		order = orderManager.getOrder(order.getId());
 		orderManager.bill(order.getId(), "1234567890987654321");
 		assertEquals("1234567890987654321", order.getToken());
-		assertEquals(OrderState.BILLING, order.getOrderState());
+        assertEquals(OrderState.BILLING, order.getState());
 
 		order = orderManager.getOrder(order.getId());
 		orderManager.accept(order.getId(), "mock1@mock.mock", "Mock Chmock", "my note", "ASDAWEQWEASD");
 		assertEquals("mock1@mock.mock", order.getPayer());
 		assertEquals("Mock Chmock", order.getPayerName());
-		assertEquals(OrderState.ACCEPTED, order.getOrderState());
+        assertEquals(OrderState.ACCEPTED, order.getState());
 
 		final HibernateOrderParcel parcel = orderManager.split(order.getId(), 12);
 		assertNotNull(parcel);
@@ -137,32 +137,32 @@ public class HibernateOrderManagerTest {
 		order = orderManager.getOrder(order.getId());
 		orderManager.processing(order.getId(), "124343", "Comment1");
 		assertEquals("124343", order.getReferenceTracking());
-		assertEquals("Comment1", order.getCommentary());
-		assertEquals(OrderState.PROCESSING, order.getOrderState());
+        assertEquals("Comment1", order.getSuspendMessage());
+        assertEquals(OrderState.PROCESSING, order.getState());
 
 		order = orderManager.getOrder(order.getId());
 		orderManager.shipping(order.getId(), "6564564", "Comment2");
 		assertEquals("6564564", order.getChinaMailTracking());
-		assertEquals("Comment2", order.getCommentary());
-		assertEquals(OrderState.SHIPPING, order.getOrderState());
+        assertEquals("Comment2", order.getSuspendMessage());
+        assertEquals(OrderState.SHIPPING, order.getState());
 
 		order = orderManager.getOrder(order.getId());
 		orderManager.shipped(order.getId(), "EW32143523TR", "Comment3");
-		assertEquals("Comment3", order.getCommentary());
-		assertEquals("EW32143523TR", order.getInternationalTracking());
-		assertEquals(OrderState.SHIPPED, order.getOrderState());
+        assertEquals("Comment3", order.getSuspendMessage());
+        assertEquals("EW32143523TR", order.getInternationalTracking());
+        assertEquals(OrderState.SHIPPED, order.getState());
 
 		order = orderManager.getOrder(order.getId());
 		orderManager.failed(order.getId(), "They, close");
-		assertEquals("They, close", order.getCommentary());
-		assertEquals(OrderState.FAILED, order.getOrderState());
+        assertEquals("They, close", order.getSuspendMessage());
+        assertEquals(OrderState.FAILED, order.getState());
 
 		order = orderManager.getOrder(order.getId());
 		orderManager.cancel(order.getId(), "ASASDASDASD23123", "my note");
 		assertEquals("ASASDASDASD23123", order.getRefundToken());
-		assertEquals(OrderState.CANCELLED, order.getOrderState());
+        assertEquals(OrderState.CANCELLED, order.getState());
 
-		assertEquals(7, order.getOrderLogs().size());
+        assertEquals(7, order.getLogs().size());
 
 		verify(desc);
 	}

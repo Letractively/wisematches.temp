@@ -90,7 +90,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
+        final OrderState state = order.getState();
 
 		order.bill(token);
 		session.update(order);
@@ -117,8 +117,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.accept(payer, payerName, payerNote, paymentId);
+        final OrderState state = order.getState();
+        order.accept(payer, payerName, payerNote, paymentId);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -135,8 +135,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final HibernateOrderParcel parcel = new HibernateOrderParcel(order, number);
 		final Long parcelId = (Long) session.save(parcel);
 
-		for (OrderItem orderItem : order.getOrderItems()) {
-			for (Integer item : items) {
+        for (OrderItem orderItem : order.getItems()) {
+            for (Integer item : items) {
 				if (orderItem.getProduct().getId().equals(item)) {
 					((HibernateOrderItem) orderItem).moveToParcel(parcelId);
 				}
@@ -155,10 +155,10 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState oldState = order.getOrderState();
-		order.shipping(parcel, tracking, commentary);
-		final OrderState newState = order.getOrderState();
-		session.update(order);
+        final OrderState oldState = order.getState();
+        order.shipping(parcel, tracking, commentary);
+        final OrderState newState = order.getState();
+        session.update(order);
 
 		if (oldState != newState) {
 			notifyOrderState(order, newState);
@@ -171,10 +171,10 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState oldState = order.getOrderState();
-		order.shipped(parcel, tracking, commentary);
-		final OrderState newState = order.getOrderState();
-		session.update(order);
+        final OrderState oldState = order.getState();
+        order.shipped(parcel, tracking, commentary);
+        final OrderState newState = order.getState();
+        session.update(order);
 
 		if (oldState != newState) {
 			notifyOrderState(order, newState);
@@ -187,10 +187,10 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState oldState = order.getOrderState();
-		order.closed(parcel, tracking, commentary);
-		final OrderState newState = order.getOrderState();
-		session.update(order);
+        final OrderState oldState = order.getState();
+        order.closed(parcel, tracking, commentary);
+        final OrderState newState = order.getState();
+        session.update(order);
 
 		if (oldState != newState) {
 			notifyOrderState(order, newState);
@@ -204,13 +204,13 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 		final HibernateOrder order = getOrder(orderId);
 
-		final HibernateOrderParcel parcel = (HibernateOrderParcel) order.getParcel(number);
-		if (parcel == null) {
+        final HibernateOrderParcel parcel = order.getParcel(number);
+        if (parcel == null) {
 			throw new IllegalArgumentException("Unknown parcel with number " + number);
 		}
 
-		for (OrderItem orderItem : order.getOrderItems()) {
-			for (Integer item : items) {
+        for (OrderItem orderItem : order.getItems()) {
+            for (Integer item : items) {
 				if (orderItem.getProduct().getId().equals(item)) {
 					((HibernateOrderItem) orderItem).moveToParcel(parcel.getId());
 				}
@@ -226,8 +226,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.processing(number, commentary);
+        final OrderState state = order.getState();
+        order.processing(number, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -239,8 +239,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.shipping(number, commentary);
+        final OrderState state = order.getState();
+        order.shipping(number, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -252,8 +252,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.shipped(number, commentary);
+        final OrderState state = order.getState();
+        order.shipped(number, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -265,8 +265,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.suspended(resumeDate, commentary);
+        final OrderState state = order.getState();
+        order.suspended(resumeDate, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -278,8 +278,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.cancelled(refundId, commentary);
+        final OrderState state = order.getState();
+        order.cancelled(refundId, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -291,8 +291,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.failed(reason);
+        final OrderState state = order.getState();
+        order.failed(reason);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -307,8 +307,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		try {
 			final HibernateOrder order = getByToken(token);
 			if (order != null) {
-				final OrderState state = order.getOrderState();
-				order.failed(reason);
+                final OrderState state = order.getState();
+                order.failed(reason);
 				session.update(order);
 
 				notifyOrderState(order, state);
@@ -328,8 +328,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState state = order.getOrderState();
-		order.close(deliveryDate, commentary);
+        final OrderState state = order.getState();
+        order.close(deliveryDate, commentary);
 		session.update(order);
 
 		notifyOrderState(order, state);
@@ -443,11 +443,11 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 	}
 
 	private void notifyOrderState(Order order, OrderState oldState) {
-		log.info("Order state was changed from {} to {}: {}", oldState, order.getOrderState(), order.getId());
+        log.info("Order state was changed from {} to {}: {}", oldState, order.getState(), order.getId());
 
 		for (OrderListener listener : listeners) {
-			listener.orderStateChanged(order, oldState, order.getOrderState());
-		}
+            listener.orderStateChanged(order, oldState, order.getState());
+        }
 	}
 
 	public void setCouponManager(CouponManager couponManager) {

@@ -5,7 +5,7 @@
 
 <#include "/core.ftl"/>
 
-<#assign state=order.orderState/>
+<#assign state=order.state/>
 <#assign shipment=order.shipment/>
 
 <div class="order ${state.code}">
@@ -32,7 +32,7 @@
 
 <#include "/content/warehouse/order/widget/details.ftl"/>
 
-<#if order.payer?has_content &&  !order.orderState.finalState>
+<#if order.payer?has_content &&  !order.state.finalState>
 <div class="info" style="padding: 5px; text-align: right; margin: 20px 0 0;">
     <@bg.security.authorized "moderator">
         <div style="float: left">
@@ -42,7 +42,7 @@
         </div>
     </@bg.security.authorized>
     <div class="operations">
-        <#if order.orderState==OrderState.SHIPPED>
+        <#if order.state==OrderState.SHIPPED>
             <div class="confirm">
                 <form action="/warehouse/order/status" method="post">
                     <input type="hidden" name="order" value="${order.id}">
@@ -53,7 +53,7 @@
                     </button>
                 </form>
             </div>
-        <#elseif !order.orderState.finalState>
+        <#elseif !order.state.finalState>
             <div class="tracking">
                 <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
                     уведомления по e-mail
@@ -76,9 +76,9 @@
 
 <#macro parcelTable parcel number>
     <#if parcel?has_content>
-        <#assign items=order.getParcelItems(parcel)/>
+        <#assign items=order.getItems(parcel)/>
     <#else>
-        <#assign items=order.getParcelItems(nullParcel)/>
+        <#assign items=order.getItems(nullParcel)/>
     </#if>
 
     <#if !items?has_content>
@@ -226,7 +226,7 @@
         </tr>
 
     <#assign grandTotalAmountUSD=0/>
-    <#list order.orderItems as i>
+    <#list order.items as i>
         <#assign product=i.product/>
         <#assign totalCount=totalCount+i.quantity/>
         <#assign totalWeight=totalWeight+i.weight/>
@@ -292,7 +292,7 @@
     </table>
 </div>
 
-<#if order.orderState==OrderState.BILLING && personalityContext.hasRole("member")>
+<#if order.state==OrderState.BILLING && personalityContext.hasRole("member")>
 <div class="paypal" style="text-align: right; padding-top: 20px">
     <form action="/privacy/order" method="post">
         <input type="hidden" name="orderId" value="${order.id}"/>
