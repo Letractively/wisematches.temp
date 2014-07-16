@@ -3,6 +3,7 @@ package billiongoods.server.services.paypal;
 import billiongoods.server.MessageFormatter;
 import billiongoods.server.services.address.Address;
 import billiongoods.server.services.payment.Order;
+import billiongoods.server.services.payment.OrderDiscount;
 import billiongoods.server.services.payment.OrderItem;
 import billiongoods.server.services.payment.Shipment;
 import billiongoods.server.warehouse.Price;
@@ -136,8 +137,8 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		final List<PaymentDetailsItemType> paymentDetailsItem = new ArrayList<>();
 
-        final List<OrderItem> orderItems = order.getItems();
-        for (OrderItem orderItem : orderItems) {
+		final List<OrderItem> orderItems = order.getItems();
+		for (OrderItem orderItem : orderItems) {
 			final PaymentDetailsItemType item = new PaymentDetailsItemType();
 			item.setName(orderItem.getProduct().getName());
 			item.setNumber(MessageFormatter.getProductCode(orderItem.getProduct()));
@@ -149,11 +150,12 @@ public class PayPalExpressCheckout implements InitializingBean {
 			paymentDetailsItem.add(item);
 		}
 
-		if (order.getCoupon() != null && order.getDiscount() > 0d) {
+		final OrderDiscount discount = order.getDiscount();
+		if (discount.getCoupon() != null && discount.getAmount() > 0d) {
 			final PaymentDetailsItemType item = new PaymentDetailsItemType();
 			item.setName("Скидка");
-			item.setDescription("Купон " + order.getCoupon());
-			item.setAmount(new BasicAmountType(CURRENCY_CODE, Price.string(order.getDiscount() * -1)));
+			item.setDescription("Купон " + discount.getCoupon());
+			item.setAmount(new BasicAmountType(CURRENCY_CODE, Price.string(discount.getAmount() * -1)));
 
 			paymentDetailsItem.add(item);
 		}
@@ -165,9 +167,9 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		paymentDetails.setShipToAddress(addressType);
 
-		paymentDetails.setItemTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() - order.getDiscount())));
+		paymentDetails.setItemTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() - discount.getAmount())));
 		paymentDetails.setShippingTotal(new BasicAmountType(CURRENCY_CODE, Price.string(shipment.getAmount())));
-		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() + shipment.getAmount() - order.getDiscount())));
+		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() + shipment.getAmount() - discount.getAmount())));
 
 		final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
 		request.setLocaleCode("RU");

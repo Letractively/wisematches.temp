@@ -53,6 +53,9 @@ public class OrderMaintainController extends AbstractController {
 
 	@RequestMapping(value = "view")
 	public String viewOrder(@RequestParam("id") String id, @RequestParam("type") String type, @ModelAttribute("form") OrderStateForm form, Model model) {
+		throw new UnsupportedOperationException("Commented");
+
+/*
 		Order order;
 		if ("ref".equalsIgnoreCase(type)) {
 			order = orderManager.getByReference(id);
@@ -72,12 +75,15 @@ public class OrderMaintainController extends AbstractController {
 
 		model.addAttribute("order", order);
 		return "/content/maintain/order";
+*/
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "promote", method = RequestMethod.POST)
 	public String promoteOrder(@ModelAttribute("form") OrderStateForm form, Errors errors, Model model) {
-		final Long id = form.getId();
+		throw new UnsupportedOperationException("Commented");
+
+/*		final Long id = form.getId();
 		final String value = form.getValue();
 		final String comment = form.getCommentary();
 		final OrderState state = form.getState();
@@ -127,12 +133,15 @@ public class OrderMaintainController extends AbstractController {
 		}
 
 		model.addAttribute("order", orderManager.getOrder(id));
-		return "/content/maintain/order";
+		return "/content/maintain/order";*/
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "promoteParcel", method = RequestMethod.POST)
 	public String promoteParcel(@ModelAttribute("form") ParcelStateForm form, Errors errors, Model model) {
+		throw new UnsupportedOperationException("Commented");
+
+/*
 		final Long id = form.getOrder();
 		final String value = form.getValue();
 		final String comment = form.getCommentary();
@@ -149,11 +158,15 @@ public class OrderMaintainController extends AbstractController {
 
 		model.addAttribute("order", order);
 		return "/content/maintain/order";
+*/
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "updateParcel.ajax", method = RequestMethod.POST)
 	public ServiceResponse createParcel(@RequestBody ParcelForm form) {
+		throw new UnsupportedOperationException("Commented");
+
+/*
 		final Long orderId = form.getOrder();
 		final Order order = orderManager.getOrder(orderId);
 		if (order == null) {
@@ -162,7 +175,7 @@ public class OrderMaintainController extends AbstractController {
 
 		final int number = form.getNumber();
 
-		OrderParcel parcel = order.getParcel(number);
+		Parcel parcel = order.getParcel(number);
 		if (parcel == null) {
 			parcel = orderManager.split(orderId, number, form.getItems());
 		} else {
@@ -170,6 +183,7 @@ public class OrderMaintainController extends AbstractController {
 		}
 
 		return responseFactory.success(parcel);
+*/
 	}
 
 	@RequestMapping(value = "export")

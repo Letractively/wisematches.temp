@@ -14,7 +14,5 @@ public interface OrderItem {
 
 	String getOptions();
 
-	boolean isRegistered();
-
 	ProductPreview getProduct();
 }

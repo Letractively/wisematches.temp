@@ -1,11 +1,10 @@
 package billiongoods.server.services.payment.impl;
 
-import billiongoods.server.services.address.Address;
 import billiongoods.server.services.payment.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,81 +23,27 @@ public class HibernateOrder implements Order {
 	@Column(name = "buyer")
 	private Long buyer;
 
-	@Column(name = "token")
-	private String token;
-
 	@Column(name = "amount", updatable = false)
 	private double amount;
 
-	@Column(name = "discount", updatable = false)
-	private double discount;
-
-	@Column(name = "shipment", updatable = false)
-	private double shipmentAmount;
-
-	@Column(name = "shipmentType", updatable = false)
-	@Enumerated(EnumType.ORDINAL)
-	private ShipmentType shipmentType;
-
-	@Column(name = "coupon", updatable = false)
-	private String coupon;
+	@Embedded
+	private Shipment shipment;
 
 	@Embedded
-	private Address shipmentAddress;
+	private HibernateTimeline timeline;
 
-	@Column(name = "created", updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
+	@Embedded
+	private HibernateOrderPayment payment;
 
-	@Column(name = "shipped")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date shipped;
-
-	@Column(name = "closed")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date closed;
-
-	@Column(name = "timestamp")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timestamp;
-
-	@Column(name = "payer")
-	private String payer;
-
-	@Column(name = "payerName")
-	private String payerName;
-
-	@Column(name = "payerNote")
-	private String payerNote;
-
-	@Column(name = "paymentId")
-	private String paymentId;
-
-	@Column(name = "tracking")
-	private boolean tracking;
-
-	@Column(name = "exceptedResume")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date exceptedResume;
-
-	@Column(name = "refundToken")
-	private String refundToken;
+	@Embedded
+	private HibernateOrderDiscount discount;
 
 	@Column(name = "commentary")
 	private String commentary;
 
-	@Column(name = "referenceTracking")
-	private String referenceTracking;
-
-	@Column(name = "chinaMailTracking")
-	private String chinaMailTracking;
-
-	@Column(name = "internationalTracking")
-	private String internationalTracking;
-
 	@Column(name = "state")
 	@Enumerated(EnumType.ORDINAL)
-	private OrderState orderState = OrderState.NEW;
+	private OrderState state = OrderState.NEW;
 
 	@OrderBy("number")
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pk.orderId", targetEntity = HibernateOrderItem.class)
@@ -109,27 +54,23 @@ public class HibernateOrder implements Order {
 	private List<OrderLog> orderLogs = new ArrayList<>();
 
 	@OrderBy("number")
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderId", targetEntity = HibernateOrderParcel.class)
-	private List<OrderParcel> orderParcels = new ArrayList<>();
-
-	@Transient
-	private Shipment shipment = null;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderId", targetEntity = HibernateParcel.class)
+	private List<Parcel> parcels = new ArrayList<>();
 
 	HibernateOrder() {
 	}
 
-	public HibernateOrder(Long buyer, double amount, double discount, String coupon, Shipment shipment, boolean tracking) {
+	public HibernateOrder(Long buyer, double amount, double discount, String coupon, Shipment shipment) {
 		this.buyer = buyer;
 		this.amount = amount;
-		this.coupon = coupon;
-		this.discount = discount;
-		this.shipmentAmount = shipment.getAmount();
-		this.shipmentType = shipment.getType();
-		this.shipmentAddress = new Address(shipment.getAddress());
-		this.tracking = tracking;
-		this.orderState = OrderState.NEW;
-		timestamp = new Date();
-		created = new Date();
+
+		this.shipment = shipment;
+
+		this.payment = new HibernateOrderPayment();
+		this.discount = new HibernateOrderDiscount(discount, coupon);
+
+		this.state = OrderState.NEW;
+		this.timeline = new HibernateTimeline(LocalDateTime.now());
 	}
 
 	@Override
@@ -143,116 +84,44 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public String getToken() {
-		return token;
-	}
-
-	@Override
 	public double getAmount() {
 		return amount;
 	}
 
 	@Override
-	public String getCoupon() {
-		return coupon;
+	public String getCommentary() {
+		return commentary;
 	}
 
 	@Override
-	public double getDiscount() {
-		return discount;
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	@Override
+	public OrderState getState() {
+		return state;
 	}
 
 	@Override
 	public Shipment getShipment() {
-		if (shipment == null) {
-			shipment = new Shipment(shipmentAmount, shipmentAddress, shipmentType);
-		}
 		return shipment;
 	}
 
 	@Override
-	public Date getTimestamp() {
-		return timestamp;
+	public OrderPayment getPayment() {
+		return payment;
 	}
 
 	@Override
-	public Date getCreated() {
-		return created;
+	public OrderDiscount getDiscount() {
+		return discount;
 	}
 
-	@Override
-	public Date getShipped() {
-		return shipped;
-	}
 
 	@Override
-	public Date getClosed() {
-		return closed;
-	}
-
-	@Override
-    public OrderState getState() {
-        return orderState;
-	}
-
-	@Override
-	public String getPayer() {
-		return payer;
-	}
-
-	@Override
-	public String getPayerName() {
-		return payerName;
-	}
-
-	@Override
-	public String getPayerNote() {
-		return payerNote;
-	}
-
-	@Override
-	public String getPaymentId() {
-		return paymentId;
-	}
-
-	@Override
-	public boolean isTracking() {
-		return tracking;
-	}
-
-	@Override
-    public String getSuspendMessage() {
-        return commentary;
-	}
-
-	@Override
-	public String getReferenceTracking() {
-		return referenceTracking;
-	}
-
-	@Override
-	public String getChinaMailTracking() {
-		return chinaMailTracking;
-	}
-
-	@Override
-	public String getInternationalTracking() {
-		return internationalTracking;
-	}
-
-	@Override
-	public String getRefundToken() {
-		return refundToken;
-	}
-
-	@Override
-	public Date getExpectedResume() {
-		return exceptedResume;
-	}
-
-	@Override
-    public int getProductsCount() {
-        int res = 0;
+	public int getProductsCount() {
+		int res = 0;
 		for (OrderItem orderItem : orderItems) {
 			res += orderItem.getQuantity();
 		}
@@ -260,93 +129,144 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public HibernateOrderParcel getParcel(int number) {
-		for (OrderParcel orderParcel : orderParcels) {
-			if (orderParcel.getNumber() == number) {
-				return (HibernateOrderParcel) orderParcel;
+	public List<OrderItem> getItems() {
+		return orderItems;
+	}
+
+	@Override
+	public List<OrderLog> getLogs() {
+		return orderLogs;
+	}
+
+	@Override
+	public HibernateParcel getParcel(Long parcelId) {
+		for (Parcel parcel : parcels) {
+			if (parcelId.equals(parcel.getId())) {
+				return (HibernateParcel) parcel;
 			}
 		}
 		return null;
 	}
 
 	@Override
-    public List<OrderItem> getItems() {
-        return orderItems;
+	public List<Parcel> getParcels() {
+		return parcels;
 	}
 
-	@Override
-    public List<OrderLog> getLogs() {
-        return orderLogs;
-	}
 
 	@Override
-    public List<OrderParcel> getParcels() {
-        return orderParcels;
-	}
-
-	@Override
-    public List<OrderItem> getItems(OrderParcel parcel) {
-        return orderItems.stream().filter(item -> (parcel == null && !item.isRegistered()) || (parcel != null && parcel.contains(item))).collect(Collectors.toList());
+	public List<OrderItem> getItems(Parcel parcel) {
+		if (parcel == null) {
+			return orderItems;
+		}
+		return orderItems.stream().filter(parcel::contains).collect(Collectors.toList());
 	}
 
 	void bill(String token) {
-		this.token = token;
+		this.payment.init(token);
 
-		updateOrderState(OrderState.BILLING, null, token);
+		updateOrderState(OrderState.BILLING, null, token, null);
 	}
 
-	void accept(String payer, String payerName, String payerNote, String paymentId) {
-		this.payer = payer;
-		this.payerName = payerName;
-		this.payerNote = payerNote;
-		this.paymentId = paymentId;
+	void accept(String paymentId, double amount, String payer, String payerName, String payerNote) {
+		payment.processed(paymentId, amount, payer, payerName, payerNote);
 
-		updateOrderState(OrderState.ACCEPTED, null, paymentId);
+		updateOrderState(OrderState.ACCEPTED, null, paymentId, null);
 	}
 
-	void addParcel(HibernateOrderParcel parcel) {
-		orderParcels.add(parcel);
+	void reject(String paymentId, double amount, String payer, String payerName, String payerNote) {
+		payment.processed(paymentId, amount, payer, payerName, payerNote);
+
+		updateOrderState(OrderState.CANCELLED, null, paymentId, null);
 	}
 
-	void removeParcel(HibernateOrderParcel parcel) {
-		orderParcels.remove(parcel);
+	void failed(String reason) {
+		this.commentary = reason;
+
+		updateOrderState(OrderState.FAILED, null, null, reason);
 	}
 
-	void shipping(int parcel, String tracking, String commentary) {
-		final HibernateOrderParcel parcel1 = getParcel(parcel);
-		if (parcel1 == null) {
-			throw new IllegalArgumentException("Unknown parcel " + parcel);
+
+	void processing() {
+		for (Parcel parcel : parcels) {
+			updateOrderState(OrderState.PROCESSING, parcel, null, null);
+		}
+	}
+
+
+	void shipping(Long parcelId, String tracking, String commentary) {
+		final HibernateParcel parcel = getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel " + parcelId);
 		}
 
-		parcel1.shipping(tracking);
+		parcel.shipping(tracking);
 
 		updateOrderState(calculateOrderState(), parcel, tracking, commentary);
 	}
 
-	void shipped(int parcel, String tracking, String commentary) {
-		final HibernateOrderParcel parcel1 = getParcel(parcel);
-		if (parcel1 == null) {
-			throw new IllegalArgumentException("Unknown parcel " + parcel);
+	void shipped(Long parcelId, String tracking, String commentary) {
+		final HibernateParcel parcel = getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel " + parcelId);
 		}
 
-		parcel1.shipped(tracking);
+		parcel.shipped(tracking);
 
 		updateOrderState(calculateOrderState(), parcel, tracking, commentary);
 	}
 
-	void closed(int parcel, String tracking, String commentary) {
-		final HibernateOrderParcel parcel1 = getParcel(parcel);
-		if (parcel1 == null) {
-			throw new IllegalArgumentException("Unknown parcel " + parcel);
+	void suspend(Long parcelId, LocalDateTime resume, String commentary) {
+		final HibernateParcel parcel = getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel " + parcelId);
 		}
 
-		parcel1.closed();
+		parcel.suspend(resume);
 
-		updateOrderState(calculateOrderState(), parcel, tracking, commentary);
+		updateOrderState(calculateOrderState(), parcel, null, commentary);
+	}
+
+	void cancel(Long parcelId, String commentary) {
+		final HibernateParcel parcel = getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel " + parcelId);
+		}
+
+		parcel.cancel();
+
+		updateOrderState(calculateOrderState(), parcel, null, commentary);
+	}
+
+
+	void cancel(String note) {
+		updateOrderState(OrderState.CANCELLED, null, null, note);
+	}
+
+	void suspend(String note) {
+		updateOrderState(OrderState.SUSPENDED, null, null, note);
+	}
+
+	void closed(Long parcelId, LocalDateTime deliveryDate, String commentary) {
+		final HibernateParcel parcel = getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel " + parcelId);
+		}
+
+		parcel.closed(deliveryDate);
+
+		updateOrderState(calculateOrderState(), parcel, deliveryDate.toString(), commentary);
+	}
+
+
+	HibernateParcel createParcel(int number) {
+		final HibernateParcel p = new HibernateParcel(this, number);
+		parcels.add(p);
+		return p;
 	}
 
 	private OrderState calculateOrderState() {
-		final Set<ParcelState> set = orderParcels.stream().map(OrderParcel::getState).collect(Collectors.toSet());
+		final Set<ParcelState> set = parcels.stream().map(Parcel::getState).collect(Collectors.toSet());
 
 		if (set.contains(ParcelState.PROCESSING) || set.contains(ParcelState.SUSPENDED)) {
 			return OrderState.PROCESSING;
@@ -363,68 +283,18 @@ public class HibernateOrder implements Order {
 		return OrderState.CANCELLED;
 	}
 
-
-	@Deprecated
-	void processing(String referenceTracking, String commentary) {
-		this.referenceTracking = referenceTracking;
-
-		updateOrderState(OrderState.PROCESSING, commentary, referenceTracking);
-	}
-
-	@Deprecated
-	void shipping(String chinaMailTracking, String commentary) {
-		this.chinaMailTracking = chinaMailTracking;
-
-		updateOrderState(OrderState.SHIPPING, commentary, chinaMailTracking);
-	}
-
-	@Deprecated
-	void shipped(String internationalTracking, String commentary) {
-		this.shipped = new Date();
-		this.internationalTracking = internationalTracking;
-
-		updateOrderState(OrderState.SHIPPED, commentary, internationalTracking);
-	}
-
-	void failed(String commentary) {
-		updateOrderState(OrderState.FAILED, commentary, null);
-	}
-
-	void suspended(Date exceptedResume, String commentary) {
-		this.exceptedResume = exceptedResume;
-
-		updateOrderState(OrderState.SUSPENDED, commentary, exceptedResume != null ? String.valueOf(exceptedResume.getTime()) : null);
-	}
-
-	void cancelled(String refundId, String commentary) {
-		this.refundToken = refundId;
-
-		updateOrderState(OrderState.CANCELLED, commentary, refundId);
-	}
-
-	void close(Date deliveryDate, String commentary) {
-		this.closed = new Date();
-
-		updateOrderState(OrderState.CLOSED, commentary, deliveryDate != null ? String.valueOf(deliveryDate.getTime()) : null);
-	}
-
-	void setTracking(boolean tracking) {
-		this.tracking = tracking;
-	}
-
 	void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
 
-	private void updateOrderState(OrderState state, int parcel, String parameter, String commentary) {
-		// TODO: add parcel number here
-		this.timestamp = new Date();
-		this.orderState = state;
 
-		if (state != OrderState.SUSPENDED) {
-			exceptedResume = null;
+	private void updateOrderState(OrderState state, Parcel parcel, String parameter, String commentary) {
+		OrderState oldState = this.state;
+		this.state = state;
+
+		if (oldState != state) {
+			updateTimeline(state);
 		}
-
 
 		if (commentary != null && commentary.length() > 254) {
 			commentary = commentary.substring(0, 254);
@@ -436,36 +306,34 @@ public class HibernateOrder implements Order {
 			this.commentary = comment = commentary;
 		}
 
-		orderLogs.add(new HibernateOrderLog(id, parameter, comment, state));
+		orderLogs.add(new HibernateOrderLog(this, parcel, parameter, comment));
 	}
 
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("HibernateOrder{");
-		sb.append("id=").append(id);
-		sb.append(", buyer=").append(buyer);
-		sb.append(", token='").append(token).append('\'');
-		sb.append(", amount=").append(amount);
-		sb.append(", shipmentAmount=").append(shipmentAmount);
-		sb.append(", shipmentType=").append(shipmentType);
-		sb.append(", shipmentAddress=").append(shipmentAddress);
-		sb.append(", created=").append(created);
-		sb.append(", timestamp=").append(timestamp);
-		sb.append(", payer='").append(payer).append('\'');
-		sb.append(", payerNote='").append(payerNote).append('\'');
-		sb.append(", paymentId='").append(paymentId).append('\'');
-		sb.append(", tracking=").append(tracking);
-		sb.append(", exceptedResume=").append(exceptedResume);
-		sb.append(", refundToken='").append(refundToken).append('\'');
-		sb.append(", commentary='").append(commentary).append('\'');
-		sb.append(", referenceTracking='").append(referenceTracking).append('\'');
-		sb.append(", chinaMailTracking='").append(chinaMailTracking).append('\'');
-		sb.append(", internationalTracking='").append(internationalTracking).append('\'');
-		sb.append(", orderState=").append(orderState);
-		sb.append(", orderItems=").append(orderItems);
-		sb.append(", orderLogs=").append(orderLogs);
-		sb.append(", shipment=").append(shipment);
-		sb.append('}');
-		return sb.toString();
+	private void updateTimeline(OrderState state) {
+		switch (state) {
+			case ACCEPTED:
+				if (timeline.getStarted() == null) {
+					timeline.setStarted(LocalDateTime.now());
+				}
+				break;
+			case PROCESSING:
+				if (timeline.getProcessed() == null) {
+					timeline.setProcessed(LocalDateTime.now());
+				}
+				break;
+			case SHIPPED:
+			case SHIPPING:
+				if (timeline.getShipped() == null) {
+					timeline.setShipped(LocalDateTime.now());
+				}
+				break;
+			case CLOSED:
+			case FAILED:
+			case CANCELLED:
+				if (timeline.getFinished() == null) {
+					timeline.setFinished(LocalDateTime.now());
+				}
+				break;
+		}
 	}
 }

@@ -1,11 +1,11 @@
 package billiongoods.server.services.payment;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface OrderParcel {
+public interface Parcel {
 	Long getId();
 
 	/**
@@ -15,14 +15,25 @@ public interface OrderParcel {
 	 */
 	int getNumber();
 
-	Date getTimestamp();
 
+	/**
+	 * Returns creation date for the order.
+	 *
+	 * @return the order's creation date.
+	 */
+	Timeline getTimeline();
+
+	/**
+	 * Current parcel state.
+	 *
+	 * @return the parcel state.
+	 */
 	ParcelState getState();
 
 
 	String getRefundToken();
 
-	Date getExpectedResume();
+	LocalDateTime getExpectedResume();
 
 
 	String getChinaMailTracking();

@@ -91,7 +91,7 @@ public class MailSelectorOriginCenterTest {
 
 		final Address address = new Address("asd", "bsdf", "+7-123-123-122", "124434", "asd", "wqe", "asd");
 
-		final Order order = new HibernateOrder(123L, 10d, 1d, null, new Shipment(12d, address, ShipmentType.REGISTERED), true);
+		final Order order = new HibernateOrder(123L, 10d, 1d, null, new Shipment(12d, address, ShipmentType.REGISTERED));
 
 		final OrderListener listener = listenerCapture.getValue();
 		listener.orderStateChanged(order, null, OrderState.NEW);

@@ -1,32 +1,32 @@
 package billiongoods.server.services.payment.impl;
 
 import billiongoods.server.services.payment.OrderItem;
-import billiongoods.server.services.payment.OrderParcel;
+import billiongoods.server.services.payment.Parcel;
 import billiongoods.server.services.payment.ParcelState;
+import billiongoods.server.services.payment.Timeline;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Entity
 @Table(name = "store_order_parcel")
-public class HibernateOrderParcel implements OrderParcel {
-	@Id
+public class HibernateParcel implements Parcel {
+	@javax.persistence.Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "number")
-	private int number;
-
-	@Column(name = "orderId")
+	@Column(name = "orderId", updatable = false)
 	private Long orderId;
 
+	@Column(name = "number", updatable = false)
+	private int number;
+
 	@Column(name = "exceptedResume")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date exceptedResume;
+	private LocalDateTime exceptedResume;
 
 	@Column(name = "commentary", length = 255)
 	private String commentary;
@@ -34,10 +34,8 @@ public class HibernateOrderParcel implements OrderParcel {
 	@Column(name = "refundToken", length = 45)
 	private String refundToken;
 
-
-	@Column(name = "timestamp")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timestamp;
+	@Embedded
+	private HibernateTimeline timeline;
 
 	@Column(name = "chinaMailTracking", length = 45)
 	private String chinaMailTracking;
@@ -45,19 +43,24 @@ public class HibernateOrderParcel implements OrderParcel {
 	@Column(name = "internationalTracking", length = 45)
 	private String internationalTracking;
 
+
 	@Column(name = "state")
 	@Enumerated(EnumType.ORDINAL)
 	private ParcelState state = ParcelState.PROCESSING;
 
 	@Deprecated
-	HibernateOrderParcel() {
+	HibernateParcel() {
 	}
 
-	public HibernateOrderParcel(HibernateOrder order, int number) {
+	public HibernateParcel(HibernateOrder order, int number) {
 		this.number = number;
 		this.orderId = order.getId();
 
-		this.timestamp = new Date();
+		final Timeline orderTimeline = order.getTimeline();
+
+		this.timeline = new HibernateTimeline(LocalDateTime.from(orderTimeline.getCreated()));
+		this.timeline.setStarted(LocalDateTime.from(orderTimeline.getStarted()));
+		this.timeline.setProcessed(LocalDateTime.now());
 	}
 
 	@Override
@@ -72,21 +75,25 @@ public class HibernateOrderParcel implements OrderParcel {
 
 
 	@Override
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	@Override
 	public ParcelState getState() {
 		return state;
 	}
-
 
 	@Override
 	public String getRefundToken() {
 		return refundToken;
 	}
 
+
 	@Override
-	public Date getExpectedResume() {
+	public LocalDateTime getExpectedResume() {
 		return exceptedResume;
 	}
-
 
 	@Override
 	public String getChinaMailTracking() {
@@ -96,12 +103,6 @@ public class HibernateOrderParcel implements OrderParcel {
 	@Override
 	public String getInternationalTracking() {
 		return internationalTracking;
-	}
-
-
-	@Override
-	public Date getTimestamp() {
-		return timestamp;
 	}
 
 	@Override
@@ -120,12 +121,45 @@ public class HibernateOrderParcel implements OrderParcel {
 		updateParcelState(ParcelState.SHIPPED);
 	}
 
-	void closed() {
+	void closed(LocalDateTime deliveryDate) {
+		timeline.setFinished(deliveryDate);
+
 		updateParcelState(ParcelState.CLOSED);
 	}
 
+	void cancel() {
+		updateParcelState(ParcelState.CANCELLED);
+	}
+
+	void suspend(LocalDateTime resume) {
+		this.exceptedResume = resume;
+
+		updateParcelState(ParcelState.SUSPENDED);
+	}
+
 	private void updateParcelState(ParcelState state) {
+		ParcelState oldState = this.state;
+
 		this.state = state;
-		this.timestamp = new Date();
+
+		if (oldState != state) {
+			updateTimeline(state);
+		}
+	}
+
+	private void updateTimeline(ParcelState state) {
+		switch (state) {
+			case SHIPPED:
+			case SHIPPING:
+				if (timeline.getShipped() == null) {
+					timeline.setShipped(LocalDateTime.now());
+				}
+				break;
+			case CANCELLED:
+				if (timeline.getFinished() == null) {
+					timeline.setFinished(LocalDateTime.now());
+				}
+				break;
+		}
 	}
 }

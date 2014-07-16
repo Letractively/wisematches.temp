@@ -44,7 +44,7 @@ public class HibernateCouponManager extends EntitySearchManager<Coupon, CouponCo
 	}
 
 	@Override
-	public Coupon redeemCoupon(String code) {
+	public Coupon redeemCoupon(String code, double amount) {
 		if (code == null) {
 			return null;
 		}

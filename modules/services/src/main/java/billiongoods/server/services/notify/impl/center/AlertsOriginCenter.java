@@ -8,10 +8,7 @@ import billiongoods.core.account.AccountManager;
 import billiongoods.server.services.notify.NotificationService;
 import billiongoods.server.services.notify.Recipient;
 import billiongoods.server.services.notify.Sender;
-import billiongoods.server.services.payment.Order;
-import billiongoods.server.services.payment.OrderListener;
-import billiongoods.server.services.payment.OrderManager;
-import billiongoods.server.services.payment.OrderState;
+import billiongoods.server.services.payment.*;
 import billiongoods.server.services.tracking.ProductTracking;
 import billiongoods.server.services.tracking.ProductTrackingListener;
 import billiongoods.server.services.tracking.ProductTrackingManager;
@@ -67,7 +64,8 @@ public class AlertsOriginCenter {
 			}
 
 			if (owner == null) {
-				owner = Recipient.get(order.getPayer(), new Passport(order.getPayerName()));
+				final OrderPayment payment = order.getPayment();
+				owner = Recipient.get(payment.getPayer(), new Passport(payment.getPayerName()));
 			}
 			final Recipient recipient = Recipient.get(Recipient.MailBox.MONITORING, owner);
 

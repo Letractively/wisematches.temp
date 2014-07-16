@@ -1,10 +1,10 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
-import billiongoods.core.Member;
 import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.Order;
+import billiongoods.server.services.payment.OrderDiscount;
 import billiongoods.server.services.payment.OrderManager;
-import billiongoods.server.services.payment.OrderState;
+import billiongoods.server.services.payment.OrderPayment;
 import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.ExpiredParametersException;
@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -60,7 +59,7 @@ public class OrderController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String checkoutOrder(WebRequest request) {
 		final OrderCheckoutForm form = (OrderCheckoutForm) request.getAttribute(ORDER_CHECKOUT_FORM_NAME, RequestAttributes.SCOPE_REQUEST);
-		final Order order = orderManager.create(getPersonality(), form.getBasket(), form.getAddress(), form.getShipmentType(), form.isEnabledTracking());
+		final Order order = orderManager.create(getPersonality(), form.getBasket(), form.getAddress(), form.getShipmentType());
 		return PayPalController.forwardCheckout(request, order);
 	}
 
@@ -77,7 +76,8 @@ public class OrderController extends AbstractController {
 		}
 
 		try {
-			couponManager.redeemCoupon(order.getCoupon());
+			final OrderDiscount discount = order.getDiscount();
+			couponManager.redeemCoupon(discount.getCoupon(), discount.getAmount());
 		} catch (Exception ex) {
 			log.error("Coupon can't be redeemed for order " + order.getId(), ex);
 		}
@@ -131,9 +131,14 @@ public class OrderController extends AbstractController {
 			errors.rejectValue("email", "order.error.email.empty");
 		}
 
-		if (!errors.hasErrors()) {
-			final Order order = orderManager.getOrder(form.getOrder());
-			if (order == null || order.getPayer() == null || !order.getPayer().equalsIgnoreCase(form.getEmail().trim())) {
+		final Order order = orderManager.getOrder(form.getOrder());
+		if (order == null) {
+			errors.reject("order.error.invalid");
+		}
+
+		if (order != null && !errors.hasErrors()) {
+			final OrderPayment payment = order.getPayment();
+			if (payment.getPayer() == null || !payment.getPayer().equalsIgnoreCase(form.getEmail().trim())) {
 				errors.reject("order.error.invalid");
 			} else {
 				return viewOrder(form.getOrder(), order, false, model);
@@ -153,7 +158,7 @@ public class OrderController extends AbstractController {
 		}
 
 		final Order order = orderManager.getOrder(form.getOrder());
-		if (order == null || !order.getPayer().equalsIgnoreCase(form.getEmail())) {
+		if (order == null || !order.getPayment().getPayer().equalsIgnoreCase(form.getEmail())) {
 			return responseFactory.failure("order.error.invalid", locale);
 		} else {
 			orderManager.setOrderTracking(order, form.isEnable());
@@ -164,6 +169,9 @@ public class OrderController extends AbstractController {
 	@RequestMapping("/close.ajax")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ServiceResponse confirmReceivedAjax(@RequestBody OrderViewForm form, Locale locale) {
+		throw new UnsupportedOperationException("Commented");
+
+/*
 		if (form.getOrder() == null) {
 			return responseFactory.failure("order.error.id.empty", locale);
 		}
@@ -172,13 +180,13 @@ public class OrderController extends AbstractController {
 		if (order == null) {
 			return responseFactory.failure("order.error.invalid", locale);
 		}
-        if (order.getState() != OrderState.SHIPPED) {
-            return responseFactory.failure("order.error.closed", locale);
+		if (order.getState() != OrderState.SHIPPED) {
+			return responseFactory.failure("order.error.closed", locale);
 		}
 
 		final Member member = getMember();
 		if (form.getEmail() != null && !form.getEmail().isEmpty()) { // tracking form only
-			if (!order.getPayer().equalsIgnoreCase(form.getEmail())) {
+			if (!order.getPayment().getPayer().equalsIgnoreCase(form.getEmail())) {
 				return responseFactory.failure("order.error.access", locale);
 			}
 		} else if (member == null || !member.idem(order.getPersonId())) { // another owner?
@@ -186,6 +194,7 @@ public class OrderController extends AbstractController {
 		}
 		orderManager.close(order.getId(), new Date(), null);
 		return responseFactory.success();
+*/
 	}
 
 	private String viewOrder(Long orderId, Order order, boolean confirmation, Model model) {
