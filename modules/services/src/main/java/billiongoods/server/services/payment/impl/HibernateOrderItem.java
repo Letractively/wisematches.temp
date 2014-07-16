@@ -96,11 +96,6 @@ public class HibernateOrderItem implements OrderItem {
 		return options;
 	}
 
-	@Override
-	public boolean isRegistered() {
-		return parcelId != null;
-	}
-
 	Long getParcelId() {
 		return parcelId;
 	}

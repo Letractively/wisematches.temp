@@ -1,7 +1,7 @@
 <#-- @ftlvariable name="order" type="billiongoods.server.services.payment.Order" -->
 <#-- @ftlvariable name="confirmation" type="boolean" -->
-<#-- @ftlvariable name="parcel" type="billiongoods.server.services.payment.OrderParcel" -->
-<#-- @ftlvariable name="nullParcel" type="billiongoods.server.services.payment.OrderParcel" -->
+<#-- @ftlvariable name="parcel" type="billiongoods.server.services.payment.Parcel" -->
+<#-- @ftlvariable name="nullParcel" type="billiongoods.server.services.payment.Parcel" -->
 
 <#include "/core.ftl"/>
 

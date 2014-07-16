@@ -50,8 +50,8 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		Recipient recipient = null;
 		if (order.getPersonId() != null && (account = accountManager.getAccount(order.getPersonId())) != null) {
 			recipient = Recipient.get(account);
-		} else if (order.isTracking() && order.getPayer() != null) {
-			recipient = Recipient.get(order.getPayer());
+		} else if (order.getPayment().getPayer() != null) {
+			recipient = Recipient.get(order.getPayment().getPayer());
 		}
 
 		if (recipient != null) {

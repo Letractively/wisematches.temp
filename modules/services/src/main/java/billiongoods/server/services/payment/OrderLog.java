@@ -6,21 +6,23 @@ import java.util.Date;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface OrderLog {
-    Long getParcelId();
+	Date getTimeStamp();
 
-    Date getTimeStamp();
+	String getParameter();
 
-    String getParameter();
-
-    String getCommentary();
+	String getCommentary();
 
 
-    boolean isOrderChange();
+	Long getOrderId();
 
-    OrderState getOrderState();
+	boolean isOrderChange();
+
+	OrderState getOrderState();
 
 
-    boolean isParcelChange();
+	Long getParcelId();
 
-    ParcelState getParcelState();
+	boolean isParcelChange();
+
+	ParcelState getParcelState();
 }

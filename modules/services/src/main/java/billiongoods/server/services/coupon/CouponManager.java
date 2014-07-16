@@ -32,7 +32,7 @@ public interface CouponManager extends SearchManager<Coupon, CouponContext, Void
 	 * @param code the id of coupon to be closed
 	 * @return the coupon or {@code null} if it wasn't redeemed
 	 */
-	Coupon redeemCoupon(String code);
+	Coupon redeemCoupon(String code, double amount);
 
 
 	/**

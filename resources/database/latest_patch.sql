@@ -22,6 +22,69 @@ REFERENCES `billiongoods`.`store_order` (`id`)
   ON DELETE CASCADE
   ON UPDATE NO ACTION;
 
+ALTER TABLE `billiongoods`.`store_order`
+CHANGE COLUMN `created` `created` DATETIME NOT NULL
+AFTER `buyer`,
+CHANGE COLUMN `shipmentType` `shipmentType` TINYINT(4) NOT NULL
+AFTER `amount`,
+CHANGE COLUMN `discount` `discountAmount` DECIMAL(10, 4) NOT NULL DEFAULT '0.0000'
+AFTER `discountCoupon`,
+CHANGE COLUMN `token` `token` VARCHAR(20) NULL DEFAULT NULL
+AFTER `closed`,
+CHANGE COLUMN `shipment` `shipmentAmount` DECIMAL(10, 4) NOT NULL,
+CHANGE COLUMN `coupon` `discountCoupon` VARCHAR(10) NULL,
+ADD COLUMN `paymentAmount` DECIMAL(10, 4) NULL
+AFTER `paymentId`,
+ADD COLUMN `refundId` VARCHAR(20) NULL
+AFTER `paymentAmount`,
+ADD COLUMN `refundAmount` DECIMAL(10, 4) NULL
+AFTER `refundId`;
+
+ALTER TABLE `billiongoods`.`store_order`
+CHANGE COLUMN `created` `created` DATETIME NOT NULL
+AFTER `refundToken`,
+CHANGE COLUMN `shipped` `shipped` DATETIME NULL DEFAULT NULL
+AFTER `created`,
+CHANGE COLUMN `closed` `closed` DATETIME NULL DEFAULT NULL
+AFTER `shipped`,
+ADD COLUMN `processed` DATETIME NULL DEFAULT NULL
+AFTER `closed`,
+ADD COLUMN `finished` DATETIME NULL DEFAULT NULL
+AFTER `processed`;
+
+ALTER TABLE `billiongoods`.`store_order`
+DROP COLUMN `finished`,
+CHANGE COLUMN `processed` `processed` DATETIME NULL DEFAULT NULL
+AFTER `created`,
+CHANGE COLUMN `closed` `finished` DATETIME NULL DEFAULT NULL,
+CHANGE COLUMN `timestamp` `tbr_timestamp` DATETIME NOT NULL;
+
+ALTER TABLE `billiongoods`.`store_order`
+ADD COLUMN `started` DATETIME NULL DEFAULT NULL
+AFTER `created`;
+
+ALTER TABLE `billiongoods`.`store_order_parcel`
+CHANGE COLUMN `timestamp` `tbr_timestamp` DATETIME NOT NULL,
+ADD COLUMN `created` DATETIME NOT NULL
+AFTER `internationalTracking`,
+ADD COLUMN `started` DATETIME NULL DEFAULT NULL
+AFTER `created`,
+ADD COLUMN `processed` DATETIME NULL DEFAULT NULL
+AFTER `started`,
+ADD COLUMN `shipped` DATETIME NULL DEFAULT NULL
+AFTER `processed`,
+ADD COLUMN `finished` DATETIME NULL DEFAULT NULL
+AFTER `shipped`;
+
+ALTER TABLE `billiongoods`.`store_order_parcel`
+DROP COLUMN `tbr_timestamp`;
+
+ALTER TABLE `billiongoods`.`store_order`
+DROP COLUMN `tbr_timestamp`;
+
+ALTER TABLE `billiongoods`.`store_order`
+DROP COLUMN `tracking`;
+
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('070714');
 
 #10.06.14
@@ -34,6 +97,7 @@ ADD COLUMN `osc` INT(11) NULL DEFAULT NULL
 AFTER `ord`,
 ADD COLUMN `nsc` INT(11) NULL DEFAULT NULL
 AFTER `nrd`;
+
 
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('100614');
 

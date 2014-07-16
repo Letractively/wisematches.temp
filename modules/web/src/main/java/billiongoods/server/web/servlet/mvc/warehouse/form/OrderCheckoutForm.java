@@ -11,6 +11,7 @@ public class OrderCheckoutForm {
 	private Basket basket;
 	private Address address;
 	private ShipmentType shipmentType;
+	@Deprecated
 	private boolean enabledTracking;
 
 	public OrderCheckoutForm(Basket basket, Address address, ShipmentType shipmentType, boolean enabledTracking) {
