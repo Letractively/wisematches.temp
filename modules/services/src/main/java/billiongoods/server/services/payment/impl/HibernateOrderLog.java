@@ -6,7 +6,7 @@ import billiongoods.server.services.payment.Parcel;
 import billiongoods.server.services.payment.ParcelState;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -33,15 +33,14 @@ public class HibernateOrderLog implements OrderLog {
 	@Enumerated(EnumType.ORDINAL)
 	private ParcelState parcelState;
 
-	@Column(name = "timestamp", updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timestamp;
-
 	@Column(name = "parameter", updatable = false)
 	private String parameter;
 
 	@Column(name = "commentary", updatable = false)
 	private String commentary;
+
+	@Column(name = "timestamp", updatable = false)
+	private LocalDateTime timestamp;
 
 	@Deprecated
 	HibernateOrderLog() {
@@ -63,7 +62,7 @@ public class HibernateOrderLog implements OrderLog {
 		this.parameter = parameter;
 		this.commentary = commentary;
 
-		this.timestamp = new Date();
+		this.timestamp = LocalDateTime.now();
 	}
 
 
@@ -93,7 +92,7 @@ public class HibernateOrderLog implements OrderLog {
 	}
 
 	@Override
-	public Date getTimeStamp() {
+	public LocalDateTime getTimeStamp() {
 		return timestamp;
 	}
 

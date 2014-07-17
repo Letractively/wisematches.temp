@@ -98,6 +98,13 @@ AFTER `ord`,
 ADD COLUMN `nsc` INT(11) NULL DEFAULT NULL
 AFTER `nrd`;
 
+ALTER TABLE `billiongoods`.`store_order_log`
+CHANGE COLUMN `timestamp` `timestamp` DATETIME NOT NULL
+AFTER `commentary`,
+ADD COLUMN `parcelId` BIGINT(20) NULL DEFAULT NULL
+AFTER `orderState`,
+ADD COLUMN `parcelState` TINYINT(4) NULL DEFAULT NULL
+AFTER `parcelId`;
 
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('100614');
 

@@ -11,10 +11,10 @@
 <#assign grandTotalAmountUSD=0/>
 
 <#macro parcelTable parcel number>
-    <#if parcel?has_content>
-        <#assign items=order.getItems(parcel)/>
+    <#if !parcel?has_content>
+        <#assign items=order.getItems()/>
     <#else>
-        <#assign items=order.getItems(nullParcel)/>
+        <#assign items=order.getItems(parcel)/>
     </#if>
 
     <#if !items?has_content>
@@ -37,11 +37,9 @@
 
             <div class="" style="float: right">
                 <span class="status">
-                <@message code="order.status.${stateName}.label"/>
-                    <#if order.state==ParcelState.SUSPENDED && parcel.expectedResume??>
+                    <@message code="order.status.${stateName}.label"/>
+                    <#if parcel?has_content && parcel.state == ParcelState.SUSPENDED>
                         до ${messageSource.formatDate(parcel.expectedResume, locale)}
-                    <#else>
-                    ${messageSource.formatDate(parcel.timestamp, locale)}
                     </#if>
                 </span>
             </div>
@@ -54,7 +52,8 @@
     <th>Цена</th>
     <th>Кол-во</th>
     <th>Итого</th>
-    <th colspan="3">Управление</th>
+    <th colspan="2">Управление</th>
+    <th colspan="2"><input name="checkAllItems" type="checkbox"></th>
 </tr>
 
     <#assign totalCount=0/>
@@ -96,26 +95,29 @@
                     <@bg.ui.priceU amountUsd/>
         </td>
         <td>
-            <input checked="checked" type="checkbox" value="${product.id}">
+            <input name="item" checked="checked" type="checkbox" value="${i.number}">
         </td>
     </tr>
     </#list>
 
 <tr>
     <td colspan="9" align="right">
-        <#if parcel?has_content>
+        <#if parcel?has_content && !parcel.state.finished>
             <div style="display: inline-block; float: left">
-                <button class="manage-parcel-shipping" type="button" value="${parcel.number}">Отправление</button>
-                <button class="manage-parcel-shipped" type="button" value="${parcel.number}">Отправлена</button>
-                <button class="manage-parcel-suspend" type="button" value="${parcel.number}">Приостановить</button>
-                <button class="manage-parcel-cancelled" type="button" value="${parcel.number}">Отменить</button>
-                <button class="manage-parcel-close" type="button" value="${parcel.number}">Закрыть</button>
+                <#list ParcelState.values() as s>
+                    <#if parcel.state.allowed(s)>
+                        <button class="manage-parcel-button" type="button" name="${s.name()?lower_case}"
+                                value="${parcel.id}">${s}</button>
+                    </#if>
+                </#list>
             </div>
         </#if>
 
-        <div style="display: inline-block">
-            <button class="manage-parcel-create" type="button">Разделить</button>
-        </div>
+        <#if !parcel?has_content || (parcel.state == ParcelState.PROCESSING && items?size>1)>
+            <div style="display: inline-block">
+                <button class="manage-parcel-create" type="button">Разделить</button>
+            </div>
+        </#if>
     </td>
 </tr>
 </tbody>
@@ -126,28 +128,37 @@
 <#include "/content/warehouse/order/widget/title.ftl"/>
 <#include "/content/warehouse/order/widget/progress.ftl"/>
 <#include "/content/warehouse/order/widget/details.ftl"/>
-
-    <div class="info" style="padding: 5px; text-align: right; margin-top: 20px; margin-bottom: 20px">
-    <#if order.state == OrderState.ACCEPTED>
-        <div style="float: left">
-            <button id="suspendOrder" type="button">Приостановить</button>
-            <button id="cancelOrder" type="button">Отменить</button>
-        </div>
-    </#if>
-        <div>
-            <form method="get" action="/maintain/order/export">
-                <button type="submit" name="order" value="${order.id}">Загрузить CSV для импорта</button>
-            </form>
-        </div>
-    </div>
-
     <div class="basket">
         <table class="cnt">
-        <@parcelTable parcel="" number=0/>
+        <#if order.parcels?size == 0>
+            <@parcelTable parcel="" number=0/>
+        <#else>
+            <#list order.parcels as parcel>
+                <@parcelTable parcel=parcel number=parcel_index+1/>
+            </#list>
+        </#if>
 
-        <#list order.parcels as parcel>
-            <@parcelTable parcel=parcel number=parcel_index+1/>
-        </#list>
+            <tbody id="operations">
+            <tr>
+                <td colspan="9" style="border: none; padding: 20px 0 0;">
+                    <div class="info" style="text-align: right; padding: 5px">
+                    <#if order.state == OrderState.ACCEPTED>
+                        <div style="float: left">
+                            <button id="suspendOrder" type="button">Приостановить</button>
+                            <button id="cancelOrder" type="button">Отменить</button>
+                        </div>
+                    </#if>
+                        <div>
+                            <form method="get" action="/maintain/order/export">
+                                <button type="submit" name="order" value="${order.id}">Загрузить CSV для импорта
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+
 
             <tbody id="grandTotal">
             <tr>
@@ -170,14 +181,14 @@
                 </th>
                 <th valign="middle" nowrap="nowrap" align="left">&nbsp;</th>
             </tr>
-            <#if order.coupon?? && (order.discount>0)>
+            <#if order.discount.coupon?? && (order.discount.amount>0)>
             <tr>
                 <th colspan="3" nowrap="nowrap" align="left">Скидка по купону</th>
                 <th nowrap="nowrap" align="left">
-                    <@bg.ui.price order.discount/>
+                    <@bg.ui.price order.discount.amount/>
                 </th>
                 <th valign="middle" nowrap="nowrap" align="left" colspan="3">
-                    <a href="/maintain/coupon/view?code=${order.coupon}">${order.coupon}</a>
+                    <a href="/maintain/coupon/view?code=${order.discount.coupon}">${order.discount.coupon}</a>
                 </th>
             </tr>
             </#if>
@@ -188,7 +199,7 @@
             </tr>
             <tr>
                 <th colspan="4" align="left">Итоговая сумма заказа</th>
-                <th><@bg.ui.price order.amount + shipment.amount - order.discount/></th>
+                <th><@bg.ui.price order.amount + shipment.amount - order.discount.amount/></th>
                 <th colspan="3">&nbsp;</th>
             </tr>
             </tbody>
@@ -196,124 +207,78 @@
     </div>
 </div>
 
-<div id="shippingForm" style="display: none">
-    <form action="/maintain/order/promoteParcel" method="post">
-        <table>
-            <tr>
-                <th><label for="chinaMailTracking">Номер:</label></th>
-                <td>
-                    <input id="chinaMailTracking" name="value">
-                </td>
-            </tr>
-            <tr>
-                <th>Коментарий:</th>
-                <td>
-                    <textarea name="commentary" rows="12" cols="50"></textarea>
-                </td>
-            </tr>
-        </table>
-        <input type="hidden" name="order" value="${order.id}"/>
-        <input type="hidden" name="number" value=""/>
-        <input type="hidden" name="state" value=""/>
-    </form>
-</div>
+<form id="promoteParcelForm" action="/maintain/order/promoteParcel" method="post" style="display: none">
+    <input type="hidden" name="orderId" value="${order.id}"/>
+    <input type="hidden" name="parcelId" value=""/>
+    <input type="hidden" name="state" value=""/>
+    <input type="hidden" name="value" value=""/>
 
-<div id="suspendForm" style="display: none">
-    <div style="display: inline-block; vertical-align: top">
-        <div>Дата возобновления:</div>
-        <div class="datepicker"></div>
-    </div>
-    <div style="display: inline-block; vertical-align: top">
-        Коментарий:<br>
-    </div>
-</div>
+    <table>
+        <tr>
+            <td valign="top">
+                <div id="shippingForm" style="display: none">
+                    <div><label for="chinaMailTracking">Номер:</label></div>
+                    <div><input id="chinaMailTracking"></div>
+                </div>
+
+                <div id="shippedForm" style="display: none">
+                    <div><label for="internationalTracking">Номер:</label></div>
+                    <div><input id="internationalTracking"></div>
+                </div>
+
+                <div id="cancelledForm" style="display: none">
+                    <div><label for="refundParcelToken">Номер возврата:</label></div>
+                    <div><input id="refundParcelToken"></div>
+                </div>
+
+                <div id="suspendedForm" style="display: none">
+                    <div>
+                        <div><label for="expectedParcelResume">Дата возобновления:</div>
+                        <div>
+                            <input id="expectedParcelResume" class="datepicker"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="closedForm" style="display: none">
+                    <div>
+                        <div><label for="closeParcelDate">Дата получения:</div>
+                        <div>
+                            <input id="closeParcelDate" class="datepicker"/>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td valign="top" width="60%">
+                <div>
+                    <div>Коментарий:</div>
+                    <div>
+                        <textarea name="commentary" rows="12" cols="45"></textarea>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
 
 <script type="application/javascript">
-    function suspendOrder() {
-        alert("asd");
-    }
+    var order = new bg.warehouse.Order();
 
-    function suspendParcel() {
-    }
-
-    function shippingParcel(parcel, form) {
-        form.find("input[name='number']").val(parcel);
-        form.find("input[name='state']").val("${ParcelState.SHIPPING.name()}");
-
-        form.find("form").submit();
-    }
-
-    function showDialog(id, funct) {
-        var opts = {
-            suspend: {title: "Приостановить", form: "#suspendForm", height: 350, width: 660},
-            shipping: {title: "Отправление", form: "#shippingForm", height: 350, width: 600}
-        };
-
-        return function () {
-            var val = $(this).val();
-
-            var caption = opts[id].caption;
-            var form = $(opts[id].form);
-            var dialog = form.dialog({
-                title: opts[id].title,
-                autoOpen: true,
-                height: opts[id].height,
-                width: opts[id].width,
-                modal: true,
-                resizable: false,
-                buttons: {
-                    "Применить": function () {
-                        funct(val, form)
-                    },
-                    "Отменить": function () {
-                        dialog.dialog("close");
-                    }
-                }
-            });
+    function getParcelManageValue(parcel, state, form) {
+        switch (state) {
+            case 'shipping':
+                return form.find("#chinaMailTracking").val();
+            case 'shipped':
+                return form.find("#internationalTracking").val();
+            case 'suspended':
+                return form.find("#expectedParcelResume").val();
+            case 'cancelled':
+                return form.find("#refundParcelToken").val();
+            case 'closed':
+                return form.find("#closeParcelDate").val();
         }
+        return null;
     }
-
-    /*
-        <button class="manage-parcel-shipping" type="button">Отправление</button>
-        <button class="manage-parcel-shipped" type="button">Отправлена</button>
-        <button class="manage-parcel-suspend" type="button">Приостановить</button>
-        <button class="manage-parcel-cancelled" type="button">Отменить</button>
-        <button class="manage-parcel-close" type="button">Закрыть</button>
-    */
-
-
-    $("#suspendOrder").click(showDialog("suspend", suspendOrder));
-
-    $(".manage-parcel-shipping").click(showDialog("shipping", shippingParcel));
-
-    $(".manage-parcel-suspend").click(showDialog("suspend", suspendParcel));
-    /*
-        function updateParcel() {
-            alert("update");
-        }
-
-        var dialog = $("#parcelEditForm").dialog({
-            autoOpen: false,
-            height: 300,
-            width: 350,
-            modal: true,
-            buttons: {
-                "Изменить": updateParcel,
-                "Отменить": function () {
-                    dialog.dialog("close");
-                }
-            },
-            close: function () {
-    //            form[ 0 ].reset();
-    //            allFields.removeClass("ui-state-error");
-            }
-        });
-    */
-
-    $(".manage-parcel-edit").click(function () {
-        // TODO: fill fields here
-        dialog.dialog("open");
-    });
 
     $(".manage-parcel-create").click(function () {
         var number = prompt("Введите номер посылки", "");
@@ -322,7 +287,7 @@
         }
 
         var items = [];
-        $(this).closest("tbody").find("input:checked").each(function (index, item) {
+        $(this).closest("tbody").find("input[name='item']:checked").each(function (index, item) {
             items.push($(item).val());
         });
 
@@ -331,80 +296,41 @@
         });
     });
 
-    $(".datepicker").datepicker({"dateFormat": "yy.mm.dd"});
-</script>
+    $(".manage-parcel-button").click(function () {
+        var button = $(this);
+        var name = button.attr('name');
+        var parcel = button.val();
 
+        var form = $("#promoteParcelForm");
+        var localForm = $("#" + name + "Form").show();
+        var dialog = form.dialog({
+            title: name,
+            autoOpen: true,
+            height: 360,
+            width: 660,
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Применить": function () {
+                    form.find("input[name='parcelId']").val(parcel);
+                    form.find("input[name='state']").val(name.toUpperCase());
+                    form.find("input[name='value']").val(getParcelManageValue(parcel, name, form));
 
-<#--
-<#if order.orderState!=OrderState.CLOSED>
-<div class="order">
-    <form action="/maintain/order/promote" method="post">
-        <input name="id" type="hidden" value="${order.id}">
-
-        <div class="info">
-            <#if order.orderState==OrderState.ACCEPTED>
-                Внутренний номер поставщика:
-            <#elseif order.orderState==OrderState.PROCESSING>
-                Номер доставки почты Китая:
-            <#elseif order.orderState==OrderState.SHIPPING>
-                Международный номер доставки (если есть):
-            <#elseif order.orderState==OrderState.SHIPPED>
-                Дата вручения (yyyy.MM.dd):
-            <#else>
-                Внутренний номер поставщика/Номер доставки почты Китая/Международный номер доставки:
-            </#if>
-            <@bg.ui.input path="form.value" fieldType="text"/>
-
-            Коментарий:
-            <@bg.ui.field path="form.commentary">
-                <textarea rows="2" style="width: 100%"
-                          name="${bg.ui.status.expression}">${bg.ui.statusValue}</textarea>
-            </@bg.ui.field>
-
-            <#if order.orderState==OrderState.ACCEPTED || order.orderState==OrderState.SUSPENDED>
-                <button type="submit" name="state" value="${OrderState.PROCESSING.name()}">
-                    Перевести в статус "Обработка" (PROCESSING)
-                </button>
-            </#if>
-            <#if order.orderState==OrderState.PROCESSING || order.orderState==OrderState.SUSPENDED>
-                <button type="submit" name="state" value="${OrderState.SHIPPING.name()}">
-                    Перевести в статус "Доставка" (SHIPPING)
-                </button>
-            </#if>
-            <#if order.orderState==OrderState.PROCESSING || order.orderState==OrderState.SHIPPING || order.orderState==OrderState.SUSPENDED>
-                <button type="submit" name="state" value="${OrderState.SHIPPED.name()}">
-                    Перевести в статус "Отправлено" (SHIPPED)
-                </button>
-            </#if>
-            <#if order.orderState==OrderState.SHIPPED>
-                <button type="submit" name="state" value="${OrderState.CLOSED.name()}">
-                    Перевести в статус "Завершено" (CLOSED)
-                </button>
-            </#if>
-
-            <#if order.orderState==OrderState.PROCESSING || order.orderState == OrderState.ACCEPTED || order.orderState == OrderState.SUSPENDED>
-                <div id="extendedOptions">
-                    <input id="allowExtendedOperations" type="checkbox">
-                    <button type="submit" name="state" value="${OrderState.SUSPENDED.name()}" disabled="disabled">
-                        Перевести в статус "Приостановлено" (SUSPENDED)
-                    </button>
-                    <button type="submit" name="state" value="${OrderState.CANCELLED.name()}" disabled="disabled">
-                        Перевести в статус "Отменен" (CANCELLED)
-                    </button>
-                </div>
-            </#if>
-        </div>
-    </form>
-</div>
-
-<script type="text/javascript">
-    $("#allowExtendedOperations").change(function () {
-        $("#extendedOptions").find("button").prop('disabled', !$(this).prop('checked'));
+                    form.submit();
+                    localForm.hide();
+                },
+                "Отменить": function () {
+                    dialog.dialog("close");
+                    localForm.hide();
+                }
+            }
+        });
     });
 
-        <#if order.orderState==OrderState.SHIPPED>
-        $("#value").datepicker({ "dateFormat": "yy.mm.dd"});
-        </#if>
+    $("input[name='checkAllItems']").click(function () {
+        var t = $(this);
+        t.closest("tbody").find("input[name='item']").prop('checked', t.is(':checked'));
+    });
+
+    $(".datepicker").datepicker({"dateFormat": "yy-mm-dd"});
 </script>
-</#if>
--->

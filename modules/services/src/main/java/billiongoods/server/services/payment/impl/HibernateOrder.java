@@ -41,6 +41,9 @@ public class HibernateOrder implements Order {
 	@Column(name = "commentary")
 	private String commentary;
 
+	@Column(name = "timestamp")
+	private LocalDateTime timestamp;
+
 	@Column(name = "state")
 	@Enumerated(EnumType.ORDINAL)
 	private OrderState state = OrderState.NEW;
@@ -70,7 +73,8 @@ public class HibernateOrder implements Order {
 		this.discount = new HibernateOrderDiscount(discount, coupon);
 
 		this.state = OrderState.NEW;
-		this.timeline = new HibernateTimeline(LocalDateTime.now());
+		this.timestamp = LocalDateTime.now();
+		this.timeline = new HibernateTimeline(this.timestamp);
 	}
 
 	@Override
@@ -149,17 +153,22 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
-	public List<Parcel> getParcels() {
-		return parcels;
-	}
-
-
-	@Override
 	public List<OrderItem> getItems(Parcel parcel) {
 		if (parcel == null) {
 			return orderItems;
 		}
 		return orderItems.stream().filter(parcel::contains).collect(Collectors.toList());
+	}
+
+
+	@Override
+	public List<Parcel> getParcels() {
+		return parcels;
+	}
+
+	@Override
+	public LocalDateTime getTimestamp() {
+		return timestamp;
 	}
 
 	void bill(String token) {
@@ -224,7 +233,7 @@ public class HibernateOrder implements Order {
 
 		parcel.suspend(resume);
 
-		updateOrderState(calculateOrderState(), parcel, null, commentary);
+		updateOrderState(calculateOrderState(), parcel, resume.toString(), commentary);
 	}
 
 	void cancel(Long parcelId, String commentary) {
@@ -290,7 +299,9 @@ public class HibernateOrder implements Order {
 
 	private void updateOrderState(OrderState state, Parcel parcel, String parameter, String commentary) {
 		OrderState oldState = this.state;
+
 		this.state = state;
+		this.timestamp = LocalDateTime.now();
 
 		if (oldState != state) {
 			updateTimeline(state);

@@ -533,23 +533,6 @@ bg.warehouse.Order = function () {
                 });
     };
 
-    this.changeTracking = function (order, email, tracking, successor) {
-        bg.ui.lock(null, 'Изменение подписки. Пожалуйста, подождите...');
-        $.post("/warehouse/order/tracking.ajax", JSON.stringify({"order": order, "email": email, "enable": tracking}))
-                .done(function (response) {
-                    if (response.success) {
-                        successor();
-                        bg.ui.unlock(null, tracking ? "Вы успешно подписаны на обновления." : "Вы успешно отписаны от обновлений.", false);
-                    } else {
-                        bg.ui.unlock(null, response.message, true);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    bg.ui.unlock(null, "Подписка не может быть добавлена в связи с внутренней ошибкой. Если проблема " +
-                    "не исчезла, пожалуйста, свяжитесь с нами.", true);
-                });
-    };
-
     this.confirmReceived = function (order, email, successor) {
         bg.ui.confirm("Вы уверены, что хотите закрыть заказ?", "При нажатии кнопки \"Да\", вы подтверждаете получение вами " +
         "заказа в полном объеме и в хорошем состоянии.", function (approved) {

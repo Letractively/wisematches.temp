@@ -10,10 +10,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.support.DelegatingMessageSource;
 
 import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Locale;
@@ -92,7 +91,7 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		return DATE_FORMATTER_CACHE.get(locale).format(date);
 	}
 
-	public String formatDate(LocalDate date, Locale locale) {
+	public String formatDate(TemporalAccessor date, Locale locale) {
 		return DATE_FORMATTER_CACHE8.get(locale).format(date);
 	}
 
@@ -104,7 +103,7 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		return TIME_FORMATTER_CACHE.get(locale).format(date);
 	}
 
-	public String formatTime(LocalTime time, Locale locale) {
+	public String formatTime(TemporalAccessor time, Locale locale) {
 		return TIME_FORMATTER_CACHE8.get(locale).format(time);
 	}
 

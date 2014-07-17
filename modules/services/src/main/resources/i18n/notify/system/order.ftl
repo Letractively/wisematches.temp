@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="context" type="billiongoods.server.services.payment.Order" -->
 <p>
-    Получен новый заказ #${context.id} от ${context.payerName!context.payer}.
+    Получен новый заказ #${context.id} от ${context.payment.payerName!context.payment.payer}.
 </p>
 
 <table>
@@ -27,14 +27,14 @@
 <#if (context.discount>0)>
     <tr>
         <td align="right" colspan="2">
-            <strong>Скидка по купону: ${context.discount?string("0.00")}</strong>
+            <strong>Скидка по купону: ${context.discount.amount?string("0.00")}</strong>
         </td>
     </tr>
 </#if>
     <tr>
         <td align="right" colspan="2">
             <strong>Итоговая
-                стоимость: ${(context.amount + context.shipment.amount - context.discount)?string("0.00")}</strong>
+                стоимость: ${(context.amount + context.shipment.amount - context.discount.amount)?string("0.00")}</strong>
         </td>
     </tr>
 </table>

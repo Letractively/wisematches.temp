@@ -6,6 +6,8 @@ import billiongoods.server.warehouse.ProductPreview;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface OrderItem {
+	Integer getNumber();
+
 	int getQuantity();
 
 	double getAmount();

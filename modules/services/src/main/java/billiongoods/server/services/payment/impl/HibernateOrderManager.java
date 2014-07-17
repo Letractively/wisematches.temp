@@ -24,8 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
+ * TODO: parcel listeners are not enabled!
+ *
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateOrderManager extends EntitySearchManager<Order, OrderContext, Void> implements OrderManager {
@@ -91,7 +94,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		int index = 0;
 		final List<OrderItem> items = new ArrayList<>();
 		for (BasketItem basketItem : basket.getBasketItems()) {
-			items.add(new HibernateOrderItem(order, basketItem, index++));
+			final HibernateOrderItem e = new HibernateOrderItem(order, basketItem, index++);
+			items.add(e);
 		}
 		order.setOrderItems(items);
 		session.update(order);
@@ -147,38 +151,44 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
-	public Order process(Long orderId, ParcelEntry... parcels) {
+	public Order process(Long orderId, ParcelEntry... entries) {
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
 		final OrderState state = order.getState();
 
-		final Set<Integer> p = new HashSet<>();
-		for (ParcelEntry parcel : parcels) {
-			Collections.addAll(p, parcel.getProducts());
+		final List<Integer> processingIds = new ArrayList<>();
+		for (ParcelEntry entry : entries) {
+			Collections.addAll(processingIds, entry.getItems());
 		}
 
-		final List<OrderItem> items = order.getItems();
-		for (OrderItem item : items) {
-			final Integer id = item.getProduct().getId();
-			if (!p.remove(id)) {
-				throw new IllegalArgumentException("Products are not in any parcel: " + id);
-			}
+		final List<Integer> processedIds = new ArrayList<>();
+		for (Parcel parcel : order.getParcels()) {
+			processedIds.addAll(order.getItems(parcel).stream().map(OrderItem::getNumber).collect(Collectors.toList()));
 		}
 
-		if (!p.isEmpty()) {
-			throw new IllegalArgumentException("Unknown products were provided in parcels: " + p);
+		final List<Integer> allIds = order.getItems().stream().map(OrderItem::getNumber).collect(Collectors.toList());
+
+		if (!allIds.containsAll(processingIds)) {
+			processedIds.removeAll(allIds);
+			throw new IllegalArgumentException("Some products not in the order: " + processedIds);
 		}
 
-		log.info("Processing order items: {} -> {}", orderId, Arrays.toString(parcels));
+		allIds.removeAll(processedIds);
+		allIds.removeAll(processingIds);
+		if (!allIds.isEmpty()) {
+			throw new IllegalArgumentException("Unknown products were provided in parcels: " + allIds);
+		}
 
-		for (ParcelEntry entry : parcels) {
+		log.info("Processing order items: {} -> {}", orderId, Arrays.toString(entries));
+
+		for (ParcelEntry entry : entries) {
 			final HibernateParcel parcel = order.createParcel(entry.getNumber());
 			final Long parcelId = (Long) session.save(parcel);
 
 			for (OrderItem orderItem : order.getItems()) {
-				for (Integer item : entry.getProducts()) {
-					if (orderItem.getProduct().getId().equals(item)) {
+				for (Integer parcelItem : entry.getItems()) {
+					if (orderItem.getNumber().equals(parcelItem)) {
 						((HibernateOrderItem) orderItem).moveToParcel(parcelId);
 					}
 				}
@@ -347,12 +357,6 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.MANDATORY)
-	public void setOrderTracking(Order order, boolean enable) {
-		throw new UnsupportedOperationException("Deprecated");
-	}
-
-	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public HibernateOrder getOrder(Long id) {
 		return (HibernateOrder) sessionFactory.getCurrentSession().get(HibernateOrder.class, id);
@@ -371,11 +375,12 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Order getByReference(String reference) {
-		final Session session = sessionFactory.getCurrentSession();
-
-		final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.referenceTracking=:ref");
-		query.setParameter("ref", reference);
-		return (HibernateOrder) query.uniqueResult();
+		throw new UnsupportedOperationException("Commented");
+//		final Session session = sessionFactory.getCurrentSession();
+//
+//		final Query query = session.createQuery("from billiongoods.server.services.payment.impl.HibernateOrder o where o.referenceTracking=:ref");
+//		query.setParameter("ref", reference);
+//		return (HibernateOrder) query.uniqueResult();
 	}
 
 	@Override
@@ -388,13 +393,13 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final ProjectionList projection = Projections.projectionList();
-		projection.add(Projections.groupProperty("orderState"));
+		projection.add(Projections.groupProperty("state"));
 		projection.add(Projections.rowCount());
 
 		final Criteria criteria = session.createCriteria(HibernateOrder.class);
 		criteria.setProjection(projection);
 		if (principal != null) {
-			criteria.add(Restrictions.eq("buyer", principal.getId()));
+			criteria.add(Restrictions.eq("payment.buyer", principal.getId()));
 		}
 
 		final Map<OrderState, Integer> map = new HashMap<>();
@@ -412,7 +417,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		if (account.getEmail() != null) {
 			final Session session = sessionFactory.getCurrentSession();
 
-			final Query query = session.createQuery("update billiongoods.server.services.payment.impl.HibernateOrder o set o.buyer = :principal where o.payer = :payer");
+			final Query query = session.createQuery("update billiongoods.server.services.payment.impl.HibernateOrder o set o.buyer = :principal where o.payment.payer = :payer");
 			query.setLong("principal", account.getId());
 			query.setString("payer", account.getEmail());
 			return query.executeUpdate();
@@ -424,11 +429,11 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 	protected void applyRestrictions(Criteria criteria, OrderContext context, Void filter) {
 		if (context != null) {
 			if (context.getOrderStates() != null) {
-				criteria.add(Restrictions.in("orderState", context.getOrderStates()));
+				criteria.add(Restrictions.in("state", context.getOrderStates()));
 			}
 
 			if (context.getPersonality() != null) {
-				criteria.add(Restrictions.eq("buyer", context.getPersonality().getId()));
+				criteria.add(Restrictions.eq("payment.buyer", context.getPersonality().getId()));
 			}
 		}
 	}

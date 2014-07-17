@@ -13,11 +13,14 @@
             <div style="display: inline-block">
                 <span class="status">
                 <@message code="order.status.${state.code}.label"/>
-                <#if order.state==OrderState.SUSPENDED && order.expectedResume??>
-                    до ${messageSource.formatDate(order.expectedResume, locale)}
-                <#else>
-                ${messageSource.formatDate(order.timestamp, locale)}
-                </#if>
+                    <#--TODO: COMMENTED-->
+                <#--
+                                <#if order.state==OrderState.SUSPENDED && order.expectedResume??>
+                                    до ${messageSource.formatDate(order.expectedResume, locale)}
+                                <#else>
+                                ${messageSource.formatDate(order.timestamp, locale)}
+                                </#if>
+                -->
                 </span>
 
                 <div class="sample">
@@ -68,14 +71,12 @@
                                         Международный код:<br><@bg.tracking.international l.parameter/>
                                     </#if>
                                 <#elseif  state.suspended>
-                                    <#if order.expectedResume??>
-                                        Приостановлен до:<br>
-                                    ${messageSource.formatDate(order.expectedResume, locale)}
-                                    </#if>
+                                    Приостановлен. Ожидание ответа от покупателя.
                                 <#elseif state.closed>
                                     <#if l.parameter?has_content>
                                         Дата вручения:<br>
-                                    ${messageSource.formatDate(l.parameter?number?long, locale)}
+                                    ${l.parameter}
+                                    <#--${messageSource.formatDate(l.parameter?number?long, locale)}-->
                                     </#if>
                                 <#elseif  state.cancelled>
                                     <#if l.parameter?has_content>
@@ -93,33 +94,25 @@
         </td>
     </tr>
 
-<#if order.suspendMessage?has_content>
+<#if order.commentary?has_content>
     <tr>
         <td valign="top" nowrap="nowrap">
             <label for="">Комментарий:</label>
         </td>
         <td>
-        ${order.suspendMessage}
+        ${order.commentary}
         </td>
     </tr>
 </#if>
 
-<#if order.paymentId?has_content && order.payer?has_content>
+<#assign payment=order.payment/>
+<#if payment.paymentId?has_content && payment.payer?has_content>
     <tr>
         <td valign="top" nowrap="nowrap">
             <label for="">Статус оплаты:</label>
         </td>
         <td>
             Оплачен через PayPal
-            <#if order.payer?has_content>
-                <br> Аккаунт: ${order.payer}
-            </#if>
-            <#if order.paymentId?has_content>
-                <br> Код операции: ${order.paymentId}
-            </#if>
-            <#if order.payerNote?has_content>
-                <br> Комментарий к платежу: ${order.payerNote}
-            </#if>
         </td>
     </tr>
 </#if>
@@ -129,16 +122,16 @@
             <label for="">Способ доставки:</label>
         </td>
         <td>
-            <div class="shipment" style="padding-bottom: 10px">
+            <div class="shipment">
             <#if order.shipment.type==ShipmentType.FREE>
                 Бесплатная доставка без номера отслеживания
             <#elseif order.shipment.type==ShipmentType.REGISTERED>
-                Отслеживаемое отправление:
-                <#if order.internationalTracking?has_content>
-                    <strong><@bg.tracking.international order.internationalTracking/></strong>
-                <#else>
-                    номер отслеживания еще не назначен
-                </#if>
+                Отслеживаемое отправление
+            <#--<#if order.internationalTracking?has_content>-->
+            <#--<strong><@bg.tracking.international order.internationalTracking/></strong>-->
+            <#--<#else>-->
+            <#--номер отслеживания еще не назначен-->
+            <#--</#if>-->
             </#if>
             </div>
         </td>
