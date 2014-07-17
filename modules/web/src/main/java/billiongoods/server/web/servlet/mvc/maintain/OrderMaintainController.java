@@ -21,6 +21,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -53,9 +55,6 @@ public class OrderMaintainController extends AbstractController {
 
 	@RequestMapping(value = "view")
 	public String viewOrder(@RequestParam("id") String id, @RequestParam("type") String type, @ModelAttribute("form") OrderStateForm form, Model model) {
-		throw new UnsupportedOperationException("Commented");
-
-/*
 		Order order;
 		if ("ref".equalsIgnoreCase(type)) {
 			order = orderManager.getByReference(id);
@@ -70,12 +69,11 @@ public class OrderMaintainController extends AbstractController {
 		}
 
 		form.setId(order.getId());
-        form.setState(order.getState());
-        form.setCommentary(order.getSuspendMessage());
+		form.setState(order.getState());
+		form.setCommentary(order.getCommentary());
 
 		model.addAttribute("order", order);
 		return "/content/maintain/order";
-*/
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -139,51 +137,44 @@ public class OrderMaintainController extends AbstractController {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "promoteParcel", method = RequestMethod.POST)
 	public String promoteParcel(@ModelAttribute("form") ParcelStateForm form, Errors errors, Model model) {
-		throw new UnsupportedOperationException("Commented");
-
-/*
-		final Long id = form.getOrder();
+		final Long orderId = form.getOrderId();
+		final Long parcelId = form.getParcelId();
 		final String value = form.getValue();
 		final String comment = form.getCommentary();
 		final ParcelState state = form.getState();
 
-		Order order;
 		switch (state) {
 			case SHIPPING:
-				order = orderManager.shipping(id, form.getNumber(), value, comment);
+				orderManager.shipping(orderId, parcelId, value, comment);
 				break;
-			default:
-				order = orderManager.getOrder(id);
+			case SHIPPED:
+				orderManager.shipped(orderId, parcelId, value, comment);
+				break;
+			case SUSPENDED:
+				orderManager.suspend(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
+				break;
+			case CANCELLED:
+				orderManager.cancel(orderId, parcelId, comment);
+				break;
+			case CLOSED:
+				orderManager.close(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
+				break;
 		}
-
-		model.addAttribute("order", order);
-		return "/content/maintain/order";
-*/
+		return "forward:/maintain/order/view?id=" + orderId + "&type=id";
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "updateParcel.ajax", method = RequestMethod.POST)
 	public ServiceResponse createParcel(@RequestBody ParcelForm form) {
-		throw new UnsupportedOperationException("Commented");
-
-/*
 		final Long orderId = form.getOrder();
 		final Order order = orderManager.getOrder(orderId);
 		if (order == null) {
 			throw new UnknownEntityException(orderId, "order");
 		}
 
-		final int number = form.getNumber();
+		orderManager.process(orderId, new ParcelEntry(form.getNumber(), form.getItems()));
 
-		Parcel parcel = order.getParcel(number);
-		if (parcel == null) {
-			parcel = orderManager.split(orderId, number, form.getItems());
-		} else {
-			parcel = orderManager.updateParcel(orderId, number, form.getItems());
-		}
-
-		return responseFactory.success(parcel);
-*/
+		return responseFactory.success();
 	}
 
 	@RequestMapping(value = "export")
@@ -201,8 +192,8 @@ public class OrderMaintainController extends AbstractController {
 		int recordId = 1;
 		final Shipment s = o.getShipment();
 		final Address a = s.getAddress();
-        for (OrderItem i : o.getItems()) {
-            b.append("\"RUSSIAN FEDERATION");
+		for (OrderItem i : o.getItems()) {
+			b.append("\"RUSSIAN FEDERATION");
 			b.append("\",\"");
 			b.append(a.getFullName());
 			b.append("\",\"");

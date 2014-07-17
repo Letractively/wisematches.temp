@@ -1,5 +1,6 @@
 package billiongoods.server.services.payment;
 
+import java.time.temporal.Temporal;
 import java.util.List;
 
 /**
@@ -119,4 +120,12 @@ public interface Order {
 	 * @return the parcel by specified id or {@code null} if parcel doesn't exist.
 	 */
 	Parcel getParcel(Long parcelId);
+
+
+	/**
+	 * Returns time when this order has been changed last time.
+	 *
+	 * @return time when this order has been changed last time.
+	 */
+	Temporal getTimestamp();
 }

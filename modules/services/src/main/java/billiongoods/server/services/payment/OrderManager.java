@@ -194,10 +194,4 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 
 
 	int importAccountOrders(Account account);
-
-	/**
-	 * TODO: tracking ability should be disabled. PayPal address will be used instead.
-	 */
-	@Deprecated
-	void setOrderTracking(Order order, boolean enable);
 }

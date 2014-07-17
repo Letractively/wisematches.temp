@@ -1,13 +1,11 @@
 package billiongoods.server.services.payment;
 
-import java.util.Date;
+import java.time.temporal.Temporal;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public interface OrderLog {
-	Date getTimeStamp();
-
 	String getParameter();
 
 	String getCommentary();
@@ -25,4 +23,7 @@ public interface OrderLog {
 	boolean isParcelChange();
 
 	ParcelState getParcelState();
+
+
+	Temporal getTimeStamp();
 }

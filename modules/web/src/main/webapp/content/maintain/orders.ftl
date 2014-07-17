@@ -61,18 +61,24 @@
                 <td><a href="/maintain/order/view?id=${o.id}&type=id">${o.id}</a></td>
                 <td>${o.shipment.address.fullName}</td>
                 <td nowrap="nowrap">${o.productsCount}</td>
-                <td nowrap="nowrap"><@bg.ui.price o.amount + o.shipment.amount - o.discount "b"/></td>
+                <td nowrap="nowrap"><@bg.ui.price o.amount + o.shipment.amount - o.discount.amount "b"/></td>
                 <td nowrap="nowrap">
-                ${messageSource.formatDate(o.created, locale)} ${messageSource.formatTime(o.created, locale)} <br>
+                ${messageSource.formatDate(o.timeline.created, locale)} ${messageSource.formatTime(o.timeline.created, locale)}
+                    <br>
                 ${messageSource.formatDate(o.timestamp, locale)} ${messageSource.formatTime(o.timestamp, locale)}
                 </td>
-                <td><@bg.tracking.system o.referenceTracking/></td>
+                <td>
+                    <#list o.parcels as p>
+                        <@bg.tracking.system p.number?string/><#if p_has_next>,</#if>
+                    </#list>
+                </td>
                 <td>
                     <#if o.shipment.type=ShipmentType.FREE>
                         без номера
                     <#else>
-                        <#if !o.internationalTracking?has_content>еще не
-                            назначен<#else><@bg.tracking.international o.internationalTracking/></#if>
+                        <#list o.parcels as p>
+                            <@bg.tracking.system p.internationalTracking?string/><#if p_has_next>,</#if>
+                        </#list>
                     </#if>
                 </td>
             </tr>

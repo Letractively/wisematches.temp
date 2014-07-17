@@ -26,6 +26,8 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 /**
+ * TODO: add listeners testing here!
+ *
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 @Transactional
@@ -214,24 +216,24 @@ public class HibernateOrderManagerTest {
 		testAccepted();
 
 		try {
-			order = orderManager.process(order.getId(), new ParcelEntry(12, 102));
+			order = orderManager.process(order.getId(), new ParcelEntry(12, 0));
 			fail("Exception must be here");
 		} catch (IllegalArgumentException ignore) {
 		}
 
 		try {
-			order = orderManager.process(order.getId(), new ParcelEntry(12, 102, 103, 104));
+			order = orderManager.process(order.getId(), new ParcelEntry(12, 0, 1, 2));
 			fail("Exception must be here");
 		} catch (IllegalArgumentException ignore) {
 		}
 
 		try {
-			order = orderManager.process(order.getId(), new ParcelEntry(12, 102, 103), new ParcelEntry(13, 104));
+			order = orderManager.process(order.getId(), new ParcelEntry(12, 0, 1), new ParcelEntry(13, 2));
 			fail("Exception must be here");
 		} catch (IllegalArgumentException ignore) {
 		}
 
-		order = orderManager.process(order.getId(), new ParcelEntry(12, 102), new ParcelEntry(13, 103));
+		order = orderManager.process(order.getId(), new ParcelEntry(12, 0), new ParcelEntry(13, 1));
 		assertNotNull(order.getTimeline().getProcessed());
 		assertEquals(OrderState.PROCESSING, order.getState());
 

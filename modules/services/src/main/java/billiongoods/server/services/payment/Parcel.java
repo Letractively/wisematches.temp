@@ -1,6 +1,6 @@
 package billiongoods.server.services.payment;
 
-import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -33,7 +33,7 @@ public interface Parcel {
 
 	String getRefundToken();
 
-	LocalDateTime getExpectedResume();
+	Temporal getExpectedResume();
 
 
 	String getChinaMailTracking();

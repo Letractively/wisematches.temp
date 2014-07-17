@@ -6,6 +6,7 @@
 <#include "/core.ftl"/>
 
 <#assign state=order.state/>
+<#assign payment=order.payment/>
 <#assign shipment=order.shipment/>
 
 <div class="order ${state.code}">
@@ -32,39 +33,19 @@
 
 <#include "/content/warehouse/order/widget/details.ftl"/>
 
-<#if order.payer?has_content &&  !order.state.finalState>
+<#if order.state==OrderState.SHIPPED>
 <div class="info" style="padding: 5px; text-align: right; margin: 20px 0 0;">
-    <@bg.security.authorized "moderator">
-        <div style="float: left">
-            <button type="button" onclick="bg.util.url.redirect('/maintain/order/view?id=${order.id}&type=id')">
-                Редактировать
-            </button>
-        </div>
-    </@bg.security.authorized>
     <div class="operations">
-        <#if order.state==OrderState.SHIPPED>
-            <div class="confirm">
-                <form action="/warehouse/order/status" method="post">
-                    <input type="hidden" name="order" value="${order.id}">
-                    <input type="hidden" name="email" value="${order.payer}">
+        <div class="confirm">
+            <form action="/warehouse/order/status" method="post">
+                <input type="hidden" name="order" value="${order.id}">
+                <input type="hidden" name="email" value="${order.payment.payer}">
 
-                    <button id="closeOrder" type="button">
-                        Подтвердить получения заказа
-                    </button>
-                </form>
-            </div>
-        <#elseif !order.state.finalState>
-            <div class="tracking">
-                <button type="button" value="true" <#if order.tracking>style="display: none"</#if>>Включить
-                    уведомления по e-mail
+                <button id="closeOrder" type="button">
+                    Подтвердить получения заказа
                 </button>
-                <button type="button" value="false" <#if !order.tracking>style="display: none"</#if>>
-                    Отключить
-                    уведомления по e-mail
-                </button>
-                <span class="sample">(${order.payer})</span>
-            </div>
-        </#if>
+            </form>
+        </div>
     </div>
 </div>
 </#if>
@@ -273,7 +254,7 @@
         <tr>
             <th colspan="5" nowrap="nowrap" align="left">Скидка по купону</th>
             <th nowrap="nowrap" align="left">
-                <@bg.ui.price order.discount/>
+                <@bg.ui.price order.discount.amount/>
             </th>
         </tr>
     </#if>
@@ -286,7 +267,7 @@
         <tr>
             <th colspan="5" nowrap="nowrap" align="left">Итоговая сумма заказа</th>
             <th nowrap="nowrap" align="left">
-            <@bg.ui.price order.amount + shipment.amount - order.discount/>
+            <@bg.ui.price order.amount + shipment.amount - order.discount.amount/>
             </th>
         </tr>
     </table>
@@ -307,18 +288,12 @@
 </div>
 
 <script type="application/javascript">
-    <#if order.payer?has_content>
+    <#if payment.payer?has_content>
     var order = new bg.warehouse.Order();
-    $(".tracking button").click(function () {
-        order.changeTracking(${order.id}, "${order.payer}", $(this).val() === 'true', function () {
-            $(".tracking button").toggle();
-        });
-    });
-
     $("#closeOrder").click(function () {
         var btn = $(this);
         btn.attr('disabled', 'disabled');
-        order.confirmReceived(${order.id}, "${order.payer}", function (approved) {
+        order.confirmReceived(${order.id}, "${payment.payer}", function (approved) {
             if (approved) {
                 $(".confirm form").submit();
             } else {

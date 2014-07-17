@@ -1,18 +1,16 @@
 package billiongoods.server.web.servlet.mvc.warehouse;
 
+import billiongoods.core.Member;
 import billiongoods.server.services.coupon.CouponManager;
-import billiongoods.server.services.payment.Order;
-import billiongoods.server.services.payment.OrderDiscount;
-import billiongoods.server.services.payment.OrderManager;
-import billiongoods.server.services.payment.OrderPayment;
+import billiongoods.server.services.payment.*;
 import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.ExpiredParametersException;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderCheckoutForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderErrorForm;
-import billiongoods.server.web.servlet.mvc.warehouse.form.OrderTrackingForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderViewForm;
+import billiongoods.server.web.servlet.mvc.warehouse.form.ParcelViewForm;
 import billiongoods.server.web.servlet.sdo.ServiceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 /**
@@ -147,31 +146,9 @@ public class OrderController extends AbstractController {
 		return "/content/warehouse/order/track";
 	}
 
-	@RequestMapping("/tracking.ajax")
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ServiceResponse changeTrackingState(@RequestBody OrderTrackingForm form, Locale locale) {
-		if (form.getOrder() == null) {
-			return responseFactory.failure("order.error.id.empty", locale);
-		}
-		if (form.getEmail() == null || form.getEmail().isEmpty()) {
-			return responseFactory.failure("order.error.email.empty", locale);
-		}
-
-		final Order order = orderManager.getOrder(form.getOrder());
-		if (order == null || !order.getPayment().getPayer().equalsIgnoreCase(form.getEmail())) {
-			return responseFactory.failure("order.error.invalid", locale);
-		} else {
-			orderManager.setOrderTracking(order, form.isEnable());
-			return responseFactory.success();
-		}
-	}
-
 	@RequestMapping("/close.ajax")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ServiceResponse confirmReceivedAjax(@RequestBody OrderViewForm form, Locale locale) {
-		throw new UnsupportedOperationException("Commented");
-
-/*
+	public ServiceResponse confirmReceivedAjax(@RequestBody ParcelViewForm form, Locale locale) {
 		if (form.getOrder() == null) {
 			return responseFactory.failure("order.error.id.empty", locale);
 		}
@@ -180,7 +157,12 @@ public class OrderController extends AbstractController {
 		if (order == null) {
 			return responseFactory.failure("order.error.invalid", locale);
 		}
-		if (order.getState() != OrderState.SHIPPED) {
+		final Parcel parcel = order.getParcel(form.getParcelId());
+		if (parcel == null) {
+			return responseFactory.failure("order.error.invalid", locale);
+		}
+
+		if (parcel.getState() != ParcelState.SHIPPED) {
 			return responseFactory.failure("order.error.closed", locale);
 		}
 
@@ -192,9 +174,8 @@ public class OrderController extends AbstractController {
 		} else if (member == null || !member.idem(order.getPersonId())) { // another owner?
 			return responseFactory.failure("order.error.access", locale);
 		}
-		orderManager.close(order.getId(), new Date(), null);
+		orderManager.close(order.getId(), form.getParcelId(), LocalDateTime.now(), null);
 		return responseFactory.success();
-*/
 	}
 
 	private String viewOrder(Long orderId, Order order, boolean confirmation, Model model) {
