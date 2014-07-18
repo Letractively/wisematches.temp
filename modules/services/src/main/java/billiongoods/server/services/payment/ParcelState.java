@@ -8,12 +8,12 @@ import java.util.Map;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public enum ParcelState {
-	PROCESSING(false),
-	SHIPPING(false),
-	SHIPPED(false),
-	SUSPENDED(false),
-	CANCELLED(true),
-	CLOSED(true);
+    PROCESSING(false), // 0
+    SHIPPING(false), // 1
+    SHIPPED(false), // 2
+    SUSPENDED(false), // 3
+    CANCELLED(true), // 4
+    CLOSED(true); // 5
 
 	private final String code;
 	private final boolean finished;

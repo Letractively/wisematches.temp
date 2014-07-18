@@ -77,7 +77,9 @@
                         без номера
                     <#else>
                         <#list o.parcels as p>
-                            <@bg.tracking.system p.internationalTracking?string/><#if p_has_next>,</#if>
+                            <#if p.internationalTracking?has_content>
+                                <@bg.tracking.system p.internationalTracking?string/><#if p_has_next>,</#if>
+                            </#if>
                         </#list>
                     </#if>
                 </td>
