@@ -284,6 +284,7 @@
         </table>
     </div>
 
+<#--
     <#if !addressBook??>
         <div class="notification">
             <table style="width: auto">
@@ -309,6 +310,7 @@
             </table>
         </div>
     </#if>
+-->
 
     <div class="total">
         <table class="payment">

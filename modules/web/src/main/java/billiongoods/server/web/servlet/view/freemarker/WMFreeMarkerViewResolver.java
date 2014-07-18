@@ -6,7 +6,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
-import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -14,7 +13,6 @@ import java.util.Locale;
  */
 public class WMFreeMarkerViewResolver extends FreeMarkerViewResolver {
 	private FreeMarkerConfig configuration;
-	private Collection<Class<? extends Enum>> exposeEnums;
 	private boolean exposeRedirectModelAttributes = false;
 
 	public WMFreeMarkerViewResolver() {
@@ -32,7 +30,6 @@ public class WMFreeMarkerViewResolver extends FreeMarkerViewResolver {
 	@Override
 	protected AbstractUrlBasedView buildView(String viewName) throws Exception {
 		final WMFreeMarkerView view = (WMFreeMarkerView) super.buildView(viewName);
-		view.setExposeEnums(exposeEnums);
 		view.setConfiguration(configuration);
 		return view;
 	}
@@ -47,9 +44,5 @@ public class WMFreeMarkerViewResolver extends FreeMarkerViewResolver {
 
 	public void setExposeRedirectModelAttributes(boolean exposeRedirectModelAttributes) {
 		this.exposeRedirectModelAttributes = exposeRedirectModelAttributes;
-	}
-
-	public void setExposeEnums(Collection<Class<? extends Enum>> exposeEnums) {
-		this.exposeEnums = exposeEnums;
 	}
 }

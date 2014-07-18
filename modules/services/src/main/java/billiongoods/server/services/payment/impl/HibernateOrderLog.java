@@ -54,7 +54,7 @@ public class HibernateOrderLog implements OrderLog {
 		this.orderId = order.getId();
 		this.orderState = order.getState();
 
-		if (parcelId != null) {
+		if (parcel != null) {
 			this.parcelId = parcel.getId();
 			this.parcelState = parcel.getState();
 		}

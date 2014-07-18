@@ -7,7 +7,7 @@
 
 <@bg.security.unauthorized "moderator">
 
-    <#if order.state.accepted && analyticsYandexCode?has_content>
+    <#if order.state == OrderState.ACCEPTED && analyticsYandexCode?has_content>
     <script type="application/javascript">
         $(document).ready(function () {
             var orderParams = {

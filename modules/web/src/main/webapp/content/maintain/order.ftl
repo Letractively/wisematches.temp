@@ -31,7 +31,7 @@
         <td colspan="9" class="info">
             <#assign stateName=parcel.state.code/>
             <div class="tit" style="display: inline-block">
-                Посылка №${number}
+                Посылка #${order.id}:${parcel.id}
                 (<@bg.tracking.system parcel.number?string/>)
             </div>
 
@@ -53,7 +53,9 @@
     <th>Кол-во</th>
     <th>Итого</th>
     <th colspan="2">Управление</th>
-    <th colspan="2"><input name="checkAllItems" type="checkbox"></th>
+    <th colspan="2">
+        <input name="checkAllItems" type="checkbox" checked="checked">
+    </th>
 </tr>
 
     <#assign totalCount=0/>
@@ -112,8 +114,8 @@
                 </#list>
             </div>
         </#if>
-
-        <#if !parcel?has_content || (parcel.state == ParcelState.PROCESSING && items?size>1)>
+    <#--|| (parcel.state == ParcelState.PROCESSING && items?size>1)-->
+        <#if (!parcel?has_content && order.state == OrderState.ACCEPTED) || (parcel?has_content && !parcel.state.finished)>
             <div style="display: inline-block">
                 <button class="manage-parcel-create" type="button">Разделить</button>
             </div>
@@ -123,7 +125,6 @@
 </tbody>
 </#macro>
 
-
 <div class="order ${order.state.code}">
 <#include "/content/warehouse/order/widget/title.ftl"/>
 <#include "/content/warehouse/order/widget/progress.ftl"/>
@@ -131,23 +132,28 @@
     <div class="basket">
         <table class="cnt">
         <#if order.parcels?size == 0>
-            <@parcelTable parcel="" number=0/>
+            <div style="padding-top: 20px">
+                <@parcelTable parcel="" number=0/>
+            </div>
         <#else>
             <#list order.parcels as parcel>
                 <@parcelTable parcel=parcel number=parcel_index+1/>
             </#list>
         </#if>
 
+        <#if !order.state.finished>
             <tbody id="operations">
             <tr>
                 <td colspan="9" style="border: none; padding: 20px 0 0;">
                     <div class="info" style="text-align: right; padding: 5px">
-                    <#if order.state == OrderState.ACCEPTED>
                         <div style="float: left">
-                            <button id="suspendOrder" type="button">Приостановить</button>
-                            <button id="cancelOrder" type="button">Отменить</button>
+                            <button name="suspended" class="manage-parcel-button" type="button">Приостановить
+                            </button>
+                            <button name="cancelled" class="manage-parcel-button" type="button">Отменить</button>
+                            &nbsp;&nbsp;
+                            <button id="deleteItems" type="button">Удалить товары</button>
                         </div>
-                    </#if>
+
                         <div>
                             <form method="get" action="/maintain/order/export">
                                 <button type="submit" name="order" value="${order.id}">Загрузить CSV для импорта
@@ -158,6 +164,7 @@
                 </td>
             </tr>
             </tbody>
+        </#if>
 
 
             <tbody id="grandTotal">
@@ -207,7 +214,7 @@
     </div>
 </div>
 
-<form id="promoteParcelForm" action="/maintain/order/promoteParcel" method="post" style="display: none">
+<form id="promoteParcelForm" action="/maintain/order/action" method="post" style="display: none">
     <input type="hidden" name="orderId" value="${order.id}"/>
     <input type="hidden" name="parcelId" value=""/>
     <input type="hidden" name="state" value=""/>
