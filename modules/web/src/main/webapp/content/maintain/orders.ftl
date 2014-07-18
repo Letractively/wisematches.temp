@@ -69,7 +69,7 @@
                 </td>
                 <td>
                     <#list o.parcels as p>
-                        <@bg.tracking.system p.number?string/><#if p_has_next>,</#if>
+                        <@bg.tracking.system p.number?string/><#if p_has_next><br></#if>
                     </#list>
                 </td>
                 <td>
@@ -78,7 +78,7 @@
                     <#else>
                         <#list o.parcels as p>
                             <#if p.internationalTracking?has_content>
-                                <@bg.tracking.system p.internationalTracking?string/><#if p_has_next>,</#if>
+                                <@bg.tracking.system p.internationalTracking?string/><#if p_has_next><br></#if>
                             </#if>
                         </#list>
                     </#if>

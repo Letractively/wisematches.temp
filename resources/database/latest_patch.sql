@@ -165,6 +165,12 @@ UPDATE store_order_item AS i, store_order_parcel AS p
 SET i.parcelId = p.id
 WHERE p.orderId = i.orderId;
 
+ALTER TABLE `billiongoods`.`store_order`
+DROP COLUMN `exceptedResume`,
+DROP COLUMN `internationalTracking`,
+DROP COLUMN `chinaMailTracking`,
+DROP COLUMN `referenceTracking`;
+
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('070714');
 
 #10.06.14
