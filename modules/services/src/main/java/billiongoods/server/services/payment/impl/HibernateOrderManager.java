@@ -459,8 +459,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Criteria criteria = session.createCriteria(HibernateOrder.class);
 		criteria.setProjection(projection);
 		if (principal != null) {
-			criteria.add(Restrictions.eq("payment.buyer", principal.getId()));
-		}
+            criteria.add(Restrictions.eq("buyer", principal.getId()));
+        }
 
 		final Map<OrderState, Integer> map = new HashMap<>();
 		final List list = criteria.list();
@@ -493,8 +493,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 			}
 
 			if (context.getPersonality() != null) {
-				criteria.add(Restrictions.eq("payment.buyer", context.getPersonality().getId()));
-			}
+                criteria.add(Restrictions.eq("buyer", context.getPersonality().getId()));
+            }
 		}
 	}
 

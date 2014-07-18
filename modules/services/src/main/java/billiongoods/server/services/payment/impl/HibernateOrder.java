@@ -345,10 +345,6 @@ public class HibernateOrder implements Order {
 
 		if (oldState != state) {
 			updateTimeline(state);
-
-			if (parcel != null) { // add common log for the order, it it's state was changed
-				orderLogs.add(new HibernateOrderLog(this, null, null, null));
-			}
 		}
 	}
 

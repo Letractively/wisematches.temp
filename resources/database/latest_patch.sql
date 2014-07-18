@@ -56,8 +56,7 @@ ALTER TABLE `billiongoods`.`store_order`
 DROP COLUMN `finished`,
 CHANGE COLUMN `processed` `processed` DATETIME NULL DEFAULT NULL
 AFTER `created`,
-CHANGE COLUMN `closed` `finished` DATETIME NULL DEFAULT NULL,
-CHANGE COLUMN `timestamp` `tbr_timestamp` DATETIME NOT NULL;
+CHANGE COLUMN `closed` `finished` DATETIME NULL DEFAULT NULL;
 
 ALTER TABLE `billiongoods`.`store_order`
 ADD COLUMN `started` DATETIME NULL DEFAULT NULL
@@ -80,10 +79,91 @@ ALTER TABLE `billiongoods`.`store_order_parcel`
 DROP COLUMN `tbr_timestamp`;
 
 ALTER TABLE `billiongoods`.`store_order`
-DROP COLUMN `tbr_timestamp`;
-
-ALTER TABLE `billiongoods`.`store_order`
 DROP COLUMN `tracking`;
+
+INSERT INTO store_order_parcel
+(orderId, number, state, chinaMailTracking, internationalTracking, created)
+  SELECT
+    id,
+    cast(referenceTracking AS UNSIGNED),
+    0,
+    chinaMailTracking,
+    internationalTracking,
+    created
+  FROM store_order
+  WHERE referenceTracking <> '' AND referenceTracking NOT LIKE "%,%";
+
+INSERT INTO store_order_parcel
+(orderId, number, state, chinaMailTracking, internationalTracking, created)
+  SELECT
+    id,
+    cast(SUBSTRING_INDEX(referenceTracking, ',', 1) AS UNSIGNED),
+    0,
+    SUBSTRING_INDEX(chinaMailTracking, ',', 1),
+    SUBSTRING_INDEX(internationalTracking, ',', 1),
+    created
+  FROM store_order
+  WHERE referenceTracking <> '' AND referenceTracking LIKE "%,%";
+
+INSERT INTO store_order_parcel
+(orderId, number, state, chinaMailTracking, internationalTracking, created)
+  SELECT
+    id,
+    cast(SUBSTRING_INDEX(referenceTracking, ',', -1) AS UNSIGNED),
+    0,
+    SUBSTRING_INDEX(chinaMailTracking, ',', -1),
+    SUBSTRING_INDEX(internationalTracking, ',', -1),
+    created
+  FROM store_order
+  WHERE referenceTracking <> '' AND referenceTracking LIKE "%,%";
+
+UPDATE store_order AS s, store_order_log AS l
+SET s.started = l.timestamp
+WHERE s.id = l.orderId AND l.orderState = 2;
+UPDATE store_order AS s, store_order_log AS l
+SET s.processed = l.timestamp
+WHERE s.id = l.orderId AND l.orderState = 3;
+UPDATE store_order AS s, store_order_log AS l
+SET s.shipped = l.timestamp
+WHERE s.id = l.orderId AND l.orderState IN (4, 5);
+UPDATE store_order AS s, store_order_log AS l
+SET s.finished = l.timestamp
+WHERE s.id = l.orderId AND l.orderState IN (6, 8, 9);
+
+UPDATE store_order_parcel AS p, store_order AS s
+SET p.state = 0, p.created = s.created, p.started = s.started
+WHERE p.orderId = s.id AND s.state = 3;
+UPDATE store_order_parcel AS p, store_order AS s
+SET p.state = 2, p.shipped = s.shipped
+WHERE p.orderId = s.id AND s.state = 5;
+UPDATE store_order_parcel AS p, store_order AS s
+SET p.state = 1, p.shipped = s.shipped
+WHERE p.orderId = s.id AND s.state = 4;
+UPDATE store_order_parcel AS p, store_order AS s
+SET p.state = 3
+WHERE p.orderId = s.id AND s.state = 7;
+UPDATE store_order_parcel AS p, store_order AS s
+SET p.state = 4, p.finished = s.finished
+WHERE p.orderId = s.id AND s.state = 8;
+UPDATE store_order_parcel AS p, store_order AS s
+SET p.state = 5, p.finished = s.finished
+WHERE p.orderId = s.id AND s.state = 9;
+
+ALTER TABLE `billiongoods`.`store_order_item`
+ADD COLUMN `parcelId` BIGINT(20) NULL DEFAULT NULL
+AFTER `number`;
+
+ALTER TABLE `billiongoods`.`store_order_log`
+CHANGE COLUMN `timestamp` `timestamp` DATETIME NOT NULL
+AFTER `commentary`,
+ADD COLUMN `parcelId` BIGINT(20) NULL DEFAULT NULL
+AFTER `orderState`,
+ADD COLUMN `parcelState` TINYINT(4) NULL DEFAULT NULL
+AFTER `parcelId`;
+
+UPDATE store_order_item AS i, store_order_parcel AS p
+SET i.parcelId = p.id
+WHERE p.orderId = i.orderId;
 
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('070714');
 
@@ -97,14 +177,6 @@ ADD COLUMN `osc` INT(11) NULL DEFAULT NULL
 AFTER `ord`,
 ADD COLUMN `nsc` INT(11) NULL DEFAULT NULL
 AFTER `nrd`;
-
-ALTER TABLE `billiongoods`.`store_order_log`
-CHANGE COLUMN `timestamp` `timestamp` DATETIME NOT NULL
-AFTER `commentary`,
-ADD COLUMN `parcelId` BIGINT(20) NULL DEFAULT NULL
-AFTER `orderState`,
-ADD COLUMN `parcelState` TINYINT(4) NULL DEFAULT NULL
-AFTER `parcelId`;
 
 INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('100614');
 
