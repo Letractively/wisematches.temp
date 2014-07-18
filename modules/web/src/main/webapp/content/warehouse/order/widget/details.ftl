@@ -118,16 +118,18 @@
     </tr>
 </#if>
 
-<#assign payment=order.payment/>
-<#if payment.paymentId?has_content && payment.payer?has_content>
-    <tr>
-        <td valign="top" nowrap="nowrap">
-            <label for="">Статус оплаты:</label>
-        </td>
-        <td>
-            Оплачен через PayPal: ${payment.payer}
-        </td>
-    </tr>
+<#if order.payment?has_content>
+    <#assign payment=order.payment/>
+    <#if payment.paymentId?has_content && payment.payer?has_content>
+        <tr>
+            <td valign="top" nowrap="nowrap">
+                <label for="">Статус оплаты:</label>
+            </td>
+            <td>
+                Оплачен через PayPal: ${payment.payer}
+            </td>
+        </tr>
+    </#if>
 </#if>
 
     <tr>
