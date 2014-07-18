@@ -77,66 +77,8 @@ public class OrderMaintainController extends AbstractController {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@RequestMapping(value = "promote", method = RequestMethod.POST)
-	public String promoteOrder(@ModelAttribute("form") OrderStateForm form, Errors errors, Model model) {
-		throw new UnsupportedOperationException("Commented");
-
-/*		final Long id = form.getId();
-		final String value = form.getValue();
-		final String comment = form.getCommentary();
-		final OrderState state = form.getState();
-
-		if (id == null) {
-			errors.rejectValue("value", "order.state.id.empty");
-		}
-		if (state == null) {
-			errors.rejectValue("value", "order.state.state.empty");
-		}
-
-		if (state != null && !errors.hasErrors()) {
-			switch (state) {
-				case PROCESSING:
-					orderManager.processing(id, value, comment);
-					break;
-				case SHIPPING:
-					orderManager.shipping(id, value, comment);
-					break;
-				case SHIPPED:
-					orderManager.shipped(id, value, comment);
-					break;
-				case SUSPENDED:
-					try {
-						orderManager.suspend(id, value != null && !value.isEmpty() ? SIMPLE_DATE_FORMAT.parse(value) : null, comment);
-					} catch (Exception ex) {
-						errors.rejectValue("value", "order.state.date.incorrect");
-					}
-					break;
-				case CANCELLED:
-					orderManager.cancel(id, value, comment);
-					break;
-				case CLOSED:
-					try {
-						orderManager.close(id, value != null && !value.isEmpty() ? SIMPLE_DATE_FORMAT.parse(value) : null, comment);
-					} catch (Exception ex) {
-						errors.rejectValue("value", "order.state.date.incorrect");
-					}
-					break;
-				default:
-					errors.rejectValue("value", "order.state.state.incorrect");
-			}
-		}
-
-		if (!errors.hasErrors()) {
-			return "redirect:/maintain/order/view?id=" + id + "&type=id";
-		}
-
-		model.addAttribute("order", orderManager.getOrder(id));
-		return "/content/maintain/order";*/
-	}
-
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@RequestMapping(value = "promoteParcel", method = RequestMethod.POST)
-	public String promoteParcel(@ModelAttribute("form") ParcelStateForm form, Errors errors, Model model) {
+	@RequestMapping(value = "action", method = RequestMethod.POST)
+	public String processOrderAction(@ModelAttribute("form") ParcelStateForm form, Errors errors, Model model) {
 		final Long orderId = form.getOrderId();
 		final Long parcelId = form.getParcelId();
 		final String value = form.getValue();
@@ -151,16 +93,24 @@ public class OrderMaintainController extends AbstractController {
 				orderManager.shipped(orderId, parcelId, value, comment);
 				break;
 			case SUSPENDED:
-				orderManager.suspend(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
+				if (parcelId == null) {
+					orderManager.suspend(orderId, comment);
+				} else {
+					orderManager.suspend(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
+				}
 				break;
 			case CANCELLED:
-				orderManager.cancel(orderId, parcelId, comment);
+				if (parcelId == null) {
+					orderManager.cancel(orderId, comment);
+				} else {
+					orderManager.cancel(orderId, parcelId, comment);
+				}
 				break;
 			case CLOSED:
 				orderManager.close(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
 				break;
 		}
-		return "forward:/maintain/order/view?id=" + orderId + "&type=id";
+		return "redirect:/maintain/order/view?id=" + orderId + "&type=id";
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)

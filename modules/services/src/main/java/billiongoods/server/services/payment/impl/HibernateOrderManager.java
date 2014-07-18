@@ -100,7 +100,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		order.setOrderItems(items);
 		session.update(order);
 
-		notifyOrderState(order, null);
+		notifyStateChange(order, null, null, null);
 		return order;
 	}
 
@@ -115,7 +115,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		order.bill(token);
 		session.update(order);
 
-		notifyOrderState(order, state);
+		notifyStateChange(order, state, null, null);
 		return order;
 	}
 
@@ -129,7 +129,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		order.accept(paymentId, amount, payer, payerName, payerNote);
 		session.update(order);
 
-		notifyOrderState(order, state);
+		notifyStateChange(order, state, null, null);
 		return order;
 	}
 
@@ -143,7 +143,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		order.reject(paymentId, amount, payer, payerName, payerNote);
 		session.delete(order);
 
-		notifyOrderState(order, state);
+		notifyStateChange(order, state, null, null);
 
 		log.info("Order has been rejected and removed from system: {}", orderId);
 		return order;
@@ -193,11 +193,12 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 					}
 				}
 			}
+
+			order.process(parcel);
 		}
-		order.processing();
 		session.update(order);
 
-		notifyOrderState(order, state);
+		notifyStateChange(order, state, null, null);
 
 		return order;
 	}
@@ -218,7 +219,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		order.cancel(note);
 		session.update(order);
 
-		notifyOrderState(order, oldState);
+		notifyStateChange(order, oldState, null, null);
 		return order;
 	}
 
@@ -232,7 +233,8 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		order.suspend(note);
 		session.update(order);
 
-		notifyOrderState(order, oldState);
+		notifyStateChange(order, oldState, null, null);
+
 		return order;
 	}
 
@@ -242,11 +244,23 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState oldState = order.getState();
-		order.shipping(parcelId, tracking, note);
+		if (order == null) {
+			throw new IllegalArgumentException("Unknown order id: " + orderId);
+		}
+
+		final HibernateParcel parcel = order.getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel id: " + parcelId);
+		}
+
+
+		final OrderState oldOState = order.getState();
+		final ParcelState oldPState = parcel.getState();
+
+		order.shipping(parcel, tracking, note);
 		session.update(order);
 
-		notifyOrderState(order, oldState);
+		notifyStateChange(order, oldOState, parcel, oldPState);
 		return order;
 	}
 
@@ -256,11 +270,23 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState oldState = order.getState();
-		order.shipped(parcelId, tracking, note);
+		if (order == null) {
+			throw new IllegalArgumentException("Unknown order id: " + orderId);
+		}
+
+		final HibernateParcel parcel = order.getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel id: " + parcelId);
+		}
+
+
+		final OrderState oldOState = order.getState();
+		final ParcelState oldPState = parcel.getState();
+
+		order.shipped(parcel, tracking, note);
 		session.update(order);
 
-		notifyOrderState(order, oldState);
+		notifyStateChange(order, oldOState, parcel, oldPState);
 		return order;
 	}
 
@@ -270,11 +296,21 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState oldState = order.getState();
-		order.cancel(parcelId, note);
-		session.update(order);
+		if (order == null) {
+			throw new IllegalArgumentException("Unknown order id: " + orderId);
+		}
 
-		notifyOrderState(order, oldState);
+		final HibernateParcel parcel = order.getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel id: " + parcelId);
+		}
+
+
+		final OrderState oldOState = order.getState();
+		final ParcelState oldPState = parcel.getState();
+
+		order.cancel(parcel, note);
+		session.update(order);
 		return order;
 	}
 
@@ -284,11 +320,23 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState oldState = order.getState();
-		order.closed(parcelId, delivered, note);
+		if (order == null) {
+			throw new IllegalArgumentException("Unknown order id: " + orderId);
+		}
+
+		final HibernateParcel parcel = order.getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel id: " + parcelId);
+		}
+
+
+		final OrderState oldOState = order.getState();
+		final ParcelState oldPState = parcel.getState();
+
+		order.closed(parcel, delivered, note);
 		session.update(order);
 
-		notifyOrderState(order, oldState);
+		notifyStateChange(order, oldOState, parcel, oldPState);
 		return order;
 	}
 
@@ -298,11 +346,23 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		final Session session = sessionFactory.getCurrentSession();
 
 		final HibernateOrder order = getOrder(orderId);
-		final OrderState oldState = order.getState();
-		order.suspend(parcelId, resume, note);
+		if (order == null) {
+			throw new IllegalArgumentException("Unknown order id: " + orderId);
+		}
+
+		final HibernateParcel parcel = order.getParcel(parcelId);
+		if (parcel == null) {
+			throw new IllegalArgumentException("Unknown parcel id: " + parcelId);
+		}
+
+
+		final OrderState oldOState = order.getState();
+		final ParcelState oldPState = parcel.getState();
+
+		order.suspend(parcel, resume, note);
 		session.update(order);
 
-		notifyOrderState(order, oldState);
+		notifyStateChange(order, oldOState, parcel, oldPState);
 		return order;
 	}
 
@@ -316,7 +376,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 		order.failed(reason);
 		session.update(order);
 
-		notifyOrderState(order, state);
+		notifyStateChange(order, state, null, null);
 		return order;
 	}
 
@@ -332,7 +392,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 				order.failed(reason);
 				session.update(order);
 
-				notifyOrderState(order, state);
+				notifyStateChange(order, state, null, null);
 				return order;
 			} else {
 				log.warn("Where is no order for token: {}", token);
@@ -440,6 +500,26 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 	@Override
 	protected void applyProjections(Criteria criteria, OrderContext context, Void filter) {
+	}
+
+	private void notifyStateChange(Order order, OrderState oldState, Parcel parcel, ParcelState oldParcelState) {
+		if (parcel != null) {
+			notifyParcelState(order, parcel, oldParcelState);
+		}
+		notifyOrderState(order, oldState);
+	}
+
+	private void notifyParcelState(Order order, Parcel parcel, ParcelState oldState) {
+		final ParcelState newState = parcel.getState();
+		if (newState == oldState) {
+			return;
+		}
+
+		log.info("Parcel state was changed from {} to {}: {}:{}", oldState, newState, order.getId(), parcel.getId());
+
+		for (ParcelListener listener : parcelListeners) {
+			listener.parcelStateChanged(order, parcel, oldState, newState);
+		}
 	}
 
 	private void notifyOrderState(Order order, OrderState oldState) {

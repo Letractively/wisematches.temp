@@ -39,7 +39,7 @@ public interface Timeline {
 
 	/**
 	 * Time when order or parcel timeline is finished. An order or parcel is finished if it was moved to any of
-	 * final state: {@link OrderState#isFinalState()}
+	 * final state: {@link OrderState#isFinished()}
 	 *
 	 * @return time when order or parcel is finished.
 	 */

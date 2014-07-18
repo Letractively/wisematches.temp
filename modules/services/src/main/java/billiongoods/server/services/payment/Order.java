@@ -2,6 +2,7 @@ package billiongoods.server.services.payment;
 
 import java.time.temporal.Temporal;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -81,7 +82,6 @@ public interface Order {
 	 */
 	OrderDiscount getDiscount();
 
-
 	/**
 	 * Returns all log messages for this order.
 	 *
@@ -104,6 +104,21 @@ public interface Order {
 	 * @return the list of items which were placed only in specified parcel
 	 */
 	List<OrderItem> getItems(Parcel parcel);
+
+
+	/**
+	 * Returns all available national tracking number for this order.
+	 *
+	 * @return all available national tracking number for this order.
+	 */
+	Set<String> getNationalTracking();
+
+	/**
+	 * Returns all international tracking numbers for this order.
+	 *
+	 * @return all international tracking numbers for this order.
+	 */
+	Set<String> getInternationalTracking();
 
 
 	/**

@@ -187,6 +187,46 @@
         <property name="messageSource" ref="notificationMessageSource"/>
     </bean>
 
+    <bean id="freemarkerCommonConfig"
+          class="billiongoods.server.components.freemarker.FreeMarkerEnumConfigurationFactoryBean"
+          abstract="true">
+        <property name="defaultEncoding" value="UTF-8"/>
+
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="number_format">computer</prop>
+                <prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
+                <prop key="template_exception_handler">rethrow</prop>
+            </props>
+        </property>
+
+        <property name="freemarkerVariables">
+            <map merge="true">
+                <entry key="messageSource" value-ref="notificationMessageSource"/>
+            </map>
+        </property>
+
+        <property name="exposeEnums">
+            <list>
+                <value>billiongoods.core.Language</value>
+                <value>billiongoods.server.warehouse.StockState</value>
+                <value>billiongoods.server.warehouse.Restriction</value>
+                <value>billiongoods.server.warehouse.ProductState</value>
+                <value>billiongoods.server.warehouse.AttributeType</value>
+                <value>billiongoods.server.warehouse.GroupType</value>
+                <value>billiongoods.server.warehouse.RelationshipType</value>
+                <value>billiongoods.server.services.image.ImageSize</value>
+                <value>billiongoods.server.services.payment.ShipmentType</value>
+                <value>billiongoods.server.services.payment.OrderState</value>
+                <value>billiongoods.server.services.payment.ParcelState</value>
+                <value>billiongoods.server.services.tracking.TrackingType</value>
+                <value>billiongoods.server.services.price.MarkupType</value>
+                <value>billiongoods.server.services.coupon.CouponAmountType</value>
+                <value>billiongoods.server.services.coupon.CouponReferenceType</value>
+            </list>
+        </property>
+    </bean>
+
     <bean id="notificationService" class="billiongoods.server.services.notify.impl.DistributedNotificationService">
         <property name="taskExecutor">
             <bean class="billiongoods.core.task.executor.TransactionAwareExecutor">
@@ -200,22 +240,14 @@
                 <property name="messageSource" ref="notificationMessageSource"/>
 
                 <property name="freeMarkerConfig">
-                    <bean class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
-                        <property name="defaultEncoding" value="UTF-8"/>
+                    <bean parent="freemarkerCommonConfig">
                         <property name="preferFileSystemAccess" value="false"/>
                         <property name="templateLoaderPath" value="classpath:/i18n/notify"/>
+
                         <property name="freemarkerVariables">
                             <map merge="true">
                                 <entry key="serverDescriptor" value-ref="serverDescriptor"/>
-                                <entry key="messageSource" value-ref="notificationMessageSource"/>
                             </map>
-                        </property>
-                        <property name="freemarkerSettings">
-                            <props>
-                                <prop key="number_format">computer</prop>
-                                <prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
-                                <prop key="template_exception_handler">rethrow</prop>
-                            </props>
                         </property>
                     </bean>
                 </property>

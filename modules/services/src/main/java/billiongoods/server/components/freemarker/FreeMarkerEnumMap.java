@@ -1,4 +1,4 @@
-package billiongoods.server.web.servlet.view.freemarker;
+package billiongoods.server.components.freemarker;
 
 import java.util.*;
 

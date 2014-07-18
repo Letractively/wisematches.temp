@@ -70,7 +70,7 @@
                             <br>
                             Состояние: <span
                                 class="status"><@message code="order.status.${o.state.code}.label"/></span>
-                            <#if !o.state.finalState && o.internationalTracking?has_content>
+                            <#if !o.state.finished && o.internationalTracking?has_content>
                                 <@bg.tracking.international o.internationalTracking/>
                             </#if>
                         </td>

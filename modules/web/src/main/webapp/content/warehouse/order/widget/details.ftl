@@ -2,7 +2,7 @@
 
 <#include "/core.ftl"/>
 
-<#assign state=order.state/>
+<#macro parameter msg val><#if val?has_content>${msg}:<br>${val}</#if></#macro>
 
 <table class="info">
     <tr>
@@ -12,7 +12,7 @@
         <td style="position: relative">
             <div style="display: inline-block">
                 <span class="status">
-                <@message code="order.status.${state.code}.label"/>
+                <@message code="order.status.${order.state.code}.label"/>
                     <#--TODO: COMMENTED-->
                 <#--
                                 <#if order.state==OrderState.SUSPENDED && order.expectedResume??>
@@ -24,7 +24,7 @@
                 </span>
 
                 <div class="sample">
-                <@message code="order.status.${state.code}.description"/>
+                <@message code="order.status.${order.state.code}.description"/>
                 </div>
             </div>
             <div style="display: inline-block; position: absolute; top: 0; right: 0; white-space: nowrap">
@@ -33,59 +33,72 @@
                 <div id="orderLogs" style="display: none">
                     <table>
                     <#list order.logs as l>
-                        <#assign state=l.orderState/>
-                        <#assign stateName=state.name()?lower_case/>
                         <tr class="order-log">
                             <td valign="top" nowrap="nowrap">${messageSource.formatDate(l.timeStamp, locale)}
                                 <br>${messageSource.formatTime(l.timeStamp, locale)}
                             </td>
-                            <td valign="top">
-                                <div>
-                                    <@message code="order.status.${stateName}.label"/>
-                                </div>
-                                <div class="sample">
-                                    <@message code="order.status.${stateName}.description"/>
-                                </div>
 
-                                <#if l.commentary?has_content>
-                                    <div class="comment">
-                                    ${l.commentary}
+                            <#if l.orderChange>
+                                <#assign state=l.orderState/>
+                                <#assign stateName=state.name()?lower_case/>
+                                <td valign="top">
+                                    <div>
+                                        <@message code="order.status.${stateName}.label"/>
                                     </div>
-                                </#if>
-                            </td valign="top">
-                            <td valign="top" width="20%">
-                                <#if state.billing>
-                                    Номер счета:<br>${l.parameter!""}
-                                <#elseif state.accepted>
-                                    Номер платежа:<br>${l.parameter!""}
-                                <#elseif state.processing>
-                                    <#if l.parameter?has_content>
-                                        Номер комплектации:<br>${l.parameter}
+                                    <div class="sample">
+                                        <@message code="order.status.${stateName}.description"/>
+                                    </div>
+
+                                    <#if l.commentary?has_content>
+                                        <div class="comment">
+                                        ${l.commentary}
+                                        </div>
                                     </#if>
-                                <#elseif state.shipping>
-                                    <#if l.parameter?has_content>
-                                        Код почты Китая:<br><@bg.tracking.china l.parameter/>
+                                </td>
+                                <td valign="top" width="20%">
+                                    <#switch state>
+                                        <#case OrderState.BILLING><@parameter "Номер счета", l.parameter!""/><#break/>
+                                        <#case OrderState.ACCEPTED><@parameter "Номер платежа", l.parameter!""/><#break/>
+                                        <#case OrderState.PROCESSING><@parameter "Номер комплектации", l.parameter!""/><#break/>
+                                        <#case OrderState.SHIPPING><@parameter "Код почты Китая", l.parameter!""/><#break/>
+                                        <#case OrderState.SHIPPED><@parameter "Международный код", l.parameter!""/><#break/>
+                                        <#case OrderState.SUSPENDED><@parameter "Причина остановки", "Ожидание ответа от покупателя"/><#break/>
+                                        <#case OrderState.CLOSED><@parameter "Дата вручения", l.parameter!""/><#break/>
+                                        <#case OrderState.CANCELLED><@parameter "Код возврата средств", l.parameter!""/><#break/>
+                                        <#case OrderState.FAILED><@parameter "Описание ошибки", l.parameter!""/><#break/>
+                                    </#switch>
+                                    &nbsp;
+                                </td>
+                            <#else>
+                                <#assign state=l.parcelState/>
+                                <#assign stateName=state.name()?lower_case/>
+                                <td valign="top">
+                                    <div>
+                                        <@message code="parcel.status.${stateName}.label"/> #${order.id}:${l.parcelId}
+                                    </div>
+                                    <div class="sample">
+                                        <@message code="parcel.status.${stateName}.description"/>
+                                    </div>
+
+                                    <#if l.commentary?has_content>
+                                        <div class="comment">
+                                        ${l.commentary}
+                                        </div>
                                     </#if>
-                                <#elseif state.shipped>
-                                    <#if l.parameter?has_content>
-                                        Международный код:<br><@bg.tracking.international l.parameter/>
-                                    </#if>
-                                <#elseif  state.suspended>
-                                    Приостановлен. Ожидание ответа от покупателя.
-                                <#elseif state.closed>
-                                    <#if l.parameter?has_content>
-                                        Дата вручения:<br>
-                                    ${l.parameter}
-                                    <#--${messageSource.formatDate(l.parameter?number?long, locale)}-->
-                                    </#if>
-                                <#elseif  state.cancelled>
-                                    <#if l.parameter?has_content>
-                                        Код возврата средств:<br>${l.parameter}
-                                    </#if>
-                                <#elseif  state.failed>
-                                    Описание ошибки:<br>${l.parameter!""}
-                                </#if>
-                            </td>
+                                </td>
+
+                                <td valign="top" width="20%">
+                                    <#switch state>
+                                        <#case ParcelState.PROCESSING><@parameter "Номер посылки", "${order.id}:${l.parcelId}"/><#break/>
+                                        <#case ParcelState.SHIPPING><@parameter "Код почты Китая", l.parameter!""/><#break/>
+                                        <#case ParcelState.SHIPPED><@parameter "Международный код", l.parameter!""/><#break/>
+                                        <#case ParcelState.SUSPENDED><@parameter "Приостановлена до", l.parameter!""/><#break/>
+                                        <#case ParcelState.CLOSED><@parameter "Дата вручения", l.parameter!""/><#break/>
+                                        <#case ParcelState.CANCELLED><@parameter "Код возврата средств", l.parameter!""/><#break/>
+                                    </#switch>
+                                    &nbsp;
+                                </td>
+                            </#if>
                         </tr>
                     </#list>
                     </table>
@@ -112,7 +125,7 @@
             <label for="">Статус оплаты:</label>
         </td>
         <td>
-            Оплачен через PayPal
+            Оплачен через PayPal: ${payment.payer}
         </td>
     </tr>
 </#if>

@@ -261,6 +261,22 @@ public class HibernateOrderManagerTest {
 		assertNotNull(p2.getTimeline().getProcessed());
 	}
 
+
+	@Test
+	public void testCancelWithParcels() {
+		testProcessing();
+
+		order = orderManager.cancel(order.getId(), "Mock reason");
+		assertNotNull(order.getTimeline().getFinished());
+		assertEquals(OrderState.CANCELLED, order.getState());
+		assertEquals("Mock reason", order.getCommentary());
+
+		final List<Parcel> parcels = order.getParcels();
+		for (Parcel parcel : parcels) {
+			assertEquals(ParcelState.CANCELLED, parcel.getState());
+		}
+	}
+
 	@Test
 	public void testShippingParcel() {
 		testProcessing();

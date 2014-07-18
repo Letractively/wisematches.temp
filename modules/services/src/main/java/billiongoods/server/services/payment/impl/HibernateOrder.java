@@ -4,9 +4,7 @@ import billiongoods.server.services.payment.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -52,7 +50,7 @@ public class HibernateOrder implements Order {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pk.orderId", targetEntity = HibernateOrderItem.class)
 	private List<OrderItem> orderItems;
 
-	@OrderBy("timestamp desc")
+	@OrderBy("id desc")
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderId", targetEntity = HibernateOrderLog.class)
 	private List<OrderLog> orderLogs = new ArrayList<>();
 
@@ -133,6 +131,60 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public Set<String> getNationalTracking() {
+		final int size = parcels.size();
+		if (size == 0) {
+			return Collections.emptySet();
+		}
+
+		if (size == 1) {
+			final Parcel parcel = parcels.get(0);
+			final String chinaMailTracking = parcel.getChinaMailTracking();
+			if (chinaMailTracking != null && !chinaMailTracking.isEmpty()) {
+				return Collections.singleton(chinaMailTracking);
+			} else {
+				return Collections.emptySet();
+			}
+		} else {
+			Set<String> res = new HashSet<>(size);
+			for (Parcel parcel : parcels) {
+				final String chinaMailTracking = parcel.getChinaMailTracking();
+				if (chinaMailTracking != null && !chinaMailTracking.isEmpty()) {
+					res.add(chinaMailTracking);
+				}
+			}
+			return res;
+		}
+	}
+
+	@Override
+	public Set<String> getInternationalTracking() {
+		final int size = parcels.size();
+		if (size == 0) {
+			return Collections.emptySet();
+		}
+
+		if (size == 1) {
+			final Parcel parcel = parcels.get(0);
+			final String internationalTracking = parcel.getInternationalTracking();
+			if (internationalTracking != null && !internationalTracking.isEmpty()) {
+				return Collections.singleton(internationalTracking);
+			} else {
+				return Collections.emptySet();
+			}
+		} else {
+			Set<String> res = new HashSet<>(size);
+			for (Parcel parcel : parcels) {
+				final String internationalTracking = parcel.getInternationalTracking();
+				if (internationalTracking != null && !internationalTracking.isEmpty()) {
+					res.add(internationalTracking);
+				}
+			}
+			return res;
+		}
+	}
+
+	@Override
 	public List<OrderItem> getItems() {
 		return orderItems;
 	}
@@ -196,75 +248,51 @@ public class HibernateOrder implements Order {
 	}
 
 
-	void processing() {
-		for (Parcel parcel : parcels) {
-			updateOrderState(OrderState.PROCESSING, parcel, null, null);
-		}
+	void process(HibernateParcel parcel) {
+		updateOrderState(OrderState.PROCESSING, parcel, null, null);
 	}
 
 
-	void shipping(Long parcelId, String tracking, String commentary) {
-		final HibernateParcel parcel = getParcel(parcelId);
-		if (parcel == null) {
-			throw new IllegalArgumentException("Unknown parcel " + parcelId);
-		}
-
+	void shipping(HibernateParcel parcel, String tracking, String commentary) {
 		parcel.shipping(tracking);
 
 		updateOrderState(calculateOrderState(), parcel, tracking, commentary);
 	}
 
-	void shipped(Long parcelId, String tracking, String commentary) {
-		final HibernateParcel parcel = getParcel(parcelId);
-		if (parcel == null) {
-			throw new IllegalArgumentException("Unknown parcel " + parcelId);
-		}
-
+	void shipped(HibernateParcel parcel, String tracking, String commentary) {
 		parcel.shipped(tracking);
 
 		updateOrderState(calculateOrderState(), parcel, tracking, commentary);
 	}
 
-	void suspend(Long parcelId, LocalDateTime resume, String commentary) {
-		final HibernateParcel parcel = getParcel(parcelId);
-		if (parcel == null) {
-			throw new IllegalArgumentException("Unknown parcel " + parcelId);
-		}
-
+	void suspend(HibernateParcel parcel, LocalDateTime resume, String commentary) {
 		parcel.suspend(resume);
 
-		updateOrderState(calculateOrderState(), parcel, resume.toString(), commentary);
+		updateOrderState(calculateOrderState(), parcel, resume.toLocalDate().toString(), commentary);
 	}
 
-	void cancel(Long parcelId, String commentary) {
-		final HibernateParcel parcel = getParcel(parcelId);
-		if (parcel == null) {
-			throw new IllegalArgumentException("Unknown parcel " + parcelId);
-		}
-
+	void cancel(HibernateParcel parcel, String commentary) {
 		parcel.cancel();
 
 		updateOrderState(calculateOrderState(), parcel, null, commentary);
 	}
 
+	void closed(HibernateParcel parcel, LocalDateTime deliveryDate, String commentary) {
+		parcel.closed(deliveryDate);
+		updateOrderState(calculateOrderState(), parcel, deliveryDate.toLocalDate().toString(), commentary);
+	}
+
 
 	void cancel(String note) {
+		for (Parcel parcel : parcels) {
+			((HibernateParcel) parcel).cancel();
+		}
+
 		updateOrderState(OrderState.CANCELLED, null, null, note);
 	}
 
 	void suspend(String note) {
 		updateOrderState(OrderState.SUSPENDED, null, null, note);
-	}
-
-	void closed(Long parcelId, LocalDateTime deliveryDate, String commentary) {
-		final HibernateParcel parcel = getParcel(parcelId);
-		if (parcel == null) {
-			throw new IllegalArgumentException("Unknown parcel " + parcelId);
-		}
-
-		parcel.closed(deliveryDate);
-
-		updateOrderState(calculateOrderState(), parcel, deliveryDate.toString(), commentary);
 	}
 
 
@@ -303,10 +331,6 @@ public class HibernateOrder implements Order {
 		this.state = state;
 		this.timestamp = LocalDateTime.now();
 
-		if (oldState != state) {
-			updateTimeline(state);
-		}
-
 		if (commentary != null && commentary.length() > 254) {
 			commentary = commentary.substring(0, 254);
 		}
@@ -318,6 +342,14 @@ public class HibernateOrder implements Order {
 		}
 
 		orderLogs.add(new HibernateOrderLog(this, parcel, parameter, comment));
+
+		if (oldState != state) {
+			updateTimeline(state);
+
+			if (parcel != null) { // add common log for the order, it it's state was changed
+				orderLogs.add(new HibernateOrderLog(this, null, null, null));
+			}
+		}
 	}
 
 	private void updateTimeline(OrderState state) {

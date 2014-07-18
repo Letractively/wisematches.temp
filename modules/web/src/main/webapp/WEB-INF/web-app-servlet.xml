@@ -82,52 +82,35 @@
         <property name="exposeSpringMacroHelpers" value="true"/>
         <property name="exposeRedirectModelAttributes" value="false"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
-        <property name="exposeEnums">
-            <list>
-                <value>billiongoods.core.Language</value>
-                <value>billiongoods.server.warehouse.StockState</value>
-                <value>billiongoods.server.warehouse.Restriction</value>
-                <value>billiongoods.server.warehouse.ProductState</value>
-                <value>billiongoods.server.warehouse.AttributeType</value>
-                <value>billiongoods.server.warehouse.GroupType</value>
-                <value>billiongoods.server.warehouse.RelationshipType</value>
-                <value>billiongoods.server.services.image.ImageSize</value>
-                <value>billiongoods.server.services.payment.ShipmentType</value>
-                <value>billiongoods.server.services.payment.OrderState</value>
-                <value>billiongoods.server.services.payment.ParcelState</value>
-                <value>billiongoods.server.services.tracking.TrackingType</value>
-                <value>billiongoods.server.services.price.MarkupType</value>
-                <value>billiongoods.server.web.servlet.mvc.warehouse.form.SortingType</value>
-                <value>billiongoods.server.web.servlet.mvc.privacy.form.OrderStateUnion</value>
-                <value>billiongoods.server.services.coupon.CouponAmountType</value>
-                <value>billiongoods.server.services.coupon.CouponReferenceType</value>
-            </list>
-        </property>
 
         <property name="configuration">
             <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-                <property name="templateLoaderPath" value=""/>
-                <property name="defaultEncoding" value="UTF-8"/>
-                <property name="freemarkerVariables">
-                    <map merge="true">
-                        <entry key="analyticsGoogleCode" value="${analytics.google.code}"/>
-                        <entry key="analyticsYandexCode" value="${analytics.yandex.code}"/>
+                <property name="configuration">
+                    <bean parent="freemarkerCommonConfig">
+                        <property name="templateLoaderPath" value=""/>
 
-                        <entry key="messageSource" value-ref="messageSource"/>
+                        <property name="freemarkerVariables">
+                            <map merge="true">
+                                <entry key="analyticsGoogleCode" value="${analytics.google.code}"/>
+                                <entry key="analyticsYandexCode" value="${analytics.yandex.code}"/>
 
-                        <entry key="imageResolver" value-ref="imageResolver"/>
-                        <entry key="personalityContext" value-ref="personalityContext"/>
+                                <entry key="messageSource" value-ref="messageSource"/>
 
-                        <entry key="imageResourcesDomain" value="${server.image.domain}"/>
-                        <entry key="staticResourcesDomain" value="${server.static.domain}"/>
-                    </map>
-                </property>
-                <property name="freemarkerSettings">
-                    <props>
-                        <prop key="number_format">computer</prop>
-                        <prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
-                        <prop key="template_exception_handler">rethrow</prop>
-                    </props>
+                                <entry key="imageResolver" value-ref="imageResolver"/>
+                                <entry key="personalityContext" value-ref="personalityContext"/>
+
+                                <entry key="imageResourcesDomain" value="${server.image.domain}"/>
+                                <entry key="staticResourcesDomain" value="${server.static.domain}"/>
+                            </map>
+                        </property>
+
+                        <property name="exposeEnums">
+                            <list merge="true">
+                                <value>billiongoods.server.web.servlet.mvc.warehouse.form.SortingType</value>
+                                <value>billiongoods.server.web.servlet.mvc.privacy.form.OrderStateUnion</value>
+                            </list>
+                        </property>
+                    </bean>
                 </property>
             </bean>
         </property>
