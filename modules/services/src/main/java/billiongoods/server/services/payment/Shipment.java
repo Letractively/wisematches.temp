@@ -2,14 +2,12 @@ package billiongoods.server.services.payment;
 
 import billiongoods.server.services.address.Address;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
+@Embeddable
 public class Shipment {
 	@Column(name = "shipmentAmount", updatable = false)
 	private double amount;
