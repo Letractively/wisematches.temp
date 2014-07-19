@@ -65,20 +65,21 @@
                         <td valign="top">
                             Заказ: <a href="/privacy/order?id=${o.id}">#${o.id}</a>
                         <span class="sample">
-                            от ${messageSource.formatDate(o.created, locale)}
+                            от ${messageSource.formatDate(o.timeline.created, locale)}
                         </span>
                             <br>
                             Состояние: <span
                                 class="status"><@message code="order.status.${o.state.code}.label"/></span>
                             <#if !o.state.finished && o.internationalTracking?has_content>
-                                <@bg.tracking.international o.internationalTracking/>
+                                <#list o.internationalTracking as t><@bg.tracking.international t/><#if t_has_next>,
+                                </#if></#list>
                             </#if>
                         </td>
                         <td valign="top">
                         ${o.productsCount}
                         </td>
                         <td valign="top">
-                            <@bg.ui.price o.amount + o.shipment.amount - o.discount "b"/>
+                            <@bg.ui.price o.amount + o.shipment.amount - o.discount.amount "b"/>
                         </td>
                         <td valign="top" nowrap="nowrap">
                             <#switch o.state>
