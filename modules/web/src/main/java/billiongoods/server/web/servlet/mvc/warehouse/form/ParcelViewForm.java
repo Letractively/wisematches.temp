@@ -4,21 +4,21 @@ package billiongoods.server.web.servlet.mvc.warehouse.form;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ParcelViewForm extends OrderViewForm {
-	private Long parcelId;
+    private Long parcel;
 
 	public ParcelViewForm() {
 	}
 
-	public ParcelViewForm(Long order, Long parcelId, String email) {
-		super(order, email);
-		this.parcelId = parcelId;
-	}
+    public ParcelViewForm(Long order, Long parcel, String email) {
+        super(order, email);
+        this.parcel = parcel;
+    }
 
-	public Long getParcelId() {
-		return parcelId;
-	}
+    public Long getParcel() {
+        return parcel;
+    }
 
-	public void setParcelId(Long parcelId) {
-		this.parcelId = parcelId;
-	}
+    public void setParcelId(Long parcel) {
+        this.parcel = parcel;
+    }
 }
