@@ -206,7 +206,7 @@
             </tr>
             <tr>
                 <th colspan="4" align="left">Итоговая сумма заказа</th>
-                <th><@bg.ui.price order.amount + shipment.amount - order.discount.amount/></th>
+                <th><@bg.ui.price order.grandTotal/></th>
                 <th colspan="3">&nbsp;</th>
             </tr>
             </tbody>

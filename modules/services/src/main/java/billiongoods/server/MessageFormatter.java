@@ -2,7 +2,10 @@ package billiongoods.server;
 
 import billiongoods.core.Language;
 import billiongoods.core.Localization;
+import billiongoods.server.services.payment.Order;
+import billiongoods.server.services.payment.OrderItem;
 import billiongoods.server.warehouse.ProductPreview;
+import billiongoods.server.warehouse.StockInfo;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
@@ -10,6 +13,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.support.DelegatingMessageSource;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAccessor;
@@ -200,5 +204,25 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 
 	public String getNumeralEnding(int value, Locale locale) {
 		return Language.byLocale(locale).getLocalization().getNumeralEnding(value);
+	}
+
+
+	public String getExceptedDeliveryDate(Order order, Locale locale) {
+		final LocalDate now = LocalDate.now();
+
+		LocalDate delivery = now;
+		for (OrderItem item : order.getItems()) {
+			final StockInfo info = item.getProduct().getStockInfo();
+
+			LocalDate date = info.getArrivalDate();
+			if (date == null) {
+				date = now.plusDays(info.getShipDays());
+			}
+
+			if (date.isAfter(delivery)) {
+				delivery = date;
+			}
+		}
+		return formatDate(delivery, locale);
 	}
 }

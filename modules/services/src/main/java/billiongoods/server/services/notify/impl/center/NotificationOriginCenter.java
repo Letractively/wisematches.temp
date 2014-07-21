@@ -38,7 +38,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 	private final ProductTrackingListener trackingListener = new TheProductTrackingListener();
 
 	private static final EnumSet<OrderState> ORDER_STATES =
-			EnumSet.of(OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SHIPPED, OrderState.SUSPENDED, OrderState.CANCELLED);
+			EnumSet.of(OrderState.ACCEPTED, OrderState.SHIPPED, OrderState.SUSPENDED, OrderState.CANCELLED);
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.notification.OriginCenter");
 
@@ -55,7 +55,7 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 
 		if (recipient != null) {
-			fireNotification("order.state", recipient, order, order.getId());
+			fireNotification("order." + order.getState().name().toLowerCase(), recipient, order, order.getId());
 		}
 	}
 

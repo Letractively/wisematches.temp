@@ -30,6 +30,13 @@ public interface Order {
 	double getAmount();
 
 	/**
+	 * Returns grand total amount for this order. If amount + shipment.amount - discount.amount
+	 *
+	 * @return the grand total amount for this order.
+	 */
+	double getGrandTotal();
+
+	/**
 	 * Returns current order state.
 	 *
 	 * @return the current order state.
