@@ -201,6 +201,10 @@ public class HibernateOrder implements Order {
 
 	@Override
 	public HibernateParcel getParcel(Long parcelId) {
+        if (parcelId == null) {
+            return null;
+        }
+
 		for (Parcel parcel : parcels) {
 			if (parcelId.equals(parcel.getId())) {
 				return (HibernateParcel) parcel;

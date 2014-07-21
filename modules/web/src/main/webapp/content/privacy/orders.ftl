@@ -84,8 +84,11 @@
                         <td valign="top" nowrap="nowrap">
                             <#switch o.state>
                                 <#case OrderState.SHIPPED>
-                                    <button type="button" onclick="closeOrder('${o.id}');">Подтвердить получение
-                                    </button>
+                                <#--
+                                            TODO: close order is commented
+                                                                    <button type="button" onclick="closeOrder('${o.id}');">Подтвердить получение
+                                                                    </button>
+                                -->
                                     <#break>
                                 <#case OrderState.BILLING>
                                     <form action="/privacy/order" method="post">

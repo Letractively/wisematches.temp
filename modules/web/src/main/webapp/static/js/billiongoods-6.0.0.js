@@ -533,12 +533,16 @@ bg.warehouse.Order = function () {
                 });
     };
 
-    this.confirmReceived = function (order, email, successor) {
+    this.confirmReceived = function (order, parcel, email, successor) {
         bg.ui.confirm("Вы уверены, что хотите закрыть заказ?", "При нажатии кнопки \"Да\", вы подтверждаете получение вами " +
         "заказа в полном объеме и в хорошем состоянии.", function (approved) {
             if (approved) {
                 bg.ui.lock(null, 'Подтверждение заказа. Пожалуйста, подождите...');
-                $.post("/warehouse/order/close.ajax", JSON.stringify({"order": order, "email": email}))
+                $.post("/warehouse/order/close.ajax", JSON.stringify({
+                    "order": order,
+                    "parcel": parcel,
+                    "email": email
+                }))
                         .done(function (response) {
                             if (response.success) {
                                 successor(true);

@@ -41,9 +41,12 @@
                 <input type="hidden" name="order" value="${order.id}">
                 <input type="hidden" name="email" value="${order.payment.payer}">
 
-                <button id="closeOrder" type="button">
-                    Подтвердить получения заказа
-                </button>
+            <#--
+                TODO: close order is commented
+                            <button id="closeOrder" type="button">
+                                Подтвердить получения заказа
+                            </button>
+            -->
             </form>
         </div>
     </div>
