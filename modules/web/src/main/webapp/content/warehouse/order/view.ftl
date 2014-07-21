@@ -267,7 +267,7 @@
         <tr>
             <th colspan="5" nowrap="nowrap" align="left">Итоговая сумма заказа</th>
             <th nowrap="nowrap" align="left">
-            <@bg.ui.price order.amount + shipment.amount - order.discount.amount/>
+            <@bg.ui.price order.grandTotal/>
             </th>
         </tr>
     </table>

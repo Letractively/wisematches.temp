@@ -91,6 +91,11 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public double getGrandTotal() {
+		return amount + shipment.getAmount() - discount.getAmount();
+	}
+
+	@Override
 	public String getCommentary() {
 		return commentary;
 	}

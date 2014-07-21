@@ -57,6 +57,8 @@ public class MailNotificationPublisher implements NotificationPublisher {
 				msg.setFrom(getInternetAddress(notification.getSender(), language));
 				msg.setTo(getInternetAddress(notification.getRecipient(), language));
 
+				msg.setBcc(getInternetAddress(Recipient.get(Recipient.MailBox.MONITORING), language));
+
 				final Recipient recipient = notification.getRecipient();
 				if (recipient instanceof Recipient.Application) {
 					final Recipient.Application application = (Recipient.Application) recipient;

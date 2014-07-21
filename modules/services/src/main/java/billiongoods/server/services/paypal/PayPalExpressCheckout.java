@@ -169,7 +169,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		paymentDetails.setItemTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() - discount.getAmount())));
 		paymentDetails.setShippingTotal(new BasicAmountType(CURRENCY_CODE, Price.string(shipment.getAmount())));
-		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getAmount() + shipment.getAmount() - discount.getAmount())));
+		paymentDetails.setOrderTotal(new BasicAmountType(CURRENCY_CODE, Price.string(order.getGrandTotal())));
 
 		final SetExpressCheckoutRequestDetailsType request = new SetExpressCheckoutRequestDetailsType();
 		request.setLocaleCode("RU");

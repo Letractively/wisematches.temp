@@ -79,7 +79,7 @@
                         ${o.productsCount}
                         </td>
                         <td valign="top">
-                            <@bg.ui.price o.amount + o.shipment.amount - o.discount.amount "b"/>
+                            <@bg.ui.price o.grandTotal "b"/>
                         </td>
                         <td valign="top" nowrap="nowrap">
                             <#switch o.state>

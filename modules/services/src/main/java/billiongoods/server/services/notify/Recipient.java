@@ -103,7 +103,6 @@ public abstract class Recipient {
 			return returnAddress;
 		}
 
-
 		@Override
 		public String toString() {
 			final StringBuilder sb = new StringBuilder("Application{");
