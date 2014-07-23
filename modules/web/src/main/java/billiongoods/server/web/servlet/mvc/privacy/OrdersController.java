@@ -4,7 +4,6 @@ import billiongoods.core.search.Orders;
 import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderContext;
 import billiongoods.server.services.payment.OrderManager;
-import billiongoods.server.services.payment.OrderState;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.PageableForm;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
@@ -32,13 +31,17 @@ import java.util.List;
 public class OrdersController extends AbstractController {
 	private OrderManager orderManager;
 
-	private static final Orders ORDERS_SORTING = Orders.of(billiongoods.core.search.Order.desc("timestamp"));
+	private static final Orders ORDERS_SORTING = Orders.of(billiongoods.core.search.Order.asc("state"), billiongoods.core.search.Order.desc("timestamp"));
 
 	public OrdersController() {
 	}
 
 	@RequestMapping("/order")
-	public String privacyOrders(@RequestParam("id") Long orderId, Model model) {
+	public String privacyOrders(@RequestParam(value = "id", required = false) Long orderId, Model model) {
+		if (orderId == null) {
+			return "redirect:/privacy/orders";
+		}
+
 		final Order order = orderManager.getOrder(orderId);
 		if (order == null) {
 			throw new UnknownEntityException(orderId, "order");
@@ -51,6 +54,10 @@ public class OrdersController extends AbstractController {
 		return "/content/privacy/order";
 	}
 
+	@RequestMapping(value = "/order", method = RequestMethod.POST, params = "action=confirm")
+	public String confirmOrder(@RequestParam("orderId") Long orderId, WebRequest request) {
+		return "redirect:/privacy/order?id=" + orderId;
+	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "/order", method = RequestMethod.POST, params = "action=checkout")
@@ -59,8 +66,8 @@ public class OrdersController extends AbstractController {
 		if (order == null) {
 			throw new UnknownEntityException(orderId, "order");
 		}
-        if (order.getState() == OrderState.BILLING && checkPersonality(order.getPersonId())) {
-            return PayPalController.forwardCheckout(request, order);
+		if (OrderStateUnion.BILLING.contains(order.getState()) && checkPersonality(order.getPersonId())) {
+			return PayPalController.forwardCheckout(request, order);
 		}
 		return "redirect:/privacy/orders";
 	}
@@ -72,8 +79,8 @@ public class OrdersController extends AbstractController {
 		if (order == null) {
 			throw new UnknownEntityException(orderId, "order");
 		}
-        if (order.getState() == OrderState.BILLING && checkPersonality(order.getPersonId())) {
-            orderManager.remove(orderId);
+		if (OrderStateUnion.BILLING.contains(order.getState()) && checkPersonality(order.getPersonId())) {
+			orderManager.remove(orderId);
 		}
 		return "redirect:/privacy/orders";
 	}

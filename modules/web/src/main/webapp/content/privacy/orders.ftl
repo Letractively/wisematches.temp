@@ -18,34 +18,6 @@
             <@bg.ui.tableNavigation pageableForm/>
             </div>
         </div>
-    <#--
-
-        <div class="table-filter">
-            <div class="ipp">
-                <strong>На странице: </strong>
-                <ul>
-                <#list [12,24,36] as i>
-                    <li class="bg-ui-button<#if pageableForm.count==i> selected</#if>">
-                        <a href="?<@bg.ui.tableNavigationParams pageableForm "count" i/>">${i}</a>
-                    </li>
-                </#list>
-                </ul>
-            </div>
-        <#if pageableForm.sort?has_content>
-            <div class="sort">
-                <strong><label for="tableSorting">Сортировать по: </label></strong>
-                <select id="tableSorting" name="sort">
-                    <#list SortingType.values() as s>
-                        <#if pageableForm.query?has_content || s != SortingType.RELEVANCE>
-                            <option value="?<@bg.ui.tableNavigationParams pageableForm "sort" s.getCode()/>"
-                                    <#if s.getCode()==pageableForm.sort>selected="selected"</#if>><@message code="product.sort.type.${s.getCode()}"/></option>
-                        </#if>
-                    </#list>
-                </select>
-            </div>
-        </#if>
-        </div>
-    -->
 
         <div class="table-content">
             <table>
@@ -68,8 +40,8 @@
                             от ${messageSource.formatDate(o.timeline.created, locale)}
                         </span>
                             <br>
-                            Состояние: <span
-                                class="status"><@message code="order.status.${o.state.code}.label"/></span>
+                            <span
+                                    class="status"><@message code="order.status.${o.state.code}.label"/></span>
                             <#if !o.state.finished && o.internationalTracking?has_content>
                                 <#list o.internationalTracking as t><@bg.tracking.international t/><#if t_has_next>,
                                 </#if></#list>
@@ -82,27 +54,22 @@
                             <@bg.ui.price o.grandTotal "b"/>
                         </td>
                         <td valign="top" nowrap="nowrap">
-                            <#switch o.state>
-                                <#case OrderState.SHIPPED>
-                                <#--
-                                            TODO: close order is commented
-                                                                    <button type="button" onclick="closeOrder('${o.id}');">Подтвердить получение
-                                                                    </button>
-                                -->
-                                    <#break>
-                                <#case OrderState.BILLING>
-                                    <form action="/privacy/order" method="post">
-                                        <input type="hidden" name="orderId" value="${o.id}"/>
+                            <form action="/privacy/order" method="post">
+                                <input type="hidden" name="orderId" value="${o.id}"/>
 
-                                        <button name="action" value="checkout">Оплатить</button>
-                                        <button name="action" value="remove"
-                                                onclick="return confirm('Вы уверены что хотите удалить данный заказ?')">
-                                            Удалить
-                                        </button>
-                                    </form>
-                                    <#break>
-                                <#default>&nbsp;
-                            </#switch>
+                                <#if o.state==OrderState.SHIPPED>
+                                    <button name="action" value="confirm">Подтвердить получение</button>
+
+                                <#elseif OrderStateUnion.BILLING.contains(o.state)>
+                                    <button name="action" value="checkout">Оплатить</button>
+                                    <button name="action" value="remove"
+                                            onclick="return confirm('Вы уверены что хотите удалить данный заказ?')">
+                                        Удалить
+                                    </button>
+                                <#else>
+                                    &nbsp;
+                                </#if>
+                            </form>
                         </td>
                     </tr>
                         <#list o.items as i>

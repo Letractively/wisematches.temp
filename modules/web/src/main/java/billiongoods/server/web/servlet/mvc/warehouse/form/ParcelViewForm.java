@@ -18,7 +18,15 @@ public class ParcelViewForm extends OrderViewForm {
         return parcel;
     }
 
-    public void setParcelId(Long parcel) {
-        this.parcel = parcel;
+	public void setParcel(Long parcel) {
+		this.parcel = parcel;
     }
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("ParcelViewForm{");
+		sb.append("parcel=").append(parcel);
+		sb.append('}');
+		return sb.toString();
+	}
 }

@@ -7,7 +7,6 @@
 
 <#assign shipment=order.shipment/>
 
-<#assign grandTotalCount=0/>
 <#assign grandTotalAmountUSD=0/>
 
 <#macro parcelTable parcel number>
@@ -17,11 +16,7 @@
         <#assign items=order.getItems(parcel)/>
     </#if>
 
-    <#if !items?has_content>
-        <#return/>
-    </#if>
-
-<tbody>
+<tbody class="parcel <#if parcel?has_content>${parcel.state.code}</#if>">
     <#if parcel?has_content>
     <tr>
         <td colspan="9" style="border: none; padding-top: 20px"></td>
@@ -36,12 +31,7 @@
             </div>
 
             <div class="" style="float: right">
-                <span class="status">
-                    <@message code="order.status.${stateName}.label"/>
-                    <#if parcel?has_content && parcel.state == ParcelState.SUSPENDED>
-                        до ${messageSource.formatDate(parcel.expectedResume, locale)}
-                    </#if>
-                </span>
+                <#include "/content/warehouse/order/widget/pstate.ftl"/>
             </div>
         </td>
     </tr>
@@ -62,8 +52,6 @@
     <#list items as i>
         <#assign product=i.product/>
 
-        <#assign totalCount=totalCount+i.quantity/>
-        <#assign grandTotalCount=grandTotalCount+i.quantity/>
     <tr class="item">
         <td valign="top" width="50px" style="border-right: none">
             <@bg.link.product product><@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/></@bg.link.product>
@@ -175,7 +163,7 @@
             <tr>
                 <th colspan="3" align="left">Всего за товары</th>
                 <th nowrap="nowrap" class="price">
-                    <span>${grandTotalCount}</span>
+                    <span>${order.productsCount}</span>
                 </th>
                 <th nowrap="nowrap" align="left">
                 <@bg.ui.price order.amount/>
