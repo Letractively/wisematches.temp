@@ -12,8 +12,8 @@ public enum OrderStateUnion {
 	PROCESSING(EnumSet.of(OrderState.ACCEPTED, OrderState.PROCESSING, OrderState.SHIPPING)),
 	SUSPENDED(EnumSet.of(OrderState.SUSPENDED)),
 	DELIVERING(EnumSet.of(OrderState.SHIPPED)),
-	BILLING(EnumSet.of(OrderState.NEW, OrderState.BILLING)),
-	BROKEN(EnumSet.of(OrderState.CANCELLED, OrderState.FAILED));
+	BILLING(EnumSet.of(OrderState.NEW, OrderState.BILLING, OrderState.FAILED)),
+	FINISHED(EnumSet.of(OrderState.CANCELLED, OrderState.CLOSED));
 
 	private final String code;
 	private final EnumSet<OrderState> orderStates;
@@ -29,6 +29,10 @@ public enum OrderStateUnion {
 
 	public EnumSet<OrderState> getOrderStates() {
 		return orderStates;
+	}
+
+	public boolean contains(OrderState state) {
+		return orderStates.contains(state);
 	}
 
 	public static OrderStateUnion byCode(String orderState) {

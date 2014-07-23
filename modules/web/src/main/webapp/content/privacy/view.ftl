@@ -35,7 +35,10 @@
                     <td>
                         <@smartCountLink OrderStateUnion.DELIVERING/>
                     </td>
-                    <td colspan="2">
+                    <td>
+                        <@smartCountLink OrderStateUnion.FINISHED/>
+                    </td>
+                    <td>
                     </td>
                 </tr>
                 <tr>

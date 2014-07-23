@@ -2,7 +2,6 @@ package billiongoods.server;
 
 import billiongoods.core.Language;
 import billiongoods.core.Localization;
-import billiongoods.server.services.payment.Order;
 import billiongoods.server.services.payment.OrderItem;
 import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.StockInfo;
@@ -17,10 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAccessor;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -206,12 +202,11 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		return Language.byLocale(locale).getLocalization().getNumeralEnding(value);
 	}
 
-
-	public String getExceptedDeliveryDate(Order order, Locale locale) {
+	public String getExceptedDeliveryDate(Collection<OrderItem> items, Locale locale) {
 		final LocalDate now = LocalDate.now();
 
 		LocalDate delivery = now;
-		for (OrderItem item : order.getItems()) {
+		for (OrderItem item : items) {
 			final StockInfo info = item.getProduct().getStockInfo();
 
 			LocalDate date = info.getArrivalDate();

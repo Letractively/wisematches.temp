@@ -142,11 +142,9 @@
                 Бесплатная доставка без номера отслеживания
             <#elseif order.shipment.type==ShipmentType.REGISTERED>
                 Отслеживаемое отправление
-            <#--<#if order.internationalTracking?has_content>-->
-            <#--<strong><@bg.tracking.international order.internationalTracking/></strong>-->
-            <#--<#else>-->
-            <#--номер отслеживания еще не назначен-->
-            <#--</#if>-->
+                <#list order.internationalTracking as t>
+                    <@bg.tracking.international t/><#if t_has_next>, </#if>
+                </#list>
             </#if>
             </div>
         </td>

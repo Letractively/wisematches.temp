@@ -1312,6 +1312,10 @@ button.bg-ui-button.selected {
     font-weight: bold;
 }
 
+.order-status table {
+    width: auto;
+}
+
 .order td, .order-status td {
     padding: 5px;
 }
@@ -1328,36 +1332,25 @@ button.bg-ui-button.selected {
     border-bottom: 1px dashed #cccccc;
 }
 
-.order-status table {
-    width: auto;
-}
-
 .order .info {
     border: 1px solid #e9e9e9;
     background: #f6f6f6;
     padding: 20px;
 }
 
-.order .status {
-    font-weight: bold;
-}
-
-.order.failed .status {
-    color: red;
-}
-
-.order.shipped .status {
-    color: green;
-}
-
-.order.closed .status {
-    color: green;
-}
-
 .order .steps table {
     margin: 10px 0 15px;
     padding: 0;
     height: 20px;
+}
+
+.orders .states div {
+    margin: 3px;
+    display: inline-block;
+}
+
+.order .operations div {
+    display: inline-block;
 }
 
 .order .steps td {
@@ -1373,8 +1366,7 @@ button.bg-ui-button.selected {
 }
 
 .order .steps td.done {
-    background-color: #ffe8bb;
-    background-position: 100% -40px;
+    background: #ffe8bb 100% -40px;
 }
 
 .order .steps td.previous {
@@ -1390,13 +1382,40 @@ button.bg-ui-button.selected {
     background-position: 100% -200px;
 }
 
-.order .operations div {
-    display: inline-block;
+.order .status, .parcel .status {
+    font-weight: bold;
 }
 
-.orders .states div {
-    margin: 3px;
-    display: inline-block;
+.order.failed .status {
+    color: red;
+}
+
+.parcel.failed .status {
+    color: red !important;
+}
+
+.order.cancelled .status {
+    color: #6b0c0f;
+}
+
+.parcel.cancelled .status {
+    color: #6b0c0f !important;
+}
+
+.order.shipped .status {
+    color: green;
+}
+
+.parcel.shipped .status {
+    color: green !important;
+}
+
+.order.closed .status {
+    color: green;
+}
+
+.parcel.closed .status {
+    color: green !important;
 }
 
 .orders .states input[type=radio] {

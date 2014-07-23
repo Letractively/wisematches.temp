@@ -22,7 +22,7 @@
 <p>
     Детали вашего заказа:<br>
     Ваш заказ <b>#${context.id}</b> был оформлен ${messageSource.formatDate(context.timeline.created, locale)}<br>
-    Ожидаемая дата отправки вашего заказа ${messageSource.getExceptedDeliveryDate(context, locale)}
+    Ожидаемая дата отправки вашего заказа ${messageSource.getExceptedDeliveryDate(context.items, locale)}
 </p>
 
 <#include "address.ftl"/>
