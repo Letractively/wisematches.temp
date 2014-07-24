@@ -4,7 +4,7 @@
 <#import "utils.ftl" as util>
 
 <div class="header">
-    Здравствуйте, ${recipient.passport.username!""}
+    Здравствуйте, <#if recipient?has_content && recipient.passport?has_content>${recipient.passport.username!""}</#if>
 </div>
 
 <div class="notify-message">
