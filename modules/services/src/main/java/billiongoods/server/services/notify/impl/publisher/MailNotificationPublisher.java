@@ -18,10 +18,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -48,47 +46,29 @@ public class MailNotificationPublisher implements NotificationPublisher {
 	@Override
 	public void publishNotification(final Notification notification) throws PublicationException {
 		log.debug("Send mail notification '{}' to {}", notification.getCode(), notification.getRecipient());
-		final MimeMessagePreparator mm = new MimeMessagePreparator() {
-			public void prepare(MimeMessage mimeMessage) throws Exception {
-				final Language language = Language.RU;
-				final MimeMessageHelper msg = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+		final MimeMessagePreparator mm = mimeMessage -> {
+			final Language language = Language.RU;
+			final MimeMessageHelper msg = new MimeMessageHelper(mimeMessage, false, "UTF-8");
 
-				msg.setSubject(notification.getSubject());
-				msg.setFrom(getInternetAddress(notification.getSender(), language));
-				msg.setTo(getInternetAddress(notification.getRecipient(), language));
+			msg.setSubject(notification.getSubject());
+			msg.setFrom(getInternetAddress(notification.getSender(), language));
+			msg.setTo(getInternetAddress(notification.getRecipient(), language));
 
-				msg.setBcc(getInternetAddress(Recipient.get(Recipient.MailBox.MONITORING), language));
+			msg.setBcc(getInternetAddress(Recipient.get(Recipient.MailBox.MONITORING), language));
 
-				final Recipient recipient = notification.getRecipient();
-				if (recipient instanceof Recipient.Application) {
-					final Recipient.Application application = (Recipient.Application) recipient;
-					if (application.getReturnAddress() != null) {
-						msg.setReplyTo(getInternetAddress(application.getReturnAddress(), language));
-					}
-					msg.setText(notification.getMessage(), true);
-				} else if (recipient instanceof Recipient.Person) {
-					final Recipient.Person person = (Recipient.Person) recipient;
-
-					final StringBuilder m = new StringBuilder();
-					final Locale locale = language.getLocale();
-					m.append(messageSource.getMessage("notify.mail.header", null, locale));
-
-					final Passport passport = person.getPassport();
-					if (passport != null) {
-						m.append(" <b>").append(passport.getUsername()).append("</b>.");
-					} else {
-						m.append(" <b>").append(messageSource.getMessage("notify.mail.customer", null, locale)).append("</b>.");
-					}
-
-					m.append(notification.getMessage());
-
-					m.append("<p><hr><br>");
-					m.append(messageSource.getMessage("notify.mail.footer", null, locale));
-					m.append("</p>");
-					msg.setText(m.toString(), true);
-				} else {
-					log.error("There is not processor for recipient {}", recipient);
+			final Recipient recipient = notification.getRecipient();
+			if (recipient instanceof Recipient.Application) {
+				final Recipient.Application application = (Recipient.Application) recipient;
+				if (application.getReturnAddress() != null) {
+					msg.setReplyTo(getInternetAddress(application.getReturnAddress(), language));
 				}
+				msg.setText(notification.getMessage(), true);
+			} else if (recipient instanceof Recipient.Person) {
+				msg.setReplyTo(getInternetAddress(Recipient.get(Recipient.MailBox.SUPPORT), language));
+
+				msg.setText(notification.getMessage(), true);
+			} else {
+				log.error("There is not processor for recipient {}", recipient);
 			}
 		};
 		try {
