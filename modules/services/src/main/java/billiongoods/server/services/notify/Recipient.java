@@ -8,108 +8,119 @@ import billiongoods.core.account.Account;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public abstract class Recipient {
-    private Recipient() {
-    }
+	private final String templateName;
 
-    public static Recipient get(String email) {
-        return new Person(email, null);
-    }
+	private Recipient(String templateName) {
+		this.templateName = templateName;
+	}
 
-    public static Recipient get(String email, Passport passport) {
-        return new Person(email, passport);
-    }
+	public String getTemplateName() {
+		return templateName;
+	}
 
-    public static Recipient get(Member member) {
-        return new Person(member.getEmail(), member.getPassport());
-    }
+	public static Recipient get(String email) {
+		return new Person(email, null);
+	}
 
-    public static Recipient get(Account account) {
-        return new Person(account.getEmail(), account.getPassport());
-    }
+	public static Recipient get(String email, Passport passport) {
+		return new Person(email, passport);
+	}
 
-    public static Recipient get(MailBox mailBox) {
-        return new Application(mailBox, null);
-    }
+	public static Recipient get(Member member) {
+		return new Person(member.getEmail(), member.getPassport());
+	}
 
-    public static Recipient get(MailBox mailBox, Recipient returnAddress) {
-        return new Application(mailBox, returnAddress);
-    }
+	public static Recipient get(Account account) {
+		return new Person(account.getEmail(), account.getPassport());
+	}
 
-    public static enum MailBox {
-        SUPPORT("support"),
-        MONITORING("monitoring");
+	public static Recipient get(MailBox mailBox) {
+		return new Application(mailBox, null);
+	}
 
-        private final String code;
+	public static Recipient get(MailBox mailBox, Recipient returnAddress) {
+		return new Application(mailBox, returnAddress);
+	}
 
-        MailBox(String code) {
-            this.code = code;
-        }
+	public static enum MailBox {
+		SUPPORT("support"),
+		MONITORING("monitoring");
 
-        public String getCode() {
-            return code;
-        }
+		private final String code;
+
+		MailBox(String code) {
+			this.code = code;
+		}
+
+		public String getCode() {
+			return code;
+		}
 
 
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("MailBox{");
-            sb.append("code='").append(code).append('\'');
-            sb.append('}');
-            return sb.toString();
-        }
-    }
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("MailBox{");
+			sb.append("code='").append(code).append('\'');
+			sb.append('}');
+			return sb.toString();
+		}
+	}
 
-    public static final class Person extends Recipient {
-        private final String email;
-        private final Passport passport;
+	public static final class Person extends Recipient {
+		private final String email;
+		private final Passport passport;
 
-        private Person(String email, Passport passport) {
-            this.email = email;
-            this.passport = passport;
-        }
+		private Person(String email, Passport passport) {
+			super("notification.ftl");
 
-        public String getEmail() {
-            return email;
-        }
+			this.email = email;
+			this.passport = passport;
+		}
 
-        public Passport getPassport() {
-            return passport;
-        }
+		public String getEmail() {
+			return email;
+		}
 
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("Person{");
-            sb.append("email='").append(email).append('\'');
-            sb.append(", passport=").append(passport);
-            sb.append('}');
-            return sb.toString();
-        }
-    }
+		public Passport getPassport() {
+			return passport;
+		}
 
-    public static final class Application extends Recipient {
-        private final MailBox mailBox;
-        private final Recipient returnAddress;
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("Person{");
+			sb.append("email='").append(email).append('\'');
+			sb.append(", passport=").append(passport);
+			sb.append('}');
+			return sb.toString();
+		}
+	}
 
-        private Application(MailBox mailBox, Recipient returnAddress) {
-            this.mailBox = mailBox;
-            this.returnAddress = returnAddress;
-        }
+	public static final class Application extends Recipient {
+		private final MailBox mailBox;
+		private final Recipient returnAddress;
 
-        public MailBox getMailBox() {
-            return mailBox;
-        }
+		private Application(MailBox mailBox, Recipient returnAddress) {
+			super("alert.ftl");
 
-        public Recipient getReturnAddress() {
-            return returnAddress;
-        }
+			this.mailBox = mailBox;
+			this.returnAddress = returnAddress;
+		}
 
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder("Application{");
-            sb.append("mailBox=").append(mailBox);
-            sb.append(", returnAddress=").append(returnAddress);
-            sb.append('}');
-            return sb.toString();
-        }
-    }
+		public MailBox getMailBox() {
+			return mailBox;
+		}
+
+		public Recipient getReturnAddress() {
+			return returnAddress;
+		}
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("Application{");
+			sb.append("mailBox=").append(mailBox);
+			sb.append(", returnAddress=").append(returnAddress);
+			sb.append('}');
+			return sb.toString();
+		}
+	}
 }

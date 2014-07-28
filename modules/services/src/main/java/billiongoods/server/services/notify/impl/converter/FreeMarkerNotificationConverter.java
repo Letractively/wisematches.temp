@@ -48,7 +48,8 @@ public class FreeMarkerNotificationConverter implements NotificationConverter {
 		variables.put("context", context);
 
 		try {
-			final Template ft = freeMarkerConfig.getTemplate("notification.ftl", locale, "UTF-8");
+			final Template ft = freeMarkerConfig.getTemplate(recipient.getTemplateName(), locale, "UTF-8");
+
 			final String message = FreeMarkerTemplateUtils.processTemplateIntoString(ft, variables);
 			return new Notification(ID_GENERATOR.incrementAndGet(), code, subject, message, recipient, sender);
 		} catch (IOException | TemplateException ex) {
