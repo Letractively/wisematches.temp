@@ -48,10 +48,18 @@ public class ProductTrackerCenter {
 		}
 
 		@Override
+		public void orderRefund(Order order, String token, double amount) {
+		}
+
+		@Override
 		public void orderStateChanged(Order order, OrderState oldState, OrderState newState) {
 			if (newState == OrderState.PROCESSING) {
                 updateSoldQuantity(order.getItems());
             }
+		}
+
+		@Override
+		public void orderContentChanged(Order order, OrderItemChange... changes) {
 		}
 	}
 }

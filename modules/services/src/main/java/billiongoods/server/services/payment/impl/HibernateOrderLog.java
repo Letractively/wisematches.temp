@@ -33,6 +33,9 @@ public class HibernateOrderLog implements OrderLog {
 	@Enumerated(EnumType.ORDINAL)
 	private ParcelState parcelState;
 
+	@Column(name = "refundAmount", updatable = false)
+	private Double refundAmount;
+
 	@Column(name = "parameter", updatable = false)
 	private String parameter;
 
@@ -48,6 +51,11 @@ public class HibernateOrderLog implements OrderLog {
 
 	public HibernateOrderLog(HibernateOrder order, String parameter, String commentary) {
 		this(order, null, parameter, commentary);
+	}
+
+	public HibernateOrderLog(HibernateOrder order, double refundAmount, String parameter, String commentary) {
+		this(order, null, parameter, commentary);
+		this.refundAmount = refundAmount;
 	}
 
 	public HibernateOrderLog(HibernateOrder order, Parcel parcel, String parameter, String commentary) {
@@ -73,12 +81,22 @@ public class HibernateOrderLog implements OrderLog {
 
 	@Override
 	public boolean isOrderChange() {
-		return !isParcelChange();
+		return !isParcelChange() && !isRefundChange();
 	}
 
 	@Override
 	public boolean isParcelChange() {
 		return parcelId != null;
+	}
+
+	@Override
+	public Double getRefundAmount() {
+		return refundAmount;
+	}
+
+	@Override
+	public boolean isRefundChange() {
+		return refundAmount != null;
 	}
 
 	@Override

@@ -131,7 +131,7 @@ bg.ui = new function () {
         }
 
         var opts = {
-            classes: [ severity.class, "ui-corner-all shadow"],
+            classes: [severity.class, "ui-corner-all shadow"],
             template: statusTemplate,
             autoHide: !stick,
             autoHideDelay: 10000
@@ -237,7 +237,7 @@ bg.ui = new function () {
 
     this.notification = function (title, message, type, error) {
         alertsWidgetPane.freeow(title, message, {
-            classes: [ error ? "ui-state-error" : "ui-state-highlight", "ui-corner-all", "shadow", type],
+            classes: [error ? "ui-state-error" : "ui-state-highlight", "ui-corner-all", "shadow", type],
             showStyle: {opacity: .95},
             template: alertTemplate,
             autoHideDelay: 10000
@@ -517,9 +517,42 @@ bg.warehouse.Basket = function () {
 };
 
 bg.warehouse.Order = function () {
-    this.createParcel = function (order, number, items, successor) {
+    this.removeProducts = function (order, items, successor) {
+        if (!confirm("Удаление товаров: " + items)) {
+            return;
+        }
+
+        var panel = $("#removeItemsPanel").empty();
+        $.each(items, function (index, number) {
+            panel.append($("<input name='items' type='hidden' value='" + number + "'>"));
+            panel.append($("<input name='quantities' type='hidden' value='0'>"));
+        });
+
+        $("#removeItemsForm").submit();
+        /*
+         bg.ui.lock(null, 'Удаление товаров...');
+         $.post("/maintain/order/updateParcel.ajax", JSON.stringify({"order": order, "number": number, "items": items}))
+         .done(function (response) {
+         if (response.success) {
+         successor(response.data);
+         bg.ui.unlock(null, "Товары успешно удалены", false);
+         } else {
+         bg.ui.unlock(null, response.message, true);
+         }
+         })
+         .fail(function (jqXHR, textStatus, errorThrown) {
+         bg.ui.unlock(null, "Удаление товаров не удалось", true);
+         });
+         */
+    };
+
+    this.createParcel = function (orderId, number, items, successor) {
         bg.ui.lock(null, 'Создание посылки. Пожалуйста, подождите...');
-        $.post("/maintain/order/updateParcel.ajax", JSON.stringify({"order": order, "number": number, "items": items}))
+        $.post("/maintain/order/updateParcel.ajax", JSON.stringify({
+            "orderId": orderId,
+            "number": number,
+            "items": items
+        }))
                 .done(function (response) {
                     if (response.success) {
                         successor(response.data);

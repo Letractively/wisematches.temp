@@ -14,8 +14,8 @@
 <#macro priceU v><span class="price"><span class="amount">US$<span
         class="usd v">${v?string("0.00")}</span></span></span></#macro>
 
-<#macro price v c=""><span class="price"><span class="amount"
-                                               itemprop="price">${v?string("0.00")}</span><img
+<#macro price v c=""><span class="price ${c}"><span class="amount"
+                                                    itemprop="price">${v?string("0.00")}</span><img
         src="<@static "images/${c}ruble.gif"/>"
         class="ruble-img"/><span class="dot" itemprop="priceCurrency">RUB</span></span></#macro>
 

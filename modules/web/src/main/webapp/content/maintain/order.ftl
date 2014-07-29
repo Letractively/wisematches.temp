@@ -19,11 +19,11 @@
 <tbody class="parcel <#if parcel?has_content>${parcel.state.code}</#if>">
     <#if parcel?has_content>
     <tr>
-        <td colspan="9" style="border: none; padding-top: 20px"></td>
+        <td colspan="10" style="border: none; padding-top: 20px"></td>
     </tr>
 
     <tr>
-        <td colspan="9" class="info">
+        <td colspan="10" class="info">
             <#assign stateName=parcel.state.code/>
             <div class="tit" style="display: inline-block">
                 Посылка #${order.id}:${parcel.id}
@@ -38,6 +38,7 @@
     </#if>
 
 <tr>
+    <th>#</th>
     <th colspan="2" width="100%">Наименование</th>
     <th>Цена</th>
     <th>Кол-во</th>
@@ -53,6 +54,9 @@
         <#assign product=i.product/>
 
     <tr class="item">
+        <td valign="top">
+        ${i.number}
+        </td>
         <td valign="top" width="50px" style="border-right: none">
             <@bg.link.product product><@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/></@bg.link.product>
         </td>
@@ -91,7 +95,7 @@
     </#list>
 
 <tr>
-    <td colspan="9" align="right">
+    <td colspan="10" align="right">
         <#if parcel?has_content && !parcel.state.finished>
             <div style="display: inline-block; float: left">
                 <#list ParcelState.values() as s>
@@ -102,8 +106,8 @@
                 </#list>
             </div>
         </#if>
-    <#--|| (parcel.state == ParcelState.PROCESSING && items?size>1)-->
-        <#if (!parcel?has_content && order.state == OrderState.ACCEPTED) || (parcel?has_content && !parcel.state.finished)>
+
+        <#if (items?size>1) && ((!parcel?has_content && order.state == OrderState.ACCEPTED) || (parcel?has_content && !parcel.state.finished))>
             <div style="display: inline-block">
                 <button class="manage-parcel-create" type="button">Разделить</button>
             </div>
@@ -117,7 +121,23 @@
 <#include "/content/warehouse/order/widget/title.ftl"/>
 <#include "/content/warehouse/order/widget/progress.ftl"/>
 <#include "/content/warehouse/order/widget/details.ftl"/>
+
+
     <div class="basket">
+    <#if (order.amount+order.payment.refundAmount) != order.payment.paymentAmount>
+        <div class="info" style="margin-top: 20px; padding: 5px; padding-left: 20px">
+            <div style="display: inline-block">
+                <strong>Сумма, необходимая к
+                    возврату: <span
+                            class="item"><@bg.ui.price order.payment.paymentAmount-(order.amount+order.payment.refundAmount) "b"/></span>
+                </strong>
+            </div>
+            <div style="float: right">
+                <button name="refund" class="manage-parcel-button">Оформить возврат</button>
+            </div>
+        </div>
+    </#if>
+
         <table class="cnt">
         <#if order.parcels?size == 0>
             <div style="padding-top: 20px">
@@ -132,14 +152,16 @@
         <#if !order.state.finished>
             <tbody id="operations">
             <tr>
-                <td colspan="9" style="border: none; padding: 20px 0 0;">
+                <td colspan="10" style="border: none; padding: 20px 0 0;">
                     <div class="info" style="text-align: right; padding: 5px">
                         <div style="float: left">
                             <button name="suspended" class="manage-parcel-button" type="button">Приостановить
                             </button>
                             <button name="cancelled" class="manage-parcel-button" type="button">Отменить</button>
-                            &nbsp;&nbsp;
-                            <button id="deleteItems" type="button">Удалить товары</button>
+                            <#if (order.items?size >1)>
+                                &nbsp;&nbsp;
+                                <button id="deleteItems" type="button">Удалить товары</button>
+                            </#if>
                         </div>
 
                         <div>
@@ -157,11 +179,11 @@
 
             <tbody id="grandTotal">
             <tr>
-                <td colspan="9" style="border: none; padding-top: 20px"></td>
+                <td colspan="10" style="border: none; padding-top: 20px"></td>
             </tr>
 
             <tr>
-                <th colspan="3" align="left">Всего за товары</th>
+                <th colspan="4" align="left">Всего за товары</th>
                 <th nowrap="nowrap" class="price">
                     <span>${order.productsCount}</span>
                 </th>
@@ -178,7 +200,7 @@
             </tr>
             <#if order.discount.coupon?? && (order.discount.amount>0)>
             <tr>
-                <th colspan="3" nowrap="nowrap" align="left">Скидка по купону</th>
+                <th colspan="4" nowrap="nowrap" align="left">Скидка по купону</th>
                 <th nowrap="nowrap" align="left">
                     <@bg.ui.price order.discount.amount/>
                 </th>
@@ -188,12 +210,12 @@
             </tr>
             </#if>
             <tr>
-                <th colspan="4" align="left">Стоимость доставки</th>
+                <th colspan="5" align="left">Стоимость доставки</th>
                 <th><@bg.ui.price shipment.amount/></th>
                 <th colspan="3">&nbsp;</th>
             </tr>
             <tr>
-                <th colspan="4" align="left">Итоговая сумма заказа</th>
+                <th colspan="5" align="left">Итоговая сумма заказа</th>
                 <th><@bg.ui.price order.grandTotal/></th>
                 <th colspan="3">&nbsp;</th>
             </tr>
@@ -201,6 +223,13 @@
         </table>
     </div>
 </div>
+
+<form id="removeItemsForm" action="/maintain/order/modify" method="post" style="display: none">
+    <input type="hidden" name="orderId" value="${order.id}"/>
+
+    <div id="removeItemsPanel">
+    </div>
+</form>
 
 <form id="promoteParcelForm" action="/maintain/order/action" method="post" style="display: none">
     <input type="hidden" name="orderId" value="${order.id}"/>
@@ -211,6 +240,20 @@
     <table>
         <tr>
             <td valign="top">
+                <div id="refundForm" style="display: none">
+                    <div>
+                        <div><label for="refundToken">Уникальный код:</label></div>
+                        <div><input id="refundToken"></div>
+                    </div>
+                    <div>
+                        <div><label for="refundAmount">Сумма возврата:</label></div>
+                        <div><input
+                                id="refundAmount"
+                                value="${order.payment.paymentAmount-(order.amount+order.payment.refundAmount)}">
+                        </div>
+                    </div>
+                </div>
+
                 <div id="shippingForm" style="display: none">
                     <div><label for="chinaMailTracking">Номер:</label></div>
                     <div><input id="chinaMailTracking"></div>
@@ -259,6 +302,14 @@
 <script type="application/javascript">
     var order = new bg.warehouse.Order();
 
+    function getSelectedProducts(root) {
+        var items = [];
+        root.closest("tbody").find("input[name='item']:checked").each(function (index, item) {
+            items.push($(item).val());
+        });
+        return items;
+    }
+
     function getParcelManageValue(parcel, state, form) {
         switch (state) {
             case 'shipping':
@@ -271,6 +322,8 @@
                 return form.find("#refundParcelToken").val();
             case 'closed':
                 return form.find("#closeParcelDate").val();
+            case 'refund':
+                return form.find("#refundAmount").val() + ":" + form.find("#refundToken").val();
         }
         return null;
     }
@@ -281,11 +334,7 @@
             return;
         }
 
-        var items = [];
-        $(this).closest("tbody").find("input[name='item']:checked").each(function (index, item) {
-            items.push($(item).val());
-        });
-
+        var items = getSelectedProducts($(this));
         order.createParcel(${order.id}, number, items, function (parcel) {
             bg.util.url.reload();
         });
@@ -325,6 +374,13 @@
     $("input[name='checkAllItems']").click(function () {
         var t = $(this);
         t.closest("tbody").find("input[name='item']").prop('checked', t.is(':checked'));
+    });
+
+    $("#deleteItems").click(function () {
+        var items = getSelectedProducts($(".parcel"));
+        order.removeProducts(${order.id}, items, function () {
+            bg.util.url.reload();
+        });
     });
 
     $(".datepicker").datepicker({"dateFormat": "yy-mm-dd"});

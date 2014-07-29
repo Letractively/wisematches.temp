@@ -71,6 +71,7 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		return null;
 	}
 
+
 	public String getMessage(String code, Locale locale) {
 		return super.getMessage(code, null, locale);
 	}
@@ -86,6 +87,24 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 	public String getMessage(String code, Object a1, Object a2, Object a3, Locale locale) {
 		return super.getMessage(code, new Object[]{a1, a2, a3}, locale);
 	}
+
+
+	public String getDefaultMessage(String code, String defaultMessage, Locale locale) {
+		return super.getMessage(code, null, defaultMessage, locale);
+	}
+
+	public String getDefaultMessage(String code, Object a1, String defaultMessage, Locale locale) {
+		return super.getMessage(code, new Object[]{a1}, defaultMessage, locale);
+	}
+
+	public String getDefaultMessage(String code, Object a1, Object a2, String defaultMessage, Locale locale) {
+		return super.getMessage(code, new Object[]{a1, a2}, defaultMessage, locale);
+	}
+
+	public String getDefaultMessage(String code, Object a1, Object a2, Object a3, String defaultMessage, Locale locale) {
+		return super.getMessage(code, new Object[]{a1, a2, a3}, defaultMessage, locale);
+	}
+
 
 	public String formatDate(Date date, Locale locale) {
 		return DATE_FORMATTER_CACHE.get(locale).format(date);

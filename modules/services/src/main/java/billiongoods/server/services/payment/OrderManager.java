@@ -53,19 +53,19 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	 * Indicates that payment has been failed.
 	 *
 	 * @param orderId the order id
-	 * @param reason  the filed reason.
-	 * @return updated order
+	 * @param errorCode
+	 *@param reason  the filed reason.  @return updated order
 	 */
-	Order failed(Long orderId, String reason);
+	Order failed(Long orderId, String errorCode, String reason);
 
 	/**
 	 * Indicates that payment has been failed.
 	 *
 	 * @param token  the payment token from {@link #bill(Long, String)} operation.
-	 * @param reason the filed reason.
-	 * @return updated order
+	 * @param errorCode
+	 *@param reason the filed reason.  @return updated order
 	 */
-	Order failed(String token, String reason);
+	Order failed(String token, String errorCode, String reason);
 
 	/**
 	 * Indicates that payment has been accepted and order is ready for processing.
@@ -108,8 +108,17 @@ public interface OrderManager extends SearchManager<Order, OrderContext, Void> {
 	 */
 	Order cancel(Long orderId, String note);
 
-	@Deprecated
-	Order refund(Long orderId, double amount, String refundId, String note);
+	/**
+	 * Updates items information for specified order.
+	 *
+	 * @param orderId the order id to be update
+	 * @param changes list of changes for this order
+	 * @return updated order or {@code null}
+	 * @throws java.lang.IllegalArgumentException if any of the change can't be applied to the order.
+	 */
+	Order modify(Long orderId, OrderItemChange... changes);
+
+	Order refund(Long orderId, String token, double amount, String note);
 
 
 	/**

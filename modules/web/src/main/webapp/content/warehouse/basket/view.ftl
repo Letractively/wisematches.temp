@@ -4,6 +4,7 @@
 <#-- @ftlvariable name="shipmentRates" type="billiongoods.server.services.payment.ShipmentRates" -->
 <#-- @ftlvariable name="shipmentManager" type="billiongoods.server.services.payment.ShipmentManager" -->
 <#-- @ftlvariable name="order" type="billiongoods.server.web.servlet.mvc.warehouse.form.BasketCheckoutForm" -->
+<#-- @ftlvariable name="checkoutError" type="billiongoods.server.services.paypal.PayPalException" -->
 <#-- @ftlvariable name="salesOperation" type="billiongoods.server.services.sales.SalesOperation" -->
 
 <#include "/core.ftl"/>
@@ -20,10 +21,12 @@
 
 <div class="basket">
 <form id="processBasketForm" action="/warehouse/basket" method="post">
-<#if rollback??>
+
+<#if checkoutError??>
 <div class="ui-state-error" style="margin-bottom: 10px; padding: 10px">
-    К сожалению у нас сейчас возникла внутренняя ошибка при работе с системой PayPal. В даннай момент мы не
-    можем обработать ваш заказ. Пожалуйста, попробуйте еще раз.
+    В данный момент платежная система PayPal не может обработать ваш
+    платеж:
+    <strong>${messageSource.getDefaultMessage("paypal.error." + checkoutError.code, checkoutError.fullMessage, locale)}</strong>.
 </div>
 </#if>
 

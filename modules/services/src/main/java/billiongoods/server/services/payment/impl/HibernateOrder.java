@@ -21,7 +21,7 @@ public class HibernateOrder implements Order {
 	@Column(name = "buyer")
 	private Long buyer;
 
-	@Column(name = "amount", updatable = false)
+	@Column(name = "amount")
 	private double amount;
 
 	@Embedded
@@ -47,7 +47,7 @@ public class HibernateOrder implements Order {
 	private OrderState state = OrderState.NEW;
 
 	@OrderBy("number")
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pk.orderId", targetEntity = HibernateOrderItem.class)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pk.orderId", targetEntity = HibernateOrderItem.class, orphanRemoval = true)
 	private List<OrderItem> orderItems;
 
 	@OrderBy("id desc")
@@ -201,9 +201,9 @@ public class HibernateOrder implements Order {
 
 	@Override
 	public HibernateParcel getParcel(Long parcelId) {
-        if (parcelId == null) {
-            return null;
-        }
+		if (parcelId == null) {
+			return null;
+		}
 
 		for (Parcel parcel : parcels) {
 			if (parcelId.equals(parcel.getId())) {
@@ -247,13 +247,13 @@ public class HibernateOrder implements Order {
 	void reject(String paymentId, double amount, String payer, String payerName, String payerNote) {
 		payment.processed(paymentId, amount, payer, payerName, payerNote);
 
-		updateOrderState(OrderState.CANCELLED, null, paymentId, null);
+		updateOrderState(OrderState.FAILED, null, null, null);
 	}
 
-	void failed(String reason) {
+	void failed(String errorCode, String reason) {
 		this.commentary = reason;
 
-		updateOrderState(OrderState.FAILED, null, null, reason);
+		updateOrderState(OrderState.FAILED, null, errorCode, reason);
 	}
 
 
@@ -291,6 +291,39 @@ public class HibernateOrder implements Order {
 		updateOrderState(calculateOrderState(), parcel, deliveryDate.toLocalDate().toString(), commentary);
 	}
 
+	void modify(OrderItemChange[] changes) {
+		double refundAmount = .0;
+
+		// checks
+		for (OrderItemChange change : changes) {
+			if (getOrderItem(change.getItem()) == null) {
+				throw new IllegalArgumentException("Unknown item number: " + change.getItem());
+			}
+		}
+
+		for (OrderItemChange change : changes) {
+			final HibernateOrderItem orderItem = getOrderItem(change.getItem());
+			if (change.getQuantity() == 0) {
+				this.orderItems.remove(orderItem);
+				refundAmount += orderItem.getAmount() * orderItem.getQuantity();
+			} else {
+				int oldQuantity = orderItem.getQuantity();
+				orderItem.updateQuantity(change.getQuantity());
+				refundAmount += orderItem.getAmount() * (oldQuantity - change.getQuantity());
+			}
+		}
+
+		this.amount -= refundAmount;
+	}
+
+	private HibernateOrderItem getOrderItem(Integer item) {
+		for (OrderItem orderItem : orderItems) {
+			if (item.equals(orderItem.getNumber())) {
+				return (HibernateOrderItem) orderItem;
+			}
+		}
+		return null;
+	}
 
 	void cancel(String note) {
 		for (Parcel parcel : parcels) {
@@ -304,6 +337,11 @@ public class HibernateOrder implements Order {
 		updateOrderState(OrderState.SUSPENDED, null, null, note);
 	}
 
+	void refund(String token, double amount, String note) {
+		payment.refund(token, amount);
+
+		orderLogs.add(new HibernateOrderLog(this, amount, token, note));
+	}
 
 	HibernateParcel createParcel(int number) {
 		final HibernateParcel p = new HibernateParcel(this, number);
@@ -332,7 +370,6 @@ public class HibernateOrder implements Order {
 	void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
-
 
 	private void updateOrderState(OrderState state, Parcel parcel, String parameter, String commentary) {
 		OrderState oldState = this.state;

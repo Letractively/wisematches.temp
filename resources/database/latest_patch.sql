@@ -1,3 +1,28 @@
+#29.07.14
+UPDATE store_order
+SET paymentAmount = 0
+WHERE paymentAmount IS NULL;
+
+UPDATE store_order
+SET refundAmount = 0
+WHERE refundAmount IS NULL;
+
+ALTER TABLE `billiongoods`.`store_order`
+CHANGE COLUMN `paymentAmount` `paymentAmount` DECIMAL(10, 4) NOT NULL DEFAULT 0,
+CHANGE COLUMN `refundAmount` `refundAmount` DECIMAL(10, 4) NOT NULL DEFAULT 0;
+
+ALTER TABLE `billiongoods`.`store_order_log`
+ADD COLUMN `amount` DECIMAL NULL DEFAULT NULL
+AFTER `parcelState`;
+
+ALTER TABLE `billiongoods`.`store_order_log`
+CHANGE COLUMN `amount` `refundAmount` DECIMAL(10, 0) NULL DEFAULT NULL;
+
+ALTER TABLE `billiongoods`.`store_order`
+CHANGE COLUMN `refundId` `refundId` VARCHAR(255) NULL DEFAULT NULL;
+
+INSERT INTO `billiongoods`.`system_version` (`version`) VALUES ('290714');
+
 #07.07.14
 CREATE TABLE `billiongoods`.`store_order_parcel` (
   `id`                    BIGINT       NOT NULL AUTO_INCREMENT,

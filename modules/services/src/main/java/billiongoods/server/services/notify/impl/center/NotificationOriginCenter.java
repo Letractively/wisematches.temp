@@ -133,12 +133,20 @@ public class NotificationOriginCenter implements BreakingDayListener {
 		}
 
 		@Override
+		public void orderRefund(Order order, String token, double amount) {
+		}
+
+		@Override
 		public void orderStateChanged(Order order, OrderState oldState, OrderState newState) {
 			if (ORDER_STATES.contains(newState)) {
 				processOrderState(order);
 			} else {
 				log.info("Order's new state doesn't suppose notifications: {} -> {}", order.getId(), newState);
 			}
+		}
+
+		@Override
+		public void orderContentChanged(Order order, OrderItemChange... changes) {
 		}
 	}
 

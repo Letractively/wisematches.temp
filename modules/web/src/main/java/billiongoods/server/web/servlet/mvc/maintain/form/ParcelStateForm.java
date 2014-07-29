@@ -1,7 +1,5 @@
 package billiongoods.server.web.servlet.mvc.maintain.form;
 
-import billiongoods.server.services.payment.ParcelState;
-
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -10,7 +8,7 @@ public class ParcelStateForm {
 	private Long parcelId;
 	private String value;
 	private String commentary;
-	private ParcelState state;
+	private String state;
 
 	public ParcelStateForm() {
 	}
@@ -47,11 +45,11 @@ public class ParcelStateForm {
 		this.commentary = commentary;
 	}
 
-	public ParcelState getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(ParcelState state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
