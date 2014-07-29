@@ -104,6 +104,13 @@ public class HibernateOrderItem implements OrderItem {
 		this.parcelId = parcelId;
 	}
 
+	void updateQuantity(int quantity) {
+		if (quantity < 1) {
+			throw new IllegalArgumentException("Quantity can't be less than zero: " + quantity);
+		}
+		this.quantity = quantity;
+	}
+
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("HibernateOrderItem{");

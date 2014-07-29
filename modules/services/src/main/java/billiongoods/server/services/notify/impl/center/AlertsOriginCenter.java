@@ -134,8 +134,11 @@ public class AlertsOriginCenter {
 	}
 
 	private class TheOrderListener implements OrderListener {
-
 		private TheOrderListener() {
+		}
+
+		@Override
+		public void orderRefund(Order order, String token, double amount) {
 		}
 
 		@Override
@@ -145,6 +148,9 @@ public class AlertsOriginCenter {
 			}
 		}
 
+		@Override
+		public void orderContentChanged(Order order, OrderItemChange... changes) {
+		}
 	}
 
 	private class TheAccountListener implements AccountListener {

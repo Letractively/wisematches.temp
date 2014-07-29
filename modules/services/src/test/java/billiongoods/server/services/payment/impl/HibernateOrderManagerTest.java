@@ -160,7 +160,7 @@ public class HibernateOrderManagerTest {
 		assertEquals("Mock Chmock", payment.getPayerName());
 		assertEquals("my note", payment.getPayerNote());
 		assertEquals("ASDAWEQWEASD", payment.getPaymentId());
-		assertEquals(Double.valueOf(123.45), payment.getPaymentAmount());
+		assertEquals(123.45, payment.getPaymentAmount(), 0.000000001);
 		assertEquals(OrderState.ACCEPTED, order.getState());
 	}
 
@@ -177,7 +177,7 @@ public class HibernateOrderManagerTest {
 		assertEquals("Mock Chmock", payment.getPayerName());
 		assertEquals("my note", payment.getPayerNote());
 		assertEquals("ASDAWEQWEASD", payment.getPaymentId());
-		assertEquals(Double.valueOf(123.45), payment.getPaymentAmount());
+		assertEquals(123.45, payment.getPaymentAmount(), 0.000000001);
 		assertEquals(OrderState.CANCELLED, order.getState());
 
 	}
@@ -186,7 +186,7 @@ public class HibernateOrderManagerTest {
 	public void testFailed() {
 		testBilling();
 
-		order = orderManager.failed(order.getId(), "Mock reason");
+		order = orderManager.failed(order.getId(), "11234", "Mock reason");
 		assertNotNull(order.getTimeline().getFinished());
 		assertEquals(OrderState.FAILED, order.getState());
 		assertEquals("Mock reason", order.getCommentary());

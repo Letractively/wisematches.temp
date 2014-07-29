@@ -5,10 +5,8 @@ import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.*;
 import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.web.servlet.mvc.AbstractController;
-import billiongoods.server.web.servlet.mvc.ExpiredParametersException;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderCheckoutForm;
-import billiongoods.server.web.servlet.mvc.warehouse.form.OrderErrorForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.OrderViewForm;
 import billiongoods.server.web.servlet.mvc.warehouse.form.ParcelViewForm;
 import org.slf4j.Logger;
@@ -26,6 +24,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
@@ -36,7 +35,9 @@ public class OrderController extends AbstractController {
 	private OrderManager orderManager;
 	private CouponManager couponManager;
 
-	private static final String ORDER_ID_PARAM = "ORDER_ID";
+	private static final String ORDER_ID_PARAM = "ORDER_ID_PARAM";
+	private static final String ORDER_EXCEPTION_PARAM = "ORDER_EXCEPTION_PARAM";
+
 	public static final String ORDER_CHECKOUT_FORM_NAME = OrderCheckoutForm.class.getName();
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.order.OrderController");
@@ -82,19 +83,20 @@ public class OrderController extends AbstractController {
 		return "redirect:/warehouse/order/confirm";
 	}
 
-	@RequestMapping("/rejected")
-	public String orderRejected() {
-		return "redirect:/warehouse/basket";
-	}
+	@RequestMapping({"/rejected", "/failed"})
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public String orderRejected(WebRequest request, Locale locale) {
+		final Long orderId = (Long) request.getAttribute(ORDER_ID_PARAM, RequestAttributes.SCOPE_REQUEST);
+		final PayPalException exception = (PayPalException) request.getAttribute(ORDER_EXCEPTION_PARAM, RequestAttributes.SCOPE_REQUEST);
 
-	@RequestMapping("/failed")
-	@Transactional(propagation = Propagation.SUPPORTS)
-	public String internal(@ModelAttribute("form") OrderErrorForm form) throws PayPalException, ExpiredParametersException {
-		final PayPalException exception = form.getException();
-		if (exception != null) {
-			throw exception;
+		orderManager.remove(orderId);
+
+		log.info("The order {} has been rejected or removed: {}", orderId, exception);
+
+		if (exception != null && messageSource.getDefaultMessage("paypal.error." + exception.getCode(), null, locale) == null) {
+			log.error("Untranslated PayPal error code: {} - > {}", exception.getCode(), exception.getMessage());
 		}
-		throw new ExpiredParametersException();
+		return BasketController.rollbackBasket(exception, request);
 	}
 
 	@RequestMapping("/confirm")
@@ -200,5 +202,22 @@ public class OrderController extends AbstractController {
 	@Autowired
 	public void setCouponManager(CouponManager couponManager) {
 		this.couponManager = couponManager;
+	}
+
+
+	public static String forwardAccepted(Long orderId, WebRequest request) {
+		request.setAttribute(ORDER_ID_PARAM, orderId, RequestAttributes.SCOPE_REQUEST);
+		return "forward:/warehouse/order/accepted";
+	}
+
+	public static String forwardRejected(Long orderId, WebRequest request) {
+		request.setAttribute(ORDER_ID_PARAM, orderId, RequestAttributes.SCOPE_REQUEST);
+		return "forward:/warehouse/order/rejected";
+	}
+
+	public static String forwardFailed(Long orderId, PayPalException exception, WebRequest request) {
+		request.setAttribute(ORDER_ID_PARAM, orderId, RequestAttributes.SCOPE_REQUEST);
+		request.setAttribute(ORDER_EXCEPTION_PARAM, exception, RequestAttributes.SCOPE_REQUEST);
+		return "forward:/warehouse/order/failed";
 	}
 }

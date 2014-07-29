@@ -5,6 +5,7 @@ import billiongoods.server.services.address.Address;
 import billiongoods.server.services.payment.*;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
+import billiongoods.server.web.servlet.mvc.maintain.form.OrderChangeForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.OrderStateForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.ParcelForm;
 import billiongoods.server.web.servlet.mvc.maintain.form.ParcelStateForm;
@@ -54,7 +55,7 @@ public class OrderMaintainController extends AbstractController {
 	}
 
 	@RequestMapping(value = "view")
-	public String viewOrder(@RequestParam("id") String id, @RequestParam("type") String type, @ModelAttribute("form") OrderStateForm form, Model model) {
+	public String viewOrder(@RequestParam("id") String id, @RequestParam(value = "type", required = false) String type, @ModelAttribute("form") OrderStateForm form, Model model) {
 		Order order;
 		if ("ref".equalsIgnoreCase(type)) {
 			order = orderManager.getByReference(id);
@@ -77,46 +78,75 @@ public class OrderMaintainController extends AbstractController {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@RequestMapping(value = "modify", method = RequestMethod.POST)
+	public String processOrderModify(@ModelAttribute("form") OrderChangeForm form, Errors errors, Model model) {
+		final Long orderId = form.getOrderId();
+
+		final Integer[] items = form.getItems();
+		final int[] quantities = form.getQuantities();
+
+		if (items != null && quantities != null && items.length == quantities.length) {
+			final OrderItemChange[] changes = new OrderItemChange[items.length];
+			for (int i = 0; i < changes.length; i++) {
+				changes[i] = new OrderItemChange(items[i], quantities[i]);
+			}
+			orderManager.modify(orderId, changes);
+		}
+		return "redirect:/maintain/order/view?id=" + orderId;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "action", method = RequestMethod.POST)
 	public String processOrderAction(@ModelAttribute("form") ParcelStateForm form, Errors errors, Model model) {
 		final Long orderId = form.getOrderId();
 		final Long parcelId = form.getParcelId();
 		final String value = form.getValue();
 		final String comment = form.getCommentary();
-		final ParcelState state = form.getState();
 
-		switch (state) {
-			case SHIPPING:
-				orderManager.shipping(orderId, parcelId, value, comment);
-				break;
-			case SHIPPED:
-				orderManager.shipped(orderId, parcelId, value, comment);
-				break;
-			case SUSPENDED:
-				if (parcelId == null) {
-					orderManager.suspend(orderId, comment);
-				} else {
-					orderManager.suspend(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
+		if ("REFUND".equalsIgnoreCase(form.getState())) {
+			final int i = value.indexOf(":");
+			final double amount = Double.parseDouble(value.substring(0, i));
+			final String token = value.substring(i + 1);
+			orderManager.refund(orderId, token, amount, comment);
+		} else {
+			if (parcelId == null) {
+				final OrderState state = OrderState.valueOf(form.getState());
+				switch (state) {
+					case SUSPENDED:
+						orderManager.suspend(orderId, comment);
+						break;
+					case CANCELLED:
+						orderManager.cancel(orderId, comment);
+						break;
 				}
-				break;
-			case CANCELLED:
-				if (parcelId == null) {
-					orderManager.cancel(orderId, comment);
-				} else {
-					orderManager.cancel(orderId, parcelId, comment);
+			} else {
+				final ParcelState state = ParcelState.valueOf(form.getState());
+				switch (state) {
+					case SHIPPING:
+						orderManager.shipping(orderId, parcelId, value, comment);
+						break;
+					case SHIPPED:
+						orderManager.shipped(orderId, parcelId, value, comment);
+						break;
+					case SUSPENDED:
+						orderManager.suspend(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
+						break;
+					case CANCELLED:
+						orderManager.cancel(orderId, parcelId, comment);
+						break;
+					case CLOSED:
+						orderManager.close(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
+						break;
 				}
-				break;
-			case CLOSED:
-				orderManager.close(orderId, parcelId, LocalDate.parse(value, DateTimeFormatter.ISO_DATE).atStartOfDay(), comment);
-				break;
+			}
 		}
-		return "redirect:/maintain/order/view?id=" + orderId + "&type=id";
+		return "redirect:/maintain/order/view?id=" + orderId;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "updateParcel.ajax", method = RequestMethod.POST)
 	public ServiceResponse createParcel(@RequestBody ParcelForm form) {
-		final Long orderId = form.getOrder();
+		final Long orderId = form.getOrderId();
 		final Order order = orderManager.getOrder(orderId);
 		if (order == null) {
 			throw new UnknownEntityException(orderId, "order");

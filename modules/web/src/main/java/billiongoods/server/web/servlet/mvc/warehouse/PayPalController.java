@@ -57,9 +57,7 @@ public class PayPalController extends AbstractController {
 			orderManager.bill(order.getId(), transaction.getToken());
 			return "redirect:" + expressCheckout.getExpressCheckoutEndPoint(transaction.getToken());
 		} catch (PayPalException ex) {
-			orderManager.failed(orderId, ex.getMessage());
-			log.error("PayPal processing error: " + ex.getMessage(), ex);
-			return "forward:/warehouse/basket/rollback";
+			return OrderController.forwardFailed(orderId, ex, request);
 		}
 	}
 
@@ -76,25 +74,26 @@ public class PayPalController extends AbstractController {
 	}
 
 	private String processOrderState(String token, boolean accepted, WebRequest request) {
+		final Order order = orderManager.getByToken(token);
+		if (order == null) {
+			throw new UnknownEntityException(token, "order");
+		}
 		try {
 			final PayPalTransaction transaction = expressCheckout.finalizeExpressCheckout(token, accepted);
-			request.setAttribute(ORDER_ID_PARAM, transaction.getOrderId(), RequestAttributes.SCOPE_REQUEST);
+
 			if (transaction.getResolution() == TransactionResolution.APPROVED) {
 				if (transaction.getTransactionId() == null) {
 					throw new PayPalSystemException(token, "There is no transactionID: payment is not approved by PayPal");
 				}
-
 				orderManager.accept(transaction.getOrderId(), transaction.getTransactionId(), transaction.getAmount(), transaction.getPayer(), transaction.getPayerName(), transaction.getPayerNote());
-				return "forward:/warehouse/order/accepted";
+				return OrderController.forwardAccepted(order.getId(), request);
 			} else if (transaction.getResolution() == TransactionResolution.REJECTED) {
 				orderManager.reject(transaction.getOrderId(), transaction.getTransactionId(), transaction.getAmount(), transaction.getPayer(), transaction.getPayerName(), transaction.getPayerNote());
-				return "forward:/warehouse/order/rejected";
+				return OrderController.forwardRejected(order.getId(), request);
 			}
 			throw new UnknownEntityException(token, "transaction");
 		} catch (PayPalException ex) {
-			log.error("Payment can't be processed: " + token, ex);
-			orderManager.failed(token, ex.getMessage());
-			return "forward:/warehouse/order/failed";
+			return OrderController.forwardFailed(order.getId(), ex, request);
 		}
 	}
 

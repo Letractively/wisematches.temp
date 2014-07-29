@@ -49,7 +49,7 @@ public interface OrderPayment {
 	 *
 	 * @return the refund amount for the order.
 	 */
-	Double getRefundAmount();
+	double getRefundAmount();
 
 
 	/**
@@ -64,5 +64,5 @@ public interface OrderPayment {
 	 *
 	 * @return the  payment amount for the order.
 	 */
-	Double getPaymentAmount();
+	double getPaymentAmount();
 }

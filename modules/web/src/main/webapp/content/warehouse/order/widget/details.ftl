@@ -38,7 +38,55 @@
                                 <br>${messageSource.formatTime(l.timeStamp, locale)}
                             </td>
 
-                            <#if l.orderChange>
+                            <#if l.refundChange>
+                                <td valign="top">
+                                    <div>
+                                        Возврат денежных средств: ${l.refundAmount?string("0.00")}руб
+                                    </div>
+                                    <div class="sample">
+                                        Мы выполнили полный либо частичный возврат денежных средств по данному заказу
+                                    </div>
+
+                                    <#if l.commentary?has_content>
+                                        <div class="comment">
+                                        ${l.commentary}
+                                        </div>
+                                    </#if>
+                                </td>
+
+                                <td valign="top" width="20%">
+                                    <@parameter "Код возврата", l.parameter!"&nbsp;"/>
+                                </td>
+                            <#elseif l.parcelChange>
+                                <#assign state=l.parcelState/>
+                                <#assign stateName=state.name()?lower_case/>
+                                <td valign="top">
+                                    <div>
+                                        <@message code="parcel.status.${stateName}.label"/> #${order.id}:${l.parcelId}
+                                    </div>
+                                    <div class="sample">
+                                        <@message code="parcel.status.${stateName}.description"/>
+                                    </div>
+
+                                    <#if l.commentary?has_content>
+                                        <div class="comment">
+                                        ${l.commentary}
+                                        </div>
+                                    </#if>
+                                </td>
+
+                                <td valign="top" width="20%">
+                                    <#switch state>
+                                        <#case ParcelState.PROCESSING><@parameter "Номер посылки", "${order.id}:${l.parcelId}"/><#break/>
+                                        <#case ParcelState.SHIPPING><@parameter "Код почты Китая", l.parameter!""/><#break/>
+                                        <#case ParcelState.SHIPPED><@parameter "Международный код", l.parameter!""/><#break/>
+                                        <#case ParcelState.SUSPENDED><@parameter "Приостановлена до", l.parameter!""/><#break/>
+                                        <#case ParcelState.CLOSED><@parameter "Дата вручения", l.parameter!""/><#break/>
+                                        <#case ParcelState.CANCELLED><@parameter "Код возврата средств", l.parameter!""/><#break/>
+                                        <#default>&nbsp;
+                                    </#switch>
+                                </td>
+                            <#else>
                                 <#assign state=l.orderState/>
                                 <#assign stateName=state.name()?lower_case/>
                                 <td valign="top">
@@ -66,37 +114,8 @@
                                         <#case OrderState.CLOSED><@parameter "Дата вручения", l.parameter!""/><#break/>
                                         <#case OrderState.CANCELLED><@parameter "Код возврата средств", l.parameter!""/><#break/>
                                         <#case OrderState.FAILED><@parameter "Описание ошибки", l.parameter!""/><#break/>
+                                        <#default>&nbsp;
                                     </#switch>
-                                    &nbsp;
-                                </td>
-                            <#else>
-                                <#assign state=l.parcelState/>
-                                <#assign stateName=state.name()?lower_case/>
-                                <td valign="top">
-                                    <div>
-                                        <@message code="parcel.status.${stateName}.label"/> #${order.id}:${l.parcelId}
-                                    </div>
-                                    <div class="sample">
-                                        <@message code="parcel.status.${stateName}.description"/>
-                                    </div>
-
-                                    <#if l.commentary?has_content>
-                                        <div class="comment">
-                                        ${l.commentary}
-                                        </div>
-                                    </#if>
-                                </td>
-
-                                <td valign="top" width="20%">
-                                    <#switch state>
-                                        <#case ParcelState.PROCESSING><@parameter "Номер посылки", "${order.id}:${l.parcelId}"/><#break/>
-                                        <#case ParcelState.SHIPPING><@parameter "Код почты Китая", l.parameter!""/><#break/>
-                                        <#case ParcelState.SHIPPED><@parameter "Международный код", l.parameter!""/><#break/>
-                                        <#case ParcelState.SUSPENDED><@parameter "Приостановлена до", l.parameter!""/><#break/>
-                                        <#case ParcelState.CLOSED><@parameter "Дата вручения", l.parameter!""/><#break/>
-                                        <#case ParcelState.CANCELLED><@parameter "Код возврата средств", l.parameter!""/><#break/>
-                                    </#switch>
-                                    &nbsp;
                                 </td>
                             </#if>
                         </tr>
@@ -127,6 +146,19 @@
             </td>
             <td>
                 Оплачен через PayPal: ${payment.payer}
+            </td>
+        </tr>
+    </#if>
+
+
+    <#if (payment.refundAmount>0)>
+        <tr>
+            <td valign="top" nowrap="nowrap">
+                <label for="">Возвращенная сумма:</label>
+            </td>
+            <td>
+                <@bg.ui.price payment.refundAmount "b"/>
+                <#if payment.refundId??>(код возврата ${payment.refundId})</#if>
             </td>
         </tr>
     </#if>

@@ -23,16 +23,16 @@ public class HibernateOrderPayment implements OrderPayment {
 	private String payerNote;
 
 	@Column(name = "paymentId")
-	private String paymentId;
+	private String paymentId = null;
 
 	@Column(name = "paymentAmount")
-	private Double paymentAmount;
+	private double paymentAmount = .0d;
 
 	@Column(name = "refundId")
-	private String refundId;
+	private String refundId = null;
 
 	@Column(name = "refundAmount")
-	private Double refundAmount;
+	private double refundAmount = .0d;
 
 	public HibernateOrderPayment() {
 	}
@@ -63,7 +63,7 @@ public class HibernateOrderPayment implements OrderPayment {
 	}
 
 	@Override
-	public Double getRefundAmount() {
+	public double getRefundAmount() {
 		return refundAmount;
 	}
 
@@ -73,7 +73,7 @@ public class HibernateOrderPayment implements OrderPayment {
 	}
 
 	@Override
-	public Double getPaymentAmount() {
+	public double getPaymentAmount() {
 		return paymentAmount;
 	}
 
@@ -87,6 +87,16 @@ public class HibernateOrderPayment implements OrderPayment {
 		this.payer = payer;
 		this.payerName = payerName;
 		this.payerNote = payerNote;
+	}
+
+	void refund(String token, double amount) {
+		refundAmount += amount;
+
+		if (refundId == null) {
+			refundId = token;
+		} else {
+			refundId += "," + token;
+		}
 	}
 
 	@Override
@@ -103,5 +113,4 @@ public class HibernateOrderPayment implements OrderPayment {
 		sb.append('}');
 		return sb.toString();
 	}
-
 }

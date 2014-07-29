@@ -5,12 +5,12 @@ import java.util.Arrays;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public class ParcelForm {
+public class OrderChangeForm {
 	private Long orderId;
-	private int number;
 	private Integer[] items;
+	private int[] quantities;
 
-	public ParcelForm() {
+	public OrderChangeForm() {
 	}
 
 	public Long getOrderId() {
@@ -21,14 +21,6 @@ public class ParcelForm {
 		this.orderId = orderId;
 	}
 
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
 	public Integer[] getItems() {
 		return items;
 	}
@@ -37,12 +29,20 @@ public class ParcelForm {
 		this.items = items;
 	}
 
+	public int[] getQuantities() {
+		return quantities;
+	}
+
+	public void setQuantities(int[] quantities) {
+		this.quantities = quantities;
+	}
+
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("ParcelForm{");
+		final StringBuilder sb = new StringBuilder("OrderChangeForm{");
 		sb.append("orderId=").append(orderId);
-		sb.append(", number=").append(number);
 		sb.append(", items=").append(Arrays.toString(items));
+		sb.append(", quantities=").append(Arrays.toString(quantities));
 		sb.append('}');
 		return sb.toString();
 	}

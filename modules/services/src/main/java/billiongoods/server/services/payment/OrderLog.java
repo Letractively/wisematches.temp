@@ -25,5 +25,10 @@ public interface OrderLog {
 	ParcelState getParcelState();
 
 
+	Double getRefundAmount();
+
+	boolean isRefundChange();
+
+
 	Temporal getTimeStamp();
 }

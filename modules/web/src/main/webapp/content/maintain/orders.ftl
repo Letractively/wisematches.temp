@@ -58,7 +58,7 @@
             </tr>
         <#list orders as o>
             <tr>
-                <td><a href="/maintain/order/view?id=${o.id}&type=id">${o.id}</a></td>
+                <td><a href="/maintain/order/view?id=${o.id}">${o.id}</a></td>
                 <td>${o.shipment.address.fullName}</td>
                 <td nowrap="nowrap">${o.productsCount}</td>
                 <td nowrap="nowrap"><@bg.ui.price o.grandTotal "b"/></td>

@@ -12,6 +12,7 @@ import billiongoods.server.services.coupon.CouponManager;
 import billiongoods.server.services.payment.ShipmentManager;
 import billiongoods.server.services.payment.ShipmentRates;
 import billiongoods.server.services.payment.ShipmentType;
+import billiongoods.server.services.paypal.PayPalException;
 import billiongoods.server.services.sales.SalesOperationManager;
 import billiongoods.server.warehouse.Attribute;
 import billiongoods.server.warehouse.ProductManager;
@@ -49,14 +50,16 @@ public class BasketController extends AbstractController {
 	private AddressBookManager addressBookManager;
 	private SalesOperationManager salesOperationManager;
 
+	private static final String BASKET_CHECKOUT_ERROR = "BASKET_CHECKOUT_ERROR";
+
 	public BasketController() {
 		super(true, false);
 	}
 
 	@RequestMapping(value = {""}, method = RequestMethod.GET)
-	public String viewBasket(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
+	public String viewBasket(@ModelAttribute("order") BasketCheckoutForm form, Model model, WebRequest request) {
 		final Basket basket = basketManager.getBasket(getPersonality());
-		return prepareBasketView(basket, form, model);
+		return prepareBasketView(basket, form, model, request);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -66,7 +69,7 @@ public class BasketController extends AbstractController {
 		basketManager.closeBasket(principal);
 
 		final Basket basket = basketManager.getBasket(principal);
-		return prepareBasketView(basket, form, model);
+		return prepareBasketView(basket, form, model, null);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -74,13 +77,13 @@ public class BasketController extends AbstractController {
 	public String validateBasket(@ModelAttribute("order") BasketCheckoutForm form, Errors errors, Model model) {
 		final Personality principal = getPersonality();
 		final Basket basket = validateBasket(principal, form, errors);
-		return prepareBasketView(basket, form, model);
+		return prepareBasketView(basket, form, model, null);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@RequestMapping(value = "", method = RequestMethod.POST, params = "action=rollback")
 	public String rollbackBasket(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
-		return viewBasket(form, model);
+		return viewBasket(form, model, null);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -89,7 +92,7 @@ public class BasketController extends AbstractController {
 		final Personality principal = getPersonality();
 		final Basket basket = validateBasket(principal, form, errors);
 		if (basket == null) {
-			return prepareBasketView(null, form, model);
+			return prepareBasketView(null, form, model, request);
 		}
 
 		AddressRecord address = null;
@@ -122,13 +125,7 @@ public class BasketController extends AbstractController {
 			request.setAttribute(OrderController.ORDER_CHECKOUT_FORM_NAME, checkout, RequestAttributes.SCOPE_REQUEST);
 			return "forward:/warehouse/order/checkout";
 		}
-		return prepareBasketView(basket, form, model);
-	}
-
-	@RequestMapping("rollback")
-	public String rollbackOrder(@ModelAttribute("order") BasketCheckoutForm form, Model model) {
-		model.addAttribute("rollback", Boolean.TRUE);
-		return viewBasket(form, model);
+		return prepareBasketView(basket, form, model, request);
 	}
 
 	@RequestMapping("add.ajax")
@@ -238,10 +235,17 @@ public class BasketController extends AbstractController {
 		return basketManager.getBasket(principal);
 	}
 
-	private String prepareBasketView(Basket basket, BasketCheckoutForm form, Model model) {
+	private String prepareBasketView(Basket basket, BasketCheckoutForm form, Model model, WebRequest request) {
 		model.addAttribute("basket", basket);
 		model.addAttribute("shipmentManager", shipmentManager);
 		model.addAttribute("salesOperation", salesOperationManager.getSalesOperation());
+
+		if (request != null) {
+			final PayPalException exception = (PayPalException) request.getAttribute(BASKET_CHECKOUT_ERROR, RequestAttributes.SCOPE_SESSION);
+			request.removeAttribute(BASKET_CHECKOUT_ERROR, RequestAttributes.SCOPE_SESSION);
+
+			model.addAttribute("checkoutError", exception);
+		}
 
 		if (basket != null) {
 			final Coupon coupon = couponManager.getCoupon(basket.getCoupon());
@@ -291,5 +295,10 @@ public class BasketController extends AbstractController {
 	@Autowired
 	public void setSalesOperationManager(SalesOperationManager salesOperationManager) {
 		this.salesOperationManager = salesOperationManager;
+	}
+
+	public static String rollbackBasket(PayPalException exception, WebRequest request) {
+		request.setAttribute(BASKET_CHECKOUT_ERROR, exception, RequestAttributes.SCOPE_SESSION);
+		return "redirect:/warehouse/basket";
 	}
 }
