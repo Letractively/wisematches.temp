@@ -8,7 +8,7 @@ import billiongoods.core.search.Orders;
  */
 public enum SortingType {
 	RELEVANCE("r", null, false),
-	BESTSELLING("bs", "soldCount", false),
+	BESTSELLING("bs", "stockInfo.soldCount", false),
 	PRICE_DOWN("plth", "price", true),
 	PRICE_UP("phtl", "price", false),
 	ARRIVAL_DATE("d", "registrationDate", false);

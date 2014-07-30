@@ -147,8 +147,8 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 		criteria.createAlias("product.propertyIds", "props").setProjection(projection);
 
 		final List<FilteringItem> items = new ArrayList<>();
-		Map<Attribute, List<CountedValue>> attributeListMap = new HashMap<>();
 		final List list = criteria.list();
+		final Map<Attribute, List<CountedValue>> attributeListMap = new LinkedHashMap<>(list.size());
 		for (Object o : list) {
 			Object[] oo = (Object[]) o;
 
