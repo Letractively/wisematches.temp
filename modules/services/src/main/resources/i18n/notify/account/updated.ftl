@@ -11,5 +11,5 @@
 <p>
     Если вы не изменяли BillionGoods аккаунт и получение данного письма вызывает у вас недоумение, это значит что кто-то
     взломал ваш BillionGoods аккаунт. Мы рекомендуем обратиться в службу поддержки
-    BillionGoods по адресу: <@util.mailto box="account-support"/>.
+    BillionGoods по адресу: <@util.mailto box="support"/>.
 </p>
