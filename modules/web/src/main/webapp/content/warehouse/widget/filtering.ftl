@@ -142,40 +142,41 @@
                 </li>
             </ul>
         </div>
-
-        <#list filtering.filteringItems as i>
-            <#if !i.empty>
-                <#assign a = i.attribute/>
-                <div class="property">
-                    <div class="name">
-                    ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
-                        <#if filter??>
-                            <span class="clean">
-                        <span class="pseudolink reset" <#if !filter.hasValue(a)>style="display: none"</#if>>Сбросить фильтр</span>
-                    </span>
-                        </#if>
-                    </div>
-
-                    <div class="items">
-                        <#switch a.attributeType>
-                        <#case AttributeType.STRING><@categoryAttributeEnum a i/><#break>
-                            <#case AttributeType.INTEGER><@categoryAttributeInteger a i/><#break>
-                            <#case AttributeType.BOOLEAN><@categoryAttributeBoolean a i/><#break>
-                        </#switch>
-                    </div>
-                </div>
-            </#if>
-        </#list>
-
-        <#if filter?? && !filter.empty>
-            <div style="text-align: right">
-                <button id="resetFilterButton" type="button">Сбросить фильтр</button>
-            </div>
-        </#if>
     </div>
 
-    <script type="text/javascript">
-        new bg.warehouse.Filter(${minTotalPrice}, ${maxTotalPrice}, ${minPrice}, ${maxPrice},
-                '<@bg.ui.tableNavigationParams pageableForm "filter" ""/>');
-    </script>
+    <#list filtering.filteringItems as i>
+        <#if !i.empty>
+            <#assign a = i.attribute/>
+            <div class="property">
+                <div class="name">
+                ${a.name}<#if a.unit?has_content>, ${a.unit}</#if>
+                    <#if filter??>
+                        <span class="clean">
+                        <span class="pseudolink reset" <#if !filter.hasValue(a)>style="display: none"</#if>>Сбросить фильтр</span>
+                    </span>
+                    </#if>
+                </div>
+
+                <div class="items">
+                    <#switch a.attributeType>
+                        <#case AttributeType.STRING><@categoryAttributeEnum a i/><#break>
+                        <#case AttributeType.INTEGER><@categoryAttributeInteger a i/><#break>
+                        <#case AttributeType.BOOLEAN><@categoryAttributeBoolean a i/><#break>
+                    </#switch>
+                </div>
+            </div>
+        </#if>
+    </#list>
+
+    <#if filter?? && !filter.empty>
+        <div style="text-align: right">
+            <button id="resetFilterButton" type="button">Сбросить фильтр</button>
+        </div>
+    </#if>
+</div>
+
+<script type="text/javascript">
+    new bg.warehouse.Filter(${minTotalPrice}, ${maxTotalPrice}, ${minPrice}, ${maxPrice},
+            '<@bg.ui.tableNavigationParams pageableForm "filter" ""/>');
+</script>
 </#if>

@@ -146,9 +146,8 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 
 		criteria.createAlias("product.propertyIds", "props").setProjection(projection);
 
-		final List<FilteringItem> items = new ArrayList<>();
 		final List list = criteria.list();
-		final Map<Attribute, List<CountedValue>> attributeListMap = new LinkedHashMap<>(list.size());
+		final Map<Attribute, Value> values = new LinkedHashMap<>();
 		for (Object o : list) {
 			Object[] oo = (Object[]) o;
 
@@ -160,36 +159,31 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 			if (type == AttributeType.INTEGER) {
 				final Integer min = oo[4] != null ? ((Number) oo[4]).intValue() : null;
 				final Integer max = oo[5] != null ? ((Number) oo[5]).intValue() : null;
-				items.add(new FilteringItem.Range(attribute, min, max));
+				values.put(attribute, new RangeValue(min, max));
 			} else if (type == AttributeType.STRING) {
 				final String sValue = (String) oo[1];
-				List<CountedValue> filteringSummaries = attributeListMap.get(attribute);
-				if (filteringSummaries == null) {
-					filteringSummaries = new ArrayList<>();
-					attributeListMap.put(attribute, filteringSummaries);
+				EnumValue value = (EnumValue) values.get(attribute);
+				if (value == null) {
+					value = new EnumValue();
+					values.put(attribute, value);
 				}
-				filteringSummaries.add(new CountedValue(count, sValue));
+				value.put(count, sValue);
 			} else if (type == AttributeType.BOOLEAN) {
 				final Boolean bValue = (Boolean) oo[2];
-				List<CountedValue> filteringSummaries = attributeListMap.get(attribute);
-				if (filteringSummaries == null) {
-					filteringSummaries = new ArrayList<>();
-					attributeListMap.put(attribute, filteringSummaries);
+				EnumValue value = (EnumValue) values.get(attribute);
+				if (value == null) {
+					value = new EnumValue();
+					values.put(attribute, value);
 				}
-				filteringSummaries.add(new CountedValue(count, bValue));
+				value.put(count, bValue);
 			}
 		}
 
 		int filteredCount = getTotalCount(context, filter);
-		for (Map.Entry<Attribute, List<CountedValue>> entry : attributeListMap.entrySet()) {
-			final List<CountedValue> value = entry.getValue();
-			Collections.sort(value);
-
-			Map<Object, Integer> values = new LinkedHashMap<>(value.size());
-			for (CountedValue v : value) {
-				values.put(v.value, v.count);
-			}
-			items.add(new FilteringItem.Enum(entry.getKey(), values));
+		final List<FilteringItem> items = new ArrayList<>(values.size());
+		for (Map.Entry<Attribute, Value> entry : values.entrySet()) {
+			final Attribute attr = entry.getKey();
+			items.add(entry.getValue().createFilteringItem(attr));
 		}
 		return new DefaultFiltering(totalCount, filteredCount, minPrice, maxPrice, items);
 	}
@@ -525,26 +519,50 @@ public class HibernateProductManager extends EntitySearchManager<ProductPreview,
 		}
 	}
 
-	private static final class CountedValue implements Comparable<CountedValue> {
-		private final int count;
-		private final Object value;
+	private static interface Value {
+		FilteringItem createFilteringItem(Attribute attribute);
+	}
 
-		private CountedValue(int count, Object value) {
-			this.count = count;
-			this.value = value;
+	private static final class EnumValue implements Value {
+		private final SortedMap<Integer, Object> values = new TreeMap<>(Comparator.<Integer>reverseOrder());
+
+		public EnumValue() {
 		}
 
-		public int getCount() {
-			return count;
-		}
-
-		public Object getValue() {
-			return value;
+		void put(Integer count, Object value) {
+			values.put(count, value);
 		}
 
 		@Override
-		public int compareTo(CountedValue o) {
-			return o.count - count;
+		public FilteringItem createFilteringItem(Attribute attribute) {
+			final Map<Object, Integer> res = new LinkedHashMap<>();
+			for (Map.Entry<Integer, Object> entry : values.entrySet()) {
+				res.put(entry.getValue(), entry.getKey());
+			}
+			return new FilteringItem.Enum(attribute, res);
+		}
+	}
+
+	private static final class RangeValue implements Value {
+		private final Integer min;
+		private final Integer max;
+
+		public RangeValue(Integer min, Integer max) {
+			this.min = min;
+			this.max = max;
+		}
+
+		public Integer getMin() {
+			return min;
+		}
+
+		public Integer getMax() {
+			return max;
+		}
+
+		@Override
+		public FilteringItem createFilteringItem(Attribute attribute) {
+			return new FilteringItem.Range(attribute, min, max);
 		}
 	}
 }
