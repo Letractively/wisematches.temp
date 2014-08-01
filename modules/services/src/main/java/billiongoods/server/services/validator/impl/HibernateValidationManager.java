@@ -255,8 +255,8 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
     private void processProductUpdate(HibernateValidationChange validation) {
         final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
         try {
-            sessionFactory.getCurrentSession().save(validation);
-            productManager.updateProductInformation(validation.getProduct().getId(), validation.getNewPrice(), validation.getNewSupplierPrice(), validation.getNewStockInfo());
+//            sessionFactory.getCurrentSession().save(validation);
+			productManager.updateProductInformation(validation.getProduct().getId(), validation.getNewPrice(), validation.getNewSupplierPrice(), validation.getNewStockInfo());
 
             for (ValidationListener listener : listeners) {
                 listener.validationProcessed(validation);
