@@ -36,10 +36,11 @@
 <table border="0" class="order-details">
     <tr>
         <td colspan="2" style="border: none; padding: 0" nowrap="nowrap" align="left">
-            Посылка #457:2 (отправлена 21 июля 2014 г.)
+            Посылка #${context.id}:${parcel.id}
         </td>
         <td colspan="3" style="border: none; padding: 0" nowrap="nowrap" align="right">
-            номер отслеживания <strong>RD23345435TG</strong>
+            <#if parcel.internationalTracking?has_content>номер отслеживания
+                <strong>${parcel.internationalTracking}</strong></#if>
         </td>
     </tr>
     <tr>
