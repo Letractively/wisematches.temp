@@ -1,20 +1,14 @@
 package billiongoods.server.services.payment;
 
-import billiongoods.server.warehouse.ProductPreview;
+import billiongoods.server.warehouse.ProductItem;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-public interface OrderItem {
+public interface OrderItem extends ProductItem {
 	Integer getNumber();
-
-	int getQuantity();
-
-	double getAmount();
 
 	double getWeight();
 
 	String getOptions();
-
-	ProductPreview getProduct();
 }

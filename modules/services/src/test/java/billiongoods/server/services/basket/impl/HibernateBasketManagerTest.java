@@ -65,11 +65,11 @@ public class HibernateBasketManagerTest {
 		assertEquals(2, item3.getNumber());
 
 		final HibernateBasket basket1 = manager.getBasket(person);
-		assertEquals(3, basket1.getBasketItems().size());
+		assertEquals(3, basket1.getItems().size());
 		assertEquals(7, basket1.getExpirationDays().intValue());
 
 		manager.removeBasketItem(person, item2.getNumber());
-		assertEquals(2, basket1.getBasketItems().size());
+		assertEquals(2, basket1.getItems().size());
 
 		final BasketItem item4 = manager.addBasketItem(person, product, null, 40);
 		assertEquals(1, item4.getNumber());

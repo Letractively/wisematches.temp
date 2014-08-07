@@ -1145,6 +1145,10 @@ button.bg-ui-button.selected {
     cursor: pointer;
 }
 
+.basket .cnt {
+    border: 1px solid #cccccc;
+}
+
 .basket .cnt th {
     font-weight: bold;
     background-color: #e7e7e7;
@@ -1152,7 +1156,7 @@ button.bg-ui-button.selected {
 
 .basket .cnt td, .basket .cnt th {
     padding: 5px;
-    border: 1px solid #cccccc;
+    vertical-align: middle;
 }
 
 .basket .item ul {
@@ -1226,6 +1230,16 @@ button.bg-ui-button.selected {
 
 .basket .tit {
     font-size: 16px;
+    font-weight: bold;
+}
+
+.basket .header {
+    padding-bottom: 20px;
+}
+
+.basket .header span {
+    color: #582712;
+    font-size: x-large;
     font-weight: bold;
 }
 

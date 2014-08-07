@@ -138,7 +138,7 @@ public class HibernateCoupon implements Coupon {
 	@Override
 	public double getDiscount(Basket basket, Catalog catalog) {
 		double res = 0d;
-		final List<BasketItem> basketItems = basket.getBasketItems();
+		final List<BasketItem> basketItems = basket.getItems();
 		for (BasketItem item : basketItems) {
 			res += getDiscount(item.getProduct(), catalog) * item.getQuantity();
 		}

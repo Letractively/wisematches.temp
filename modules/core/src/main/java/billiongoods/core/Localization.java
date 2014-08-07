@@ -15,6 +15,15 @@ public abstract class Localization {
 			{"d", "day", "days", "days"},
 			{"h", "hour", "hours", "hours"},
 			{"m", "minute", "minutes", "minutes"}}) {
+
+		@Override
+		public String getCountEnding(int value) {
+			if (value == 1) {
+				return "";
+			}
+			return "s";
+		}
+
 		@Override
 		public String getNumeralEnding(int abs) {
 			switch (abs) {
@@ -46,6 +55,22 @@ public abstract class Localization {
 			{"м", "минута", "минуты", "минут"}}) {
 
 		private final String[] NUMERALS = new String[]{"ый", "ый", "ой", "ий", "ый", "ый", "ой", "ой", "ой", "ый"};
+
+		@Override
+		public String getCountEnding(int value) {
+			int k = value;
+			if (k > 20) {
+				k = k % 10;
+			}
+
+			if (k == 1) {
+				return "";
+			}
+			if (k >= 2 && k <= 4) {
+				return "а";
+			}
+			return "ов";
+		}
 
 		@Override
 		public String getNumeralEnding(int abs) {
@@ -112,6 +137,8 @@ public abstract class Localization {
 	}
 
 	public abstract String getWordEnding(int quantity);
+
+	public abstract String getCountEnding(int value);
 
 	public abstract String getNumeralEnding(int value);
 

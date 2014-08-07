@@ -93,7 +93,7 @@ public class HibernateOrderManager extends EntitySearchManager<Order, OrderConte
 
 		int index = 0;
 		final List<OrderItem> items = new ArrayList<>();
-		for (BasketItem basketItem : basket.getBasketItems()) {
+		for (BasketItem basketItem : basket.getItems()) {
 			items.add(new HibernateOrderItem(order, basketItem, index++));
 		}
 		order.setOrderItems(items);

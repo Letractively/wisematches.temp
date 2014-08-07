@@ -132,7 +132,7 @@ public class HibernateBasketManager implements BasketManager {
 		final HibernateBasket basket = getBasket(principal);
 
 		if (basket != null) {
-			final HibernateBasketItem basketItem = basket.getBasketItem(itemNumber);
+			final HibernateBasketItem basketItem = basket.getItem(itemNumber);
 			if (basketItem != null) {
 				basket.removeBasketItem(basketItem);
 				sessionFactory.getCurrentSession().update(basket);
@@ -148,7 +148,7 @@ public class HibernateBasketManager implements BasketManager {
 	public BasketItem updateBasketItem(Personality principal, int itemNumber, int quantity) {
 		final HibernateBasket basket = getBasket(principal);
 		if (basket != null) {
-			final HibernateBasketItem basketItem = basket.getBasketItem(itemNumber);
+			final HibernateBasketItem basketItem = basket.getItem(itemNumber);
 			if (basketItem != null) {
 				basketItem.setQuantity(quantity);
 				sessionFactory.getCurrentSession().update(basketItem);
