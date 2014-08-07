@@ -58,6 +58,15 @@ public class HibernateBasket implements Basket {
 	}
 
 	@Override
+	public int getProducts() {
+		int res = 0;
+		for (BasketItem item : basketItems) {
+			res += item.getQuantity();
+		}
+		return res;
+	}
+
+	@Override
 	public double getAmount() {
 		double res = .0d;
 		for (BasketItem basketItem : basketItems) {
@@ -100,12 +109,12 @@ public class HibernateBasket implements Basket {
 	}
 
 	@Override
-	public List<BasketItem> getBasketItems() {
+	public List<BasketItem> getItems() {
 		return basketItems;
 	}
 
 	@Override
-	public HibernateBasketItem getBasketItem(int number) {
+	public HibernateBasketItem getItem(int number) {
 		for (BasketItem basketItem : basketItems) {
 			if (basketItem.getNumber() == number) {
 				return (HibernateBasketItem) basketItem;

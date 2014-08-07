@@ -123,23 +123,27 @@ public class OrderController extends AbstractController {
 	@RequestMapping(value = "/status", method = RequestMethod.POST)
 	public String processOrderStatus(@ModelAttribute("form") OrderViewForm form, Errors errors, Model model) {
 		if (form.getOrder() == null) {
-			errors.rejectValue("order", "order.error.id.empty");
+			if (!errors.hasFieldErrors("order")) {
+				errors.rejectValue("order", "order.error.id.empty");
+			}
 		}
 		if (form.getEmail() == null || form.getEmail().isEmpty()) {
 			errors.rejectValue("email", "order.error.email.empty");
 		}
 
-		final Order order = orderManager.getOrder(form.getOrder());
-		if (order == null) {
-			errors.reject("order.error.invalid");
-		}
-
-		if (order != null && !errors.hasErrors()) {
-			final OrderPayment payment = order.getPayment();
-			if (payment.getPayer() == null || !payment.getPayer().equalsIgnoreCase(form.getEmail().trim())) {
+		if (!errors.hasErrors()) {
+			final Order order = orderManager.getOrder(form.getOrder());
+			if (order == null) {
 				errors.reject("order.error.invalid");
-			} else {
-				return viewOrder(form.getOrder(), order, false, model);
+			}
+
+			if (order != null && !errors.hasErrors()) {
+				final OrderPayment payment = order.getPayment();
+				if (payment.getPayer() == null || !payment.getPayer().equalsIgnoreCase(form.getEmail().trim())) {
+					errors.reject("order.error.invalid");
+				} else {
+					return viewOrder(form.getOrder(), order, false, model);
+				}
 			}
 		}
 		return "/content/warehouse/order/track";

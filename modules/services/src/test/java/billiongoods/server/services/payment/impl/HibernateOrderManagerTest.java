@@ -94,7 +94,7 @@ public class HibernateOrderManagerTest {
 		final Basket basket = createMock(Basket.class);
 		expect(basket.getAmount()).andReturn(23.9d).times(2);
 		expect(basket.getWeight()).andReturn(23.9d).times(2);
-		expect(basket.getBasketItems()).andReturn(Arrays.asList(item1, item2));
+		expect(basket.getItems()).andReturn(Arrays.asList(item1, item2));
 		expect(basket.getCoupon()).andReturn(null);
 		replay(basket);
 

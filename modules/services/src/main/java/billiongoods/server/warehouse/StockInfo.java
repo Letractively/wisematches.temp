@@ -43,24 +43,23 @@ public class StockInfo {
 		return count;
 	}
 
-	public int getSoldCount() {
-		return soldCount;
-	}
-
 	public int getShipDays() {
 		return shipDays;
 	}
 
-	public LocalDate getArrivalDate() {
-		return arrivalDate;
+	public int getSoldCount() {
+		return soldCount;
 	}
-
 
 	public StockState getStockState() {
 		if ((count > 0) || (count == 0 && shipDays >= 9)) {
 			return StockState.IN_STOCK;
 		}
 		return arrivalDate != null ? StockState.OUT_STOCK : StockState.SOLD_OUT;
+	}
+
+	public LocalDate getArrivalDate() {
+		return arrivalDate;
 	}
 
 	@Override

@@ -20,8 +20,22 @@
 </#macro>
 
 <div class="basket">
-<form id="processBasketForm" action="/warehouse/basket" method="post">
 
+<div class="header">
+<#if basket??><#assign cnt=basket.products/></#if>
+    <div>
+        <span>Ваша корзина покупок</span>
+    <span style="color: #000000; font-weight: normal">(${cnt!"нет"}
+        товар${messageSource.getCountEnding(cnt!0, locale)})</span>
+    </div>
+<#if basket??>
+    <div>
+        Ожидаемая дата отправки ${messageSource.getExceptedDeliveryDate(basket.items, locale)}
+    </div>
+</#if>
+</div>
+
+<form id="processBasketForm" action="/warehouse/basket" method="post">
 <#if checkoutError??>
 <div class="ui-state-error" style="margin-bottom: 10px; padding: 10px">
     В данный момент платежная система PayPal не может обработать ваш
@@ -34,35 +48,31 @@
 
 <table class="cnt">
     <tr>
-        <th></th>
-        <th>Код</th>
-        <th width="100%">Наименование</th>
-        <th>Опции</th>
+        <th>&nbsp;</th>
+        <th width="100%" colspan="2">Товар</th>
         <th>Количество</th>
         <th>Вес</th>
         <th>Итого</th>
     </tr>
 <#if basket?has_content>
-    <#list basket.basketItems as i>
+    <#list basket.items as i>
         <#assign product=i.product/>
         <tr class="item">
-            <td style="margin-right: 10px">
+            <td>
+                &nbsp;
+            </td>
+            <td style="vertical-align: top">
                 <@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/>
             </td>
-            <td align="left">
-                <@bg.link.product product>${messageSource.getProductCode(product)}</@bg.link.product>
-            </td>
             <td width="100%" align="left">
-                <@bg.link.product product>${product.name}</@bg.link.product>
-            </td>
-            <td valign="middle" nowrap="nowrap">
-                <ul>
+                <@bg.link.product product>${product.name} (${messageSource.getProductCode(product)})</@bg.link.product>
+                <ul class="sample" style="padding-top: 10px">
                     <#list i.options as o>
                         <li>${o.attribute.name}: ${o.value}</li>
                     </#list>
                 </ul>
             </td>
-            <td valign="middle" nowrap="nowrap" align="center">
+            <td nowrap="nowrap" align="center">
                 <input type="hidden" name="itemNumbers" value="${i.number}"/>
                 <input type="hidden" name="itemAmounts" value="${i.product.price.amount}"/>
                 <input type="hidden" name="itemWeights" value="${i.product.weight}"/>
@@ -78,16 +88,16 @@
                     <button class="removeItem" type="button">Удалить</button>
                 </div>
             </td>
-            <td valign="middle" align="center" nowrap="nowrap">
+            <td align="center" nowrap="nowrap">
                 <span class="itemWeight">${product.weight?string("0.00")} кг</span>
             </td>
-            <td valign="middle" nowrap="nowrap" align="left">
+            <td nowrap="nowrap" align="left">
                 <span class="itemAmount"><@bg.ui.price product.price.amount * i.quantity "b"/></span>
             </td>
         </tr>
     </#list>
     <tr>
-        <th align="right" colspan="7" class="controls">
+        <th align="right" colspan="6" class="controls">
             <div class="changeWarning">
                 Корзина была изменена. Вы можете <a id="saveChanges" href="#" onclick="return false">сохранить</a>
                 изменения либо <a id="revertChanges" href="#" onclick="return false">отменить</a> их.

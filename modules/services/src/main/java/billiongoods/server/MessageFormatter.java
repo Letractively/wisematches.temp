@@ -2,7 +2,7 @@ package billiongoods.server;
 
 import billiongoods.core.Language;
 import billiongoods.core.Localization;
-import billiongoods.server.services.payment.OrderItem;
+import billiongoods.server.warehouse.ProductItem;
 import billiongoods.server.warehouse.ProductPreview;
 import billiongoods.server.warehouse.StockInfo;
 import org.joda.time.DateMidnight;
@@ -217,15 +217,19 @@ public class MessageFormatter extends DelegatingMessageSource implements Message
 		return Language.byLocale(locale).getLocalization().getWordEnding(quantity);
 	}
 
+	public String getCountEnding(int value, Locale locale) {
+		return Language.byLocale(locale).getLocalization().getCountEnding(value);
+	}
+
 	public String getNumeralEnding(int value, Locale locale) {
 		return Language.byLocale(locale).getLocalization().getNumeralEnding(value);
 	}
 
-	public String getExceptedDeliveryDate(Collection<OrderItem> items, Locale locale) {
+	public String getExceptedDeliveryDate(Collection<? extends ProductItem> items, Locale locale) {
 		final LocalDate now = LocalDate.now();
 
 		LocalDate delivery = now;
-		for (OrderItem item : items) {
+		for (ProductItem item : items) {
 			final StockInfo info = item.getProduct().getStockInfo();
 
 			LocalDate date = info.getArrivalDate();

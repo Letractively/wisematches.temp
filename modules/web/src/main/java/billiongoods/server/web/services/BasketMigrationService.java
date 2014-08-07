@@ -55,7 +55,7 @@ public class BasketMigrationService {
 				if (visitorBasket != null) {
 					final TransactionStatus transaction = transactionManager.getTransaction(NEW_TRANSACTION_DEFINITION);
 					try {
-						for (BasketItem item : visitorBasket.getBasketItems()) {
+						for (BasketItem item : visitorBasket.getItems()) {
 							basketManager.addBasketItem(personality, item.getProduct(), item.getOptions(), item.getQuantity());
 						}
 						basketManager.closeBasket(visitor);

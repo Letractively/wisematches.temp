@@ -1,17 +1,6 @@
 <#-- @ftlvariable name="OrderState" type="billiongoods.server.services.payment.OrderState.static" -->
 <#-- @ftlvariable name="context" type="billiongoods.server.services.payment.Order" -->
 
-<style type="text/css">
-    .order-details {
-        border-collapse: collapse;
-    }
-
-    .order-details th, .order-details td {
-        padding: 5px;
-        border: 1px solid #808080;
-    }
-</style>
-
 <#import "../utils.ftl" as util>
 
 <p>
@@ -28,7 +17,7 @@
 <#include "address.ftl"/>
 
 <p>
-    Информация о заказе:
+    Информация о товарах:
 <table border="0" class="order-details">
     <tr>
         <th>Товар</th>
@@ -57,7 +46,7 @@
     </tr>
 </#if>
     <tr>
-        <td colspan="4" align="center"><strong>Итогова стомость заказа:</strong></td>
+        <td colspan="4" align="center"><strong>Итоговая стоимость заказа:</strong></td>
         <td>${context.grandTotal?string("0.00")}</td>
     </tr>
 </table>
@@ -65,8 +54,5 @@
 
 <p>
     Вы можете проверить состояние вашего заказа используя <@util.link "/account/signin">свой личный кабинет</@util.link>
-    либо
-    воспользовавшись сервисом <@util.link "/warehouse/order/status">отслеживания заказов</@util.link>.
-    Если у вас возникли какие-либо вопросы по вашему заказу, вы можете связаться с нами по электронной
-    почте <@util.mailto "support"/>
+    либо воспользовавшись сервисом <@util.link "/warehouse/order/status">отслеживания заказов</@util.link>.
 </p>

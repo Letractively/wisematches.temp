@@ -53,7 +53,7 @@ public class BasketController extends AbstractController {
 	private static final String BASKET_CHECKOUT_ERROR = "BASKET_CHECKOUT_ERROR";
 
 	public BasketController() {
-		super(true, false);
+		super(true, true);
 	}
 
 	@RequestMapping(value = {""}, method = RequestMethod.GET)
@@ -162,7 +162,7 @@ public class BasketController extends AbstractController {
 			final Personality principal = getPersonality();
 			final Basket basket = basketManager.getBasket(principal);
 			if (basket != null) {
-				final List<BasketItem> basketItems = basket.getBasketItems();
+				final List<BasketItem> basketItems = basket.getItems();
 				for (BasketItem basketItem : basketItems) {
 					if (basketItem.getProduct().getId().equals(product.getId()) && basketItem.getOptions().equals(options)) {
 						basketManager.updateBasketItem(principal, basketItem.getNumber(), basketItem.getQuantity() + quantity);
@@ -180,12 +180,12 @@ public class BasketController extends AbstractController {
 
 	private Basket validateBasket(Personality principal, BasketCheckoutForm form, Errors errors) {
 		Basket basket = basketManager.getBasket(principal);
-		if (basket == null || basket.getBasketItems() == null) {
+		if (basket == null || basket.getItems() == null) {
 			return null;
 		}
 
 		final Set<Integer> numbers = new HashSet<>();
-		for (BasketItem basketItem : basket.getBasketItems()) {
+		for (BasketItem basketItem : basket.getItems()) {
 			numbers.add(basketItem.getNumber());
 		}
 		final Integer[] itemNumbers = form.getItemNumbers();
@@ -205,7 +205,7 @@ public class BasketController extends AbstractController {
 			final Integer number = itemNumbers[i];
 			final int quantity = form.getItemQuantities()[i];
 
-			if (quantity != basket.getBasketItem(number).getQuantity()) {
+			if (quantity != basket.getItem(number).getQuantity()) {
 				basketManager.updateBasketItem(principal, number, quantity);
 			}
 		}
