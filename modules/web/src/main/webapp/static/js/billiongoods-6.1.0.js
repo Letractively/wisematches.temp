@@ -438,7 +438,23 @@ bg.warehouse.Basket = function () {
     };
 
     var showChangedWarning = function () {
-        basket.find(".changeWarning").show('slow');
+        basket.find(".changeWarning").fadeIn();
+    };
+
+    var invalidateActions = function () {
+        if (basket.find("input[name='item']:checked").size() == 0) {
+            $("#removeSelected").attr("disabled", true);
+        } else {
+            $("#removeSelected").removeAttr("disabled");
+        }
+
+        if (basket.find(".cnt tr.item").size() == 0) {
+            $(".hideNoItems").show();
+            $(".showNoItems").hide();
+        } else {
+            $(".hideNoItems").hide();
+            $(".showNoItems").show();
+        }
     };
 
     var recalculateTotal = function () {
@@ -483,6 +499,10 @@ bg.warehouse.Basket = function () {
         updatePrice(basket.find('.payment-total .price'), totalAmount + shipmentAmount - discountAmount);
     };
 
+    basket.find('input[name="item"]').change(function () {
+        invalidateActions();
+    });
+
     basket.find('[name="shipment"]').change(function () {
         recalculateTotal();
     });
@@ -504,6 +524,14 @@ bg.warehouse.Basket = function () {
     basket.find(".removeItem").click(function () {
         $(this).closest("tr").detach();
         recalculateTotal();
+        invalidateActions();
+        showChangedWarning();
+    });
+
+    basket.find('#removeSelected').click(function () {
+        basket.find("input[name='item']:checked").closest("tr").detach();
+        recalculateTotal();
+        invalidateActions();
         showChangedWarning();
     });
 
@@ -514,6 +542,13 @@ bg.warehouse.Basket = function () {
     basket.find("#revertChanges").click(function () {
         basket.find("form").append($("<input name='action' value='rollback' type='hidden'/>")).submit();
     });
+
+    basket.find("input[name='checkAllItems']").click(function () {
+        basket.find("input[name='item']").prop('checked', $(this).is(':checked'));
+        invalidateActions();
+    });
+
+    invalidateActions();
 };
 
 bg.warehouse.Order = function () {

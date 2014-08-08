@@ -51,6 +51,12 @@
         <div>&nbsp;</div>
 
         <div>
+            <a href="/maintain/cache">Работа с кэшем</a>
+        </div>
+
+        <div>&nbsp;</div>
+
+        <div>
             <a href="/maintain/sales/operation">Время работы</a>
         </div>
         <div>&nbsp;</div>
