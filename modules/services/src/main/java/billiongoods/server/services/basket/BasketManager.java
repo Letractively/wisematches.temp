@@ -27,4 +27,6 @@ public interface BasketManager {
 
 
 	Basket closeBasket(Personality principal);
+
+	void clearCache();
 }

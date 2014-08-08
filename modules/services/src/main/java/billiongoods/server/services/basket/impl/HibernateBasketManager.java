@@ -158,6 +158,11 @@ public class HibernateBasketManager implements BasketManager {
 		return null;
 	}
 
+	@Override
+	@CacheEvict(value = {"basket", "basketSize"}, allEntries = true)
+	public void clearCache() {
+	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

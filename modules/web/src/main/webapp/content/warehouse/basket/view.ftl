@@ -20,7 +20,7 @@
 </#macro>
 
 <div class="basket">
-
+<form id="processBasketForm" action="/warehouse/basket" method="post">
 <div class="header">
 <#if basket??><#assign cnt=basket.products/></#if>
     <div>
@@ -35,7 +35,6 @@
 </#if>
 </div>
 
-<form id="processBasketForm" action="/warehouse/basket" method="post">
 <#if checkoutError??>
 <div class="ui-state-error" style="margin-bottom: 10px; padding: 10px">
     В данный момент платежная система PayPal не может обработать ваш
@@ -44,27 +43,43 @@
 </div>
 </#if>
 
+<div class="showNoItems">
 <@salesWarning/>
+</div>
 
 <table class="cnt">
     <tr>
-        <th>&nbsp;</th>
+        <th>
+            <input name="checkAllItems" type="checkbox" title="выделить все">
+        </th>
         <th width="100%" colspan="2">Товар</th>
+        <th>Наличие</th>
+        <th>Стоимость</th>
         <th>Количество</th>
-        <th>Вес</th>
         <th>Итого</th>
     </tr>
+
+    <tr class="hideNoItems" <#if basket?has_content>style="display: none"</#if>>
+        <td colspan="7">
+            <div class="empty">
+                У вас в корзине нет ни одного товара. Посмотрите наши <a href="/warehouse/arrivals">последние
+                поступления</a> что бы
+                выбрать подходящую новинку для себя.
+            </div>
+        </td>
+    </tr>
+
 <#if basket?has_content>
     <#list basket.items as i>
         <#assign product=i.product/>
         <tr class="item">
-            <td>
-                &nbsp;
+            <td style="vertical-align: top; padding-top: 10px">
+                <input name="item" type="checkbox" value="${i.number}" title="Выделить">
             </td>
             <td style="vertical-align: top">
                 <@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/>
             </td>
-            <td width="100%" align="left">
+            <td width="100%" align="left" style="vertical-align: top; padding-top: 10px">
                 <@bg.link.product product>${product.name} (${messageSource.getProductCode(product)})</@bg.link.product>
                 <ul class="sample" style="padding-top: 10px">
                     <#list i.options as o>
@@ -73,40 +88,58 @@
                 </ul>
             </td>
             <td nowrap="nowrap" align="center">
+                <#assign stockInfo=i.product.stockInfo/>
+                <#if stockInfo.stockState == StockState.SOLD_OUT>
+                    распродан
+                <#elseif (stockInfo.shipDays<=2)>
+                    в наличие
+                <#elseif stockInfo.arrivalDate??>
+                    ожидается<br> ${messageSource.formatDate(stockInfo.arrivalDate, locale)}
+                <#else>
+                    ожидается<br> через ${stockInfo.shipDays} ${messageSource.formatDays(stockInfo.shipDays, locale)}
+                </#if>
+            </td>
+            <td nowrap="nowrap" align="right">
+                <span class="itemPrice"><@bg.ui.price product.price.amount "b"/></span> x
+            </td>
+            <td nowrap="nowrap" align="center">
                 <input type="hidden" name="itemNumbers" value="${i.number}"/>
                 <input type="hidden" name="itemAmounts" value="${i.product.price.amount}"/>
                 <input type="hidden" name="itemWeights" value="${i.product.weight}"/>
+
                 <input type="hidden" name="itemDiscounts"
                        value="<#if coupon??>${coupon.getDiscount(i.product, catalog)}<#else>0</#if>"/>
 
                 <div class="quantity">
-                    <button class="q_down bg-ui-button" disabled="disabled" type="button"> -</button>
                     <input class="q_input" name="itemQuantities" value="${i.quantity}">
-                    <button class="q_up bg-ui-button" type="button"> +</button>
                 </div>
-                <div class="controls">
-                    <button class="removeItem" type="button">Удалить</button>
-                </div>
-            </td>
-            <td align="center" nowrap="nowrap">
-                <span class="itemWeight">${product.weight?string("0.00")} кг</span>
             </td>
             <td nowrap="nowrap" align="left">
                 <span class="itemAmount"><@bg.ui.price product.price.amount * i.quantity "b"/></span>
             </td>
         </tr>
     </#list>
+</#if>
+
     <tr>
-        <th align="right" colspan="6" class="controls">
-            <div class="changeWarning">
-                Корзина была изменена. Вы можете <a id="saveChanges" href="#" onclick="return false">сохранить</a>
-                изменения либо <a id="revertChanges" href="#" onclick="return false">отменить</a> их.
+        <th align="left" colspan="7" class="controls">
+            <div style="display: inline-block">
+                <button id="removeSelected" type="button" disabled="disabled">Удалить выбранные</button>
             </div>
-            <button type="submit" name="action" value="clear">Очистить Корзину</button>
+
+            <div style="display: inline-block; padding-left: 10px">
+                <div class="changeWarning" style="display: none">
+                    Корзина была изменена. Вы можете <a id="saveChanges" href="#" onclick="return false">сохранить</a>
+                    изменения либо <a id="revertChanges" href="#" onclick="return false">отменить</a> их.
+                </div>
+            </div>
+        <#--<button type="submit" name="action" value="clear">Очистить Корзину</button>-->
         </th>
     </tr>
 </table>
 
+<div class="showNoItems">
+<#if basket?has_content>
     <@salesWarning/>
 
 <div class="unregistered" <#if shipmentRates.isFreeShipment(ShipmentType.REGISTERED)>style="display: none"</#if>>
@@ -297,34 +330,6 @@
         </table>
     </div>
 
-<#--
-    <#if !addressBook??>
-        <div class="notification">
-            <table style="width: auto">
-                <tr>
-                    <td style="padding-top: 10px">
-                        <span class="tit">Извещения о заказе</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <@bg.ui.input path="order.notifications" fieldType="checkbox">
-                            <label for="notifications">Получать извещения о статусе заказа по электронной
-                                почте,
-                                связанной с PayPal аккаунтом.</label>
-
-                            <div class="sample">(мы оставляем за собой право связаться с вами по электронной почте
-                                в случае если у нас возникнут вопросы по заказу либо какие-либо сложности с его
-                                оформлением)
-                            </div>
-                        </@bg.ui.input>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </#if>
--->
-
     <div class="total">
         <table class="payment">
             <tr class="payment-order">
@@ -376,17 +381,9 @@
     </div>
 </td>
 </tr>
-</#if>
-<tr class="empty" <#if basket?has_content>style="display: none"</#if>>
-    <td colspan="7">
-        <div class="empty">
-            У вас в корзине нет ни одного товара. Посмотрите наши <a href="/warehouse/arrivals">последние
-            поступления</a> что бы
-            выбрать подходящую новинку для себя.
-        </div>
-    </td>
-</tr>
 </table>
+</div>
+</#if>
 </div>
 </form>
 </div>
