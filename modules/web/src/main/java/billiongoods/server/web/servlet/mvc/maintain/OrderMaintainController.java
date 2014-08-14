@@ -3,6 +3,8 @@ package billiongoods.server.web.servlet.mvc.maintain;
 import billiongoods.core.search.Orders;
 import billiongoods.server.services.address.Address;
 import billiongoods.server.services.payment.*;
+import billiongoods.server.services.paypal.PayPalTransaction;
+import billiongoods.server.services.paypal.PayPalTransactionManager;
 import billiongoods.server.web.servlet.mvc.AbstractController;
 import billiongoods.server.web.servlet.mvc.UnknownEntityException;
 import billiongoods.server.web.servlet.mvc.maintain.form.OrderChangeForm;
@@ -21,7 +23,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
@@ -34,8 +35,8 @@ import java.util.List;
 @RequestMapping("/maintain/order")
 public class OrderMaintainController extends AbstractController {
 	private OrderManager orderManager;
+	private PayPalTransactionManager transactionManager;
 
-	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd");
 	private static final Orders TIMESTAMP = Orders.of(billiongoods.core.search.Order.desc("timestamp"));
 
 	public OrderMaintainController() {
@@ -112,6 +113,11 @@ public class OrderMaintainController extends AbstractController {
 			if (parcelId == null) {
 				final OrderState state = OrderState.valueOf(form.getState());
 				switch (state) {
+					case ACCEPTED:
+						final PayPalTransaction transaction = transactionManager.getTransactionByOrder(orderId);
+						if (transaction != null && transaction.getPayer() != null) {
+							orderManager.accept(transaction.getOrderId(), transaction.getTransactionId(), transaction.getAmount(), transaction.getPayer(), transaction.getPayerName(), transaction.getPayerNote());
+						}
 					case SUSPENDED:
 						orderManager.suspend(orderId, comment);
 						break;
@@ -210,5 +216,10 @@ public class OrderMaintainController extends AbstractController {
 	@Autowired
 	public void setOrderManager(OrderManager orderManager) {
 		this.orderManager = orderManager;
+	}
+
+	@Autowired
+	public void setTransactionManager(PayPalTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
 	}
 }

@@ -56,6 +56,19 @@ public class HibernatePayPalTransactionManager implements PayPalTransactionManag
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS)
+	public PayPalTransaction getTransactionByOrder(Long orderId) {
+		final Session session = sessionFactory.getCurrentSession();
+		final Query query = session.createQuery("from billiongoods.server.services.paypal.impl.HibernatePayPalTransaction where orderId=:orderId");
+		query.setParameter("orderId", orderId);
+		try {
+			return (HibernatePayPalTransaction) query.uniqueResult();
+		} catch (Exception ex) {
+			return null;
+		}
+	}
+
+	@Override
 	@Transactional(propagation = Propagation.MANDATORY)
 	public PayPalTransaction beginTransaction(Order order) {
 		HibernatePayPalTransaction transaction = new HibernatePayPalTransaction(order.getId(), order.getAmount(), order.getShipment().getAmount());

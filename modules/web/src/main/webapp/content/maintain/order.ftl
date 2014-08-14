@@ -155,8 +155,11 @@
                 <td colspan="10" style="border: none; padding: 20px 0 0;">
                     <div class="info" style="text-align: right; padding: 5px">
                         <div style="float: left">
-                            <button name="suspended" class="manage-parcel-button" type="button">Приостановить
-                            </button>
+                            <#if order.state == OrderState.BILLING>
+                                <button name="accepted" class="manage-parcel-button" type="button">Оплачен</button>
+                            </#if>
+
+                            <button name="suspended" class="manage-parcel-button" type="button">Приостановить</button>
                             <button name="cancelled" class="manage-parcel-button" type="button">Отменить</button>
                             <#if (order.items?size >1)>
                                 &nbsp;&nbsp;
