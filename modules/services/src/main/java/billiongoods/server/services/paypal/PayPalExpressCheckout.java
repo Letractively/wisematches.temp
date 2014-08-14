@@ -151,7 +151,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 		}
 
 		final OrderDiscount discount = order.getDiscount();
-		if (discount.getCoupon() != null && discount.getAmount() > 0d) {
+		if (discount.getCoupon() != null && discount.getAmount() > .0d) {
 			final PaymentDetailsItemType item = new PaymentDetailsItemType();
 			item.setName("Скидка");
 			item.setDescription("Купон " + discount.getCoupon());
@@ -183,7 +183,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 		request.setPaymentDetails(Collections.singletonList(paymentDetails));
 		request.setCppLogoImage("http://static.billiongoods.ru/images/logo.png");
 
-		request.setInvoiceID(String.valueOf(tnxId));
+		request.setInvoiceID(String.valueOf(order.getId()));
 
 		try {
 			final SetExpressCheckoutRequestType setExpressCheckoutRequest = new SetExpressCheckoutRequestType(request);
@@ -192,10 +192,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 			setExpressCheckoutReq.setSetExpressCheckoutRequest(setExpressCheckoutRequest);
 
 			final SetExpressCheckoutResponseType response = service.setExpressCheckout(setExpressCheckoutReq);
-			if (response.getAck() != AckCodeType.SUCCESS) {
-				throw new PayPalQueryException("ID" + tnxId, new PayPalQueryError(response));
-			}
-			return response;
+			return validateResponse("ID" + tnxId, response);
 		} catch (PayPalException ex) {
 			throw ex;
 		} catch (Exception ex) {
@@ -211,10 +208,7 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		try {
 			final GetExpressCheckoutDetailsResponseType response = service.getExpressCheckoutDetails(req);
-			if (response.getAck() != AckCodeType.SUCCESS) {
-				throw new PayPalQueryException("TK" + token, new PayPalQueryError(response));
-			}
-			return response;
+			return validateResponse("TK" + token, response);
 		} catch (PayPalException ex) {
 			throw ex;
 		} catch (Exception ex) {
@@ -239,15 +233,24 @@ public class PayPalExpressCheckout implements InitializingBean {
 
 		try {
 			final DoExpressCheckoutPaymentResponseType response = service.doExpressCheckoutPayment(doRequest);
-			if (response.getAck() != AckCodeType.SUCCESS) {
-				throw new PayPalQueryException(details.getToken(), new PayPalQueryError(response));
-			}
-			return response;
+			return validateResponse(details.getToken(), response);
 		} catch (PayPalException ex) {
 			throw ex;
 		} catch (Exception ex) {
 			throw new PayPalSystemException(requestDetails.getToken(), "SetExpressCheckout can't be executed. Token: " + requestDetails.getToken(), ex);
 		}
+	}
+
+	private <T extends AbstractResponseType> T validateResponse(String token, T response) throws PayPalQueryException {
+		if (response.getAck() != AckCodeType.SUCCESS) {
+			final PayPalQueryError error = new PayPalQueryError(response);
+			if (response.getAck() == AckCodeType.SUCCESSWITHWARNING) {
+				log.error("Payment processed with warning: {}", error);
+			} else {
+				throw new PayPalQueryException(token, error);
+			}
+		}
+		return response;
 	}
 
 	public void setConfiguration(Configuration configuration) {

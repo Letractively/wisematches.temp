@@ -16,6 +16,9 @@ public interface PayPalTransactionManager {
 	PayPalTransaction getTransaction(String token);
 
 
+	PayPalTransaction getTransactionByOrder(Long orderId);
+
+
 	PayPalTransaction beginTransaction(Order order);
 
 
