@@ -118,6 +118,7 @@ public class OrderMaintainController extends AbstractController {
 						if (transaction != null && transaction.getPayer() != null) {
 							orderManager.accept(transaction.getOrderId(), transaction.getTransactionId(), transaction.getAmount(), transaction.getPayer(), transaction.getPayerName(), transaction.getPayerNote());
 						}
+						break;
 					case SUSPENDED:
 						orderManager.suspend(orderId, comment);
 						break;

@@ -6,12 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="+">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/impl/HibernatePayPalTransactionManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/impl/HibernatePayPalTransactionManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java" afterPath="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/PayPalExpressCheckout.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/PayPalExpressCheckout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/PayPalTransactionManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/PayPalTransactionManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -112,7 +108,18 @@
     <favorites_list name="application" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="OrderMaintainController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.37775332" vertical-offset="1272" max-vertical-offset="3468">
+              <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -171,8 +178,8 @@
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/PayPalExpressCheckout.java" />
         <option value="$PROJECT_DIR$/modules/web/src/main/webapp/content/maintain/order.ftl" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/impl/HibernatePayPalTransactionManager.java" />
-        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java" />
         <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/paypal/PayPalTransactionManager.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java" />
       </list>
     </option>
   </component>
@@ -2093,7 +2100,7 @@
       <workItem from="1407408532097" duration="272000" />
       <workItem from="1407408829928" duration="7778000" />
       <workItem from="1407483555453" duration="11583000" />
-      <workItem from="1408016617262" duration="4145000" />
+      <workItem from="1408016617262" duration="4769000" />
     </task>
     <task id="LOCAL-00001" summary="Release 5.0.0">
       <created>1363751984384</created>
@@ -3319,11 +3326,17 @@
       <option name="project" value="LOCAL" />
       <updated>1407497330319</updated>
     </task>
-    <option name="localTasksCounter" value="205" />
+    <task id="LOCAL-00205" summary="+">
+      <created>1408020775944</created>
+      <option name="number" value="00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1408020775944</updated>
+    </task>
+    <option name="localTasksCounter" value="206" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1241392000" />
+    <option name="totallyTimeSpent" value="1242016000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -3347,7 +3360,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36295503" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32762313" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -3691,9 +3704,9 @@
         <state vertical-scroll-proportion="0.52422905" vertical-offset="0" max-vertical-offset="908">
           <caret line="28" column="13" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#586#587#0" expanded="true" />
-            <element signature="e#625#626#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#586#587#0" expanded="false" />
+            <element signature="e#625#626#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3710,8 +3723,8 @@
         <state vertical-scroll-proportion="0.37004405" vertical-offset="1092" max-vertical-offset="4522">
           <caret line="122" column="8" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
           <folding>
-            <element signature="e#3774#3778#0" expanded="true" />
-            <element signature="e#4055#4059#0" expanded="true" />
+            <element signature="e#3774#3778#0" expanded="false" />
+            <element signature="e#4055#4059#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3727,6 +3740,33 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5011338" vertical-offset="0" max-vertical-offset="882">
           <caret line="387" column="44" selection-start-line="387" selection-start-column="7" selection-end-line="387" selection-end-column="7" />
+          <folding>
+            <element signature="e#816#1206#0#FTL&gt;" expanded="false" />
+            <element signature="e#842#1196#0#FTL&gt;" expanded="false" />
+            <element signature="e#1571#1708#0#FTL&gt;" expanded="false" />
+            <element signature="e#1717#2035#0#FTL&gt;" expanded="false" />
+            <element signature="e#2768#5253#0#FTL&gt;" expanded="false" />
+            <element signature="e#2797#5246#0#FTL&gt;" expanded="false" />
+            <element signature="e#3500#3616#0#FTL&gt;" expanded="false" />
+            <element signature="e#3778#4245#0#FTL&gt;" expanded="false" />
+            <element signature="e#3874#3954#0#FTL&gt;" expanded="false" />
+            <element signature="e#3954#4097#0#FTL&gt;" expanded="false" />
+            <element signature="e#4097#4239#0#FTL&gt;" expanded="false" />
+            <element signature="e#6044#15845#0#FTL&gt;" expanded="false" />
+            <element signature="e#6769#7960#0#FTL&gt;" expanded="false" />
+            <element signature="e#7034#7798#0#FTL&gt;" expanded="false" />
+            <element signature="e#10172#10634#0#FTL&gt;" expanded="false" />
+            <element signature="e#10308#10555#0#FTL&gt;" expanded="false" />
+            <element signature="e#10669#10799#0#FTL&gt;" expanded="false" />
+            <element signature="e#11123#11269#0#FTL&gt;" expanded="false" />
+            <element signature="e#13351#13454#0#FTL&gt;" expanded="false" />
+            <element signature="e#13704#13868#0#FTL&gt;" expanded="false" />
+            <element signature="e#14633#14964#0#FTL&gt;" expanded="false" />
+            <element signature="e#16026#16174#0#HTML" expanded="false" />
+            <element signature="e#16220#16367#0#HTML" expanded="false" />
+            <element signature="e#16375#16676#0#FTL&gt;" expanded="false" />
+            <element signature="e#16475#16663#0#HTML" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3843,23 +3883,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1272" max-vertical-offset="3485">
-          <caret line="109" column="62" selection-start-line="109" selection-start-column="56" selection-end-line="109" selection-end-column="56" />
-          <folding>
-            <element signature="e#8269#8270#0" expanded="true" />
-            <element signature="e#8308#8309#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/warehouse/PayPalController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6442731" vertical-offset="1064" max-vertical-offset="1972">
           <caret line="118" column="19" selection-start-line="118" selection-start-column="16" selection-end-line="118" selection-end-column="19" />
           <folding>
-            <element signature="e#3201#3206#0" expanded="true" />
+            <element signature="e#3201#3206#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3908,6 +3937,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21255507" vertical-offset="2561" max-vertical-offset="4267">
           <caret line="178" column="49" selection-start-line="178" selection-start-column="49" selection-end-line="178" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/maintain/OrderMaintainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37775332" vertical-offset="1272" max-vertical-offset="3468">
+          <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
           <folding />
         </state>
       </provider>
