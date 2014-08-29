@@ -3,3 +3,10 @@
 
 <#import "../utils.ftl" as util>
 
+<p>
+    Ваш заказ был отменен<#if context.commentary?has_content>: ${context.commentary}</#if>.
+</p>
+
+<p>
+    Мы выполним возврат денежных редств по данному заказу в течение следующих 48 часов.
+</p>

@@ -2,7 +2,7 @@
 
 <#include "/core.ftl"/>
 
-<#macro parameter msg val><#if val?has_content>${msg}:<br>${val}</#if></#macro>
+<#macro parameter msg val><#if val?has_content>${msg}:<br>${val}<#else>&nbsp;</#if></#macro>
 
 <table class="info">
     <tr>

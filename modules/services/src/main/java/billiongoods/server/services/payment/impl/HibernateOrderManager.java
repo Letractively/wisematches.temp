@@ -27,8 +27,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
- * TODO: parcel listeners are not enabled!
- *
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class HibernateOrderManager extends EntitySearchManager<Order, OrderContext, Void> implements OrderManager {

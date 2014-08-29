@@ -2,20 +2,20 @@ package billiongoods.server.services.payment;
 
 import billiongoods.core.Personality;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class OrderContext {
-	private final EnumSet<OrderState> orderStates;
+	private final Set<OrderState> orderStates;
 	private final Personality personality;
 
-	public OrderContext(EnumSet<OrderState> orderStates) {
+	public OrderContext(Set<OrderState> orderStates) {
 		this(null, orderStates);
 	}
 
-	public OrderContext(Personality personality, EnumSet<OrderState> orderStates) {
+	public OrderContext(Personality personality, Set<OrderState> orderStates) {
 		this.orderStates = orderStates;
 		this.personality = personality;
 	}
@@ -24,7 +24,7 @@ public class OrderContext {
 		return personality;
 	}
 
-	public EnumSet<OrderState> getOrderStates() {
+	public Set<OrderState> getOrderStates() {
 		return orderStates;
 	}
 }
