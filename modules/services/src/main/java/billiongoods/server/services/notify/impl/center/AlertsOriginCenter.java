@@ -21,6 +21,8 @@ import billiongoods.server.warehouse.ProductPreview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.EnumSet;
+
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
@@ -30,6 +32,7 @@ public class AlertsOriginCenter {
 	private ProductManager productManager;
 	private ValidationManager productValidator;
 	private ProductTrackingManager trackingManager;
+	private OrderExpirationManager expirationManager;
 
 	private NotificationService notificationService;
 
@@ -37,6 +40,8 @@ public class AlertsOriginCenter {
 	private final TheAccountListener accountListener = new TheAccountListener();
 	private final TheValidationListener validatorListener = new TheValidationListener();
 	private final TheProductTrackingListener trackingListener = new TheProductTrackingListener();
+
+	private static final EnumSet<OrderState> ORDER_PROCESSING_STATE = EnumSet.of(OrderState.ACCEPTED, OrderState.CLOSED);
 
 	private static final Logger log = LoggerFactory.getLogger("billiongoods.alerts.OriginCenter");
 
@@ -51,28 +56,40 @@ public class AlertsOriginCenter {
 		}
 	}
 
-	private void processOrderAccepted(Order order) {
+	private void processOrderExpiring(Order order) {
 		try {
-			Recipient owner = null;
-
-			Long personId = order.getPersonId();
-			if (personId != null) {
-				final Account account = accountManager.getAccount(personId);
-				if (account != null) {
-					owner = Recipient.get(account);
-				}
-			}
-
-			if (owner == null) {
-				final OrderPayment payment = order.getPayment();
-				owner = Recipient.get(payment.getPayer(), new Passport(payment.getPayerName()));
-			}
-			final Recipient recipient = Recipient.get(Recipient.MailBox.MONITORING, owner);
-
-			notificationService.raiseNotification(recipient, Sender.SERVER, "system.order", order, order.getId());
+			final Recipient recipient = Recipient.get(Recipient.MailBox.MONITORING, getOrderOwner(order));
+			notificationService.raiseNotification(recipient, Sender.SERVER, "system.order.expiring." + order.getState().getCode(), order, order.getId());
 		} catch (Exception ex) {
 			log.error("Order accepted alert can't be sent", ex);
 		}
+	}
+
+	private void processOrderState(Order order) {
+		try {
+			final Recipient recipient = Recipient.get(Recipient.MailBox.MONITORING, getOrderOwner(order));
+			notificationService.raiseNotification(recipient, Sender.SERVER, "system.order.state." + order.getState().getCode(), order, order.getId());
+		} catch (Exception ex) {
+			log.error("Order accepted alert can't be sent", ex);
+		}
+	}
+
+	private Recipient getOrderOwner(Order order) {
+		Recipient owner = null;
+
+		Long personId = order.getPersonId();
+		if (personId != null) {
+			final Account account = accountManager.getAccount(personId);
+			if (account != null) {
+				owner = Recipient.get(account);
+			}
+		}
+
+		if (owner == null) {
+			final OrderPayment payment = order.getPayment();
+			owner = Recipient.get(payment.getPayer(), new Passport(payment.getPayerName()));
+		}
+		return owner;
 	}
 
 
@@ -133,7 +150,7 @@ public class AlertsOriginCenter {
 		}
 	}
 
-	private class TheOrderListener implements OrderListener {
+	private class TheOrderListener implements OrderListener, OrderExpirationListener {
 		private TheOrderListener() {
 		}
 
@@ -142,9 +159,14 @@ public class AlertsOriginCenter {
 		}
 
 		@Override
+		public void orderExpiring(Order order) {
+			processOrderExpiring(order);
+		}
+
+		@Override
 		public void orderStateChanged(Order order, OrderState oldState, OrderState newState) {
-			if (newState == OrderState.ACCEPTED) {
-				processOrderAccepted(order);
+			if (ORDER_PROCESSING_STATE.contains(newState)) {
+				processOrderState(order);
 			}
 		}
 

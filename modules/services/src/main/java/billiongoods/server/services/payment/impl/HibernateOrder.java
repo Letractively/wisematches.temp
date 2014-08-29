@@ -3,6 +3,7 @@ package billiongoods.server.services.payment.impl;
 import billiongoods.server.services.payment.*;
 
 import javax.persistence.*;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -375,7 +376,7 @@ public class HibernateOrder implements Order {
 		OrderState oldState = this.state;
 
 		this.state = state;
-		this.timestamp = LocalDateTime.now();
+		this.timestamp = LocalDateTime.now(Clock.systemUTC());
 
 		if (commentary != null && commentary.length() > 254) {
 			commentary = commentary.substring(0, 254);

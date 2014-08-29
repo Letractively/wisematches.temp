@@ -146,6 +146,20 @@
         <property name="shipmentManager" ref="shipmentManager"/>
     </bean>
 
+    <bean class="billiongoods.server.services.payment.impl.OrderExpirationCenter">
+        <property name="orderManager" ref="orderManager"/>
+        <property name="taskScheduler">
+            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+                <property name="poolSize" value="1"/>
+                <property name="threadGroupName" value="OrderExpirationSchedulers"/>
+                <property name="threadNamePrefix" value="OrderExpirationScheduler"/>
+                <property name="waitForTasksToCompleteOnShutdown" value="true"/>
+            </bean>
+        </property>
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="transactionTemplate" ref="transactionRequiresNew"/>
+    </bean>
+
     <bean class="billiongoods.server.warehouse.impl.ProductTrackerCenter">
         <property name="orderManager" ref="orderManager"/>
         <property name="productManager" ref="productManager"/>
