@@ -34,7 +34,7 @@ public class ProductContext {
 	}
 
 	public ProductContext(Category category, boolean subCategories, String search, boolean arrival, boolean onlyRecommended, EnumSet<ProductState> productStates, StockState stockState) {
-		this(category, subCategories, search, arrival, false, productStates, stockState, null);
+		this(category, subCategories, search, arrival, onlyRecommended, productStates, stockState, null);
 	}
 
 	public ProductContext(Category category, boolean subCategories, String search, boolean arrival, boolean onlyRecommended, EnumSet<ProductState> productStates, StockState stockState, Restriction restriction) {
