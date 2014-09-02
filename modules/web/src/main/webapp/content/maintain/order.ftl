@@ -107,7 +107,7 @@
             </div>
         </#if>
 
-        <#if (items?size>1) && ((!parcel?has_content && order.state == OrderState.ACCEPTED) || (parcel?has_content && !parcel.state.finished))>
+        <#if (!parcel?has_content && order.state == OrderState.ACCEPTED) || ((items?size>1) && (parcel?has_content && !parcel.state.finished))>
             <div style="display: inline-block">
                 <button class="manage-parcel-create" type="button">Разделить</button>
             </div>

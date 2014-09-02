@@ -1,7 +1,6 @@
 package billiongoods.server.services.payment.impl;
 
 import billiongoods.server.services.payment.*;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,7 +29,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class OrderExpirationCenter implements OrderExpirationManager, InitializingBean {
 	private OrderManager orderManager;
 	private TaskScheduler taskScheduler;
-	private SessionFactory sessionFactory;
 	private TransactionTemplate transactionTemplate;
 
 	private final Lock lock = new ReentrantLock();
@@ -167,10 +165,6 @@ public class OrderExpirationCenter implements OrderExpirationManager, Initializi
 
 	public void setTaskScheduler(TaskScheduler taskScheduler) {
 		this.taskScheduler = taskScheduler;
-	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
 	}
 
 	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {

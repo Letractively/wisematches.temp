@@ -146,7 +146,7 @@
         <property name="shipmentManager" ref="shipmentManager"/>
     </bean>
 
-    <bean class="billiongoods.server.services.payment.impl.OrderExpirationCenter">
+    <bean id="orderExpirationManager" class="billiongoods.server.services.payment.impl.OrderExpirationCenter">
         <property name="orderManager" ref="orderManager"/>
         <property name="taskScheduler">
             <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
@@ -156,7 +156,6 @@
                 <property name="waitForTasksToCompleteOnShutdown" value="true"/>
             </bean>
         </property>
-        <property name="sessionFactory" ref="sessionFactory"/>
         <property name="transactionTemplate" ref="transactionRequiresNew"/>
     </bean>
 
@@ -279,6 +278,7 @@
         <property name="notificationService" ref="notificationService"/>
 
         <property name="orderManager" ref="orderManager"/>
+        <property name="expirationManager" ref="orderExpirationManager"/>
         <property name="accountManager" ref="accountManager"/>
         <property name="productManager" ref="productManager"/>
         <property name="trackingManager" ref="trackingManager"/>

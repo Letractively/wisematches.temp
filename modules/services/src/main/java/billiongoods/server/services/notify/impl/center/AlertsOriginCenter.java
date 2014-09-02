@@ -61,7 +61,7 @@ public class AlertsOriginCenter {
 			final Recipient recipient = Recipient.get(Recipient.MailBox.MONITORING, getOrderOwner(order));
 			notificationService.raiseNotification(recipient, Sender.SERVER, "system.order.expiring." + order.getState().getCode(), order, order.getId());
 		} catch (Exception ex) {
-			log.error("Order accepted alert can't be sent", ex);
+			log.error("Order expiring alert can't be sent: " + order.getId() + " - > " + order.getState(), ex);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class AlertsOriginCenter {
 			final Recipient recipient = Recipient.get(Recipient.MailBox.MONITORING, getOrderOwner(order));
 			notificationService.raiseNotification(recipient, Sender.SERVER, "system.order.state." + order.getState().getCode(), order, order.getId());
 		} catch (Exception ex) {
-			log.error("Order accepted alert can't be sent", ex);
+			log.error("Order state alert can't be sent: " + order.getId() + " - > " + order.getState(), ex);
 		}
 	}
 
@@ -108,6 +108,20 @@ public class AlertsOriginCenter {
 		if (this.orderManager != null) {
 			this.orderManager.addOrderListener(orderListener);
 		}
+	}
+
+	public void setExpirationManager(OrderExpirationManager expirationManager) {
+		if (this.expirationManager != null) {
+			this.expirationManager.removeOrderExpirationListener(orderListener);
+		}
+		;
+
+		this.expirationManager = expirationManager;
+
+		if (this.expirationManager != null) {
+			this.expirationManager.addOrderExpirationListener(orderListener);
+		}
+		;
 	}
 
 	public void setAccountManager(AccountManager accountManager) {
