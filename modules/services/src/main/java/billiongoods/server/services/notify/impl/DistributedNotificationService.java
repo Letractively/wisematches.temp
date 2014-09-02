@@ -26,15 +26,12 @@ public class DistributedNotificationService implements NotificationService {
 	public Notification raiseNotification(Recipient recipient, Sender sender, String code, Object context, Object... args) throws NotificationException {
 		final Notification notification = notificationConverter.createNotification(recipient, sender, code, context, args);
 
-		taskExecutor.execute(new Runnable() {
-			@Override
-			public void run() {
-				for (final NotificationPublisher publisher : publishers) {
-					try {
-						publisher.publishNotification(notification);
-					} catch (NotificationException ex) {
-						log.error("Notification can't be processed: code={},publisher={}", notification.getCode(), publisher.getName(), ex);
-					}
+		taskExecutor.execute(() -> {
+			for (final NotificationPublisher publisher : publishers) {
+				try {
+					publisher.publishNotification(notification);
+				} catch (NotificationException ex) {
+					log.error("Notification can't be processed: code={},publisher={}", notification.getCode(), publisher.getName(), ex);
 				}
 			}
 		});

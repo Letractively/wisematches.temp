@@ -58,18 +58,6 @@ public class FreeMarkerNotificationConverter implements NotificationConverter {
 	}
 
 	protected String getTemplate(String code) {
-		int count = 0;
-		int index = 0;
-		do {
-			index = code.indexOf('.', index + 1);
-			if (index == -1) {
-				break;
-			}
-			count++;
-			if (count == 3) {
-				return code.substring(0, index);
-			}
-		} while (true);
 		return code;
 	}
 
