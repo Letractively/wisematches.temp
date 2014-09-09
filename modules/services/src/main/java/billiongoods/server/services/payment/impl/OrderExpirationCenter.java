@@ -101,7 +101,7 @@ public class OrderExpirationCenter implements OrderExpirationManager, Initializi
 			if (duration >= period && state == OrderState.SHIPPED) { // out of date shipped
 				log.info("Shipped order has been expired. Do termination...");
 
-				processOrderCheck(order);
+				processOrderCheck(order, true);
 			} else {
 				final long initial = period - (duration % period);
 				log.info("Schedule order check: id - {}, state - {}, initial - {}, now - {}, timestamp - {}", orderId, state, initial, now, timestamp);
@@ -118,19 +118,20 @@ public class OrderExpirationCenter implements OrderExpirationManager, Initializi
 		}
 	}
 
-	public void processOrderCheck(Long id) {
+	private void processOrderCheck(Long id, boolean silence) {
 		final Order order = orderManager.getOrder(id);
 		if (order != null) {
-			processOrderCheck(order);
+			processOrderCheck(order, silence);
 		}
 	}
 
-	public void processOrderCheck(Order order) {
+	private void processOrderCheck(final Order order, boolean silence) {
 		final OrderState state = order.getState();
 		if (!days.containsKey(state)) {
 			log.info("Order #{} state {} was changed from last time. Invalid state now.", order.getId(), state);
 		}
 
+		Order res = order;
 		if (state == OrderState.SHIPPED) {
 			log.info("Close order by timeout: {}", order.getId());
 
@@ -138,16 +139,19 @@ public class OrderExpirationCenter implements OrderExpirationManager, Initializi
 			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
 				@Override
 				protected void doInTransactionWithoutResult(TransactionStatus status) {
-					order.getParcels().stream().filter(parcel -> parcel.getState() == ParcelState.SHIPPED).forEach(parcel -> {
+					order.getParcels().stream().filter(parcel -> parcel.getState() == ParcelState.SHIPPED && !parcel.isTracking()).forEach(parcel -> {
 						orderManager.close(order.getId(), parcel.getId(), now, "Заказ автоматически закрыт по прошествие " + days.get(OrderState.SHIPPED) + " дней с момента отправки.");
 					});
 				}
 			});
-		} else {
-			log.info("Notify expiring order: {}", order.getId());
+			res = orderManager.getOrder(order.getId()); // order must be refreshed
+		}
+
+		if (res.getState() != OrderState.CLOSED && !silence) {
+			log.info("Notify expiring order: {}", res.getId());
 
 			for (OrderExpirationListener listener : listeners) {
-				listener.orderExpiring(order);
+				listener.orderExpiring(res);
 			}
 		}
 	}
@@ -180,7 +184,12 @@ public class OrderExpirationCenter implements OrderExpirationManager, Initializi
 
 		@Override
 		public void run() {
-			processOrderCheck(id);
+			transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+				@Override
+				protected void doInTransactionWithoutResult(TransactionStatus status) {
+					processOrderCheck(id, false);
+				}
+			});
 		}
 	}
 
