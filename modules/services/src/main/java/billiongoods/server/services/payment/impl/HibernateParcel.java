@@ -96,6 +96,11 @@ public class HibernateParcel implements Parcel {
 	}
 
 	@Override
+	public boolean isTracking() {
+		return internationalTracking != null && !internationalTracking.isEmpty();
+	}
+
+	@Override
 	public String getChinaMailTracking() {
 		return chinaMailTracking;
 	}

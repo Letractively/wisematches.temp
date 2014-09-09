@@ -112,6 +112,13 @@ public interface Order {
 	 */
 	List<OrderItem> getItems(Parcel parcel);
 
+	/**
+	 * Checks is this order has any associated international tracking number or not. This method doesn't check
+	 * any shipment type or order state. It just checks original tracking numbers.
+	 *
+	 * @return {@code true} is there is any international tracking number; {@code false} - otherwise.
+	 */
+	boolean isTracking();
 
 	/**
 	 * Returns all available national tracking number for this order.

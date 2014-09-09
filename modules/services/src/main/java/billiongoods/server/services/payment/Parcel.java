@@ -36,6 +36,8 @@ public interface Parcel {
 	Temporal getExpectedResume();
 
 
+	boolean isTracking();
+
 	String getChinaMailTracking();
 
 	String getInternationalTracking();

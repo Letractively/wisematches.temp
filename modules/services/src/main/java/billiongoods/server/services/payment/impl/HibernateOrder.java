@@ -137,6 +137,16 @@ public class HibernateOrder implements Order {
 	}
 
 	@Override
+	public boolean isTracking() {
+		for (Parcel parcel : parcels) {
+			if (parcel.isTracking()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public Set<String> getNationalTracking() {
 		final int size = parcels.size();
 		if (size == 0) {
