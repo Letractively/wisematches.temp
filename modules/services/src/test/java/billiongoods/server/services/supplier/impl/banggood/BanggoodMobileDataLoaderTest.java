@@ -39,8 +39,8 @@ public class BanggoodMobileDataLoaderTest {
 		final BanggoodMobileDataLoader dataLoader = new BanggoodMobileDataLoader();
 		dataLoader.afterPropertiesSet();
 
-		final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/Wholesale-Sports-Outdoor-Bicycle-Rubber-Protecting-Palms-Grips-Gloves-1-Pair-Blue-p-57971.html", "SKU051116", Supplier.BANGGOOD, null);
-		final SupplierDescription desc1 = dataLoader.loadDescription(info1);
+        final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/Earphone-Headset-Pattern-PC-Hard-Back-Case-Cover-For-IPhone-5-5S-p-86990.html", "SKU095691", Supplier.BANGGOOD, null);
+        final SupplierDescription desc1 = dataLoader.loadDescription(info1);
 		assertNotNull(desc1);
 		assertNotNull(desc1.getPrice());
 		System.out.println(desc1);
