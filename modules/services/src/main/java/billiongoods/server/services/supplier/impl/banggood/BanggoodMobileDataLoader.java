@@ -240,7 +240,14 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
             if (execute.getStatusLine().getStatusCode() == 404) {
                 return null;
             }
-            return parseProductDetails(EntityUtils.toString(execute.getEntity()));
+            final String text = EntityUtils.toString(execute.getEntity());
+            if (text == null) {
+                return null;
+            }
+            if (text.contains("Sorry! The page has a error!")) { // 404 for mobile version
+                return null;
+            }
+            return parseProductDetails(text);
         } catch (DataLoadingException ex) {
             throw ex;
         } catch (Exception ex) {
