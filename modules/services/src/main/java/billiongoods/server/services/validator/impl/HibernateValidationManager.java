@@ -280,7 +280,7 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
 
     private List<ValidatingProduct> loadProductDetails(Session session, int position, int count) {
         final Range range = Range.limit(position, count);
-        final Query query = session.createQuery("select a.id, a.price, a.stockInfo, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) order by a.id");
+        final Query query = session.createQuery("select a.id, a.name, a.price, a.stockInfo, a.supplierInfo from billiongoods.server.warehouse.impl.HibernateProduct a where a.state in (:states) order by a.id");
         query.setParameterList("states", ProductContext.VISIBLE);
         final List list = range.apply(query).list();
         if (list.size() == 0) {
@@ -292,11 +292,12 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
             final Object[] a = (Object[]) o;
 
             final Integer productId = (Integer) a[0];
-            final Price price = (Price) a[1];
-            final StockInfo stockInfo = (StockInfo) a[2];
-            final SupplierInfo supplierInfo = (SupplierInfo) a[3];
+            final String name = (String) a[1];
+            final Price price = (Price) a[2];
+            final StockInfo stockInfo = (StockInfo) a[3];
+            final SupplierInfo supplierInfo = (SupplierInfo) a[4];
 
-            res.add(new ValidatingProductImpl(productId, price, stockInfo, supplierInfo));
+            res.add(new ValidatingProductImpl(productId, name, price, stockInfo, supplierInfo));
         }
         return res;
     }
