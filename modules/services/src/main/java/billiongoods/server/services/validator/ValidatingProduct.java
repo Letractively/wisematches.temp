@@ -10,6 +10,8 @@ import billiongoods.server.warehouse.SupplierInfo;
 public interface ValidatingProduct {
 	Integer getId();
 
+    String getName();
+
 	Price getPrice();
 
 	StockInfo getStockInfo();

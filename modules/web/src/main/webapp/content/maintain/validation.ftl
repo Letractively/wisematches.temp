@@ -84,6 +84,7 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
     <table class="info">
         <tr>
             <th>Артикул</th>
+            <th>Наименование</th>
             <th>Banggood</th>
             <th>Текущая цена</th>
             <th>Цена до скидки</th>
@@ -91,16 +92,19 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
 
         <#list context.lostProducts as b>
             <tr>
-                <td>
+                <td nowrap="nowrap">
                     <a href="http://www.billiongoods.ru/maintain/product?id=${b.id}">${messageSource.getProductCode(b.id)}</a>
                 </td>
                 <td>
+                ${b.name}
+                </td>
+                <td nowrap="nowrap">
                     <a href="${b.supplierInfo.referenceUrl.toString()}">${b.supplierInfo.referenceCode}</a>
                 </td>
-                <td>
+                <td nowrap="nowrap">
                 ${b.price.amount?string("0.00")}
                 </td>
-                <td>
+                <td nowrap="nowrap">
                     <#if b.price.primordialAmount??>${b.price.primordialAmount?string("0.00")}</#if>
                 </td>
             </tr>
@@ -117,6 +121,7 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
     <table class="info">
         <tr>
             <th>Артикул</th>
+            <th>наименование</th>
             <th>Banggood</th>
             <th>Текущая цена</th>
             <th>Цена до скидки</th>
@@ -125,19 +130,22 @@ ${price.amount?string("0.00")} (<#if price.primordialAmount??>${price.primordial
 
         <#list context.brokenProducts as b>
             <tr>
-                <td>
+                <td nowrap="nowrap">
                     <a href="http://www.billiongoods.ru/maintain/product?id=${b.id}">${messageSource.getProductCode(b.id)}</a>
                 </td>
                 <td>
+                ${b.name}
+                </td>
+                <td nowrap="nowrap">
                     <a href="${b.supplierInfo.referenceUrl.toString()}">${b.supplierInfo.referenceCode}</a>
                 </td>
-                <td>
+                <td nowrap="nowrap">
                 ${b.price.amount?string("0.00")}
                 </td>
-                <td>
+                <td nowrap="nowrap">
                     <#if b.price.primordialAmount??>${b.price.primordialAmount?string("0.00")}</#if>
                 </td>
-                <td>
+                <td nowrap="nowrap">
                     <@stockInfo b.stockInfo/>
                 </td>
             </tr>

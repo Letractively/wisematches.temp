@@ -9,42 +9,47 @@ import billiongoods.server.warehouse.SupplierInfo;
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
 public class ValidatingProductImpl implements ValidatingProduct {
-	private final Integer id;
-	private final Price price;
-	private final StockInfo stockInfo;
-	private final SupplierInfo supplierInfo;
+    private final Integer id;
+    private final String name;
+    private final Price price;
+    private final StockInfo stockInfo;
+    private final SupplierInfo supplierInfo;
 
-	ValidatingProductImpl(Integer id, Price price, StockInfo stockInfo, SupplierInfo supplierInfo) {
-		this.id = id;
-		this.price = price;
-		this.stockInfo = stockInfo;
-		this.supplierInfo = supplierInfo;
-	}
+    ValidatingProductImpl(Integer id, String name, Price price, StockInfo stockInfo, SupplierInfo supplierInfo) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stockInfo = stockInfo;
+        this.supplierInfo = supplierInfo;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    @Override
+    public Integer getId() {
+        return id;
+    }
 
-	public Price getPrice() {
-		return price;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	public StockInfo getStockInfo() {
-		return stockInfo;
-	}
+    @Override
+    public Price getPrice() {
+        return price;
+    }
 
-	public SupplierInfo getSupplierInfo() {
-		return supplierInfo;
-	}
+    @Override
+    public StockInfo getStockInfo() {
+        return stockInfo;
+    }
 
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("ValidatingProductImpl{");
-		sb.append("id=").append(id);
-		sb.append(", price=").append(price);
-		sb.append(", stockInfo=").append(stockInfo);
-		sb.append(", supplierInfo=").append(supplierInfo);
-		sb.append('}');
-		return sb.toString();
-	}
+    @Override
+    public SupplierInfo getSupplierInfo() {
+        return supplierInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "ValidatingProductImpl{" + "id=" + id + ", name=" + name + ", price=" + price + ", stockInfo=" + stockInfo + ", supplierInfo=" + supplierInfo + '}';
+    }
 }
