@@ -94,6 +94,7 @@
                 <@bg.link.product product><@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/></@bg.link.product>
             </td>
             <td valign="top" width="100%" align="left" style="border-left: none">
+                <@bg.link.product product>${messageSource.getProductCode(product)}</@bg.link.product>
                 <@bg.link.product product>${product.name}</@bg.link.product>
                 <#if i.options??>
                     <div class="options">
