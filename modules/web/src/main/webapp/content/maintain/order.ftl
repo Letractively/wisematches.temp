@@ -60,7 +60,8 @@
         <td valign="top" width="50px" style="border-right: none">
             <@bg.link.product product><@bg.ui.productImage product product.previewImageId!"" ImageSize.TINY/></@bg.link.product>
         </td>
-        <td valign="top" width="100%" align="left" style="border-left: none">
+        <td valign="top" width="100%" align="left" style="border-left: none;">
+            <@bg.link.product product>${messageSource.getProductCode(product)}</@bg.link.product>
             <@bg.link.product product>${product.name}</@bg.link.product>
             <#if i.options??>
                 <div class="options">
@@ -107,7 +108,7 @@
             </div>
         </#if>
 
-        <#if (!parcel?has_content && order.state == OrderState.ACCEPTED) || ((items?size>1) && (parcel?has_content && !parcel.state.finished))>
+        <#if (!parcel?has_content && (order.state == OrderState.ACCEPTED || order.state == OrderState.SUSPENDED)) || ((items?size>1) && (parcel?has_content && !parcel.state.finished))>
             <div style="display: inline-block">
                 <button class="manage-parcel-create" type="button">Разделить</button>
             </div>
