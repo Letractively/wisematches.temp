@@ -63,7 +63,8 @@ public abstract class AbstractController {
 		if (uri.length() <= 1) {
 			return "title.default";
 		}
-		return "title." + uri.replaceAll("/", ".").substring(1);
+		final String substring = uri.replaceAll("/", ".").substring(1);
+		return "title." + (substring.endsWith(".") ? substring.substring(0, substring.length() - 1) : substring);
 	}
 
 	public void setTitle(Model model, String title) {

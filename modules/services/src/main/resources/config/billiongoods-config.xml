@@ -81,7 +81,8 @@
         <property name="transactionManager" ref="transactionManager"/>
 
         <property name="taskExecutor">
-            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+            <bean id="ValidationManagerScheduler"
+                  class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
                 <property name="poolSize" value="1"/>
                 <property name="threadNamePrefix" value="PriceValidation"/>
                 <property name="waitForTasksToCompleteOnShutdown" value="true"/>
@@ -100,7 +101,8 @@
         <property name="transactionManager" ref="transactionManager"/>
 
         <property name="taskExecutor">
-            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+            <bean id="ProductsImporterScheduler"
+                  class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
                 <property name="poolSize" value="1"/>
                 <property name="threadNamePrefix" value="ProductsImporter"/>
                 <property name="waitForTasksToCompleteOnShutdown" value="true"/>
@@ -149,11 +151,12 @@
     <bean id="orderExpirationManager" class="billiongoods.server.services.payment.impl.OrderExpirationCenter">
         <property name="orderManager" ref="orderManager"/>
         <property name="taskScheduler">
-            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+            <bean id="OrderExpirationScheduler"
+                  class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
                 <property name="poolSize" value="1"/>
                 <property name="threadGroupName" value="OrderExpirationSchedulers"/>
                 <property name="threadNamePrefix" value="OrderExpirationScheduler"/>
-                <property name="waitForTasksToCompleteOnShutdown" value="true"/>
+                <property name="waitForTasksToCompleteOnShutdown" value="false"/>
             </bean>
         </property>
         <property name="transactionTemplate" ref="transactionRequiresNew"/>
@@ -184,7 +187,7 @@
 
     <bean id="notificationTaskExecutor" class="billiongoods.core.task.executor.TransactionAwareExecutor">
         <property name="taskExecutor">
-            <bean class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+            <bean id="NotificationScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
                 <property name="poolSize" value="1"/>
                 <property name="threadNamePrefix" value="NotificationManager"/>
                 <property name="waitForTasksToCompleteOnShutdown" value="true"/>
