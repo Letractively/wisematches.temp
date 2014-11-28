@@ -48,6 +48,7 @@ public class HibernateRelationshipManagerTest {
 		editor.setWeight(1.2);
 		editor.setSupplierPrice(new Price(124.d));
 		editor.setProductState(ProductState.DISABLED);
+		editor.setStockInfo(new StockInfo(1, 12, 3));
 
 		editor.setName("Mock art1");
 		final Product a1 = productManager.createProduct(editor);

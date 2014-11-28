@@ -178,8 +178,7 @@ public class HibernateOrderManagerTest {
 		assertEquals("my note", payment.getPayerNote());
 		assertEquals("ASDAWEQWEASD", payment.getPaymentId());
 		assertEquals(123.45, payment.getPaymentAmount(), 0.000000001);
-		assertEquals(OrderState.CANCELLED, order.getState());
-
+		assertEquals(OrderState.FAILED, order.getState());
 	}
 
 	@Test

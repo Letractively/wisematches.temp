@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Sergey Klimenko (smklimenko@gmail.com)
  */
-//@Ignore
+@Ignore
 public class BanggoodMobileDataLoaderTest {
 	public BanggoodMobileDataLoaderTest() {
 	}
@@ -59,7 +59,6 @@ public class BanggoodMobileDataLoaderTest {
 	}
 
 	@Test
-	@Ignore
 	public void testSupplierDescription3() throws Exception {
 		final BanggoodMobileDataLoader dataLoader = new BanggoodMobileDataLoader();
 		dataLoader.afterPropertiesSet();
