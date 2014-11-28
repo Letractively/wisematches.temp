@@ -15,7 +15,7 @@ public class FreeMarkerMailSelectorConverterTest {
 	public void getTemplate() {
 		final FreeMarkerNotificationConverter converter = new FreeMarkerNotificationConverter();
 		assertEquals("this.is.code", converter.getTemplate("this.is.code"));
-		assertEquals("this.is.code", converter.getTemplate("this.is.code.c1"));
-		assertEquals("this.is.code", converter.getTemplate("this.is.code.b.c1"));
+		assertEquals("this.is.code.c1", converter.getTemplate("this.is.code.c1"));
+		assertEquals("this.is.code.b.c1", converter.getTemplate("this.is.code.b.c1"));
 	}
 }
