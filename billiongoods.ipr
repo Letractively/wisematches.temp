@@ -5,14 +5,14 @@
   </component>
   <component name="ArtifactManager">
     <artifact type="exploded-war" build-on-make="true" name="web:war exploded">
-      <output-path>$PROJECT_DIR$/modules/web/target/web-6.1.0</output-path>
+      <output-path>$PROJECT_DIR$/modules/web/target/web-6.2.0</output-path>
       <root id="root">
         <element id="directory" name="WEB-INF">
           <element id="directory" name="classes">
             <element id="module-output" name="web" />
           </element>
           <element id="directory" name="lib">
-            <element id="archive" name="core-6.1.0.jar">
+            <element id="archive" name="core-6.2.0.jar">
               <element id="module-output" name="core" />
             </element>
             <element id="library" level="project" name="Maven: org.hibernate:hibernate-core:4.2.5.Final" />
@@ -30,7 +30,7 @@
             <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.26" />
             <element id="library" level="project" name="Maven: cglib:cglib-nodep:2.2.2" />
             <element id="library" level="project" name="Maven: javax.transaction:jta:1.1" />
-            <element id="archive" name="services-6.1.0.jar">
+            <element id="archive" name="services-6.2.0.jar">
               <element id="module-output" name="services" />
             </element>
             <element id="library" level="project" name="Maven: net.sf.opencsv:opencsv:2.3" />
@@ -100,7 +100,7 @@
     </artifact>
     <artifact type="war" name="web:war">
       <output-path>$PROJECT_DIR$/modules/web/target</output-path>
-      <root id="archive" name="web-6.1.0.war">
+      <root id="archive" name="web-6.2.0.war">
         <element id="artifact" artifact-name="web:war exploded" />
       </root>
     </artifact>
@@ -315,6 +315,7 @@
     <version value="1.0" />
   </component>
   <component name="JavaScriptLibraryMappings">
+    <file url="PROJECT" libraries="{ckeditor, jquery-2.1.0, jquery-2.1.1}" />
     <excludedPredefinedLibrary name="HTML" />
   </component>
   <component name="JavacSettings">

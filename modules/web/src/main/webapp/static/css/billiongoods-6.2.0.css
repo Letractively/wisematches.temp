@@ -732,8 +732,8 @@ button.bg-ui-button.selected {
 }
 
 .info-panel .tit {
-    line-height: normal;
     background: #f0f0f0;
+    line-height: normal;
     border-bottom: 2px solid #d67632;
 }
 
@@ -790,10 +790,6 @@ button.bg-ui-button.selected {
     display: inline-block;
 }
 
-.product, .product span, .product div, .product label {
-    font-size: 14px;
-}
-
 .product .view {
     width: 276px;
 }
@@ -830,17 +826,19 @@ button.bg-ui-button.selected {
 }
 
 .product .info {
-    padding-left: 5px;
-}
-
-.product .info > div {
-    padding-bottom: 15px;
+    background: #f9f9f9;
+    margin: 0 0 0 10px;
+    padding: 10px 20px 20px 20px;
 }
 
 .product .name {
     color: #303030;
     font-size: 15px;
     font-weight: bold;
+}
+
+.product .info .name {
+    padding-bottom: 15px;
 }
 
 .product.disabled .name {
@@ -853,7 +851,6 @@ button.bg-ui-button.selected {
 
 .product .stock {
     padding-top: 10px;
-    border-top: 1px dashed #ebebeb;
 }
 
 .product .stock .out_stock, .product .stock .sold_out {
@@ -878,31 +875,45 @@ button.bg-ui-button.selected {
 }
 
 .product .shipment {
-    float: right;
     color: green;
-    text-align: right;
 }
 
-.product .panel {
-    padding: 0 !important;
-    background: #f3f3f3;
-    border: 1px solid #cccccc;
+.product .card {
+    padding-top: 10px;
 }
 
-.product .panel > div {
-    padding: 6px;
+.product .card .items {
+    width: 100%;
+    display: table;
 }
 
-.product .ops, .product .action {
-    border-top: 1px dashed #cccccc;
+.product .card .item {
+    padding: 10px 0;
+    display: table-row;
 }
 
-.product .stock div, .product .ops div, .product .action div {
+.product .card .item-name {
+    padding: 5px 25px 5px 0;
+    display: table-cell;
+    white-space: nowrap;
+}
+
+.product .card .item-cnt {
+    width: 100%;
+    padding: 5px 0;
+    display: table-cell;
+}
+
+.product .ops .item-cnt div {
+    display: inline;
+}
+
+.product .stock div {
     display: inline;
 }
 
 .product .option {
-    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .price {
@@ -954,8 +965,8 @@ button.bg-ui-button.selected {
     padding: 0;
     width: 20px;
     height: 18px;
-    vertical-align: text-top;
     border-color: #129900;
+    vertical-align: baseline;
     background-color: #14be00;
 }
 
