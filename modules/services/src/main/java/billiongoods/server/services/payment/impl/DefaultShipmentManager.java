@@ -14,8 +14,8 @@ public class DefaultShipmentManager implements ShipmentManager {
 	private double registeredShipmentCost = REGISTERED_SHIPMENT_COST;
 
 	private static final double DEFAULT_SHIPMENT_COST = 0d;
-	private static final double FREE_SHIPMENT_AMOUNT = 1000d;
-	private static final double REGISTERED_SHIPMENT_COST = 70d;
+	private static final double FREE_SHIPMENT_AMOUNT = 1200d;
+	private static final double REGISTERED_SHIPMENT_COST = 80d;
 
 	public DefaultShipmentManager() {
 	}
