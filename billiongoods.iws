@@ -6,22 +6,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dead97dc-1a23-4904-982b-27559c512bcc" name="Default" comment="+">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/resources/product_image.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/services/src/test/resources/product_info.csv" />
-      <change type="DELETED" beforePath="C:\Source\bg\modules\services\src\test\resources\banggood_packer.csv" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggood/BanggoodMobileDataLoaderTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggood/BanggoodMobileDataLoaderTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggood/BanggoodProductImporter.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggood/BanggoodProductImporter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggood/BanggoodProductImporterTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggood/BanggoodProductImporterTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/notify/impl/converter/FreeMarkerMailSelectorConverterTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/notify/impl/converter/FreeMarkerMailSelectorConverterTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/payment/impl/HibernateOrderManagerTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/payment/impl/HibernateOrderManagerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/HibernateRelationshipManagerTest.java" afterPath="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/HibernateRelationshipManagerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iml" afterPath="$PROJECT_DIR$/billiongoods.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.ids" afterPath="$PROJECT_DIR$/billiongoods.ids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/DefaultShipmentManager.java" afterPath="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/DefaultShipmentManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-6.1.0.js" afterPath="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-6.1.0.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" afterPath="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.ipr" afterPath="$PROJECT_DIR$/billiongoods.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/billiongoods.iws" afterPath="$PROJECT_DIR$/billiongoods.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/core/core.iml" afterPath="$PROJECT_DIR$/modules/core/core.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/services/services.iml" afterPath="$PROJECT_DIR$/modules/services/services.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/todo.txt" afterPath="$PROJECT_DIR$/todo.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/web.iml" afterPath="$PROJECT_DIR$/modules/web/web.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/tracking.properties" afterPath="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/tracking.properties" />
     </list>
     <ignored path="application.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -147,6 +138,10 @@
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/payment/impl/HibernateOrderManagerTest.java" />
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/services/supplier/impl/banggood/BanggoodMobileDataLoaderTest.java" />
         <option value="$PROJECT_DIR$/modules/services/src/test/java/billiongoods/server/warehouse/impl/HibernateRelationshipManagerTest.java" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/DefaultShipmentManager.java" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-6.1.0.js" />
+        <option value="$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/tracking.properties" />
+        <option value="$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml" />
       </list>
     </option>
   </component>
@@ -233,7 +228,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -846,6 +841,48 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="timezone" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="billiongoods" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="server" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="supplier" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -962,7 +999,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1035,7 +1072,7 @@
       <recent name="billiongoods.server.services.image.impl" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All Tests">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 7">
     <configuration default="false" name="HibernateOrderManagerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1750,997 +1787,10 @@
       <workItem from="1412768716118" duration="47000" />
       <workItem from="1414501012959" duration="5067000" />
       <workItem from="1414664405310" duration="1556000" />
-      <workItem from="1417092211654" duration="6468000" />
-    </task>
-    <task id="LOCAL-00001" summary="Release 5.0.0">
-      <created>1363751984384</created>
-      <option name="number" value="00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1363751984384</updated>
-    </task>
-    <task id="LOCAL-00002" summary="+ Release 5.0.3&#10;+ Editor medals added&#10;+ Robot medals fixed.">
-      <created>1364130587135</created>
-      <option name="number" value="00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1364130587135</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Release 5.1.0&#10; - new award has been added&#10; - set of issues were fixed&#10; - grant award from admin panel">
-      <created>1364403625343</created>
-      <option name="number" value="00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1364403625344</updated>
-    </task>
-    <task id="LOCAL-00004" summary="+ Issue 319:&#9;No my own changes">
-      <created>1364564637818</created>
-      <option name="number" value="00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1364564637818</updated>
-    </task>
-    <task id="LOCAL-00005" summary="- Issue 317:&#9;Players filter - search button musn't be visible for advanced">
-      <created>1364565377348</created>
-      <option name="number" value="00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1364565377348</updated>
-    </task>
-    <task id="LOCAL-00006" summary="+ Issue 231:&#9;Provide &quot;Server Maintenance&quot; page">
-      <created>1364741062579</created>
-      <option name="number" value="00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1364741062579</updated>
-    </task>
-    <task id="LOCAL-00007" summary="+ Issue 231:&#9;Provide &quot;Server Maintenance&quot; page">
-      <created>1364741255749</created>
-      <option name="number" value="00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1364741255749</updated>
-    </task>
-    <task id="LOCAL-00008" summary="+ Issue 231:&#9;Provide &quot;Server Maintenance&quot; page">
-      <created>1364756782671</created>
-      <option name="number" value="00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1364756782671</updated>
-    </task>
-    <task id="LOCAL-00009" summary="sync">
-      <created>1364847481249</created>
-      <option name="number" value="00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1364847481249</updated>
-    </task>
-    <task id="LOCAL-00010" summary="new logo">
-      <created>1364933929701</created>
-      <option name="number" value="00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1364933929701</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Release 5.1.7: new logo, more admin features.">
-      <created>1365048547990</created>
-      <option name="number" value="00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1365048547990</updated>
-    </task>
-    <task id="LOCAL-00012" summary="+ security issue fix">
-      <created>1367290357267</created>
-      <option name="number" value="00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1367290357267</updated>
-    </task>
-    <task id="LOCAL-00013" summary="+  Issue 336:&#9;java.lang.IllegalArgumentException: Locale part &quot;${locale}&quot; contains invalid characters">
-      <created>1367639061297</created>
-      <option name="number" value="00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1367639061297</updated>
-    </task>
-    <task id="LOCAL-00014" summary="+ Issue 333:&#9;Uncaught TypeError: Cannot read property 'info' of null&#10;+ Issue 337:&#9;Fast response from a robot">
-      <created>1367640711366</created>
-      <option name="number" value="00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1367640711366</updated>
-    </task>
-    <task id="LOCAL-00015" summary="+ Issue 269:&#9;Supporting for touch-screen devices">
-      <created>1367645012506</created>
-      <option name="number" value="00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1367645012506</updated>
-    </task>
-    <task id="LOCAL-00016" summary="release 5.1.11">
-      <created>1367648070191</created>
-      <option name="number" value="00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1367648070191</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Safari 4 is minor">
-      <created>1367661940901</created>
-      <option name="number" value="00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1367661940901</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Release 5.1.15">
-      <created>1371151676681</created>
-      <option name="number" value="00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1371151676681</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Release 5.1.17">
-      <created>1373911960435</created>
-      <option name="number" value="00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1373911960436</updated>
-    </task>
-    <task id="LOCAL-00020" summary="info about change is closed">
-      <created>1374419429022</created>
-      <option name="number" value="00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1374419429022</updated>
-    </task>
-    <task id="LOCAL-00021" summary="info about change is closed">
-      <created>1374419543291</created>
-      <option name="number" value="00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1374419543291</updated>
-    </task>
-    <task id="LOCAL-00022" summary="info about change is closed">
-      <created>1374482974827</created>
-      <option name="number" value="00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1374482974827</updated>
-    </task>
-    <task id="LOCAL-00023" summary="info about change is closed">
-      <created>1374498379466</created>
-      <option name="number" value="00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1374498379466</updated>
-    </task>
-    <task id="LOCAL-00024" summary="info about change is closed">
-      <created>1374500799957</created>
-      <option name="number" value="00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1374500799957</updated>
-    </task>
-    <task id="LOCAL-00025" summary="info about change is closed">
-      <created>1374584162077</created>
-      <option name="number" value="00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1374584162077</updated>
-    </task>
-    <task id="LOCAL-00026" summary="info about change is closed">
-      <created>1374660273122</created>
-      <option name="number" value="00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1374660273122</updated>
-    </task>
-    <task id="LOCAL-00027" summary="info about change is closed">
-      <created>1374665188388</created>
-      <option name="number" value="00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1374665188388</updated>
-    </task>
-    <task id="LOCAL-00028" summary="info about change is closed">
-      <created>1374674977049</created>
-      <option name="number" value="00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1374674977049</updated>
-    </task>
-    <task id="LOCAL-00029" summary="info about change is closed">
-      <created>1374741748192</created>
-      <option name="number" value="00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1374741748192</updated>
-    </task>
-    <task id="LOCAL-00030" summary="info about change is closed">
-      <created>1374758192558</created>
-      <option name="number" value="00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1374758192558</updated>
-    </task>
-    <task id="LOCAL-00031" summary="static servlet for resources added">
-      <created>1374828441125</created>
-      <option name="number" value="00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1374828441125</updated>
-    </task>
-    <task id="LOCAL-00032" summary="static servlet for resources added: final version. Static servlet returns status, not error page!">
-      <created>1374831425584</created>
-      <option name="number" value="00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1374831425584</updated>
-    </task>
-    <task id="LOCAL-00033" summary="categories view is in progress">
-      <created>1374844308533</created>
-      <option name="number" value="00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1374844308533</updated>
-    </task>
-    <task id="LOCAL-00034" summary="categories view is in progress">
-      <created>1375190919381</created>
-      <option name="number" value="00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1375190919381</updated>
-    </task>
-    <task id="LOCAL-00035" summary="categories view is in progress">
-      <created>1375259518092</created>
-      <option name="number" value="00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1375259518092</updated>
-    </task>
-    <task id="LOCAL-00036" summary="categories view is in progress">
-      <created>1375259854092</created>
-      <option name="number" value="00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1375259854092</updated>
-    </task>
-    <task id="LOCAL-00037" summary="+">
-      <created>1375269461229</created>
-      <option name="number" value="00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1375269461229</updated>
-    </task>
-    <task id="LOCAL-00038" summary="+">
-      <created>1375279864590</created>
-      <option name="number" value="00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1375279864590</updated>
-    </task>
-    <task id="LOCAL-00039" summary="+">
-      <created>1375343967780</created>
-      <option name="number" value="00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1375343967780</updated>
-    </task>
-    <task id="LOCAL-00040" summary="+">
-      <created>1375366328070</created>
-      <option name="number" value="00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1375366328070</updated>
-    </task>
-    <task id="LOCAL-00041" summary="+">
-      <created>1375445268094</created>
-      <option name="number" value="00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1375445268094</updated>
-    </task>
-    <task id="LOCAL-00042" summary="+">
-      <created>1375452699803</created>
-      <option name="number" value="00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1375452699803</updated>
-    </task>
-    <task id="LOCAL-00043" summary="+">
-      <created>1375711379611</created>
-      <option name="number" value="00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1375711379611</updated>
-    </task>
-    <task id="LOCAL-00044" summary="+">
-      <created>1375778122149</created>
-      <option name="number" value="00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1375778122149</updated>
-    </task>
-    <task id="LOCAL-00045" summary="+">
-      <created>1375795597785</created>
-      <option name="number" value="00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1375795597785</updated>
-    </task>
-    <task id="LOCAL-00046" summary="+">
-      <created>1375797762597</created>
-      <option name="number" value="00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1375797762597</updated>
-    </task>
-    <task id="LOCAL-00047" summary="+">
-      <created>1375873188185</created>
-      <option name="number" value="00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1375873188185</updated>
-    </task>
-    <task id="LOCAL-00048" summary="+">
-      <created>1375878593989</created>
-      <option name="number" value="00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1375878593989</updated>
-    </task>
-    <task id="LOCAL-00049" summary="+">
-      <created>1375883590336</created>
-      <option name="number" value="00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1375883590336</updated>
-    </task>
-    <task id="LOCAL-00050" summary="+">
-      <created>1375943438612</created>
-      <option name="number" value="00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1375943438613</updated>
-    </task>
-    <task id="LOCAL-00051" summary="+">
-      <created>1375962904435</created>
-      <option name="number" value="00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1375962904435</updated>
-    </task>
-    <task id="LOCAL-00052" summary="+">
-      <created>1375967966860</created>
-      <option name="number" value="00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1375967966860</updated>
-    </task>
-    <task id="LOCAL-00053" summary="+">
-      <created>1376053756318</created>
-      <option name="number" value="00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1376053756318</updated>
-    </task>
-    <task id="LOCAL-00054" summary="+">
-      <created>1376313058991</created>
-      <option name="number" value="00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1376313058991</updated>
-    </task>
-    <task id="LOCAL-00055" summary="+">
-      <created>1376316201288</created>
-      <option name="number" value="00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1376316201288</updated>
-    </task>
-    <task id="LOCAL-00056" summary="+">
-      <created>1376388627967</created>
-      <option name="number" value="00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1376388627967</updated>
-    </task>
-    <task id="LOCAL-00057" summary="+">
-      <created>1376400277202</created>
-      <option name="number" value="00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1376400277202</updated>
-    </task>
-    <task id="LOCAL-00058" summary="+">
-      <created>1376402653028</created>
-      <option name="number" value="00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1376402653028</updated>
-    </task>
-    <task id="LOCAL-00059" summary="+">
-      <created>1376471176844</created>
-      <option name="number" value="00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1376471176844</updated>
-    </task>
-    <task id="LOCAL-00060" summary="+">
-      <created>1376473983753</created>
-      <option name="number" value="00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1376473983753</updated>
-    </task>
-    <task id="LOCAL-00061" summary="+">
-      <created>1376474086777</created>
-      <option name="number" value="00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1376474086777</updated>
-    </task>
-    <task id="LOCAL-00062" summary="+">
-      <created>1378147138061</created>
-      <option name="number" value="00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1378147138061</updated>
-    </task>
-    <task id="LOCAL-00063" summary="+">
-      <created>1378227040058</created>
-      <option name="number" value="00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1378227040058</updated>
-    </task>
-    <task id="LOCAL-00064" summary="+">
-      <created>1378702479329</created>
-      <option name="number" value="00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1378702479329</updated>
-    </task>
-    <task id="LOCAL-00065" summary="+">
-      <created>1378832927216</created>
-      <option name="number" value="00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1378832927216</updated>
-    </task>
-    <task id="LOCAL-00066" summary="+">
-      <created>1378839388428</created>
-      <option name="number" value="00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1378839388428</updated>
-    </task>
-    <task id="LOCAL-00067" summary="+">
-      <created>1379608251642</created>
-      <option name="number" value="00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1379608251642</updated>
-    </task>
-    <task id="LOCAL-00068" summary="+">
-      <created>1379703197074</created>
-      <option name="number" value="00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1379703197074</updated>
-    </task>
-    <task id="LOCAL-00069" summary="+">
-      <created>1380137341070</created>
-      <option name="number" value="00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1380137341070</updated>
-    </task>
-    <task id="LOCAL-00070" summary="+">
-      <created>1380304541099</created>
-      <option name="number" value="00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1380304541100</updated>
-    </task>
-    <task id="LOCAL-00071" summary="+">
-      <created>1380349300825</created>
-      <option name="number" value="00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1380349300826</updated>
-    </task>
-    <task id="LOCAL-00072" summary="+">
-      <created>1380559365789</created>
-      <option name="number" value="00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1380559365789</updated>
-    </task>
-    <task id="LOCAL-00073" summary="+">
-      <created>1380602926663</created>
-      <option name="number" value="00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1380602926663</updated>
-    </task>
-    <task id="LOCAL-00074" summary="+">
-      <created>1380784511282</created>
-      <option name="number" value="00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1380784511282</updated>
-    </task>
-    <task id="LOCAL-00075" summary="+">
-      <created>1380909582962</created>
-      <option name="number" value="00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1380909582962</updated>
-    </task>
-    <task id="LOCAL-00076" summary="+">
-      <created>1381238328604</created>
-      <option name="number" value="00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1381238328604</updated>
-    </task>
-    <task id="LOCAL-00077" summary="+">
-      <created>1381328058788</created>
-      <option name="number" value="00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1381328058788</updated>
-    </task>
-    <task id="LOCAL-00078" summary="+">
-      <created>1381396147319</created>
-      <option name="number" value="00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1381396147320</updated>
-    </task>
-    <task id="LOCAL-00079" summary="+">
-      <created>1381398403745</created>
-      <option name="number" value="00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1381398403745</updated>
-    </task>
-    <task id="LOCAL-00080" summary="+">
-      <created>1381404241060</created>
-      <option name="number" value="00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1381404241060</updated>
-    </task>
-    <task id="LOCAL-00081" summary="+">
-      <created>1381412824323</created>
-      <option name="number" value="00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1381412824323</updated>
-    </task>
-    <task id="LOCAL-00082" summary="+">
-      <created>1381501899772</created>
-      <option name="number" value="00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1381501899772</updated>
-    </task>
-    <task id="LOCAL-00083" summary="+">
-      <created>1381757001661</created>
-      <option name="number" value="00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1381757001662</updated>
-    </task>
-    <task id="LOCAL-00084" summary="+">
-      <created>1381759932628</created>
-      <option name="number" value="00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1381759932628</updated>
-    </task>
-    <task id="LOCAL-00085" summary="+">
-      <created>1382003757704</created>
-      <option name="number" value="00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1382003757704</updated>
-    </task>
-    <task id="LOCAL-00086" summary="+">
-      <created>1382014873437</created>
-      <option name="number" value="00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1382014873437</updated>
-    </task>
-    <task id="LOCAL-00087" summary="+">
-      <created>1382015313684</created>
-      <option name="number" value="00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1382015313684</updated>
-    </task>
-    <task id="LOCAL-00088" summary="+">
-      <created>1382019043454</created>
-      <option name="number" value="00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1382019043454</updated>
-    </task>
-    <task id="LOCAL-00089" summary="+">
-      <created>1382088741337</created>
-      <option name="number" value="00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1382088741337</updated>
-    </task>
-    <task id="LOCAL-00090" summary="+">
-      <created>1382091666372</created>
-      <option name="number" value="00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1382091666372</updated>
-    </task>
-    <task id="LOCAL-00091" summary="+">
-      <created>1382101848285</created>
-      <option name="number" value="00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1382101848285</updated>
-    </task>
-    <task id="LOCAL-00092" summary="+">
-      <created>1382102778155</created>
-      <option name="number" value="00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1382102778155</updated>
-    </task>
-    <task id="LOCAL-00093" summary="+">
-      <created>1382435984259</created>
-      <option name="number" value="00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1382435984259</updated>
-    </task>
-    <task id="LOCAL-00094" summary="+">
-      <created>1382452288947</created>
-      <option name="number" value="00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1382452288947</updated>
-    </task>
-    <task id="LOCAL-00095" summary="+">
-      <created>1382605070290</created>
-      <option name="number" value="00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1382605070290</updated>
-    </task>
-    <task id="LOCAL-00096" summary="+">
-      <created>1382610743980</created>
-      <option name="number" value="00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1382610743980</updated>
-    </task>
-    <task id="LOCAL-00097" summary="+">
-      <created>1382615418325</created>
-      <option name="number" value="00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1382615418326</updated>
-    </task>
-    <task id="LOCAL-00098" summary="+">
-      <created>1382619047542</created>
-      <option name="number" value="00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1382619047542</updated>
-    </task>
-    <task id="LOCAL-00099" summary="+">
-      <created>1382621540324</created>
-      <option name="number" value="00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1382621540324</updated>
-    </task>
-    <task id="LOCAL-00100" summary="+">
-      <created>1382621900361</created>
-      <option name="number" value="00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1382621900361</updated>
-    </task>
-    <task id="LOCAL-00101" summary="+">
-      <created>1383040884868</created>
-      <option name="number" value="00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1383040884868</updated>
-    </task>
-    <task id="LOCAL-00102" summary="+">
-      <created>1383047059118</created>
-      <option name="number" value="00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1383047059118</updated>
-    </task>
-    <task id="LOCAL-00103" summary="+">
-      <created>1383057303524</created>
-      <option name="number" value="00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1383057303524</updated>
-    </task>
-    <task id="LOCAL-00104" summary="+">
-      <created>1383129886405</created>
-      <option name="number" value="00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1383129886406</updated>
-    </task>
-    <task id="LOCAL-00105" summary="+">
-      <created>1383221793182</created>
-      <option name="number" value="00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1383221793182</updated>
-    </task>
-    <task id="LOCAL-00106" summary="+">
-      <created>1383226962379</created>
-      <option name="number" value="00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1383226962379</updated>
-    </task>
-    <task id="LOCAL-00107" summary="+">
-      <created>1383310380294</created>
-      <option name="number" value="00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1383310380294</updated>
-    </task>
-    <task id="LOCAL-00108" summary="+">
-      <created>1383747085606</created>
-      <option name="number" value="00108" />
-      <option name="project" value="LOCAL" />
-      <updated>1383747085607</updated>
-    </task>
-    <task id="LOCAL-00109" summary="+">
-      <created>1383811739123</created>
-      <option name="number" value="00109" />
-      <option name="project" value="LOCAL" />
-      <updated>1383811739123</updated>
-    </task>
-    <task id="LOCAL-00110" summary="+">
-      <created>1383823670960</created>
-      <option name="number" value="00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1383823670960</updated>
-    </task>
-    <task id="LOCAL-00111" summary="+">
-      <created>1383914052551</created>
-      <option name="number" value="00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1383914052552</updated>
-    </task>
-    <task id="LOCAL-00112" summary="+">
-      <created>1384176171831</created>
-      <option name="number" value="00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1384176171831</updated>
-    </task>
-    <task id="LOCAL-00113" summary="+">
-      <created>1384255482491</created>
-      <option name="number" value="00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1384255482491</updated>
-    </task>
-    <task id="LOCAL-00114" summary="+">
-      <created>1384351161941</created>
-      <option name="number" value="00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1384351161941</updated>
-    </task>
-    <task id="LOCAL-00115" summary="+">
-      <created>1384438341849</created>
-      <option name="number" value="00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1384438341849</updated>
-    </task>
-    <task id="LOCAL-00116" summary="+">
-      <created>1384520344513</created>
-      <option name="number" value="00116" />
-      <option name="project" value="LOCAL" />
-      <updated>1384520344513</updated>
-    </task>
-    <task id="LOCAL-00117" summary="+">
-      <created>1384769941297</created>
-      <option name="number" value="00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1384769941297</updated>
-    </task>
-    <task id="LOCAL-00118" summary="+">
-      <created>1384871683118</created>
-      <option name="number" value="00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1384871683119</updated>
-    </task>
-    <task id="LOCAL-00119" summary="+">
-      <created>1385041098808</created>
-      <option name="number" value="00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1385041098808</updated>
-    </task>
-    <task id="LOCAL-00120" summary="+">
-      <created>1385043162765</created>
-      <option name="number" value="00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1385043162765</updated>
-    </task>
-    <task id="LOCAL-00121" summary="+">
-      <created>1385129914905</created>
-      <option name="number" value="00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1385129914905</updated>
-    </task>
-    <task id="LOCAL-00122" summary="+">
-      <created>1385376257407</created>
-      <option name="number" value="00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1385376257407</updated>
-    </task>
-    <task id="LOCAL-00123" summary="+">
-      <created>1385376460209</created>
-      <option name="number" value="00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1385376460209</updated>
-    </task>
-    <task id="LOCAL-00124" summary="+">
-      <created>1385385865669</created>
-      <option name="number" value="00124" />
-      <option name="project" value="LOCAL" />
-      <updated>1385385865669</updated>
-    </task>
-    <task id="LOCAL-00125" summary="+">
-      <created>1385460779128</created>
-      <option name="number" value="00125" />
-      <option name="project" value="LOCAL" />
-      <updated>1385460779128</updated>
-    </task>
-    <task id="LOCAL-00126" summary="+">
-      <created>1385461688114</created>
-      <option name="number" value="00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1385461688114</updated>
-    </task>
-    <task id="LOCAL-00127" summary="+">
-      <created>1385462814678</created>
-      <option name="number" value="00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1385462814678</updated>
-    </task>
-    <task id="LOCAL-00128" summary="+">
-      <created>1385474489671</created>
-      <option name="number" value="00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1385474489671</updated>
-    </task>
-    <task id="LOCAL-00129" summary="+">
-      <created>1385495387280</created>
-      <option name="number" value="00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1385495387281</updated>
-    </task>
-    <task id="LOCAL-00130" summary="+">
-      <created>1385543890367</created>
-      <option name="number" value="00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1385543890367</updated>
-    </task>
-    <task id="LOCAL-00131" summary="+">
-      <created>1385647716241</created>
-      <option name="number" value="00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1385647716241</updated>
-    </task>
-    <task id="LOCAL-00132" summary="+">
-      <created>1385730065439</created>
-      <option name="number" value="00132" />
-      <option name="project" value="LOCAL" />
-      <updated>1385730065440</updated>
-    </task>
-    <task id="LOCAL-00133" summary="+">
-      <created>1386102634414</created>
-      <option name="number" value="00133" />
-      <option name="project" value="LOCAL" />
-      <updated>1386102634414</updated>
-    </task>
-    <task id="LOCAL-00134" summary="+">
-      <created>1386155035920</created>
-      <option name="number" value="00134" />
-      <option name="project" value="LOCAL" />
-      <updated>1386155035920</updated>
-    </task>
-    <task id="LOCAL-00135" summary="+">
-      <created>1386164230783</created>
-      <option name="number" value="00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1386164230783</updated>
-    </task>
-    <task id="LOCAL-00136" summary="+">
-      <created>1386251175117</created>
-      <option name="number" value="00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1386251175117</updated>
-    </task>
-    <task id="LOCAL-00137" summary="+">
-      <created>1386335483559</created>
-      <option name="number" value="00137" />
-      <option name="project" value="LOCAL" />
-      <updated>1386335483559</updated>
-    </task>
-    <task id="LOCAL-00138" summary="+">
-      <created>1386580483755</created>
-      <option name="number" value="00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1386580483755</updated>
-    </task>
-    <task id="LOCAL-00139" summary="+">
-      <created>1386587055698</created>
-      <option name="number" value="00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1386587055699</updated>
-    </task>
-    <task id="LOCAL-00140" summary="+">
-      <created>1386598154941</created>
-      <option name="number" value="00140" />
-      <option name="project" value="LOCAL" />
-      <updated>1386598154941</updated>
-    </task>
-    <task id="LOCAL-00141" summary="+">
-      <created>1386682879585</created>
-      <option name="number" value="00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1386682879585</updated>
-    </task>
-    <task id="LOCAL-00142" summary="+">
-      <created>1386682976276</created>
-      <option name="number" value="00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1386682976276</updated>
-    </task>
-    <task id="LOCAL-00143" summary="+">
-      <created>1386859044983</created>
-      <option name="number" value="00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1386859044984</updated>
-    </task>
-    <task id="LOCAL-00144" summary="+">
-      <created>1387354865369</created>
-      <option name="number" value="00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1387354865370</updated>
-    </task>
-    <task id="LOCAL-00145" summary="+">
-      <created>1387357066379</created>
-      <option name="number" value="00145" />
-      <option name="project" value="LOCAL" />
-      <updated>1387357066379</updated>
-    </task>
-    <task id="LOCAL-00146" summary="+">
-      <created>1387358079957</created>
-      <option name="number" value="00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1387358079958</updated>
-    </task>
-    <task id="LOCAL-00147" summary="+">
-      <created>1387440269350</created>
-      <option name="number" value="00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1387440269350</updated>
-    </task>
-    <task id="LOCAL-00148" summary="+">
-      <created>1387449766705</created>
-      <option name="number" value="00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1387449766706</updated>
-    </task>
-    <task id="LOCAL-00149" summary="+">
-      <created>1387451610596</created>
-      <option name="number" value="00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1387451610596</updated>
-    </task>
-    <task id="LOCAL-00150" summary="+">
-      <created>1387451877577</created>
-      <option name="number" value="00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1387451877577</updated>
-    </task>
-    <task id="LOCAL-00151" summary="+">
-      <created>1387463132538</created>
-      <option name="number" value="00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1387463132538</updated>
-    </task>
-    <task id="LOCAL-00152" summary="+">
-      <created>1388131687546</created>
-      <option name="number" value="00152" />
-      <option name="project" value="LOCAL" />
-      <updated>1388131687546</updated>
-    </task>
-    <task id="LOCAL-00153" summary="+">
-      <created>1388142419095</created>
-      <option name="number" value="00153" />
-      <option name="project" value="LOCAL" />
-      <updated>1388142419095</updated>
-    </task>
-    <task id="LOCAL-00154" summary="+">
-      <created>1388148149551</created>
-      <option name="number" value="00154" />
-      <option name="project" value="LOCAL" />
-      <updated>1388148149551</updated>
-    </task>
-    <task id="LOCAL-00155" summary="+">
-      <created>1388148194704</created>
-      <option name="number" value="00155" />
-      <option name="project" value="LOCAL" />
-      <updated>1388148194704</updated>
-    </task>
-    <task id="LOCAL-00156" summary="+">
-      <created>1389255721670</created>
-      <option name="number" value="00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1389255721670</updated>
-    </task>
-    <task id="LOCAL-00157" summary="+">
-      <created>1389258956337</created>
-      <option name="number" value="00157" />
-      <option name="project" value="LOCAL" />
-      <updated>1389258956337</updated>
-    </task>
-    <task id="LOCAL-00158" summary="+">
-      <created>1390229210400</created>
-      <option name="number" value="00158" />
-      <option name="project" value="LOCAL" />
-      <updated>1390229210400</updated>
-    </task>
-    <task id="LOCAL-00159" summary="+">
-      <created>1390288436053</created>
-      <option name="number" value="00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1390288436053</updated>
-    </task>
-    <task id="LOCAL-00160" summary="+">
-      <created>1391000667822</created>
-      <option name="number" value="00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1391000667822</updated>
-    </task>
-    <task id="LOCAL-00161" summary="+">
-      <created>1391079940176</created>
-      <option name="number" value="00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1391079940176</updated>
-    </task>
-    <task id="LOCAL-00162" summary="+">
-      <created>1391092459407</created>
-      <option name="number" value="00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1391092459407</updated>
-    </task>
-    <task id="LOCAL-00163" summary="+">
-      <created>1391778853505</created>
-      <option name="number" value="00163" />
-      <option name="project" value="LOCAL" />
-      <updated>1391778853505</updated>
-    </task>
-    <task id="LOCAL-00164" summary="+">
-      <created>1391779749262</created>
-      <option name="number" value="00164" />
-      <option name="project" value="LOCAL" />
-      <updated>1391779749262</updated>
-    </task>
-    <task id="LOCAL-00165" summary="+">
-      <created>1392034784436</created>
-      <option name="number" value="00165" />
-      <option name="project" value="LOCAL" />
-      <updated>1392034784436</updated>
+      <workItem from="1417092211654" duration="11872000" />
+      <workItem from="1417520525524" duration="2489000" />
+      <workItem from="1417780307577" duration="473000" />
+      <workItem from="1417780870201" duration="790000" />
     </task>
     <task id="LOCAL-00166" summary="+">
       <created>1392726542812</created>
@@ -3030,11 +2080,17 @@
       <option name="project" value="LOCAL" />
       <updated>1414506084003</updated>
     </task>
-    <option name="localTasksCounter" value="214" />
+    <task id="LOCAL-00214" summary="+">
+      <created>1417170025157</created>
+      <option name="number" value="00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1417170025157</updated>
+    </task>
+    <option name="localTasksCounter" value="215" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1286060000" />
+    <option name="totallyTimeSpent" value="1295216000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -3075,7 +2131,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34582442" sideWeight="0.47177848" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20178282" sideWeight="0.26213592" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20660277" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20660277" sideWeight="0.57289296" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32875606" sideWeight="0.6879271" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19382322" sideWeight="0.67903227" order="5" side_tool="false" content_ui="tabs" />
@@ -3209,193 +2265,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.0.3.RELEASE/spring-webmvc-4.0.3.RELEASE-sources.jar!/org/springframework/web/servlet/FrameworkServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2924" max-vertical-offset="4624">
-          <caret line="815" column="30" selection-start-line="815" selection-start-column="30" selection-end-line="815" selection-end-column="30" />
-          <folding>
-            <element signature="docComment;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#DEFAULT_NAMESPACE_SUFFIX#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#DEFAULT_CONTEXT_CLASS#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#SERVLET_CONTEXT_PREFIX#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#INIT_PARAM_DELIMITERS#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#contextAttribute#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#contextClass#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#contextId#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#namespace#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#contextConfigLocation#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#contextInitializers#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#contextInitializerClasses#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#publishContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#publishEvents#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#threadContextInheritable#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#dispatchOptionsRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#dispatchTraceRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#webApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#webApplicationContextInjected#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;field#refreshEventReceived#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#FrameworkServlet#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#FrameworkServlet#1;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#FrameworkServlet#1;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setContextAttribute#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#getContextAttribute#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setContextClass#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#getContextClass#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setContextId#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#getContextId#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setNamespace#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#getNamespace#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#getNamespace#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setContextConfigLocation#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#setContextConfigLocation#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#getContextConfigLocation#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setContextInitializers#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#setContextInitializers#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setContextInitializerClasses#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#setContextInitializerClasses#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setPublishContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setPublishEvents#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setThreadContextInheritable#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#setThreadContextInheritable#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setDispatchOptionsRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#setDispatchOptionsRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setDispatchTraceRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#setApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#setApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#initServletBean#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#initServletBean#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#initWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#initWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="e#23355#23424#0" expanded="false" />
-            <element signature="e#23544#23614#0" expanded="false" />
-            <element signature="e#23823#23893#0" expanded="false" />
-            <element signature="e#24355#24429#0" expanded="false" />
-            <element signature="docComment;method#findWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#findWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#createWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#createWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#configureAndRefreshWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="e#28115#28187#0" expanded="false" />
-            <element signature="e#28774#28863#0" expanded="false" />
-            <element signature="docComment;method#createWebApplicationContext#1;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#createWebApplicationContext#1;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#postProcessWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#applyInitializers#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#applyInitializers#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#loadInitializer#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#getServletContextAttributeName#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#getWebApplicationContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#initFrameworkServlet#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#refresh#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#refresh#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#onApplicationEvent#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#onApplicationEvent#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#onRefresh#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#onRefresh#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#destroy#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#service#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#service#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#doGet#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#doGet#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#doPost#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#doPost#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#doPut#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#doPut#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#doDelete#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#doDelete#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#doOptions#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#doOptions#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="e#38482#38541#0" expanded="false" />
-            <element signature="class#38616:38896" expanded="false" />
-            <element signature="method#setHeader#0;class#38616:38896" expanded="false" />
-            <element signature="docComment;method#doTrace#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#doTrace#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#processRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#processRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#buildLocaleContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#buildLocaleContext#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#buildRequestAttributes#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#buildRequestAttributes#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#initContextHolders#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#resetContextHolders#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#publishRequestHandledEvent#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#getUsernameForRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#getUsernameForRequest#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;method#doService#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;class#ContextRefreshListener#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="class#ContextRefreshListener#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="docComment;class#RequestBindingInterceptor#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="class#RequestBindingInterceptor#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#preProcess#0;class#RequestBindingInterceptor#0;class#FrameworkServlet#0" expanded="false" />
-            <element signature="method#postProcess#0;class#RequestBindingInterceptor#0;class#FrameworkServlet#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.0.3.RELEASE/spring-web-4.0.3.RELEASE-sources.jar!/org/springframework/web/context/ContextLoaderListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="928" max-vertical-offset="1836">
-          <caret line="92" column="45" selection-start-line="92" selection-start-column="45" selection-end-line="92" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/basket/impl/HibernateBasket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3043">
-          <caret line="31" column="69" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0/src.zip!/java/util/concurrent/ExecutorService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="969">
-          <caret line="187" column="95" selection-start-line="187" selection-start-column="25" selection-end-line="187" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/CentralController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1547">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/java/billiongoods/server/web/servlet/mvc/AbstractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2654185" vertical-offset="354" max-vertical-offset="2397">
-          <caret line="51" column="24" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/OrderExpirationCenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.051762115" vertical-offset="106" max-vertical-offset="3230">
-          <caret line="30" column="56" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.0.3.RELEASE/spring-context-4.0.3.RELEASE-sources.jar!/org/springframework/scheduling/concurrent/ThreadPoolTaskScheduler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14977974" vertical-offset="0" max-vertical-offset="1802">
-          <caret line="54" column="55" selection-start-line="54" selection-start-column="55" selection-end-line="54" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/4.0.3.RELEASE/spring-context-4.0.3.RELEASE-sources.jar!/org/springframework/scheduling/concurrent/ExecutorConfigurationSupport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44493392" vertical-offset="2673" max-vertical-offset="3621">
-          <caret line="212" column="20" selection-start-line="212" selection-start-column="0" selection-end-line="212" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42921856" vertical-offset="2239" max-vertical-offset="6052">
-          <caret line="154" column="50" selection-start-line="154" selection-start-column="50" selection-end-line="154" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/integ.logback.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0561674" vertical-offset="0" max-vertical-offset="908">
@@ -3412,13 +2281,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/paypal.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="908">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/customs.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="908">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -3446,13 +2308,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/tracking.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43061674" vertical-offset="0" max-vertical-offset="908">
-          <caret line="23" column="94" selection-start-line="23" selection-start-column="94" selection-end-line="23" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/web.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="680" max-vertical-offset="5049">
@@ -3464,7 +2319,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="908">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3472,7 +2326,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="908">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3480,7 +2333,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.28911564" vertical-offset="0" max-vertical-offset="882">
           <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3495,7 +2347,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.36621314" vertical-offset="85" max-vertical-offset="1513">
           <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3503,15 +2354,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19274376" vertical-offset="0" max-vertical-offset="882">
           <caret line="10" column="42" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/todo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
-          <caret line="23" column="26" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3519,7 +2361,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1181" max-vertical-offset="2601">
           <caret line="126" column="44" selection-start-line="126" selection-start-column="44" selection-end-line="126" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3527,7 +2368,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
           <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3535,7 +2375,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21365638" vertical-offset="588" max-vertical-offset="1496">
           <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3543,7 +2382,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.08" vertical-offset="3132" max-vertical-offset="6290">
           <caret line="230" column="25" selection-start-line="230" selection-start-column="25" selection-end-line="230" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3551,7 +2389,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.68171805" vertical-offset="8935" max-vertical-offset="9843">
           <caret line="624" column="30" selection-start-line="624" selection-start-column="26" selection-end-line="624" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3563,49 +2400,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggood/BanggoodProductImporter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2951" max-vertical-offset="5797">
-          <caret line="197" column="46" selection-start-line="197" selection-start-column="17" selection-end-line="197" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2068#2069#0" expanded="true" />
-            <element signature="e#2098#2099#0" expanded="true" />
-            <element signature="e#2713#2714#0" expanded="true" />
-            <element signature="e#2773#2774#0" expanded="true" />
-            <element signature="e#8647#8648#0" expanded="true" />
-            <element signature="e#8684#8685#0" expanded="true" />
-            <element signature="e#8743#8744#0" expanded="true" />
-            <element signature="e#8782#8783#0" expanded="true" />
-            <element signature="e#8847#8848#0" expanded="true" />
-            <element signature="e#8890#8891#0" expanded="true" />
-            <element signature="e#8955#8956#0" expanded="true" />
-            <element signature="e#8998#8999#0" expanded="true" />
-            <element signature="e#9195#9196#0" expanded="true" />
-            <element signature="e#9234#9235#0" expanded="true" />
-            <element signature="e#9946#9947#0" expanded="true" />
-            <element signature="e#9967#9968#0" expanded="true" />
-            <element signature="e#10013#10014#0" expanded="true" />
-            <element signature="e#10032#10033#0" expanded="true" />
-            <element signature="e#10081#10082#0" expanded="true" />
-            <element signature="e#10100#10101#0" expanded="true" />
-            <element signature="e#10148#10149#0" expanded="true" />
-            <element signature="e#10200#10201#0" expanded="true" />
-            <element signature="e#10250#10251#0" expanded="true" />
-            <element signature="e#10269#10270#0" expanded="true" />
-            <element signature="e#10318#10319#0" expanded="true" />
-            <element signature="e#10351#10352#0" expanded="true" />
-            <element signature="e#10400#10401#0" expanded="true" />
-            <element signature="e#10420#10421#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/services/src/test/resources/product_info.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="794767">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3613,7 +2411,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4178771" vertical-offset="0" max-vertical-offset="895">
           <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3621,10 +2418,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="61" max-vertical-offset="969">
           <caret line="56" column="36" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
-          <folding>
-            <element signature="e#2192#2193#0" expanded="true" />
-            <element signature="e#2210#2211#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3632,7 +2425,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29955947" vertical-offset="0" max-vertical-offset="908">
           <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3648,7 +2440,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29845816" vertical-offset="1650" max-vertical-offset="9214">
           <caret line="139" column="17" selection-start-line="139" selection-start-column="17" selection-end-line="139" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3656,7 +2447,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2610132" vertical-offset="3605" max-vertical-offset="6817">
           <caret line="260" column="42" selection-start-line="260" selection-start-column="36" selection-end-line="260" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3664,7 +2454,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.677095" vertical-offset="261" max-vertical-offset="1156">
           <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3672,7 +2461,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
           <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3680,7 +2468,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8" max-vertical-offset="1003">
           <caret line="32" column="23" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3688,7 +2475,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850">
           <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3696,7 +2482,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.28854626" vertical-offset="112" max-vertical-offset="1020">
           <caret line="34" column="26" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3704,7 +2489,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.3325992" vertical-offset="3468" max-vertical-offset="11288">
           <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3712,7 +2496,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2246696" vertical-offset="0" max-vertical-offset="1564">
           <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3720,7 +2503,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.76762116" vertical-offset="0" max-vertical-offset="1292">
           <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3728,7 +2510,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20484582" vertical-offset="1667" max-vertical-offset="5746">
           <caret line="158" column="31" selection-start-line="158" selection-start-column="31" selection-end-line="158" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3736,7 +2517,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20484582" vertical-offset="868" max-vertical-offset="3043">
           <caret line="77" column="16" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3744,6 +2524,117 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37444934" vertical-offset="0" max-vertical-offset="1003">
           <caret line="30" column="42" selection-start-line="30" selection-start-column="42" selection-end-line="30" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/test/resources/resizeTest.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/test/resources/resizeTest.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/banggood/BanggoodProductImporter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2890" max-vertical-offset="4930">
+          <caret line="197" column="17" selection-start-line="197" selection-start-column="17" selection-end-line="197" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/DefaultImportingSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08259912" vertical-offset="350" max-vertical-offset="1258">
+          <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/supplier/impl/DefaultSupplierDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13105726" vertical-offset="0" max-vertical-offset="908">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/timezone/TimeZoneManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2246696" vertical-offset="0" max-vertical-offset="908">
+          <caret line="35" column="23" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+          <folding>
+            <element signature="docComment;class#TimeZoneManager#0" expanded="false" />
+            <element signature="method#afterPropertiesSet#0;class#TimeZoneManager#0" expanded="false" />
+            <element signature="method#getTimeZoneEntry#0;class#TimeZoneManager#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.561674" vertical-offset="0" max-vertical-offset="908">
+          <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/core/src/main/java/billiongoods/core/account/impl/HibernateAccountRecoveryManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="1513">
+          <caret line="25" column="70" selection-start-line="25" selection-start-column="70" selection-end-line="25" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/impl/DefaultShipmentManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1088">
+          <caret line="10" column="51" selection-start-line="10" selection-start-column="51" selection-end-line="10" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/java/billiongoods/server/services/payment/ShipmentManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/webapp/static/js/billiongoods-6.1.0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="7900" max-vertical-offset="21199">
+          <caret line="493" column="60" selection-start-line="493" selection-start-column="60" selection-end-line="493" selection-end-column="60" />
+          <folding>
+            <marker date="1417781466248" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/customs.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
+          <caret line="2" column="41" selection-start-line="2" selection-start-column="41" selection-end-line="2" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/web/src/main/resources/i18n/assistance/tracking.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
+          <caret line="2" column="63" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/services/src/main/resources/config/billiongoods-config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3567384" vertical-offset="2031" max-vertical-offset="6052">
+          <caret line="138" column="28" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
           <folding />
         </state>
       </provider>

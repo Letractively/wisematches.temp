@@ -475,10 +475,10 @@ bg.warehouse.Basket = function () {
         var shipmentType = shipmentItem.val();
 
         var shipmentAmount = 0;
-        if (totalAmount < 1000) {
+        if (totalAmount < 1200) {
             basket.find('.unregistered').slideDown('fast');
             if (shipmentType == 'REGISTERED') {
-                shipmentAmount = 70.;
+                shipmentAmount = 80.;
             }
             basket.find('#shipmentFree').removeAttr('disabled');
             basket.find('#freeRegisteredShipment').hide();
@@ -491,7 +491,7 @@ bg.warehouse.Basket = function () {
             basket.find('#paidRegisteredShipment').hide();
         }
 
-        updatePrice(basket.find('.unregistered .price'), 1000 - totalAmount);
+        updatePrice(basket.find('.unregistered .price'), 1200 - totalAmount);
 
         updatePrice(basket.find('.payment-order .price'), totalAmount);
         updatePrice(basket.find('.payment-shipment .price'), shipmentAmount);
