@@ -39,8 +39,8 @@ public class BanggoodMobileDataLoaderTest {
 		final BanggoodMobileDataLoader dataLoader = new BanggoodMobileDataLoader();
 		dataLoader.afterPropertiesSet();
 
-        final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/Earphone-Headset-Pattern-PC-Hard-Back-Case-Cover-For-IPhone-5-5S-p-86990.html", "SKU095691", Supplier.BANGGOOD, null);
-        final SupplierDescription desc1 = dataLoader.loadDescription(info1);
+		final HibernateSupplierInfo info1 = new HibernateSupplierInfo("/QS-QS5013-2_5CH-Mini-Micro-Remote-Control-RC-Helicopter-p-941430.html", "SKU159880", Supplier.BANGGOOD, null);
+		final SupplierDescription desc1 = dataLoader.loadDescription(info1);
 		assertNotNull(desc1);
 		assertNotNull(desc1.getPrice());
 		System.out.println(desc1);
@@ -63,7 +63,7 @@ public class BanggoodMobileDataLoaderTest {
 		final BanggoodMobileDataLoader dataLoader = new BanggoodMobileDataLoader();
 		dataLoader.afterPropertiesSet();
 
-		final HibernateSupplierInfo info2 = new HibernateSupplierInfo("/p-46246.html", "SKU105465", Supplier.BANGGOOD, null);
+		final HibernateSupplierInfo info2 = new HibernateSupplierInfo("/-p-39473.html", "SKU043151", Supplier.BANGGOOD, null);
 		final SupplierDescription desc2 = dataLoader.loadDescription(info2);
 		assertNotNull(desc2);
 		assertNotNull(desc2.getPrice());
