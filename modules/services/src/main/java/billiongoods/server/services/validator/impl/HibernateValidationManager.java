@@ -263,8 +263,8 @@ public class HibernateValidationManager implements ValidationManager, CleaningDa
             }
             transactionManager.commit(transaction);
         } catch (Exception ex) {
-            transactionManager.rollback(transaction);
             log.error("Validate products can't be updated", ex);
+            transactionManager.rollback(transaction);
         }
     }
 
