@@ -194,7 +194,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 
 			final String code = (String) values.get("code");
 			if (!"00".equalsIgnoreCase(code)) {
-				return new AjaxDetails(0, 0, LocalDate.MAX); // TODO: incorrect. Doesn't work for POA
+				return new AjaxDetails(0, 0, null); // TODO: incorrect. Doesn't work for POA
 			} else {
 				@SuppressWarnings("unchecked")
 				final Map<String, Object> result = (Map<String, Object>) values.get("result");
