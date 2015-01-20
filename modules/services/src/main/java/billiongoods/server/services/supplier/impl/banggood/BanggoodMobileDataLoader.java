@@ -180,7 +180,7 @@ public class BanggoodMobileDataLoader implements SupplierDataLoader, Initializin
 
 			final List<NameValuePair> nvps = new ArrayList<>();
 //			nvps.add(new BasicNameValuePair("products_id", supplier.getReferenceId()));
-//			nvps.add(new BasicNameValuePair("poa", "POA289722"));
+			nvps.add(new BasicNameValuePair("poa", supplier.getReferenceCode()));
 			nvps.add(new BasicNameValuePair("warehouse", "CN"));
 //			nvps.add(new BasicNameValuePair("wh", "CN"));
 //			nvps.add(new BasicNameValuePair("attr_poa_slt", "-1"));
