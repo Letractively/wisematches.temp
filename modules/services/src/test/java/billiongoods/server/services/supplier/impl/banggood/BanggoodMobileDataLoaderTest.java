@@ -51,7 +51,7 @@ public class BanggoodMobileDataLoaderTest {
 		final BanggoodMobileDataLoader dataLoader = new BanggoodMobileDataLoader();
 		dataLoader.afterPropertiesSet();
 
-		final HibernateSupplierInfo info2 = new HibernateSupplierInfo("/Wholesale-Replacement-WLtoys-V911-2_4GHz-4CH-RC-Helicopter-BNF-New-Plug-Version-p-39473.html", "SKU043151", Supplier.BANGGOOD, null);
+		final HibernateSupplierInfo info2 = new HibernateSupplierInfo("/BMP180-Digital-Barometric-Pressure-Sensor-Module-Board-p-930690.html", "SKU134591", Supplier.BANGGOOD, null);
 		final SupplierDescription desc2 = dataLoader.loadDescription(info2);
 		assertNotNull(desc2);
 		assertNotNull(desc2.getPrice());
